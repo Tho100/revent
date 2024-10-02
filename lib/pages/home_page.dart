@@ -44,21 +44,21 @@ class HomePageState extends State<HomePage> {
     return AppBar(
       centerTitle: false,
       title: Padding(
-        padding: const EdgeInsets.only(top: 8),
+        padding: const EdgeInsets.all(8),
         child: Text(
           'Revent',
           style: GoogleFonts.inter(
             color: ThemeColor.white,
             fontWeight: FontWeight.w900,
-            fontSize: 21.5
+            fontSize: 22.5
           )
         ),
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.only(top: 8),
+          padding: const EdgeInsets.all(8),
           child: IconButton(
-            icon: const Icon(CupertinoIcons.gear, size: 18),
+            icon: const Icon(CupertinoIcons.gear, size: 20),
             color: ThemeColor.thirdWhite,
             onPressed: () => NavigatePage.settingsPage(context),
           ),
