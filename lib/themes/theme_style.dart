@@ -26,4 +26,11 @@ class ThemeStyle {
     ),
   );
 
+  static final btnMainStyle = ElevatedButton.styleFrom(
+    backgroundColor: ThemeColor.white,
+    foregroundColor: ThemeColor.thirdWhite,
+    elevation: 0,
+    shape: const StadiumBorder()
+  );
+
 }
