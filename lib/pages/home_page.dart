@@ -44,7 +44,7 @@ class HomePageState extends State<HomePage> {
     return AppBar(
       centerTitle: false,
       title: Padding(
-        padding: const EdgeInsets.all(8),
+        padding: const EdgeInsets.only(top: 10, left: 8),
         child: Text(
           'Revent',
           style: GoogleFonts.inter(
@@ -56,9 +56,9 @@ class HomePageState extends State<HomePage> {
       ),
       actions: [
         Padding(
-          padding: const EdgeInsets.all(8),
+          padding: const EdgeInsets.only(top: 10, right: 12),
           child: IconButton(
-            icon: const Icon(CupertinoIcons.gear, size: 20),
+            icon: const Icon(CupertinoIcons.gear, size: 30),
             color: ThemeColor.thirdWhite,
             onPressed: () => NavigatePage.settingsPage(context),
           ),
