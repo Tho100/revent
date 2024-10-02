@@ -19,8 +19,8 @@ class NavigationBarDock extends StatelessWidget {
     required this.notificationOnPressed,
     required this.profileOnPressed,
     required this.currentIndex,
-    Key? key
-  }) : super(key: key);  
+    super.key
+  });
   
 
   final navIcons = [

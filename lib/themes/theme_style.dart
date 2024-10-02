@@ -33,4 +33,26 @@ class ThemeStyle {
     shape: const StadiumBorder()
   );
 
+  static InputDecoration txtFieldStye({required String hintText}) {
+    return InputDecoration(
+      hintText: hintText,
+      counterText: '',
+      contentPadding: const EdgeInsets.fromLTRB(20, 22, 10, 25),
+      hintStyle: GoogleFonts.inter(color: ThemeColor.darkGrey),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: const BorderSide(
+          color: ThemeColor.darkGrey
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: const BorderSide(
+          width: 2,
+          color: ThemeColor.secondaryWhite
+        )
+      )
+    );
+  }
+
 }
