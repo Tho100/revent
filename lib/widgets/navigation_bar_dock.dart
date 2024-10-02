@@ -40,8 +40,8 @@ class NavigationBarDock extends StatelessWidget {
     return Container(
       height: 65,
       margin: const EdgeInsets.only(
-        left: 25.5,
-        right: 25.5,
+        left: 20,
+        right: 20,
         bottom: 24
       ),
       decoration: BoxDecoration(
@@ -72,8 +72,8 @@ class NavigationBarDock extends StatelessWidget {
                       margin: const EdgeInsets.only(
                         top: 7.5, 
                         bottom: 0, 
-                        left: 13.5, 
-                        right: 13.5
+                        left: 5, 
+                        right: 5
                       ),
                       child: IconButton(
                         icon: Icon(icon), 
