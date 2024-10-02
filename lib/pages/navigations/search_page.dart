@@ -22,6 +22,7 @@ class SearchPage extends StatelessWidget {
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Search',
+          customBackOnPressed: () => NavigatePage.homePage(context),
           context: context
         ).buildAppBar(),
         bottomNavigationBar: UpdateNavigation(

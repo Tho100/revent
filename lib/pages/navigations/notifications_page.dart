@@ -22,6 +22,7 @@ class NotificationsPage extends StatelessWidget {
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Notifications',
+          customBackOnPressed: () => NavigatePage.homePage(context),
           context: context
         ).buildAppBar(),
         bottomNavigationBar: UpdateNavigation(
