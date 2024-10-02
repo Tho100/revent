@@ -58,7 +58,7 @@ class HomePageState extends State<HomePage> {
         Padding(
           padding: const EdgeInsets.only(top: 10, right: 12),
           child: IconButton(
-            icon: const Icon(CupertinoIcons.gear, size: 30),
+            icon: const Icon(CupertinoIcons.gear, size: 28),
             color: ThemeColor.thirdWhite,
             onPressed: () => NavigatePage.settingsPage(context),
           ),
