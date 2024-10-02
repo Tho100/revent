@@ -12,7 +12,7 @@ class ThemeStyle {
   );
 
   static final btnBottomDialogTextStyle = GoogleFonts.inter(
-    color: const Color.fromARGB(255,235,235,235),
+    color: const Color.fromARGB(255, 235, 235, 235),
     fontWeight: FontWeight.w800,
     fontSize: 16,
   ); 

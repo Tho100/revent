@@ -57,6 +57,8 @@ class BottomsheetAddItem {
           onPressed: addForumOnPressed
         ),
 
+        const SizedBox(height: 20),
+
       ]
     );
   }
