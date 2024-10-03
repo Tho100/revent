@@ -12,7 +12,7 @@ class ThemeStyle {
   );
 
   static final btnBottomDialogTextStyle = GoogleFonts.inter(
-    color: const Color.fromARGB(255,235,235,235),
+    color: const Color.fromARGB(255, 235, 235, 235),
     fontWeight: FontWeight.w800,
     fontSize: 16,
   ); 
@@ -25,5 +25,34 @@ class ThemeStyle {
       borderRadius: BorderRadius.zero, 
     ),
   );
+
+  static final btnMainStyle = ElevatedButton.styleFrom(
+    backgroundColor: ThemeColor.white,
+    foregroundColor: ThemeColor.thirdWhite,
+    elevation: 0,
+    shape: const StadiumBorder()
+  );
+
+  static InputDecoration txtFieldStye({required String hintText}) {
+    return InputDecoration(
+      hintText: hintText,
+      counterText: '',
+      contentPadding: const EdgeInsets.fromLTRB(20, 22, 10, 25),
+      hintStyle: GoogleFonts.inter(color: ThemeColor.darkGrey),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: const BorderSide(
+          color: ThemeColor.darkGrey
+        ),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: const BorderSide(
+          width: 2,
+          color: ThemeColor.secondaryWhite
+        )
+      )
+    );
+  }
 
 }

@@ -25,7 +25,7 @@ class UpdateNavigation {
         addOnPressed: () { 
           BottomsheetAddItem().buildBottomsheet(
             context: context,
-            addVentOnPressed: () => CreateNewItem().newVent(), 
+            addVentOnPressed: () => NavigatePage.createVentPage(context), 
             addForumOnPressed: () => CreateNewItem().newForum(),
           );
         },

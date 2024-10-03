@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/pages/main_screen_page.dart';
 import 'package:revent/themes/theme_color.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -38,8 +38,11 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   void _startTimer() {
+    //NavigatePage.homePage(context);
     splashScreenTimer = Timer(const Duration(milliseconds: 2500), () {
-      NavigatePage.homePage(context);
+      Navigator.push(context, MaterialPageRoute(
+        builder: (context) => const MainScreenPage())
+      );
     });
   }
 
