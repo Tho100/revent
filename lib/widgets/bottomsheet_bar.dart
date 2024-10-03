@@ -3,7 +3,7 @@ import 'package:revent/themes/theme_color.dart';
 
 class BottomsheetBar extends StatelessWidget {
 
-  const BottomsheetBar({Key? key}) : super(key: key);
+  const BottomsheetBar({super.key});
 
   @override
   Widget build(BuildContext context) {
