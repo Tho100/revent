@@ -8,8 +8,8 @@ class BottomsheetTitle extends StatelessWidget {
 
   const BottomsheetTitle({
     required this.title,
-    Key? key
-  }) : super(key: key);
+    super.key
+  });
 
   @override
   Widget build(BuildContext context) {

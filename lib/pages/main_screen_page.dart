@@ -6,7 +6,7 @@ import 'package:revent/widgets/main_button.dart';
 
 class MainScreenPage extends StatelessWidget {
 
-  const MainScreenPage({Key? key}) : super(key: key);
+  const MainScreenPage({super.key});
 
   Widget _buildButtons(BuildContext context) {
     return Column(
