@@ -12,11 +12,14 @@ class CreateVentPage extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        
+
         MainButton(
           text: "Create vent", 
-          onPressed: () {
-            createItem.newVent(ventTitle: "My first vent");
+          onPressed: () async {
+            await createItem.newVent(
+              ventTitle: "My first vent", 
+              ventBodyText: "Hello this is my first vent ever!"
+            );
           }
         ),
 
