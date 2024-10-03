@@ -22,7 +22,6 @@ class NavigationBarDock extends StatelessWidget {
     super.key
   });
   
-
   final navIcons = [
     CupertinoIcons.home, 
     CupertinoIcons.search, 

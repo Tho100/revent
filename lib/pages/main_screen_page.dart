@@ -8,7 +8,7 @@ class MainScreenPage extends StatelessWidget {
 
   const MainScreenPage({Key? key}) : super(key: key);
 
-  Widget buildButtons(BuildContext context) {
+  Widget _buildButtons(BuildContext context) {
     return Column(
       children: [
 
@@ -50,7 +50,7 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
-  Widget buildHeaderText() {
+  Widget _buildHeaderText() {
     return Text("Read & Vent.",
       style: GoogleFonts.inter(
         color: ThemeColor.white,
@@ -61,7 +61,7 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
-  Widget buildSubText() {
+  Widget _buildSubText() {
     return Text("Share your thoughts, stories, and more!",
       style: GoogleFonts.inter(
         color: ThemeColor.thirdWhite,
@@ -72,16 +72,16 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
-  Widget buildBottomContainer(BuildContext context) {
+  Widget _buildBottomContainer(BuildContext context) {
     return Container(
       color: ThemeColor.black,
       width: MediaQuery.of(context).size.width,
       height: 205,
-      child: buildButtons(context),
+      child: _buildButtons(context),
     );
   }
 
-  Widget buildBody(BuildContext context) {
+  Widget _buildBody(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -90,18 +90,18 @@ class MainScreenPage extends StatelessWidget {
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: buildHeaderText(),
+          child: _buildHeaderText(),
         ),
         
         const SizedBox(height: 12),
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: buildSubText(),
+          child: _buildSubText(),
         ),
       
         const Spacer(),
-        buildBottomContainer(context)
+        _buildBottomContainer(context)
 
       ],
     );
@@ -110,7 +110,7 @@ class MainScreenPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: buildBody(context)
+      body: _buildBody(context)
     );
   }
   
