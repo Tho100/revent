@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revent/pages/create_vent_page.dart';
 import 'package:revent/pages/home_page.dart';
 import 'package:revent/pages/navigations/notifications_page.dart';
 import 'package:revent/pages/navigations/profile_page.dart';
@@ -48,6 +49,13 @@ class NavigatePage {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const SettingsPage()),
+    );
+  }
+
+  static void createVentPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => CreateVentPage()),
     );
   }
 
