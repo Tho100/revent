@@ -33,7 +33,7 @@ class NavigationBarDock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    final getNonAddIndex = currentIndex != 2 ? currentIndex : 2;
+    final getNonAddIndex = currentIndex == 2 ? 2 : currentIndex;
     final selectedNavigationIndexNotifier = ValueNotifier<int>(getNonAddIndex);
 
     return Container(
