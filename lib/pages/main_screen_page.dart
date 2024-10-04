@@ -50,6 +50,17 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
+  Widget _buildLogoText() {
+    return Text(">:(",
+      style: GoogleFonts.inter(
+        color: ThemeColor.white,
+        fontSize: 25,
+        fontWeight: FontWeight.w900,
+      ),
+      textAlign: TextAlign.left,
+    );
+  }
+
   Widget _buildHeaderText() {
     return Text("Read & Vent.",
       style: GoogleFonts.inter(
@@ -86,7 +97,14 @@ class MainScreenPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        const SizedBox(height: 115),
+        const SizedBox(height: 85),
+
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 28),
+          child: _buildLogoText(),
+        ),
+
+        const SizedBox(height: 12),
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),

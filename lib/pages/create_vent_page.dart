@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/model/create_new_item.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
 
 class CreateVentPage extends StatelessWidget {
@@ -63,7 +64,7 @@ class CreateVentPage extends StatelessWidget {
               fontWeight: defaultFontWeight, 
               fontSize: 16
             ),
-            hintText: "Body text",
+            hintText: "Body text (optional)",
             border: InputBorder.none,
             focusedBorder: InputBorder.none,
             enabledBorder: InputBorder.none,
@@ -96,19 +97,15 @@ class CreateVentPage extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButton() {
+  Widget _buildActionButton(BuildContext context) {
     return SizedBox(
       width: 120,
       child: Padding(
         padding: const EdgeInsets.all(8),
         child: ElevatedButton(
-          onPressed: () async {
-            await createItem.newVent(
-              ventTitle: ventTitleController.text, 
-              ventBodyText: ventBodyTextController.text
-            );
-          },
+          onPressed: () async => _createVentOnPressed(context),
           style: ElevatedButton.styleFrom(
+            foregroundColor: ThemeColor.thirdWhite,
             backgroundColor: ThemeColor.white,
             elevation: 0,
             shape: const StadiumBorder()
@@ -125,6 +122,20 @@ class CreateVentPage extends StatelessWidget {
       )
     );
   }
+  
+  Future<void> _createVentOnPressed(BuildContext context) async {
+
+    if(ventTitleController.text.isEmpty) {
+      CustomAlertDialog.alertDialog(context, "Please enter vent title.");
+      return;
+    }
+
+    await createItem.newVent(
+      ventTitle: ventTitleController.text, 
+      ventBodyText: ventBodyTextController.text
+    );
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -132,7 +143,7 @@ class CreateVentPage extends StatelessWidget {
       appBar: CustomAppBar(
         context: context, 
         title: "",
-        actions: [_buildActionButton()],
+        actions: [_buildActionButton(context)],
       ).buildAppBar(),
       body: _buildBody(context),
     );
