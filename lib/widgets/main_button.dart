@@ -18,7 +18,7 @@ class MainButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 68,
-      width: MediaQuery.of(context).size.width-50,
+      width: MediaQuery.of(context).size.width * 0.9,
       child: ElevatedButton(
         style: ThemeStyle.btnMainStyle,
         onPressed: onPressed,

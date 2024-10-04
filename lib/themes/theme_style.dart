@@ -27,7 +27,6 @@ class ThemeStyle {
   );
 
   static final btnMainStyle = ElevatedButton.styleFrom(
-    padding: const EdgeInsets.fromLTRB(20, 22, 10, 25), 
     backgroundColor: ThemeColor.white,
     foregroundColor: ThemeColor.thirdWhite,
     elevation: 0,
