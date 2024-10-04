@@ -59,4 +59,8 @@ class NavigatePage {
     );
   }
 
+  static void createVentCommunity(BuildContext context) {
+    
+  }
+
 }
