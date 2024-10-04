@@ -28,8 +28,6 @@ class CreateNewItem {
 
       ventData.ventTitles.add(ventTitle);
 
-      print(ventData.ventTitles);
-
     } catch (err) {
       print(err.toString());
     }

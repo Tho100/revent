@@ -109,6 +109,7 @@ class CreateVentPage extends StatelessWidget {
             );
           },
           style: ElevatedButton.styleFrom(
+            foregroundColor: ThemeColor.thirdWhite,
             backgroundColor: ThemeColor.white,
             elevation: 0,
             shape: const StadiumBorder()
