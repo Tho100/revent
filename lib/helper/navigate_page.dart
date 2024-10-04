@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/create_vent_page.dart';
 import 'package:revent/pages/home_page.dart';
 import 'package:revent/pages/navigations/notifications_page.dart';
@@ -61,6 +62,13 @@ class NavigatePage {
 
   static void createVentCommunity(BuildContext context) {
     
+  }
+
+  static void signUpPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SignUpPage()),
+    );
   }
 
 }

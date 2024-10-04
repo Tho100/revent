@@ -34,11 +34,11 @@ class MainScreenPage extends StatelessWidget {
               ),
               shape: const StadiumBorder(),
             ),
-            onPressed: () => NavigatePage.homePage(context),
+            onPressed: () => NavigatePage.signUpPage(context),
             child: Text(
               "Create an account",
               style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
+                color: ThemeColor.white,
                 fontWeight: FontWeight.w800,
                 fontSize: 17,
               )
