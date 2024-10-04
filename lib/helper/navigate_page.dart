@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/create_vent_page.dart';
 import 'package:revent/pages/home_page.dart';
@@ -59,7 +60,7 @@ class NavigatePage {
       MaterialPageRoute(builder: (context) => CreateVentPage()),
     );
   }
-
+  // TODO: Rename to createVentCommunityPage
   static void createVentCommunity(BuildContext context) {
     
   }
@@ -68,6 +69,13 @@ class NavigatePage {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => const SignUpPage()),
+    );
+  }
+
+  static void signInPage(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => const SignInPage()),
     );
   }
 

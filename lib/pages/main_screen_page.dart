@@ -16,7 +16,7 @@ class MainScreenPage extends StatelessWidget {
 
         MainButton(
           text: "Sign In",
-          onPressed: () => NavigatePage.homePage(context),
+          onPressed: () => NavigatePage.signInPage(context),
         ),
 
         const SizedBox(height: 15),
@@ -98,12 +98,12 @@ class MainScreenPage extends StatelessWidget {
       children: [
 
         const SizedBox(height: 85),
-
+        
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
           child: _buildLogoText(),
         ),
-
+        
         const SizedBox(height: 18),
 
         Padding(
