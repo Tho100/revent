@@ -34,7 +34,6 @@ class SignUpPageState extends State<SignUpPage> {
         vertical: mediaQuery.size.height * 0.05,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
   
           const Padding(
@@ -68,7 +67,7 @@ class SignUpPageState extends State<SignUpPage> {
             visibility: visiblePasswordNotifier
           ),
 
-          const SizedBox(height: 25),
+          const SizedBox(height: 30),
 
           MainButton(
             text: "Sign Up",

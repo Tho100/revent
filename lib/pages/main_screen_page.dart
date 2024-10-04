@@ -23,7 +23,7 @@ class MainScreenPage extends StatelessWidget {
 
         SizedBox(
           height: 68,
-          width: MediaQuery.of(context).size.width-50,
+          width: MediaQuery.of(context).size.width * 0.87,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               foregroundColor: ThemeColor.thirdWhite,
