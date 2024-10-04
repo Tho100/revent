@@ -23,7 +23,7 @@ class MainScreenPage extends StatelessWidget {
 
         SizedBox(
           height: 68,
-          width: MediaQuery.of(context).size.width-50,
+          width: MediaQuery.of(context).size.width * 0.87,
           child: ElevatedButton(
             style: ElevatedButton.styleFrom(
               foregroundColor: ThemeColor.thirdWhite,
@@ -34,11 +34,11 @@ class MainScreenPage extends StatelessWidget {
               ),
               shape: const StadiumBorder(),
             ),
-            onPressed: () => NavigatePage.homePage(context),
+            onPressed: () => NavigatePage.signUpPage(context),
             child: Text(
               "Create an account",
               style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
+                color: ThemeColor.white,
                 fontWeight: FontWeight.w800,
                 fontSize: 17,
               )
@@ -54,7 +54,7 @@ class MainScreenPage extends StatelessWidget {
     return Text(">:(",
       style: GoogleFonts.inter(
         color: ThemeColor.white,
-        fontSize: 25,
+        fontSize: 22,
         fontWeight: FontWeight.w900,
       ),
       textAlign: TextAlign.left,
@@ -104,7 +104,7 @@ class MainScreenPage extends StatelessWidget {
           child: _buildLogoText(),
         ),
 
-        const SizedBox(height: 12),
+        const SizedBox(height: 18),
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),

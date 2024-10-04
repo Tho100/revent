@@ -33,16 +33,20 @@ class ThemeStyle {
     shape: const StadiumBorder()
   );
 
-  static InputDecoration txtFieldStye({required String hintText}) {
+  static InputDecoration txtFieldStye({required String hintText, IconButton? customSuffix, TextStyle? customCounterStyle}) {
     return InputDecoration(
       hintText: hintText,
       counterText: '',
+      suffixIcon: customSuffix,
       contentPadding: const EdgeInsets.fromLTRB(20, 22, 10, 25),
-      hintStyle: GoogleFonts.inter(color: ThemeColor.darkGrey),
+      hintStyle: GoogleFonts.inter(
+        color: ThemeColor.thirdWhite, 
+        fontWeight: FontWeight.w700
+      ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
         borderSide: const BorderSide(
-          color: ThemeColor.darkGrey
+          color: ThemeColor.thirdWhite
         ),
       ),
       focusedBorder: OutlineInputBorder(

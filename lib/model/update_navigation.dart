@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/model/create_new_item.dart';
 import 'package:revent/widgets/bottomsheet_widgets/add_item.dart';
 import 'package:revent/widgets/navigation_bar_dock.dart';
 
@@ -31,7 +30,7 @@ class UpdateNavigation {
             }, 
             addForumOnPressed: () {
               Navigator.pop(context);
-              CreateNewItem().newForum();
+              NavigatePage.createVentCommunity(context);
             },
           );
         },

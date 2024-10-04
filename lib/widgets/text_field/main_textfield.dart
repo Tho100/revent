@@ -7,10 +7,14 @@ class MainTextField extends StatelessWidget {
 
   final TextEditingController controller;
   final String hintText;
+  final int? maxLength;
+  final bool? autoFocus;
 
   const MainTextField({
     required this.controller,
     required this.hintText,
+    this.maxLength,
+    this.autoFocus,
     super.key
   });
 
@@ -18,6 +22,8 @@ class MainTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      maxLength: maxLength,
+      autofocus: autoFocus ?? false,
       decoration: ThemeStyle.txtFieldStye(hintText: hintText),
       style: GoogleFonts.inter(
         color: ThemeColor.secondaryWhite,
