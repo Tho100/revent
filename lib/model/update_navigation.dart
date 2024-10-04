@@ -30,7 +30,7 @@ class UpdateNavigation {
             }, 
             addForumOnPressed: () {
               Navigator.pop(context);
-              NavigatePage.createVentCommunity(context);
+              NavigatePage.createVentCommunityPage(context);
             },
           );
         },

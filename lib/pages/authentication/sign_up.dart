@@ -79,30 +79,25 @@ class SignUpPageState extends State<SignUpPage> {
           SizedBox(
             height: 35,
             child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: ThemeColor.black,
-                      elevation: 0,
-                      shadowColor: Colors.transparent,
-                      shape: const StadiumBorder(),
-                    ),
-                    onPressed: () => print("HI"),
-                    child: Text(
-                      "Already have an account?",
-                      style: GoogleFonts.inter(
-                        color: ThemeColor.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 15,
-                        decoration: TextDecoration.underline
-                      ),
-                    ),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: ThemeColor.black,
+                  elevation: 0,
+                  shadowColor: Colors.transparent,
+                  shape: const StadiumBorder(),
+                ),
+                onPressed: () {
+                  //
+                },
+                child: Text(
+                  "Already have an account?",
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.white,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15,
+                    decoration: TextDecoration.underline
                   ),
-                  
-                ],
+                ),
               ),
             ),
           ),
