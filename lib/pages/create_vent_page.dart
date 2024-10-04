@@ -114,7 +114,7 @@ class CreateVentPage extends StatelessWidget {
             shape: const StadiumBorder()
           ),
           child: Text(
-            "Create vent",
+            "Post vent",
             style: GoogleFonts.inter(
               color: ThemeColor.mediumBlack,
               fontSize: 12,
