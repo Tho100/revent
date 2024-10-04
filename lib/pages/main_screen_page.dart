@@ -54,7 +54,7 @@ class MainScreenPage extends StatelessWidget {
     return Text(">:(",
       style: GoogleFonts.inter(
         color: ThemeColor.white,
-        fontSize: 25,
+        fontSize: 22,
         fontWeight: FontWeight.w900,
       ),
       textAlign: TextAlign.left,
@@ -104,7 +104,7 @@ class MainScreenPage extends StatelessWidget {
           child: _buildLogoText(),
         ),
 
-        const SizedBox(height: 12),
+        const SizedBox(height: 18),
 
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 28),
