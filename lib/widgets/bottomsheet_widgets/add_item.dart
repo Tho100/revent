@@ -41,7 +41,7 @@ class BottomsheetAddItem {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Add item'),
+        const BottomsheetTitle(title: 'Create'),
 
         const Divider(color: ThemeColor.lightGrey),
 

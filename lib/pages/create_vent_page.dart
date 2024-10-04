@@ -104,8 +104,8 @@ class CreateVentPage extends StatelessWidget {
         child: ElevatedButton(
           onPressed: () async {
             await createItem.newVent(
-              ventTitle: "My first vent", 
-              ventBodyText: "Hello this is my first vent ever!"
+              ventTitle: ventTitleController.text, 
+              ventBodyText: ventBodyTextController.text
             );
           },
           style: ElevatedButton.styleFrom(
@@ -114,7 +114,7 @@ class CreateVentPage extends StatelessWidget {
             shape: const StadiumBorder()
           ),
           child: Text(
-            "Create vent",
+            "Post vent",
             style: GoogleFonts.inter(
               color: ThemeColor.mediumBlack,
               fontSize: 12,
