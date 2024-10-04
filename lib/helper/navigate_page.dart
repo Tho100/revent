@@ -60,8 +60,8 @@ class NavigatePage {
       MaterialPageRoute(builder: (context) => CreateVentPage()),
     );
   }
-  // TODO: Rename to createVentCommunityPage
-  static void createVentCommunity(BuildContext context) {
+
+  static void createVentCommunityPage(BuildContext context) {
     
   }
 

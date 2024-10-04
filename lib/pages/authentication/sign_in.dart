@@ -67,7 +67,7 @@ class SignInPageState extends State<SignInPage> {
           ),
 
           const Spacer(),
-
+          // TODO: Remove unused widgets
           SizedBox(
             height: 35,
             child: Center(
