@@ -39,9 +39,7 @@ class SignUpPageState extends State<SignUpPage> {
 
       var authHash = AuthModel().computeHash(auth);
       
-      final informationCon = RegisterUser();
-      
-      await informationCon.insertParams(
+      await RegisterUser().register(
         username: username,
         hashPassword: authHash,
         email: email,
@@ -118,10 +116,8 @@ class SignUpPageState extends State<SignUpPage> {
       auth: authInput, 
     );
   
-    singleTextLoading.stopLoading();
+    //singleTextLoading.stopLoading();
     
-    NavigatePage.homePage(context);
-
   }
 
   Widget _buildBody(BuildContext context) {
