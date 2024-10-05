@@ -27,11 +27,11 @@ class SingleTextLoading {
   }
 
   AlertDialog _buildLoadingDialog(BuildContext context) {
-
-    const backgroundColor = ThemeColor.darkGrey;
-
     return AlertDialog(
-      backgroundColor: backgroundColor,
+      backgroundColor: ThemeColor.darkGrey,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(14),
+      ),
       title: Row(
         children: [
 
@@ -57,7 +57,6 @@ class SingleTextLoading {
 
         ]
       ),
-      
     );
   }
 
