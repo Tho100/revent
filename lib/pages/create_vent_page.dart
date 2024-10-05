@@ -36,9 +36,6 @@ class CreateVentPage extends StatelessWidget {
         ),
         hintText: "Title",
         border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
         contentPadding: EdgeInsets.zero, 
       ),
     );
@@ -66,9 +63,6 @@ class CreateVentPage extends StatelessWidget {
             ),
             hintText: "Body text (optional)",
             border: InputBorder.none,
-            focusedBorder: InputBorder.none,
-            enabledBorder: InputBorder.none,
-            disabledBorder: InputBorder.none,
             contentPadding: EdgeInsets.zero, 
           ),
         ),
@@ -87,7 +81,7 @@ class CreateVentPage extends StatelessWidget {
         ),   
 
         Padding(
-          padding: const EdgeInsets.only(left: 18.0, right: 16.0),
+          padding: const EdgeInsets.only(left: 17.0, right: 15.0),
           child: _buildBodyTextField(context),
         ),
 
