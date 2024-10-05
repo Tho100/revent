@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_classes/register_user.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -143,7 +144,10 @@ class SignUpPageState extends State<SignUpPage> {
 
           MainTextField(
             hintText: "Enter a username", 
-            maxLength: 32,
+            maxLength: 24,
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r'\s')),
+            ],
             controller: usernameController
           ),
 
