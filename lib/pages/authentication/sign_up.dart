@@ -79,7 +79,7 @@ class SignUpPageState extends State<SignUpPage> {
     }
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign Up Failed","Email address is not valid.");
+      CustomAlertDialog.alertDialogTitle(context, "Sign Up Failed", "Email address is not valid.");
       return;
     }
 
@@ -107,7 +107,8 @@ class SignUpPageState extends State<SignUpPage> {
     final singleTextLoading = SingleTextLoading();
 
     singleTextLoading.startLoading(
-      title: "Creating account...", context: context
+      title: "Creating account...", 
+      context: context
     );
 
     await insertUserRegistrationInformation(
@@ -115,9 +116,7 @@ class SignUpPageState extends State<SignUpPage> {
       email: emailInput, 
       auth: authInput, 
     );
-  
-    //singleTextLoading.stopLoading();
-    
+      
   }
 
   Widget _buildBody(BuildContext context) {
