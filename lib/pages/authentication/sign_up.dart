@@ -144,7 +144,7 @@ class SignUpPageState extends State<SignUpPage> {
 
           MainTextField(
             hintText: "Enter a username", 
-            maxLength: 32,
+            maxLength: 24,
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp(r'\s')),
             ],
