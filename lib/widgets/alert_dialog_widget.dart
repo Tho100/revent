@@ -20,7 +20,7 @@ class AlertDialogWidget extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),
-      backgroundColor: ThemeColor.mediumBlack,
+      backgroundColor: ThemeColor.darkGrey,
       title: title,
       content: content,
       actions: actions,
