@@ -27,7 +27,7 @@ class SingleTextLoading {
   }
 
   AlertDialog _buildLoadingDialog(BuildContext context) {
-    // TODO: Update font
+
     const backgroundColor = ThemeColor.darkGrey;
 
     return AlertDialog(
@@ -44,16 +44,16 @@ class SingleTextLoading {
           const SizedBox(width: 25),
 
           Text(title,
-          style: const TextStyle(
-            color: ThemeColor.secondaryWhite,
-            fontSize: 18,
-            overflow: TextOverflow.ellipsis,
-            fontWeight: FontWeight.w500,
+            style: const TextStyle(
+              color: ThemeColor.secondaryWhite,
+              fontSize: 18,
+              overflow: TextOverflow.ellipsis,
+              fontWeight: FontWeight.w800,
+            ),
+            textAlign: TextAlign.center,
           ),
-          textAlign: TextAlign.center,
-        ),
 
-        const SizedBox(height: 25),
+          const SizedBox(height: 25),
 
         ]
       ),

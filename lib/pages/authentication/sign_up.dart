@@ -115,9 +115,7 @@ class SignUpPageState extends State<SignUpPage> {
       email: emailInput, 
       auth: authInput, 
     );
-  
-    //singleTextLoading.stopLoading();
-    
+      
   }
 
   Widget _buildBody(BuildContext context) {
