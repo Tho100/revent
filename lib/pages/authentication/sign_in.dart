@@ -30,7 +30,7 @@ class SignInPageState extends State<SignInPage> {
     required String auth,
   }) async {
 
-    await LoginUser().processLogin(email, auth, context);
+    await LoginUser().login(email, auth, context);
 
   }
   
@@ -77,7 +77,7 @@ class SignInPageState extends State<SignInPage> {
             padding: EdgeInsets.only(left: 4.0, top: 22.0),
             child: HeaderText(
               title: "Sign In", 
-              subTitle: "Sign in to your account" // TODO: Update to 'Sign in to your Revent account'
+              subTitle: "Sign in to your Revent account"
             ),
           ),
           

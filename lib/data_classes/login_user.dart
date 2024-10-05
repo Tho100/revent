@@ -9,7 +9,7 @@ class LoginUser {
 
   final userDataGetter = UserDataGetter();
 
-  Future<void> processLogin(String? email, String? auth, BuildContext context) async {
+  Future<void> login(String? email, String? auth, BuildContext context) async {
 
     final conn = await ReventConnect.initializeConnection();
 
