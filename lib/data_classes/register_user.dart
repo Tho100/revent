@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 
 class RegisterUser {
 
-  Future<void> insertParams({
+  Future<void> register({
     required String? username,
     required String? email,
     required String? hashPassword,
@@ -14,7 +15,7 @@ class RegisterUser {
     final conn = await ReventConnect.initializeConnection();
 
     final verifyUsernameQue = await conn.execute(
-      "SELECT username FROM user_information  WHERE username = :username",
+      "SELECT username FROM user_information WHERE username = :username",
       {"username": username},
     );
 
@@ -39,23 +40,11 @@ class RegisterUser {
       return;
     }
 
-    if (username!.length > 20) {
-      if(context.mounted) {
-        Navigator.pop(context);
-        CustomAlertDialog.alertDialog(context, "Username character length limit is 20.");
-      }
-      return;
-    }
-
-    if (hashPassword!.length <= 5) {
-      if(context.mounted) {
-        Navigator.pop(context);
-        CustomAlertDialog.alertDialog(context, "Password length must be greater than 5.");
-      }
-      return;
-    }
-
     await _insertUserInfo(username, email, hashPassword);
+
+    if(context.mounted) {
+      NavigatePage.homePage(context);
+    }
 
     hashPassword = null;
     username = null;

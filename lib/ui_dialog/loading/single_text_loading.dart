@@ -19,7 +19,7 @@ class SingleTextLoading {
       barrierDismissible: false,
       builder: (_) => _buildLoadingDialog(context),
     );
-    
+
   }
 
   void stopLoading() {
@@ -27,7 +27,7 @@ class SingleTextLoading {
   }
 
   AlertDialog _buildLoadingDialog(BuildContext context) {
-    
+    // TODO: Update font
     const backgroundColor = ThemeColor.darkGrey;
 
     return AlertDialog(
