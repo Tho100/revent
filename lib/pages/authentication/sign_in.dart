@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/data_classes/login_user.dart';
+import 'package:revent/model/email_validator.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/header_text.dart';
 import 'package:revent/widgets/main_button.dart';
 import 'package:revent/widgets/text_field/auth_textfield.dart';
@@ -22,6 +25,42 @@ class SignInPageState extends State<SignInPage> {
 
   final visiblePasswordNotifier = ValueNotifier<bool>(false);
 
+  Future<void> _verifyUserLoginInformation({
+    required String email,
+    required String auth,
+  }) async {
+
+    await LoginUser().processLogin(email, auth, context);
+
+  }
+  
+  Future<void> _processSignIn() async {
+
+    final authInput = passwordController.text.trim();
+    final emailInput = emailController.text.trim();
+
+    if (!EmailValidator().validateEmail(emailInput)) {
+      CustomAlertDialog.alertDialogTitle(context, "Sign In Failed", "Email address is not valid.");
+      return;
+    }
+
+    if (emailInput.isEmpty) {
+      CustomAlertDialog.alertDialogTitle(context, "Sign In Failed", "Please enter your email address.");
+      return;
+    }
+
+    if (authInput.isEmpty) {
+      CustomAlertDialog.alertDialogTitle(context, "Sign In Failed", "Please enter your password.");              
+      return;
+    }
+
+    await _verifyUserLoginInformation(
+      email: emailInput, 
+      auth: authInput, 
+    );
+    
+  }
+
   Widget _buildBody(BuildContext context) {
 
     final mediaQuery = MediaQuery.of(context);
@@ -37,8 +76,8 @@ class SignInPageState extends State<SignInPage> {
           const Padding(
             padding: EdgeInsets.only(left: 4.0, top: 22.0),
             child: HeaderText(
-              title: "Sign Up", 
-              subTitle: "Sign in to your account"
+              title: "Sign In", 
+              subTitle: "Sign in to your account" // TODO: Update to 'Sign in to your Revent account'
             ),
           ),
           
@@ -61,9 +100,7 @@ class SignInPageState extends State<SignInPage> {
 
           MainButton(
             text: "Sign In",
-            onPressed:  () {
-              //
-            },
+            onPressed: () async => _processSignIn(),
           ),
 
           const Spacer(),
