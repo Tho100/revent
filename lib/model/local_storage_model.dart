@@ -14,38 +14,6 @@ class LocalStorageModel {
   final _accountUsernamesFolderName = "FlowStorageAccountInfo";
   final _accountEmailFolderName = "FlowStorageAccountInfoEmail";
 
-  Future<List<String>> _readLocalData(String customFolder) async {
-
-    try {
-
-      final localDir = await _retrieveLocalDirectory(
-        customFolder: customFolder
-      );
-
-      final setupFiles = File('${localDir.path}/$_fileName');
-
-      final fileContent = await setupFiles.readAsLines();
-      
-      return fileContent;
-      
-    } catch(err) {
-      return [];
-    }
-
-  }
-
-  Future<List<String>> readLocalAccountUsernames() async {
-    return await _readLocalData(_accountUsernamesFolderName);
-  }
-
-  Future<List<String>> readLocalAccountEmails() async {
-    return await _readLocalData(_accountEmailFolderName);
-  }
-
-  Future<List<String>> readLocalAccountPlans() async {
-    return await _readLocalData(_accountPlanFolderName);
-  }
-
   Future<List<String>> readLocalAccountInformation() async {
     
     String username = '';
