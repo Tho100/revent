@@ -20,6 +20,27 @@ class UserDataGetter {
 
   }
 
+  Future<List<String?>> getAccountTypeAndUsername({
+    required MySQLConnectionPool conn,
+    required String? email
+  }) async {
+
+    const getUsernameQuery = "SELECT username FROM user_information WHERE email = :email";
+    const getAccountPlanQuery = "SELECT plan FROM user_information WHERE email = :email";
+
+    final params = {'email': email};
+
+    final results = await Future.wait([
+      conn.execute(getUsernameQuery, params),
+      conn.execute(getAccountPlanQuery, params),
+    ]);
+
+    return results
+        .expand((result) => result.rows.map((row) => row.assoc().values.first))
+        .toList();
+
+  }
+
   Future<String> getAccountAuthentication({
     required MySQLConnectionPool conn,
     required String? username

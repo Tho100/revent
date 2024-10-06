@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/data_classes/user_data_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -59,10 +60,13 @@ class LoginUser {
 
       justLoading.stopLoading();*/
       
+      await _initializeUserInfo(conn, email!);
+
       final localUserInfo = await LocalStorageModel().readLocalAccountInformation();
 
       if(localUserInfo[0].isEmpty && isRememberMeChecked) {
-        await LocalStorageModel().setupLocalAccountInformation(username, email!, "Basic");
+        await LocalStorageModel()
+          .setupLocalAccountInformation(username, email, userData.accountType);
       }
 
       if(context.mounted) {
@@ -78,6 +82,20 @@ class LoginUser {
     } finally {
       await conn.close();
     }
+
+  }
+
+  Future<void> _initializeUserInfo(MySQLConnectionPool conn, String email) async {
+
+    final accountInfo = await userDataGetter
+      .getAccountTypeAndUsername(email: email, conn: conn);
+      
+    final username = accountInfo[0]!;
+    final accountPlan = accountInfo[1]!;
+
+    userData.setUsername(username);
+    userData.setEmail(email);
+    userData.setAccountType(accountPlan);
 
   }
   
