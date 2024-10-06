@@ -8,14 +8,10 @@ class LocalStorageModel {
   final encryption = EncryptionClass();
 
   final _fileName = "info.txt";
-  final _folderName = "FlowStorageInfos";
-  final _accountPlanFolderName = "FlowStorageAccountInfoPlan";
-
-  final _accountUsernamesFolderName = "FlowStorageAccountInfo";
-  final _accountEmailFolderName = "FlowStorageAccountInfoEmail";
+  final _folderName = "ReventInfos";
 
   Future<List<String>> readLocalAccountInformation() async {
-    
+
     String username = '';
     String email = '';
     String accountType = '';
@@ -23,12 +19,12 @@ class LocalStorageModel {
     final localDir = await _retrieveLocalDirectory();
 
     if (localDir.existsSync()) {
-      final setupFiles = File('${localDir.path}/$_fileName');
+      final setupFile = File('${localDir.path}/$_fileName');
 
-      if (setupFiles.existsSync()) {
-        final lines = await setupFiles.readAsLines();
+      if (setupFile.existsSync()) {
+        final lines = await setupFile.readAsLines();
 
-        if (lines.length >= 2) {
+        if (lines.length >= 3) {
           username = lines[0];
           email = lines[1];
           accountType = lines[2];
@@ -36,54 +32,31 @@ class LocalStorageModel {
       }
     }
 
-    List<String> accountInfo = [];
-
-    accountInfo.add(encryption.decrypt(username));
-    accountInfo.add(encryption.decrypt(email));
-    accountInfo.add(accountType);
-
-    return accountInfo;
+    return [username, email, accountType];
 
   }
 
-  Future<void> setupLocalAutoLogin(String username, String email, String accountType) async {
+  Future<void> setupLocalAccountInformation(String username, String email, String plan) async {
 
     final localDir = await _retrieveLocalDirectory();
+    
+    if (!localDir.existsSync()) {
+      localDir.createSync(recursive: true);
+    }
 
-    if (email.isNotEmpty && email.isNotEmpty) {
+    final setupFile = File('${localDir.path}/$_fileName');
 
-      if (localDir.existsSync()) {
-        localDir.deleteSync(recursive: true);
-      }
+    try {
 
-      localDir.createSync();
+      await setupFile.writeAsString('$username\n$email\n$plan');
 
-      final setupFiles = File('${localDir.path}/$_fileName');
-
-      try {
-        
-        if (setupFiles.existsSync()) {
-          setupFiles.deleteSync();
-        }
-
-        setupFiles.writeAsStringSync(
-          "${EncryptionClass().encrypt(username)}\n${EncryptionClass().encrypt(email)}\n$accountType");
-
-      } catch (err) { }
-
-    } 
+    } catch (err) {}
 
   }
 
-  Future<void> _deleteLocalData(String customFolder, String data) async {
+  Future<void> deleteLocalData() async {
 
-    if (data.isEmpty) {
-      return;
-    }
-
-    final localDir = await _retrieveLocalDirectory(
-      customFolder: customFolder
-    );
+    final localDir = await _retrieveLocalDirectory();
 
     final filePath = File('${localDir.path}/$_fileName');
 
@@ -91,28 +64,14 @@ class LocalStorageModel {
 
       await filePath.delete();
 
-    } catch (err) { }
+    } catch (err) {}
 
   }
 
-  Future<void> deleteLocalAccountUsernames(String username) async {
-    await _deleteLocalData(_accountUsernamesFolderName, username);
-  }
-
-  Future<void> deleteLocalAccountEmails(String email) async {
-    await _deleteLocalData(_accountEmailFolderName, email);
-  }
-
-  Future<void> deleteLocalAccountPlans(String plan) async {
-    await _deleteLocalData(_accountPlanFolderName, plan);
-  }
-
-  Future<Directory> _retrieveLocalDirectory({String? customFolder}) async {
-
-    final folderName = customFolder ?? _folderName;
+  Future<Directory> _retrieveLocalDirectory() async {
 
     final getDirApplication = await getApplicationDocumentsDirectory();
-    final setupPath = '${getDirApplication.path}/$folderName';
+    final setupPath = '${getDirApplication.path}/$_folderName';
     
     return Directory(setupPath);
 

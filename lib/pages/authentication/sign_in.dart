@@ -24,17 +24,21 @@ class SignInPageState extends State<SignInPage> {
   final passwordController = TextEditingController();
 
   final visiblePasswordNotifier = ValueNotifier<bool>(false);
+  final isRememberMeCheckedNotifier = ValueNotifier<bool>(true); 
 
   Future<void> _verifyUserLoginInformation({
     required String email,
     required String auth,
   }) async {
 
-    await LoginUser().login(email, auth, context);
+    print(isRememberMeCheckedNotifier.value);
+
+    await LoginUser().
+      login(email, auth, isRememberMeCheckedNotifier.value, context);
 
   }
   
-  Future<void> _processSignIn() async {
+  Future<void> _processLogin() async {
 
     final authInput = passwordController.text.trim();
     final emailInput = emailController.text.trim();
@@ -91,16 +95,65 @@ class SignInPageState extends State<SignInPage> {
           const SizedBox(height: 15),
 
           AuthTextField().passwordTextField(
-            hintText: "Enter a password",
+            hintText: "Enter a password", // TODO: Update to "Enter your password"
             controller: passwordController, 
             visibility: visiblePasswordNotifier
+          ),
+
+          const SizedBox(height: 15),
+
+          CheckboxTheme(
+            data: CheckboxThemeData(
+              fillColor: MaterialStateColor.resolveWith(
+                (states) => ThemeColor.thirdWhite,
+              ),
+              checkColor: MaterialStateColor.resolveWith(
+                (states) => ThemeColor.secondaryWhite,
+              ),
+              overlayColor: MaterialStateColor.resolveWith(
+                (states) => ThemeColor.secondaryWhite.withOpacity(0.1),
+              ),
+              side: const BorderSide(
+                color: ThemeColor.thirdWhite,
+                width: 2.0,
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4.0),
+              ),
+            ),
+            child: Row(
+              children: [
+                
+                ValueListenableBuilder(
+                  valueListenable: isRememberMeCheckedNotifier,
+                  builder: (context, value, child) {
+                    return Checkbox(
+                      value: value,
+                      onChanged: (checkedValue) {
+                        isRememberMeCheckedNotifier.value = checkedValue ?? true;
+                      },
+                    );
+                  },
+                ),
+
+                Text(
+                  "Remember Me",
+                  style: GoogleFonts.inter(
+                    color: const Color.fromARGB(225, 225, 225, 225),
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14,
+                  ),
+                ),
+
+              ],
+            ),
           ),
 
           const SizedBox(height: 30),
 
           MainButton(
             text: "Sign In",
-            onPressed: () async => _processSignIn(),
+            onPressed: () async => _processLogin(),
           ),
 
           const Spacer(),
@@ -141,6 +194,7 @@ class SignInPageState extends State<SignInPage> {
     emailController.dispose();
     passwordController.dispose();
     visiblePasswordNotifier.dispose();
+    isRememberMeCheckedNotifier.dispose();
     super.dispose();
   }
 

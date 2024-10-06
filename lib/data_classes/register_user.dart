@@ -69,7 +69,7 @@ class RegisterUser {
       await conn.execute(query, params);
       
       await LocalStorageModel()
-        .setupLocalAutoLogin(username!, email!, "Basic");
+        .setupLocalAccountInformation(username!, email!, "Basic");
 
     } catch (duplicatedUsernameException) { } 
 
