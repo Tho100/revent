@@ -3,6 +3,7 @@ import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/create_vent_page.dart';
 import 'package:revent/pages/home_page.dart';
+import 'package:revent/pages/main_screen_page.dart';
 import 'package:revent/pages/navigations/notifications_page.dart';
 import 'package:revent/pages/navigations/profile_page.dart';
 import 'package:revent/pages/navigations/search_page.dart';
@@ -17,6 +18,13 @@ class NavigatePage {
         transitionDuration: const Duration(microseconds: 0)
       ),
       (route) => false,
+    );
+  }
+
+  static void mainScreenPage(BuildContext context) {
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(builder: (context) => const MainScreenPage()),
     );
   }
 
