@@ -1,11 +1,8 @@
 import 'dart:io';
 
 import 'package:path_provider/path_provider.dart';
-import 'package:revent/security/encryption_model.dart';
 
 class LocalStorageModel {
-
-  final encryption = EncryptionClass();
 
   final _fileName = "info.txt";
   final _folderName = "ReventInfos";
@@ -19,6 +16,7 @@ class LocalStorageModel {
     final localDir = await _retrieveLocalDirectory();
 
     if (localDir.existsSync()) {
+
       final setupFile = File('${localDir.path}/$_fileName');
 
       if (setupFile.existsSync()) {
@@ -50,7 +48,9 @@ class LocalStorageModel {
 
       await setupFile.writeAsString('$username\n$email\n$plan');
 
-    } catch (err) {}
+    } catch (err) {
+      print(err.toString());
+    }
 
   }
 
