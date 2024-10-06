@@ -166,9 +166,7 @@ class SignInPageState extends State<SignInPage> {
                   shadowColor: Colors.transparent,
                   shape: const StadiumBorder(),
                 ),
-                onPressed: () {
-                  //
-                },
+                onPressed: () {},
                 child: Text(
                   "Forgot your password?",
                   style: GoogleFonts.inter(

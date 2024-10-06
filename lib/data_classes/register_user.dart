@@ -59,11 +59,12 @@ class RegisterUser {
       
       final conn = await ReventConnect.initializeConnection();
 
-      const query = "INSERT INTO user_information(username, email, password) VALUES (:username, :email, :password)";
+      const query = "INSERT INTO user_information(username, email, password, plan) VALUES (:username, :email, :password, :plan)";
       final params = {
         'username': username,
         'email': email,
-        'password': hashPassword
+        'password': hashPassword,
+        'plan': 'Basic'
       };
 
       await conn.execute(query, params);

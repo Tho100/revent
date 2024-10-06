@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/data_classes/user_data_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -11,6 +12,8 @@ import 'package:revent/ui_dialog/alert_dialog.dart';
 class LoginUser {
 
   final userDataGetter = UserDataGetter();
+  final localStorage = LocalStorageModel();
+
   final userData = GetIt.instance<UserDataProvider>();
 
   Future<void> login(String? email, String? auth, bool isRememberMeChecked, BuildContext context) async {
@@ -41,29 +44,8 @@ class LoginUser {
         return;
       }
         
-      /*final justLoading = JustLoading();
-
-      if(context.mounted) {
-        justLoading.startLoading(context: context);
-      }
-
-      await _getStartupDataFiles(conn, isRememberMeChecked, email!);
-
-      final localUsernames = await LocalStorageModel().readLocalAccountUsernames();
-
-      if(!localUsernames.contains(username) && isRememberMeChecked) {
-        await LocalStorageModel().setupLocalAccountUsernames(username);
-        await LocalStorageModel().setupLocalAccountEmails(email);
-        await LocalStorageModel().setupLocalAccountPlans(userData.accountType);
-      }
-
-      justLoading.stopLoading();*/
-      
-      final localUserInfo = await LocalStorageModel().readLocalAccountInformation();
-
-      if(localUserInfo[0].isEmpty && isRememberMeChecked) {
-        await LocalStorageModel().setupLocalAccountInformation(username, email!, "Basic");
-      }
+      await _initializeUserInfo(conn: conn, email: email!);
+      await _initializeRememberMe(isRememberMeChecked: isRememberMeChecked);
 
       if(context.mounted) {
         NavigatePage.homePage(context);
@@ -78,6 +60,34 @@ class LoginUser {
     } finally {
       await conn.close();
     }
+
+  }
+
+  Future<void> _initializeRememberMe({required bool isRememberMeChecked}) async {
+
+    final localUserInfo = (await localStorage.readLocalAccountInformation())['username']!;
+
+    if(localUserInfo.isEmpty && isRememberMeChecked) {
+      await localStorage
+        .setupLocalAccountInformation(userData.username, userData.email, userData.accountType);
+    }
+
+  }
+
+  Future<void> _initializeUserInfo({
+    required MySQLConnectionPool conn, 
+    required String email
+  }) async {
+
+    final accountInfo = await userDataGetter
+      .getAccountTypeAndUsername(email: email, conn: conn);
+      
+    final username = accountInfo[0]!;
+    final accountPlan = accountInfo[1]!;
+
+    userData.setUsername(username);
+    userData.setEmail(email);
+    userData.setAccountType(accountPlan);
 
   }
   

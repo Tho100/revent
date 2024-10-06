@@ -46,7 +46,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   void _startTimer() async {
 
-    if ((await localModel.readLocalAccountInformation())[0].isNotEmpty) {
+    final localUsername = (await localModel.readLocalAccountInformation())['username']!;
       splashScreenTimer = Timer(const Duration(milliseconds: 0), () {
         _navigateToNextScreen();
       });
@@ -66,29 +66,23 @@ class SplashScreenState extends State<SplashScreen> {
 
       final readLocalData = await localModel.readLocalAccountInformation();
 
-      final getLocalUsername = readLocalData[0];
-      final getLocalEmail = readLocalData[1];
-      final getLocalAccountType = readLocalData[2];
+      final getLocalUsername = readLocalData['username']!;
+      final getLocalEmail = readLocalData['email']!;
+      final getLocalAccountType = readLocalData['plan']!;
 
-      if(getLocalUsername == '') {
-
+      if(getLocalUsername.isEmpty) {
         if(mounted) {
           NavigatePage.mainScreenPage(context);
         }
+        return;
+      }
 
-      } else {
+      userData.setAccountType(getLocalAccountType);
+      userData.setUsername(getLocalUsername);
+      userData.setEmail(getLocalEmail);
 
-        userData.setAccountType(getLocalAccountType);
-        userData.setUsername(getLocalUsername);
-        userData.setEmail(getLocalEmail);
-
-        //final conn = await SqlConnection.initializeConnection();
-        //await _getStartupDataFiles(conn, getLocalUsername, getLocalEmail, getLocalAccountType);
-        
-        if(mounted) {
-          NavigatePage.homePage(context);
-        }
-        
+      if(mounted) {
+        NavigatePage.homePage(context);
       }
 
     } catch (err) {

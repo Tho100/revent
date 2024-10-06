@@ -4,12 +4,10 @@ import 'package:path_provider/path_provider.dart';
 
 class LocalStorageModel {
 
-  final encryption = EncryptionClass();
-
   final _fileName = "info.txt";
   final _folderName = "ReventInfos";
 
-  Future<List<String>> readLocalAccountInformation() async {
+  Future<Map<String, String>> readLocalAccountInformation() async {
 
     String username = '';
     String email = '';
@@ -22,6 +20,7 @@ class LocalStorageModel {
       final setupFile = File('${localDir.path}/$_fileName');
 
       if (setupFile.existsSync()) {
+
         final lines = await setupFile.readAsLines();
 
         if (lines.length >= 3) {
@@ -29,10 +28,16 @@ class LocalStorageModel {
           email = lines[1];
           accountType = lines[2];
         }
+
       }
+      
     }
 
-    return [username, email, accountType];
+    return {
+      'username': username, 
+      'email': email, 
+      'plan': accountType
+    };
 
   }
 
