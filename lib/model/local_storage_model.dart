@@ -4,6 +4,8 @@ import 'package:path_provider/path_provider.dart';
 
 class LocalStorageModel {
 
+  final encryption = EncryptionClass();
+
   final _fileName = "info.txt";
   final _folderName = "ReventInfos";
 
