@@ -45,12 +45,8 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   void _startTimer() async {
-    
-    print("IN IN");
 
-    print((await localModel.readLocalAccountInformation()));
-
-    if ((await localModel.readLocalAccountInformation())[0] != '') {
+    if ((await localModel.readLocalAccountInformation()).isNotEmpty) {
       splashScreenTimer = Timer(const Duration(milliseconds: 0), () {
         _navigateToNextScreen();
       });
