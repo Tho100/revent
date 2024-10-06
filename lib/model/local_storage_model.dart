@@ -7,7 +7,7 @@ class LocalStorageModel {
   final _fileName = "info.txt";
   final _folderName = "ReventInfos";
 
-  Future<List<String>> readLocalAccountInformation() async {
+  Future<Map<String, String>> readLocalAccountInformation() async {
 
     String username = '';
     String email = '';
@@ -30,7 +30,7 @@ class LocalStorageModel {
       }
     }
 
-    return [username, email, accountType];
+    return {'username': username, 'email': email, 'plan': accountType};
 
   }
 

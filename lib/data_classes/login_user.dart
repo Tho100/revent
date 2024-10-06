@@ -83,9 +83,9 @@ class LoginUser {
 
   Future<void> _initializeRememberMe({required bool isRememberMeChecked}) async {
 
-    final localUserInfo = await localStorage.readLocalAccountInformation();
+    final localUserInfo = (await localStorage.readLocalAccountInformation())['username']!;
 
-    if(localUserInfo[0].isEmpty && isRememberMeChecked) {
+    if(localUserInfo.isEmpty && isRememberMeChecked) {
       await localStorage
         .setupLocalAccountInformation(userData.username, userData.email, userData.accountType);
     }
