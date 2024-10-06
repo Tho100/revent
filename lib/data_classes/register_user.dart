@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 
 class RegisterUser {
@@ -67,7 +68,8 @@ class RegisterUser {
 
       await conn.execute(query, params);
       
-      //await setupAutoLogin(userName,email!);
+      await LocalStorageModel()
+        .setupLocalAccountInformation(username!, email!, "Basic");
 
     } catch (duplicatedUsernameException) { } 
 

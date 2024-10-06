@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/data_classes/user_data_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/model/local_storage_model.dart';
+import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 
 class LoginUser {
 
   final userDataGetter = UserDataGetter();
+  final userData = GetIt.instance<UserDataProvider>();
 
-  Future<void> login(String? email, String? auth, BuildContext context) async {
+  Future<void> login(String? email, String? auth, bool isRememberMeChecked, BuildContext context) async {
 
     final conn = await ReventConnect.initializeConnection();
 
@@ -54,6 +58,12 @@ class LoginUser {
       }
 
       justLoading.stopLoading();*/
+      
+      final localUserInfo = await LocalStorageModel().readLocalAccountInformation();
+
+      if(localUserInfo.isEmpty && isRememberMeChecked) {
+        await LocalStorageModel().setupLocalAccountInformation(username, email!, "Basic");
+      }
 
       if(context.mounted) {
         NavigatePage.homePage(context);
