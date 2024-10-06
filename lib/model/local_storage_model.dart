@@ -58,7 +58,7 @@ class LocalStorageModel {
     } catch (err) {
       print(err.toString());
     }
-    
+
   }
 
   Future<void> deleteLocalData() async {
