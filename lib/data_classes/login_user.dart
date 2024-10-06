@@ -12,6 +12,8 @@ import 'package:revent/ui_dialog/alert_dialog.dart';
 class LoginUser {
 
   final userDataGetter = UserDataGetter();
+  final localStorage = LocalStorageModel();
+
   final userData = GetIt.instance<UserDataProvider>();
 
   Future<void> login(String? email, String? auth, bool isRememberMeChecked, BuildContext context) async {
@@ -60,14 +62,8 @@ class LoginUser {
 
       justLoading.stopLoading();*/
       
-      await _initializeUserInfo(conn, email!);
-
-      final localUserInfo = await LocalStorageModel().readLocalAccountInformation();
-
-      if(localUserInfo[0].isEmpty && isRememberMeChecked) {
-        await LocalStorageModel()
-          .setupLocalAccountInformation(username, email, userData.accountType);
-      }
+      await _initializeUserInfo(conn: conn, email: email!);
+      await _initializeRememberMe(isRememberMeChecked: isRememberMeChecked);
 
       if(context.mounted) {
         NavigatePage.homePage(context);
@@ -85,7 +81,21 @@ class LoginUser {
 
   }
 
-  Future<void> _initializeUserInfo(MySQLConnectionPool conn, String email) async {
+  Future<void> _initializeRememberMe({required bool isRememberMeChecked}) async {
+
+    final localUserInfo = await localStorage.readLocalAccountInformation();
+
+    if(localUserInfo[0].isEmpty && isRememberMeChecked) {
+      await localStorage
+        .setupLocalAccountInformation(userData.username, userData.email, userData.accountType);
+    }
+
+  }
+
+  Future<void> _initializeUserInfo({
+    required MySQLConnectionPool conn, 
+    required String email
+  }) async {
 
     final accountInfo = await userDataGetter
       .getAccountTypeAndUsername(email: email, conn: conn);
