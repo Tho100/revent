@@ -20,6 +20,7 @@ class LocalStorageModel {
       final setupFile = File('${localDir.path}/$_fileName');
 
       if (setupFile.existsSync()) {
+
         final lines = await setupFile.readAsLines();
 
         if (lines.length >= 3) {
@@ -27,10 +28,16 @@ class LocalStorageModel {
           email = lines[1];
           accountType = lines[2];
         }
+
       }
+      
     }
 
-    return {'username': username, 'email': email, 'plan': accountType};
+    return {
+      'username': username, 
+      'email': email, 
+      'plan': accountType
+    };
 
   }
 
