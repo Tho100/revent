@@ -61,7 +61,7 @@ class LoginUser {
       
       final localUserInfo = await LocalStorageModel().readLocalAccountInformation();
 
-      if(localUserInfo.isEmpty && isRememberMeChecked) {
+      if(localUserInfo[0].isEmpty && isRememberMeChecked) {
         await LocalStorageModel().setupLocalAccountInformation(username, email!, "Basic");
       }
 

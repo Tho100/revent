@@ -31,8 +31,6 @@ class SignInPageState extends State<SignInPage> {
     required String auth,
   }) async {
 
-    print(isRememberMeCheckedNotifier.value);
-
     await LoginUser().
       login(email, auth, isRememberMeCheckedNotifier.value, context);
 
