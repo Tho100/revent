@@ -83,9 +83,6 @@ class SplashScreenState extends State<SplashScreen> {
       userData.setUsername(getLocalUsername);
       userData.setEmail(getLocalEmail);
 
-      //final conn = await SqlConnection.initializeConnection();
-      //await _getStartupDataFiles(conn, getLocalUsername, getLocalEmail, getLocalAccountType);
-      
       if(mounted) {
         NavigatePage.homePage(context);
       }
