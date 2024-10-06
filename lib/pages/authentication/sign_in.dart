@@ -95,7 +95,7 @@ class SignInPageState extends State<SignInPage> {
           const SizedBox(height: 15),
 
           AuthTextField().passwordTextField(
-            hintText: "Enter a password", // TODO: Update to "Enter your password"
+            hintText: "Enter your password",
             controller: passwordController, 
             visibility: visiblePasswordNotifier
           ),
