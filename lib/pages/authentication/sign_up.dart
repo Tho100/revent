@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_classes/register_user.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/email_validator.dart';
+import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -29,7 +32,9 @@ class SignUpPageState extends State<SignUpPage> {
 
   final visiblePasswordNotifier = ValueNotifier<bool>(false);
 
-  Future<void> insertUserRegistrationInformation({
+  final userData = GetIt.instance<UserDataProvider>();
+
+  Future<void> _insertUserRegistrationInformation({
     required String username,
     required String email,
     required String auth,
@@ -79,7 +84,7 @@ class SignUpPageState extends State<SignUpPage> {
     }
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign Up Failed","Email address is not valid.");
+      CustomAlertDialog.alertDialogTitle(context, "Sign Up Failed", "Email address is not valid.");
       return;
     }
 
@@ -98,26 +103,23 @@ class SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    /*userData.setUsername(usernameInput);
+    userData.setUsername(usernameInput);
     userData.setEmail(emailInput);
-    userData.setAccountType("Basic");
-    
-    tempData.setOrigin("homeFiles");*/
+    userData.setAccountType("Basic"); 
     
     final singleTextLoading = SingleTextLoading();
 
     singleTextLoading.startLoading(
-      title: "Creating account...", context: context
+      title: "Creating account...", 
+      context: context
     );
 
-    await insertUserRegistrationInformation(
+    await _insertUserRegistrationInformation(
       username: usernameInput, 
       email: emailInput, 
       auth: authInput, 
     );
-  
-    //singleTextLoading.stopLoading();
-    
+      
   }
 
   Widget _buildBody(BuildContext context) {
@@ -144,7 +146,10 @@ class SignUpPageState extends State<SignUpPage> {
 
           MainTextField(
             hintText: "Enter a username", 
-            maxLength: 32,
+            maxLength: 24,
+            inputFormatters: [
+              FilteringTextInputFormatter.deny(RegExp(r'\s')),
+            ],
             controller: usernameController
           ),
 
