@@ -16,28 +16,25 @@ class UpdateNavigation {
   final navigationIndex = GetIt.instance<NavigationProvider>();
 
   Widget showNavigationBar() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: NavigationBarDock(
-        homeOnPressed: () => NavigatePage.homePage(context),
-        searchOnPressed: () => NavigatePage.searchPage(context),
-        addOnPressed: () { 
-          BottomsheetAddItem().buildBottomsheet(
-            context: context,
-            addVentOnPressed: () {
-              Navigator.pop(context);
-              NavigatePage.createVentPage(context); 
-            }, 
-            addForumOnPressed: () {
-              Navigator.pop(context);
-              NavigatePage.createVentCommunityPage(context);
-            },
-          );
-        },
-        notificationOnPressed: () => NavigatePage.notificationsPage(context),
-        profileOnPressed: () => NavigatePage.profilePage(context),
-        currentIndex: navigationIndex.pageIndex,
-      ),
+    return NavigationBarDock(
+      homeOnPressed: () => NavigatePage.homePage(context),
+      searchOnPressed: () => NavigatePage.searchPage(context),
+      addOnPressed: () { 
+        BottomsheetAddItem().buildBottomsheet(
+          context: context,
+          addVentOnPressed: () {
+            Navigator.pop(context);
+            NavigatePage.createVentPage(context); 
+          }, 
+          addForumOnPressed: () {
+            Navigator.pop(context);
+            NavigatePage.createVentCommunityPage(context);
+          },
+        );
+      },
+      notificationOnPressed: () => NavigatePage.notificationsPage(context),
+      profileOnPressed: () => NavigatePage.profilePage(context),
+      currentIndex: navigationIndex.pageIndex,
     );
   }
 
