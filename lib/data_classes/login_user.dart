@@ -44,24 +44,6 @@ class LoginUser {
         return;
       }
         
-      /*final justLoading = JustLoading();
-
-      if(context.mounted) {
-        justLoading.startLoading(context: context);
-      }
-
-      await _getStartupDataFiles(conn, isRememberMeChecked, email!);
-
-      final localUsernames = await LocalStorageModel().readLocalAccountUsernames();
-
-      if(!localUsernames.contains(username) && isRememberMeChecked) {
-        await LocalStorageModel().setupLocalAccountUsernames(username);
-        await LocalStorageModel().setupLocalAccountEmails(email);
-        await LocalStorageModel().setupLocalAccountPlans(userData.accountType);
-      }
-
-      justLoading.stopLoading();*/
-      
       await _initializeUserInfo(conn: conn, email: email!);
       await _initializeRememberMe(isRememberMeChecked: isRememberMeChecked);
 
