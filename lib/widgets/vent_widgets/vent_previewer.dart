@@ -107,9 +107,8 @@ class VentPreviewer extends StatelessWidget {
       height: 34,
       child: ElevatedButton(
         style: defaultActionButtonsStyle,
-        onPressed: () => () {},
+        onPressed: () => print("Liked"),
           child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
   
             Transform.translate(
@@ -143,9 +142,8 @@ class VentPreviewer extends StatelessWidget {
       height: 34,
       child: ElevatedButton(
         style: defaultActionButtonsStyle,
-        onPressed: () => () {},
+        onPressed: () => print("Commented"),
           child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
     
             Transform.translate(
@@ -181,9 +179,7 @@ class VentPreviewer extends StatelessWidget {
       color: ThemeColor.black,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () {
-          print(title);
-        },
+        onTap: () => print(title),
         child: Container(
           height: 200,
           decoration: BoxDecoration(
