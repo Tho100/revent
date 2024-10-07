@@ -7,6 +7,7 @@ import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/widgets/vent_widgets/vent_listview.dart';
 
 class HomePage extends StatefulWidget {
 
@@ -22,22 +23,26 @@ class HomePageState extends State<HomePage> {
   final ventData = GetIt.instance<VentDataProvider>();
   final navigationIndex = GetIt.instance<NavigationProvider>();
 
+  Widget _buildListView() {
+    return Center(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width-36,
+        child: const VentListView()
+      ),
+    );
+  }
+
   Widget _buildHomeBody() {
-    return Stack(
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        ListView.builder(
-          itemCount: 5,
-          itemBuilder: ((context, index) {
-            return ListTile(
-              title: Text(index.toString(), 
-                style: GoogleFonts.inter(
-                  color: ThemeColor.white,
-                  fontWeight: FontWeight.w700,
-                )
-              )
-            );
-          }),
+
+        const SizedBox(height: 20),
+
+        Expanded(
+          child: _buildListView()
         ),
+
       ],
     );
   }
@@ -46,7 +51,7 @@ class HomePageState extends State<HomePage> {
     return AppBar(
       centerTitle: false,
       title: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 8),
+        padding: const EdgeInsets.only(top: 10, left: 5),
         child: Text(
           'Revent',
           style: GoogleFonts.inter(
