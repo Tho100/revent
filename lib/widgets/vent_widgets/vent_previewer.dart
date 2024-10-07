@@ -176,50 +176,60 @@ class VentPreviewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 200,
-      decoration: BoxDecoration(
-        color: ThemeColor.black,
-        border: Border.all(
-          color: ThemeColor.secondaryWhite,
-          width: 0.8
-        ),
+    return Material(
+      borderRadius: BorderRadius.circular(16),
+      color: ThemeColor.black,
+      child: InkWell(
         borderRadius: BorderRadius.circular(16),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(14.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            _buildCommunityAndCreatorHeader(),
-
-            const SizedBox(height: 14),
-
-            _buildTitle(context),
-
-            const SizedBox(height: 12),
-
-            _buildBodyText(),
-      
-            const SizedBox(height: 22),
-
-            Padding(
-              padding: const EdgeInsets.only(top: 18.0),
-              child: Row(
-                children: [
-                      
-                  _buildLikeButton(),
-                      
-                  const SizedBox(width: 8),
-                      
-                  _buildCommentsButton(),
-                      
-                ],
-              ),
+        onTap: () {
+          print(title);
+        },
+        child: Container(
+          height: 200,
+          decoration: BoxDecoration(
+            color: Colors.transparent,
+            border: Border.all(
+              color: ThemeColor.secondaryWhite,
+              width: 0.8
             ),
-
-          ],
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(14.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+          
+                _buildCommunityAndCreatorHeader(),
+          
+                const SizedBox(height: 14),
+          
+                _buildTitle(context),
+          
+                const SizedBox(height: 12),
+          
+                _buildBodyText(),
+          
+                const SizedBox(height: 22),
+          
+                Padding(
+                  padding: const EdgeInsets.only(top: 18.0),
+                  child: Row(
+                    children: [
+                          
+                      _buildLikeButton(),
+                          
+                      const SizedBox(width: 8),
+                          
+                      _buildCommentsButton(),
+                          
+                    ],
+                  ),
+                ),
+          
+              ],
+            ),
+          ),
         ),
       ),
     );
