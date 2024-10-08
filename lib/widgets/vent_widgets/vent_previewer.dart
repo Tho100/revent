@@ -115,7 +115,7 @@ class VentPreviewer extends StatelessWidget {
               offset: const Offset(0, -1),
               child: const Icon(
                 CupertinoIcons.heart_fill, 
-                color: Color.fromARGB(255, 127, 15, 50),
+                color: Color.fromARGB(200, 255, 105, 180),
                 size: 18.5, 
               ),
             ),
