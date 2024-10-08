@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:revent/data_classes/crud.dart';
+import 'package:revent/data_query/crud.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 
 class CreateNewItem {
