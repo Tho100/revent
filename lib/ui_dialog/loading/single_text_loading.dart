@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
 
 class SingleTextLoading {
@@ -44,12 +45,12 @@ class SingleTextLoading {
           const SizedBox(width: 25),
 
           Text(title,
-            style: const TextStyle(
+            style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontSize: 18,
-              overflow: TextOverflow.ellipsis,
               fontWeight: FontWeight.w800,
             ),
+            overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           ),
 

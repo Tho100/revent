@@ -42,14 +42,14 @@ class CustomAlertDialog {
         return AlertDialogWidget(
           title: Text(
             title,
-            style: const TextStyle(
+            style: GoogleFonts.inter(
               color: ThemeColor.white,
               fontWeight: FontWeight.w800
             )
           ),
           content: Text(
             messages,
-            style: const TextStyle(
+            style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,
             )
@@ -57,9 +57,9 @@ class CustomAlertDialog {
           actions: <Widget>[
             TextButton(
               onPressed: () => Navigator.pop(context),
-              child: const Text(
+              child: Text(
                 'OK',
-                style: TextStyle(
+                style: GoogleFonts.inter(
                   color: ThemeColor.secondaryWhite,
                   fontWeight: FontWeight.w800,
                 )
