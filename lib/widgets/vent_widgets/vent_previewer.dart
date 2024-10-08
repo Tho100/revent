@@ -109,15 +109,17 @@ class VentPreviewer extends StatelessWidget {
   }
 
   Widget _buildBodyText() {
-    return Text(
-      bodyText,
-      style: GoogleFonts.inter(
-        color: ThemeColor.secondaryWhite,
-        fontWeight: FontWeight.w800,
-        fontSize: 12.5
+    return Expanded(
+      child: Text(
+        bodyText,
+        style: GoogleFonts.inter(
+          color: ThemeColor.secondaryWhite,
+          fontWeight: FontWeight.w800,
+          fontSize: 12.5
+        ),
+        overflow: TextOverflow.ellipsis,
+        maxLines: 2
       ),
-      overflow: TextOverflow.ellipsis,
-      maxLines: 2
     );
   }
 
@@ -200,7 +202,7 @@ class VentPreviewer extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         onTap: () => print(title),
         child: Container(
-          height: 200,
+          height: 218.5,
           decoration: BoxDecoration(
             color: Colors.transparent,
             border: Border.all(
@@ -225,10 +227,10 @@ class VentPreviewer extends StatelessWidget {
           
                 _buildBodyText(),
           
-                const SizedBox(height: 22),
+                const SizedBox(height: 26),
           
                 Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
+                  padding: const EdgeInsets.only(top: 22.0),
                   child: Row(
                     children: [
                           
