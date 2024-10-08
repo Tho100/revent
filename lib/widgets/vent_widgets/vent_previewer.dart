@@ -7,14 +7,16 @@ class VentPreviewer extends StatelessWidget {
 
   final String title;
   final String bodyText;
-  final String postTimespan;
+  final String creator;
+  final String postTimestamp;
   final int totalLikes;
   final int totalComments;
 
   VentPreviewer({
     required this.title,
     required this.bodyText,
-    required this.postTimespan,
+    required this.creator,
+    required this.postTimestamp,
     required this.totalLikes,
     required this.totalComments,
     super.key
@@ -50,7 +52,7 @@ class VentPreviewer extends StatelessWidget {
           children: [
 
             Text(
-              'parenting-support',
+              'motivation',
               style: GoogleFonts.inter(
                 color: ThemeColor.white,
                 fontWeight: FontWeight.w800,
@@ -61,7 +63,7 @@ class VentPreviewer extends StatelessWidget {
             const SizedBox(height: 2.5),
 
             Text(
-              'By dan_isgay',
+              creator,
               style: GoogleFonts.inter(
                 color: ThemeColor.thirdWhite,
                 fontWeight: FontWeight.w800,
@@ -77,7 +79,7 @@ class VentPreviewer extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(bottom: 12.5, right: 4.0),
           child: Text(
-            postTimespan,
+            postTimestamp,
             style: GoogleFonts.inter(
               color: ThemeColor.thirdWhite,
               fontWeight: FontWeight.w800,

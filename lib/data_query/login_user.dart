@@ -8,6 +8,7 @@ import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/vent_query/vent_data_setup.dart';
 
 class LoginUser {
 
@@ -47,11 +48,15 @@ class LoginUser {
       await _initializeUserInfo(conn: conn, email: email!);
       await _initializeRememberMe(isRememberMeChecked: isRememberMeChecked);
 
+      await VentDataSetup().setup(); 
+
       if(context.mounted) {
         NavigatePage.homePage(context);
       }
 
     } catch (err) {
+
+      print(err.toString());
 
       if(context.mounted) {
         CustomAlertDialog.alertDialogTitle(context, "Something is wrong...", "No internet connection.");

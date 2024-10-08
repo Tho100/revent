@@ -15,11 +15,13 @@ class CreateNewItem {
 
     const creator = "dan";
 
-    const query = "INSERT INTO vent_info (creator, title, body_text) VALUES (:creator, :title, :bodytext)";
+    const query = "INSERT INTO vent_info (creator, title, body_text, total_likes, total_comments) VALUES (:creator, :title, :body_text, :total_likes, :total_comments)";
     final params = {
       'creator': creator,
       'title': ventTitle,
-      'bodytext': ventBodyText
+      'body_text': ventBodyText,
+      'total_likes': 0,
+      'total_comments': 0,
     };
 
     try {

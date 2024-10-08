@@ -7,6 +7,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/vent_query/vent_data_setup.dart';
 
 class SplashScreen extends StatefulWidget {
 
@@ -19,9 +20,9 @@ class SplashScreen extends StatefulWidget {
 
 class SplashScreenState extends State<SplashScreen> {
 
-  final localModel = LocalStorageModel();
-
   final userData = GetIt.instance<UserDataProvider>();
+
+  final localModel = LocalStorageModel();
 
   Timer? splashScreenTimer;
 
@@ -79,6 +80,8 @@ class SplashScreenState extends State<SplashScreen> {
         return;
       }
 
+      await VentDataSetup().setup();
+
       userData.setAccountType(getLocalAccountType);
       userData.setUsername(getLocalUsername);
       userData.setEmail(getLocalEmail);
@@ -88,6 +91,7 @@ class SplashScreenState extends State<SplashScreen> {
       }
 
     } catch (err) {
+      print(err.toString());
       NavigatePage.mainScreenPage(context);
     }
 
