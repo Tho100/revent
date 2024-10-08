@@ -16,6 +16,7 @@ class VentListView extends StatelessWidget {
 
         final titles = ['I dont know what im doing with my life anymore fuck this shit fr bro', 'hey guys', 'test title'];
         final bodyText = ['helll yeah man whats going on', 'aaaaaaaaaaaaaaaaaaa', 'iim testing 123123_3'];
+        final postTimespan = ['24m', '11h', '3d'];
 
         final totalLikes = [110, 40, 2];
         final totalComments = [444, 2, 11];
@@ -25,6 +26,7 @@ class VentListView extends StatelessWidget {
           child: VentPreviewer(
             title: titles[index],
             bodyText: bodyText[index],
+            postTimespan: postTimespan[index],
             totalLikes: totalLikes[index],
             totalComments: totalComments[index],
           ),

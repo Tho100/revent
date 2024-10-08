@@ -7,12 +7,14 @@ class VentPreviewer extends StatelessWidget {
 
   final String title;
   final String bodyText;
+  final String postTimespan;
   final int totalLikes;
   final int totalComments;
 
   VentPreviewer({
     required this.title,
     required this.bodyText,
+    required this.postTimespan,
     required this.totalLikes,
     required this.totalComments,
     super.key
@@ -48,7 +50,7 @@ class VentPreviewer extends StatelessWidget {
           children: [
 
             Text(
-              'motivation',
+              'parenting-support',
               style: GoogleFonts.inter(
                 color: ThemeColor.white,
                 fontWeight: FontWeight.w800,
@@ -69,6 +71,21 @@ class VentPreviewer extends StatelessWidget {
 
           ],
         ),
+
+        const Spacer(),
+
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12.5, right: 4.0),
+          child: Text(
+            postTimespan,
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 13.2
+            ),
+          ),
+        ),
+
       ],
     );
   }
@@ -185,7 +202,7 @@ class VentPreviewer extends StatelessWidget {
           decoration: BoxDecoration(
             color: Colors.transparent,
             border: Border.all(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.thirdWhite,
               width: 0.8
             ),
             borderRadius: BorderRadius.circular(16),
