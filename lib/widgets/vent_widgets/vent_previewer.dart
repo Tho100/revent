@@ -195,6 +195,11 @@ class VentPreviewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double containerHeight = bodyText.isEmpty ? 160 : 221;
+    double actionButtonsPadding = bodyText.isEmpty ? 0 : 22;
+    double actionButtonsHeightGap = bodyText.isEmpty ? 12 : 26;
+
     return Material(
       borderRadius: BorderRadius.circular(16),
       color: ThemeColor.black,
@@ -202,7 +207,7 @@ class VentPreviewer extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         onTap: () => print(title),
         child: Container(
-          height: 218.5,
+          height: containerHeight,
           decoration: BoxDecoration(
             color: Colors.transparent,
             border: Border.all(
@@ -227,10 +232,10 @@ class VentPreviewer extends StatelessWidget {
           
                 _buildBodyText(),
           
-                const SizedBox(height: 26),
+                SizedBox(height: actionButtonsHeightGap),
           
                 Padding(
-                  padding: const EdgeInsets.only(top: 22.0),
+                  padding: EdgeInsets.only(top: actionButtonsPadding),
                   child: Row(
                     children: [
                           
