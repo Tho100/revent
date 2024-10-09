@@ -136,6 +136,7 @@ class CreateVentPage extends StatelessWidget {
       }
 
     } catch (err) {
+      CustomAlertDialog.alertDialogTitle(context, "Something went wrong", "Failed to post vent.");
       print(err.toString());
     }
 
