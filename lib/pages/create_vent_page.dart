@@ -131,6 +131,10 @@ class CreateVentPage extends StatelessWidget {
         ventBodyText: ventBodyTextController.text
       );
 
+      if(context.mounted) {
+        Navigator.pop(context);
+      }
+
     } catch (err) {
       print(err.toString());
     }
