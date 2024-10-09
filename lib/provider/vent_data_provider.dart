@@ -58,4 +58,14 @@ class VentDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteVentData() {
+    _ventTitles.clear();
+    _ventBodyText.clear();
+    _ventCreator.clear();
+    _ventPostTimestamp.clear();
+    _ventTotalLikes.clear();
+    _ventTotalComments.clear();
+    notifyListeners();
+  }
+
 }
