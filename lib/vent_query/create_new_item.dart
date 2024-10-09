@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/crud.dart';
+import 'package:revent/model/format_post_timestamp.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 
@@ -26,8 +27,8 @@ class CreateNewItem {
 
     await crud.execute(query: query, params: params);
 
-    final now = DateTime.now();  
-    final formattedTimestamp = now.toString().substring(0, 19);
+    final now = DateTime.now();
+    final formattedTimestamp = FormatPostTimestamp().formatTimeAgo(now);
 
     ventData.addVentData(ventTitle, ventBodyText, userData.username, formattedTimestamp);
 
