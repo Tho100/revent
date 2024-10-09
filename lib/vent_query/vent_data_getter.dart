@@ -23,7 +23,7 @@ class VentDataGetter {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = "SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info";
+    const query = "SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info ORDER BY post_id DESC";
     
     final retrievedVents = await conn.execute(query);
 
