@@ -24,15 +24,12 @@ class CreateNewItem {
       'total_comments': 0,
     };
 
-    try {
+    await crud.execute(query: query, params: params);
 
-      await crud.execute(query: query, params: params);
+    final now = DateTime.now();  
+    final formattedTimestamp = now.toString().substring(0, 19);
 
-      ventData.ventTitles.add(ventTitle);
-
-    } catch (err) {
-      print(err.toString());
-    }
+    ventData.addVentData(ventTitle, ventBodyText, userData.username, formattedTimestamp);
 
   }
 

@@ -124,10 +124,16 @@ class CreateVentPage extends StatelessWidget {
       return;
     }
 
-    await createItem.newVent(
-      ventTitle: ventTitleController.text, 
-      ventBodyText: ventBodyTextController.text
-    );
+    try {
+
+      await createItem.newVent(
+        ventTitle: ventTitleController.text, 
+        ventBodyText: ventBodyTextController.text
+      );
+
+    } catch (err) {
+      print(err.toString());
+    }
 
   }
 

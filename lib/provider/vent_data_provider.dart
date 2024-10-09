@@ -48,4 +48,14 @@ class VentDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void addVentData(String title, String bodyText, String creator, String postTimestamp) {
+    _ventTitles.add(title);
+    _ventBodyText.add(bodyText);
+    _ventCreator.add(creator);
+    _ventPostTimestamp.add(postTimestamp);
+    _ventTotalLikes.add(0);
+    _ventTotalComments.add(0);
+    notifyListeners();
+  }
+
 }
