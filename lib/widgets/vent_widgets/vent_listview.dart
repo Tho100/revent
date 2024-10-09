@@ -17,15 +17,16 @@ class VentListView extends StatelessWidget {
           ),
           itemCount: ventData.ventTitles.length,
           itemBuilder: (context, index) {
+            final reversedIndex = ventData.ventTitles.length - 1 - index;
             return Padding(
               padding: const EdgeInsets.only(bottom: 12.5),
               child: VentPreviewer(
-                title: ventData.ventTitles[index],
-                bodyText: ventData.ventBodyText[index],
-                creator: ventData.ventCreator[index],
-                postTimestamp: ventData.ventPostTimestamp[index],
-                totalLikes: ventData.ventTotalLikes[index],
-                totalComments: ventData.ventTotalComments[index],
+                title: ventData.ventTitles[reversedIndex],
+                bodyText: ventData.ventBodyText[reversedIndex],
+                creator: ventData.ventCreator[reversedIndex],
+                postTimestamp: ventData.ventPostTimestamp[reversedIndex],
+                totalLikes: ventData.ventTotalLikes[reversedIndex],
+                totalComments: ventData.ventTotalComments[reversedIndex],
               ),
             );
       
