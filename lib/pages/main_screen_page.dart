@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/widgets/main_button.dart';
+import 'package:revent/widgets/buttons/main_button.dart';
 
 class MainScreenPage extends StatelessWidget {
 
@@ -20,7 +20,7 @@ class MainScreenPage extends StatelessWidget {
         ),
 
         const SizedBox(height: 15),
-
+        // TODO: Use custom outlinedbutton
         SizedBox(
           height: 68,
           width: MediaQuery.of(context).size.width * 0.87,
