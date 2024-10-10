@@ -3,8 +3,10 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/data_query/user_profile/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
+import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
@@ -21,6 +23,7 @@ class SplashScreen extends StatefulWidget {
 class SplashScreenState extends State<SplashScreen> {
 
   final userData = GetIt.instance<UserDataProvider>();
+  final profileData = GetIt.instance<ProfileDataProvider>();
 
   final localModel = LocalStorageModel();
 
@@ -43,6 +46,11 @@ class SplashScreenState extends State<SplashScreen> {
         )
       )
     );  
+  }
+
+  Future<void> _loadStartupData() async {
+    await ProfileDataSetup().setup(username: userData.username);
+    await VentDataSetup().setup();
   }
 
   void _startTimer() async {
@@ -80,11 +88,11 @@ class SplashScreenState extends State<SplashScreen> {
         return;
       }
 
-      await VentDataSetup().setup();
-
       userData.setAccountPlan(getLocalAccountType);
       userData.setUsername(getLocalUsername);
       userData.setEmail(getLocalEmail);
+
+      await _loadStartupData();
 
       if(mounted) {
         NavigatePage.homePage(context);

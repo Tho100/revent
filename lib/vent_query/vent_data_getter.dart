@@ -1,23 +1,10 @@
-import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_post_timestamp.dart';
 
 class VentDataGetter {
 
   final formatPostTimestamp = FormatPostTimestamp();
-
-  List<String> _extractStringColumn(IResultSet rowsData, String columnName) {
-    return rowsData.rows.map((row) {
-      return row.assoc()[columnName]!;
-    }).toList();
-  }
-
-  List<int> _extractIntColumn(IResultSet rowsData, String columnName) {
-    return rowsData.rows.map((row) {
-      final value = row.assoc()[columnName]!;
-      return int.tryParse(value) ?? 0;
-    }).toList();
-  }
 
   Future<Map<String, dynamic>> getVentsData() async {
 
@@ -27,12 +14,14 @@ class VentDataGetter {
     
     final retrievedVents = await conn.execute(query);
 
-    final title = _extractStringColumn(retrievedVents, 'title');
-    final bodyText = _extractStringColumn(retrievedVents, 'body_text');
-    final creator = _extractStringColumn(retrievedVents, 'creator');
+    final extractData = ExtractData(rowsData: retrievedVents);
 
-    final totalLikes = _extractIntColumn(retrievedVents, 'total_likes');
-    final totalComments = _extractIntColumn(retrievedVents, 'total_comments');
+    final title = extractData.extractStringColumn('title');
+    final bodyText = extractData.extractStringColumn('body_text');
+    final creator = extractData.extractStringColumn('creator');
+
+    final totalLikes = extractData.extractIntColumn('total_likes');
+    final totalComments = extractData.extractIntColumn('total_comments');
 
     final postTimestamp = retrievedVents.rows.map((row) {
       final createdAtValue = row.assoc()['created_at'];

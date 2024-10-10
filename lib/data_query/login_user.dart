@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/data_query/user_data_getter.dart';
+import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
@@ -93,6 +94,8 @@ class LoginUser {
     userData.setUsername(username);
     userData.setEmail(email);
     userData.setAccountPlan(accountPlan);
+
+    await ProfileDataSetup().setup(username: username);
 
   }
   

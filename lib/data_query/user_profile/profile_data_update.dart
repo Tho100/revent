@@ -22,7 +22,6 @@ class ProfileDataUpdate {
       'username': username
     };
 
-    // TODOO: Read profile data on startup and load it to provider data,
     // TODO: On bio-update, update the bio-provider data 
 
     await conn.execute(query, params);
