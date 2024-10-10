@@ -9,7 +9,7 @@ class ProfileDataProvider extends ChangeNotifier {
   Uint8List _profilePicture = Uint8List(0);
 
   int _followers = 0;
-  int _followings = 0;
+  int _following = 0;
   int _posts = 0;
 
   String get bio => _bio;
@@ -17,7 +17,7 @@ class ProfileDataProvider extends ChangeNotifier {
   Uint8List get profilePicture => _profilePicture;
 
   int get followers => _followers;
-  int get followings => _followings;
+  int get following => _following;
   int get posts => _posts;
 
   void setBio(String bio) {
@@ -35,8 +35,8 @@ class ProfileDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setFollowings(int followings) {
-    _followings = followings;
+  void setFollowing(int following) {
+    _following = following;
     notifyListeners();
   }
 

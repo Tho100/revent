@@ -10,7 +10,7 @@ class ProfileDataUpdate {
     required this.username
   });
 
-  final profileDataProvider = GetIt.instance<ProfileDataProvider>();
+  final profileData = GetIt.instance<ProfileDataProvider>();
 
   Future<void> updateBio({required String bioText}) async {
 
@@ -22,8 +22,7 @@ class ProfileDataUpdate {
       'username': username
     };
 
-    // TODOO: Read profile data on startup and load it to provider data,
-    // TODO: On bio-update, update the bio-provider data 
+    profileData.setBio(bioText);
 
     await conn.execute(query, params);
 
