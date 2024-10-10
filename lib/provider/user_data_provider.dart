@@ -4,11 +4,11 @@ class UserDataProvider extends ChangeNotifier {
 
   String _username = '';
   String _email = '';
-  String _accountType = '';
+  String _plan = '';
 
   String get username => _username;
   String get email => _email;
-  String get accountType => _accountType;
+  String get plan => _plan;
   
   void setUsername(String username) {
     _username = username;
@@ -20,8 +20,8 @@ class UserDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setAccountType(String accountType) {
-    _accountType = accountType;
+  void setAccountPlan(String plan) {
+    _plan = plan;
     notifyListeners();
   }
   

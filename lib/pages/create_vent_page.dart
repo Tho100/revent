@@ -124,10 +124,21 @@ class CreateVentPage extends StatelessWidget {
       return;
     }
 
-    await createItem.newVent(
-      ventTitle: ventTitleController.text, 
-      ventBodyText: ventBodyTextController.text
-    );
+    try {
+
+      await createItem.newVent(
+        ventTitle: ventTitleController.text, 
+        ventBodyText: ventBodyTextController.text
+      );
+
+      if(context.mounted) {
+        Navigator.pop(context);
+      }
+
+    } catch (err) {
+      CustomAlertDialog.alertDialogTitle(context, "Something went wrong", "Failed to post vent.");
+      print(err.toString());
+    }
 
   }
 

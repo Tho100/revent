@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/data_classes/register_user.dart';
+import 'package:revent/data_query/register_user.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/provider/user_data_provider.dart';
@@ -11,7 +11,7 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/loading/single_text_loading.dart';
 import 'package:revent/widgets/header_text.dart';
-import 'package:revent/widgets/main_button.dart';
+import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/text_field/auth_textfield.dart';
 import 'package:revent/widgets/text_field/main_textfield.dart';
 
@@ -105,7 +105,7 @@ class SignUpPageState extends State<SignUpPage> {
 
     userData.setUsername(usernameInput);
     userData.setEmail(emailInput);
-    userData.setAccountType("Basic"); 
+    userData.setAccountPlan("Basic"); 
     
     final singleTextLoading = SingleTextLoading();
 

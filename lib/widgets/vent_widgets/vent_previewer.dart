@@ -7,12 +7,16 @@ class VentPreviewer extends StatelessWidget {
 
   final String title;
   final String bodyText;
+  final String creator;
+  final String postTimestamp;
   final int totalLikes;
   final int totalComments;
 
   VentPreviewer({
     required this.title,
     required this.bodyText,
+    required this.creator,
+    required this.postTimestamp,
     required this.totalLikes,
     required this.totalComments,
     super.key
@@ -59,7 +63,7 @@ class VentPreviewer extends StatelessWidget {
             const SizedBox(height: 2.5),
 
             Text(
-              'By dan_isgay',
+              'By $creator',
               style: GoogleFonts.inter(
                 color: ThemeColor.thirdWhite,
                 fontWeight: FontWeight.w800,
@@ -69,6 +73,21 @@ class VentPreviewer extends StatelessWidget {
 
           ],
         ),
+
+        const Spacer(),
+
+        Padding(
+          padding: const EdgeInsets.only(bottom: 12.5, right: 4.0),
+          child: Text(
+            postTimestamp,
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 13.2
+            ),
+          ),
+        ),
+
       ],
     );
   }
@@ -90,15 +109,17 @@ class VentPreviewer extends StatelessWidget {
   }
 
   Widget _buildBodyText() {
-    return Text(
-      bodyText,
-      style: GoogleFonts.inter(
-        color: ThemeColor.secondaryWhite,
-        fontWeight: FontWeight.w800,
-        fontSize: 12.5
+    return Expanded(
+      child: Text(
+        bodyText,
+        style: GoogleFonts.inter(
+          color: ThemeColor.secondaryWhite,
+          fontWeight: FontWeight.w800,
+          fontSize: 12.5
+        ),
+        overflow: TextOverflow.ellipsis,
+        maxLines: 2
       ),
-      overflow: TextOverflow.ellipsis,
-      maxLines: 2
     );
   }
 
@@ -115,7 +136,7 @@ class VentPreviewer extends StatelessWidget {
               offset: const Offset(0, -1),
               child: const Icon(
                 CupertinoIcons.heart_fill, 
-                color: Color.fromARGB(255, 127, 15, 50),
+                color: Color.fromARGB(200, 255, 105, 180),
                 size: 18.5, 
               ),
             ),
@@ -174,6 +195,11 @@ class VentPreviewer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    double containerHeight = bodyText.isEmpty ? 160 : 221;
+    double actionButtonsPadding = bodyText.isEmpty ? 0 : 22;
+    double actionButtonsHeightGap = bodyText.isEmpty ? 12 : 26;
+
     return Material(
       borderRadius: BorderRadius.circular(16),
       color: ThemeColor.black,
@@ -181,11 +207,11 @@ class VentPreviewer extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
         onTap: () => print(title),
         child: Container(
-          height: 200,
+          height: containerHeight,
           decoration: BoxDecoration(
             color: Colors.transparent,
             border: Border.all(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.thirdWhite,
               width: 0.8
             ),
             borderRadius: BorderRadius.circular(16),
@@ -206,10 +232,10 @@ class VentPreviewer extends StatelessWidget {
           
                 _buildBodyText(),
           
-                const SizedBox(height: 22),
+                SizedBox(height: actionButtonsHeightGap),
           
                 Padding(
-                  padding: const EdgeInsets.only(top: 18.0),
+                  padding: EdgeInsets.only(top: actionButtonsPadding),
                   child: Row(
                     children: [
                           

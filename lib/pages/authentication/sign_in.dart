@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/data_classes/login_user.dart';
+import 'package:revent/data_query/login_user.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/header_text.dart';
-import 'package:revent/widgets/main_button.dart';
+import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/text_field/auth_textfield.dart';
 import 'package:revent/widgets/text_field/main_textfield.dart';
 

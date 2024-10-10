@@ -9,6 +9,7 @@ class MainTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final int? maxLength;
+  final int? maxLines;
   final bool? autoFocus;
   final List<TextInputFormatter>? inputFormatters;
 
@@ -16,6 +17,7 @@ class MainTextField extends StatelessWidget {
     required this.controller,
     required this.hintText,
     this.maxLength,
+    this.maxLines,
     this.autoFocus,
     this.inputFormatters,
     super.key
@@ -26,6 +28,7 @@ class MainTextField extends StatelessWidget {
     return TextFormField(
       controller: controller,
       maxLength: maxLength,
+      maxLines: maxLines,
       autofocus: autoFocus ?? false,
       inputFormatters: inputFormatters,
       decoration: ThemeStyle.txtFieldStye(hintText: hintText),
