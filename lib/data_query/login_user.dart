@@ -74,7 +74,7 @@ class LoginUser {
 
     if(localUserInfo.isEmpty && isRememberMeChecked) {
       await localStorage
-        .setupLocalAccountInformation(userData.username, userData.email, userData.accountType);
+        .setupLocalAccountInformation(userData.username, userData.email, userData.plan);
     }
 
   }
@@ -92,7 +92,7 @@ class LoginUser {
 
     userData.setUsername(username);
     userData.setEmail(email);
-    userData.setAccountType(accountPlan);
+    userData.setAccountPlan(accountPlan);
 
   }
   

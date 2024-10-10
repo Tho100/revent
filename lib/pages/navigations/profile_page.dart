@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
+import 'package:revent/widgets/profile_picture.dart';
 
 class ProfilePage extends StatelessWidget {
 
@@ -14,17 +16,6 @@ class ProfilePage extends StatelessWidget {
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
-
-  Widget _buildProfilePicture() {
-    return Container(
-      width: 65,
-      height: 65,
-      decoration: const BoxDecoration(
-        color: ThemeColor.white,
-        shape: BoxShape.circle
-      ),
-    );
-  }
 
   Widget _buildUsername() {
     return Text(
@@ -61,7 +52,10 @@ class ProfilePage extends StatelessWidget {
         customHeight: MediaQuery.of(context).size.height * 0.050,
         customFontSize: 15.5,
         text: 'Edit profile',
-        onPressed: () => print('Edit profile'),
+        onPressed: () => Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EditProfilePage())
+        )
       ),
     );
   }
@@ -119,7 +113,7 @@ class ProfilePage extends StatelessWidget {
 
           const SizedBox(height: 27),
     
-          _buildProfilePicture(),
+          const ProfilePictureWidget(),
           
           const SizedBox(height: 12),
     

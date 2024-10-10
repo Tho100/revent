@@ -82,7 +82,7 @@ class SplashScreenState extends State<SplashScreen> {
 
       await VentDataSetup().setup();
 
-      userData.setAccountType(getLocalAccountType);
+      userData.setAccountPlan(getLocalAccountType);
       userData.setUsername(getLocalUsername);
       userData.setEmail(getLocalEmail);
 
