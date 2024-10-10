@@ -59,16 +59,32 @@ class RegisterUser {
       
       final conn = await ReventConnect.initializeConnection();
 
-      const query = "INSERT INTO user_information(username, email, password, plan) VALUES (:username, :email, :password, :plan)";
-      final params = {
-        'username': username,
-        'email': email,
-        'password': hashPassword,
-        'plan': 'Basic'
-      };
+      const queries = 
+      [
+        "INSERT INTO user_information(username, email, password, plan) VALUES (:username, :email, :password, :plan)",
+        "INSERT INTO user_profile_information(bio, followers, following, posts, username) VALUES (:bio, :followers, :following, :posts, :username)"
+      ];
 
-      await conn.execute(query, params);
-      
+      final params = [
+        {
+          'username': username,
+          'email': email,
+          'password': hashPassword,
+          'plan': 'Basic'
+        },
+        {
+          'bio': 'Hello!',
+          'followers': 0,
+          'following': 0,
+          'posts': 0,
+          'username': username
+        }
+      ];
+
+      for(int i=0; i < queries.length; i++) {
+        await conn.execute(queries[i], params[i]);
+      }
+
       await LocalStorageModel()
         .setupLocalAccountInformation(username!, email!, "Basic");
 
