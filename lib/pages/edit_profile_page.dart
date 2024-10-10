@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/data_query/profile_data_update.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -118,7 +119,10 @@ class EditProfilePage extends StatelessWidget {
                 customHeight: 46,
                 customFontSize: 15,
                 text: 'Save', 
-                onPressed: () => print('Saved bio')
+                onPressed: () async {
+                  await ProfileDataUpdate(username: userData.username)
+                    .updateBio(bioText: bioController.text);
+                }
               ),
             ),
         
