@@ -107,9 +107,7 @@ class SignUpPageState extends State<SignUpPage> {
     userData.setEmail(emailInput);
     userData.setAccountPlan("Basic"); 
     
-    final singleTextLoading = SingleTextLoading();
-
-    singleTextLoading.startLoading(
+    SingleTextLoading().startLoading(
       title: "Creating account...", 
       context: context
     );
