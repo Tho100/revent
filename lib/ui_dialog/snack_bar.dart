@@ -1,0 +1,43 @@
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/themes/theme_color.dart';
+
+class SnackBarDialog {
+
+  final BuildContext context;
+
+  SnackBarDialog({required this.context});
+
+  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> temporarySnack({
+    required BuildContext context,
+    required String message
+  }) {
+    return ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(        
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: ThemeColor.white,
+        duration: const Duration(seconds: 2),
+        content: Row(
+          children: [
+
+            const SizedBox(width: 4),
+            
+            SizedBox(
+              width: 320,
+              child: Text(message, 
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  color: ThemeColor.mediumBlack,
+                  fontWeight: FontWeight.w800,
+                ),
+                overflow: TextOverflow.ellipsis
+              ),
+            ),
+
+          ],
+        ),
+      )
+    );
+  }
+
+}
