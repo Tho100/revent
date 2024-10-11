@@ -10,7 +10,7 @@ import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:get_it/get_it.dart';
 
-GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 
 void initializeLocators() {
   final locators = GetIt.instance;
@@ -44,6 +44,7 @@ class MainRun extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      scaffoldMessengerKey: scaffoldMessengerKey,
       theme: ThemeData(
         actionIconTheme: ActionIconThemeData(
           backButtonIconBuilder: (BuildContext context) => const Icon(CupertinoIcons.chevron_back),

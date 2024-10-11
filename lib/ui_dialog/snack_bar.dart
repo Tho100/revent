@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/main.dart';
 import 'package:revent/themes/theme_color.dart';
 
 class SnackBarDialog {
 
-  final BuildContext context;
-
-  SnackBarDialog({required this.context});
-
   static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> temporarySnack({
-    required BuildContext context,
     required String message
   }) {
-    return ScaffoldMessenger.of(context).showSnackBar(
+    return scaffoldMessengerKey.currentState!.showSnackBar(
       SnackBar(        
         behavior: SnackBarBehavior.floating,
         backgroundColor: ThemeColor.white,

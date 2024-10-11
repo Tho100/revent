@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/create_new_item.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -130,6 +131,8 @@ class CreateVentPage extends StatelessWidget {
         ventTitle: ventTitleController.text, 
         ventBodyText: ventBodyTextController.text
       );
+        
+      SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
 
       if(context.mounted) {
         Navigator.pop(context);
