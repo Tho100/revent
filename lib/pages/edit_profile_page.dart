@@ -8,6 +8,7 @@ import 'package:revent/model/profile_picture_model.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
@@ -46,8 +47,8 @@ class EditProfilePageState extends State<EditProfilePage> {
       .createProfilePicture(context);
 
     if(isProfileSelected) {
-      profilePicNotifier.value = profileData.profilePicture;
-      //CallToast.call(message: "Updated profile picture");
+      _initializeProfilePic();
+      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
     }
 
   }
