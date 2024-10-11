@@ -54,14 +54,8 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   void _startTimer() async {
-    // TODO: Remove unused prints
-    print(await localModel.readLocalAccountInformation());
 
     final localUsername = (await localModel.readLocalAccountInformation())['username']!;
-
-    print("------------");
-
-    print(localUsername);
 
     if(localUsername.isNotEmpty) {
     splashScreenTimer = Timer(const Duration(milliseconds: 0), () {
