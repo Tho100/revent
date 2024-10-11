@@ -41,7 +41,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     profilePicNotifier.value = profileData.profilePicture;
   }
 
-  void _onChangeProfilePicPressed() async {
+  void _changeProfilePicOnPressed() async {
     
     final isProfileSelected = await ProfilePictureModel()
       .createProfilePicture(context);
@@ -50,6 +50,15 @@ class EditProfilePageState extends State<EditProfilePage> {
       _initializeProfilePic();
       SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
     }
+
+  }
+
+  void _saveBioOnPressed() async {
+
+    await ProfileDataUpdate()
+      .updateBio(bioText: bioController.text);
+
+    SnackBarDialog.temporarySnack(message: 'Updated bio.');
 
   }
 
@@ -71,7 +80,7 @@ class EditProfilePageState extends State<EditProfilePage> {
           customHeight: 46,
           customFontSize: 15,
           text: 'Change profile picture', 
-          onPressed: () => _onChangeProfilePicPressed()
+          onPressed: () => _changeProfilePicOnPressed()
         ),
 
       ],
@@ -150,10 +159,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                 customHeight: 46,
                 customFontSize: 15,
                 text: 'Save', 
-                onPressed: () async {
-                  await ProfileDataUpdate()
-                    .updateBio(bioText: bioController.text);
-                }
+                onPressed: () => _saveBioOnPressed()
               ),
             ),
         
