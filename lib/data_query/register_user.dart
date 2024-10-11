@@ -62,7 +62,7 @@ class RegisterUser {
       const queries = 
       [
         "INSERT INTO user_information(username, email, password, plan) VALUES (:username, :email, :password, :plan)",
-        "INSERT INTO user_profile_information(bio, followers, following, posts, username) VALUES (:bio, :followers, :following, :posts, :username)"
+        "INSERT INTO user_profile_info(bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)"
       ];
 
       final params = [
@@ -77,6 +77,7 @@ class RegisterUser {
           'followers': 0,
           'following': 0,
           'posts': 0,
+          'profile_pic': '',
           'username': username
         }
       ];
@@ -88,7 +89,9 @@ class RegisterUser {
       await LocalStorageModel()
         .setupLocalAccountInformation(username!, email!, "Basic");
 
-    } catch (duplicatedUsernameException) { } 
+    } catch (err) {
+      print(err.toString());
+    } 
 
   }  
 

@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,17 +7,51 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
+import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
-class ProfilePage extends StatelessWidget {
+class ProfilePage extends StatefulWidget {
 
-  ProfilePage({super.key});
+  const ProfilePage({super.key});
+
+  @override
+  State<ProfilePage> createState() => ProfilePageState();
+
+}
+
+class ProfilePageState extends State<ProfilePage> {
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
+  final profileData = GetIt.instance<ProfileDataProvider>();
+
+  Future<ValueNotifier<Uint8List?>> _initializeProfilePic() async {
+    
+    final profilePictureNotifier = ValueNotifier<Uint8List?>(Uint8List(0));
+
+    try {
+
+      final picData = profileData.profilePicture;
+
+      if(picData.isEmpty) {
+        profilePictureNotifier.value = Uint8List(0);
+
+      } else {
+        profilePictureNotifier.value = picData;   
+
+      }
+      
+      return profilePictureNotifier;
+
+    } catch (err) {
+      return profilePictureNotifier;
+
+    }
+
+  }
 
   Widget _buildUsername() {
     return Text(
@@ -54,7 +90,7 @@ class ProfilePage extends StatelessWidget {
         text: 'Edit profile',
         onPressed: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => EditProfilePage())
+          MaterialPageRoute(builder: (context) => const EditProfilePage())
         )
       ),
     );
@@ -105,6 +141,17 @@ class ProfilePage extends StatelessWidget {
     );
   }
 
+  Widget _buildProfilePicture() {
+    return FutureBuilder<ValueNotifier<Uint8List?>>(
+      future: _initializeProfilePic(),
+      builder: (context, snapshot) {
+        return ProfilePictureWidget(
+          profileDataNotifier: snapshot.data!,
+        );
+      }
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 35.0),
@@ -113,7 +160,7 @@ class ProfilePage extends StatelessWidget {
 
           const SizedBox(height: 27),
     
-          const ProfilePictureWidget(),
+          _buildProfilePicture(),
           
           const SizedBox(height: 12),
     
@@ -137,6 +184,12 @@ class ProfilePage extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState(); 
+    _initializeProfilePic();
+  }
+
+  @override
   Widget build(BuildContext context) {
     navigationIndex.setPageIndex(4);
     return WillPopScope(
@@ -152,5 +205,4 @@ class ProfilePage extends StatelessWidget {
       ),
     );
   }
-
 }
