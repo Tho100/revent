@@ -1,7 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_profile/profile_data_update.dart';
+import 'package:revent/model/profile_picture_model.dart';
+import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -9,11 +13,18 @@ import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
 import 'package:revent/widgets/text_field/main_textfield.dart';
 
-class EditProfilePage extends StatelessWidget {
+class EditProfilePage extends StatefulWidget {
 
-  EditProfilePage({super.key});
+  const EditProfilePage({super.key});
+
+  @override
+  State<EditProfilePage> createState() => EditProfilePageState();
+}
+
+class EditProfilePageState extends State<EditProfilePage> {
 
   final userData = GetIt.instance<UserDataProvider>();
+  final profileData = GetIt.instance<ProfileDataProvider>();
 
   final bioController = TextEditingController();
 
@@ -23,14 +34,33 @@ class EditProfilePage extends StatelessWidget {
     fontWeight: FontWeight.w700,
   );
 
+  final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
+
+  void _initializeProfilePic() {
+    profilePicNotifier.value = profileData.profilePicture;
+  }
+
+  void _onChangeProfilePicPressed() async {
+    
+    final isProfileSelected = await ProfilePictureModel()
+      .createProfilePicture(context);
+
+    if(isProfileSelected) {
+      profilePicNotifier.value = profileData.profilePicture;
+      //CallToast.call(message: "Updated profile picture");
+    }
+
+  }
+
   Widget _buildProfilePicture(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        const ProfilePictureWidget(
+        ProfilePictureWidget(
           customWidth: 80,
           customHeight: 80,
+          profileDataNotifier: profilePicNotifier,
         ),
 
         const SizedBox(height: 20),
@@ -40,7 +70,7 @@ class EditProfilePage extends StatelessWidget {
           customHeight: 46,
           customFontSize: 15,
           text: 'Change profile picture', 
-          onPressed: () => print('hi'),
+          onPressed: () => _onChangeProfilePicPressed()
         ),
 
       ],
@@ -120,7 +150,7 @@ class EditProfilePage extends StatelessWidget {
                 customFontSize: 15,
                 text: 'Save', 
                 onPressed: () async {
-                  await ProfileDataUpdate(username: userData.username)
+                  await ProfileDataUpdate()
                     .updateBio(bioText: bioController.text);
                 }
               ),
@@ -161,6 +191,18 @@ class EditProfilePage extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _initializeProfilePic();
+  }
+
+  @override
+  void dispose() {
+    profilePicNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: _buildBody(context),
@@ -170,5 +212,4 @@ class EditProfilePage extends StatelessWidget {
       ).buildAppBar(),
     );
   }
-
 }

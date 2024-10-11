@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:typed_data';
+
 import 'package:get_it/get_it.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
@@ -13,11 +16,18 @@ class ProfileDataSetup {
     final followers = profileInfo['followers'];
     final following = profileInfo['following'];
     final bio = profileInfo['bio'];
+    final profilePic = profileInfo['profile_pic'];
 
     profileData.setPosts(totalPosts);
     profileData.setFollowers(followers);
     profileData.setFollowing(following);
     profileData.setBio(bio);
+    
+    final profilePicData = profilePic.toString().isEmpty 
+      ? Uint8List(0)
+      : base64Decode(profilePic);
+
+    profileData.setProfilePicture(profilePicData);
 
   }
 
@@ -27,7 +37,8 @@ class ProfileDataSetup {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = "SELECT posts, following, followers, bio FROM user_profile_info WHERE username = :username";
+    // TODO: SIMPLFIY QUERY with SELECT * FROM....
+    const query = "SELECT posts, following, followers, bio, profile_picture FROM user_profile_info WHERE username = :username";
     final param = {
       'username': username
     };
@@ -39,13 +50,15 @@ class ProfileDataSetup {
     final posts = extractData.extractIntColumn('posts');
     final following = extractData.extractIntColumn('following');
     final followers = extractData.extractIntColumn('followers');
-    final bio = extractData.extractIntColumn('bio');
+    final bio = extractData.extractStringColumn('bio');
+    final profilePic = extractData.extractStringColumn('profile_picture');
 
     _initializeProfileInfo({
-      'total_post': posts,
-      'following': following,
-      'followers': followers,
-      'bio': bio
+      'total_post': posts[0],
+      'following': following[0],
+      'followers': followers[0],
+      'bio': bio[0],
+      'profile_pic': profilePic[0]
     });
 
   }

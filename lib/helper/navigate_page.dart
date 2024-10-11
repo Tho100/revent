@@ -49,7 +49,7 @@ class NavigatePage {
   static void profilePage(BuildContext context) {
     Navigator.push(
       context,
-      PageRouteBuilder(pageBuilder: (_, __, ___) => ProfilePage(),
+      PageRouteBuilder(pageBuilder: (_, __, ___) => const ProfilePage(),
         transitionDuration: const Duration(microseconds: 0)
       ),
     );
