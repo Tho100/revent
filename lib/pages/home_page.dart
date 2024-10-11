@@ -27,7 +27,7 @@ class HomePageState extends State<HomePage> {
   Widget _buildListView() {
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width-36,
+        width: MediaQuery.of(context).size.width - 36,
         child: RefreshIndicator(
           color: ThemeColor.black,
           onRefresh: () async => await RefreshVentData().refresh(),

@@ -59,9 +59,9 @@ class SignUpPageState extends State<SignUpPage> {
 
   Future<void> _processRegistration() async {
 
-    var usernameInput = usernameController.text;
-    var emailInput = emailController.text;
-    var authInput = passwordController.text;
+    final usernameInput = usernameController.text;
+    final emailInput = emailController.text;
+    final authInput = passwordController.text;
 
     if(emailInput.isEmpty && usernameInput.isEmpty && authInput.isEmpty) {
       CustomAlertDialog.alertDialog(context, "Please fill all the required forms.");

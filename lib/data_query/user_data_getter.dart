@@ -36,8 +36,8 @@ class UserDataGetter {
     ]);
 
     return results
-        .expand((result) => result.rows.map((row) => row.assoc().values.first))
-        .toList();
+      .expand((result) => result.rows.map((row) => row.assoc().values.first))
+      .toList();
 
   }
 
