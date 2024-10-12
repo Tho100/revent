@@ -200,7 +200,7 @@ class ProfilePageState extends State<ProfilePage> {
     navigationIndex.setPageIndex(4);
     return WillPopScope(
       onWillPop: () async {
-        NavigatePage.homePage(context);
+        NavigatePage.homePage();
         return true;
       },
       child: Scaffold(

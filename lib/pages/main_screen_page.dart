@@ -9,7 +9,7 @@ class MainScreenPage extends StatelessWidget {
 
   const MainScreenPage({super.key});
 
-  Widget _buildButtons(BuildContext context) {
+  Widget _buildButtons() {
     return Column(
       children: [
 
@@ -17,14 +17,14 @@ class MainScreenPage extends StatelessWidget {
 
         MainButton(
           text: 'Sign In',
-          onPressed: () => NavigatePage.signInPage(context),
+          onPressed: () => NavigatePage.signInPage(),
         ),
 
         const SizedBox(height: 15),
 
         CustomOutlinedButton(
           text: 'Create an account',
-          onPressed: () => NavigatePage.signUpPage(context),
+          onPressed: () => NavigatePage.signUpPage(),
         ),
 
       ],
@@ -69,7 +69,7 @@ class MainScreenPage extends StatelessWidget {
       color: ThemeColor.black,
       width: MediaQuery.of(context).size.width,
       height: 205,
-      child: _buildButtons(context),
+      child: _buildButtons(),
     );
   }
 

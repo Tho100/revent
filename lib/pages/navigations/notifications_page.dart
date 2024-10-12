@@ -16,13 +16,13 @@ class NotificationsPage extends StatelessWidget {
     navigationIndex.setPageIndex(3);
     return WillPopScope(
       onWillPop: () async {
-        NavigatePage.homePage(context);
+        NavigatePage.homePage();
         return true;
       },
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Notifications',
-          customBackOnPressed: () => NavigatePage.homePage(context),
+          customBackOnPressed: () => NavigatePage.homePage(),
           context: context
         ).buildAppBar(),
         bottomNavigationBar: UpdateNavigation(

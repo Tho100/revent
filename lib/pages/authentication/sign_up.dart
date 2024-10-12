@@ -185,7 +185,7 @@ class SignUpPageState extends State<SignUpPage> {
                   shadowColor: Colors.transparent,
                   shape: const StadiumBorder(),
                 ),
-                onPressed: () => NavigatePage.signInPage(context),
+                onPressed: () => NavigatePage.signInPage(),
                 child: Text(
                   "Already have an account?",
                   style: GoogleFonts.inter(

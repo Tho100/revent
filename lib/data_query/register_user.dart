@@ -44,7 +44,7 @@ class RegisterUser {
     await _insertUserInfo(username, email, hashPassword);
 
     if(context.mounted) {
-      NavigatePage.homePage(context);
+      NavigatePage.homePage();
     }
 
     hashPassword = null;

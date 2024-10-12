@@ -52,7 +52,7 @@ class LoginUser {
       await VentDataSetup().setup(); 
 
       if(context.mounted) {
-        NavigatePage.homePage(context);
+        NavigatePage.homePage();
       }
 
     } catch (err) {

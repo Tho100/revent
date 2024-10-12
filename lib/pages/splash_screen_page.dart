@@ -83,7 +83,7 @@ class SplashScreenState extends State<SplashScreen> {
 
       if(getLocalUsername.isEmpty) {
         if(mounted) {
-          NavigatePage.mainScreenPage(context);
+          NavigatePage.mainScreenPage();
         }
         return;
       }
@@ -95,12 +95,12 @@ class SplashScreenState extends State<SplashScreen> {
       await _loadStartupData();
 
       if(mounted) {
-        NavigatePage.homePage(context);
+        NavigatePage.homePage();
       }
 
     } catch (err) {
       print(err.toString());
-      NavigatePage.mainScreenPage(context);
+      NavigatePage.mainScreenPage();
     }
 
   }

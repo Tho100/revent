@@ -11,6 +11,7 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:get_it/get_it.dart';
 
 final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+final navigatorKey = GlobalKey<NavigatorState>();
 
 void initializeLocators() {
   final locators = GetIt.instance;
@@ -44,6 +45,7 @@ class MainRun extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorKey: navigatorKey,
       scaffoldMessengerKey: scaffoldMessengerKey,
       theme: ThemeData(
         actionIconTheme: ActionIconThemeData(
