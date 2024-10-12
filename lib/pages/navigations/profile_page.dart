@@ -145,9 +145,15 @@ class ProfilePageState extends State<ProfilePage> {
     return FutureBuilder<ValueNotifier<Uint8List?>>(
       future: _initializeProfilePic(),
       builder: (context, snapshot) {
-        return ProfilePictureWidget(
-          profileDataNotifier: snapshot.data!,
-        );
+        if(snapshot.connectionState == ConnectionState.done) {
+          return ProfilePictureWidget(
+            profileDataNotifier: snapshot.data!,
+          );
+
+        } else {
+          return const CircularProgressIndicator(color: ThemeColor.white);
+
+        }
       }
     );
   }
