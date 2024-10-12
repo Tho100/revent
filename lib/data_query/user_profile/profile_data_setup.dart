@@ -10,22 +10,22 @@ class ProfileDataSetup {
 
   final profileData = GetIt.instance<ProfileDataProvider>();
 
-  void _initializeProfileInfo(Map<String, dynamic> profileInfo) {
-
-    final totalPosts = profileInfo['total_post'];
-    final followers = profileInfo['followers'];
-    final following = profileInfo['following'];
-    final bio = profileInfo['bio'];
-    final profilePic = profileInfo['profile_pic'];
+  void _initializeProfileInfo({
+    required int totalPosts,
+    required int followers,
+    required int following,
+    required String bio,
+    required String profilePicBase64,
+  }) {
 
     profileData.setPosts(totalPosts);
     profileData.setFollowers(followers);
     profileData.setFollowing(following);
     profileData.setBio(bio);
     
-    final profilePicData = profilePic.toString().isEmpty 
+    final profilePicData = profilePicBase64.toString().isEmpty 
       ? Uint8List(0)
-      : base64Decode(profilePic);
+      : base64Decode(profilePicBase64);
 
     profileData.setProfilePicture(profilePicData);
 
@@ -37,7 +37,6 @@ class ProfileDataSetup {
 
     final conn = await ReventConnect.initializeConnection();
 
-    // TODO: SIMPLFIY QUERY with SELECT * FROM....
     const query = "SELECT posts, following, followers, bio, profile_picture FROM user_profile_info WHERE username = :username";
     final param = {
       'username': username
@@ -47,19 +46,19 @@ class ProfileDataSetup {
 
     final extractData = ExtractData(rowsData: retrievedInfo);
 
-    final posts = extractData.extractIntColumn('posts');
-    final following = extractData.extractIntColumn('following');
-    final followers = extractData.extractIntColumn('followers');
-    final bio = extractData.extractStringColumn('bio');
-    final profilePic = extractData.extractStringColumn('profile_picture');
+    final posts = extractData.extractIntColumn('posts')[0];
+    final following = extractData.extractIntColumn('following')[0];
+    final followers = extractData.extractIntColumn('followers')[0];
+    final bio = extractData.extractStringColumn('bio')[0];
+    final profilePic = extractData.extractStringColumn('profile_picture')[0];
 
-    _initializeProfileInfo({
-      'total_post': posts[0],
-      'following': following[0],
-      'followers': followers[0],
-      'bio': bio[0],
-      'profile_pic': profilePic[0]
-    });
+    _initializeProfileInfo(
+      totalPosts: posts, 
+      followers: followers, 
+      following: following, 
+      bio: bio, 
+      profilePicBase64: profilePic
+    );
 
   }
 
