@@ -9,9 +9,7 @@ class UpdateNavigation {
 
   final BuildContext context;
 
-  UpdateNavigation({
-    required this.context,
-  });
+  UpdateNavigation({required this.context});
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
 

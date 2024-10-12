@@ -4,9 +4,7 @@ class ExtractData {
 
   final IResultSet rowsData;
 
-  ExtractData({
-    required this.rowsData
-  });
+  ExtractData({required this.rowsData});
 
   List<String> extractStringColumn(String columnName) {
     return rowsData.rows.map((row) {

@@ -8,6 +8,7 @@ import 'package:revent/model/profile_picture_model.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
@@ -19,6 +20,7 @@ class EditProfilePage extends StatefulWidget {
 
   @override
   State<EditProfilePage> createState() => EditProfilePageState();
+  
 }
 
 class EditProfilePageState extends State<EditProfilePage> {
@@ -40,15 +42,24 @@ class EditProfilePageState extends State<EditProfilePage> {
     profilePicNotifier.value = profileData.profilePicture;
   }
 
-  void _onChangeProfilePicPressed() async {
+  void _changeProfilePicOnPressed() async {
     
     final isProfileSelected = await ProfilePictureModel()
       .createProfilePicture(context);
 
     if(isProfileSelected) {
-      profilePicNotifier.value = profileData.profilePicture;
-      //CallToast.call(message: "Updated profile picture");
+      _initializeProfilePic();
+      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
     }
+
+  }
+
+  void _saveBioOnPressed() async {
+
+    await ProfileDataUpdate()
+      .updateBio(bioText: bioController.text);
+
+    SnackBarDialog.temporarySnack(message: 'Updated bio.');
 
   }
 
@@ -70,7 +81,7 @@ class EditProfilePageState extends State<EditProfilePage> {
           customHeight: 46,
           customFontSize: 15,
           text: 'Change profile picture', 
-          onPressed: () => _onChangeProfilePicPressed()
+          onPressed: () => _changeProfilePicOnPressed()
         ),
 
       ],
@@ -149,10 +160,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                 customHeight: 46,
                 customFontSize: 15,
                 text: 'Save', 
-                onPressed: () async {
-                  await ProfileDataUpdate()
-                    .updateBio(bioText: bioController.text);
-                }
+                onPressed: () => _saveBioOnPressed()
               ),
             ),
         

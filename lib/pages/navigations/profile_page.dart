@@ -68,7 +68,7 @@ class ProfilePageState extends State<ProfilePage> {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.65,
       child: Text(
-        'Livin the life innit my guy yeah',
+        profileData.bio,
         style: GoogleFonts.inter(
           color: ThemeColor.secondaryWhite,
           fontWeight: FontWeight.w700,
