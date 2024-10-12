@@ -196,9 +196,9 @@ class VentPreviewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    double containerHeight = bodyText.isEmpty ? 160 : 221;
-    double actionButtonsPadding = bodyText.isEmpty ? 0 : 22;
-    double actionButtonsHeightGap = bodyText.isEmpty ? 12 : 26;
+    final containerHeight = bodyText.isEmpty ? 160.0 : 221.0;
+    final actionButtonsPadding = bodyText.isEmpty ? 0.0 : 22.0;
+    final actionButtonsHeightGap = bodyText.isEmpty ? 12.0 : 26.0;
 
     return Material(
       borderRadius: BorderRadius.circular(16),
