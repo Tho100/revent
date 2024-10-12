@@ -1,45 +1,20 @@
 import 'dart:io';
-import 'dart:typed_data';
-
-import 'package:archive/archive.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 
 class Compressor {
 
-  static Future<Uint8List> compressFile(String filePath) async {
+  static Future<List<int>> compressedByteImage({
+    required String path,
+    required int quality,
+  }) async {
 
-    final gzipEncoder = GZipEncoder();
+    File? compressedFile = await _processImageCompression(path: path, quality: quality);
 
-    List<int> fileContent = await File(filePath).readAsBytes();
-
-    List<int> compressedBytes = gzipEncoder.encode(fileContent)!;
-    Uint8List compressedUint8List = Uint8List.fromList(compressedBytes);
-
-    return compressedUint8List;
+    return await compressedFile.readAsBytes();
 
   }
 
-  static Uint8List decompressFile(Uint8List compressedData) {
-
-    final gzipDecoder = GZipDecoder();
-
-    List<int> decompressedData = gzipDecoder.decodeBytes(compressedData);
-
-    return Uint8List.fromList(decompressedData);
-
-  }
-
-  static Uint8List compressByte(Uint8List fileBytes) {
-
-    List<int>? compressedBytes = GZipEncoder().encode(fileBytes);
-
-    Uint8List compressedUint8List = Uint8List.fromList(compressedBytes!);
-
-    return compressedUint8List;
-
-  }
-
-  static Future<File> processImageCompression({
+  static Future<File> _processImageCompression({
     required String path, 
     required int quality
     }) async {
@@ -51,17 +26,6 @@ class Compressor {
     
     return Future.value(compressedFile);
     
-  }
-
-  static Future<List<int>> compressedByteImage({
-    required String path,
-    required int quality,
-  }) async {
-
-    File? compressedFile = await processImageCompression(path: path, quality: quality);
-
-    return await compressedFile.readAsBytes();
-
   }
   
 }
