@@ -23,7 +23,7 @@ class RegisterUser {
     if (verifyUsernameQue.rows.isNotEmpty) {
       if(context.mounted) {
         Navigator.pop(context);
-        CustomAlertDialog.alertDialog(context, "Username is taken.");
+        CustomAlertDialog.alertDialog( "Username is taken.");
       }
       return;
     }
@@ -36,7 +36,7 @@ class RegisterUser {
     if (verifyEmailQue.rows.isNotEmpty) {
       if(context.mounted) {
         Navigator.pop(context);
-        CustomAlertDialog.alertDialog(context, "Email already exists.");
+        CustomAlertDialog.alertDialog("Email already exists.");
       }
       return;
     }

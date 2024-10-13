@@ -52,7 +52,7 @@ class SignUpPageState extends State<SignUpPage> {
       );
 
     } catch (exceptionConnectionFsc) {
-      CustomAlertDialog.alertDialogTitle(context, "Something is wrong...", "No internet connection.");
+      CustomAlertDialog.alertDialogTitle("Something is wrong...", "No internet connection.");
     }
     
   }
@@ -64,42 +64,42 @@ class SignUpPageState extends State<SignUpPage> {
     final authInput = passwordController.text;
 
     if(emailInput.isEmpty && usernameInput.isEmpty && authInput.isEmpty) {
-      CustomAlertDialog.alertDialog(context, "Please fill all the required forms.");
+      CustomAlertDialog.alertDialog("Please fill all the required forms.");
       return;
     }
 
     if (usernameInput.contains(RegExp(r'[&%;?]'))) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign Up Failed", "Username cannot contain special characters.");
+      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Username cannot contain special characters.");
       return;
     }
 
     if (authInput.contains(RegExp(r'[?!]'))) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign Up Failed", "Password cannot contain special characters.");
+      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Password cannot contain special characters.");
       return;
     }
 
     if (authInput.length <= 5) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign Up Failed", "Password must contain more than 5 characters.");
+      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Password must contain more than 5 characters.");
       return;
     }
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign Up Failed", "Email address is not valid.");
+      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Email address is not valid.");
       return;
     }
 
     if (usernameInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign Up Failed","Please enter a username.");
+      CustomAlertDialog.alertDialogTitle("Sign Up Failed","Please enter a username.");
       return;
     }
 
     if (authInput.isEmpty) {
-      CustomAlertDialog.alertDialog(context, "Please enter a password.");
+      CustomAlertDialog.alertDialog("Please enter a password.");
       return;
     }
 
     if (emailInput.isEmpty) {
-      CustomAlertDialog.alertDialog(context, "Please enter your email.");
+      CustomAlertDialog.alertDialog( "Please enter your email.");
       return;
     }
 

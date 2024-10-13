@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/main.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/alert_dialog_widget.dart';
 
 class CustomAlertDialog {
 
-  static Future alertDialog(BuildContext context, String message) {
+  static Future alertDialog(String message) {
     return showDialog(
       barrierDismissible: false,
-      context: context, 
+      context: navigatorKey.currentContext!, 
       builder: (context) {
         return AlertDialogWidget(
           content: Text(
@@ -36,9 +37,9 @@ class CustomAlertDialog {
 
   }
   
-  static Future alertDialogTitle(BuildContext context, String title, String messages) {
+  static Future alertDialogTitle(String title, String messages) {
     return showDialog(
-      context: context,
+      context: navigatorKey.currentContext!,
       builder: (BuildContext context) {
         return AlertDialogWidget(
           title: Text(
