@@ -27,6 +27,7 @@ class VentListView extends StatelessWidget {
                 postTimestamp: ventData.ventPostTimestamp[reversedIndex],
                 totalLikes: ventData.ventTotalLikes[reversedIndex],
                 totalComments: ventData.ventTotalComments[reversedIndex],
+                pfpData: ventData.ventProfilePic[reversedIndex],
               ),
             );
       

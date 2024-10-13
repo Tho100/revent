@@ -8,7 +8,7 @@ import 'package:revent/provider/user_data_provider.dart';
 
 class ProfilePictureGetter {
 
-  Future<Uint8List> getProfilePicture({String? username}) async {
+  Future<Uint8List> getProfilePictures({String? username}) async {
     
     final userData = GetIt.instance<UserDataProvider>();
 

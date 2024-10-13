@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -12,6 +14,7 @@ class VentPreviewer extends StatelessWidget {
   final String postTimestamp;
   final int totalLikes;
   final int totalComments;
+  final Uint8List pfpData;
 
   VentPreviewer({
     required this.title,
@@ -20,6 +23,7 @@ class VentPreviewer extends StatelessWidget {
     required this.postTimestamp,
     required this.totalLikes,
     required this.totalComments,
+    required this.pfpData,
     super.key
   });
 
@@ -43,7 +47,13 @@ class VentPreviewer extends StatelessWidget {
           decoration: const BoxDecoration(
             color: ThemeColor.white,
             shape: BoxShape.circle
-          )
+          ),
+          child: ClipOval(
+            child: Image.memory(
+              pfpData, 
+              fit: BoxFit.cover
+            ),
+          ),
         ),
 
         const SizedBox(width: 10),

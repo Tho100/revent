@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/format_post_timestamp.dart';
+import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 
@@ -8,6 +9,7 @@ class CreateNewItem {
 
   final ventData = GetIt.instance<VentDataProvider>();
   final userData = GetIt.instance<UserDataProvider>();
+  final profileData = GetIt.instance<ProfileDataProvider>();
 
   Future<void> newVent({
     required String ventTitle,
@@ -30,7 +32,10 @@ class CreateNewItem {
     final now = DateTime.now();
     final formattedTimestamp = FormatPostTimestamp().formatTimeAgo(now);
 
-    ventData.addVentData(ventTitle, ventBodyText, userData.username, formattedTimestamp);
+    ventData.addVentData(
+      ventTitle, ventBodyText, 
+      userData.username, formattedTimestamp, profileData.profilePicture
+    );
 
   }
 
