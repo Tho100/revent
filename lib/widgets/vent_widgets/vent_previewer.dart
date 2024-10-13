@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
 
 class VentPreviewer extends StatelessWidget {
@@ -205,7 +206,7 @@ class VentPreviewer extends StatelessWidget {
       color: ThemeColor.black,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () => print(title),
+        onTap: () => NavigatePage.viewVentPostPage(),
         child: Container(
           height: containerHeight,
           decoration: BoxDecoration(

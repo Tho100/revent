@@ -9,6 +9,7 @@ import 'package:revent/pages/navigations/notifications_page.dart';
 import 'package:revent/pages/navigations/profile_page.dart';
 import 'package:revent/pages/navigations/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
+import 'package:revent/pages/vent_post.dart';
 
 class NavigatePage {
 
@@ -67,6 +68,13 @@ class NavigatePage {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (context) => CreateVentPage()),
+    );
+  }
+
+  static void viewVentPostPage() {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (context) => const VentPostPage()),
     );
   }
 
