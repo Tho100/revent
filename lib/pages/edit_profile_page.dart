@@ -77,7 +77,7 @@ class EditProfilePageState extends State<EditProfilePage> {
         const SizedBox(height: 20),
 
         MainButton(
-          customWidth: MediaQuery.of(context).size.width * 0.44,
+          customWidth: MediaQuery.of(context).size.width * 0.47,
           customHeight: 46,
           customFontSize: 15,
           text: 'Change profile picture', 
@@ -120,7 +120,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   Widget _buildUpgradeButton(BuildContext context) {
     return MainButton(
-      customWidth: MediaQuery.of(context).size.width * 0.24,
+      customWidth: MediaQuery.of(context).size.width * 0.26,
       customHeight: 46,
       customFontSize: 15,
       text: 'Upgrade', 
