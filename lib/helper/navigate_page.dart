@@ -71,10 +71,16 @@ class NavigatePage {
     );
   }
 
-  static void viewVentPostPage() {
+  static void viewVentPostPage({
+    required String title, 
+    required String bodyText,
+    required String postTimestamp
+  }) {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (context) => const VentPostPage()),
+      MaterialPageRoute(builder: (context) => VentPostPage(
+        title: title, bodyText: bodyText, postTimestamp: postTimestamp,
+      )),
     );
   }
 

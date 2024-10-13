@@ -206,7 +206,9 @@ class VentPreviewer extends StatelessWidget {
       color: ThemeColor.black,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () => NavigatePage.viewVentPostPage(),
+        onTap: () => NavigatePage.viewVentPostPage(
+          title: title, bodyText: bodyText, postTimestamp: postTimestamp
+        ),
         child: Container(
           height: containerHeight,
           decoration: BoxDecoration(
