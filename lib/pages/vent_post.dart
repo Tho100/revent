@@ -92,7 +92,7 @@ class VentPostPageState extends State<VentPostPage> {
           ),
         ),
 
-        Text(' (dot)  ${widget.postTimestamp}',
+        Text('  •  ${widget.postTimestamp}',
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,
@@ -162,8 +162,8 @@ class VentPostPageState extends State<VentPostPage> {
       ),
       actions: [
         IconButton(
-          icon: const Icon(CupertinoIcons.ellipsis_vertical),
-          color: ThemeColor.thirdWhite,
+          icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
+          color: ThemeColor.white,
           onPressed: () => print('Pressed')
         ),
       ],
