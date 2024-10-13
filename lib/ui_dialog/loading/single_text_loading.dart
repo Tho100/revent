@@ -44,7 +44,8 @@ class SingleTextLoading {
 
           const SizedBox(width: 25),
 
-          Text(title,
+          Text(
+            title,
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontSize: 18,

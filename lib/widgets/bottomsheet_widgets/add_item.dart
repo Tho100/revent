@@ -17,12 +17,16 @@ class BottomsheetAddItem {
       style: ThemeStyle.btnBottomDialogBackgroundStyle,
       child: Row(
         children: [
+
           Icon(icon, color: ThemeColor.secondaryWhite),
+          
           const SizedBox(width: 15.0),
+
           Text(
             text,
             style: ThemeStyle.btnBottomDialogTextStyle
           ),
+
         ],
       ),
     );
