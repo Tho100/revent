@@ -15,14 +15,14 @@ class UpdateNavigation {
 
   Widget showNavigationBar() {
     return NavigationBarDock(
-      homeOnPressed: () => NavigatePage.homePage(context),
-      searchOnPressed: () => NavigatePage.searchPage(context),
+      homeOnPressed: () => NavigatePage.homePage(),
+      searchOnPressed: () => NavigatePage.searchPage(),
       addOnPressed: () { 
         BottomsheetAddItem().buildBottomsheet(
           context: context,
           addVentOnPressed: () {
             Navigator.pop(context);
-            NavigatePage.createVentPage(context); 
+            NavigatePage.createVentPage(); 
           }, 
           addForumOnPressed: () {
             Navigator.pop(context);
@@ -30,8 +30,8 @@ class UpdateNavigation {
           },
         );
       },
-      notificationOnPressed: () => NavigatePage.notificationsPage(context),
-      profileOnPressed: () => NavigatePage.profilePage(context),
+      notificationOnPressed: () => NavigatePage.notificationsPage(),
+      profileOnPressed: () => NavigatePage.profilePage(),
       currentIndex: navigationIndex.pageIndex,
     );
   }

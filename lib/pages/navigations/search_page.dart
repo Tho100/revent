@@ -16,13 +16,13 @@ class SearchPage extends StatelessWidget {
     navigationIndex.setPageIndex(1);
     return WillPopScope(
       onWillPop: () async {
-        NavigatePage.homePage(context);
+        NavigatePage.homePage();
         return true;
       },
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Search',
-          customBackOnPressed: () => NavigatePage.homePage(context),
+          customBackOnPressed: () => NavigatePage.homePage(),
           context: context
         ).buildAppBar(),
         bottomNavigationBar: UpdateNavigation(

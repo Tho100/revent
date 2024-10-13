@@ -72,7 +72,7 @@ class HomePageState extends State<HomePage> {
           child: IconButton(
             icon: const Icon(CupertinoIcons.gear, size: 28),
             color: ThemeColor.thirdWhite,
-            onPressed: () => NavigatePage.settingsPage(context),
+            onPressed: () => NavigatePage.settingsPage(),
           ),
         )
       ],

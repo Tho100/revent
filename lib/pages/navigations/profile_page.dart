@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/model/profile_picture_model.dart';
 import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
@@ -27,31 +28,6 @@ class ProfilePageState extends State<ProfilePage> {
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
-
-  Future<ValueNotifier<Uint8List?>> _initializeProfilePic() async {
-    
-    final profilePictureNotifier = ValueNotifier<Uint8List?>(Uint8List(0));
-
-    try {
-
-      final picData = profileData.profilePicture;
-
-      if(picData.isEmpty) {
-        profilePictureNotifier.value = Uint8List(0);
-
-      } else {
-        profilePictureNotifier.value = picData;   
-
-      }
-      
-      return profilePictureNotifier;
-
-    } catch (err) {
-      return profilePictureNotifier;
-
-    }
-
-  }
 
   Widget _buildUsername() {
     return Text(
@@ -143,11 +119,17 @@ class ProfilePageState extends State<ProfilePage> {
 
   Widget _buildProfilePicture() {
     return FutureBuilder<ValueNotifier<Uint8List?>>(
-      future: _initializeProfilePic(),
+      future: ProfilePictureModel().initializeProfilePic(),
       builder: (context, snapshot) {
-        return ProfilePictureWidget(
-          profileDataNotifier: snapshot.data!,
-        );
+        if(snapshot.connectionState == ConnectionState.done) {
+          return ProfilePictureWidget(
+            profileDataNotifier: snapshot.data!,
+          );
+
+        } else {
+          return const CircularProgressIndicator(color: ThemeColor.white);
+
+        }
       }
     );
   }
@@ -186,7 +168,6 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState(); 
-    _initializeProfilePic();
   }
 
   @override
@@ -194,7 +175,7 @@ class ProfilePageState extends State<ProfilePage> {
     navigationIndex.setPageIndex(4);
     return WillPopScope(
       onWillPop: () async {
-        NavigatePage.homePage(context);
+        NavigatePage.homePage();
         return true;
       },
       child: Scaffold(
