@@ -7,6 +7,7 @@ import 'package:revent/data_query/user_profile/profile_data_update.dart';
 import 'package:revent/model/compressor.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/profile_picture_picker.dart';
+import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
 class ProfilePictureModel {
@@ -58,6 +59,33 @@ class ProfilePictureModel {
     final pfpData = ExtractData(rowsData: result).extractStringColumn('profile_picture');
     return base64Decode(pfpData[0]);
     
+  }
+
+  Future<ValueNotifier<Uint8List?>> initializeProfilePic() async {
+    
+    final profileData = GetIt.instance<ProfileDataProvider>();
+
+    final profilePictureNotifier = ValueNotifier<Uint8List?>(Uint8List(0));
+
+    try {
+
+      final picData = profileData.profilePicture;
+
+      if(picData.isEmpty) {
+        profilePictureNotifier.value = Uint8List(0);
+
+      } else {
+        profilePictureNotifier.value = picData;   
+
+      }
+      
+      return profilePictureNotifier;
+
+    } catch (err) {
+      return profilePictureNotifier;
+
+    }
+
   }
 
 }
