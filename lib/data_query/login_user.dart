@@ -29,7 +29,7 @@ class LoginUser {
 
       if (username == null) {
         if (context.mounted) {
-          CustomAlertDialog.alertDialog(context, "Account not found.");
+          CustomAlertDialog.alertDialog("Account not found.");
         }
         return;
       }
@@ -41,7 +41,7 @@ class LoginUser {
 
       if(!isAuthMatched) {
         if(context.mounted) {
-          CustomAlertDialog.alertDialog(context, "Password is incorrect.");
+          CustomAlertDialog.alertDialog("Password is incorrect.");
         }
         return;
       }
@@ -60,7 +60,7 @@ class LoginUser {
       print(err.toString());
 
       if(context.mounted) {
-        CustomAlertDialog.alertDialogTitle(context, "Something is wrong...", "No internet connection.");
+        CustomAlertDialog.alertDialogTitle("Something is wrong...", "No internet connection.");
       }
       
     } finally {

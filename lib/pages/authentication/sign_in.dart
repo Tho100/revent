@@ -42,17 +42,17 @@ class SignInPageState extends State<SignInPage> {
     final emailInput = emailController.text.trim();
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign In Failed", "Email address is not valid.");
+      CustomAlertDialog.alertDialogTitle("Sign In Failed", "Email address is not valid.");
       return;
     }
 
     if (emailInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign In Failed", "Please enter your email address.");
+      CustomAlertDialog.alertDialogTitle("Sign In Failed", "Please enter your email address.");
       return;
     }
 
     if (authInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle(context, "Sign In Failed", "Please enter your password.");              
+      CustomAlertDialog.alertDialogTitle("Sign In Failed", "Please enter your password.");              
       return;
     }
 

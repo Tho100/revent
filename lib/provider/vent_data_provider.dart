@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class VentDataProvider extends ChangeNotifier {
@@ -10,6 +12,8 @@ class VentDataProvider extends ChangeNotifier {
   List<int> _ventTotalLikes = <int>[];
   List<int> _ventTotalComments = <int>[];
 
+  List<Uint8List> _ventProfilePic = <Uint8List>[]; //TODO: Remove unused typed-specific
+
   List<String> get ventTitles => _ventTitles;
   List<String> get ventBodyText => _ventBodyText;
   List<String> get ventCreator => _ventCreator;
@@ -17,6 +21,8 @@ class VentDataProvider extends ChangeNotifier {
 
   List<int> get ventTotalLikes => _ventTotalLikes;
   List<int> get ventTotalComments => _ventTotalComments;
+
+  List<Uint8List> get ventProfilePic => _ventProfilePic;
 
   void setVentTitles(List<String> titles) {
     _ventTitles = titles;
@@ -48,11 +54,17 @@ class VentDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addVentData(String title, String bodyText, String creator, String postTimestamp) {
+  void setVentProfilePic(List<Uint8List> pfpData) {
+    _ventProfilePic = pfpData;
+    notifyListeners();
+  }
+
+  void addVentData(String title, String bodyText, String creator, String postTimestamp, Uint8List pfpData) {
     _ventTitles.add(title);
     _ventBodyText.add(bodyText);
     _ventCreator.add(creator);
     _ventPostTimestamp.add(postTimestamp);
+    _ventProfilePic.add(pfpData);
     _ventTotalLikes.add(0);
     _ventTotalComments.add(0);
     notifyListeners();

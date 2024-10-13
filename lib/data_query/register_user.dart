@@ -3,6 +3,7 @@ import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/vent_query/vent_data_setup.dart';
 
 class RegisterUser {
 
@@ -23,7 +24,7 @@ class RegisterUser {
     if (verifyUsernameQue.rows.isNotEmpty) {
       if(context.mounted) {
         Navigator.pop(context);
-        CustomAlertDialog.alertDialog(context, "Username is taken.");
+        CustomAlertDialog.alertDialog( "Username is taken.");
       }
       return;
     }
@@ -36,20 +37,18 @@ class RegisterUser {
     if (verifyEmailQue.rows.isNotEmpty) {
       if(context.mounted) {
         Navigator.pop(context);
-        CustomAlertDialog.alertDialog(context, "Email already exists.");
+        CustomAlertDialog.alertDialog("Email already exists.");
       }
       return;
     }
 
     await _insertUserInfo(username, email, hashPassword);
 
+    await VentDataSetup().setup();
+
     if(context.mounted) {
       NavigatePage.homePage();
     }
-
-    hashPassword = null;
-    username = null;
-    email = null;
   
   }
 

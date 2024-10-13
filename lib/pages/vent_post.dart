@@ -84,7 +84,8 @@ class VentPostPageState extends State<VentPostPage> {
 
         const SizedBox(width: 10),
 
-        Text(userData.username,
+        Text(
+          userData.username,
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,
@@ -92,7 +93,8 @@ class VentPostPageState extends State<VentPostPage> {
           ),
         ),
 
-        Text('  •  ${widget.postTimestamp}',
+        Text(
+          '  •  ${widget.postTimestamp}',
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,
@@ -109,7 +111,8 @@ class VentPostPageState extends State<VentPostPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        Text(widget.title,
+        Text(
+          widget.title,
           style: GoogleFonts.inter(
             color: ThemeColor.white,
             fontWeight: FontWeight.w800,
@@ -150,7 +153,8 @@ class VentPostPageState extends State<VentPostPage> {
 
           const SizedBox(width: 12),
     
-          Text('parenting-support',
+          Text(
+            'parenting-support',
             style: GoogleFonts.inter(
               color: ThemeColor.white,
               fontWeight: FontWeight.w800,

@@ -20,7 +20,8 @@ class SnackBarDialog {
             
             SizedBox(
               width: 320,
-              child: Text(message, 
+              child: Text(
+                message, 
                 style: GoogleFonts.inter(
                   fontSize: 13,
                   color: ThemeColor.mediumBlack,

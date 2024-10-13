@@ -121,7 +121,7 @@ class CreateVentPage extends StatelessWidget {
   Future<void> _createVentOnPressed(BuildContext context) async {
 
     if(ventTitleController.text.isEmpty) {
-      CustomAlertDialog.alertDialog(context, "Please enter vent title.");
+      CustomAlertDialog.alertDialog("Please enter vent title.");
       return;
     }
 
@@ -139,7 +139,7 @@ class CreateVentPage extends StatelessWidget {
       }
 
     } catch (err) {
-      CustomAlertDialog.alertDialogTitle(context, "Something went wrong", "Failed to post vent.");
+      CustomAlertDialog.alertDialogTitle("Something went wrong", "Failed to post vent.");
       print(err.toString());
     }
 
