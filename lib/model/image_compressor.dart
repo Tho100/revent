@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter_native_image/flutter_native_image.dart';
 
-class Compressor {
+class ImageCompressor {
 
   static Future<List<int>> compressedByteImage({
     required String path,

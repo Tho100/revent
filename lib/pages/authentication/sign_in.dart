@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/data_query/login_user.dart';
+import 'package:revent/data_query/user_login_service.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/data_query/register_user.dart';
+import 'package:revent/data_query/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/security/hash_model.dart';
