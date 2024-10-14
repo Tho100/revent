@@ -59,18 +59,13 @@ class SignUpPageState extends State<SignUpPage> {
     final emailInput = emailController.text;
     final authInput = passwordController.text;
 
-    if(emailInput.isEmpty && usernameInput.isEmpty && authInput.isEmpty) {
-      CustomAlertDialog.alertDialog("Please fill all the required forms.");
+    if(emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
+      CustomAlertDialog.alertDialog("Please fill all the forms.");
       return;
     }
 
     if (usernameInput.contains(RegExp(r'[&%;?]'))) {
       CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Username cannot contain special characters.");
-      return;
-    }
-
-    if (authInput.contains(RegExp(r'[?!]'))) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Password cannot contain special characters.");
       return;
     }
 
@@ -81,21 +76,6 @@ class SignUpPageState extends State<SignUpPage> {
 
     if (!EmailValidator().validateEmail(emailInput)) {
       CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Email address is not valid.");
-      return;
-    }
-
-    if (usernameInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed","Please enter a username.");
-      return;
-    }
-
-    if (authInput.isEmpty) {
-      CustomAlertDialog.alertDialog("Please enter a password.");
-      return;
-    }
-
-    if (emailInput.isEmpty) {
-      CustomAlertDialog.alertDialog( "Please enter your email.");
       return;
     }
 
