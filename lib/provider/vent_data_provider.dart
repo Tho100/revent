@@ -4,15 +4,15 @@ import 'package:flutter/material.dart';
 
 class VentDataProvider extends ChangeNotifier {
   
-  List<String> _ventTitles = <String>[];
-  List<String> _ventBodyText = <String>[];
-  List<String> _ventCreator = <String>[];
-  List<String> _ventPostTimestamp = <String>[];
+  List<String> _ventTitles = [];
+  List<String> _ventBodyText = [];
+  List<String> _ventCreator = [];
+  List<String> _ventPostTimestamp = [];
 
-  List<int> _ventTotalLikes = <int>[];
-  List<int> _ventTotalComments = <int>[];
+  List<int> _ventTotalLikes = [];
+  List<int> _ventTotalComments = [];
 
-  List<Uint8List> _ventProfilePic = <Uint8List>[]; //TODO: Remove unused typed-specific
+  List<Uint8List> _ventProfilePic = [];
 
   List<String> get ventTitles => _ventTitles;
   List<String> get ventBodyText => _ventBodyText;
