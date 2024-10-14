@@ -8,14 +8,40 @@ class ProfilePictureWidget extends StatelessWidget {
   
   final double? customWidth;
   final double? customHeight;
-  final ValueNotifier<Uint8List?> profileDataNotifier;
+  final Uint8List? pfpData;
+  final ValueNotifier<Uint8List?>? profileDataNotifier;
 
   const ProfilePictureWidget({
-    required this.profileDataNotifier,
+    this.profileDataNotifier,
+    this.pfpData,
     this.customWidth,
     this.customHeight,
     super.key
   });
+
+  Widget _buildNotifierPfp() {
+
+    if (profileDataNotifier == null) {
+      return const Icon(CupertinoIcons.person, color: Colors.white);
+    }
+
+    return ValueListenableBuilder<Uint8List?>(
+      valueListenable: profileDataNotifier!,
+      builder: (context, imageData, child) {
+        if (imageData == null) {
+          return const Icon(CupertinoIcons.person, color: Colors.white);
+        }
+        return _buildPfp(pfpData: imageData);
+      },
+    );
+
+  }
+
+  Widget _buildPfp({required Uint8List pfpData}) {
+    return ClipOval(
+      child: Image.memory(pfpData, fit: BoxFit.cover)
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,19 +52,9 @@ class ProfilePictureWidget extends StatelessWidget {
         color: ThemeColor.white,
         shape: BoxShape.circle
       ),
-      child: ValueListenableBuilder(
-        valueListenable: profileDataNotifier,
-        builder: (context, imageData, child) {
-          return imageData!.isEmpty 
-            ? const Icon(CupertinoIcons.person, color: Colors.white)
-            : ClipOval(
-              child: Image.memory(
-                imageData, 
-                fit: BoxFit.cover
-            ),
-          );
-        },
-      ),
+      child: pfpData != null
+        ? _buildPfp(pfpData: pfpData!)
+        : _buildNotifierPfp(),
     );
   }
 

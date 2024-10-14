@@ -118,6 +118,7 @@ class ProfilePageState extends State<ProfilePage> {
   }
 
   Widget _buildProfilePicture() {
+    // TODO: replace with pfpdata
     return FutureBuilder<ValueNotifier<Uint8List?>>(
       future: ProfilePictureModel().initializeProfilePic(),
       builder: (context, snapshot) {

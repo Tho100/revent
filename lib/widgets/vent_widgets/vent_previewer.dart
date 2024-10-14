@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/pages/vent_post.dart';
 import 'package:revent/themes/theme_color.dart';
 
 class VentPreviewer extends StatelessWidget {
@@ -204,6 +204,21 @@ class VentPreviewer extends StatelessWidget {
     );
   }
 
+  void _viewVentPostPage({
+    required BuildContext context,
+  }) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => VentPostPage(
+        title: title, 
+        bodyText: bodyText, 
+        postTimestamp: postTimestamp,
+        creator: creator, 
+        pfpData: pfpData,
+      )),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
@@ -216,9 +231,7 @@ class VentPreviewer extends StatelessWidget {
       color: ThemeColor.black,
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
-        onTap: () => NavigatePage.viewVentPostPage(
-          title: title, bodyText: bodyText, postTimestamp: postTimestamp
-        ),
+        onTap: () => _viewVentPostPage(context: context),
         child: Container(
           height: containerHeight,
           decoration: BoxDecoration(
