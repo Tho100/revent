@@ -9,7 +9,8 @@ class SnackBarDialog {
     required String message
   }) {
     return scaffoldMessengerKey.currentState!.showSnackBar(
-      SnackBar(        
+      SnackBar(
+        shape: const StadiumBorder(),
         behavior: SnackBarBehavior.floating,
         backgroundColor: ThemeColor.white,
         duration: const Duration(seconds: 2),
