@@ -1,11 +1,21 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
+import 'package:revent/provider/profile_data_provider.dart';
+import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 
 class RegisterUser {
+
+  final userData = GetIt.instance<UserDataProvider>();
+  final profileData = GetIt.instance<ProfileDataProvider>();
+
+  final defaultBioMsg = 'Hello!';
 
   Future<void> register({
     required String? username,
@@ -42,7 +52,9 @@ class RegisterUser {
       return;
     }
 
-    await _insertUserInfo(username, email, hashPassword);
+    _initializeUserInfo(username: username!, email: email!);
+
+    await _insertUserInfo(hashPassword: hashPassword);
 
     await VentDataSetup().setup();
 
@@ -52,7 +64,7 @@ class RegisterUser {
   
   }
 
-  Future<void> _insertUserInfo(String? username, String? email, String? hashPassword) async {
+  Future<void> _insertUserInfo({required String? hashPassword}) async {
 
     try {
       
@@ -66,18 +78,18 @@ class RegisterUser {
 
       final params = [
         {
-          'username': username,
-          'email': email,
+          'username': userData.username,
+          'email': userData.email,
           'password': hashPassword,
           'plan': 'Basic'
         },
         {
-          'bio': 'Hello!',
+          'bio': defaultBioMsg,
           'followers': 0,
           'following': 0,
           'posts': 0,
           'profile_pic': '',
-          'username': username
+          'username': userData.username
         }
       ];
 
@@ -86,12 +98,30 @@ class RegisterUser {
       }
 
       await LocalStorageModel()
-        .setupLocalAccountInformation(username!, email!, "Basic");
+        .setupLocalAccountInformation(userData.username, userData.email, "Basic");
 
     } catch (err) {
       print(err.toString());
     } 
 
   }  
+
+  void _initializeUserInfo({
+    required String username,
+    required String email
+  }) {
+
+    userData.setUsername(username);
+    userData.setEmail(email);
+    userData.setAccountPlan("Basic"); 
+
+    profileData.setPosts(0);
+    profileData.setFollowers(0);
+    profileData.setFollowing(0);
+    profileData.setBio(defaultBioMsg);
+
+    profileData.setProfilePicture(Uint8List(0));
+    
+  }
 
 }
