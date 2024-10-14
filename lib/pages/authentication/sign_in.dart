@@ -31,7 +31,7 @@ class SignInPageState extends State<SignInPage> {
     required String auth,
   }) async {
 
-    await LoginUser().
+    await UserLoginService().
       login(email, auth, isRememberMeCheckedNotifier.value, context);
 
   }

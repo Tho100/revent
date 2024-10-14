@@ -40,7 +40,7 @@ class SignUpPageState extends State<SignUpPage> {
 
       var authHash = AuthModel().computeHash(auth);
       
-      await RegisterUser().register(
+      await UserRegistrationService().register(
         username: username,
         hashPassword: authHash,
         email: email,

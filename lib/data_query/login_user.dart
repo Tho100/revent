@@ -11,7 +11,7 @@ import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 
-class LoginUser {
+class UserLoginService {
 
   final userDataGetter = UserDataGetter();
   final localStorage = LocalStorageModel();
@@ -46,8 +46,8 @@ class LoginUser {
         return;
       }
         
-      await _initializeUserInfo(conn: conn, email: email!);
-      await _initializeRememberMe(isRememberMeChecked: isRememberMeChecked);
+      await _setUserProfileData(conn: conn, email: email!);
+      await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
 
       await VentDataSetup().setup(); 
 
@@ -69,7 +69,7 @@ class LoginUser {
 
   }
 
-  Future<void> _initializeRememberMe({required bool isRememberMeChecked}) async {
+  Future<void> _setAutoLoginData({required bool isRememberMeChecked}) async {
 
     final localUserInfo = (await localStorage.readLocalAccountInformation())['username']!;
 
@@ -80,7 +80,7 @@ class LoginUser {
 
   }
 
-  Future<void> _initializeUserInfo({
+  Future<void> _setUserProfileData({
     required MySQLConnectionPool conn, 
     required String email
   }) async {

@@ -38,7 +38,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
 
-  void _initializeProfilePic() {
+  void _setProfilePic() {
     profilePicNotifier.value = profileData.profilePicture;
   }
 
@@ -48,7 +48,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       .createProfilePicture(context);
 
     if(isProfileSelected) {
-      _initializeProfilePic();
+      _setProfilePic();
       SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
     }
 
@@ -201,7 +201,7 @@ class EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-    _initializeProfilePic();
+    _setProfilePic();
   }
 
   @override
