@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/model/profile_picture_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/profile_picture.dart';
@@ -14,11 +13,15 @@ class VentPostPage extends StatefulWidget {
   final String title;
   final String bodyText;
   final String postTimestamp;
+  final String creator;
+  final Uint8List pfpData;
 
   const VentPostPage({
     required this.title,
     required this.bodyText,
     required this.postTimestamp,
+    required this.creator,
+    required this.pfpData,
     super.key
   });
 
@@ -57,21 +60,10 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildProfilePicture({required bool isFromCommunity}) {
-    return FutureBuilder<ValueNotifier<Uint8List?>>(
-    future: ProfilePictureModel().initializeProfilePic(),
-      builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.done) {
-          return ProfilePictureWidget(
-            customHeight: isFromCommunity ? 40 : 35,
-            customWidth: isFromCommunity ? 40 : 35,
-            profileDataNotifier: snapshot.data!,
-          );
-
-        } else {
-          return const CircularProgressIndicator(color: ThemeColor.white);
-
-        }
-      }
+    return ProfilePictureWidget(
+      customHeight: isFromCommunity ? 40 : 35,
+      customWidth: isFromCommunity ? 40 : 35,
+      pfpData: widget.pfpData,
     );
   }
 
@@ -85,7 +77,7 @@ class VentPostPageState extends State<VentPostPage> {
         const SizedBox(width: 10),
 
         Text(
-          userData.username,
+          widget.creator,
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,

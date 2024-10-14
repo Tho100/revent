@@ -1,10 +1,7 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/model/profile_picture_model.dart';
 import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
@@ -117,23 +114,6 @@ class ProfilePageState extends State<ProfilePage> {
     );
   }
 
-  Widget _buildProfilePicture() {
-    return FutureBuilder<ValueNotifier<Uint8List?>>(
-      future: ProfilePictureModel().initializeProfilePic(),
-      builder: (context, snapshot) {
-        if(snapshot.connectionState == ConnectionState.done) {
-          return ProfilePictureWidget(
-            profileDataNotifier: snapshot.data!,
-          );
-
-        } else {
-          return const CircularProgressIndicator(color: ThemeColor.white);
-
-        }
-      }
-    );
-  }
-
   Widget _buildBody(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 35.0),
@@ -142,7 +122,9 @@ class ProfilePageState extends State<ProfilePage> {
 
           const SizedBox(height: 27),
     
-          _buildProfilePicture(),
+          ProfilePictureWidget(
+            pfpData: profileData.profilePicture,
+          ),
           
           const SizedBox(height: 12),
     
