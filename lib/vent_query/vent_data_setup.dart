@@ -21,7 +21,7 @@ class VentDataSetup {
     required List<int> totalComments,
     required List<Uint8List> profilePic,
   }) {
-
+    
     ventData.setVentTitles(title);
     ventData.setVentBodyText(bodyText);
     ventData.setVentCreator(creator);
