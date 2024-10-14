@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/data_query/register_user.dart';
+import 'package:revent/data_query/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/security/hash_model.dart';
@@ -40,7 +40,7 @@ class SignUpPageState extends State<SignUpPage> {
 
       var authHash = AuthModel().computeHash(auth);
       
-      await RegisterUser().register(
+      await UserRegistrationService().register(
         username: username,
         hashPassword: authHash,
         email: email,
@@ -59,18 +59,13 @@ class SignUpPageState extends State<SignUpPage> {
     final emailInput = emailController.text;
     final authInput = passwordController.text;
 
-    if(emailInput.isEmpty && usernameInput.isEmpty && authInput.isEmpty) {
-      CustomAlertDialog.alertDialog("Please fill all the required forms.");
+    if(emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
+      CustomAlertDialog.alertDialog("Please fill all the forms.");
       return;
     }
 
     if (usernameInput.contains(RegExp(r'[&%;?]'))) {
       CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Username cannot contain special characters.");
-      return;
-    }
-
-    if (authInput.contains(RegExp(r'[?!]'))) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Password cannot contain special characters.");
       return;
     }
 
@@ -81,21 +76,6 @@ class SignUpPageState extends State<SignUpPage> {
 
     if (!EmailValidator().validateEmail(emailInput)) {
       CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Email address is not valid.");
-      return;
-    }
-
-    if (usernameInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed","Please enter a username.");
-      return;
-    }
-
-    if (authInput.isEmpty) {
-      CustomAlertDialog.alertDialog("Please enter a password.");
-      return;
-    }
-
-    if (emailInput.isEmpty) {
-      CustomAlertDialog.alertDialog( "Please enter your email.");
       return;
     }
 

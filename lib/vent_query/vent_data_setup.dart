@@ -12,7 +12,7 @@ class VentDataSetup {
   final ventDataGetter = VentDataGetter();
   final profilePicGetter = ProfilePictureGetter();
 
-  void _initializeData({
+  void _setVentData({
     required List<String> title,
     required List<String> bodyText,
     required List<String> creator,
@@ -51,7 +51,7 @@ class VentDataSetup {
       )
     );
 
-    _initializeData(
+    _setVentData(
       title: title, bodyText: bodyText, creator: creator, postTimestamp: postTimestamp,
       totalLikes: totalLikes, totalComments: totalComments, profilePic: profilePic
     );

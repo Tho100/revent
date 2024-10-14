@@ -10,7 +10,7 @@ class ProfileDataSetup {
 
   final profileData = GetIt.instance<ProfileDataProvider>();
 
-  void _initializeProfileInfo({
+  void _setUserProfileInfo({
     required int totalPosts,
     required int followers,
     required int following,
@@ -52,7 +52,7 @@ class ProfileDataSetup {
     final bio = extractData.extractStringColumn('bio')[0];
     final profilePic = extractData.extractStringColumn('profile_picture')[0];
 
-    _initializeProfileInfo(
+    _setUserProfileInfo(
       totalPosts: posts, 
       followers: followers, 
       following: following, 

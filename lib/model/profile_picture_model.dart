@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_profile/profile_data_update.dart';
-import 'package:revent/model/compressor.dart';
+import 'package:revent/model/image_compressor.dart';
 import 'package:revent/model/profile_picture_picker.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 
@@ -24,7 +24,7 @@ class ProfilePictureModel {
         fileName = pathToString.split("/")
           .last.replaceAll("'", "");
 
-        final compressedImage = await Compressor
+        final compressedImage = await ImageCompressor
           .compressedByteImage(path: pathToString, quality: 18);
 
         final decodedImage = Uint8List.fromList(compressedImage);

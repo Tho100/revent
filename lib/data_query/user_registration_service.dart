@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
@@ -10,7 +11,7 @@ import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 
-class RegisterUser {
+class UserRegistrationService {
 
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
@@ -24,37 +25,23 @@ class RegisterUser {
     required BuildContext context
   }) async {
     
-    final conn = await ReventConnect.initializeConnection();
+    final getUsername = await _getDataInfo(
+      'SELECT username FROM user_information WHERE username = :username',
+      {"username": username}
+    ); 
 
-    final verifyUsernameQue = await conn.execute(
-      "SELECT username FROM user_information WHERE username = :username",
-      {"username": username},
-    );
+    _showWarningOnDataAlreadyExists(context, getUsername, 'Username is taken.');
 
-    if (verifyUsernameQue.rows.isNotEmpty) {
-      if(context.mounted) {
-        Navigator.pop(context);
-        CustomAlertDialog.alertDialog( "Username is taken.");
-      }
-      return;
-    }
-
-    final verifyEmailQue = await conn.execute(
-      "SELECT email FROM user_information WHERE email = :email",
+    final getEmail = await _getDataInfo(
+      'SELECT email FROM user_information WHERE email = :email',
       {"email": email},
     );
     
-    if (verifyEmailQue.rows.isNotEmpty) {
-      if(context.mounted) {
-        Navigator.pop(context);
-        CustomAlertDialog.alertDialog("Email already exists.");
-      }
-      return;
-    }
+    _showWarningOnDataAlreadyExists(context, getEmail, 'Email already exists.');
+    
+    _setUserProfileData(username: username!, email: email!);
 
-    _initializeUserInfo(username: username!, email: email!);
-
-    await _insertUserInfo(hashPassword: hashPassword);
+    await _saveUserData(hashPassword: hashPassword);
 
     await VentDataSetup().setup();
 
@@ -64,7 +51,45 @@ class RegisterUser {
   
   }
 
-  Future<void> _insertUserInfo({required String? hashPassword}) async {
+  void _showWarningOnDataAlreadyExists(BuildContext context, IResultSet data, String errorMessage) {
+
+    if (data.rows.isNotEmpty) {
+      if(context.mounted) {
+        Navigator.pop(context);
+        CustomAlertDialog.alertDialog(errorMessage);
+      }
+      return;
+    }
+
+  }
+
+  void _setUserProfileData({
+    required String username,
+    required String email
+  }) {
+
+    userData.setUsername(username);
+    userData.setEmail(email);
+    userData.setAccountPlan("Basic"); 
+
+    profileData.setPosts(0);
+    profileData.setFollowers(0);
+    profileData.setFollowing(0);
+    profileData.setBio(defaultBioMsg);
+
+    profileData.setProfilePicture(Uint8List(0));
+    
+  }
+
+  Future<IResultSet> _getDataInfo(String query, Map<String, dynamic> param) async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    return await conn.execute(query, param);
+
+  }
+
+  Future<void> _saveUserData({required String? hashPassword}) async {
 
     try {
       
@@ -105,23 +130,5 @@ class RegisterUser {
     } 
 
   }  
-
-  void _initializeUserInfo({
-    required String username,
-    required String email
-  }) {
-
-    userData.setUsername(username);
-    userData.setEmail(email);
-    userData.setAccountPlan("Basic"); 
-
-    profileData.setPosts(0);
-    profileData.setFollowers(0);
-    profileData.setFollowing(0);
-    profileData.setBio(defaultBioMsg);
-
-    profileData.setProfilePicture(Uint8List(0));
-    
-  }
 
 }
