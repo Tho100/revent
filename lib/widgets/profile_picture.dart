@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:revent/themes/theme_color.dart';
 
 class ProfilePictureWidget extends StatelessWidget {
@@ -19,27 +18,23 @@ class ProfilePictureWidget extends StatelessWidget {
     super.key
   });
 
+  final defaultEmptyIcon = const Icon(CupertinoIcons.person, color: ThemeColor.mediumBlack);
+
   Widget _buildNotifierPfp() {
-
-    if (profileDataNotifier == null) {
-      return const Icon(CupertinoIcons.person, color: Colors.white);
-    }
-
     return ValueListenableBuilder<Uint8List?>(
       valueListenable: profileDataNotifier!,
       builder: (context, imageData, child) {
-        if (imageData == null) {
-          return const Icon(CupertinoIcons.person, color: Colors.white);
-        }
-        return _buildPfp(pfpData: imageData);
+        return imageData == null 
+          ? defaultEmptyIcon
+          : _buildPfp(pfpData: imageData);
       },
     );
-
   }
 
   Widget _buildPfp({required Uint8List pfpData}) {
-    return ClipOval(
-      child: Image.memory(pfpData, fit: BoxFit.cover)
+    return pfpData.isEmpty 
+      ? defaultEmptyIcon
+      : ClipOval(child: Image.memory(pfpData, fit: BoxFit.cover)
     );
   }
 
