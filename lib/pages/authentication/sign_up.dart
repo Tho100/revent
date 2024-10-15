@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/data_query/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/email_validator.dart';
@@ -24,9 +25,7 @@ class SignUpPage extends StatefulWidget {
 
 class SignUpPageState extends State<SignUpPage> {
 
-  final usernameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final authController = AuthController();
 
   final visiblePasswordNotifier = ValueNotifier<bool>(false);
 
@@ -55,9 +54,9 @@ class SignUpPageState extends State<SignUpPage> {
 
   Future<void> _processRegistration() async {
 
-    final usernameInput = usernameController.text;
-    final emailInput = emailController.text;
-    final authInput = passwordController.text;
+    final usernameInput = authController.usernameController.text;
+    final emailInput = authController.emailController.text;
+    final authInput = authController.passwordController.text;
 
     if(emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
       CustomAlertDialog.alertDialog("Please fill all the forms.");
@@ -124,21 +123,21 @@ class SignUpPageState extends State<SignUpPage> {
             inputFormatters: [
               FilteringTextInputFormatter.deny(RegExp(r'\s')),
             ],
-            controller: usernameController
+            controller: authController.usernameController
           ),
 
           const SizedBox(height: 15),
 
           MainTextField(
             hintText: "Enter your email address", 
-            controller: emailController
+            controller: authController.emailController
           ),
 
           const SizedBox(height: 15),
 
           AuthTextField().passwordTextField(
             hintText: "Enter a password",
-            controller: passwordController, 
+            controller: authController.passwordController, 
             visibility: visiblePasswordNotifier
           ),
 
@@ -182,9 +181,7 @@ class SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    usernameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
+    authController.dispose();
     visiblePasswordNotifier.dispose();
     super.dispose();
   }
