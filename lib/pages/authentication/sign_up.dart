@@ -79,7 +79,9 @@ class SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    SingleTextLoading().startLoading(
+    final loadingDialog = SingleTextLoading();
+
+    loadingDialog.startLoading(
       title: "Creating account...", 
       context: context
     );
@@ -89,6 +91,8 @@ class SignUpPageState extends State<SignUpPage> {
       email: emailInput, 
       auth: authInput, 
     );
+
+    loadingDialog.stopLoading();
       
   }
 
