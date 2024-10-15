@@ -74,7 +74,7 @@ class VentPreviewer extends StatelessWidget {
             const SizedBox(height: 2.5),
 
             Text(
-              'By $creator',
+              '@$creator',
               style: GoogleFonts.inter(
                 color: ThemeColor.thirdWhite,
                 fontWeight: FontWeight.w800,
