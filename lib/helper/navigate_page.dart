@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:revent/main.dart';
+import 'package:revent/global/constant.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/create_vent_page.dart';

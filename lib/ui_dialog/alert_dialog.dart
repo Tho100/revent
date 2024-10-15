@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/main.dart';
+import 'package:revent/global/constant.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/alert_dialog_widget.dart';
 
