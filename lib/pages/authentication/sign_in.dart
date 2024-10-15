@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/data_query/user_login_service.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -20,8 +21,7 @@ class SignInPage extends StatefulWidget {
 
 class SignInPageState extends State<SignInPage> {
 
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
+  final authController = AuthController();
 
   final visiblePasswordNotifier = ValueNotifier<bool>(false);
   final isRememberMeCheckedNotifier = ValueNotifier<bool>(true); 
@@ -38,8 +38,8 @@ class SignInPageState extends State<SignInPage> {
   
   Future<void> _processLogin() async {
 
-    final authInput = passwordController.text.trim();
-    final emailInput = emailController.text.trim();
+    final authInput = authController.passwordController.text.trim();
+    final emailInput = authController.emailController.text.trim();
 
     if (!EmailValidator().validateEmail(emailInput)) {
       CustomAlertDialog.alertDialogTitle("Sign In Failed", "Email address is not valid.");
@@ -87,14 +87,14 @@ class SignInPageState extends State<SignInPage> {
 
           MainTextField(
             hintText: "Enter your email address", 
-            controller: emailController
+            controller: authController.emailController
           ),
 
           const SizedBox(height: 15),
 
           AuthTextField().passwordTextField(
             hintText: "Enter your password",
-            controller: passwordController, 
+            controller: authController.passwordController, 
             visibility: visiblePasswordNotifier
           ),
 
@@ -187,8 +187,7 @@ class SignInPageState extends State<SignInPage> {
 
   @override
   void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
+    authController.dispose();
     visiblePasswordNotifier.dispose();
     isRememberMeCheckedNotifier.dispose();
     super.dispose();

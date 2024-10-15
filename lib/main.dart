@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/constant.dart';
 import 'package:revent/pages/splash_screen_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
@@ -9,9 +10,6 @@ import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:get_it/get_it.dart';
-
-final scaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
-final navigatorKey = GlobalKey<NavigatorState>();
 
 void initializeLocators() {
   final locators = GetIt.instance;
