@@ -24,7 +24,7 @@ class HomePageState extends State<HomePage> {
   final ventData = GetIt.instance<VentDataProvider>();
   final navigationIndex = GetIt.instance<NavigationProvider>();
 
-  Future<void> refreshVentData() async {
+  Future<void> _refreshVentData() async {
 
     ventData.deleteVentData();
     
@@ -38,7 +38,7 @@ class HomePageState extends State<HomePage> {
         width: MediaQuery.of(context).size.width - 36,
         child: RefreshIndicator(
           color: ThemeColor.black,
-          onRefresh: () async => await refreshVentData(),
+          onRefresh: () async => await _refreshVentData(),
           child: const VentListView()
         ),
       ),
