@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/pages/vent_post.dart';
+import 'package:revent/pages/vent_post_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
