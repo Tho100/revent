@@ -7,7 +7,8 @@ import 'package:revent/themes/theme_style.dart';
 class MainTextField extends StatelessWidget {
 
   final TextEditingController controller;
-  final String hintText;
+  final String? initialValue;
+  final String? hintText;
   final int? maxLength;
   final int? maxLines;
   final bool? autoFocus;
@@ -15,7 +16,8 @@ class MainTextField extends StatelessWidget {
 
   const MainTextField({
     required this.controller,
-    required this.hintText,
+    this.initialValue,
+    this.hintText,
     this.maxLength,
     this.maxLines,
     this.autoFocus,
@@ -26,12 +28,13 @@ class MainTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: initialValue,
       controller: controller,
       maxLength: maxLength,
       maxLines: maxLines,
       autofocus: autoFocus ?? false,
       inputFormatters: inputFormatters,
-      decoration: ThemeStyle.txtFieldStye(hintText: hintText),
+      decoration: ThemeStyle.txtFieldStye(hintText: hintText!),
       style: GoogleFonts.inter(
         color: ThemeColor.secondaryWhite,
         fontWeight: FontWeight.w700,

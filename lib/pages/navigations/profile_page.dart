@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/data_query/user_profile/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
@@ -25,6 +26,14 @@ class ProfilePageState extends State<ProfilePage> {
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
+
+  Future<void> _pageOnRefresh() async {
+
+    profileData.clearProfileData();
+
+    await ProfileDataSetup().setup(username: userData.username);
+
+  }
 
   Widget _buildUsername() {
     return Text(
@@ -161,11 +170,18 @@ class ProfilePageState extends State<ProfilePage> {
         return true;
       },
       child: Scaffold(
-        body: _buildBody(context),
+        body: RefreshIndicator(
+          onRefresh: () async => await _pageOnRefresh(),
+          child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
+            child: _buildBody(context)
+          ),
+        ),
         bottomNavigationBar: UpdateNavigation(
           context: context,
         ).showNavigationBar(),
       ),
     );
   }
+  
 }

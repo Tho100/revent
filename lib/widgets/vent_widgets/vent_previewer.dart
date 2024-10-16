@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/pages/vent_post.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/widgets/profile_picture.dart';
 
 class VentPreviewer extends StatelessWidget {
 
@@ -41,19 +42,10 @@ class VentPreviewer extends StatelessWidget {
     return Row(
       children: [
 
-        Container(
-          width: 30,
-          height: 30,
-          decoration: const BoxDecoration(
-            color: ThemeColor.white,
-            shape: BoxShape.circle
-          ),
-          child: ClipOval(
-            child: Image.memory(
-              pfpData, 
-              fit: BoxFit.cover
-            ),
-          ),
+        ProfilePictureWidget(
+          customWidth: 30,
+          customHeight: 30,
+          pfpData: pfpData,
         ),
 
         const SizedBox(width: 10),
