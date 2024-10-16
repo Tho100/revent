@@ -6,7 +6,7 @@ class AuthController {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
- void dispose() {
+  void dispose() {
     usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();
