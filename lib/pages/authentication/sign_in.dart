@@ -5,6 +5,7 @@ import 'package:revent/data_query/user_login_service.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/widgets/buttons/underlined_button.dart';
 import 'package:revent/widgets/header_text.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/text_field/auth_textfield.dart';
@@ -156,28 +157,9 @@ class SignInPageState extends State<SignInPage> {
 
           const Spacer(),
 
-          SizedBox(
-            height: 35,
-            child: Center(
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: ThemeColor.black,
-                  elevation: 0,
-                  shadowColor: Colors.transparent,
-                  shape: const StadiumBorder(),
-                ),
-                onPressed: () {},
-                child: Text(
-                  "Forgot your password?",
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.white,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 15,
-                    decoration: TextDecoration.underline
-                  ),
-                ),
-              ),
-            ),
+          UnderlinedButton(
+            text: 'Forgot your password?', 
+            onPressed: () {}
           ),
     
         ],
