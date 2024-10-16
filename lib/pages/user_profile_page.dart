@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/data_query/user_profile/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
@@ -36,17 +35,22 @@ class UserProfilePageState extends State<UserProfilePage> {
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
+  int followers = 0;
+  int following = 0;
+  int posts = 0;
+  String bio = '';
+
+  Future<void> _setProfileData() async {
+
+  }
+
   Future<void> _pageOnRefresh() async {
-
-    profileData.clearProfileData();
-
-    await ProfileDataSetup().setup(username: userData.username);
 
   }
 
   Widget _buildUsername() {
     return Text(
-      userData.username,
+      widget.username,
       style: GoogleFonts.inter(
         color: ThemeColor.white,
         fontWeight: FontWeight.w800,
