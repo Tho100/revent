@@ -2,9 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/constant.dart';
+import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/pages/user_profile_page.dart';
 import 'package:revent/pages/vent_post_page.dart';
+import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
 class VentPreviewer extends StatelessWidget {
@@ -38,60 +44,98 @@ class VentPreviewer extends StatelessWidget {
     ),
   );
 
+  final userData = GetIt.instance<UserDataProvider>();
+
+  void _goToProfilePage() {
+
+    if(creator != userData.username) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => UserProfilePage(
+          username: creator, pfpData: pfpData
+          )
+        )
+      ); 
+
+    } else {
+      NavigatePage.myProfilePage();
+
+    }
+
+  }
+
+  void _viewVentPostPage({
+    required BuildContext context,
+  }) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => VentPostPage(
+        title: title, 
+        bodyText: bodyText, 
+        postTimestamp: postTimestamp,
+        creator: creator, 
+        pfpData: pfpData,
+      )),
+    );
+  }
+
   Widget _buildCommunityAndCreatorHeader() {
-    return Row(
-      children: [
-
-        ProfilePictureWidget(
-          customWidth: 30,
-          customHeight: 30,
-          pfpData: pfpData,
-        ),
-
-        const SizedBox(width: 10),
-
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-
-            Text(
-              'motivation',
-              style: GoogleFonts.inter(
-                color: ThemeColor.white,
-                fontWeight: FontWeight.w800,
-                fontSize: 15,
+    return InkWellEffect(
+      onPressed: () => _goToProfilePage(),
+      child: Row(
+        children: [
+    
+          ProfilePictureWidget(
+            customWidth: 30,
+            customHeight: 30,
+            pfpData: pfpData,
+          ),
+    
+          const SizedBox(width: 10),
+    
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+    
+              Text(
+                'motivation',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.white,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 15,
+                ),
               ),
-            ),
-
-            const SizedBox(height: 2.5),
-
-            Text(
-              '@$creator',
+    
+              const SizedBox(height: 2.5),
+    
+              Text(
+                '@$creator',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.thirdWhite,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 12
+                ),
+              ),
+    
+            ],
+          ),
+    
+          const Spacer(),
+    
+          Padding(
+            padding: const EdgeInsets.only(bottom: 12.5, right: 4.0),
+            child: Text(
+              postTimestamp,
               style: GoogleFonts.inter(
                 color: ThemeColor.thirdWhite,
                 fontWeight: FontWeight.w800,
-                fontSize: 12
+                fontSize: 13.2
               ),
             ),
-
-          ],
-        ),
-
-        const Spacer(),
-
-        Padding(
-          padding: const EdgeInsets.only(bottom: 12.5, right: 4.0),
-          child: Text(
-            postTimestamp,
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w800,
-              fontSize: 13.2
-            ),
           ),
-        ),
-
-      ],
+    
+        ],
+      ),
     );
   }
 
@@ -196,21 +240,6 @@ class VentPreviewer extends StatelessWidget {
     );
   }
 
-  void _viewVentPostPage({
-    required BuildContext context,
-  }) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => VentPostPage(
-        title: title, 
-        bodyText: bodyText, 
-        postTimestamp: postTimestamp,
-        creator: creator, 
-        pfpData: pfpData,
-      )),
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
 
@@ -218,57 +247,52 @@ class VentPreviewer extends StatelessWidget {
     final actionButtonsPadding = bodyText.isEmpty ? 0.0 : 22.0;
     final actionButtonsHeightGap = bodyText.isEmpty ? 12.0 : 26.0;
 
-    return Material(
-      borderRadius: BorderRadius.circular(16),
-      color: ThemeColor.black,
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16),
-        onTap: () => _viewVentPostPage(context: context),
-        child: Container(
-          height: containerHeight,
-          decoration: BoxDecoration(
-            color: Colors.transparent,
-            border: Border.all(
-              color: ThemeColor.thirdWhite,
-              width: 0.8
-            ),
-            borderRadius: BorderRadius.circular(16),
+    return InkWellEffect(
+      onPressed: () => _viewVentPostPage(context: context),
+      child: Container(
+        height: containerHeight,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          border: Border.all(
+            color: ThemeColor.thirdWhite,
+            width: 0.8
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(14.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-          
-                _buildCommunityAndCreatorHeader(),
-          
-                const SizedBox(height: 14),
-          
-                _buildTitle(context),
-          
-                const SizedBox(height: 12),
-          
-                _buildBodyText(),
-          
-                SizedBox(height: actionButtonsHeightGap),
-          
-                Padding(
-                  padding: EdgeInsets.only(top: actionButtonsPadding),
-                  child: Row(
-                    children: [
-                          
-                      _buildLikeButton(),
-                          
-                      const SizedBox(width: 8),
-                          
-                      _buildCommentsButton(),
-                          
-                    ],
-                  ),
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(14.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+        
+              _buildCommunityAndCreatorHeader(),
+        
+              const SizedBox(height: 14),
+        
+              _buildTitle(context),
+        
+              const SizedBox(height: 12),
+        
+              _buildBodyText(),
+        
+              SizedBox(height: actionButtonsHeightGap),
+        
+              Padding(
+                padding: EdgeInsets.only(top: actionButtonsPadding),
+                child: Row(
+                  children: [
+                        
+                    _buildLikeButton(),
+                        
+                    const SizedBox(width: 8),
+                        
+                    _buildCommentsButton(),
+                        
+                  ],
                 ),
-          
-              ],
-            ),
+              ),
+        
+            ],
           ),
         ),
       ),

@@ -8,6 +8,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/user_profile_page.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
 class VentPostPage extends StatefulWidget {
@@ -46,7 +47,7 @@ class VentPostPageState extends State<VentPostPage> {
           )
         )
       ); 
-      
+
     } else {
       NavigatePage.myProfilePage();
 
@@ -88,8 +89,8 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildProfileHeader() {
-    return GestureDetector(
-      onTap: () => _goToProfilePage(),
+    return InkWellEffect(
+      onPressed: () => _goToProfilePage(),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
