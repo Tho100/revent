@@ -39,8 +39,4 @@ class CreateNewItem {
 
   }
 
-  void newForum() {
-
-  }
-
 }
