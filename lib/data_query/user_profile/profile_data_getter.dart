@@ -3,13 +3,17 @@ import 'package:revent/model/extract_data.dart';
 
 class ProfileDataGetter {
 
-  Future<Map<String, dynamic>> getData({
+  Future<Map<String, dynamic>> getProfileData({
+    required bool isMyProfile,
     required String username
   }) async {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = "SELECT posts, following, followers, bio, profile_picture FROM user_profile_info WHERE username = :username";
+    final query = isMyProfile 
+      ? "SELECT posts, following, followers, bio, profile_picture FROM user_profile_info WHERE username = :username"
+      : "SELECT posts, following, followers, bio FROM user_profile_info WHERE username = :username";
+
     final param = {
       'username': username
     };
@@ -22,15 +26,19 @@ class ProfileDataGetter {
     final following = extractData.extractIntColumn('following')[0];
     final followers = extractData.extractIntColumn('followers')[0];
     final bio = extractData.extractStringColumn('bio')[0];
-    final profilePic = extractData.extractStringColumn('profile_picture')[0];
 
-    return {
+    Map<String, dynamic> result = {
       'posts': posts, 
       'followers': followers, 
       'following': following, 
-      'bio': bio, 
-      'profile_pic': profilePic
+      'bio': bio
     };
+
+    if (isMyProfile) {
+      result['profile_pic'] = extractData.extractStringColumn('profile_picture')[0];
+    }
+
+    return result;
 
   }
 

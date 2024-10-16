@@ -34,7 +34,8 @@ class ProfileDataSetup {
     required String username
   }) async {
 
-    final getProfileData = await ProfileDataGetter().getData(username: username);
+    final getProfileData = await ProfileDataGetter()
+      .getProfileData(isMyProfile: true, username: username);
 
     _setUserProfileInfo(
       totalPosts: getProfileData['posts'], 

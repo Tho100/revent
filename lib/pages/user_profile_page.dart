@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
@@ -41,6 +42,14 @@ class UserProfilePageState extends State<UserProfilePage> {
   String bio = '';
 
   Future<void> _setProfileData() async {
+
+    final getProfileData = await ProfileDataGetter()
+      .getProfileData(isMyProfile: false, username: widget.username);
+    
+    posts = getProfileData['posts'];
+    followers = getProfileData['followers']; 
+    following = getProfileData['following'];
+    bio =  getProfileData['bio'];
 
   }
 
@@ -171,7 +180,8 @@ class UserProfilePageState extends State<UserProfilePage> {
 
   @override
   void initState() {
-    super.initState(); 
+    super.initState();
+    _setProfileData();
   }
 
   @override
