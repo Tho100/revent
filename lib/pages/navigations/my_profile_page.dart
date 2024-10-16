@@ -12,16 +12,16 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
-class ProfilePage extends StatefulWidget {
+class MyProfilePage extends StatefulWidget {
 
-  const ProfilePage({super.key});
+  const MyProfilePage({super.key});
 
   @override
-  State<ProfilePage> createState() => ProfilePageState();
+  State<MyProfilePage> createState() => MyProfilePageState();
 
 }
 
-class ProfilePageState extends State<ProfilePage> {
+class MyProfilePageState extends State<MyProfilePage> {
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();

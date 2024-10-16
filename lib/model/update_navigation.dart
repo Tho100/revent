@@ -31,7 +31,7 @@ class UpdateNavigation {
         );
       },
       notificationOnPressed: () => NavigatePage.notificationsPage(),
-      profileOnPressed: () => NavigatePage.profilePage(),
+      profileOnPressed: () => NavigatePage.myProfilePage(),
       currentIndex: navigationIndex.pageIndex,
     );
   }

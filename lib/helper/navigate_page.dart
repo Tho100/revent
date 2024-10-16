@@ -6,7 +6,7 @@ import 'package:revent/pages/create_vent_page.dart';
 import 'package:revent/pages/home_page.dart';
 import 'package:revent/pages/main_screen_page.dart';
 import 'package:revent/pages/navigations/notifications_page.dart';
-import 'package:revent/pages/navigations/profile_page.dart';
+import 'package:revent/pages/navigations/my_profile_page.dart';
 import 'package:revent/pages/navigations/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 
@@ -47,10 +47,10 @@ class NavigatePage {
     );
   }
 
-  static void profilePage() {
+  static void myProfilePage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      PageRouteBuilder(pageBuilder: (_, __, ___) => const ProfilePage(),
+      PageRouteBuilder(pageBuilder: (_, __, ___) => const MyProfilePage(),
         transitionDuration: const Duration(microseconds: 0)
       ),
     );
