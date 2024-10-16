@@ -7,7 +7,7 @@ import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/vent_query/refresh_vent_data.dart';
+import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/vent_widgets/vent_listview.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,13 +24,21 @@ class HomePageState extends State<HomePage> {
   final ventData = GetIt.instance<VentDataProvider>();
   final navigationIndex = GetIt.instance<NavigationProvider>();
 
+  Future<void> _refreshVentData() async {
+
+    ventData.deleteVentData();
+    
+    await VentDataSetup().setup();
+
+  }
+
   Widget _buildListView() {
     return Center(
       child: SizedBox(
         width: MediaQuery.of(context).size.width - 36,
         child: RefreshIndicator(
           color: ThemeColor.black,
-          onRefresh: () async => await RefreshVentData().refresh(),
+          onRefresh: () async => await _refreshVentData(),
           child: const VentListView()
         ),
       ),
