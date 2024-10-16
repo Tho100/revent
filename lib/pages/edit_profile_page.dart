@@ -146,6 +146,7 @@ class EditProfilePageState extends State<EditProfilePage> {
         
             MainTextField(
               controller: bioController, 
+              initialValue: profileData.bio,
               hintText: 'Enter your bio here...',
               maxLines: 5,
               maxLength: 100,
