@@ -45,4 +45,12 @@ class ProfileDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearProfileData() {
+    _posts = 0;
+    _followers = 0;
+    _following = 0;
+    _bio = '';
+    _profilePicture = Uint8List(0);
+  }
+
 }

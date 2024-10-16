@@ -5,7 +5,7 @@ import 'package:revent/vent_query/vent_data_setup.dart';
 class RefreshVentData {
 
   final ventData = GetIt.instance<VentDataProvider>();
-
+  // TODO: Move to home-page class
   Future<void> refresh() async {
 
     ventData.deleteVentData();
