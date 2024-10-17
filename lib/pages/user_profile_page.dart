@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
@@ -10,6 +11,7 @@ import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
@@ -40,6 +42,8 @@ class UserProfilePageState extends State<UserProfilePage> {
   final postsNotifier = ValueNotifier<int>(0);
   final bioNotifier = ValueNotifier<String>('');
 
+  final isFollowingNotifier = ValueNotifier<bool>(false);
+
   Future<void> _setProfileData() async {
 
     final getProfileData = await ProfileDataGetter()
@@ -49,6 +53,16 @@ class UserProfilePageState extends State<UserProfilePage> {
     followersNotifier.value = getProfileData['followers']; 
     followingNotifier.value = getProfileData['following'];
     bioNotifier.value =  getProfileData['bio'];
+
+  }
+
+  void _followUserOnPressed() async {
+
+    isFollowingNotifier.value 
+      ? await UserActions(username: widget.username).userFollowAction(follow: false)
+      : await UserActions(username: widget.username).userFollowAction(follow: true);
+
+    isFollowingNotifier.value = !isFollowingNotifier.value;
 
   }
 
@@ -87,12 +101,25 @@ class UserProfilePageState extends State<UserProfilePage> {
   Widget _buildEditProfileButton(BuildContext context) {
     return Align(
       alignment: Alignment.center,
-      child: MainButton(
-        customWidth: MediaQuery.of(context).size.width * 0.45,
-        customHeight: MediaQuery.of(context).size.height * 0.050,
-        customFontSize: 15.5,
-        text: 'Follow',
-        onPressed: () {}
+      child: ValueListenableBuilder(
+        valueListenable: isFollowingNotifier,
+        builder: (context, isFollowing, child) {
+          return isFollowing 
+            ? CustomOutlinedButton(
+              customWidth: MediaQuery.of(context).size.width * 0.45,
+              customHeight: MediaQuery.of(context).size.height * 0.050,
+              customFontSize: 15.5,
+              text: 'Following',
+              onPressed: () => _followUserOnPressed()
+            )
+            : MainButton(
+              customWidth: MediaQuery.of(context).size.width * 0.45,
+              customHeight: MediaQuery.of(context).size.height * 0.050,
+              customFontSize: 15.5,
+              text: 'Follow',
+              onPressed: () => _followUserOnPressed()
+            );
+        },
       ),
     );
   }
