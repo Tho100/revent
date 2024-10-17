@@ -218,6 +218,7 @@ class UserProfilePageState extends State<UserProfilePage> {
     followingNotifier.dispose();
     postsNotifier.dispose();
     bioNotifier.dispose();
+    isFollowingNotifier.dispose();
     super.dispose();
   }
 

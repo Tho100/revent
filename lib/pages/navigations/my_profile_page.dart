@@ -116,9 +116,13 @@ class MyProfilePageState extends State<MyProfilePage> {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
+              
               _buildPopularityHeader('followers', profileData.followers),
+
               _buildPopularityHeader('posts', profileData.posts),
+
               _buildPopularityHeader('following', profileData.following),
+
             ],
           );
         },
