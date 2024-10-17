@@ -1,4 +1,7 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
@@ -9,6 +12,8 @@ import 'package:revent/pages/navigations/notifications_page.dart';
 import 'package:revent/pages/navigations/my_profile_page.dart';
 import 'package:revent/pages/navigations/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
+import 'package:revent/pages/user_profile_page.dart';
+import 'package:revent/provider/user_data_provider.dart';
 
 class NavigatePage {
 
@@ -86,6 +91,26 @@ class NavigatePage {
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (context) => const SignInPage()),
     );
+  }
+
+  static void userProfilePage({required String username, required Uint8List pfpData}) {
+
+    final userData = GetIt.instance<UserDataProvider>();
+
+    if(username != userData.username) {
+      Navigator.push(
+        navigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) => UserProfilePage(
+          username: username, pfpData: pfpData
+          )
+        )
+      ); 
+
+    } else {
+      myProfilePage();
+
+    }
+
   }
 
 }

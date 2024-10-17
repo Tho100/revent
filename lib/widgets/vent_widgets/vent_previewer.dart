@@ -2,13 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/pages/user_profile_page.dart';
 import 'package:revent/pages/vent_post_page.dart';
-import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
@@ -44,26 +40,6 @@ class VentPreviewer extends StatelessWidget {
     ),
   );
 
-  final userData = GetIt.instance<UserDataProvider>();
-
-  void _goToProfilePage() {
-
-    if(creator != userData.username) {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (context) => UserProfilePage(
-          username: creator, pfpData: pfpData
-          )
-        )
-      ); 
-
-    } else {
-      NavigatePage.myProfilePage();
-
-    }
-
-  }
-
   void _viewVentPostPage({
     required BuildContext context,
   }) {
@@ -81,7 +57,7 @@ class VentPreviewer extends StatelessWidget {
 
   Widget _buildCommunityAndCreatorHeader() {
     return InkWellEffect(
-      onPressed: () => _goToProfilePage(),
+      onPressed: () => NavigatePage.userProfilePage(username: creator, pfpData: pfpData),
       child: Row(
         children: [
     
