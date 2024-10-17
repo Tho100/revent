@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:revent/data_query/user_profile/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
@@ -110,15 +111,17 @@ class MyProfilePageState extends State<MyProfilePage> {
   Widget _popularityWidgets(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-    
-          _buildPopularityHeader('followers', 10),
-          _buildPopularityHeader('posts', 5),
-          _buildPopularityHeader('following', 12),
-    
-        ],
+      child: Consumer<ProfileDataProvider>(
+        builder: (context, profileData, child) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildPopularityHeader('followers', profileData.followers),
+              _buildPopularityHeader('posts', profileData.posts),
+              _buildPopularityHeader('following', profileData.following),
+            ],
+          );
+        },
       ),
     );
   }
@@ -171,6 +174,7 @@ class MyProfilePageState extends State<MyProfilePage> {
       },
       child: Scaffold(
         body: RefreshIndicator(
+          color: ThemeColor.mediumBlack,
           onRefresh: () async => await _pageOnRefresh(),
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
