@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -102,6 +103,11 @@ class UserProfilePageState extends State<UserProfilePage> {
   }
 
   Widget _buildEditProfileButton(BuildContext context) {
+
+    final buttonWidth = MediaQuery.of(context).size.width * 0.45;
+    final buttonHeight = MediaQuery.of(context).size.height * 0.050;
+    const fontSize = 15.5;
+
     return Align(
       alignment: Alignment.center,
       child: ValueListenableBuilder(
@@ -109,22 +115,23 @@ class UserProfilePageState extends State<UserProfilePage> {
         builder: (context, isFollowing, child) {
           return isFollowing 
             ? CustomOutlinedButton(
-              customWidth: MediaQuery.of(context).size.width * 0.45,
-              customHeight: MediaQuery.of(context).size.height * 0.050,
-              customFontSize: 15.5,
+              customWidth: buttonWidth,
+              customHeight: buttonHeight,
+              customFontSize: fontSize,
               text: 'Following',
               onPressed: () => _followUserOnPressed()
             )
             : MainButton(
-              customWidth: MediaQuery.of(context).size.width * 0.45,
-              customHeight: MediaQuery.of(context).size.height * 0.050,
-              customFontSize: 15.5,
+              customWidth: buttonWidth,
+              customHeight: buttonHeight,
+              customFontSize: fontSize,
               text: 'Follow',
               onPressed: () => _followUserOnPressed()
             );
         },
       ),
     );
+
   }
 
   Widget _buildPopularityHeader(String header, ValueNotifier notifierValue) {
@@ -169,7 +176,9 @@ class UserProfilePageState extends State<UserProfilePage> {
         children: [
     
           _buildPopularityHeader('followers', followersNotifier),
+
           _buildPopularityHeader('posts', postsNotifier),
+
           _buildPopularityHeader('following', followingNotifier),
     
         ],
@@ -213,7 +222,6 @@ class UserProfilePageState extends State<UserProfilePage> {
 
   @override
   void dispose() {
-    super.initState();
     followersNotifier.dispose();
     followingNotifier.dispose();
     postsNotifier.dispose();
@@ -227,7 +235,7 @@ class UserProfilePageState extends State<UserProfilePage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: ''
+        title: '',
       ).buildAppBar(),
       body: RefreshIndicator(
         color: ThemeColor.mediumBlack,

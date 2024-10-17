@@ -1,6 +1,5 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/connection/revent_connect.dart';
-import 'package:revent/model/extract_data.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
 class UserFollowing {
@@ -13,20 +12,15 @@ class UserFollowing {
 
       final conn = await ReventConnect.initializeConnection();
 
-      const query = 'SELECT follower FROM user_follows_info WHERE following = :following';
+      const query = 'SELECT 1 FROM user_follows_info WHERE following = :following AND follower = :follower LIMIT 1';
       final param = {
-        'following': username
+        'following': username,
+        'follower': userData.username
       };
 
       final results = await conn.execute(query, param);
 
-      final rowsData = ExtractData(rowsData: results).extractStringColumn('follower');
-
-      if(rowsData.contains(userData.username)) {
-        return true;
-      }
-
-      return false;
+      return results.rows.isNotEmpty;
 
     } catch (err) {
       return false;
