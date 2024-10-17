@@ -214,6 +214,13 @@ class UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
+  Widget _buildActionButton() {
+    return IconButton(
+      icon: const Icon(CupertinoIcons.ellipsis_vertical),
+      onPressed: () => print('pressed')
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -236,6 +243,7 @@ class UserProfilePageState extends State<UserProfilePage> {
       appBar: CustomAppBar(
         context: context, 
         title: '',
+        actions: [_buildActionButton()]
       ).buildAppBar(),
       body: RefreshIndicator(
         color: ThemeColor.mediumBlack,
