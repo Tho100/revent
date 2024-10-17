@@ -1,4 +1,6 @@
+import 'package:get_it/get_it.dart';
 import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/provider/user_data_provider.dart';
 
 class UserActions {
 
@@ -6,26 +8,44 @@ class UserActions {
 
   UserActions({required this.username});
 
-  Future<bool> userFollowAction({required bool follow}) async {
+  final userData = GetIt.instance<UserDataProvider>();
+
+  Future<void> userFollowAction({required bool follow}) async {
     
     try {
 
       final conn = await ReventConnect.initializeConnection();
 
-      final query = follow 
-        ? "UPDATE user_profile_info SET followers = followers + 1 WHERE username = :username"
-        : "UPDATE user_profile_info SET followers = followers - 1 WHERE username = :username";
-        
-      final param = {
-        'username': username
-      };
+      final updateFollowerValueQuery = follow 
+        ? 'UPDATE user_profile_info SET followers = followers + 1 WHERE username = :username'
+        : 'UPDATE user_profile_info SET followers = followers - 1 WHERE username = :username';
 
-      await conn.execute(query, param);
+      final insertOrDeleteFollowerQuery = follow 
+        ? 'INSERT INTO user_follows_info (follower, following) VALUES (:follower, :following)'
+        : 'DELETE FROM user_follows_info WHERE following = :following AND follower = :follower';
 
-      return true;
+
+      final queries = [
+        updateFollowerValueQuery,
+        insertOrDeleteFollowerQuery
+      ];
+
+      final params = [
+        {
+          'username': username
+        },
+        { 
+          'follower': userData.username,
+          'following': username
+        }
+      ];
+
+      for (int i=0; i<queries.length; i++) {
+        await conn.execute(queries[i], params[i]);
+      }
 
     } catch (err) {
-      return false;
+      print(err.toString());
     }
     
   }
