@@ -176,6 +176,7 @@ class MyProfilePageState extends State<MyProfilePage> {
       },
       child: Scaffold(
         body: RefreshIndicator(
+          color: ThemeColor.mediumBlack,
           onRefresh: () async => await _pageOnRefresh(),
           child: SingleChildScrollView(
             physics: const AlwaysScrollableScrollPhysics(),
