@@ -57,8 +57,6 @@ class UserLoginService {
 
     } catch (err) {
 
-      print(err.toString());
-
       if(context.mounted) {
         CustomAlertDialog.alertDialogTitle("Something is wrong...", "No internet connection.");
       }
