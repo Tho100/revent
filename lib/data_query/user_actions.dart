@@ -16,6 +16,10 @@ class UserActions {
 
       final conn = await ReventConnect.initializeConnection();
 
+      final updateFollowingValueQuery = follow 
+        ? 'UPDATE user_profile_info SET following = following + 1 WHERE username = :username'
+        : 'UPDATE user_profile_info SET following = following - 1 WHERE username = :username';
+
       final updateFollowerValueQuery = follow 
         ? 'UPDATE user_profile_info SET followers = followers + 1 WHERE username = :username'
         : 'UPDATE user_profile_info SET followers = followers - 1 WHERE username = :username';
@@ -26,11 +30,15 @@ class UserActions {
 
 
       final queries = [
+        updateFollowingValueQuery,
         updateFollowerValueQuery,
         insertOrDeleteFollowerQuery
       ];
 
       final params = [
+        {
+          'username': userData.username
+        },
         {
           'username': username
         },

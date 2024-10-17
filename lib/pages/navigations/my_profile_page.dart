@@ -27,6 +27,11 @@ class MyProfilePageState extends State<MyProfilePage> {
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
+  final followersNotifier = ValueNotifier<int>(0);
+  final followingNotifier = ValueNotifier<int>(0);
+  final postsNotifier = ValueNotifier<int>(0);
+  final bioNotifier = ValueNotifier<String>('');
+
   Future<void> _pageOnRefresh() async {
 
     profileData.clearProfileData();
@@ -114,9 +119,9 @@ class MyProfilePageState extends State<MyProfilePage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
     
-          _buildPopularityHeader('followers', 10),
-          _buildPopularityHeader('posts', 5),
-          _buildPopularityHeader('following', 12),
+          _buildPopularityHeader('followers', profileData.followers),
+          _buildPopularityHeader('posts', profileData.posts),
+          _buildPopularityHeader('following', profileData.following),
     
         ],
       ),
