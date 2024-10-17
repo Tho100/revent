@@ -226,6 +226,7 @@ class UserProfilePageState extends State<UserProfilePage> {
         title: ''
       ).buildAppBar(),
       body: RefreshIndicator(
+        color: ThemeColor.mediumBlack,
         onRefresh: () async => await _setProfileData(),
         child: SingleChildScrollView(
           physics: const AlwaysScrollableScrollPhysics(),
