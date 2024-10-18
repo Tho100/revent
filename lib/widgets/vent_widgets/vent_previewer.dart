@@ -7,6 +7,7 @@ import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent_post_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
@@ -134,88 +135,18 @@ class VentPreviewer extends StatelessWidget {
       ),
     );
   }
-
-  Widget _buildActionButton({
-    required VoidCallback onPressed,
-    required Widget child, 
-  }) {
-    return SizedBox(
-      height: 34,
-      child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          foregroundColor: ThemeColor.thirdWhite,
-          backgroundColor: ThemeColor.black,
-          shape: const StadiumBorder(
-            side: BorderSide(
-              color: ThemeColor.thirdWhite
-            )
-          ),
-        ),
-        onPressed: onPressed,
-        child: child
-      )
-    );
-  }
-
+  
   Widget _buildLikeButton() {
-    return _buildActionButton(
-      onPressed: () => print('liked'), 
-      child: Row(
-        children: [
-
-          Transform.translate(
-            offset: const Offset(0, -1),
-            child: const Icon(
-              CupertinoIcons.heart_fill, 
-              color: Color.fromARGB(200, 255, 105, 180),
-              size: 18.5, 
-            ),
-          ),
-
-          const SizedBox(width: 6), 
-
-          Text(
-            totalLikes.toString(),
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 13.5,
-            ),
-          ),
-          
-        ],
-      ),
+    return ActionsButton().buildLikeButton(
+      text: totalLikes.toString(), 
+      onPressed: () => print('Liked')
     );
   }
 
-  Widget _buildCommentsButton() {
-    return _buildActionButton(
-      onPressed: () => print('commented'), 
-      child: Row(
-        children: [
-  
-          Transform.translate(
-            offset: const Offset(0, -1),
-            child: const Icon(
-              CupertinoIcons.chat_bubble, 
-              color: ThemeColor.white,
-              size: 18, 
-            ),
-          ),
-  
-          const SizedBox(width: 6), 
-  
-          Text(
-            totalComments.toString(),
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 13.5,
-            ),
-          ),
-  
-        ],
-      ),
+  Widget _buildCommentButton() {
+    return ActionsButton().buildCommentsButton(
+      text: totalComments.toString(), 
+      onPressed: () => print('Commented')
     );
   }
 
@@ -265,7 +196,7 @@ class VentPreviewer extends StatelessWidget {
                         
                     const SizedBox(width: 8),
                         
-                    _buildCommentsButton(),
+                    _buildCommentButton(),
                         
                   ],
                 ),
