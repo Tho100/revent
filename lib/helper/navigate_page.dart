@@ -30,7 +30,7 @@ class NavigatePage {
   static void mainScreenPage() {
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (context) => const MainScreenPage()),
+      MaterialPageRoute(builder: (_) => const MainScreenPage()),
     );
   }
 
@@ -64,32 +64,32 @@ class NavigatePage {
   static void settingsPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (context) => const SettingsPage()),
+      MaterialPageRoute(builder: (_) => const SettingsPage()),
     );
   }
 
   static void createVentPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (context) => CreateVentPage()),
+      MaterialPageRoute(builder: (_) => const CreateVentPage()),
     );
   }
 
-  static void createVentCommunityPage(BuildContext context) {
+  static void createVentCommunityPage() {
     
   }
 
   static void signUpPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (context) => const SignUpPage()),
+      MaterialPageRoute(builder: (_) => const SignUpPage()),
     );
   }
 
   static void signInPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (context) => const SignInPage()),
+      MaterialPageRoute(builder: (_) => const SignInPage()),
     );
   }
 

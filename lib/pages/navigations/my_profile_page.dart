@@ -73,7 +73,7 @@ class MyProfilePageState extends State<MyProfilePage> {
         text: 'Edit profile',
         onPressed: () => Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const EditProfilePage())
+          MaterialPageRoute(builder: (_) => const EditProfilePage())
         )
       ),
     );
@@ -112,7 +112,7 @@ class MyProfilePageState extends State<MyProfilePage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Consumer<ProfileDataProvider>(
-        builder: (context, profileData, child) {
+        builder: (_, profileData, __) {
           return Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [

@@ -125,7 +125,7 @@ class SignInPageState extends State<SignInPage> {
                 
                 ValueListenableBuilder(
                   valueListenable: isRememberMeCheckedNotifier,
-                  builder: (context, value, child) {
+                  builder: (_, value, __) {
                     return Checkbox(
                       value: value,
                       onChanged: (checkedValue) {

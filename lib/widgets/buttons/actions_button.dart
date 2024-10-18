@@ -5,6 +5,8 @@ import 'package:revent/themes/theme_color.dart';
 
 class ActionsButton {
 
+  final iconOffset = const Offset(0, -1);
+
   Widget _buildActionButton({
     required VoidCallback onPressed,
     required Widget child, 
@@ -12,6 +14,7 @@ class ActionsButton {
     return SizedBox(
       height: 34,
       child: ElevatedButton(
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           foregroundColor: ThemeColor.thirdWhite,
           backgroundColor: ThemeColor.black,
@@ -21,7 +24,6 @@ class ActionsButton {
             )
           ),
         ),
-        onPressed: onPressed,
         child: child
       )
     );
@@ -37,7 +39,7 @@ class ActionsButton {
         children: [
 
           Transform.translate(
-            offset: const Offset(0, -1),
+            offset: iconOffset,
             child: const Icon(
               CupertinoIcons.heart_fill, 
               color: Color.fromARGB(200, 255, 105, 180),
@@ -71,7 +73,7 @@ class ActionsButton {
         children: [
   
           Transform.translate(
-            offset: const Offset(0, -1),
+            offset: iconOffset,
             child: const Icon(
               CupertinoIcons.chat_bubble, 
               color: ThemeColor.white,

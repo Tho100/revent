@@ -12,7 +12,7 @@ class AuthTextField {
   }) {
     return ValueListenableBuilder(
       valueListenable: visibility,
-      builder: (context, value, child) {
+      builder: (_, value, __) {
         return TextFormField(
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,

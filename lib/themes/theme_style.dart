@@ -19,14 +19,11 @@ class ThemeStyle {
     ),
   );
 
-  static final btnMainStyle = ElevatedButton.styleFrom(
-    backgroundColor: ThemeColor.white,
-    foregroundColor: ThemeColor.thirdWhite,
-    elevation: 0,
-    shape: const StadiumBorder()
-  );
-
-  static InputDecoration txtFieldStye({required String hintText, IconButton? customSuffix, TextStyle? customCounterStyle}) {
+  static InputDecoration txtFieldStye({
+    required String hintText, 
+    IconButton? customSuffix, 
+    TextStyle? customCounterStyle
+  }) {
     return InputDecoration(
       hintText: hintText,
       counterText: '',

@@ -6,7 +6,7 @@ class NavigationBarDock extends StatelessWidget {
 
   final VoidCallback homeOnPressed;
   final VoidCallback searchOnPressed;
-  final VoidCallback addOnPressed;
+  final VoidCallback createOnPressed;
   final VoidCallback notificationOnPressed;
   final VoidCallback profileOnPressed;
 
@@ -15,7 +15,7 @@ class NavigationBarDock extends StatelessWidget {
   NavigationBarDock({
     required this.homeOnPressed, 
     required this.searchOnPressed,
-    required this.addOnPressed, 
+    required this.createOnPressed, 
     required this.notificationOnPressed,
     required this.profileOnPressed,
     required this.currentIndex,
@@ -57,9 +57,10 @@ class NavigationBarDock extends StatelessWidget {
             color: Colors.transparent,
             child: Column(
               children: [
+
                 ValueListenableBuilder(
                   valueListenable: selectedNavigationIndexNotifier,
-                  builder: (context, value, child) {
+                  builder: (_, value, __) {
 
                     final isSelected = value == index;
                     final iconColor = index == 2
@@ -88,6 +89,7 @@ class NavigationBarDock extends StatelessWidget {
                     );
                   },
                 ),
+
               ],
             ),
           );
@@ -106,7 +108,7 @@ class NavigationBarDock extends StatelessWidget {
         searchOnPressed();
         break;
       case 2:
-        addOnPressed();
+        createOnPressed();
         break;
       case 3:
         notificationOnPressed();

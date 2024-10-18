@@ -6,7 +6,7 @@ import 'package:revent/widgets/bottomsheet_bar.dart';
 import 'package:revent/widgets/bottomsheet_title.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 
-class BottomsheetAddItem {
+class BottomsheetCreate {
 
   Widget _buildOptionButton({
     required String text, 

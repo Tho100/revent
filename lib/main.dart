@@ -47,7 +47,7 @@ class MainRun extends StatelessWidget {
       scaffoldMessengerKey: scaffoldMessengerKey,
       theme: ThemeData(
         actionIconTheme: ActionIconThemeData(
-          backButtonIconBuilder: (BuildContext context) => const Icon(CupertinoIcons.chevron_back),
+          backButtonIconBuilder: (_) => const Icon(CupertinoIcons.chevron_back),
         ),
         scaffoldBackgroundColor: ThemeColor.black,
         appBarTheme: const AppBarTheme(
