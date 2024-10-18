@@ -6,9 +6,16 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
 
-class CreateVentPage extends StatelessWidget {
+class CreateVentPage extends StatefulWidget {
 
-  CreateVentPage({super.key});
+  const CreateVentPage({super.key});
+
+  @override
+  State<CreateVentPage> createState() => CreateVentPageState();
+
+}
+
+class CreateVentPageState extends State<CreateVentPage> {
 
   final createItem = CreateNewItem();
 
@@ -16,6 +23,7 @@ class CreateVentPage extends StatelessWidget {
   final ventBodyTextController = TextEditingController();
 
   final defaultFontWeight = FontWeight.w800;
+
   final hintTextColor = ThemeColor.thirdWhite;
 
   Widget _buildTitleField() {
@@ -117,7 +125,7 @@ class CreateVentPage extends StatelessWidget {
       )
     );
   }
-  
+
   Future<void> _createVentOnPressed(BuildContext context) async {
 
     if(ventTitleController.text.isEmpty) {
@@ -146,6 +154,13 @@ class CreateVentPage extends StatelessWidget {
   }
 
   @override
+  void dispose() {
+    ventTitleController.dispose();
+    ventBodyTextController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
@@ -156,5 +171,4 @@ class CreateVentPage extends StatelessWidget {
       body: _buildBody(context),
     );
   }
-
 }

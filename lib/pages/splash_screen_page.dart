@@ -99,7 +99,6 @@ class SplashScreenState extends State<SplashScreen> {
       }
 
     } catch (err) {
-      print(err.toString());
       NavigatePage.mainScreenPage();
     }
 

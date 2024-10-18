@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/themes/theme_style.dart';
 
 class MainButton extends StatelessWidget {
 
@@ -26,8 +25,13 @@ class MainButton extends StatelessWidget {
       height: customHeight ?? 68,
       width: customWidth ?? MediaQuery.of(context).size.width * 0.87,
       child: ElevatedButton(
-        style: ThemeStyle.btnMainStyle,
         onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: ThemeColor.white,
+          foregroundColor: ThemeColor.thirdWhite,
+          elevation: 0,
+          shape: const StadiumBorder()
+        ),
         child: Text(
           text,
           style: GoogleFonts.inter(

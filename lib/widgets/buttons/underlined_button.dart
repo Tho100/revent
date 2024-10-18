@@ -20,13 +20,13 @@ class UnderlinedButton extends StatelessWidget {
       height: 35,
       child: Center(
         child: ElevatedButton(
+          onPressed: onPressed,
           style: ElevatedButton.styleFrom(
             backgroundColor: ThemeColor.black,
             elevation: 0,
             shadowColor: Colors.transparent,
             shape: const StadiumBorder(),
           ),
-          onPressed: onPressed,
           child: Text(
             text,
             style: GoogleFonts.inter(

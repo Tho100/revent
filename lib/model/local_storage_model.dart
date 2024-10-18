@@ -13,7 +13,7 @@ class LocalStorageModel {
     String email = '';
     String accountType = '';
 
-    final localDir = await _retrieveLocalDirectory();
+    final localDir = await _readLocalDirectory();
 
     if (localDir.existsSync()) {
 
@@ -43,7 +43,7 @@ class LocalStorageModel {
 
   Future<void> setupLocalAccountInformation(String username, String email, String plan) async {
 
-    final localDir = await _retrieveLocalDirectory();
+    final localDir = await _readLocalDirectory();
     
     if (!localDir.existsSync()) {
       localDir.createSync(recursive: true);
@@ -63,7 +63,7 @@ class LocalStorageModel {
 
   Future<void> deleteLocalData() async {
 
-    final localDir = await _retrieveLocalDirectory();
+    final localDir = await _readLocalDirectory();
 
     final filePath = File('${localDir.path}/$_fileName');
 
@@ -75,7 +75,7 @@ class LocalStorageModel {
 
   }
 
-  Future<Directory> _retrieveLocalDirectory() async {
+  Future<Directory> _readLocalDirectory() async {
 
     final getDirApplication = await getApplicationDocumentsDirectory();
     final setupPath = '${getDirApplication.path}/$_folderName';

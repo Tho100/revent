@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/widgets/bottomsheet_widgets/add_item.dart';
+import 'package:revent/widgets/bottomsheet_widgets/create.dart';
 import 'package:revent/widgets/navigation_bar_dock.dart';
 
 class UpdateNavigation {
@@ -17,8 +17,8 @@ class UpdateNavigation {
     return NavigationBarDock(
       homeOnPressed: () => NavigatePage.homePage(),
       searchOnPressed: () => NavigatePage.searchPage(),
-      addOnPressed: () { 
-        BottomsheetAddItem().buildBottomsheet(
+      createOnPressed: () { 
+        BottomsheetCreate().buildBottomsheet(
           context: context,
           addVentOnPressed: () {
             Navigator.pop(context);

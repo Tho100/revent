@@ -26,6 +26,7 @@ class CustomOutlinedButton extends StatelessWidget {
       height: customHeight ?? 68,
       width: customWidth ?? MediaQuery.of(context).size.width * 0.87,
       child: ElevatedButton(
+        onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           foregroundColor: ThemeColor.thirdWhite,
           backgroundColor: ThemeColor.black,
@@ -35,7 +36,6 @@ class CustomOutlinedButton extends StatelessWidget {
           ),
           shape: const StadiumBorder(),
         ),
-        onPressed: onPressed,
         child: Text(
           text,
           style: GoogleFonts.inter(

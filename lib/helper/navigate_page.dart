@@ -71,7 +71,7 @@ class NavigatePage {
   static void createVentPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => CreateVentPage()),
+      MaterialPageRoute(builder: (_) => const CreateVentPage()),
     );
   }
 

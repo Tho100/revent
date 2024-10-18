@@ -64,7 +64,6 @@ class VentPostPageState extends State<VentPostPage> {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(username: widget.creator, pfpData: widget.pfpData),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
     
           _buildProfilePicture(isFromCommunity: false),
@@ -237,7 +236,6 @@ class VentPostPageState extends State<VentPostPage> {
       ),
     );
   }
-
 
   @override
   void initState() {

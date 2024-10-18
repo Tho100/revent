@@ -18,7 +18,10 @@ class ProfilePictureWidget extends StatelessWidget {
     super.key
   });
 
-  final defaultEmptyIcon = const Icon(CupertinoIcons.person, color: ThemeColor.mediumBlack);
+  final defaultEmptyIcon = const Icon(
+    CupertinoIcons.person, 
+    color: ThemeColor.mediumBlack
+  );
 
   Widget _buildNotifierPfp() {
     return ValueListenableBuilder<Uint8List?>(

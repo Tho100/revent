@@ -28,7 +28,7 @@ class SignUpPageState extends State<SignUpPage> {
 
   final visiblePasswordNotifier = ValueNotifier<bool>(false);
 
-  Future<void> _insertUserRegistrationInformation({
+  Future<void> _verifyUserRegistrationInformation({
     required String username,
     required String email,
     required String auth,
@@ -84,7 +84,7 @@ class SignUpPageState extends State<SignUpPage> {
       context: context
     );
 
-    await _insertUserRegistrationInformation(
+    await _verifyUserRegistrationInformation(
       username: usernameInput, 
       email: emailInput, 
       auth: authInput, 

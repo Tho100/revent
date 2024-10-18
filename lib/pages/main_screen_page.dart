@@ -76,6 +76,13 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
+  Widget _buildPaddedWidget({required Widget child}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 28),
+      child: child
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,26 +90,24 @@ class MainScreenPage extends StatelessWidget {
 
         const SizedBox(height: 85),
         
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: _buildLogoText(),
+        _buildPaddedWidget(
+          child: _buildLogoText()
         ),
         
         const SizedBox(height: 18),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: _buildHeaderText(),
+        _buildPaddedWidget(
+          child: _buildHeaderText()
         ),
         
         const SizedBox(height: 12),
 
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 28),
-          child: _buildSubText(),
+        _buildPaddedWidget(
+          child: _buildSubText()
         ),
       
         const Spacer(),
+        
         _buildBottomContainer(context)
 
       ],
