@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
@@ -160,7 +161,11 @@ class VentPostPageState extends State<VentPostPage> {
       actions: [
         IconButton(
           icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
-          onPressed: () => print('Pressed')
+          onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
+            context: context, 
+            reportOnPressed: () {}, 
+            blockOnPressed: () {}
+          )
         ),
       ],
     );

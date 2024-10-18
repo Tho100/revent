@@ -7,7 +7,7 @@ import 'package:revent/widgets/bottomsheet.dart';
 import 'package:revent/widgets/bottomsheet_bar.dart';
 import 'package:revent/widgets/bottomsheet_title.dart';
 
-class BottomsheetUserActions {
+class BottomsheetVentPostActions {
 
   Widget _buildOptionButton({
     required String text, 
@@ -20,17 +20,19 @@ class BottomsheetUserActions {
       child: Row(
         children: [
 
-          Icon(icon, color: ThemeColor.darkRed),
+          Icon(icon, color: icon == CupertinoIcons.flag ? ThemeColor.darkRed : ThemeColor.secondaryWhite),
 
           const SizedBox(width: 15),
 
           Text(
             text,
-            style: GoogleFonts.inter(
+            style: text == 'Report' 
+              ? GoogleFonts.inter(
               color: ThemeColor.darkRed,
               fontWeight: FontWeight.w800,
               fontSize: 17,
-            ),
+              ) 
+            : ThemeStyle.btnBottomsheetTextStyle,
           )
 
         ],
@@ -51,17 +53,23 @@ class BottomsheetUserActions {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'User Action'),
+        const BottomsheetTitle(title: 'Post Action'),
 
         _buildOptionButton(
-          text: 'Report',
-          icon: CupertinoIcons.flag,
+          text: 'Save',
+          icon: CupertinoIcons.bookmark,
           onPressed: reportOnPressed
         ),
 
         _buildOptionButton(
-          text: 'Block',
-          icon: CupertinoIcons.clear_circled,
+          text: 'Copy',
+          icon: CupertinoIcons.doc_on_doc,
+          onPressed: blockOnPressed
+        ),
+
+        _buildOptionButton(
+          text: 'Report',
+          icon: CupertinoIcons.flag,
           onPressed: blockOnPressed
         ),
 
