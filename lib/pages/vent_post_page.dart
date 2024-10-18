@@ -47,7 +47,7 @@ class VentPostPageState extends State<VentPostPage> {
 
               _buildProfileHeader(),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 18),
 
               _buildHeader(context),
 
@@ -105,7 +105,7 @@ class VentPostPageState extends State<VentPostPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        Text(
+        SelectableText(
           widget.title,
           style: GoogleFonts.inter(
             color: ThemeColor.white,
@@ -115,16 +115,13 @@ class VentPostPageState extends State<VentPostPage> {
           maxLines: 2,
         ),
 
-        const SizedBox(height: 20),
-
-        Text(
+        SelectableText(
           widget.bodyText,
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w800,
             fontSize: 14
           ),
-          overflow: TextOverflow.ellipsis,
           maxLines: 12
         ),
 
