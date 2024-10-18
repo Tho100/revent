@@ -160,7 +160,6 @@ class VentPostPageState extends State<VentPostPage> {
       actions: [
         IconButton(
           icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
-          color: ThemeColor.white,
           onPressed: () => print('Pressed')
         ),
       ],
