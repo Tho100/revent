@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
+import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
@@ -15,6 +16,8 @@ class VentPostPage extends StatefulWidget {
   final String bodyText;
   final String postTimestamp;
   final String creator;
+  final int totalLikes;
+  final int totalComments;
   final Uint8List pfpData;
 
   const VentPostPage({
@@ -22,6 +25,8 @@ class VentPostPage extends StatefulWidget {
     required this.bodyText,
     required this.postTimestamp,
     required this.creator,
+    required this.totalLikes,
+    required this.totalComments,
     required this.pfpData,
     super.key
   });
@@ -33,28 +38,17 @@ class VentPostPage extends StatefulWidget {
 
 class VentPostPageState extends State<VentPostPage> {
 
-  Widget _buildBody(BuildContext context) {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 24, left: 18),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width-45,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
+  Widget _buildLikeButton() {
+    return ActionsButton().buildLikeButton(
+      text: widget.totalLikes.toString(), 
+      onPressed: () => print('Liked')
+    );
+  }
 
-              const SizedBox(height: 20),
-
-              _buildProfileHeader(),
-
-              const SizedBox(height: 18),
-
-              _buildHeader(context),
-
-            ] 
-          ),
-        ),
-      ),
+  Widget _buildCommentButton() {
+    return ActionsButton().buildCommentsButton(
+      text: widget.totalComments.toString(), 
+      onPressed: () => print('Commented')
     );
   }
 
@@ -100,7 +94,7 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
+  Widget _buildHeader() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -122,7 +116,6 @@ class VentPostPageState extends State<VentPostPage> {
             fontWeight: FontWeight.w800,
             fontSize: 14
           ),
-          maxLines: 12
         ),
 
       ],
@@ -167,6 +160,84 @@ class VentPostPageState extends State<VentPostPage> {
       ],
     );
   }
+
+  Widget _buildBody(BuildContext context) {
+
+    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 22.0;
+    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 26.0;
+
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 24, left: 18),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width-45,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+    
+                const SizedBox(height: 20),
+    
+                _buildProfileHeader(),
+    
+                const SizedBox(height: 18),
+    
+                _buildHeader(),
+    
+                SizedBox(height: actionButtonsHeightGap),
+    
+                Padding(
+                  padding: EdgeInsets.only(top: actionButtonsPadding),
+                  child: Row(
+                    children: [
+                          
+                      _buildLikeButton(),
+                          
+                      const SizedBox(width: 8),
+                          
+                      _buildCommentButton(),
+                          
+                    ],
+                  ),
+                ),
+    
+                const SizedBox(height: 32),
+    
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4.0),
+                      child: Text(
+                        'Comments',
+                        style: GoogleFonts.inter(
+                          color: ThemeColor.secondaryWhite,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+    
+                    const SizedBox(height: 10),
+    
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Divider(color: ThemeColor.darkWhite),
+                    ),
+    
+                  ],
+                ),
+                    
+              ] 
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
 
   @override
   void initState() {
