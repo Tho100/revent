@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
@@ -46,7 +47,7 @@ class VentPostPageState extends State<VentPostPage> {
 
               _buildProfileHeader(),
 
-              const SizedBox(height: 16),
+              const SizedBox(height: 18),
 
               _buildHeader(context),
 
@@ -104,7 +105,7 @@ class VentPostPageState extends State<VentPostPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        Text(
+        SelectableText(
           widget.title,
           style: GoogleFonts.inter(
             color: ThemeColor.white,
@@ -114,16 +115,13 @@ class VentPostPageState extends State<VentPostPage> {
           maxLines: 2,
         ),
 
-        const SizedBox(height: 20),
-
-        Text(
+        SelectableText(
           widget.bodyText,
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w800,
             fontSize: 14
           ),
-          overflow: TextOverflow.ellipsis,
           maxLines: 12
         ),
 
@@ -160,8 +158,11 @@ class VentPostPageState extends State<VentPostPage> {
       actions: [
         IconButton(
           icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
-          color: ThemeColor.white,
-          onPressed: () => print('Pressed')
+          onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
+            context: context, 
+            reportOnPressed: () {}, 
+            blockOnPressed: () {}
+          )
         ),
       ],
     );
