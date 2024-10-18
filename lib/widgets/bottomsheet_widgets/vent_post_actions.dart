@@ -73,7 +73,7 @@ class BottomsheetVentPostActions {
           onPressed: blockOnPressed
         ),
 
-        const SizedBox(height: 35),
+        const SizedBox(height: 25),
 
       ]
     );

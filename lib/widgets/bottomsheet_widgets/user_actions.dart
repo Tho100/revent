@@ -65,7 +65,7 @@ class BottomsheetUserActions {
           onPressed: blockOnPressed
         ),
 
-        const SizedBox(height: 35),
+        const SizedBox(height: 25),
 
       ]
     );
