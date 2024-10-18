@@ -39,6 +39,8 @@ class VentPreviewer extends StatelessWidget {
         title: title, 
         bodyText: bodyText, 
         postTimestamp: postTimestamp,
+        totalComments: totalComments,
+        totalLikes: totalLikes,
         creator: creator, 
         pfpData: pfpData,
       )),
