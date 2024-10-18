@@ -13,6 +13,7 @@ import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
@@ -217,7 +218,11 @@ class UserProfilePageState extends State<UserProfilePage> {
   Widget _buildActionButton() {
     return IconButton(
       icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
-      onPressed: () => print('pressed')
+      onPressed: () => BottomsheetUserActions().buildBottomsheet(
+        context: context, 
+        reportOnPressed: () {}, 
+        blockOnPressed: () {}
+      )
     );
   }
 
