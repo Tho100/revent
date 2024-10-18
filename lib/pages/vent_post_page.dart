@@ -166,41 +166,72 @@ class VentPostPageState extends State<VentPostPage> {
     final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 22.0;
     final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 26.0;
 
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 24, left: 18),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width-45,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              const SizedBox(height: 20),
-
-              _buildProfileHeader(),
-
-              const SizedBox(height: 18),
-
-              _buildHeader(),
-
-              SizedBox(height: actionButtonsHeightGap),
-
-              Padding(
-                padding: EdgeInsets.only(top: actionButtonsPadding),
-                child: Row(
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 24, left: 18),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width-45,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+    
+                const SizedBox(height: 20),
+    
+                _buildProfileHeader(),
+    
+                const SizedBox(height: 18),
+    
+                _buildHeader(),
+    
+                SizedBox(height: actionButtonsHeightGap),
+    
+                Padding(
+                  padding: EdgeInsets.only(top: actionButtonsPadding),
+                  child: Row(
+                    children: [
+                          
+                      _buildLikeButton(),
+                          
+                      const SizedBox(width: 8),
+                          
+                      _buildCommentButton(),
+                          
+                    ],
+                  ),
+                ),
+    
+                const SizedBox(height: 32),
+    
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                        
-                    _buildLikeButton(),
-                        
-                    const SizedBox(width: 8),
-                        
-                    _buildCommentButton(),
-                        
+                    
+                    Padding(
+                      padding: const EdgeInsets.only(left: 4.0),
+                      child: Text(
+                        'Comments',
+                        style: GoogleFonts.inter(
+                          color: ThemeColor.secondaryWhite,
+                          fontWeight: FontWeight.w800,
+                          fontSize: 15,
+                        ),
+                      ),
+                    ),
+    
+                    const SizedBox(height: 10),
+    
+                    const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Divider(color: ThemeColor.darkWhite),
+                    ),
+    
                   ],
                 ),
-              ),
-
-            ] 
+                    
+              ] 
+            ),
           ),
         ),
       ),
