@@ -216,7 +216,7 @@ class UserProfilePageState extends State<UserProfilePage> {
 
   Widget _buildActionButton() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_vertical),
+      icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
       onPressed: () => print('pressed')
     );
   }
