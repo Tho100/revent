@@ -57,9 +57,10 @@ class NavigationBarDock extends StatelessWidget {
             color: Colors.transparent,
             child: Column(
               children: [
+
                 ValueListenableBuilder(
                   valueListenable: selectedNavigationIndexNotifier,
-                  builder: (context, value, child) {
+                  builder: (_, value, __) {
 
                     final isSelected = value == index;
                     final iconColor = index == 2
@@ -88,6 +89,7 @@ class NavigationBarDock extends StatelessWidget {
                     );
                   },
                 ),
+                
               ],
             ),
           );

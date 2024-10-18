@@ -35,7 +35,7 @@ class VentPreviewer extends StatelessWidget {
   void _viewVentPostPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (context) => VentPostPage(
+      MaterialPageRoute(builder: (_) => VentPostPage(
         title: title, 
         bodyText: bodyText, 
         postTimestamp: postTimestamp,

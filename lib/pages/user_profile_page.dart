@@ -87,7 +87,7 @@ class UserProfilePageState extends State<UserProfilePage> {
       width: MediaQuery.of(context).size.width * 0.65,
       child: ValueListenableBuilder(
         valueListenable: bioNotifier,
-        builder: (context, value, widget) {
+        builder: (_, value, __) {
           return Text(
             value,
             style: GoogleFonts.inter(
@@ -113,7 +113,7 @@ class UserProfilePageState extends State<UserProfilePage> {
       alignment: Alignment.center,
       child: ValueListenableBuilder(
         valueListenable: isFollowingNotifier,
-        builder: (context, isFollowing, child) {
+        builder: (_, isFollowing, __) {
           return isFollowing 
             ? CustomOutlinedButton(
               customWidth: buttonWidth,
@@ -142,7 +142,7 @@ class UserProfilePageState extends State<UserProfilePage> {
 
         ValueListenableBuilder(
           valueListenable: notifierValue,
-          builder: (context, value, child) {
+          builder: (_, value, __) {
             return Text(
               value.toString(),
               style: GoogleFonts.inter(

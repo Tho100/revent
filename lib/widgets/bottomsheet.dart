@@ -16,7 +16,7 @@ class Bottomsheet {
       ),
       isScrollControlled: true,
       context: context, 
-      builder: (context) {
+      builder: (_) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,

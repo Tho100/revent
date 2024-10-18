@@ -23,7 +23,7 @@ class ProfilePictureWidget extends StatelessWidget {
   Widget _buildNotifierPfp() {
     return ValueListenableBuilder<Uint8List?>(
       valueListenable: profileDataNotifier!,
-      builder: (context, imageData, child) {
+      builder: (_, imageData, __) {
         return imageData == null 
           ? defaultEmptyIcon
           : _buildPfp(pfpData: imageData);

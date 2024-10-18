@@ -10,13 +10,13 @@ class VentListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<VentDataProvider>(
-      builder: (context, ventData, child) {
+      builder: (_, ventData, __) {
         return ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics()
           ),
           itemCount: ventData.ventTitles.length,
-          itemBuilder: (context, index) {
+          itemBuilder: (_, index) {
             final reversedIndex = ventData.ventTitles.length - 1 - index;
             return Padding(
               padding: const EdgeInsets.only(bottom: 12.5),

@@ -26,7 +26,7 @@ class UpdateNavigation {
           }, 
           addForumOnPressed: () {
             Navigator.pop(context);
-            NavigatePage.createVentCommunityPage(context);
+            NavigatePage.createVentCommunityPage();
           },
         );
       },
