@@ -15,12 +15,12 @@ class BottomsheetTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 12.0, top: 25.0),
+        padding: const EdgeInsets.only(bottom: 12.5, top: 25.5),
         child: Text(
           title,
           style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
-            fontSize: 18.2,
+            color: ThemeColor.white,
+            fontSize: 19,
             fontWeight: FontWeight.w800
           ),
         ),

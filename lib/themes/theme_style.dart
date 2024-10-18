@@ -4,13 +4,6 @@ import 'package:revent/themes/theme_color.dart';
 
 class ThemeStyle {
 
-  static const bottomDialogBorderStyle = RoundedRectangleBorder( 
-    borderRadius: BorderRadius.only(
-      topLeft: Radius.circular(18),
-      topRight: Radius.circular(18)
-    )
-  );
-
   static final btnBottomDialogTextStyle = GoogleFonts.inter(
     color: const Color.fromARGB(255, 235, 235, 235),
     fontWeight: FontWeight.w800,

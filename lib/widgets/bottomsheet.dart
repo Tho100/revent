@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/themes/theme_style.dart';
 
 class Bottomsheet {
 
@@ -9,8 +8,12 @@ class Bottomsheet {
     required List<Widget> children
   }) {
     return showModalBottomSheet(
-      backgroundColor: ThemeColor.black,
-      shape: ThemeStyle.bottomDialogBorderStyle,
+      backgroundColor: ThemeColor.mediumBlack,
+      shape: const RoundedRectangleBorder( 
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(18),
+        ),
+      ),
       isScrollControlled: true,
       context: context, 
       builder: (context) {

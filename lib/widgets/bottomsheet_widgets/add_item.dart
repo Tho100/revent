@@ -1,34 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/bottomsheet.dart';
 import 'package:revent/widgets/bottomsheet_bar.dart';
 import 'package:revent/widgets/bottomsheet_title.dart';
+import 'package:revent/widgets/inkwell_effect.dart';
 
 class BottomsheetAddItem {
 
-  Widget _buildAddItemButton({
-    required String text,
-    required IconData icon,
+  Widget _buildOptionButton({
+    required String text, 
+    required IconData icon, 
     required VoidCallback onPressed
   }) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ThemeStyle.btnBottomDialogBackgroundStyle,
-      child: Row(
-        children: [
+    return Column(
+      children: [
 
-          Icon(icon, color: ThemeColor.secondaryWhite),
-          
-          const SizedBox(width: 15.0),
-
-          Text(
-            text,
-            style: ThemeStyle.btnBottomDialogTextStyle
+        InkWellEffect(
+          onPressed: onPressed,
+          child: Container(
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(color: ThemeColor.thirdWhite),
+            ),
+            child: Icon(icon, size: 35, color: ThemeColor.white),
           ),
+        ),
+        
+        const SizedBox(height: 12),
 
-        ],
-      ),
+        Text(
+          text,
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontSize: 14,
+            fontWeight: FontWeight.w800,
+          ),
+        ),
+
+      ],
     );
   }
 
@@ -47,21 +58,30 @@ class BottomsheetAddItem {
 
         const BottomsheetTitle(title: 'Create'),
 
-        const Divider(color: ThemeColor.lightGrey),
+        const SizedBox(height: 12),
 
-        _buildAddItemButton(
-          text: 'Create a vent',
-          icon: Icons.add,
-          onPressed: addVentOnPressed
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+
+            _buildOptionButton(
+              text: 'Vent',
+              icon: Icons.add,
+              onPressed: addVentOnPressed
+            ),
+
+            const SizedBox(width: 30),
+
+            _buildOptionButton(
+              text: 'Community',
+              icon: Icons.group,
+              onPressed: addForumOnPressed
+            ),
+
+          ],
         ),
 
-        _buildAddItemButton(
-          text: 'Create a new vent forum',
-          icon: Icons.add,
-          onPressed: addForumOnPressed
-        ),
-
-        const SizedBox(height: 20),
+        const SizedBox(height: 35),
 
       ]
     );
