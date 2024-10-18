@@ -58,8 +58,6 @@ class BottomsheetAddItem {
 
         const BottomsheetTitle(title: 'Create'),
 
-        const SizedBox(height: 12),
-
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
