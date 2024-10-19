@@ -38,6 +38,8 @@ class VentPostPage extends StatefulWidget {
 
 class VentPostPageState extends State<VentPostPage> {
 
+  final focusNode = FocusNode();
+
   Widget _buildLikeButton() {
     return ActionsButton().buildLikeButton(
       text: widget.totalLikes.toString(), 
@@ -98,23 +100,29 @@ class VentPostPageState extends State<VentPostPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        SelectableText(
-          widget.title,
-          style: GoogleFonts.inter(
-            color: ThemeColor.white,
-            fontWeight: FontWeight.w800,
-            fontSize: 21
+        Focus(
+          focusNode: focusNode,
+          child: SelectableText(
+            widget.title,
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 21
+            ),
           ),
         ),
 
         const SizedBox(height: 14),
 
-        SelectableText(
-          widget.bodyText,
-          style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
-            fontWeight: FontWeight.w800,
-            fontSize: 14
+        Focus(
+          focusNode: focusNode,
+          child: SelectableText(
+            widget.bodyText,
+            style: GoogleFonts.inter(
+              color: ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 14
+            ),
           ),
         ),
 
@@ -245,14 +253,18 @@ class VentPostPageState extends State<VentPostPage> {
 
   @override
   void dispose() {
+    focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: _buildCustomAppBar(context),
-      body: _buildBody(context),
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: _buildCustomAppBar(context),
+        body: _buildBody(context),
+      ),
     );
   }
 
