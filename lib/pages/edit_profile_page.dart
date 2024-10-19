@@ -42,6 +42,10 @@ class EditProfilePageState extends State<EditProfilePage> {
     profilePicNotifier.value = profileData.profilePicture;
   }
 
+  void _setBioText() {
+    bioController.text = profileData.bio;
+  }
+
   void _changeProfilePicOnPressed() async {
     
     final isProfileSelected = await ProfilePictureModel()
@@ -146,7 +150,6 @@ class EditProfilePageState extends State<EditProfilePage> {
         
             MainTextField(
               controller: bioController, 
-              initialValue: profileData.bio,
               hintText: 'Enter your bio here...',
               maxLines: 5,
               maxLength: 100,
@@ -203,6 +206,7 @@ class EditProfilePageState extends State<EditProfilePage> {
   void initState() {
     super.initState();
     _setProfilePic();
+    _setBioText();
   }
 
   @override

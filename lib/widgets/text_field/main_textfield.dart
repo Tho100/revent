@@ -7,7 +7,6 @@ import 'package:revent/themes/theme_style.dart';
 class MainTextField extends StatelessWidget {
 
   final TextEditingController controller;
-  final String? initialValue;
   final String? hintText;
   final int? maxLength;
   final int? maxLines;
@@ -16,7 +15,6 @@ class MainTextField extends StatelessWidget {
 
   const MainTextField({
     required this.controller,
-    this.initialValue,
     this.hintText,
     this.maxLength,
     this.maxLines,
@@ -28,7 +26,6 @@ class MainTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      initialValue: initialValue,
       controller: controller,
       maxLength: maxLength,
       maxLines: maxLines,

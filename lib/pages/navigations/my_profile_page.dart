@@ -48,18 +48,22 @@ class MyProfilePageState extends State<MyProfilePage> {
   }
 
   Widget _buildBio(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.65,
-      child: Text(
-        profileData.bio,
-        style: GoogleFonts.inter(
-          color: ThemeColor.secondaryWhite,
-          fontWeight: FontWeight.w700,
-          fontSize: 14
-        ),
-        textAlign: TextAlign.center,
-        maxLines: 3,
-      ),
+    return Consumer<ProfileDataProvider>(
+      builder: (_, profileData, __) {
+        return SizedBox(
+          width: MediaQuery.of(context).size.width * 0.65,
+          child: Text(
+            profileData.bio,
+            style: GoogleFonts.inter(
+              color: ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w700,
+              fontSize: 14
+            ),
+            textAlign: TextAlign.center,
+            maxLines: 3,
+          ),
+        );
+      },
     );
   }
 
