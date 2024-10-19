@@ -81,7 +81,7 @@ class VentPreviewer extends StatelessWidget {
                 style: GoogleFonts.inter(
                   color: ThemeColor.thirdWhite,
                   fontWeight: FontWeight.w800,
-                  fontSize: 12
+                  fontSize: 13
                 ),
               ),
     
@@ -130,7 +130,7 @@ class VentPreviewer extends StatelessWidget {
         style: GoogleFonts.inter(
           color: ThemeColor.secondaryWhite,
           fontWeight: FontWeight.w800,
-          fontSize: 12.5
+          fontSize: 12.7
         ),
         overflow: TextOverflow.ellipsis,
         maxLines: 2
