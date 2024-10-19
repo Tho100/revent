@@ -26,7 +26,7 @@ class HomePageState extends State<HomePage> {
 
   Future<void> _refreshVentData() async {
 
-    ventData.deleteVentData();
+    ventData.deleteVentsData();
     
     await VentDataSetup().setup();
 

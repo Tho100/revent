@@ -32,10 +32,15 @@ class CreateNewItem {
     final now = DateTime.now();
     final formattedTimestamp = FormatPostTimestamp().formatTimeAgo(now);
 
-    ventData.addVentData(
-      ventTitle, ventBodyText, 
-      userData.username, formattedTimestamp, profileData.profilePicture
+    final newVent = Vent(
+      title: ventTitle, 
+      bodyText: ventBodyText, 
+      creator: userData.username, 
+      postTimestamp: formattedTimestamp, 
+      profilePic: profileData.profilePicture
     );
+    
+    ventData.addVent(newVent);
 
   }
 

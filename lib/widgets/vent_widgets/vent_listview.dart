@@ -7,17 +7,17 @@ class VentListView extends StatelessWidget {
 
   const VentListView({super.key});
 
-  Widget _buildVentPreview(VentDataProvider ventData, int index) {
+  Widget _buildVentPreview(Vent ventData) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 12.5),
       child: VentPreviewer(
-        title: ventData.ventTitles[index],
-        bodyText: ventData.ventBodyText[index],
-        creator: ventData.ventCreator[index],
-        postTimestamp: ventData.ventPostTimestamp[index],
-        totalLikes: ventData.ventTotalLikes[index],
-        totalComments: ventData.ventTotalComments[index],
-        pfpData: ventData.ventProfilePic[index],
+        title: ventData.title,
+        bodyText: ventData.bodyText,
+        creator: ventData.creator,
+        postTimestamp: ventData.postTimestamp,
+        totalLikes: ventData.totalLikes,
+        totalComments: ventData.totalComments,
+        pfpData: ventData.profilePic,
       ),
     );
   }
@@ -30,10 +30,11 @@ class VentListView extends StatelessWidget {
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics()
           ),
-          itemCount: ventData.ventTitles.length,
+          itemCount: ventData.vents.length,
           itemBuilder: (_, index) {
-            final reversedVentIndex = ventData.ventTitles.length - 1 - index;
-            return _buildVentPreview(ventData, reversedVentIndex);
+            final reversedVentIndex = ventData.vents.length - 1 - index;
+            final vents = ventData.vents[reversedVentIndex]; 
+            return _buildVentPreview(vents);
           }
         );
       },

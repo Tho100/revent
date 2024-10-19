@@ -2,82 +2,56 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
+class Vent {
+
+  String title;
+  String bodyText;
+  String creator;
+  String postTimestamp;
+
+  Uint8List profilePic;
+
+  int totalLikes;
+  int totalComments;
+
+  Vent({
+    required this.title,
+    required this.bodyText,
+    required this.creator,
+    required this.postTimestamp,
+    required this.profilePic,
+    this.totalLikes = 0,
+    this.totalComments = 0,
+  });
+
+}
+
 class VentDataProvider extends ChangeNotifier {
-  
-  List<String> _ventTitles = [];
-  List<String> _ventBodyText = [];
-  List<String> _ventCreator = [];
-  List<String> _ventPostTimestamp = [];
 
-  List<int> _ventTotalLikes = [];
-  List<int> _ventTotalComments = [];
+  List<Vent> _vents = [];
 
-  List<Uint8List> _ventProfilePic = [];
+  List<Vent> get vents => _vents;
 
-  List<String> get ventTitles => _ventTitles;
-  List<String> get ventBodyText => _ventBodyText;
-  List<String> get ventCreator => _ventCreator;
-  List<String> get ventPostTimestamp => _ventPostTimestamp;
-
-  List<int> get ventTotalLikes => _ventTotalLikes;
-  List<int> get ventTotalComments => _ventTotalComments;
-
-  List<Uint8List> get ventProfilePic => _ventProfilePic;
-
-  void setVentTitles(List<String> titles) {
-    _ventTitles = titles;
+  void setVents(List<Vent> vents) {
+    _vents = vents;
     notifyListeners();
   }
 
-  void setVentBodyText(List<String> bodyText) {
-    _ventBodyText = bodyText;
+  void addVent(Vent vent) {
+    _vents.add(vent);
     notifyListeners();
   }
 
-  void setVentCreator(List<String> creator) {
-    _ventCreator = creator;
+  void deleteVentsData() {
+    _vents.clear();
     notifyListeners();
   }
 
-  void setVentPostTimestamp(List<String> postTimestamp) {
-    _ventPostTimestamp = postTimestamp;
-    notifyListeners();
-  }
-
-  void setVentTotalLikes(List<int> creator) {
-    _ventTotalLikes = creator;
-    notifyListeners();
-  }
-
-  void setVentTotalComments(List<int> postTimestamp) {
-    _ventTotalComments = postTimestamp;
-    notifyListeners();
-  }
-
-  void setVentProfilePic(List<Uint8List> pfpData) {
-    _ventProfilePic = pfpData;
-    notifyListeners();
-  }
-
-  void addVentData(String title, String bodyText, String creator, String postTimestamp, Uint8List pfpData) {
-    _ventTitles.add(title);
-    _ventBodyText.add(bodyText);
-    _ventCreator.add(creator);
-    _ventPostTimestamp.add(postTimestamp);
-    _ventProfilePic.add(pfpData);
-    _ventTotalLikes.add(0);
-    _ventTotalComments.add(0);
-    notifyListeners();
-  }
-
-  void deleteVentData() {
-    _ventTitles.clear();
-    _ventBodyText.clear();
-    _ventCreator.clear();
-    _ventPostTimestamp.clear();
-    _ventTotalLikes.clear();
-    _ventTotalComments.clear();
-    notifyListeners();
+  void deleteVent(int index) {
+    if (index >= 0 && index < _vents.length) {
+      _vents.removeAt(index);
+      notifyListeners();
+    }
   }
 
 }
