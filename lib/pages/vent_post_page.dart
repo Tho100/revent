@@ -105,8 +105,9 @@ class VentPostPageState extends State<VentPostPage> {
             fontWeight: FontWeight.w800,
             fontSize: 21
           ),
-          maxLines: 2,
         ),
+
+        const SizedBox(height: 14),
 
         SelectableText(
           widget.bodyText,
