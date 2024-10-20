@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/vent_query/delete_vent.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
@@ -39,6 +41,25 @@ class VentPostPage extends StatefulWidget {
 class VentPostPageState extends State<VentPostPage> {
 
   final focusNode = FocusNode();
+
+  Future<void> _deleteOnPressed() async {
+
+    try {
+
+      await DeleteVent().delete(ventTitle: widget.title);
+
+      SnackBarDialog.temporarySnack(message: 'Post has been deleted.');
+
+      if(context.mounted) {
+        Navigator.pop(context);
+        Navigator.pop(context);
+      }
+
+    } catch (err) {
+      SnackBarDialog.temporarySnack(message: 'Failed to delete this post.');
+    }
+
+  }
 
   Widget _buildLikeButton() {
     return ActionsButton().buildLikeButton(
@@ -130,7 +151,20 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
-  PreferredSizeWidget _buildCustomAppBar(BuildContext context) {
+  Widget _buildActions() {
+    return IconButton(
+      icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
+      onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
+        context: context, 
+        creator: widget.creator,
+        reportOnPressed: () {}, 
+        blockOnPressed: () {},
+        deleteOnPressed: () async => await _deleteOnPressed()
+      )
+    );
+  }
+
+  PreferredSizeWidget _buildCustomAppBar() {
     return AppBar(
       centerTitle: true,
         leading: IconButton(
@@ -157,19 +191,12 @@ class VentPostPageState extends State<VentPostPage> {
         ],
       ),
       actions: [
-        IconButton(
-          icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
-          onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
-            context: context, 
-            reportOnPressed: () {}, 
-            blockOnPressed: () {}
-          )
-        ),
+        _buildActions(),
       ],
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
 
     final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 22.0;
     final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 26.0;
@@ -262,8 +289,8 @@ class VentPostPageState extends State<VentPostPage> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
-        appBar: _buildCustomAppBar(context),
-        body: _buildBody(context),
+        appBar: _buildCustomAppBar(),
+        body: _buildBody(),
       ),
     );
   }

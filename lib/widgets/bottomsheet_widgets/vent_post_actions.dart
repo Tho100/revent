@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/bottomsheet.dart';
@@ -9,9 +11,12 @@ import 'package:revent/widgets/bottomsheet_title.dart';
 
 class BottomsheetVentPostActions {
 
+  final userData = GetIt.instance<UserDataProvider>();
+
   Widget _buildOptionButton({
     required String text, 
     required IconData icon, 
+    bool? isRed = false,
     required VoidCallback onPressed
   }) {
     return ElevatedButton(
@@ -20,13 +25,13 @@ class BottomsheetVentPostActions {
       child: Row(
         children: [
 
-          Icon(icon, color: icon == CupertinoIcons.flag ? ThemeColor.darkRed : ThemeColor.secondaryWhite),
+          Icon(icon, color: isRed! ? ThemeColor.darkRed : ThemeColor.secondaryWhite),
 
           const SizedBox(width: 15),
 
           Text(
             text,
-            style: text == 'Report' 
+            style: isRed
               ? GoogleFonts.inter(
               color: ThemeColor.darkRed,
               fontWeight: FontWeight.w800,
@@ -42,8 +47,10 @@ class BottomsheetVentPostActions {
 
   Future buildBottomsheet({
     required BuildContext context,
+    required String creator,
     required VoidCallback reportOnPressed,
-    required VoidCallback blockOnPressed
+    required VoidCallback blockOnPressed,
+    required VoidCallback deleteOnPressed,
   }) {
     return Bottomsheet().buildBottomSheet(
       context: context, 
@@ -70,7 +77,16 @@ class BottomsheetVentPostActions {
         _buildOptionButton(
           text: 'Report',
           icon: CupertinoIcons.flag,
+          isRed: true,
           onPressed: blockOnPressed
+        ),
+
+        if(userData.username == creator)
+        _buildOptionButton(
+          text: 'Delete',
+          icon: CupertinoIcons.trash,
+          isRed: true,
+          onPressed: deleteOnPressed
         ),
 
         const SizedBox(height: 25),
