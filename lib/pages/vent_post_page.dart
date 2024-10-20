@@ -2,11 +2,15 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/delete_vent.dart';
+import 'package:revent/vent_query/vent_actions.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
@@ -42,6 +46,20 @@ class VentPostPageState extends State<VentPostPage> {
 
   final focusNode = FocusNode();
 
+  final ventData = GetIt.instance<VentDataProvider>();
+
+  Future<void> _likeOnPressed() async {
+
+    try {
+
+      await VentActions(title: widget.title, creator: widget.creator).likePost();
+
+    } catch (err) {
+      SnackBarDialog.temporarySnack(message: 'Failed to like this post');
+    }
+
+  }
+
   Future<void> _deleteOnPressed() async {
 
     try {
@@ -62,9 +80,16 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildLikeButton() {
-    return ActionsButton().buildLikeButton(
-      text: widget.totalLikes.toString(), 
-      onPressed: () => print('Liked')
+    return Consumer<VentDataProvider>(
+      builder: (_, ventData, __) {
+        final index = ventData.vents.indexWhere(
+          (vent) => vent.title == widget.title && vent.creator == widget.creator
+        );
+        return ActionsButton().buildLikeButton(
+          text: ventData.vents[index].totalLikes.toString(), 
+          onPressed: () async => await _likeOnPressed()
+        );
+      },
     );
   }
 

@@ -7,11 +7,13 @@ import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent_post_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/vent_query/vent_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
-class VentPreviewer extends StatelessWidget {
+class VentPreviewer extends StatefulWidget {
 
   final String title;
   final String bodyText;
@@ -32,31 +34,64 @@ class VentPreviewer extends StatelessWidget {
     super.key
   });
 
+  @override
+  State<VentPreviewer> createState() => VentPreviewerState();
+
+}
+
+class VentPreviewerState extends State<VentPreviewer> {
+
   void _viewVentPostPage() {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => VentPostPage(
-        title: title, 
-        bodyText: bodyText, 
-        postTimestamp: postTimestamp,
-        totalComments: totalComments,
-        totalLikes: totalLikes,
-        creator: creator, 
-        pfpData: pfpData,
+        title: widget.title, 
+        bodyText: widget.bodyText, 
+        postTimestamp: widget.postTimestamp,
+        totalComments: widget.totalComments,
+        totalLikes: widget.totalLikes,
+        creator: widget.creator, 
+        pfpData: widget.pfpData,
       )),
+    );
+  }
+
+  Future<void> _likeOnPressed() async {
+
+    try {
+
+      await VentActions(title: widget.title, creator: widget.creator).likePost();
+
+    } catch (err) {
+      SnackBarDialog.temporarySnack(message: 'Failed to like this post');
+    }
+
+  }
+
+  Widget _buildLikeButton() {
+    return ActionsButton().buildLikeButton(
+      text: widget.totalLikes.toString(), 
+      onPressed: () async => await _likeOnPressed()
+    );
+  }
+
+  Widget _buildCommentButton() {
+    return ActionsButton().buildCommentsButton(
+      text: widget.totalComments.toString(), 
+      onPressed: () => print('Commented')
     );
   }
 
   Widget _buildCommunityAndCreatorHeader() {
     return InkWellEffect(
-      onPressed: () => NavigatePage.userProfilePage(username: creator, pfpData: pfpData),
+      onPressed: () => NavigatePage.userProfilePage(username: widget.creator, pfpData: widget.pfpData),
       child: Row(
         children: [
     
           ProfilePictureWidget(
             customWidth: 30,
             customHeight: 30,
-            pfpData: pfpData,
+            pfpData: widget.pfpData,
           ),
     
           const SizedBox(width: 10),
@@ -77,7 +112,7 @@ class VentPreviewer extends StatelessWidget {
               const SizedBox(height: 2.5),
     
               Text(
-                '@$creator',
+                '@${widget.creator}',
                 style: GoogleFonts.inter(
                   color: ThemeColor.thirdWhite,
                   fontWeight: FontWeight.w800,
@@ -93,7 +128,7 @@ class VentPreviewer extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 12.5, right: 4.0),
             child: Text(
-              postTimestamp,
+              widget.postTimestamp,
               style: GoogleFonts.inter(
                 color: ThemeColor.thirdWhite,
                 fontWeight: FontWeight.w800,
@@ -111,7 +146,7 @@ class VentPreviewer extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width-90,
       child: Text(
-        title,
+        widget.title,
         style: GoogleFonts.inter(
           color: ThemeColor.white,
           fontWeight: FontWeight.w800,
@@ -126,7 +161,7 @@ class VentPreviewer extends StatelessWidget {
   Widget _buildBodyText() {
     return Expanded(
       child: Text(
-        bodyText,
+        widget.bodyText,
         style: GoogleFonts.inter(
           color: ThemeColor.secondaryWhite,
           fontWeight: FontWeight.w800,
@@ -137,27 +172,13 @@ class VentPreviewer extends StatelessWidget {
       ),
     );
   }
-  
-  Widget _buildLikeButton() {
-    return ActionsButton().buildLikeButton(
-      text: totalLikes.toString(), 
-      onPressed: () => print('Liked')
-    );
-  }
-
-  Widget _buildCommentButton() {
-    return ActionsButton().buildCommentsButton(
-      text: totalComments.toString(), 
-      onPressed: () => print('Commented')
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
 
-    final containerHeight = bodyText.isEmpty ? 160.0 : 221.0;
-    final actionButtonsPadding = bodyText.isEmpty ? 0.0 : 22.0;
-    final actionButtonsHeightGap = bodyText.isEmpty ? 12.0 : 26.0;
+    final containerHeight = widget.bodyText.isEmpty ? 160.0 : 221.0;
+    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 22.0;
+    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 12.0 : 26.0;
 
     return InkWellEffect(
       onPressed: () => _viewVentPostPage(),
@@ -210,5 +231,4 @@ class VentPreviewer extends StatelessWidget {
       ),
     );
   }
-
 } 
