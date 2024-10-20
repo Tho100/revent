@@ -31,7 +31,7 @@ class CreateVentPageState extends State<CreateVentPage> {
       controller: ventTitleController,
       autofocus: true,
       maxLines: 1,
-      maxLength: 255,
+      maxLength: 85,
       style: GoogleFonts.inter(
         color: ThemeColor.white,
         fontWeight: defaultFontWeight,
@@ -58,6 +58,7 @@ class CreateVentPageState extends State<CreateVentPage> {
         child: TextFormField(
           controller: ventBodyTextController,
           keyboardType: TextInputType.multiline,
+          maxLength: 1000,
           maxLines: null,
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
