@@ -14,6 +14,8 @@ class Vent {
   int totalLikes;
   int totalComments;
 
+  bool isPostLiked;
+
   Vent({
     required this.title,
     required this.bodyText,
@@ -22,6 +24,7 @@ class Vent {
     required this.profilePic,
     this.totalLikes = 0,
     this.totalComments = 0,
+    this.isPostLiked = false
   });
 
 }
@@ -52,6 +55,19 @@ class VentDataProvider extends ChangeNotifier {
       _vents.removeAt(index);
       notifyListeners();
     }
+  }
+
+  void likeVent(int index) {
+
+    _vents[index].isPostLiked = !_vents[index].isPostLiked;
+
+    _vents[index].isPostLiked 
+      ? _vents[index].totalLikes += 1
+      : _vents[index].totalLikes -= 1;
+
+
+    notifyListeners();
+    
   }
 
 }
