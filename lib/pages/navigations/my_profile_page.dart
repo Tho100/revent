@@ -123,7 +123,7 @@ class MyProfilePageState extends State<MyProfilePage> {
               
               _buildPopularityHeader('followers', profileData.followers),
 
-              _buildPopularityHeader('posts', profileData.posts),
+              _buildPopularityHeader('vents', profileData.posts),
 
               _buildPopularityHeader('following', profileData.following),
 
