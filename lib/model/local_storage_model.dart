@@ -71,7 +71,9 @@ class LocalStorageModel {
 
       await filePath.delete();
 
-    } catch (err) {}
+    } catch (err) {
+      print(err.toString());
+    }
 
   }
 

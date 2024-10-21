@@ -2,15 +2,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/vent_query/delete_vent.dart';
-import 'package:revent/vent_query/vent_actions.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
@@ -44,41 +41,6 @@ class VentPostPage extends StatefulWidget {
 
 class VentPostPageState extends State<VentPostPage> {
 
-  final focusNode = FocusNode();
-
-  final ventData = GetIt.instance<VentDataProvider>();
-
-  Future<void> _likeOnPressed() async {
-
-    try {
-
-      await VentActions(title: widget.title, creator: widget.creator).likePost();
-
-    } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to like this post');
-    }
-
-  }
-
-  Future<void> _deleteOnPressed() async {
-
-    try {
-
-      await DeleteVent().delete(ventTitle: widget.title);
-
-      SnackBarDialog.temporarySnack(message: 'Post has been deleted.');
-
-      if(context.mounted) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-      }
-
-    } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to delete this post.');
-    }
-
-  }
-
   Widget _buildLikeButton() {
     return Consumer<VentDataProvider>(
       builder: (_, ventData, __) {
@@ -87,7 +49,11 @@ class VentPostPageState extends State<VentPostPage> {
         );
         return ActionsButton().buildLikeButton(
           text: ventData.vents[index].totalLikes.toString(), 
-          onPressed: () async => await _likeOnPressed()
+          onPressed: () async => await CallVentActions(
+            context: context, 
+            title: widget.title, 
+            creator: widget.creator
+          ).likePost()
         );
       },
     );
@@ -146,29 +112,24 @@ class VentPostPageState extends State<VentPostPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        Focus(
-          focusNode: focusNode,
-          child: SelectableText(
-            widget.title,
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 21
-            ),
+        SelectableText(
+          widget.title,
+          style: GoogleFonts.inter(
+            color: ThemeColor.white,
+            fontWeight: FontWeight.w800,
+            fontSize: 21
           ),
         ),
+        
 
         const SizedBox(height: 14),
 
-        Focus(
-          focusNode: focusNode,
-          child: SelectableText(
-            widget.bodyText,
-            style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
-              fontWeight: FontWeight.w800,
-              fontSize: 14
-            ),
+        SelectableText(
+          widget.bodyText,
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontWeight: FontWeight.w800,
+            fontSize: 14
           ),
         ),
 
@@ -184,7 +145,11 @@ class VentPostPageState extends State<VentPostPage> {
         creator: widget.creator,
         reportOnPressed: () {}, 
         blockOnPressed: () {},
-        deleteOnPressed: () async => await _deleteOnPressed()
+        deleteOnPressed: () async => await CallVentActions(
+          context: context, 
+          title: widget.title, 
+          creator: widget.creator
+        ).deletePost()
       )
     );
   }
@@ -305,18 +270,14 @@ class VentPostPageState extends State<VentPostPage> {
 
   @override
   void dispose() {
-    focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: _buildCustomAppBar(),
-        body: _buildBody(),
-      ),
+    return Scaffold(
+      appBar: _buildCustomAppBar(),
+      body: _buildBody(),  
     );
   }
 
