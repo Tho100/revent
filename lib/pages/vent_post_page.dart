@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -43,10 +42,6 @@ class VentPostPage extends StatefulWidget {
 }
 
 class VentPostPageState extends State<VentPostPage> {
-
-  final focusNode = FocusNode();
-
-  final ventData = GetIt.instance<VentDataProvider>();
 
   Future<void> _likeOnPressed() async {
 
@@ -146,29 +141,24 @@ class VentPostPageState extends State<VentPostPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        Focus(
-          focusNode: focusNode,
-          child: SelectableText(
-            widget.title,
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 21
-            ),
+        SelectableText(
+          widget.title,
+          style: GoogleFonts.inter(
+            color: ThemeColor.white,
+            fontWeight: FontWeight.w800,
+            fontSize: 21
           ),
         ),
+        
 
         const SizedBox(height: 14),
 
-        Focus(
-          focusNode: focusNode,
-          child: SelectableText(
-            widget.bodyText,
-            style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
-              fontWeight: FontWeight.w800,
-              fontSize: 14
-            ),
+        SelectableText(
+          widget.bodyText,
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontWeight: FontWeight.w800,
+            fontSize: 14
           ),
         ),
 
@@ -305,18 +295,14 @@ class VentPostPageState extends State<VentPostPage> {
 
   @override
   void dispose() {
-    focusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        appBar: _buildCustomAppBar(),
-        body: _buildBody(),
-      ),
+    return Scaffold(
+      appBar: _buildCustomAppBar(),
+      body: _buildBody(),  
     );
   }
 
