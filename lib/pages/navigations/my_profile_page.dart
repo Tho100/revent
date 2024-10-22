@@ -112,7 +112,7 @@ class MyProfilePageState extends State<MyProfilePage> {
     );
   }
 
-  Widget _popularityWidgets(BuildContext context) {
+  Widget _popularityWidgets() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Consumer<ProfileDataProvider>(
@@ -123,7 +123,7 @@ class MyProfilePageState extends State<MyProfilePage> {
               
               _buildPopularityHeader('followers', profileData.followers),
 
-              _buildPopularityHeader('posts', profileData.posts),
+              _buildPopularityHeader('vents', profileData.posts),
 
               _buildPopularityHeader('following', profileData.following),
 
@@ -160,7 +160,7 @@ class MyProfilePageState extends State<MyProfilePage> {
 
           const SizedBox(height: 40),
 
-          _popularityWidgets(context),
+          _popularityWidgets(),
 
         ],
       ),

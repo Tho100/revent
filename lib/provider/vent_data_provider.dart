@@ -57,14 +57,15 @@ class VentDataProvider extends ChangeNotifier {
     }
   }
 
-  void likeVent(int index) {
+  void likeVent(int index, bool isUserLikedPost) {
 
-    _vents[index].isPostLiked = !_vents[index].isPostLiked;
+    _vents[index].isPostLiked = isUserLikedPost 
+      ? false
+      : true; //!_vents[index].isPostLiked;
 
     _vents[index].isPostLiked 
       ? _vents[index].totalLikes += 1
       : _vents[index].totalLikes -= 1;
-
 
     notifyListeners();
     
