@@ -8,6 +8,7 @@ import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
@@ -145,11 +146,16 @@ class VentPostPageState extends State<VentPostPage> {
         creator: widget.creator,
         reportOnPressed: () {}, 
         blockOnPressed: () {},
-        deleteOnPressed: () async => await CallVentActions(
-          context: context, 
-          title: widget.title, 
-          creator: widget.creator
-        ).deletePost()
+        deleteOnPressed: () {
+          CustomAlertDialog.alertDialogCustomOnPress(
+            message: 'Delete this post?', 
+            onPressedEvent: () async => await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).deletePost()
+          );
+        }
       )
     );
   }
