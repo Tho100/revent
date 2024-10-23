@@ -207,7 +207,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 22.0;
     final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 26.0;
-
+  // TODO: Put padding on the most top
     return ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
       child: SingleChildScrollView(
