@@ -8,6 +8,7 @@ import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
@@ -40,6 +41,20 @@ class VentPostPage extends StatefulWidget {
 }
 
 class VentPostPageState extends State<VentPostPage> {
+
+  Future<void> _deletePostOnPressed() async {
+
+    await CallVentActions(
+      context: context, 
+      title: widget.title, 
+      creator: widget.creator
+    ).deletePost();
+
+    if(context.mounted) {
+      Navigator.pop(context);
+    }
+
+  }
 
   Widget _buildLikeButton() {
     return Consumer<VentDataProvider>(
@@ -145,11 +160,13 @@ class VentPostPageState extends State<VentPostPage> {
         creator: widget.creator,
         reportOnPressed: () {}, 
         blockOnPressed: () {},
-        deleteOnPressed: () async => await CallVentActions(
-          context: context, 
-          title: widget.title, 
-          creator: widget.creator
-        ).deletePost()
+        deleteOnPressed: () {
+          CustomAlertDialog.alertDialogCustomOnPress(
+            message: 'Delete this post?', 
+            buttonMessage: 'Delete',
+            onPressedEvent: () async => _deletePostOnPressed()
+          );
+        }
       )
     );
   }
