@@ -208,12 +208,12 @@ class VentPostPageState extends State<VentPostPage> {
     final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 22.0;
     final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 26.0;
 
-    return ScrollConfiguration(
+    return Padding(
+      padding: const EdgeInsets.only(top: 24, left: 18),
+      child: ScrollConfiguration(
       behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
       child: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 24, left: 18),
-          child: SizedBox(
+        child: SizedBox(
             width: MediaQuery.of(context).size.width-45,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
