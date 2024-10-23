@@ -42,6 +42,20 @@ class VentPostPage extends StatefulWidget {
 
 class VentPostPageState extends State<VentPostPage> {
 
+  Future<void> _deletePostOnPressed() async {
+
+    await CallVentActions(
+      context: context, 
+      title: widget.title, 
+      creator: widget.creator
+    ).deletePost();
+
+    if(context.mounted) {
+      Navigator.pop(context);
+    }
+
+  }
+
   Widget _buildLikeButton() {
     return Consumer<VentDataProvider>(
       builder: (_, ventData, __) {
@@ -150,11 +164,7 @@ class VentPostPageState extends State<VentPostPage> {
           CustomAlertDialog.alertDialogCustomOnPress(
             message: 'Delete this post?', 
             buttonMessage: 'Delete',
-            onPressedEvent: () async => await CallVentActions(
-              context: context, 
-              title: widget.title, 
-              creator: widget.creator
-            ).deletePost()
+            onPressedEvent: () async => _deletePostOnPressed()
           );
         }
       )

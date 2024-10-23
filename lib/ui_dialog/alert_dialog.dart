@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -57,7 +56,7 @@ class CustomAlertDialog {
               fontWeight: FontWeight.w800,
             )
           ),
-          actions: <Widget>[ //TODO: Remove unsued <widget>
+          actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
@@ -98,7 +97,7 @@ class CustomAlertDialog {
               child: Text(
                 'Cancel',
                 style: GoogleFonts.inter(
-                  color: ThemeColor.darkRed,
+                  color: ThemeColor.secondaryWhite,
                   fontWeight: FontWeight.w800,
                 )
               ),
@@ -109,7 +108,7 @@ class CustomAlertDialog {
               child: Text(
                 buttonMessage,
                 style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
+                  color: ThemeColor.darkRed,
                   fontWeight: FontWeight.w800,
                 )
               ),
