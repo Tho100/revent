@@ -76,6 +76,7 @@ class CustomAlertDialog {
 
   static Future alertDialogCustomOnPress({
     required String message,
+    required String buttonMessage,
     required VoidCallback onPressedEvent,    
   }) {
     return showDialog(
@@ -86,7 +87,7 @@ class CustomAlertDialog {
           content: Text(
             message,
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.white,
               fontWeight: FontWeight.w800,
             )
           ),
@@ -104,9 +105,9 @@ class CustomAlertDialog {
             ),
 
             TextButton(
-              onPressed: () => Navigator.pop(context),
+              onPressed: onPressedEvent,
               child: Text(
-                'Confirm',
+                buttonMessage,
                 style: GoogleFonts.inter(
                   color: ThemeColor.secondaryWhite,
                   fontWeight: FontWeight.w800,
