@@ -31,7 +31,7 @@ class SettingsPage extends StatelessWidget {
             style: GoogleFonts.inter(
               color: ThemeColor.thirdWhite,
               fontWeight: FontWeight.w700,
-              fontSize: 17
+              fontSize: 15
             ),
           )
         ]

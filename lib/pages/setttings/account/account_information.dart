@@ -60,13 +60,13 @@ class AccountInformationPage extends StatelessWidget {
   Widget _buildBody(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(top: 16.0, left: 14.0),
+        padding: const EdgeInsets.only(top: 24.0, left: 14.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-                  
-            const SizedBox(height: 42),
-      
+
+            const SizedBox(height: 12),
+                        
             _buildHeaders('Username', '@${userData.username}'),
             _buildHeaders('Email', userData.email),
             _buildHeaders('Plan', userData.plan),
