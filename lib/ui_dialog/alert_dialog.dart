@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -56,7 +57,7 @@ class CustomAlertDialog {
               fontWeight: FontWeight.w800,
             )
           ),
-          actions: <Widget>[
+          actions: <Widget>[ //TODO: Remove unsued <widget>
             TextButton(
               onPressed: () => Navigator.pop(context),
               child: Text(
@@ -67,6 +68,52 @@ class CustomAlertDialog {
                 )
               ),
             ),
+          ],
+        );
+      },
+    );
+  }
+
+  static Future alertDialogCustomOnPress({
+    required String message,
+    required VoidCallback onPressedEvent,    
+  }) {
+    return showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialogWidget(
+          content: Text(
+            message,
+            style: GoogleFonts.inter(
+              color: ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w800,
+            )
+          ),
+          actions: [
+
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Cancel',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.darkRed,
+                  fontWeight: FontWeight.w800,
+                )
+              ),
+            ),
+
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Confirm',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.secondaryWhite,
+                  fontWeight: FontWeight.w800,
+                )
+              ),
+            ),
+
           ],
         );
       },

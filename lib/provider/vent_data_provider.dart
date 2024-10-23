@@ -61,7 +61,7 @@ class VentDataProvider extends ChangeNotifier {
 
     _vents[index].isPostLiked = isUserLikedPost 
       ? false
-      : true; //!_vents[index].isPostLiked;
+      : true; //!_vents[index].isPostLiked;  //TODO: Remove unused comments
 
     _vents[index].isPostLiked 
       ? _vents[index].totalLikes += 1
