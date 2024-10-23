@@ -19,9 +19,9 @@ class UserRegistrationService {
   final defaultBioMsg = 'Hello!';
 
   Future<void> register({
-    required String? username,
-    required String? email,
-    required String? hashPassword,
+    required String username,
+    required String email,
+    required String hashPassword,
     required BuildContext context
   }) async {
     
@@ -39,7 +39,7 @@ class UserRegistrationService {
     
     _showWarningOnDataAlreadyExists(context, getEmail, 'Email already exists.');
     
-    _setUserProfileData(username: username!, email: email!);
+    _setUserProfileData(username: username, email: email);
 
     await _saveUserData(hashPassword: hashPassword);
 

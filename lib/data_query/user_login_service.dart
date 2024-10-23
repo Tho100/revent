@@ -18,7 +18,7 @@ class UserLoginService {
 
   final userData = GetIt.instance<UserDataProvider>();
 
-  Future<void> login(String? email, String? auth, bool isRememberMeChecked, BuildContext context) async {
+  Future<void> login(String email, String auth, bool isRememberMeChecked, BuildContext context) async {
 
     final conn = await ReventConnect.initializeConnection();
 
@@ -37,7 +37,7 @@ class UserLoginService {
       final authenticationInformation = await userDataGetter
         .getAccountAuthentication(username: username, conn: conn);
         
-      final isAuthMatched = AuthModel().computeHash(auth!) == authenticationInformation;
+      final isAuthMatched = AuthModel().computeHash(auth) == authenticationInformation;
 
       if(!isAuthMatched) {
         if(context.mounted) {
@@ -46,7 +46,7 @@ class UserLoginService {
         return;
       }
         
-      await _setUserProfileData(conn: conn, email: email!);
+      await _setUserProfileData(conn: conn, email: email);
       await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
 
       await VentDataSetup().setup(); 
