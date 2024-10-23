@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/pages/setttings/account/account_information.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/settings_button.dart';
@@ -38,7 +39,7 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody(BuildContext context) {
 
     const buttonHeightGap = 8.0;
 
@@ -52,7 +53,12 @@ class SettingsPage extends StatelessWidget {
     
             SettingsButton(
               text: 'Account information', 
-              onPressed: () {}
+              onPressed: () {
+                Navigator.push(
+                  context, 
+                  MaterialPageRoute(builder: (_) => AccountInformationPage())
+                );
+              }
             ),
     
             const SizedBox(height: buttonHeightGap),
@@ -84,7 +90,7 @@ class SettingsPage extends StatelessWidget {
         title: 'Settings',
         context: context
       ).buildAppBar(),
-      body: _buildBody(),
+      body: _buildBody(context),
     );
   }
 
