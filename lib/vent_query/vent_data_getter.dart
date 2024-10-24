@@ -1,10 +1,10 @@
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
-import 'package:revent/model/format_post_timestamp.dart';
+import 'package:revent/model/format_date.dart';
 
 class VentDataGetter {
 
-  final formatPostTimestamp = FormatPostTimestamp();
+  final formatPostTimestamp = FormatDate();
 
   Future<Map<String, dynamic>> getVentsData() async {
 
@@ -26,7 +26,7 @@ class VentDataGetter {
     final postTimestamp = retrievedVents.rows.map((row) {
       final createdAtValue = row.assoc()['created_at'];
       final createdAt = DateTime.parse(createdAtValue!);
-      return formatPostTimestamp.formatTimeAgo(createdAt);
+      return formatPostTimestamp.formatPostTimestamp(createdAt);
     }).toList();
 
     return {

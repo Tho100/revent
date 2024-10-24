@@ -21,6 +21,20 @@ class UserDataGetter {
 
   }
 
+  Future<String> getJoinedDate({
+    required MySQLConnectionPool conn,
+    required String username
+  }) async {
+
+    const query = "SELECT created_at FROM user_information WHERE username = :username";
+    final params = {'username': username};
+    
+    final results = await conn.execute(query, params);
+
+    return results.rows.last.assoc()['created_at']!;
+
+  }
+
   Future<Map<String, dynamic>> getUserStartupInfo({
     required MySQLConnectionPool conn,
     required String email

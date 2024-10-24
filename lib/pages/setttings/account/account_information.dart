@@ -1,17 +1,48 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/data_query/user_data_getter.dart';
+import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
 
-class AccountInformationPage extends StatelessWidget {
+class AccountInformationPage extends StatefulWidget {
 
-  AccountInformationPage({super.key});
+  const AccountInformationPage({super.key});
+
+  @override
+  State<AccountInformationPage> createState() => AccountInformationPageState();
+
+}
+
+class AccountInformationPageState extends State<AccountInformationPage> {
 
   final userData = GetIt.instance<UserDataProvider>();
+
+  Future<String> _loadJoinedDate() async {
+
+    if(userData.joinedDate.isEmpty) {
+
+      final conn = await ReventConnect.initializeConnection();
+
+      final getJoinedDate = await UserDataGetter()
+        .getJoinedDate(conn: conn, username: userData.username);
+
+      final formattedJoinedDate = FormatDate().formatLongDate(getJoinedDate);
+
+      userData.setJoinedDate(formattedJoinedDate);
+
+      return formattedJoinedDate;
+
+    } else {
+      return userData.joinedDate;
+
+    }
+
+  }
 
   Widget _buildHeaders(String header, String value) {
     return Padding(
@@ -70,6 +101,24 @@ class AccountInformationPage extends StatelessWidget {
             _buildHeaders('Username', '@${userData.username}'),
             _buildHeaders('Email', userData.email),
             _buildHeaders('Plan', userData.plan),
+
+            FutureBuilder<String>(
+              future: _loadJoinedDate(),
+              builder: (_, snapshot) {
+
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return _buildHeaders('Joined date', '...');
+
+                } else if (snapshot.hasError) {
+                  return _buildHeaders('Joined date', '0/0/0');
+
+                } else {
+                  return _buildHeaders('Joined date', snapshot.data ?? '0/0/0');
+
+                }
+
+              },
+            ),
       
             _buildUpgradeButton(context), 
                   
@@ -89,5 +138,4 @@ class AccountInformationPage extends StatelessWidget {
       body: _buildBody(context),
     );
   }
-
 }
