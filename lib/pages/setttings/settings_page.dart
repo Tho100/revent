@@ -56,7 +56,7 @@ class SettingsPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context, 
-                  MaterialPageRoute(builder: (_) => AccountInformationPage())
+                  MaterialPageRoute(builder: (_) => const AccountInformationPage())
                 );
               }
             ),
