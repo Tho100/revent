@@ -1,34 +1,39 @@
 import 'package:flutter/material.dart';
 
+class User {
+
+  String username;
+  String email;
+  String plan;
+  String? joinedDate;
+
+  User({
+    required this.username,
+    required this.email,
+    required this.plan,
+    this.joinedDate,
+  });
+
+}
+
 class UserDataProvider extends ChangeNotifier {
-
-  String _username = '';
-  String _email = '';
-  String _plan = '';
-  String _joinedDate = '';
-
-  String get username => _username;
-  String get email => _email;
-  String get plan => _plan;
-  String get joinedDate => _joinedDate;
-
-  void setUsername(String username) {
-    _username = username;
-    notifyListeners();
-  }
-
-  void setEmail(String email) {
-    _email = email;
-    notifyListeners();
-  }
-
-  void setAccountPlan(String plan) {
-    _plan = plan;
-    notifyListeners();
-  }
   
+  User _user = User(username: '', email: '', plan: '', joinedDate: '');
+
+  User get user => _user;
+
+  void setUser(User user) {
+    _user = user;
+    notifyListeners();
+  }
+
   void setJoinedDate(String joinedDate) {
-    _joinedDate = joinedDate;
+    _user.joinedDate = joinedDate;
+    notifyListeners();
+  }
+
+  void clearUserData() {
+    _user = User(username: '', email: '', plan: '', joinedDate: '');
     notifyListeners();
   }
 

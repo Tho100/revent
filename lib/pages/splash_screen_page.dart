@@ -49,7 +49,7 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _loadStartupData() async {
-    await ProfileDataSetup().setup(username: userData.username);
+    await ProfileDataSetup().setup(username: userData.user.username);
     await VentDataSetup().setup();
   }
 
@@ -88,9 +88,13 @@ class SplashScreenState extends State<SplashScreen> {
         return;
       }
 
-      userData.setAccountPlan(getLocalAccountType);
-      userData.setUsername(getLocalUsername);
-      userData.setEmail(getLocalEmail);
+      final userSetup = User(
+        username: getLocalUsername, 
+        email: getLocalEmail, 
+        plan: getLocalAccountType, 
+      );
+
+      userData.setUser(userSetup);
 
       await _loadStartupData();
 

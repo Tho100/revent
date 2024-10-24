@@ -24,12 +24,12 @@ class AccountInformationPageState extends State<AccountInformationPage> {
 
   Future<String> _loadJoinedDate() async {
 
-    if(userData.joinedDate.isEmpty) {
+    if(userData.user.joinedDate == null) {
 
       final conn = await ReventConnect.initializeConnection();
 
       final getJoinedDate = await UserDataGetter()
-        .getJoinedDate(conn: conn, username: userData.username);
+        .getJoinedDate(conn: conn, username: userData.user.username);
 
       final formattedJoinedDate = FormatDate().formatLongDate(getJoinedDate);
 
@@ -38,7 +38,7 @@ class AccountInformationPageState extends State<AccountInformationPage> {
       return formattedJoinedDate;
 
     } else {
-      return userData.joinedDate;
+      return userData.user.joinedDate!;
 
     }
 
@@ -98,9 +98,8 @@ class AccountInformationPageState extends State<AccountInformationPage> {
 
             const SizedBox(height: 12),
                         
-            _buildHeaders('Username', '@${userData.username}'),
-            _buildHeaders('Email', userData.email),
-            _buildHeaders('Plan', userData.plan),
+            _buildHeaders('Username', '@${userData.user.username}'),
+            _buildHeaders('Email', userData.user.email),
 
             FutureBuilder<String>(
               future: _loadJoinedDate(),
@@ -120,6 +119,7 @@ class AccountInformationPageState extends State<AccountInformationPage> {
               },
             ),
       
+            _buildHeaders('Plan', userData.user.plan),
             _buildUpgradeButton(context), 
                   
           ],

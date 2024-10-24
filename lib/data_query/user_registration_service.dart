@@ -68,9 +68,13 @@ class UserRegistrationService {
     required String email
   }) {
 
-    userData.setUsername(username);
-    userData.setEmail(email);
-    userData.setAccountPlan("Basic"); 
+    final userSetup = User(
+      username: username, 
+      email: email, 
+      plan: 'Basic', 
+    );
+
+    userData.setUser(userSetup);
 
     profileData.setPosts(0);
     profileData.setFollowers(0);
@@ -103,8 +107,8 @@ class UserRegistrationService {
 
       final params = [
         {
-          'username': userData.username,
-          'email': userData.email,
+          'username': userData.user.username,
+          'email': userData.user.email,
           'password': hashPassword,
           'plan': 'Basic'
         },
@@ -114,7 +118,7 @@ class UserRegistrationService {
           'following': 0,
           'posts': 0,
           'profile_pic': '',
-          'username': userData.username
+          'username': userData.user.username
         }
       ];
 
@@ -123,7 +127,7 @@ class UserRegistrationService {
       }
 
       await LocalStorageModel()
-        .setupLocalAccountInformation(userData.username, userData.email, "Basic");
+        .setupLocalAccountInformation(userData.user.username, userData.user.email, "Basic");
 
     } catch (err) {
       print(err.toString());

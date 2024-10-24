@@ -18,7 +18,7 @@ class ProfileDataUpdate {
     const query = "UPDATE user_profile_info SET bio = :bio_value WHERE username = :username";
     final params = {
       'bio_value': bioText,
-      'username': userData.username
+      'username': userData.user.username
     };
 
     profileData.setBio(bioText);
@@ -36,7 +36,7 @@ class ProfileDataUpdate {
     const query = "UPDATE user_profile_info SET profile_picture = :profile_pic_data WHERE username = :username";
     final params = {
       'profile_pic_data': toBase64EncodedPfp,
-      'username': userData.username
+      'username': userData.user.username
     };
 
     profileData.setProfilePicture(picData);

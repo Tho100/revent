@@ -23,7 +23,7 @@ class UserActions {
         final updateFollowingValueQuery = 
           'UPDATE user_profile_info SET following = following $operationSymbol 1 WHERE username = :username';
           
-        await conn.execute(updateFollowingValueQuery, {'username': userData.username});
+        await conn.execute(updateFollowingValueQuery, {'username': userData.user.username});
 
         final updateFollowerValueQuery = 
           'UPDATE user_profile_info SET followers = followers $operationSymbol 1 WHERE username = :username';
@@ -34,7 +34,7 @@ class UserActions {
           ? 'INSERT INTO user_follows_info (follower, following) VALUES (:follower, :following)'
           : 'DELETE FROM user_follows_info WHERE following = :following AND follower = :follower';
 
-        await conn.execute(insertOrDeleteFollowerQuery, {'follower': userData.username, 'following': username});
+        await conn.execute(insertOrDeleteFollowerQuery, {'follower': userData.user.username, 'following': username});
 
       });
 

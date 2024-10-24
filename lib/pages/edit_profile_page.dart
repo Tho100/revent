@@ -176,7 +176,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       
             const SizedBox(height: 42),
       
-            _buildHeaders('Username', '@${userData.username}'),
+            _buildHeaders('Username', '@${userData.user.username}'),
           
             const SizedBox(height: 40),
       
@@ -211,5 +211,5 @@ class EditProfilePageState extends State<EditProfilePage> {
       ).buildAppBar(),
     );
   }
-  
+
 }

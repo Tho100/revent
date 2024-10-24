@@ -31,7 +31,7 @@ class VentActions {
     final likesInfoParams = {
       'title': title,
       'creator': creator,
-      'liked_by': userData.username,
+      'liked_by': userData.user.username,
     };
 
     final isUserLikedPost = await _isUserLikedPost(

@@ -72,8 +72,9 @@ class UserLoginService {
     final localUserInfo = (await localStorage.readLocalAccountInformation())['username']!;
 
     if(localUserInfo.isEmpty && isRememberMeChecked) {
-      await localStorage
-        .setupLocalAccountInformation(userData.username, userData.email, userData.plan);
+      await localStorage.setupLocalAccountInformation(
+        userData.user.username, userData.user.email, userData.user.plan
+      );
     }
 
   }
@@ -89,9 +90,13 @@ class UserLoginService {
     final username = accountInfo['username'];
     final accountPlan = accountInfo['plan'];
 
-    userData.setUsername(username);
-    userData.setEmail(email);
-    userData.setAccountPlan(accountPlan);
+    final userSetup = User(
+      username: username, 
+      email: email, 
+      plan: accountPlan, 
+    );
+
+    userData.setUser(userSetup);
 
     await ProfileDataSetup().setup(username: username);
 

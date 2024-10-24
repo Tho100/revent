@@ -97,7 +97,7 @@ class NavigatePage {
 
     final userData = GetIt.instance<UserDataProvider>();
 
-    if(username != userData.username) {
+    if(username != userData.user.username) {
       Navigator.push(
         navigatorKey.currentContext!,
         MaterialPageRoute(builder: (context) => UserProfilePage(

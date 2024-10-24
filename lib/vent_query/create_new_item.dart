@@ -20,7 +20,7 @@ class CreateNewItem {
 
     const query = "INSERT INTO vent_info (creator, title, body_text, total_likes, total_comments) VALUES (:creator, :title, :body_text, :total_likes, :total_comments)";
     final params = {
-      'creator': userData.username,
+      'creator': userData.user.username,
       'title': ventTitle,
       'body_text': ventBodyText,
       'total_likes': 0,
@@ -35,7 +35,7 @@ class CreateNewItem {
     final newVent = Vent(
       title: ventTitle, 
       bodyText: ventBodyText, 
-      creator: userData.username, 
+      creator: userData.user.username, 
       postTimestamp: formattedTimestamp, 
       profilePic: profileData.profilePicture
     );
