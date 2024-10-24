@@ -84,10 +84,10 @@ class UserLoginService {
   }) async {
 
     final accountInfo = await userDataGetter
-      .getAccountTypeAndUsername(email: email, conn: conn);
+      .getUserStartupInfo(email: email, conn: conn);
       
-    final username = accountInfo[0]!;
-    final accountPlan = accountInfo[1]!;
+    final username = accountInfo['username'];
+    final accountPlan = accountInfo['plan'];
 
     userData.setUsername(username);
     userData.setEmail(email);
