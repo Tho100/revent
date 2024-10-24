@@ -16,7 +16,7 @@ class ProfilePictureGetter {
 
     const query = "SELECT profile_picture FROM user_profile_info WHERE username = :username";
     final params = {
-      'username': username!.isNotEmpty ? username : userData.username
+      'username': username!.isNotEmpty ? username : userData.user.username
     };
 
     final result = await conn.execute(query, params);

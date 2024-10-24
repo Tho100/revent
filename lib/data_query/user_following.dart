@@ -15,7 +15,7 @@ class UserFollowing {
       const query = 'SELECT 1 FROM user_follows_info WHERE following = :following AND follower = :follower LIMIT 1';
       final param = {
         'following': username,
-        'follower': userData.username
+        'follower': userData.user.username
       };
 
       final results = await conn.execute(query, param);

@@ -15,7 +15,7 @@ class DeleteVent {
     const query = "DELETE FROM vent_info WHERE title = :title AND creator = :creator";
     final params = {
       'title': ventTitle,
-      'creator': userData.username,
+      'creator': userData.user.username,
     };
 
     await conn.execute(query, params);

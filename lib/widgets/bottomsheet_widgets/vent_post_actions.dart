@@ -81,7 +81,7 @@ class BottomsheetVentPostActions {
           onPressed: blockOnPressed
         ),
 
-        if(userData.username == creator)
+        if(userData.user.username == creator)
         _buildOptionButton(
           text: 'Delete',
           icon: CupertinoIcons.trash,

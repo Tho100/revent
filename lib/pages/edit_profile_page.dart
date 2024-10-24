@@ -122,16 +122,6 @@ class EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildUpgradeButton(BuildContext context) {
-    return MainButton(
-      customWidth: MediaQuery.of(context).size.width * 0.26,
-      customHeight: 46,
-      customFontSize: 15,
-      text: 'Upgrade', 
-      onPressed: () => print('Upgrade')
-    );
-  }
-
   Widget _buildBio(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
@@ -186,12 +176,8 @@ class EditProfilePageState extends State<EditProfilePage> {
       
             const SizedBox(height: 42),
       
-            _buildHeaders('Username', '@${userData.username}'),
-            _buildHeaders('Email', userData.email),
-            _buildHeaders('Plan', userData.plan),
-      
-            _buildUpgradeButton(context), 
-      
+            _buildHeaders('Username', '@${userData.user.username}'),
+          
             const SizedBox(height: 40),
       
             _buildBio(context),
@@ -225,4 +211,5 @@ class EditProfilePageState extends State<EditProfilePage> {
       ).buildAppBar(),
     );
   }
+
 }

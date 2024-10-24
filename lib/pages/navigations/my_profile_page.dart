@@ -32,13 +32,13 @@ class MyProfilePageState extends State<MyProfilePage> {
 
     profileData.clearProfileData();
 
-    await ProfileDataSetup().setup(username: userData.username);
+    await ProfileDataSetup().setup(username: userData.user.username);
 
   }
 
   Widget _buildUsername() {
     return Text(
-      userData.username,
+      userData.user.username,
       style: GoogleFonts.inter(
         color: ThemeColor.white,
         fontWeight: FontWeight.w800,
