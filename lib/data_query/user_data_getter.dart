@@ -1,10 +1,11 @@
 import 'package:mysql_client/mysql_client.dart';
+import 'package:revent/model/extract_data.dart';
 
 class UserDataGetter {
 
   Future<String?> getUsername({
     required MySQLConnectionPool conn,
-    required String? email
+    required String email
   }) async {
 
     const query = "SELECT username FROM user_information WHERE email = :email";
@@ -20,30 +21,45 @@ class UserDataGetter {
 
   }
 
-  Future<List<String?>> getAccountTypeAndUsername({
+  Future<String> getJoinedDate({
     required MySQLConnectionPool conn,
-    required String? email
+    required String username
   }) async {
 
-    const getUsernameQuery = "SELECT username FROM user_information WHERE email = :email";
-    const getAccountPlanQuery = "SELECT plan FROM user_information WHERE email = :email";
+    const query = "SELECT created_at FROM user_information WHERE username = :username";
+    final params = {'username': username};
+    
+    final results = await conn.execute(query, params);
 
-    final params = {'email': email};
+    return results.rows.last.assoc()['created_at']!;
 
-    final results = await Future.wait([
-      conn.execute(getUsernameQuery, params),
-      conn.execute(getAccountPlanQuery, params),
-    ]);
+  }
 
-    return results
-      .expand((result) => result.rows.map((row) => row.assoc().values.first))
-      .toList();
+  Future<Map<String, dynamic>> getUserStartupInfo({
+    required MySQLConnectionPool conn,
+    required String email
+  }) async {
+
+    const query = "SELECT username, plan FROM user_information WHERE email = :email";
+    final param = {'email': email};
+    
+    final results = await conn.execute(query, param);
+
+    final extractedData = ExtractData(rowsData: results);
+
+    final username = extractedData.extractStringColumn('username')[0];
+    final plan = extractedData.extractStringColumn('plan')[0];
+
+    return {
+      'username': username,
+      'plan': plan,
+    };
 
   }
 
   Future<String> getAccountAuthentication({
     required MySQLConnectionPool conn,
-    required String? username
+    required String username
   }) async {
 
     const query = "SELECT password FROM user_information WHERE username = :username";

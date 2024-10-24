@@ -1,6 +1,8 @@
-class FormatPostTimestamp {
+import 'package:intl/intl.dart';
 
-  String formatTimeAgo(DateTime createdAt) {
+class FormatDate {
+
+  String formatPostTimestamp(DateTime createdAt) {
 
     final now = DateTime.now();
     final difference = now.difference(createdAt);
@@ -24,6 +26,15 @@ class FormatPostTimestamp {
       return '${(difference.inDays / 365).floor()}y';
 
     }
+
+  }
+
+  String formatLongDate(String timestamp) {
+
+    DateTime parsedDate = DateTime.parse(timestamp);
+    String formattedDate = DateFormat('MMMM d yyyy').format(parsedDate);
+
+    return formattedDate;
 
   }
 

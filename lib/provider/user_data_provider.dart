@@ -5,11 +5,13 @@ class UserDataProvider extends ChangeNotifier {
   String _username = '';
   String _email = '';
   String _plan = '';
+  String _joinedDate = '';
 
   String get username => _username;
   String get email => _email;
   String get plan => _plan;
-  
+  String get joinedDate => _joinedDate;
+
   void setUsername(String username) {
     _username = username;
     notifyListeners();
@@ -25,4 +27,9 @@ class UserDataProvider extends ChangeNotifier {
     notifyListeners();
   }
   
+  void setJoinedDate(String joinedDate) {
+    _joinedDate = joinedDate;
+    notifyListeners();
+  }
+
 }

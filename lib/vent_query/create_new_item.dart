@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/connection/revent_connect.dart';
-import 'package:revent/model/format_post_timestamp.dart';
+import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
@@ -30,7 +30,7 @@ class CreateNewItem {
     await conn.execute(query, params);
 
     final now = DateTime.now();
-    final formattedTimestamp = FormatPostTimestamp().formatTimeAgo(now);
+    final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
     final newVent = Vent(
       title: ventTitle, 
