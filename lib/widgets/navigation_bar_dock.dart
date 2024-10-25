@@ -37,18 +37,14 @@ class NavigationBarDock extends StatelessWidget {
     final selectedNavigationIndexNotifier = ValueNotifier<int>(getNonAddIndex);
 
     return Container(
-      height: 65,
+      height: 60,
       margin: const EdgeInsets.only(
         left: 20,
         right: 20,
-        bottom: 24
-      ),
-      decoration: BoxDecoration(
-        color: ThemeColor.darkGrey,
-        borderRadius: BorderRadius.circular(32),
+        bottom: 16
       ),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: navIcons.map((icon) {
 
           final index = navIcons.indexOf(icon);
@@ -72,8 +68,8 @@ class NavigationBarDock extends StatelessWidget {
                       margin: const EdgeInsets.only(
                         top: 7.5, 
                         bottom: 0, 
-                        left: 5, 
-                        right: 5
+                        left: 12, 
+                        right: 12
                       ),
                       child: IconButton(
                         icon: Icon(icon), 

@@ -39,6 +39,8 @@ class VentPreviewer extends StatefulWidget {
 
 class VentPreviewerState extends State<VentPreviewer> {
 
+  final isPostLikedNotifier = ValueNotifier<bool>(false);
+
   void _viewVentPostPage() {
     Navigator.push(
       navigatorKey.currentContext!,
@@ -57,11 +59,15 @@ class VentPreviewerState extends State<VentPreviewer> {
   Widget _buildLikeButton() {
     return ActionsButton().buildLikeButton(
       text: widget.totalLikes.toString(), 
-      onPressed: () async => await CallVentActions(
-        context: context, 
-        title: widget.title, 
-        creator: widget.creator
-      ).likePost()
+      isLiked: isPostLikedNotifier.value,
+      onPressed: () async {
+        await CallVentActions(
+          context: context, 
+          title: widget.title, 
+          creator: widget.creator
+        ).likePost();
+        isPostLikedNotifier.value = !isPostLikedNotifier.value;
+      }
     );
   }
 
@@ -69,6 +75,12 @@ class VentPreviewerState extends State<VentPreviewer> {
     return ActionsButton().buildCommentsButton(
       text: widget.totalComments.toString(), 
       onPressed: () => print('Commented')
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return ActionsButton().buildSaveButton(
+      onPressed: () => print('Saved')
     );
   }
 
@@ -84,33 +96,18 @@ class VentPreviewerState extends State<VentPreviewer> {
             pfpData: widget.pfpData,
           ),
     
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
     
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-    
-              Text(
-                'motivation',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.white,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 15,
-                ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              '@${widget.creator}',
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontWeight: FontWeight.w800,
+                fontSize: 13
               ),
-    
-              const SizedBox(height: 2.5),
-    
-              Text(
-                '@${widget.creator}',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 13
-                ),
-              ),
-    
-            ],
+            ),
           ),
     
           const Spacer(),
@@ -164,6 +161,12 @@ class VentPreviewerState extends State<VentPreviewer> {
   }
 
   @override
+  void dispose() {
+    isPostLikedNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
 
     final containerHeight = widget.bodyText.isEmpty ? 160.0 : 221.0;
@@ -210,6 +213,10 @@ class VentPreviewerState extends State<VentPreviewer> {
                     const SizedBox(width: 8),
                         
                     _buildCommentButton(),
+
+                    const Spacer(),
+
+                    _buildSaveButton()
                         
                   ],
                 ),

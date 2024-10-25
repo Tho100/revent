@@ -121,11 +121,17 @@ class MyProfilePageState extends State<MyProfilePage> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               
-              _buildPopularityHeader('followers', profileData.followers),
+              GestureDetector(
+                onTap: () => NavigatePage.followsPage(pageType: 'Followers'),
+                child: _buildPopularityHeader('followers', profileData.followers)
+              ),
 
               _buildPopularityHeader('vents', profileData.posts),
 
-              _buildPopularityHeader('following', profileData.following),
+              GestureDetector(
+                onTap: () => NavigatePage.followsPage(pageType: 'Following'),
+                child: _buildPopularityHeader('following', profileData.following)
+              ),
 
             ],
           );

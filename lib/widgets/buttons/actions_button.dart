@@ -31,6 +31,7 @@ class ActionsButton {
 
   Widget buildLikeButton({
     required String text,
+    required bool isLiked,
     required VoidCallback onPressed,
   }) {
     return _buildActionButton(
@@ -40,9 +41,9 @@ class ActionsButton {
 
           Transform.translate(
             offset: iconOffset,
-            child: const Icon(
-              CupertinoIcons.heart_fill, 
-              color: Color.fromARGB(200, 255, 105, 180),
+            child: Icon(
+              isLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, 
+              color: isLiked ? const Color.fromARGB(200, 255, 105, 180) : ThemeColor.white,
               size: 18.5, 
             ),
           ),
@@ -94,6 +95,22 @@ class ActionsButton {
   
         ],
       ),
+    );
+  }
+
+  Widget buildSaveButton({
+    required VoidCallback onPressed,
+  }) {
+    return _buildActionButton(
+      onPressed: onPressed, 
+      child: Transform.translate(
+        offset: iconOffset,
+        child: const Icon(
+          CupertinoIcons.bookmark, 
+          color: ThemeColor.white,
+          size: 18.5, 
+        ),
+      ),          
     );
   }
 
