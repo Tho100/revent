@@ -13,7 +13,7 @@ class FollowsGetter {
 
     final query = followType == 'Followers' 
       ? 'SELECT * FROM user_follows_info WHERE following = :username'
-      : 'SELECT * FROM user_follows_info WHERE followers = :username';
+      : 'SELECT * FROM user_follows_info WHERE follower = :username';
 
     final param = {'username': userData.user.username};
 
