@@ -84,33 +84,18 @@ class VentPreviewerState extends State<VentPreviewer> {
             pfpData: widget.pfpData,
           ),
     
-          const SizedBox(width: 10),
+          const SizedBox(width: 8),
     
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-    
-              Text(
-                'motivation',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.white,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 15,
-                ),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Text(
+              '@${widget.creator}',
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontWeight: FontWeight.w800,
+                fontSize: 13
               ),
-    
-              const SizedBox(height: 2.5),
-    
-              Text(
-                '@${widget.creator}',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 13
-                ),
-              ),
-    
-            ],
+            ),
           ),
     
           const Spacer(),
