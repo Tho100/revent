@@ -6,6 +6,7 @@ import 'package:revent/global/constant.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/create_vent_page.dart';
+import 'package:revent/pages/follows_page.dart';
 import 'package:revent/pages/home_page.dart';
 import 'package:revent/pages/main_screen_page.dart';
 import 'package:revent/pages/navigations/notifications_page.dart';
@@ -77,6 +78,13 @@ class NavigatePage {
 
   static void createVentCommunityPage() {
     
+  }
+
+  static void followsPage({required String pageType}) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => FollowsPage(pageType: pageType)),
+    );
   }
 
   static void signUpPage() {
