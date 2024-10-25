@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/follows_getter.dart';
+import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -104,7 +105,14 @@ class FollowsPageState extends State<FollowsPage> {
       child: Center(
         child: SizedBox(
           width: MediaQuery.of(context).size.width - 28,
-          child: _buildListView()
+          child: ValueListenableBuilder(
+            valueListenable: usernameListNotifier, 
+            builder: (_, usernames, __) {
+              return usernames.isEmpty 
+                ?  EmptyPage().nothingToSeeHere()
+                : _buildListView();
+            }
+          )
         ),
       ),
     );
