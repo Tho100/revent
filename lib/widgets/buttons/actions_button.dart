@@ -41,8 +41,8 @@ class ActionsButton {
           Transform.translate(
             offset: iconOffset,
             child: const Icon(
-              CupertinoIcons.heart_fill, 
-              color: Color.fromARGB(200, 255, 105, 180),
+              CupertinoIcons.heart, 
+              color: ThemeColor.white,//Color.fromARGB(200, 255, 105, 180),
               size: 18.5, 
             ),
           ),
@@ -94,6 +94,22 @@ class ActionsButton {
   
         ],
       ),
+    );
+  }
+
+  Widget buildSaveButton({
+    required VoidCallback onPressed,
+  }) {
+    return _buildActionButton(
+      onPressed: onPressed, 
+      child: Transform.translate(
+        offset: iconOffset,
+        child: const Icon(
+          CupertinoIcons.bookmark, 
+          color: ThemeColor.white,
+          size: 18.5, 
+        ),
+      ),          
     );
   }
 

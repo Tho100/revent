@@ -72,6 +72,12 @@ class VentPreviewerState extends State<VentPreviewer> {
     );
   }
 
+  Widget _buildSaveButton() {
+    return ActionsButton().buildSaveButton(
+      onPressed: () => print('Saved')
+    );
+  }
+
   Widget _buildCommunityAndCreatorHeader() {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(username: widget.creator, pfpData: widget.pfpData),
@@ -195,6 +201,10 @@ class VentPreviewerState extends State<VentPreviewer> {
                     const SizedBox(width: 8),
                         
                     _buildCommentButton(),
+
+                    const Spacer(),
+
+                    _buildSaveButton()
                         
                   ],
                 ),
