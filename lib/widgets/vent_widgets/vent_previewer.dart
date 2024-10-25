@@ -39,6 +39,8 @@ class VentPreviewer extends StatefulWidget {
 
 class VentPreviewerState extends State<VentPreviewer> {
 
+  final isPostLikedNotifier = ValueNotifier<bool>(false);
+
   void _viewVentPostPage() {
     Navigator.push(
       navigatorKey.currentContext!,
@@ -57,11 +59,15 @@ class VentPreviewerState extends State<VentPreviewer> {
   Widget _buildLikeButton() {
     return ActionsButton().buildLikeButton(
       text: widget.totalLikes.toString(), 
-      onPressed: () async => await CallVentActions(
-        context: context, 
-        title: widget.title, 
-        creator: widget.creator
-      ).likePost()
+      isLiked: isPostLikedNotifier.value,
+      onPressed: () async {
+        await CallVentActions(
+          context: context, 
+          title: widget.title, 
+          creator: widget.creator
+        ).likePost();
+        isPostLikedNotifier.value = !isPostLikedNotifier.value;
+      }
     );
   }
 
@@ -152,6 +158,12 @@ class VentPreviewerState extends State<VentPreviewer> {
         maxLines: 2
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    isPostLikedNotifier.dispose();
+    super.dispose();
   }
 
   @override
