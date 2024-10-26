@@ -34,28 +34,27 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   }
 
-  Widget _buildListView() {
-    return Center(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width - 28,
-        child: RefreshIndicator(
-          color: ThemeColor.black,
-          onRefresh: () async => await _refreshVentData(),
-          child: const VentListView(),
+  Widget _buildForYouListView() {
+    return Expanded(
+      child: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width - 28,
+          child: RefreshIndicator(
+            color: ThemeColor.black,
+            onRefresh: () async => await _refreshVentData(),
+            child: const VentListView(),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildForYouListView() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+  Widget _buildTabBarBody() {
+    return TabBarView(
+      controller: tabController,
       children: [
-
-        Expanded(
-          child: _buildListView(),
-        ),
-
+        _buildForYouListView(), 
+        Container(),           
       ],
     );
   }
@@ -138,13 +137,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
             _buildCustomAppBar(context)
           ];
         },
-        body: TabBarView(
-          controller: tabController,
-          children: [
-            _buildForYouListView(), 
-            Container(),           
-          ],
-        ),
+        body: _buildTabBarBody()
       ),
       bottomNavigationBar: UpdateNavigation(
         context: context,
