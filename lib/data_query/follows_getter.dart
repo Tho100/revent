@@ -1,14 +1,9 @@
 import 'dart:convert';
-import 'dart:typed_data';
 
-import 'package:get_it/get_it.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
-import 'package:revent/provider/user_data_provider.dart';
 
 class FollowsGetter {
-
-  final userData = GetIt.instance<UserDataProvider>();
 
   Future<Map<String, List<dynamic>>> getFollows({
     required String followType, 
@@ -16,35 +11,29 @@ class FollowsGetter {
   }) async {
 
     final conn = await ReventConnect.initializeConnection();
-    // TODO: Switch * to columnName and simpify code
+
+    final columnName = followType == 'Followers' 
+      ? 'follower' : 'following'; 
+
     final getUsernameQuery = followType == 'Followers' 
-      ? 'SELECT * FROM user_follows_info WHERE following = :username'
-      : 'SELECT * FROM user_follows_info WHERE follower = :username';
+      ? 'SELECT $columnName FROM user_follows_info WHERE following = :username'
+      : 'SELECT $columnName FROM user_follows_info WHERE follower = :username';
 
     final followsParam = {'username': username};
 
     final results = await conn.execute(getUsernameQuery, followsParam);
 
-    final columnName = followType == 'Followers' 
-      ? 'follower' : 'following'; 
-
     final extractedFollows = ExtractData(rowsData: results).extractStringColumn(columnName);
 
-    List<Uint8List> profilePicBase64 = [];
-
-    for (var username in extractedFollows) {
-
+    final profilePicBase64 = await Future.wait(extractedFollows.map((username) async {
       const getProfilePicQuery = 'SELECT profile_picture FROM user_profile_info WHERE username = :username';
       final profilePicParam = {'username': username};
 
       final results = await conn.execute(getProfilePicQuery, profilePicParam);
-
       final extractedPfp = ExtractData(rowsData: results).extractStringColumn('profile_picture')[0];
-      final decodedBase64 = base64Decode(extractedPfp);
-
-      profilePicBase64.add(decodedBase64);
-
-    }
+      
+      return base64Decode(extractedPfp);
+    }));
 
     return {
       'username': extractedFollows,
