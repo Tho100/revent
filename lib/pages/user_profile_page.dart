@@ -10,8 +10,6 @@ import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
-import 'package:revent/provider/profile_data_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
@@ -38,8 +36,6 @@ class UserProfilePage extends StatefulWidget {
 class UserProfilePageState extends State<UserProfilePage> {
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
-  final userData = GetIt.instance<UserDataProvider>();
-  final profileData = GetIt.instance<ProfileDataProvider>();
 
   final followersNotifier = ValueNotifier<int>(0);
   final followingNotifier = ValueNotifier<int>(0);

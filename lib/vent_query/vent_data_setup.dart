@@ -5,22 +5,22 @@ import 'package:revent/provider/vent_data_provider.dart';
 
 class VentDataSetup {
 
-  final ventDataProvider = GetIt.instance<VentDataProvider>();
+  final ventData = GetIt.instance<VentDataProvider>();
   
   final ventDataGetter = VentDataGetter();
   final profilePicGetter = ProfilePictureGetter();
 
   Future<void> setup() async {
 
-    final ventData = await ventDataGetter.getVentsData();
+    final ventsInfo = await ventDataGetter.getVentsData();
 
-    final titles = ventData['title']! as List<String>;
-    final bodyText = ventData['body_text']! as List<String>;
-    final creator = ventData['creator']! as List<String>;
-    final postTimestamp = ventData['post_timestamp']! as List<String>;
+    final titles = ventsInfo['title']! as List<String>;
+    final bodyText = ventsInfo['body_text']! as List<String>;
+    final creator = ventsInfo['creator']! as List<String>;
+    final postTimestamp = ventsInfo['post_timestamp']! as List<String>;
 
-    final totalLikes = ventData['total_likes']! as List<int>;
-    final totalComments = ventData['total_comments']! as List<int>;
+    final totalLikes = ventsInfo['total_likes']! as List<int>;
+    final totalComments = ventsInfo['total_comments']! as List<int>;
 
     final profilePic = await Future.wait(
       creator.map((username) async => await profilePicGetter.getProfilePictures(username: username)
@@ -39,7 +39,7 @@ class VentDataSetup {
       );
     });
 
-    ventDataProvider.setVents(vents);
+    ventData.setVents(vents);
 
   }
 
