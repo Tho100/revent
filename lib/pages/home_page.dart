@@ -61,13 +61,14 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   PreferredSizeWidget _buildTabBar() {
     return TabBar(
+      tabAlignment: TabAlignment.center,
       controller: tabController,
       labelColor: ThemeColor.white,              
       unselectedLabelColor: Colors.grey,      
       indicator: UnderlineTabIndicator(
-        borderRadius: BorderRadius.circular(24),
+        borderRadius: BorderRadius.circular(36),
         borderSide: const BorderSide(width: 2.5, color: ThemeColor.white),
-        insets: const EdgeInsets.symmetric(horizontal: 85), 
+        insets: const EdgeInsets.symmetric(horizontal: 25), 
       ),
       labelStyle: GoogleFonts.inter(             
         fontSize: 14,
@@ -90,7 +91,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       snap: true,
       centerTitle: false,
       title: Padding(
-        padding: const EdgeInsets.only(left: 5),
+        padding: const EdgeInsets.only(top: 10, left: 5),
         child: Text(
           'Revent',
           style: GoogleFonts.inter(
