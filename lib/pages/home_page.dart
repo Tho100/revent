@@ -19,49 +19,76 @@ class HomePage extends StatefulWidget {
   
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
   final ventData = GetIt.instance<VentDataProvider>();
   final navigationIndex = GetIt.instance<NavigationProvider>();
+  
+  late TabController tabController;
 
   Future<void> _refreshVentData() async {
 
     ventData.deleteVentsData();
-    
+
     await VentDataSetup().setup();
 
   }
 
-  Widget _buildListView() {
-    return Center(
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width - 28,
-        child: RefreshIndicator(
-          color: ThemeColor.black,
-          onRefresh: () async => await _refreshVentData(),
-          child: const VentListView()
+  Widget _buildForYouListView() {
+    return Expanded(
+      child: Center(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width - 28,
+          child: RefreshIndicator(
+            color: ThemeColor.black,
+            onRefresh: () async => await _refreshVentData(),
+            child: const VentListView(),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildHomeBody() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+  Widget _buildTabBarBody() {
+    return TabBarView(
+      controller: tabController,
       children: [
-
-        const SizedBox(height: 20),
-
-        Expanded(
-          child: _buildListView()
-        ),
-
+        _buildForYouListView(), 
+        Container(),           
       ],
     );
   }
 
-  PreferredSizeWidget _buildCustomAppBar(BuildContext context) {
-    return AppBar(
+  PreferredSizeWidget _buildTabBar() {
+    return TabBar(
+      tabAlignment: TabAlignment.center,
+      controller: tabController,
+      labelColor: ThemeColor.white,              
+      unselectedLabelColor: Colors.grey,      
+      indicator: UnderlineTabIndicator(
+        borderRadius: BorderRadius.circular(36),
+        borderSide: const BorderSide(width: 2.5, color: ThemeColor.white),
+        insets: const EdgeInsets.symmetric(horizontal: 25), 
+      ),
+      labelStyle: GoogleFonts.inter(             
+        fontSize: 14,
+        fontWeight: FontWeight.w800,
+      ),
+      unselectedLabelStyle: GoogleFonts.inter(   
+        fontSize: 14,
+        fontWeight: FontWeight.w800,        
+      ),
+      tabs: const [
+        Tab(text: 'For you'),
+        Tab(text: 'Following'),
+      ],
+    );
+  }
+
+  SliverAppBar _buildCustomAppBar(BuildContext context) {
+    return SliverAppBar(
+      floating: true,
+      snap: true,
       centerTitle: false,
       title: Padding(
         padding: const EdgeInsets.only(top: 10, left: 5),
@@ -70,8 +97,8 @@ class HomePageState extends State<HomePage> {
           style: GoogleFonts.inter(
             color: ThemeColor.white,
             fontWeight: FontWeight.w900,
-            fontSize: 22.5
-          )
+            fontSize: 22.5,
+          ),
         ),
       ),
       actions: [
@@ -82,8 +109,9 @@ class HomePageState extends State<HomePage> {
             color: ThemeColor.thirdWhite,
             onPressed: () => NavigatePage.settingsPage(),
           ),
-        )
+        ),
       ],
+      bottom: _buildTabBar()
     );
   }
 
@@ -91,18 +119,27 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     navigationIndex.setPageIndex(0);
+    tabController = TabController(length: 2, vsync: this);
   }
-  
+
   @override
   void dispose() {
+    tabController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildCustomAppBar(context),
-      body: _buildHomeBody(),
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (_, bool isScrolled) {
+          return [
+            _buildCustomAppBar(context)
+          ];
+        },
+        body: _buildTabBarBody()
+      ),
       bottomNavigationBar: UpdateNavigation(
         context: context,
       ).showNavigationBar(),

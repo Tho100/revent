@@ -1,21 +1,38 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/follows_getter.dart';
+import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
+
+class _FollowsUserData {
+
+  final String username;
+  final Uint8List profilePic;
+
+  _FollowsUserData({
+    required this.username, 
+    required this.profilePic
+  });
+
+}
 
 class FollowsPage extends StatefulWidget {
 
   final String pageType;
+  final String username;
 
   const FollowsPage({
-    required this.pageType, 
+    required this.pageType,
+    required this.username, 
     super.key
   });
 
@@ -26,7 +43,7 @@ class FollowsPage extends StatefulWidget {
 
 class FollowsPageState extends State<FollowsPage> {
 
-  final usernameListNotifier = ValueNotifier<List<String>>([]);
+  final followsUserDataNotifier = ValueNotifier<List<_FollowsUserData>>([]);
 
   final profileData = GetIt.instance<ProfileDataProvider>();
 
@@ -34,67 +51,76 @@ class FollowsPageState extends State<FollowsPage> {
 
     try {
 
-      final getFollowsInfo = await FollowsGetter().getFollows(followType: widget.pageType);
+      final getFollowsInfo = await FollowsGetter()
+        .getFollows(followType: widget.pageType, username: widget.username);
 
-      usernameListNotifier.value = List.from(getFollowsInfo);
+      final usernames = getFollowsInfo['username']!;
+      final profilePics = getFollowsInfo['profile_pic']!;
+
+      final followsUserInfoList = List.generate(usernames.length, (index) {
+        return _FollowsUserData(
+          username: usernames[index],
+          profilePic: profilePics[index],
+        );
+      });
+
+      followsUserDataNotifier.value = followsUserInfoList;
 
     } catch (err) {
       print(err.toString());
     }
-
+    
   }
 
-  Widget _buildListViewItems(String username) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Row(
-        children: [
-    
-          ProfilePictureWidget(
-            customWidth: 45,
-            customHeight: 45,
-            pfpData: profileData.profilePicture
-          ),
-    
-          const SizedBox(width: 10),
-    
-          Text(
-            username,
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 16,
+
+  Widget _buildListViewItems(String username, Uint8List pfpData) {
+    return InkWellEffect(
+      onPressed: () => NavigatePage.userProfilePage(username: username, pfpData: pfpData),
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 16.0),
+        child: Row(
+          children: [
+      
+            ProfilePictureWidget(
+              customWidth: 45,
+              customHeight: 45,
+              pfpData: pfpData
             ),
-          ),
-    
-          const Spacer(),
-    
-          MainButton(
-            customWidth: MediaQuery.of(context).size.width * 0.19,
-            customHeight: 40,
-            customFontSize: 13,
-            text: widget.pageType == 'Followers' ? 'Remove' : 'Follow',
-            onPressed: () => print(widget.pageType)
-          ),
-    
-        ],
+      
+            const SizedBox(width: 10),
+      
+            Text(
+              username,
+              style: GoogleFonts.inter(
+                color: ThemeColor.white,
+                fontWeight: FontWeight.w800,
+                fontSize: 16,
+              ),
+            ),
+      
+            const Spacer(),
+      
+            MainButton(
+              customWidth: MediaQuery.of(context).size.width * 0.19,
+              customHeight: 40,
+              customFontSize: 13,
+              text: widget.pageType == 'Followers' ? 'Remove' : 'Follow',
+              onPressed: () => print(widget.pageType)
+            ),
+      
+          ],
+        ),
       ),
     );
   }
 
   Widget _buildListView() {
-    return ValueListenableBuilder(
-      valueListenable: usernameListNotifier,
-      builder: (_, username, __) {
-        return ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()
-          ),
-          itemCount: usernameListNotifier.value.length,
-          itemBuilder: (_, index) {
-            return _buildListViewItems(username[index]);
-          }
-        );
+    return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+      itemCount: followsUserDataNotifier.value.length,
+      itemBuilder: (_, index) {
+        final followsUserData = followsUserDataNotifier.value[index];
+        return _buildListViewItems(followsUserData.username, followsUserData.profilePic);
       },
     );
   }
@@ -106,9 +132,9 @@ class FollowsPageState extends State<FollowsPage> {
         child: SizedBox(
           width: MediaQuery.of(context).size.width - 28,
           child: ValueListenableBuilder(
-            valueListenable: usernameListNotifier, 
-            builder: (_, usernames, __) {
-              return usernames.isEmpty 
+            valueListenable: followsUserDataNotifier, 
+            builder: (_, followsUserDataList, __) {
+              return followsUserDataList.isEmpty 
                 ?  EmptyPage().nothingToSeeHere()
                 : _buildListView();
             }

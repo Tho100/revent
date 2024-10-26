@@ -122,14 +122,14 @@ class MyProfilePageState extends State<MyProfilePage> {
             children: [
               
               GestureDetector(
-                onTap: () => NavigatePage.followsPage(pageType: 'Followers'),
+                onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userData.user.username),
                 child: _buildPopularityHeader('followers', profileData.followers)
               ),
 
               _buildPopularityHeader('vents', profileData.posts),
 
               GestureDetector(
-                onTap: () => NavigatePage.followsPage(pageType: 'Following'),
+                onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userData.user.username),
                 child: _buildPopularityHeader('following', profileData.following)
               ),
 
