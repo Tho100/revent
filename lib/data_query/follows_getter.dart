@@ -10,7 +10,10 @@ class FollowsGetter {
 
   final userData = GetIt.instance<UserDataProvider>();
 
-  Future<Map<String, List<dynamic>>> getFollows({required String followType}) async {
+  Future<Map<String, List<dynamic>>> getFollows({
+    required String followType, 
+    required String username
+  }) async {
 
     final conn = await ReventConnect.initializeConnection();
     // TODO: Switch * to columnName and simpify code
@@ -18,7 +21,7 @@ class FollowsGetter {
       ? 'SELECT * FROM user_follows_info WHERE following = :username'
       : 'SELECT * FROM user_follows_info WHERE follower = :username';
 
-    final followsParam = {'username': userData.user.username};
+    final followsParam = {'username': username};
 
     final results = await conn.execute(getUsernameQuery, followsParam);
 

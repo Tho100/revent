@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
+import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/profile_data_provider.dart';
@@ -176,11 +177,17 @@ class UserProfilePageState extends State<UserProfilePage> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
     
-          _buildPopularityHeader('followers', followersNotifier),
+          GestureDetector(
+            onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
+            child: _buildPopularityHeader('followers', followersNotifier)
+          ),
 
           _buildPopularityHeader('posts', postsNotifier),
 
-          _buildPopularityHeader('following', followingNotifier),
+          GestureDetector(
+            onTap: () => NavigatePage.followsPage(pageType: 'Following', username: widget.username),
+            child: _buildPopularityHeader('following', followingNotifier)
+          ),
     
         ],
       ),

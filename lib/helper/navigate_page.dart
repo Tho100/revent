@@ -80,10 +80,10 @@ class NavigatePage {
     
   }
 
-  static void followsPage({required String pageType}) {
+  static void followsPage({required String pageType, required String username}) {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => FollowsPage(pageType: pageType)),
+      MaterialPageRoute(builder: (_) => FollowsPage(pageType: pageType, username: username)),
     );
   }
 

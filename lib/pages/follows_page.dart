@@ -28,9 +28,11 @@ class _FollowsUserData {
 class FollowsPage extends StatefulWidget {
 
   final String pageType;
+  final String username;
 
   const FollowsPage({
-    required this.pageType, 
+    required this.pageType,
+    required this.username, 
     super.key
   });
 
@@ -49,7 +51,8 @@ class FollowsPageState extends State<FollowsPage> {
 
     try {
 
-      final getFollowsInfo = await FollowsGetter().getFollows(followType: widget.pageType);
+      final getFollowsInfo = await FollowsGetter()
+        .getFollows(followType: widget.pageType, username: widget.username);
 
       final usernames = getFollowsInfo['username']!;
       final profilePics = getFollowsInfo['profile_pic']!;
