@@ -1,6 +1,5 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_profile/profile_data_update.dart';
@@ -29,6 +28,8 @@ class EditProfilePageState extends State<EditProfilePage> {
   final profileData = GetIt.instance<ProfileDataProvider>();
 
   final bioController = TextEditingController();
+  final pronounOneController = TextEditingController();
+  final pronounTwoController = TextEditingController();
 
   final headerTextDefaultStyle = GoogleFonts.inter(
     color: ThemeColor.thirdWhite,
@@ -44,6 +45,19 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   void _setBioText() {
     bioController.text = profileData.bio;
+  }
+
+  void _setPronouns() {
+
+    if(profileData.pronouns != '/') {
+      
+      final splittedPronouns = profileData.pronouns.split('/');
+
+      pronounOneController.text = splittedPronouns[0];
+      pronounTwoController.text = splittedPronouns[1];
+
+    }
+
   }
 
   void _changeProfilePicOnPressed() async {
@@ -64,6 +78,17 @@ class EditProfilePageState extends State<EditProfilePage> {
       .updateBio(bioText: bioController.text);
 
     SnackBarDialog.temporarySnack(message: 'Updated bio.');
+
+  }
+
+  void _savePronounsOnPressed() async {
+
+    final concatenatedPronouns = "${pronounOneController.text}/${pronounTwoController.text}";
+
+    await ProfileDataUpdate()
+      .updatePronouns(pronouns: concatenatedPronouns);
+
+    SnackBarDialog.temporarySnack(message: 'Updated pronouns.');
 
   }
 
@@ -89,36 +114,6 @@ class EditProfilePageState extends State<EditProfilePage> {
         ),
 
       ],
-    );
-  }
-
-  Widget _buildHeaders(String header, String value) {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          
-          Text(
-            header,
-            style: headerTextDefaultStyle,
-          ),
-    
-          const SizedBox(height: 8),
-    
-          Text(
-            value,
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-    
-          const SizedBox(height: 20),
-    
-        ],
-      ),
     );
   }
 
@@ -164,6 +159,84 @@ class EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
+  Widget _buildPronouns(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 8.0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.85,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+        
+            Text(
+              'My pronouns',
+              style: headerTextDefaultStyle,
+            ),
+        
+            const SizedBox(height: 16),
+        
+            Row(
+              children: [
+
+                Flexible(
+                  child: MainTextField(
+                    controller: pronounOneController, 
+                    hintText: '',
+                    maxLines: 1,
+                    maxLength: 10,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(width: 8),
+
+                Text(
+                  '/',
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.secondaryWhite,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 18
+                  ),
+                ),
+                
+                const SizedBox(width: 8),
+              
+                Flexible(
+                  child: MainTextField(
+                    controller: pronounTwoController, 
+                    hintText: '',
+                    maxLines: 1,
+                    maxLength: 10,
+                    inputFormatters: [
+                      FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                    ],
+                  ),
+                ),
+
+              ],
+            ),
+
+            const SizedBox(height: 12),
+        
+            Align(
+              alignment: Alignment.bottomRight,
+              child: MainButton(
+                customWidth: MediaQuery.of(context).size.width * 0.24,
+                customHeight: 46,
+                customFontSize: 15,
+                text: 'Save', 
+                onPressed: () => _savePronounsOnPressed()
+              ),
+            ),
+        
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
@@ -175,9 +248,9 @@ class EditProfilePageState extends State<EditProfilePage> {
             _buildProfilePicture(context),
       
             const SizedBox(height: 42),
-      
-            _buildHeaders('Username', '@${userData.user.username}'),
-          
+                
+            _buildPronouns(context),
+              
             const SizedBox(height: 40),
       
             _buildBio(context),
@@ -193,11 +266,15 @@ class EditProfilePageState extends State<EditProfilePage> {
     super.initState();
     _setProfilePic();
     _setBioText();
+    _setPronouns();
   }
 
   @override
   void dispose() {
     profilePicNotifier.dispose();
+    bioController.dispose();
+    pronounOneController.dispose();
+    pronounTwoController.dispose();
     super.dispose();
   }
 

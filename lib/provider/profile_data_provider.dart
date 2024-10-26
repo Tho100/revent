@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 class ProfileDataProvider extends ChangeNotifier {
 
   String _bio = '';
+  String _pronouns = '';
 
   Uint8List _profilePicture = Uint8List(0);
 
@@ -13,6 +14,7 @@ class ProfileDataProvider extends ChangeNotifier {
   int _posts = 0;
 
   String get bio => _bio;
+  String get pronouns => _pronouns;
 
   Uint8List get profilePicture => _profilePicture;
 
@@ -22,6 +24,11 @@ class ProfileDataProvider extends ChangeNotifier {
 
   void setBio(String bio) {
     _bio = bio;
+    notifyListeners();
+  }
+
+  void setPronouns(String pronouns) {
+    _pronouns = pronouns;
     notifyListeners();
   }
 
