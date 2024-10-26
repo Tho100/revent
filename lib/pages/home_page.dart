@@ -47,12 +47,10 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     );
   }
 
-  Widget _buildHomeBody() {
+  Widget _buildForYouListView() {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-
-        const SizedBox(height: 20),
 
         Expanded(
           child: _buildListView(),
@@ -133,7 +131,6 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      //appBar: _buildCustomAppBar(context),
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (_, bool isScrolled) {
@@ -144,7 +141,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         body: TabBarView(
           controller: tabController,
           children: [
-            _buildHomeBody(), 
+            _buildForYouListView(), 
             Container(),           
           ],
         ),
