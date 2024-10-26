@@ -19,15 +19,17 @@ class HomePage extends StatefulWidget {
   
 }
 
-class HomePageState extends State<HomePage> {
+class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
   final ventData = GetIt.instance<VentDataProvider>();
   final navigationIndex = GetIt.instance<NavigationProvider>();
+  
+  late TabController tabController;
 
   Future<void> _refreshVentData() async {
 
     ventData.deleteVentsData();
-    
+
     await VentDataSetup().setup();
 
   }
@@ -39,7 +41,7 @@ class HomePageState extends State<HomePage> {
         child: RefreshIndicator(
           color: ThemeColor.black,
           onRefresh: () async => await _refreshVentData(),
-          child: const VentListView()
+          child: const VentListView(),
         ),
       ),
     );
@@ -53,9 +55,34 @@ class HomePageState extends State<HomePage> {
         const SizedBox(height: 20),
 
         Expanded(
-          child: _buildListView()
+          child: _buildListView(),
         ),
 
+      ],
+    );
+  }
+
+  PreferredSizeWidget _buildTabBar() {
+    return TabBar(
+      controller: tabController,
+      labelColor: ThemeColor.white,              
+      unselectedLabelColor: Colors.grey,      
+      indicator: UnderlineTabIndicator(
+        borderRadius: BorderRadius.circular(24),
+        borderSide: const BorderSide(width: 2.5, color: ThemeColor.white),
+        insets: const EdgeInsets.symmetric(horizontal: 85), 
+      ),
+      labelStyle: GoogleFonts.inter(             
+        fontSize: 14,
+        fontWeight: FontWeight.w800,
+      ),
+      unselectedLabelStyle: GoogleFonts.inter(   
+        fontSize: 14,
+        fontWeight: FontWeight.w800,        
+      ),
+      tabs: const [
+        Tab(text: 'For you'),
+        Tab(text: 'Following'),
       ],
     );
   }
@@ -64,14 +91,14 @@ class HomePageState extends State<HomePage> {
     return AppBar(
       centerTitle: false,
       title: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 5),
+        padding: const EdgeInsets.only(left: 5),
         child: Text(
           'Revent',
           style: GoogleFonts.inter(
             color: ThemeColor.white,
             fontWeight: FontWeight.w900,
-            fontSize: 22.5
-          )
+            fontSize: 22.5,
+          ),
         ),
       ),
       actions: [
@@ -82,8 +109,9 @@ class HomePageState extends State<HomePage> {
             color: ThemeColor.thirdWhite,
             onPressed: () => NavigatePage.settingsPage(),
           ),
-        )
+        ),
       ],
+      bottom: _buildTabBar()
     );
   }
 
@@ -91,10 +119,12 @@ class HomePageState extends State<HomePage> {
   void initState() {
     super.initState();
     navigationIndex.setPageIndex(0);
+    tabController = TabController(length: 2, vsync: this);
   }
-  
+
   @override
   void dispose() {
+    tabController.dispose();
     super.dispose();
   }
 
@@ -102,7 +132,13 @@ class HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildCustomAppBar(context),
-      body: _buildHomeBody(),
+      body: TabBarView(
+        controller: tabController,
+        children: [
+          _buildHomeBody(), 
+          Container(),           
+        ],
+      ),
       bottomNavigationBar: UpdateNavigation(
         context: context,
       ).showNavigationBar(),
