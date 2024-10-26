@@ -47,6 +47,30 @@ class MyProfilePageState extends State<MyProfilePage> {
     );
   }
 
+  Widget _buildPronouns(BuildContext context) {
+    return Consumer<ProfileDataProvider>(
+      builder: (_, profileData, __) {
+        final bottomPadding = profileData.pronouns.isNotEmpty ? 14.0 : 0.0;
+        return Padding(
+          padding: EdgeInsets.only(bottom: bottomPadding),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.65,
+            child: Text(
+              profileData.pronouns,
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontWeight: FontWeight.w700,
+                fontSize: 12.5
+              ),
+              textAlign: TextAlign.center,
+              maxLines: 3,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildBio(BuildContext context) {
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
@@ -60,7 +84,6 @@ class MyProfilePageState extends State<MyProfilePage> {
               fontSize: 14
             ),
             textAlign: TextAlign.center,
-            maxLines: 3,
           ),
         );
       },
@@ -147,21 +170,23 @@ class MyProfilePageState extends State<MyProfilePage> {
         children: [
 
           const SizedBox(height: 27),
-    
+
           ProfilePictureWidget(
             pfpData: profileData.profilePicture,
           ),
           
           const SizedBox(height: 12),
-    
+
           _buildUsername(),
-    
+
           const SizedBox(height: 8),
-    
+
+          _buildPronouns(context),
+
           _buildBio(context),
     
           const SizedBox(height: 25),
-    
+
           _buildEditProfileButton(context),
 
           const SizedBox(height: 40),

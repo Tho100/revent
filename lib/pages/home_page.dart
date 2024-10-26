@@ -134,9 +134,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (_, bool isScrolled) {
-          return [
-            _buildCustomAppBar(context)
-          ];
+          return [_buildCustomAppBar(context)];
         },
         body: _buildTabBarBody()
       ),

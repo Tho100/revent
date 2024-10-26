@@ -10,8 +10,6 @@ import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
-import 'package:revent/provider/profile_data_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
@@ -38,13 +36,12 @@ class UserProfilePage extends StatefulWidget {
 class UserProfilePageState extends State<UserProfilePage> {
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
-  final userData = GetIt.instance<UserDataProvider>();
-  final profileData = GetIt.instance<ProfileDataProvider>();
 
   final followersNotifier = ValueNotifier<int>(0);
   final followingNotifier = ValueNotifier<int>(0);
   final postsNotifier = ValueNotifier<int>(0);
   final bioNotifier = ValueNotifier<String>('');
+  final pronounsNotifier = ValueNotifier<String>('');
 
   final isFollowingNotifier = ValueNotifier<bool>(false);
 
@@ -57,6 +54,7 @@ class UserProfilePageState extends State<UserProfilePage> {
     followersNotifier.value = getProfileData['followers']; 
     followingNotifier.value = getProfileData['following'];
     bioNotifier.value =  getProfileData['bio'];
+    pronounsNotifier.value =  getProfileData['pronouns'];
 
     isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
 
@@ -79,6 +77,30 @@ class UserProfilePageState extends State<UserProfilePage> {
         color: ThemeColor.white,
         fontWeight: FontWeight.w800,
         fontSize: 20.5
+      ),
+    );
+  }
+
+  Widget _buildPronouns(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.65,
+      child: ValueListenableBuilder(
+        valueListenable: pronounsNotifier,
+        builder: (_, value, __) {
+          final bottomPadding = value.isNotEmpty ? 14.0 : 0.0; 
+          return Padding(
+            padding: EdgeInsets.only(bottom: bottomPadding),
+            child: Text(
+              value,
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontWeight: FontWeight.w700,
+                fontSize: 12.5
+              ),
+              textAlign: TextAlign.center,
+            ),
+          );
+        },
       ),
     );
   }
@@ -208,6 +230,8 @@ class UserProfilePageState extends State<UserProfilePage> {
   
         const SizedBox(height: 8),
   
+        _buildPronouns(context),
+
         _buildBio(context),
   
         const SizedBox(height: 25),
@@ -245,6 +269,7 @@ class UserProfilePageState extends State<UserProfilePage> {
     followingNotifier.dispose();
     postsNotifier.dispose();
     bioNotifier.dispose();
+    pronounsNotifier.dispose();
     isFollowingNotifier.dispose();
     super.dispose();
   }

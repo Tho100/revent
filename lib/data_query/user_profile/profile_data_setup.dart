@@ -14,6 +14,7 @@ class ProfileDataSetup {
     required int followers,
     required int following,
     required String bio,
+    required String pronouns,
     required String profilePicBase64,
   }) {
 
@@ -21,6 +22,7 @@ class ProfileDataSetup {
     profileData.setFollowers(followers);
     profileData.setFollowing(following);
     profileData.setBio(bio);
+    profileData.setPronouns(pronouns);
     
     final profilePicData = profilePicBase64.toString().isEmpty 
       ? Uint8List(0)
@@ -42,6 +44,7 @@ class ProfileDataSetup {
       followers: getProfileData['followers'], 
       following: getProfileData['following'], 
       bio: getProfileData['bio'], 
+      pronouns: getProfileData['pronouns'],
       profilePicBase64: getProfileData['profile_pic']
     );
 

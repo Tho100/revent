@@ -45,4 +45,20 @@ class ProfileDataUpdate {
 
   }
 
+  Future<void> updatePronouns({required String pronouns}) async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    const query = "UPDATE user_profile_info SET pronouns = :pronouns WHERE username = :username";
+    final params = {
+      'pronouns': pronouns,
+      'username': userData.user.username
+    };
+
+    profileData.setPronouns(pronouns);
+
+    await conn.execute(query, params);
+
+  }
+
 }
