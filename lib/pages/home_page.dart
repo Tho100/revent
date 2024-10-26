@@ -87,8 +87,10 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     );
   }
 
-  PreferredSizeWidget _buildCustomAppBar(BuildContext context) {
-    return AppBar(
+  SliverAppBar _buildCustomAppBar(BuildContext context) {
+    return SliverAppBar(
+      floating: true,
+      snap: true,
       centerTitle: false,
       title: Padding(
         padding: const EdgeInsets.only(left: 5),
@@ -131,13 +133,21 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildCustomAppBar(context),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          _buildHomeBody(), 
-          Container(),           
-        ],
+      //appBar: _buildCustomAppBar(context),
+      body: NestedScrollView(
+        floatHeaderSlivers: true,
+        headerSliverBuilder: (_, bool isScrolled) {
+          return [
+            _buildCustomAppBar(context)
+          ];
+        },
+        body: TabBarView(
+          controller: tabController,
+          children: [
+            _buildHomeBody(), 
+            Container(),           
+          ],
+        ),
       ),
       bottomNavigationBar: UpdateNavigation(
         context: context,
