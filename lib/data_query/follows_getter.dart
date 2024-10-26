@@ -13,7 +13,7 @@ class FollowsGetter {
   Future<Map<String, List<dynamic>>> getFollows({required String followType}) async {
 
     final conn = await ReventConnect.initializeConnection();
-
+    // TODO: Switch * to columnName and simpify code
     final getUsernameQuery = followType == 'Followers' 
       ? 'SELECT * FROM user_follows_info WHERE following = :username'
       : 'SELECT * FROM user_follows_info WHERE follower = :username';
