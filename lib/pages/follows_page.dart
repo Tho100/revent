@@ -1,4 +1,5 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,18 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
+
+class _FollowsUserData {
+
+  final String username;
+  final Uint8List profilePic;
+
+  _FollowsUserData({
+    required this.username, 
+    required this.profilePic
+  });
+
+}
 
 class FollowsPage extends StatefulWidget {
 
@@ -26,7 +39,7 @@ class FollowsPage extends StatefulWidget {
 
 class FollowsPageState extends State<FollowsPage> {
 
-  final usernameListNotifier = ValueNotifier<List<String>>([]);
+  final followsUserDataNotifier = ValueNotifier<List<_FollowsUserData>>([]);
 
   final profileData = GetIt.instance<ProfileDataProvider>();
 
@@ -36,15 +49,26 @@ class FollowsPageState extends State<FollowsPage> {
 
       final getFollowsInfo = await FollowsGetter().getFollows(followType: widget.pageType);
 
-      usernameListNotifier.value = List.from(getFollowsInfo);
+      final usernames = getFollowsInfo['username']!;
+      final profilePics = getFollowsInfo['profile_pic']!;
+
+      final followsUserInfoList = List.generate(usernames.length, (index) {
+        return _FollowsUserData(
+          username: usernames[index],
+          profilePic: profilePics[index],
+        );
+      });
+
+      followsUserDataNotifier.value = followsUserInfoList;
 
     } catch (err) {
       print(err.toString());
     }
-
+    
   }
 
-  Widget _buildListViewItems(String username) {
+
+  Widget _buildListViewItems(String username, Uint8List pfpData) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Row(
@@ -53,7 +77,7 @@ class FollowsPageState extends State<FollowsPage> {
           ProfilePictureWidget(
             customWidth: 45,
             customHeight: 45,
-            pfpData: profileData.profilePicture
+            pfpData: pfpData
           ),
     
           const SizedBox(width: 10),
@@ -83,18 +107,12 @@ class FollowsPageState extends State<FollowsPage> {
   }
 
   Widget _buildListView() {
-    return ValueListenableBuilder(
-      valueListenable: usernameListNotifier,
-      builder: (_, username, __) {
-        return ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()
-          ),
-          itemCount: usernameListNotifier.value.length,
-          itemBuilder: (_, index) {
-            return _buildListViewItems(username[index]);
-          }
-        );
+    return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+      itemCount: followsUserDataNotifier.value.length,
+      itemBuilder: (_, index) {
+        final followsUserData = followsUserDataNotifier.value[index];
+        return _buildListViewItems(followsUserData.username, followsUserData.profilePic);
       },
     );
   }
@@ -106,9 +124,9 @@ class FollowsPageState extends State<FollowsPage> {
         child: SizedBox(
           width: MediaQuery.of(context).size.width - 28,
           child: ValueListenableBuilder(
-            valueListenable: usernameListNotifier, 
-            builder: (_, usernames, __) {
-              return usernames.isEmpty 
+            valueListenable: followsUserDataNotifier, 
+            builder: (_, followsUserDataList, __) {
+              return followsUserDataList.isEmpty 
                 ?  EmptyPage().nothingToSeeHere()
                 : _buildListView();
             }
