@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -39,6 +40,23 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
 
+  bool isBioChanges = false;
+  bool isPronounsChanges = false;
+
+  void _setTextFieldsListeners() {
+
+    bioController.addListener(() {
+      isBioChanges = true;
+    });
+    pronounOneController.addListener(() {
+      isPronounsChanges = true;
+    });
+    pronounTwoController.addListener(() {
+      isPronounsChanges = true;
+    });
+
+  }
+
   void _setProfilePic() {
     profilePicNotifier.value = profileData.profilePicture;
   }
@@ -60,6 +78,20 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   }
 
+  void _saveChangesOnPressed() {
+    
+    if(isBioChanges) {
+      _saveBio();
+    } 
+
+    if(isPronounsChanges) {
+      _savePronouns();
+    }
+
+    SnackBarDialog.temporarySnack(message: 'Saved changes.');
+
+  }
+
   void _changeProfilePicOnPressed() async {
     
     final isProfileSelected = await ProfilePictureModel()
@@ -72,23 +104,19 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   }
 
-  void _saveBioOnPressed() async {
+  void _saveBio() async {
 
     await ProfileDataUpdate()
       .updateBio(bioText: bioController.text);
 
-    SnackBarDialog.temporarySnack(message: 'Updated bio.');
-
   }
 
-  void _savePronounsOnPressed() async {
+  void _savePronouns() async {
 
     final concatenatedPronouns = "${pronounOneController.text}/${pronounTwoController.text}";
 
     await ProfileDataUpdate()
       .updatePronouns(pronouns: concatenatedPronouns);
-
-    SnackBarDialog.temporarySnack(message: 'Updated pronouns.');
 
   }
 
@@ -141,17 +169,6 @@ class EditProfilePageState extends State<EditProfilePage> {
             ),
             
             const SizedBox(height: 12),
-        
-            Align(
-              alignment: Alignment.bottomRight,
-              child: MainButton(
-                customWidth: MediaQuery.of(context).size.width * 0.24,
-                customHeight: 46,
-                customFontSize: 15,
-                text: 'Save', 
-                onPressed: () => _saveBioOnPressed()
-              ),
-            ),
         
           ],
         ),
@@ -220,19 +237,18 @@ class EditProfilePageState extends State<EditProfilePage> {
 
             const SizedBox(height: 12),
         
-            Align(
-              alignment: Alignment.bottomRight,
-              child: MainButton(
-                customWidth: MediaQuery.of(context).size.width * 0.24,
-                customHeight: 46,
-                customFontSize: 15,
-                text: 'Save', 
-                onPressed: () => _savePronounsOnPressed()
-              ),
-            ),
-        
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _buildActionButton() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 8.0),
+      child: IconButton(
+        icon: const Icon(Icons.check, size: 22),
+        onPressed: () => _saveChangesOnPressed(),
       ),
     );
   }
@@ -267,6 +283,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     _setProfilePic();
     _setBioText();
     _setPronouns();
+    _setTextFieldsListeners();
   }
 
   @override
@@ -283,8 +300,9 @@ class EditProfilePageState extends State<EditProfilePage> {
     return Scaffold(
       body: _buildBody(context),
       appBar: CustomAppBar(
+        context: context,
         title: 'Edit profile',
-        context: context
+        actions: [_buildActionButton()]
       ).buildAppBar(),
     );
   }
