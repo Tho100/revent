@@ -97,10 +97,10 @@ class FollowsPageState extends State<FollowsPage> {
             const Spacer(),
       
             MainButton(
-              customWidth: MediaQuery.of(context).size.width * 0.19,
+              customWidth: MediaQuery.of(context).size.width * 0.21,
               customHeight: 40,
               customFontSize: 13,
-              text: widget.pageType == 'Followers' ? 'Remove' : 'Follow',
+              text: widget.pageType == 'Followers' ? 'Follow' : 'Unfollow',
               onPressed: () => print(widget.pageType)
             ),
       

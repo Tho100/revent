@@ -6,6 +6,7 @@ import 'package:revent/data_query/user_profile/profile_data_update.dart';
 import 'package:revent/model/profile_picture_model.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
@@ -77,17 +78,25 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   }
 
-  void _saveChangesOnPressed() {
-    
-    if(isBioChanges) {
-      _saveBio();
-    } 
+  void _saveChangesOnPressed() async {
 
-    if(isPronounsChanges) {
-      _savePronouns();
+    bool isSaved = true;
+
+    if (isBioChanges) {
+      if (await _saveBio() == false) {
+        isSaved = false; 
+      }
     }
 
-    SnackBarDialog.temporarySnack(message: 'Saved changes.');
+    if (isPronounsChanges) {
+      if (await _savePronouns() == false) {
+        isSaved = false; 
+      }
+    }
+
+    if (isSaved) {
+      SnackBarDialog.temporarySnack(message: 'Saved changes.');
+    }
 
   }
 
@@ -103,21 +112,47 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   }
 
-  void _saveBio() async {
+  Future<bool> _saveBio() async {
 
-    await ProfileDataUpdate()
-      .updateBio(bioText: bioController.text);
+    try {
+
+      await ProfileDataUpdate()
+        .updateBio(bioText: bioController.text);
+
+      return true;
+
+    } catch (err) {
+      return false;
+    }
 
   }
 
-  void _savePronouns() async {
+  Future<bool> _savePronouns() async {
 
-    final concatenatedPronouns = "${pronounOneController.text}/${pronounTwoController.text}";
+    try {
 
-    await ProfileDataUpdate()
-      .updatePronouns(pronouns: concatenatedPronouns);
+      final isBothEmpty = pronounOneController.text.isEmpty && pronounTwoController.text.isEmpty;
+      final isBothFilled = pronounOneController.text.isNotEmpty && pronounTwoController.text.isNotEmpty;
+
+      if (!isBothEmpty && !isBothFilled) {
+        CustomAlertDialog.alertDialog('Both fields must be filled or left empty');
+        return false; 
+      }
+
+      final concatenatedPronouns = isBothEmpty 
+        ? '' 
+        : "${pronounOneController.text}/${pronounTwoController.text}";
+
+      await ProfileDataUpdate().updatePronouns(pronouns: concatenatedPronouns);
+
+      return true;
+
+    } catch (err) {
+      return false;
+    }
 
   }
+
 
   Widget _buildProfilePicture(BuildContext context) {
     return Column(
@@ -133,7 +168,7 @@ class EditProfilePageState extends State<EditProfilePage> {
         const SizedBox(height: 20),
 
         MainButton(
-          customWidth: MediaQuery.of(context).size.width * 0.50,
+          customWidth: MediaQuery.of(context).size.width * 0.55,
           customHeight: 46,
           customFontSize: 15,
           text: 'Change profile picture', 

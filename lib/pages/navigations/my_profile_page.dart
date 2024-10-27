@@ -159,6 +159,8 @@ class MyProfilePageState extends State<MyProfilePage> {
     return InkWellEffect(
       onPressed: () => ProfilePictureDialog().showPfpDialog(context, profileData.profilePicture),
       child: ProfilePictureWidget(
+        customHeight: 75,
+        customWidth: 75,
         pfpData: profileData.profilePicture,
       ),
     );
