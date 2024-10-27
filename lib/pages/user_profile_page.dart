@@ -2,13 +2,11 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -34,8 +32,6 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class UserProfilePageState extends State<UserProfilePage> {
-
-  final navigationIndex = GetIt.instance<NavigationProvider>();
 
   final followersNotifier = ValueNotifier<int>(0);
   final followingNotifier = ValueNotifier<int>(0);
