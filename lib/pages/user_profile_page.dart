@@ -2,19 +2,20 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/themes/theme_style.dart';
+import 'package:revent/ui_dialog/profile_picture_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -34,8 +35,6 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class UserProfilePageState extends State<UserProfilePage> {
-
-  final navigationIndex = GetIt.instance<NavigationProvider>();
 
   final followersNotifier = ValueNotifier<int>(0);
   final followingNotifier = ValueNotifier<int>(0);
@@ -73,11 +72,7 @@ class UserProfilePageState extends State<UserProfilePage> {
   Widget _buildUsername() {
     return Text(
       widget.username,
-      style: GoogleFonts.inter(
-        color: ThemeColor.white,
-        fontWeight: FontWeight.w800,
-        fontSize: 20.5
-      ),
+      style: ThemeStyle.profileUsernameStyle
     );
   }
 
@@ -92,11 +87,7 @@ class UserProfilePageState extends State<UserProfilePage> {
             padding: EdgeInsets.only(bottom: bottomPadding),
             child: Text(
               value,
-              style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
-                fontWeight: FontWeight.w700,
-                fontSize: 12.5
-              ),
+              style: ThemeStyle.profilePronounsStyle,
               textAlign: TextAlign.center,
             ),
           );
@@ -113,11 +104,7 @@ class UserProfilePageState extends State<UserProfilePage> {
         builder: (_, value, __) {
           return Text(
             value,
-            style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
-              fontWeight: FontWeight.w700,
-              fontSize: 14
-            ),
+            style: ThemeStyle.profileBioStyle,
             textAlign: TextAlign.center,
             maxLines: 3,
           );
@@ -216,13 +203,20 @@ class UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
+  Widget _buildProfilePicture() {
+    return InkWellEffect(
+      onPressed: () => ProfilePictureDialog().showPfpDialog(context, widget.pfpData),
+      child: ProfilePictureWidget(
+        pfpData: widget.pfpData,
+      ),
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return Column(
         children: [
   
-        ProfilePictureWidget(
-          pfpData: widget.pfpData,
-        ),
+        _buildProfilePicture(),
         
         const SizedBox(height: 12),
   

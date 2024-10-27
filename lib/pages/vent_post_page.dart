@@ -9,6 +9,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
@@ -87,10 +88,10 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
-  Widget _buildProfilePicture({required bool isFromCommunity}) {
+  Widget _buildProfilePicture() {
     return ProfilePictureWidget(
-      customHeight: isFromCommunity ? 40 : 35,
-      customWidth: isFromCommunity ? 40 : 35,
+      customHeight: 35,
+      customWidth: 35,
       pfpData: widget.pfpData,
     );
   }
@@ -101,7 +102,7 @@ class VentPostPageState extends State<VentPostPage> {
       child: Row(
         children: [
     
-          _buildProfilePicture(isFromCommunity: false),
+          _buildProfilePicture(),
     
           const SizedBox(width: 10),
     
@@ -142,7 +143,6 @@ class VentPostPageState extends State<VentPostPage> {
           ),
         ),
         
-
         const SizedBox(height: 14),
 
         SelectableText(
@@ -174,38 +174,6 @@ class VentPostPageState extends State<VentPostPage> {
           );
         }
       )
-    );
-  }
-
-  PreferredSizeWidget _buildCustomAppBar() {
-    return AppBar(
-      centerTitle: true,
-        leading: IconButton(
-        icon: const Icon(CupertinoIcons.chevron_back, color: ThemeColor.white),
-        onPressed: () => Navigator.pop(context),
-      ),
-      title: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-
-          _buildProfilePicture(isFromCommunity: true),
-
-          const SizedBox(width: 12),
-    
-          Text(
-            'parenting-support',
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontWeight: FontWeight.w800,
-              fontSize: 16,
-            )
-          ),
-
-        ],
-      ),
-      actions: [
-        _buildActions(),
-      ],
     );
   }
 
@@ -295,7 +263,11 @@ class VentPostPageState extends State<VentPostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildCustomAppBar(),
+      appBar: CustomAppBar(
+        context: context, 
+        title: 'Vent',
+        actions: [_buildActions()]
+      ).buildAppBar(),
       body: _buildBody(),  
     );
   }
