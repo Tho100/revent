@@ -10,6 +10,7 @@ import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
@@ -39,11 +40,7 @@ class MyProfilePageState extends State<MyProfilePage> {
   Widget _buildUsername() {
     return Text(
       userData.user.username,
-      style: GoogleFonts.inter(
-        color: ThemeColor.white,
-        fontWeight: FontWeight.w800,
-        fontSize: 20.5
-      ),
+      style: ThemeStyle.profileUsernameStyle
     );
   }
 
@@ -57,13 +54,8 @@ class MyProfilePageState extends State<MyProfilePage> {
             width: MediaQuery.of(context).size.width * 0.65,
             child: Text(
               profileData.pronouns,
-              style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
-                fontWeight: FontWeight.w700,
-                fontSize: 12.5
-              ),
+              style: ThemeStyle.profilePronounsStyle,
               textAlign: TextAlign.center,
-              maxLines: 3,
             ),
           ),
         );
@@ -78,12 +70,9 @@ class MyProfilePageState extends State<MyProfilePage> {
           width: MediaQuery.of(context).size.width * 0.65,
           child: Text(
             profileData.bio,
-            style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
-              fontWeight: FontWeight.w700,
-              fontSize: 14
-            ),
+            style: ThemeStyle.profileBioStyle,
             textAlign: TextAlign.center,
+            maxLines: 3,
           ),
         );
       },
