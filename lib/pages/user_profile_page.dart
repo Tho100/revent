@@ -83,8 +83,9 @@ class UserProfilePageState extends State<UserProfilePage> {
         valueListenable: pronounsNotifier,
         builder: (_, value, __) {
           final bottomPadding = value.isNotEmpty ? 14.0 : 0.0; 
+          final topPadding = value.isNotEmpty ? 8.0 : 0.0;
           return Padding(
-            padding: EdgeInsets.only(bottom: bottomPadding),
+            padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
             child: Text(
               value,
               style: ThemeStyle.profilePronounsStyle,
@@ -221,8 +222,6 @@ class UserProfilePageState extends State<UserProfilePage> {
         const SizedBox(height: 12),
   
         _buildUsername(),
-  
-        const SizedBox(height: 8),
   
         _buildPronouns(context),
 

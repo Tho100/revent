@@ -50,8 +50,9 @@ class MyProfilePageState extends State<MyProfilePage> {
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
         final bottomPadding = profileData.pronouns.isNotEmpty ? 14.0 : 0.0;
-        return Padding(
-          padding: EdgeInsets.only(bottom: bottomPadding),
+        final topPadding = profileData.pronouns.isNotEmpty ? 8.0 : 0.0;
+          return Padding(
+          padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.65,
             child: Text(
@@ -176,8 +177,6 @@ class MyProfilePageState extends State<MyProfilePage> {
           const SizedBox(height: 12),
 
           _buildUsername(),
-
-          const SizedBox(height: 8),
 
           _buildPronouns(context),
 
