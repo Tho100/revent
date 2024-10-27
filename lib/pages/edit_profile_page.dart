@@ -6,7 +6,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_profile/profile_data_update.dart';
 import 'package:revent/model/profile_picture_model.dart';
 import 'package:revent/provider/profile_data_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -25,7 +24,6 @@ class EditProfilePage extends StatefulWidget {
 
 class EditProfilePageState extends State<EditProfilePage> {
 
-  final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
   final bioController = TextEditingController();
@@ -48,9 +46,11 @@ class EditProfilePageState extends State<EditProfilePage> {
     bioController.addListener(() {
       isBioChanges = true;
     });
+
     pronounOneController.addListener(() {
       isPronounsChanges = true;
     });
+
     pronounTwoController.addListener(() {
       isPronounsChanges = true;
     });
