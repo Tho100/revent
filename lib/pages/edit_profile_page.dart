@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -67,7 +66,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   void _setPronouns() {
 
-    if(profileData.pronouns != '/') {
+    if(profileData.pronouns != '/' || profileData.pronouns.isNotEmpty) {
       
       final splittedPronouns = profileData.pronouns.split('/');
 
