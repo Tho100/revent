@@ -35,15 +35,13 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   }
 
   Widget _buildForYouListView() {
-    return Expanded(
-      child: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width - 28,
-          child: RefreshIndicator(
-            color: ThemeColor.black,
-            onRefresh: () async => await _refreshVentData(),
-            child: const VentListView(),
-          ),
+    return Center(
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width - 28,
+        child: RefreshIndicator(
+          color: ThemeColor.black,
+          onRefresh: () async => await _refreshVentData(),
+          child: const VentListView(),
         ),
       ),
     );
@@ -133,7 +131,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     return Scaffold(
       body: NestedScrollView(
         floatHeaderSlivers: true,
-        headerSliverBuilder: (_, bool isScrolled) {
+        headerSliverBuilder: (_, __) {
           return [_buildCustomAppBar(context)];
         },
         body: _buildTabBarBody()
