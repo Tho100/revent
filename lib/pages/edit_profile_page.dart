@@ -66,7 +66,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   void _setPronouns() {
 
-    if(profileData.pronouns != '/' || profileData.pronouns.isNotEmpty) {
+    if(profileData.pronouns.isNotEmpty) {
       
       final splittedPronouns = profileData.pronouns.split('/');
 
