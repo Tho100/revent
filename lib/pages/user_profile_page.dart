@@ -10,10 +10,12 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
+import 'package:revent/ui_dialog/profile_picture_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -201,13 +203,20 @@ class UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
+  Widget _buildProfilePicture() {
+    return InkWellEffect(
+      onPressed: () => ProfilePictureDialog().showPfpDialog(context, widget.pfpData),
+      child: ProfilePictureWidget(
+        pfpData: widget.pfpData,
+      ),
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return Column(
         children: [
   
-        ProfilePictureWidget(
-          pfpData: widget.pfpData,
-        ),
+        _buildProfilePicture(),
         
         const SizedBox(height: 12),
   
