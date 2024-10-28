@@ -237,7 +237,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                     maxLines: 1,
                     maxLength: 10,
                     inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                      FilteringTextInputFormatter.deny(RegExp(r'\s')), // TODO: use disablewhitesapce class
                     ],
                   ),
                 ),
