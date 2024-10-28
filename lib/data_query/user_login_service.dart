@@ -9,7 +9,6 @@ import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
-import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 
 class UserLoginService {
@@ -23,45 +22,35 @@ class UserLoginService {
 
     final conn = await ReventConnect.initializeConnection();
 
-    try {
+    final username = await userDataGetter
+      .getUsername(email: email, conn: conn);
 
-      final username = await userDataGetter
-        .getUsername(email: email, conn: conn);
-
-      if (username == null) {
-        if (context.mounted) {
-          CustomAlertDialog.alertDialog("Account not found.");
-        }
-        return;
+    if (username == null) {
+      if (context.mounted) {
+        CustomAlertDialog.alertDialog('Account not found.');
       }
+      return;
+    }
 
-      final authenticationInformation = await userDataGetter
-        .getAccountAuthentication(username: username, conn: conn);
-        
-      final isAuthMatched = AuthModel().computeHash(auth) == authenticationInformation;
-
-      if(!isAuthMatched) {
-        if(context.mounted) {
-          CustomAlertDialog.alertDialog("Password is incorrect.");
-        }
-        return;
-      }
-        
-      await _setUserProfileData(conn: conn, email: email);
-      await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
-
-      await VentDataSetup().setup(); 
-
-      if(context.mounted) {
-        NavigatePage.homePage();
-      }
-
-    } catch (err) {
-
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    final authenticationInformation = await userDataGetter
+      .getAccountAuthentication(username: username, conn: conn);
       
-    } finally {
-      await conn.close();
+    final isAuthMatched = AuthModel().computeHash(auth) == authenticationInformation;
+
+    if(!isAuthMatched) {
+      if(context.mounted) {
+        CustomAlertDialog.alertDialog('Password is incorrect.');
+      }
+      return;
+    }
+      
+    await _setUserProfileData(conn: conn, email: email);
+    await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
+
+    await VentDataSetup().setup(); 
+
+    if(context.mounted) {
+      NavigatePage.homePage();
     }
 
   }

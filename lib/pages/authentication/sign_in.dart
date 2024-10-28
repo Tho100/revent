@@ -5,6 +5,7 @@ import 'package:revent/data_query/user_login_service.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/buttons/underlined_button.dart';
 import 'package:revent/widgets/header_text.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
@@ -32,8 +33,14 @@ class SignInPageState extends State<SignInPage> {
     required String auth,
   }) async {
 
-    await UserLoginService().
-      login(email, auth, isRememberMeCheckedNotifier.value, context);
+    try {
+
+      await UserLoginService().
+        login(email, auth, isRememberMeCheckedNotifier.value, context);
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    }
 
   }
   
@@ -43,17 +50,17 @@ class SignInPageState extends State<SignInPage> {
     final emailInput = authController.emailController.text.trim();
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle("Sign In Failed", "Email address is not valid.");
+      CustomAlertDialog.alertDialogTitle('Sign In Failed', 'Email address is not valid.');
       return;
     }
 
     if (emailInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle("Sign In Failed", "Please enter your email address.");
+      CustomAlertDialog.alertDialogTitle('Sign In Failed', 'Please enter your email address.');
       return;
     }
 
     if (authInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle("Sign In Failed", "Please enter your password.");              
+      CustomAlertDialog.alertDialogTitle('Sign In Failed', 'Please enter your password.');              
       return;
     }
 
@@ -79,22 +86,22 @@ class SignInPageState extends State<SignInPage> {
           const Padding(
             padding: EdgeInsets.only(left: 4.0, top: 22.0),
             child: HeaderText(
-              title: "Sign In", 
-              subTitle: "Sign in to your Revent account"
+              title: 'Sign In', 
+              subTitle: 'Sign in to your Revent account'
             ),
           ),
           
           const SizedBox(height: 30),
 
           MainTextField(
-            hintText: "Enter your email address", 
+            hintText: 'Enter your email address', 
             controller: authController.emailController
           ),
 
           const SizedBox(height: 15),
 
           AuthTextField().passwordTextField(
-            hintText: "Enter your password",
+            hintText: 'Enter your password',
             controller: authController.passwordController, 
             visibility: visiblePasswordNotifier
           ),
@@ -136,7 +143,7 @@ class SignInPageState extends State<SignInPage> {
                 ),
 
                 Text(
-                  "Remember Me",
+                  'Remember Me',
                   style: GoogleFonts.inter(
                     color: const Color.fromARGB(225, 225, 225, 225),
                     fontWeight: FontWeight.w800,
@@ -151,7 +158,7 @@ class SignInPageState extends State<SignInPage> {
           const SizedBox(height: 30),
 
           MainButton(
-            text: "Sign In",
+            text: 'Sign In',
             onPressed: () async => _processLogin(),
           ),
 

@@ -37,7 +37,7 @@ class SignUpPageState extends State<SignUpPage> {
 
     try {
 
-      var authHash = AuthModel().computeHash(auth);
+      final authHash = AuthModel().computeHash(auth);
       
       await UserRegistrationService().register(
         username: username,
@@ -59,22 +59,22 @@ class SignUpPageState extends State<SignUpPage> {
     final authInput = authController.passwordController.text;
 
     if(emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
-      CustomAlertDialog.alertDialog("Please fill all the forms.");
+      CustomAlertDialog.alertDialog('Please fill all the fields.');
       return;
     }
 
     if (usernameInput.contains(RegExp(r'[&%;?]'))) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Username cannot contain special characters.");
+      CustomAlertDialog.alertDialogTitle('Sign Up Failed', 'Username cannot contain special characters.');
       return;
     }
 
     if (authInput.length <= 5) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Password must contain more than 5 characters.");
+      CustomAlertDialog.alertDialogTitle('Sign Up Failed', 'Password must contain more than 5 characters.');
       return;
     }
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Email address is not valid.");
+      CustomAlertDialog.alertDialogTitle('Sign Up Failed', 'Email address is not valid.');
       return;
     }
 

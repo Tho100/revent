@@ -31,8 +31,8 @@ class FormatDate {
 
   String formatLongDate(String timestamp) {
 
-    DateTime parsedDate = DateTime.parse(timestamp);
-    String formattedDate = DateFormat('MMMM d yyyy').format(parsedDate);
+    final parsedDate = DateTime.parse(timestamp);
+    final formattedDate = DateFormat('MMMM d yyyy').format(parsedDate);
 
     return formattedDate;
 

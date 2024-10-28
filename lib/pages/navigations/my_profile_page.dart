@@ -198,11 +198,6 @@ class MyProfilePageState extends State<MyProfilePage> {
   }
 
   @override
-  void initState() {
-    super.initState(); 
-  }
-
-  @override
   Widget build(BuildContext context) {
     navigationIndex.setPageIndex(4);
     return WillPopScope(
