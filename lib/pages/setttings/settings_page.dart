@@ -1,12 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/model/local_storage_model.dart';
+import 'package:revent/model/user_model.dart';
 import 'package:revent/pages/setttings/account/account_information.dart';
-import 'package:revent/provider/profile_data_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -16,18 +12,12 @@ class SettingsPage extends StatelessWidget {
 
   const SettingsPage({super.key});
 
-  void _signOutOnPressed() async {
-
-    final userData = GetIt.instance<UserDataProvider>();
-    final profileData = GetIt.instance<ProfileDataProvider>();
-
-    userData.clearUserData();
-    profileData.clearProfileData();
-
-    await LocalStorageModel().deleteLocalData();
-
-    NavigatePage.mainScreenPage();
-
+  void _signOutOnPressed() {
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: 'Are you sure you want to sign out of your account?', 
+      buttonMessage: 'Sign out', 
+      onPressedEvent: () => UserModel().signOutUser()
+    );
   }
 
   Widget _buildHeader(IconData icon, String message) {
@@ -108,7 +98,7 @@ class SettingsPage extends StatelessWidget {
                   onPressed: () => CustomAlertDialog.alertDialogCustomOnPress(
                     message: 'Are you sure you want to sign out of your account?', 
                     buttonMessage: 'Sign out', 
-                    onPressedEvent: () async => _signOutOnPressed()
+                    onPressedEvent: () => _signOutOnPressed()
                   ),
                 ),
               ),
