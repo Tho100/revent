@@ -7,6 +7,7 @@ import 'package:revent/model/email_validator.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/loading/single_text_loading.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/buttons/underlined_button.dart';
 import 'package:revent/widgets/header_text.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
@@ -45,8 +46,8 @@ class SignUpPageState extends State<SignUpPage> {
         context: context
       );
 
-    } catch (exceptionConnectionFsc) {
-      CustomAlertDialog.alertDialogTitle("Something is wrong...", "No internet connection.");
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
     
   }

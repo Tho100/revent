@@ -9,6 +9,7 @@ import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 
 class UserLoginService {
@@ -57,9 +58,7 @@ class UserLoginService {
 
     } catch (err) {
 
-      if(context.mounted) {
-        CustomAlertDialog.alertDialogTitle("Something is wrong...", "No internet connection.");
-      }
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
       
     } finally {
       await conn.close();

@@ -122,6 +122,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
       return false;
     }
 
@@ -148,11 +149,11 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
       return false;
     }
 
   }
-
 
   Widget _buildProfilePicture(BuildContext context) {
     return Column(

@@ -90,8 +90,8 @@ class UserRegistrationService {
 
       const queries = 
       [
-        "INSERT INTO user_information(username, email, password, plan) VALUES (:username, :email, :password, :plan)",
-        "INSERT INTO user_profile_info(bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)"
+        'INSERT INTO user_information(username, email, password, plan) VALUES (:username, :email, :password, :plan)',
+        'INSERT INTO user_profile_info(bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)'
       ];
 
       final params = [
@@ -116,7 +116,7 @@ class UserRegistrationService {
       }
 
       await LocalStorageModel()
-        .setupLocalAccountInformation(userData.user.username, userData.user.email, "Basic");
+        .setupLocalAccountInformation(userData.user.username, userData.user.email, 'Basic');
 
     } catch (err) {
       print(err.toString());
