@@ -47,7 +47,7 @@ class CreateVentPageState extends State<CreateVentPage> {
       }
 
     } catch (err) {
-      CustomAlertDialog.alertDialogTitle('Something went wrong', 'Failed to post vent.');
+      SnackBarDialog.errorSnack(message: 'Failed to post vent.');
     }
 
   }
@@ -171,4 +171,5 @@ class CreateVentPageState extends State<CreateVentPage> {
       body: _buildBody(context),
     );
   }
+  
 }
