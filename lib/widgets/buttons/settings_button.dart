@@ -7,11 +7,14 @@ class SettingsButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
 
+  final bool? isSignOutButton;
+
   const SettingsButton({
     required this.text,
     required this.onPressed,
-    Key? key,
-  }) : super(key: key);
+    this.isSignOutButton,
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,7 @@ class SettingsButton extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                        
+
                   const SizedBox(height: 8),
 
                   Row(
@@ -36,7 +39,7 @@ class SettingsButton extends StatelessWidget {
                       Text(
                         text,
                         style: GoogleFonts.inter(
-                          color: ThemeColor.white,
+                          color: isSignOutButton == true ? ThemeColor.darkRed : ThemeColor.white,
                           fontWeight: FontWeight.w800,
                           fontSize: 22
                         ),
@@ -45,7 +48,11 @@ class SettingsButton extends StatelessWidget {
 
                       const Spacer(),
 
-                      const Icon(Icons.arrow_forward_ios, color: ThemeColor.thirdWhite, size: 20),
+                      Icon(
+                        Icons.arrow_forward_ios, 
+                        color: isSignOutButton == true ? ThemeColor.darkRed : ThemeColor.thirdWhite, 
+                        size: 20
+                      ),
                       
                       const SizedBox(width: 25),
 
