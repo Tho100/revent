@@ -46,8 +46,9 @@ class ProfilePictureWidget extends StatelessWidget {
     return Container(
       width: customWidth ?? 65,
       height: customHeight ?? 65,
-      decoration: const BoxDecoration(
-        color: ThemeColor.white,
+      decoration: BoxDecoration(
+        color: pfpData == null 
+          ?ThemeColor.white : ThemeColor.black,
         shape: BoxShape.circle
       ),
       child: pfpData != null
