@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/data_query/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/model/disable_whitespace.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -81,7 +81,7 @@ class SignUpPageState extends State<SignUpPage> {
     final loadingDialog = SingleTextLoading();
 
     loadingDialog.startLoading(
-      title: "Creating account...", 
+      title: 'Creating account...', 
       context: context
     );
 
@@ -110,33 +110,32 @@ class SignUpPageState extends State<SignUpPage> {
           const Padding(
             padding: EdgeInsets.only(left: 4.0, top: 22.0),
             child: HeaderText(
-              title: "Sign Up", 
-              subTitle: "Create an account for Revent"
+              title: 'Sign Up', 
+              subTitle: 'Create an account for Revent'
             ),
           ),
           
           const SizedBox(height: 30),
 
           MainTextField(
-            hintText: "Enter a username", 
+            hintText: 'Enter a username', 
             maxLength: 24,
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'\s')),
-            ],
+            inputFormatters: DisableWhitespaceTextField().disable(),
             controller: authController.usernameController
           ),
 
           const SizedBox(height: 15),
 
           MainTextField(
-            hintText: "Enter your email address", 
+            hintText: 'Enter your email address', 
+            inputFormatters: DisableWhitespaceTextField().disable(),
             controller: authController.emailController
           ),
 
           const SizedBox(height: 15),
 
           AuthTextField().passwordTextField(
-            hintText: "Enter a password",
+            hintText: 'Enter a password',
             controller: authController.passwordController, 
             visibility: visiblePasswordNotifier
           ),
@@ -144,7 +143,7 @@ class SignUpPageState extends State<SignUpPage> {
           const SizedBox(height: 30),
 
           MainButton(
-            text: "Sign Up",
+            text: 'Sign Up',
             onPressed: () async => await _processRegistration()
           ),
 
