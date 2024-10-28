@@ -2,12 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/vent_widgets/vent_listview.dart';
 
 class HomePage extends StatefulWidget {
@@ -21,18 +20,9 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
-  final ventData = GetIt.instance<VentDataProvider>();
   final navigationIndex = GetIt.instance<NavigationProvider>();
   
   late TabController tabController;
-
-  Future<void> _refreshVentData() async {
-
-    ventData.deleteVentsData();
-
-    await VentDataSetup().setup();
-
-  }
 
   Widget _buildForYouListView() {
     return Center(
@@ -40,7 +30,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         width: MediaQuery.of(context).size.width - 28,
         child: RefreshIndicator(
           color: ThemeColor.black,
-          onRefresh: () async => await _refreshVentData(),
+          onRefresh: () async => await CallRefresh().refreshVents(),
           child: const VentListView(),
         ),
       ),
