@@ -20,11 +20,11 @@ class ProfilePicturePicker {
     return GalleryDisplaySettings(
     showImagePreview: true,
     tabsTexts: TabsTexts(
-      videoText: "",
-      photoText: "",
-      noImagesFounded: "Gallery is empty",
-      acceptAllPermissions: "Permission denied",
-      clearImagesText: "Clear selections",
+      videoText: '',
+      photoText: '',
+      noImagesFounded: 'Gallery is empty',
+      acceptAllPermissions: 'Permission denied',
+      clearImagesText: 'Clear selections',
     ),
     maximumSelection: 1,
       appTheme: AppTheme(

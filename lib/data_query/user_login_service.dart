@@ -22,47 +22,35 @@ class UserLoginService {
 
     final conn = await ReventConnect.initializeConnection();
 
-    try {
+    final username = await userDataGetter
+      .getUsername(email: email, conn: conn);
 
-      final username = await userDataGetter
-        .getUsername(email: email, conn: conn);
-
-      if (username == null) {
-        if (context.mounted) {
-          CustomAlertDialog.alertDialog("Account not found.");
-        }
-        return;
+    if (username == null) {
+      if (context.mounted) {
+        CustomAlertDialog.alertDialog('Account not found.');
       }
+      return;
+    }
 
-      final authenticationInformation = await userDataGetter
-        .getAccountAuthentication(username: username, conn: conn);
-        
-      final isAuthMatched = AuthModel().computeHash(auth) == authenticationInformation;
-
-      if(!isAuthMatched) {
-        if(context.mounted) {
-          CustomAlertDialog.alertDialog("Password is incorrect.");
-        }
-        return;
-      }
-        
-      await _setUserProfileData(conn: conn, email: email);
-      await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
-
-      await VentDataSetup().setup(); 
-
-      if(context.mounted) {
-        NavigatePage.homePage();
-      }
-
-    } catch (err) {
-
-      if(context.mounted) {
-        CustomAlertDialog.alertDialogTitle("Something is wrong...", "No internet connection.");
-      }
+    final authenticationInformation = await userDataGetter
+      .getAccountAuthentication(username: username, conn: conn);
       
-    } finally {
-      await conn.close();
+    final isAuthMatched = AuthModel().computeHash(auth) == authenticationInformation;
+
+    if(!isAuthMatched) {
+      if(context.mounted) {
+        CustomAlertDialog.alertDialog('Password is incorrect.');
+      }
+      return;
+    }
+      
+    await _setUserProfileData(conn: conn, email: email);
+    await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
+
+    await VentDataSetup().setup(); 
+
+    if(context.mounted) {
+      NavigatePage.homePage();
     }
 
   }

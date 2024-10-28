@@ -26,6 +26,32 @@ class CreateVentPageState extends State<CreateVentPage> {
 
   final hintTextColor = ThemeColor.thirdWhite;
 
+  Future<void> _createVentOnPressed(BuildContext context) async {
+
+    if(ventTitleController.text.isEmpty) {
+      CustomAlertDialog.alertDialog('Please enter vent title.');
+      return;
+    }
+
+    try {
+
+      await createItem.newVent(
+        ventTitle: ventTitleController.text, 
+        ventBodyText: ventBodyTextController.text
+      );
+        
+      SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
+
+      if(context.mounted) {
+        Navigator.pop(context);
+      }
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Failed to post vent.');
+    }
+
+  }
+
   Widget _buildTitleField() {
     return TextField(
       controller: ventTitleController,
@@ -43,7 +69,7 @@ class CreateVentPageState extends State<CreateVentPage> {
           fontWeight: defaultFontWeight, 
           fontSize: 24
         ),
-        hintText: "Title",
+        hintText: 'Title',
         border: InputBorder.none,
         contentPadding: EdgeInsets.zero, 
       ),
@@ -71,7 +97,7 @@ class CreateVentPageState extends State<CreateVentPage> {
               fontWeight: defaultFontWeight, 
               fontSize: 16
             ),
-            hintText: "Body text (optional)",
+            hintText: 'Body text (optional)',
             border: InputBorder.none,
             contentPadding: EdgeInsets.zero, 
           ),
@@ -115,7 +141,7 @@ class CreateVentPageState extends State<CreateVentPage> {
             shape: const StadiumBorder()
           ),
           child: Text(
-            "Post vent",
+            'Post vent',
             style: GoogleFonts.inter(
               color: ThemeColor.mediumBlack,
               fontSize: 12,
@@ -125,33 +151,6 @@ class CreateVentPageState extends State<CreateVentPage> {
         ),
       )
     );
-  }
-
-  Future<void> _createVentOnPressed(BuildContext context) async {
-
-    if(ventTitleController.text.isEmpty) {
-      CustomAlertDialog.alertDialog("Please enter vent title.");
-      return;
-    }
-
-    try {
-
-      await createItem.newVent(
-        ventTitle: ventTitleController.text, 
-        ventBodyText: ventBodyTextController.text
-      );
-        
-      SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
-
-      if(context.mounted) {
-        Navigator.pop(context);
-      }
-
-    } catch (err) {
-      CustomAlertDialog.alertDialogTitle("Something went wrong", "Failed to post vent.");
-      print(err.toString());
-    }
-
   }
 
   @override
@@ -166,10 +165,11 @@ class CreateVentPageState extends State<CreateVentPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: "",
+        title: '',
         actions: [_buildActionButton(context)],
       ).buildAppBar(),
       body: _buildBody(context),
     );
   }
+  
 }

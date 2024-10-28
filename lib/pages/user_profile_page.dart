@@ -216,28 +216,31 @@ class UserProfilePageState extends State<UserProfilePage> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Column(
-        children: [
-  
-        _buildProfilePicture(),
-        
-        const SizedBox(height: 12),
-  
-        _buildUsername(),
-  
-        _buildPronouns(context),
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: [
+    
+          _buildProfilePicture(),
+          
+          const SizedBox(height: 12),
+    
+          _buildUsername(),
+    
+          _buildPronouns(context),
 
-        _buildBio(context),
-  
-        const SizedBox(height: 25),
-  
-        _buildEditProfileButton(context),
+          _buildBio(context),
+    
+          const SizedBox(height: 25),
+    
+          _buildEditProfileButton(context),
 
-        const SizedBox(height: 40),
+          const SizedBox(height: 40),
 
-        _popularityWidgets(context),
+          _popularityWidgets(context),
 
-      ],
+        ],
+      ),
     );
   }
 
@@ -280,10 +283,7 @@ class UserProfilePageState extends State<UserProfilePage> {
       body: RefreshIndicator(
         color: ThemeColor.mediumBlack,
         onRefresh: () async => await _setProfileData(),
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: _buildBody(context)
-        ),
+        child: _buildBody(context)
       ),
       bottomNavigationBar: UpdateNavigation(
         context: context,

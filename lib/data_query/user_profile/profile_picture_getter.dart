@@ -14,7 +14,7 @@ class ProfilePictureGetter {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = "SELECT profile_picture FROM user_profile_info WHERE username = :username";
+    const query = 'SELECT profile_picture FROM user_profile_info WHERE username = :username';
     final params = {
       'username': username!.isNotEmpty ? username : userData.user.username
     };

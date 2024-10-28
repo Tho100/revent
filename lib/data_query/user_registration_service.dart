@@ -83,44 +83,38 @@ class UserRegistrationService {
   }
 
   Future<void> _saveUserData({required String? hashPassword}) async {
-
-    try {
       
-      final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnect.initializeConnection();
 
-      const queries = 
-      [
-        "INSERT INTO user_information(username, email, password, plan) VALUES (:username, :email, :password, :plan)",
-        "INSERT INTO user_profile_info(bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)"
-      ];
+    const queries = 
+    [
+      'INSERT INTO user_information(username, email, password, plan) VALUES (:username, :email, :password, :plan)',
+      'INSERT INTO user_profile_info(bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)'
+    ];
 
-      final params = [
-        {
-          'username': userData.user.username,
-          'email': userData.user.email,
-          'password': hashPassword,
-          'plan': 'Basic'
-        },
-        {
-          'bio': defaultBioMsg,
-          'followers': 0,
-          'following': 0,
-          'posts': 0,
-          'profile_pic': '',
-          'username': userData.user.username
-        }
-      ];
-
-      for(int i=0; i < queries.length; i++) {
-        await conn.execute(queries[i], params[i]);
+    final params = [
+      {
+        'username': userData.user.username,
+        'email': userData.user.email,
+        'password': hashPassword,
+        'plan': 'Basic'
+      },
+      {
+        'bio': defaultBioMsg,
+        'followers': 0,
+        'following': 0,
+        'posts': 0,
+        'profile_pic': '',
+        'username': userData.user.username
       }
+    ];
 
-      await LocalStorageModel()
-        .setupLocalAccountInformation(userData.user.username, userData.user.email, "Basic");
+    for(int i=0; i < queries.length; i++) {
+      await conn.execute(queries[i], params[i]);
+    }
 
-    } catch (err) {
-      print(err.toString());
-    } 
+    await LocalStorageModel()
+      .setupLocalAccountInformation(userData.user.username, userData.user.email, 'Basic');
 
   }  
 

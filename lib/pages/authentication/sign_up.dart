@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/data_query/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/model/disable_whitespace.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/loading/single_text_loading.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/buttons/underlined_button.dart';
 import 'package:revent/widgets/header_text.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
@@ -36,7 +37,7 @@ class SignUpPageState extends State<SignUpPage> {
 
     try {
 
-      var authHash = AuthModel().computeHash(auth);
+      final authHash = AuthModel().computeHash(auth);
       
       await UserRegistrationService().register(
         username: username,
@@ -45,8 +46,8 @@ class SignUpPageState extends State<SignUpPage> {
         context: context
       );
 
-    } catch (exceptionConnectionFsc) {
-      CustomAlertDialog.alertDialogTitle("Something is wrong...", "No internet connection.");
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
     
   }
@@ -58,29 +59,29 @@ class SignUpPageState extends State<SignUpPage> {
     final authInput = authController.passwordController.text;
 
     if(emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
-      CustomAlertDialog.alertDialog("Please fill all the forms.");
+      CustomAlertDialog.alertDialog('Please fill all the fields.');
       return;
     }
 
     if (usernameInput.contains(RegExp(r'[&%;?]'))) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Username cannot contain special characters.");
+      CustomAlertDialog.alertDialogTitle('Sign Up Failed', 'Username cannot contain special characters.');
       return;
     }
 
     if (authInput.length <= 5) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Password must contain more than 5 characters.");
+      CustomAlertDialog.alertDialogTitle('Sign Up Failed', 'Password must contain more than 5 characters.');
       return;
     }
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle("Sign Up Failed", "Email address is not valid.");
+      CustomAlertDialog.alertDialogTitle('Sign Up Failed', 'Email address is not valid.');
       return;
     }
 
     final loadingDialog = SingleTextLoading();
 
     loadingDialog.startLoading(
-      title: "Creating account...", 
+      title: 'Creating account...', 
       context: context
     );
 
@@ -109,33 +110,32 @@ class SignUpPageState extends State<SignUpPage> {
           const Padding(
             padding: EdgeInsets.only(left: 4.0, top: 22.0),
             child: HeaderText(
-              title: "Sign Up", 
-              subTitle: "Create an account for Revent"
+              title: 'Sign Up', 
+              subTitle: 'Create an account for Revent'
             ),
           ),
           
           const SizedBox(height: 30),
 
           MainTextField(
-            hintText: "Enter a username", 
+            hintText: 'Enter a username', 
             maxLength: 24,
-            inputFormatters: [
-              FilteringTextInputFormatter.deny(RegExp(r'\s')),
-            ],
+            inputFormatters: DisableWhitespaceTextField().disable(),
             controller: authController.usernameController
           ),
 
           const SizedBox(height: 15),
 
           MainTextField(
-            hintText: "Enter your email address", 
+            hintText: 'Enter your email address', 
+            inputFormatters: DisableWhitespaceTextField().disable(),
             controller: authController.emailController
           ),
 
           const SizedBox(height: 15),
 
           AuthTextField().passwordTextField(
-            hintText: "Enter a password",
+            hintText: 'Enter a password',
             controller: authController.passwordController, 
             visibility: visiblePasswordNotifier
           ),
@@ -143,7 +143,7 @@ class SignUpPageState extends State<SignUpPage> {
           const SizedBox(height: 30),
 
           MainButton(
-            text: "Sign Up",
+            text: 'Sign Up',
             onPressed: () async => await _processRegistration()
           ),
 

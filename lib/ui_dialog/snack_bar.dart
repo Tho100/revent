@@ -38,4 +38,37 @@ class SnackBarDialog {
     );
   }
 
+  static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> errorSnack({
+    required String message
+  }) {
+    return scaffoldMessengerKey.currentState!.showSnackBar(
+      SnackBar(
+        shape: const StadiumBorder(),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: ThemeColor.darkRed,
+        duration: const Duration(seconds: 2),
+        content: Row(
+          children: [
+
+            const SizedBox(width: 4),
+            
+            SizedBox(
+              width: 320,
+              child: Text(
+                message, 
+                style: GoogleFonts.inter(
+                  fontSize: 13,
+                  color: ThemeColor.white,
+                  fontWeight: FontWeight.w800,
+                ),
+                overflow: TextOverflow.ellipsis
+              ),
+            ),
+
+          ],
+        ),
+      )
+    );
+  }
+
 }

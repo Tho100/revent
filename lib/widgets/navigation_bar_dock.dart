@@ -37,11 +37,11 @@ class NavigationBarDock extends StatelessWidget {
     final selectedNavigationIndexNotifier = ValueNotifier<int>(getNonAddIndex);
 
     return Container(
-      height: 60,
+      height: 55.5,
       margin: const EdgeInsets.only(
         left: 20,
         right: 20,
-        bottom: 16
+        bottom: 14
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

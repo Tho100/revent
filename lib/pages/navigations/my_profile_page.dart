@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/data_query/user_profile/profile_data_setup.dart';
+import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
@@ -30,14 +30,6 @@ class MyProfilePageState extends State<MyProfilePage> {
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
-
-  Future<void> _pageOnRefresh() async {
-
-    profileData.clearProfileData();
-
-    await ProfileDataSetup().setup(username: userData.user.username);
-
-  }
 
   Widget _buildUsername() {
     return Text(
@@ -167,39 +159,37 @@ class MyProfilePageState extends State<MyProfilePage> {
   }
 
   Widget _buildBody(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 35.0),
-      child: Column(
-        children: [
+    return SingleChildScrollView(
+      physics: const AlwaysScrollableScrollPhysics(),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 35.0),
+        child: Column(
+          children: [
 
-          const SizedBox(height: 27),
+            const SizedBox(height: 27),
 
-          _buildProfilePicture(),
-          
-          const SizedBox(height: 12),
+            _buildProfilePicture(),
+            
+            const SizedBox(height: 12),
 
-          _buildUsername(),
+            _buildUsername(),
 
-          _buildPronouns(context),
+            _buildPronouns(context),
 
-          _buildBio(context),
-    
-          const SizedBox(height: 25),
+            _buildBio(context),
+      
+            const SizedBox(height: 25),
 
-          _buildEditProfileButton(context),
+            _buildEditProfileButton(context),
 
-          const SizedBox(height: 40),
+            const SizedBox(height: 40),
 
-          _popularityWidgets(),
+            _popularityWidgets(),
 
-        ],
+          ],
+        ),
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState(); 
   }
 
   @override
@@ -213,11 +203,8 @@ class MyProfilePageState extends State<MyProfilePage> {
       child: Scaffold(
         body: RefreshIndicator(
           color: ThemeColor.mediumBlack,
-          onRefresh: () async => await _pageOnRefresh(),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: _buildBody(context)
-          ),
+          onRefresh: () async => await CallRefresh().refreshProfile(),
+          child: _buildBody(context)
         ),
         bottomNavigationBar: UpdateNavigation(
           context: context,

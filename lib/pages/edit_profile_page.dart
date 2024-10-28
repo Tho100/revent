@@ -122,6 +122,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
       return false;
     }
 
@@ -148,11 +149,11 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
       return false;
     }
 
   }
-
 
   Widget _buildProfilePicture(BuildContext context) {
     return Column(
@@ -236,7 +237,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                     maxLines: 1,
                     maxLength: 10,
                     inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp(r'\s')),
+                      FilteringTextInputFormatter.deny(RegExp(r'\s')), // TODO: use disablewhitesapce class
                     ],
                   ),
                 ),

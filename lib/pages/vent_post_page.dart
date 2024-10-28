@@ -177,76 +177,82 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
+  Widget _buildActionButtons() {
+
+    final topPadding = widget.bodyText.isEmpty ? 0.0 : 30.0;
+    
+    return Padding(
+      padding: EdgeInsets.only(top: topPadding),
+      child: Row(
+        children: [
+          
+          _buildLikeButton(),
+          
+          const SizedBox(width: 8),
+
+          _buildCommentButton(),
+
+        ],
+      ),
+    );
+    
+  }
+
+  Widget _buildCommentsHeader() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        Padding(
+          padding: const EdgeInsets.only(left: 4.0),
+          child: Text(
+            'Comments',
+            style: GoogleFonts.inter(
+              color: ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 17,
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 10),
+        
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          child: Divider(color: ThemeColor.darkWhite),
+        ),
+
+      ],
+    );
+  }
+
   Widget _buildBody() {
-
-    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 22.0;
-    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 26.0;
-
     return Padding(
       padding: const EdgeInsets.only(top: 24, left: 18),
       child: ScrollConfiguration(
-      behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
-      child: SingleChildScrollView(
-        child: SizedBox(
-            width: MediaQuery.of(context).size.width-45,
+        behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
+        child: SingleChildScrollView(
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width - 45,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-    
+
                 const SizedBox(height: 20),
-    
+
                 _buildProfileHeader(),
-    
+
                 const SizedBox(height: 18),
-    
+
                 _buildHeader(),
-    
-                SizedBox(height: actionButtonsHeightGap),
-    
-                Padding(
-                  padding: EdgeInsets.only(top: actionButtonsPadding),
-                  child: Row(
-                    children: [
-                          
-                      _buildLikeButton(),
-                          
-                      const SizedBox(width: 8),
-                          
-                      _buildCommentButton(),
-                          
-                    ],
-                  ),
-                ),
-    
+
+                _buildActionButtons(),
+
                 const SizedBox(height: 32),
-    
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    
-                    Padding(
-                      padding: const EdgeInsets.only(left: 4.0),
-                      child: Text(
-                        'Comments',
-                        style: GoogleFonts.inter(
-                          color: ThemeColor.secondaryWhite,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 17,
-                        ),
-                      ),
-                    ),
-    
-                    const SizedBox(height: 10),
-    
-                    const Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 5),
-                      child: Divider(color: ThemeColor.darkWhite),
-                    ),
-    
-                  ],
-                ),
-                    
-              ] 
+
+                _buildCommentsHeader(),
+
+              ],
             ),
           ),
         ),

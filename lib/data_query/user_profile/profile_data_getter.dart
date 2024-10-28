@@ -11,8 +11,8 @@ class ProfileDataGetter {
     final conn = await ReventConnect.initializeConnection();
 
     final query = isMyProfile 
-      ? "SELECT posts, following, followers, bio, pronouns, profile_picture FROM user_profile_info WHERE username = :username"
-      : "SELECT posts, following, followers, bio, pronouns FROM user_profile_info WHERE username = :username";
+      ? 'SELECT posts, following, followers, bio, pronouns, profile_picture FROM user_profile_info WHERE username = :username'
+      : 'SELECT posts, following, followers, bio, pronouns FROM user_profile_info WHERE username = :username';
 
     final param = {
       'username': username
