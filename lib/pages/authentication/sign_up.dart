@@ -144,7 +144,10 @@ class SignUpPageState extends State<SignUpPage> {
 
           MainButton(
             text: 'Sign Up',
-            onPressed: () async => await _processRegistration()
+            onPressed: () async { 
+              FocusScope.of(context).unfocus(); 
+              await _processRegistration();
+            }
           ),
 
           const Spacer(),
