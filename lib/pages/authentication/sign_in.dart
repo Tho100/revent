@@ -161,7 +161,10 @@ class SignInPageState extends State<SignInPage> {
 
           MainButton(
             text: 'Sign In',
-            onPressed: () async => _processLogin(),
+            onPressed: () async {
+              FocusScope.of(context).unfocus(); 
+              await _processLogin();
+            }
           ),
 
           const Spacer(),
