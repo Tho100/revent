@@ -43,8 +43,6 @@ class VentPostPage extends StatefulWidget {
 
 class VentPostPageState extends State<VentPostPage> {
 
-  final isPostLikedNotifier = ValueNotifier<bool>(false);
-
   Future<void> _deletePostOnPressed() async {
 
     await CallVentActions(
@@ -67,14 +65,13 @@ class VentPostPageState extends State<VentPostPage> {
         );
         return ActionsButton().buildLikeButton(
           text: ventData.vents[index].totalLikes.toString(), 
-          isLiked: isPostLikedNotifier.value,
+          isLiked: ventData.vents[index].isPostLiked,
           onPressed: () async { 
             await CallVentActions(
               context: context, 
               title: widget.title, 
               creator: widget.creator
             ).likePost();
-            isPostLikedNotifier.value = !isPostLikedNotifier.value;
           }
         );
       },
@@ -258,12 +255,6 @@ class VentPostPageState extends State<VentPostPage> {
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    isPostLikedNotifier.dispose();
-    super.dispose();
   }
 
   @override
