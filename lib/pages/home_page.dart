@@ -38,13 +38,34 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     );
   }
 
-  Widget _buildTabBarBody() {
+  Widget _buildTabBarTabs() {
     return TabBarView(
       controller: tabController,
       children: [
         _buildForYouListView(), 
         Container(),           
       ],
+    );
+  }
+
+  PreferredSizeWidget _buildTabBar() {
+    return CustomTabBar(
+      controller: tabController, 
+      tabs: const [
+        Tab(text: 'For you'),
+        Tab(text: 'Following'),
+      ],
+    ).buildTabBar();
+  }
+
+  Widget _buildActionButton() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, right: 12),
+      child: IconButton(
+        icon: const Icon(CupertinoIcons.gear, size: 28),
+        color: ThemeColor.thirdWhite,
+        onPressed: () => NavigatePage.settingsPage(),
+      ),
     );
   }
 
@@ -64,23 +85,8 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
           ),
         ),
       ),
-      actions: [
-        Padding(
-          padding: const EdgeInsets.only(top: 10, right: 12),
-          child: IconButton(
-            icon: const Icon(CupertinoIcons.gear, size: 28),
-            color: ThemeColor.thirdWhite,
-            onPressed: () => NavigatePage.settingsPage(),
-          ),
-        ),
-      ],
-      bottom: CustomTabBar(
-        controller: tabController, 
-        tabs: const [
-          Tab(text: 'For you'),
-          Tab(text: 'Following'),
-        ],
-      ).buildTabBar()
+      actions: [_buildActionButton()],
+      bottom: _buildTabBar()
     );
   }
 
@@ -105,7 +111,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         headerSliverBuilder: (_, __) {
           return [_buildCustomAppBar(context)];
         },
-        body: _buildTabBarBody()
+        body: _buildTabBarTabs()
       ),
       bottomNavigationBar: UpdateNavigation(
         context: context,
