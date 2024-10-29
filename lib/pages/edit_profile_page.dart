@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_profile/profile_data_update.dart';
+import 'package:revent/model/disable_whitespace.dart';
 import 'package:revent/model/profile_picture_model.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -236,9 +237,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                     hintText: '',
                     maxLines: 1,
                     maxLength: 10,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp(r'\s')), // TODO: use disablewhitesapce class
-                    ],
+                    inputFormatters: DisableWhitespaceTextField().disable()
                   ),
                 ),
 
@@ -261,9 +260,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                     hintText: '',
                     maxLines: 1,
                     maxLength: 10,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.deny(RegExp(r'\s')),
-                    ],
+                    inputFormatters: DisableWhitespaceTextField().disable()
                   ),
                 ),
 
