@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -13,7 +14,9 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/ui_dialog/profile_picture_dialog.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
+import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
+import 'package:revent/widgets/profile/my_posts_listview.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
 class MyProfilePage extends StatefulWidget {
@@ -25,11 +28,13 @@ class MyProfilePage extends StatefulWidget {
 
 }
 
-class MyProfilePageState extends State<MyProfilePage> {
+class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderStateMixin {
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
+
+  late TabController tabController;
 
   Widget _buildUsername() {
     return Text(
@@ -158,6 +163,33 @@ class MyProfilePageState extends State<MyProfilePage> {
     );
   }
 
+  Widget _buildMyVentPostsTab() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 28,
+      child: const MyPostsListView(),
+    );
+  }
+
+  Widget _buildTabBarTabs() {
+    return TabBarView(
+      controller: tabController,
+      children: [
+        _buildMyVentPostsTab(), 
+        Container(),           
+      ],
+    );
+  }
+
+  PreferredSizeWidget _buildTabBar() {
+    return CustomTabBar(
+      controller: tabController, 
+      tabs: const [
+        Tab(icon: Icon(CupertinoIcons.square_grid_2x2)),
+        Tab(icon: Icon(CupertinoIcons.bookmark)),
+      ],
+    ).buildTabBar();
+  }
+
   Widget _buildBody(BuildContext context) {
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
@@ -186,10 +218,30 @@ class MyProfilePageState extends State<MyProfilePage> {
 
             _popularityWidgets(),
 
+            _buildTabBar(),
+
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.5, 
+              child: _buildTabBarTabs(),
+            ),
+
           ],
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    navigationIndex.setPageIndex(0);
+    tabController = TabController(length: 2, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    super.dispose();
   }
 
   @override
