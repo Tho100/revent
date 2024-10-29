@@ -132,8 +132,7 @@ class CreateVentPageState extends State<CreateVentPage> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: MainButton(
-        customWidth: 110,
-        customFontSize: 12,
+        customWidth: 115,
         text: 'Post vent', 
         onPressed: () async => _createVentOnPressed(context),
       ),
