@@ -7,6 +7,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/vent_widgets/vent_listview.dart';
 
 class HomePage extends StatefulWidget {
@@ -47,32 +48,6 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     );
   }
 
-  PreferredSizeWidget _buildTabBar() {
-    return TabBar(
-      tabAlignment: TabAlignment.center,
-      controller: tabController,
-      labelColor: ThemeColor.white,              
-      unselectedLabelColor: Colors.grey,      
-      indicator: UnderlineTabIndicator(
-        borderRadius: BorderRadius.circular(36),
-        borderSide: const BorderSide(width: 2.5, color: ThemeColor.white),
-        insets: const EdgeInsets.symmetric(horizontal: 25), 
-      ),
-      labelStyle: GoogleFonts.inter(             
-        fontSize: 14,
-        fontWeight: FontWeight.w800,
-      ),
-      unselectedLabelStyle: GoogleFonts.inter(   
-        fontSize: 14,
-        fontWeight: FontWeight.w800,        
-      ),
-      tabs: const [
-        Tab(text: 'For you'),
-        Tab(text: 'Following'),
-      ],
-    );
-  }
-
   SliverAppBar _buildCustomAppBar(BuildContext context) {
     return SliverAppBar(
       floating: true,
@@ -99,7 +74,13 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
           ),
         ),
       ],
-      bottom: _buildTabBar()
+      bottom: CustomTabBar(
+        controller: tabController, 
+        tabs: const [
+          Tab(text: 'For you'),
+          Tab(text: 'Following'),
+        ],
+      ).buildTabBar()
     );
   }
 
