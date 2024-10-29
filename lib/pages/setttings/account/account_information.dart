@@ -82,7 +82,6 @@ class AccountInformationPageState extends State<AccountInformationPage> {
     return MainButton(
       customWidth: MediaQuery.of(context).size.width * 0.26,
       customHeight: 46,
-      customFontSize: 15,
       text: 'Upgrade', 
       onPressed: () => print('Upgrade')
     );

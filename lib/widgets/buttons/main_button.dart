@@ -37,7 +37,7 @@ class MainButton extends StatelessWidget {
           style: GoogleFonts.inter(
             color: ThemeColor.mediumBlack,
             fontWeight: FontWeight.w800,
-            fontSize: customFontSize ?? 17,
+            fontSize: customFontSize ?? 13,
           )
         ),
       ),

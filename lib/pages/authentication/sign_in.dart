@@ -40,6 +40,7 @@ class SignInPageState extends State<SignInPage> {
         login(email, auth, isRememberMeCheckedNotifier.value, context);
 
     } catch (err) {
+      print(err.toString());
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 

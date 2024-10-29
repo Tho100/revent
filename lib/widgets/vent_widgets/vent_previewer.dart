@@ -20,6 +20,7 @@ class VentPreviewer extends StatefulWidget {
   final int totalLikes;
   final int totalComments;
   final Uint8List pfpData;
+  final bool isPostLiked;
 
   const VentPreviewer({
     required this.title,
@@ -29,6 +30,7 @@ class VentPreviewer extends StatefulWidget {
     required this.totalLikes,
     required this.totalComments,
     required this.pfpData,
+    required this.isPostLiked,
     super.key
   });
 
@@ -38,8 +40,6 @@ class VentPreviewer extends StatefulWidget {
 }
 
 class VentPreviewerState extends State<VentPreviewer> {
-
-  final isPostLikedNotifier = ValueNotifier<bool>(false);
 
   void _viewVentPostPage() {
     Navigator.push(
@@ -59,14 +59,13 @@ class VentPreviewerState extends State<VentPreviewer> {
   Widget _buildLikeButton() {
     return ActionsButton().buildLikeButton(
       text: widget.totalLikes.toString(), 
-      isLiked: isPostLikedNotifier.value,
+      isLiked: widget.isPostLiked,
       onPressed: () async {
         await CallVentActions(
           context: context, 
           title: widget.title, 
           creator: widget.creator
         ).likePost();
-        isPostLikedNotifier.value = !isPostLikedNotifier.value;
       }
     );
   }
@@ -161,12 +160,6 @@ class VentPreviewerState extends State<VentPreviewer> {
   }
 
   @override
-  void dispose() {
-    isPostLikedNotifier.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
 
     final containerHeight = widget.bodyText.isEmpty ? 160.0 : 221.0;
@@ -228,4 +221,5 @@ class VentPreviewerState extends State<VentPreviewer> {
       ),
     );
   }
+  
 } 

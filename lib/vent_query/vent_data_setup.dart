@@ -22,6 +22,8 @@ class VentDataSetup {
     final totalLikes = ventsInfo['total_likes']! as List<int>;
     final totalComments = ventsInfo['total_comments']! as List<int>;
 
+    final isLiked = ventsInfo['is_liked']! as List<bool>;
+
     final profilePic = await Future.wait(
       creator.map((username) async => await profilePicGetter.getProfilePictures(username: username)
       )
@@ -36,6 +38,7 @@ class VentDataSetup {
         profilePic: profilePic[index],
         totalLikes: totalLikes[index],
         totalComments: totalComments[index],
+        isPostLiked: isLiked[index]
       );
     });
 

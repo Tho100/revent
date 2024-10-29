@@ -5,6 +5,7 @@ import 'package:revent/vent_query/create_new_item.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/buttons/main_button.dart';
 
 class CreateVentPage extends StatefulWidget {
 
@@ -128,28 +129,13 @@ class CreateVentPageState extends State<CreateVentPage> {
   }
 
   Widget _buildActionButton(BuildContext context) {
-    return SizedBox(
-      width: 120,
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: ElevatedButton(
-          onPressed: () async => _createVentOnPressed(context),
-          style: ElevatedButton.styleFrom(
-            foregroundColor: ThemeColor.thirdWhite,
-            backgroundColor: ThemeColor.white,
-            elevation: 0,
-            shape: const StadiumBorder()
-          ),
-          child: Text(
-            'Post vent',
-            style: GoogleFonts.inter(
-              color: ThemeColor.mediumBlack,
-              fontSize: 12,
-              fontWeight: FontWeight.w800
-            )
-          ),
-        ),
-      )
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: MainButton(
+        customWidth: 115,
+        text: 'Post vent', 
+        onPressed: () async => _createVentOnPressed(context),
+      ),
     );
   }
 

@@ -18,6 +18,7 @@ class VentListView extends StatelessWidget {
         totalLikes: ventData.totalLikes,
         totalComments: ventData.totalComments,
         pfpData: ventData.profilePic,
+        isPostLiked: ventData.isPostLiked,
       ),
     );
   }
