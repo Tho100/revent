@@ -4,29 +4,16 @@ import 'package:revent/themes/theme_color.dart';
 
 class EmptyPage {
 
-  Widget nothingToSeeHere() {
-    return Column(
-      children: [
-
-        Text('¯\\_(ツ)_/¯',
-          style: GoogleFonts.inter(
-            color: ThemeColor.thirdWhite,
-            fontWeight: FontWeight.w400,
-            fontSize: 45
-          ),
+  Widget customMessage({required String message}) {
+    return Center(
+      child: Text(
+        message,
+        style: GoogleFonts.inter(
+          color: ThemeColor.white,
+          fontWeight: FontWeight.w800,
+          fontSize: 15
         ),
-
-        const SizedBox(height: 12),
-
-        Text('Nothing to see here',
-          style: GoogleFonts.inter(
-            color: ThemeColor.thirdWhite,
-            fontWeight: FontWeight.w800,
-            fontSize: 15
-          ),
-        ),
-
-      ],
+      ),
     );
   }
 

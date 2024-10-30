@@ -71,7 +71,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   }
 
-  Widget _buildPronouns(BuildContext context) {
+  Widget _buildPronouns() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.65,
       child: ValueListenableBuilder(
@@ -92,7 +92,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     );
   }
 
-  Widget _buildBio(BuildContext context) {
+  Widget _buildBio() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.65,
       child: ValueListenableBuilder(
@@ -109,7 +109,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     );
   }
 
-  Widget _buildEditProfileButton(BuildContext context) {
+  Widget _buildEditProfileButton() {
 
     final buttonWidth = MediaQuery.of(context).size.width * 0.45;
     final buttonHeight = MediaQuery.of(context).size.height * 0.050;
@@ -141,7 +141,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   }
 
-  Widget _popularityWidgets(BuildContext context) {
+  Widget _popularityWidgets() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Row(
@@ -165,9 +165,11 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics()
+      ),
         child: Column(
           children: [
     
@@ -177,17 +179,17 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     
           profileInfoWidgets.buildUsername(),
     
-          _buildPronouns(context),
+          _buildPronouns(),
 
-          _buildBio(context),
+          _buildBio(),
     
           const SizedBox(height: 25),
     
-          _buildEditProfileButton(context),
+          _buildEditProfileButton(),
 
           const SizedBox(height: 28),
 
-          _popularityWidgets(context),
+          _popularityWidgets(),
 
           tabBarWidgets.buildTabBar(),
 
@@ -240,7 +242,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       body: RefreshIndicator(
         color: ThemeColor.mediumBlack,
         onRefresh: () async => await _setProfileData(),
-        child: _buildBody(context)
+        child: _buildBody()
       ),
       bottomNavigationBar: UpdateNavigation(
         context: context,
