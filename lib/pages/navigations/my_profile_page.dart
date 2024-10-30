@@ -34,7 +34,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
-  Widget _buildPronouns(BuildContext context) {
+  Widget _buildPronouns() {
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
         final bottomPadding = profileData.pronouns.isNotEmpty ? 14.0 : 0.0;
@@ -54,7 +54,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     );
   }
 
-  Widget _buildBio(BuildContext context) {
+  Widget _buildBio() {
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
         return SizedBox(
@@ -70,7 +70,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     );
   }
 
-  Widget _buildEditProfileButton(BuildContext context) {
+  Widget _buildEditProfileButton() {
     return Align(
       alignment: Alignment.center,
       child: CustomOutlinedButton(
@@ -114,7 +114,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
       child: Padding(
@@ -130,13 +130,13 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
             profileInfoWidgets.buildUsername(),
 
-            _buildPronouns(context),
+            _buildPronouns(),
 
-            _buildBio(context),
+            _buildBio(),
       
             const SizedBox(height: 25),
 
-            _buildEditProfileButton(context),
+            _buildEditProfileButton(),
 
             const SizedBox(height: 28),
 
@@ -179,7 +179,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
         body: RefreshIndicator(
           color: ThemeColor.mediumBlack,
           onRefresh: () async => await CallRefresh().refreshProfile(),
-          child: _buildBody(context)
+          child: _buildBody()
         ),
         bottomNavigationBar: UpdateNavigation(
           context: context,
