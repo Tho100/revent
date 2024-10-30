@@ -14,9 +14,8 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/ui_dialog/profile_picture_dialog.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
-import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
-import 'package:revent/widgets/profile/my_posts_listview.dart';
+import 'package:revent/widgets/profile/tabbar_widgets.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
 class MyProfilePage extends StatefulWidget {
@@ -34,6 +33,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
+  late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
   Widget _buildUsername() {
@@ -163,40 +163,6 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     );
   }
 
-  Widget _buildMyVentPostsTab() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width - 28,
-      child: const MyPostsListView(),
-    );
-  }
-
-  Widget _buildTabBarTabs() {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5, 
-      child: TabBarView(
-        controller: tabController,
-        children: [
-          _buildMyVentPostsTab(), 
-          Container(),           
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTabBar() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 18.0),
-      child: CustomTabBar(
-        controller: tabController, 
-        tabAlignment: TabAlignment.fill,
-        tabs: const [
-          Tab(icon: Icon(CupertinoIcons.square_grid_2x2, size: 20)),
-          Tab(icon: Icon(CupertinoIcons.bookmark, size: 20)),
-        ],
-      ).buildTabBar(),
-    );
-  }
-
   Widget _buildBody(BuildContext context) {
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
@@ -225,9 +191,9 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
             _popularityWidgets(),
 
-            _buildTabBar(),
+            tabBarWidgets.buildTabBar(),
 
-            _buildTabBarTabs(),
+            tabBarWidgets.buildTabBarTabs(),
 
           ],
         ),
@@ -240,6 +206,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     super.initState();
     navigationIndex.setPageIndex(0);
     tabController = TabController(length: 2, vsync: this);
+    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController);
   }
 
   @override
