@@ -167,7 +167,9 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   Widget _buildBody() {
     return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics()
+      ),
         child: Column(
           children: [
     
