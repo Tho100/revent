@@ -1,10 +1,12 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/follows_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/empty_page.dart';
+import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
@@ -42,6 +44,8 @@ class FollowsPage extends StatefulWidget {
 class FollowsPageState extends State<FollowsPage> {
 
   final followsUserDataNotifier = ValueNotifier<List<_FollowsUserData>>([]);
+
+  final userData = GetIt.instance<UserDataProvider>();
 
   Future<void> _loadData() async {
 
@@ -96,11 +100,14 @@ class FollowsPageState extends State<FollowsPage> {
       
             const Spacer(),
       
-            MainButton(
-              customWidth: MediaQuery.of(context).size.width * 0.21,
-              customHeight: 40,
-              text: widget.pageType == 'Followers' ? 'Follow' : 'Unfollow',
-              onPressed: () => print(widget.pageType)
+            Visibility(
+              visible: username != userData.user.username,
+              child: MainButton(
+                customWidth: MediaQuery.of(context).size.width * 0.21,
+                customHeight: 40,
+                text: widget.pageType == 'Followers' ? 'Follow' : 'Unfollow',
+                onPressed: () => print(widget.pageType)
+              ),
             ),
       
           ],

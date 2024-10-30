@@ -14,12 +14,7 @@ class MyPostsListView extends StatelessWidget {
       ),
       itemCount: 3,
       itemBuilder: (_, index) {
-        return Text(
-          index.toString(),
-          style: GoogleFonts.inter(
-            color: ThemeColor.white
-          ),
-        );
+        
       }
     );
   }

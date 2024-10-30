@@ -7,14 +7,17 @@ class CustomTabBar {
   final TabController controller;
   final List<Widget> tabs;
 
+  final TabAlignment? tabAlignment;
+
   CustomTabBar({
     required this.controller,
     required this.tabs,
+    required this.tabAlignment
   });
 
   PreferredSizeWidget buildTabBar() {
     return TabBar(
-      tabAlignment: TabAlignment.center,
+      tabAlignment: tabAlignment,
       controller: controller,
       labelColor: ThemeColor.white,              
       unselectedLabelColor: Colors.grey,      
