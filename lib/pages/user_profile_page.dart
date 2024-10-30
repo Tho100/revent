@@ -2,7 +2,6 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
@@ -10,14 +9,12 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
-import 'package:revent/ui_dialog/profile_picture_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
-import 'package:revent/widgets/inkwell_effect.dart';
+import 'package:revent/widgets/profile/profile_info_widgets.dart';
 import 'package:revent/widgets/profile/tabbar_widgets.dart';
-import 'package:revent/widgets/profile_picture.dart';
 
 class UserProfilePage extends StatefulWidget {
 
@@ -45,6 +42,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   final isFollowingNotifier = ValueNotifier<bool>(false);
 
+  late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
@@ -71,13 +69,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
     isFollowingNotifier.value = !isFollowingNotifier.value;
 
-  }
-
-  Widget _buildUsername() {
-    return Text(
-      widget.username,
-      style: ThemeStyle.profileUsernameStyle
-    );
   }
 
   Widget _buildPronouns(BuildContext context) {
@@ -150,40 +141,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   }
 
-  Widget _buildPopularityHeader(String header, ValueNotifier notifierValue) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-
-        ValueListenableBuilder(
-          valueListenable: notifierValue,
-          builder: (_, value, __) {
-            return Text(
-              value.toString(),
-              style: GoogleFonts.inter(
-                color: ThemeColor.white,
-                fontWeight: FontWeight.w800,
-                fontSize: 20
-              ),
-            );
-          },
-        ),
-
-        const SizedBox(height: 4),
-
-        Text(
-          header,
-          style: GoogleFonts.inter(
-            color: ThemeColor.white,
-            fontWeight: FontWeight.w700,
-            fontSize: 14.5
-          ),
-        ),
-
-      ],
-    );
-  }
-
   Widget _popularityWidgets(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -193,28 +150,17 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     
           GestureDetector(
             onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
-            child: _buildPopularityHeader('followers', followersNotifier)
+            child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
           ),
 
-          _buildPopularityHeader('posts', postsNotifier),
+          profileInfoWidgets.buildPopularityHeaderNotifier('posts', postsNotifier),
 
           GestureDetector(
             onTap: () => NavigatePage.followsPage(pageType: 'Following', username: widget.username),
-            child: _buildPopularityHeader('following', followingNotifier)
+            child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
           ),
     
         ],
-      ),
-    );
-  }
-
-  Widget _buildProfilePicture() {
-    return InkWellEffect(
-      onPressed: () => ProfilePictureDialog().showPfpDialog(context, widget.pfpData),
-      child: ProfilePictureWidget(
-        customHeight: 75,
-        customWidth: 75,
-        pfpData: widget.pfpData,
       ),
     );
   }
@@ -225,11 +171,11 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
         child: Column(
           children: [
     
-          _buildProfilePicture(),
+          profileInfoWidgets.buildProfilePicture(),
           
           const SizedBox(height: 12),
     
-          _buildUsername(),
+          profileInfoWidgets.buildUsername(),
     
           _buildPronouns(context),
 
@@ -267,6 +213,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   void initState() {
     super.initState();
     _setProfileData();
+    profileInfoWidgets = ProfileInfoWidgets(context: context, username: widget.username, pfpData: widget.pfpData);
     tabController = TabController(length: 2, vsync: this);
     tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController);
   }

@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -12,11 +11,9 @@ import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
-import 'package:revent/ui_dialog/profile_picture_dialog.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
-import 'package:revent/widgets/inkwell_effect.dart';
+import 'package:revent/widgets/profile/profile_info_widgets.dart';
 import 'package:revent/widgets/profile/tabbar_widgets.dart';
-import 'package:revent/widgets/profile_picture.dart';
 
 class MyProfilePage extends StatefulWidget {
 
@@ -33,15 +30,9 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
+  late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
-
-  Widget _buildUsername() {
-    return Text(
-      userData.user.username,
-      style: ThemeStyle.profileUsernameStyle
-    );
-  }
 
   Widget _buildPronouns(BuildContext context) {
     return Consumer<ProfileDataProvider>(
@@ -95,35 +86,6 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     );
   }
 
-  Widget _buildPopularityHeader(String header, int value) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-
-        Text(
-          value.toString(),
-          style: GoogleFonts.inter(
-            color: ThemeColor.white,
-            fontWeight: FontWeight.w800,
-            fontSize: 20
-          ),
-        ),
-
-        const SizedBox(height: 4),
-
-        Text(
-          header,
-          style: GoogleFonts.inter(
-            color: ThemeColor.white,
-            fontWeight: FontWeight.w700,
-            fontSize: 14.5
-          ),
-        ),
-
-      ],
-    );
-  }
-
   Widget _popularityWidgets() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
@@ -135,30 +97,19 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
               
               GestureDetector(
                 onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userData.user.username),
-                child: _buildPopularityHeader('followers', profileData.followers)
+                child: profileInfoWidgets.buildPopularityHeader('followers', profileData.followers)
               ),
 
-              _buildPopularityHeader('vents', profileData.posts),
+              profileInfoWidgets.buildPopularityHeader('vents', profileData.posts),
 
               GestureDetector(
                 onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userData.user.username),
-                child: _buildPopularityHeader('following', profileData.following)
+                child: profileInfoWidgets.buildPopularityHeader('following', profileData.following)
               ),
 
             ],
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildProfilePicture() {
-    return InkWellEffect(
-      onPressed: () => ProfilePictureDialog().showPfpDialog(context, profileData.profilePicture),
-      child: ProfilePictureWidget(
-        customHeight: 75,
-        customWidth: 75,
-        pfpData: profileData.profilePicture,
       ),
     );
   }
@@ -173,11 +124,11 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
             const SizedBox(height: 27),
 
-            _buildProfilePicture(),
+            profileInfoWidgets.buildProfilePicture(),
             
             const SizedBox(height: 12),
 
-            _buildUsername(),
+            profileInfoWidgets.buildUsername(),
 
             _buildPronouns(context),
 
@@ -205,6 +156,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   void initState() {
     super.initState();
     navigationIndex.setPageIndex(0);
+    profileInfoWidgets = ProfileInfoWidgets(context: context, username: userData.user.username, pfpData: profileData.profilePicture);
     tabController = TabController(length: 2, vsync: this);
     tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController);
   }

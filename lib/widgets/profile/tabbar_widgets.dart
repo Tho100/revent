@@ -5,9 +5,9 @@ import 'package:revent/widgets/profile/my_posts_listview.dart';
 
 class ProfileTabBarWidgets {
 
-  BuildContext context;
+  final BuildContext context;
 
-  TabController controller;
+  final TabController controller;
 
   ProfileTabBarWidgets({
     required this.context,
