@@ -47,6 +47,11 @@ class FollowsPageState extends State<FollowsPage> {
 
   final userData = GetIt.instance<UserDataProvider>();
 
+  final emptyMessages = {
+    'Followers': 'No followers yet.',
+    'Following': 'No following yet.',
+  };
+
   Future<void> _loadData() async {
 
     try {
@@ -137,7 +142,7 @@ class FollowsPageState extends State<FollowsPage> {
             valueListenable: followsUserDataNotifier, 
             builder: (_, followsUserDataList, __) {
               return followsUserDataList.isEmpty 
-                ?  EmptyPage().nothingToSeeHere()
+                ?  EmptyPage().customMessage(message: emptyMessages[widget.pageType]!)
                 : _buildListView();
             }
           )
