@@ -15,7 +15,9 @@ import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
+import 'package:revent/widgets/profile/my_posts_listview.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -34,7 +36,7 @@ class UserProfilePage extends StatefulWidget {
 
 }
 
-class UserProfilePageState extends State<UserProfilePage> {
+class UserProfilePageState extends State<UserProfilePage> with SingleTickerProviderStateMixin {
 
   final followersNotifier = ValueNotifier<int>(0);
   final followingNotifier = ValueNotifier<int>(0);
@@ -43,6 +45,8 @@ class UserProfilePageState extends State<UserProfilePage> {
   final pronounsNotifier = ValueNotifier<String>('');
 
   final isFollowingNotifier = ValueNotifier<bool>(false);
+
+  late  TabController tabController;
 
   Future<void> _setProfileData() async {
 
@@ -215,6 +219,40 @@ class UserProfilePageState extends State<UserProfilePage> {
     );
   }
 
+  Widget _buildMyVentPostsTab() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 28,
+      child: const MyPostsListView(),
+    );
+  }
+
+  Widget _buildTabBarTabs() {
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5, 
+      child: TabBarView(
+        controller: tabController,
+        children: [
+          _buildMyVentPostsTab(), 
+          Container(),           
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTabBar() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 18.0),
+      child: CustomTabBar(
+        controller: tabController, 
+        tabAlignment: TabAlignment.fill,
+        tabs: const [
+          Tab(icon: Icon(CupertinoIcons.square_grid_2x2, size: 20)),
+          Tab(icon: Icon(CupertinoIcons.bookmark, size: 20)),
+        ],
+      ).buildTabBar(),
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return SingleChildScrollView(
       physics: const AlwaysScrollableScrollPhysics(),
@@ -235,9 +273,13 @@ class UserProfilePageState extends State<UserProfilePage> {
     
           _buildEditProfileButton(context),
 
-          const SizedBox(height: 40),
+          const SizedBox(height: 28),
 
           _popularityWidgets(context),
+
+          _buildTabBar(),
+
+          _buildTabBarTabs()
 
         ],
       ),
@@ -259,6 +301,7 @@ class UserProfilePageState extends State<UserProfilePage> {
   void initState() {
     super.initState();
     _setProfileData();
+    tabController = TabController(length: 2, vsync: this);
   }
 
   @override
