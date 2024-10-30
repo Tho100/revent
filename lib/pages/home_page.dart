@@ -51,6 +51,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   PreferredSizeWidget _buildTabBar() {
     return CustomTabBar(
       controller: tabController, 
+      tabAlignment: TabAlignment.center,
       tabs: const [
         Tab(text: 'For you'),
         Tab(text: 'Following'),

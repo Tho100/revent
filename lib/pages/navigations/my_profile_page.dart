@@ -171,23 +171,30 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   }
 
   Widget _buildTabBarTabs() {
-    return TabBarView(
-      controller: tabController,
-      children: [
-        _buildMyVentPostsTab(), 
-        Container(),           
-      ],
+    return SizedBox(
+      height: MediaQuery.of(context).size.height * 0.5, 
+      child: TabBarView(
+        controller: tabController,
+        children: [
+          _buildMyVentPostsTab(), 
+          Container(),           
+        ],
+      ),
     );
   }
 
-  PreferredSizeWidget _buildTabBar() {
-    return CustomTabBar(
-      controller: tabController, 
-      tabs: const [
-        Tab(icon: Icon(CupertinoIcons.square_grid_2x2)),
-        Tab(icon: Icon(CupertinoIcons.bookmark)),
-      ],
-    ).buildTabBar();
+  Widget _buildTabBar() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 18.0),
+      child: CustomTabBar(
+        controller: tabController, 
+        tabAlignment: TabAlignment.fill,
+        tabs: const [
+          Tab(icon: Icon(CupertinoIcons.square_grid_2x2, size: 20)),
+          Tab(icon: Icon(CupertinoIcons.bookmark, size: 20)),
+        ],
+      ).buildTabBar(),
+    );
   }
 
   Widget _buildBody(BuildContext context) {
@@ -214,16 +221,13 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
             _buildEditProfileButton(context),
 
-            const SizedBox(height: 40),
+            const SizedBox(height: 28),
 
             _popularityWidgets(),
 
             _buildTabBar(),
 
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.5, 
-              child: _buildTabBarTabs(),
-            ),
+            _buildTabBarTabs(),
 
           ],
         ),
