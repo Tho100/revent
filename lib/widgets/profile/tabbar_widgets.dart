@@ -14,22 +14,18 @@ class ProfileTabBarWidgets {
     required this.controller
   });
 
-  Widget _buildMyVentPostsTab() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width - 28,
-      child: const MyPostsListView(),
-    );
-  }
-
   Widget buildTabBarTabs() {
-    return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.5, 
-      child: TabBarView(
-        controller: controller,
-        children: [
-          _buildMyVentPostsTab(), 
-          Container(),           
-        ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
+      child: SizedBox( 
+        height: MediaQuery.of(context).size.height * 1, 
+        child: TabBarView(
+          controller: controller,
+          children: [
+            const MyPostsListView(),
+            Container(),
+          ],
+        ),
       ),
     );
   }

@@ -123,7 +123,9 @@ class FollowsPageState extends State<FollowsPage> {
 
   Widget _buildListView() {
     return ListView.builder(
-      physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics()
+      ),
       itemCount: followsUserDataNotifier.value.length,
       itemBuilder: (_, index) {
         final followsUserData = followsUserDataNotifier.value[index];
