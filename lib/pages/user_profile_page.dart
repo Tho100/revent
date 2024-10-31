@@ -2,11 +2,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
+import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
+import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -34,6 +37,8 @@ class UserProfilePage extends StatefulWidget {
 
 class UserProfilePageState extends State<UserProfilePage> with SingleTickerProviderStateMixin {
 
+  final profilePostsData = GetIt.instance<ProfilePostsProvider>();
+
   final followersNotifier = ValueNotifier<int>(0);
   final followingNotifier = ValueNotifier<int>(0);
   final postsNotifier = ValueNotifier<int>(0);
@@ -45,6 +50,21 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
+
+  void _initializeClasses() {
+    profileInfoWidgets = ProfileInfoWidgets(context: context, username: widget.username, pfpData: widget.pfpData);
+    tabController = TabController(length: 2, vsync: this);
+    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: false);
+  }
+
+  Future<void> _setPostsData() async {
+
+    final getPostsData = await ProfilePostsGetter()
+      .getPosts(username: widget.username);
+
+    profilePostsData.setUserProfileTitles(getPostsData);
+
+  }
 
   Future<void> _setProfileData() async {
 
@@ -72,23 +92,23 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   }
 
   Widget _buildPronouns() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.65,
-      child: ValueListenableBuilder(
-        valueListenable: pronounsNotifier,
-        builder: (_, value, __) {
-          final bottomPadding = value.isNotEmpty ? 14.0 : 0.0; 
-          final topPadding = value.isNotEmpty ? 8.0 : 0.0;
-          return Padding(
-            padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
+    return ValueListenableBuilder(
+      valueListenable: pronounsNotifier,
+      builder: (_, value, __) {
+        final bottomPadding = value.isNotEmpty ? 14.0 : 0.0; 
+        final topPadding = value.isNotEmpty ? 8.0 : 0.0;
+        return Padding(
+          padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),          
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.65,
             child: Text(
               value,
               style: ThemeStyle.profilePronounsStyle,
               textAlign: TextAlign.center,
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -166,35 +186,46 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics()
-      ),
-        child: Column(
-          children: [
-    
-          profileInfoWidgets.buildProfilePicture(),
-          
-          const SizedBox(height: 12),
-    
-          profileInfoWidgets.buildUsername(),
-    
-          _buildPronouns(),
+    return NestedScrollView(
+      headerSliverBuilder: (_, __) {
+        return [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            expandedHeight: 286,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Column(
+                children: [
 
-          _buildBio(),
-    
-          const SizedBox(height: 25),
-    
-          _buildEditProfileButton(),
+                  profileInfoWidgets.buildProfilePicture(),
 
-          const SizedBox(height: 28),
+                  const SizedBox(height: 12),
 
-          _popularityWidgets(),
+                  profileInfoWidgets.buildUsername(),
 
+                  _buildPronouns(),
+
+                  _buildBio(),
+
+                  const SizedBox(height: 25),
+
+                  _buildEditProfileButton(),
+
+                  const SizedBox(height: 28),
+
+                  _popularityWidgets(),
+
+                ],
+              ),
+            ),
+          ),
+        ];
+      },
+      body: Column(
+        children: [
           tabBarWidgets.buildTabBar(),
-
-          tabBarWidgets.buildTabBarTabs()
-
+          Expanded(
+            child: tabBarWidgets.buildTabBarTabs(),
+          ),
         ],
       ),
     );
@@ -215,9 +246,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   void initState() {
     super.initState();
     _setProfileData();
-    profileInfoWidgets = ProfileInfoWidgets(context: context, username: widget.username, pfpData: widget.pfpData);
-    tabController = TabController(length: 2, vsync: this);
-    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController);
+    _setPostsData();
+    _initializeClasses();
   }
 
   @override
@@ -228,6 +258,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     bioNotifier.dispose();
     pronounsNotifier.dispose();
     isFollowingNotifier.dispose();
+    tabController.dispose();
     super.dispose();
   }
 

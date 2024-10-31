@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/profile_data_provider.dart';
+import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
@@ -29,17 +30,37 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
+  final profilePostsData = GetIt.instance<ProfilePostsProvider>();
 
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
+
+  void _initializeClasses() {
+    profileInfoWidgets = ProfileInfoWidgets(context: context, username: userData.user.username, pfpData: profileData.profilePicture);
+    tabController = TabController(length: 2, vsync: this);
+    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: true);
+  }
+
+  Future<void> _setPostsData() async {
+
+    if(profilePostsData.myProfileTitles.isEmpty) {
+
+      final getPostsData = await ProfilePostsGetter()
+        .getPosts(username: userData.user.username);
+
+      profilePostsData.setMyProfileTitles(getPostsData);
+
+    } 
+
+  }
 
   Widget _buildPronouns() {
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
         final bottomPadding = profileData.pronouns.isNotEmpty ? 14.0 : 0.0;
         final topPadding = profileData.pronouns.isNotEmpty ? 8.0 : 0.0;
-          return Padding(
+        return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.65,
@@ -115,41 +136,52 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics()
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 35.0),
-        child: Column(
-          children: [
+    return NestedScrollView(
+      headerSliverBuilder: (_, __) {
+        return [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            expandedHeight: 350,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Padding(
+                padding: const EdgeInsets.only(top: 35.0),
+                child: Column(
+                  children: [
+              
+                    const SizedBox(height: 27),
 
-            const SizedBox(height: 27),
-
-            profileInfoWidgets.buildProfilePicture(),
-            
-            const SizedBox(height: 12),
-
-            profileInfoWidgets.buildUsername(),
-
-            _buildPronouns(),
-
-            _buildBio(),
-      
-            const SizedBox(height: 25),
-
-            _buildEditProfileButton(),
-
-            const SizedBox(height: 28),
-
-            _popularityWidgets(),
-
-            tabBarWidgets.buildTabBar(),
-
-            tabBarWidgets.buildTabBarTabs(),
-
-          ],
-        ),
+                    profileInfoWidgets.buildProfilePicture(),
+              
+                    const SizedBox(height: 12),
+              
+                    profileInfoWidgets.buildUsername(),
+              
+                    _buildPronouns(),
+              
+                    _buildBio(),
+              
+                    const SizedBox(height: 25),
+              
+                    _buildEditProfileButton(),
+              
+                    const SizedBox(height: 28),
+              
+                    _popularityWidgets(),
+              
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ];
+      },
+      body: Column(
+        children: [
+          tabBarWidgets.buildTabBar(),
+          Expanded(
+            child: tabBarWidgets.buildTabBarTabs(),
+          ),
+        ],
       ),
     );
   }
@@ -158,9 +190,8 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   void initState() {
     super.initState();
     navigationIndex.setPageIndex(0);
-    profileInfoWidgets = ProfileInfoWidgets(context: context, username: userData.user.username, pfpData: profileData.profilePicture);
-    tabController = TabController(length: 2, vsync: this);
-    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController);
+    _setPostsData();
+    _initializeClasses();
   }
 
   @override

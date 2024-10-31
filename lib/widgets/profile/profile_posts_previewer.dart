@@ -4,11 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 
-class MyPostsPreviewer extends StatelessWidget {
+class ProfilePostsPreviewer extends StatelessWidget {
 
   final String title;
 
-  const MyPostsPreviewer({
+  const ProfilePostsPreviewer({
     required this.title,
     super.key
   });
