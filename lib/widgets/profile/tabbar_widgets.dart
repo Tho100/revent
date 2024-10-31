@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
-import 'package:revent/widgets/profile/my_posts_listview.dart';
+import 'package:revent/widgets/profile/profile_posts_listview.dart';
 
 class ProfileTabBarWidgets {
 
@@ -22,7 +22,7 @@ class ProfileTabBarWidgets {
         child: TabBarView(
           controller: controller,
           children: [
-            const MyPostsListView(),
+            const ProfilePostsListView(),
             Container(),
           ],
         ),

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:revent/widgets/profile/my_posts_previewer.dart';
+import 'package:revent/widgets/profile/profile_posts_previewer.dart';
 
-class MyPostsListView extends StatelessWidget {
+class ProfilePostsListView extends StatelessWidget {
 
-  const MyPostsListView({super.key});
+  const ProfilePostsListView({super.key});
 
   Widget _buildPreviewer() {
     return const Padding(
       padding: EdgeInsets.all(8.0),
       child: Align(
         alignment: Alignment.center,
-        child: MyPostsPreviewer(
+        child: ProfilePostsPreviewer(
           title: 'Whats your guys thoughts on Mr Robot?',
         ),
       ),
