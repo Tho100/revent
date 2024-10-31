@@ -36,6 +36,12 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
+  void _initializeClasses() {
+    profileInfoWidgets = ProfileInfoWidgets(context: context, username: userData.user.username, pfpData: profileData.profilePicture);
+    tabController = TabController(length: 2, vsync: this);
+    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: true);
+  }
+
   Future<void> _setPostsData() async {
 
     if(profilePostsData.myProfileTitles.isEmpty) {
@@ -174,9 +180,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     super.initState();
     navigationIndex.setPageIndex(0);
     _setPostsData();
-    profileInfoWidgets = ProfileInfoWidgets(context: context, username: userData.user.username, pfpData: profileData.profilePicture);
-    tabController = TabController(length: 2, vsync: this);
-    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: true);
+    _initializeClasses();
   }
 
   @override

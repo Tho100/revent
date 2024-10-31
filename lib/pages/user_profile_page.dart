@@ -51,6 +51,12 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
+  void _initializeClasses() {
+    profileInfoWidgets = ProfileInfoWidgets(context: context, username: widget.username, pfpData: widget.pfpData);
+    tabController = TabController(length: 2, vsync: this);
+    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: false);
+  }
+
   Future<void> _setPostsData() async {
 
     final getPostsData = await ProfilePostsGetter()
@@ -230,11 +236,9 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     super.initState();
     _setProfileData();
     _setPostsData();
-    profileInfoWidgets = ProfileInfoWidgets(context: context, username: widget.username, pfpData: widget.pfpData);
-    tabController = TabController(length: 2, vsync: this);
-    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: false);
+    _initializeClasses();
   }
-// TODO: Create a function to sepearte initialize late vars
+
   @override
   void dispose() {
     followersNotifier.dispose();
