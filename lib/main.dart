@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/pages/splash_screen_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
@@ -17,6 +18,7 @@ void initializeLocators() {
   locators.registerLazySingleton<UserDataProvider>(() => UserDataProvider());
   locators.registerLazySingleton<VentDataProvider>(() => VentDataProvider());
   locators.registerLazySingleton<ProfileDataProvider>(() => ProfileDataProvider());
+  locators.registerLazySingleton<ProfilePostsProvider>(() => ProfilePostsProvider());
 }
 
 void main() async {
@@ -30,6 +32,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => GetIt.instance<NavigationProvider>()),
         ChangeNotifierProvider(create: (context) => GetIt.instance<UserDataProvider>()),
         ChangeNotifierProvider(create: (context) => GetIt.instance<ProfileDataProvider>()),
+        ChangeNotifierProvider(create: (context) => GetIt.instance<ProfilePostsProvider>()),
       ],
       child: const MainRun(),
     ),
