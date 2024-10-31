@@ -92,23 +92,23 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   }
 
   Widget _buildPronouns() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.65,
-      child: ValueListenableBuilder(
-        valueListenable: pronounsNotifier,
-        builder: (_, value, __) {
-          final bottomPadding = value.isNotEmpty ? 14.0 : 0.0; 
-          final topPadding = value.isNotEmpty ? 8.0 : 0.0;
-          return Padding(
-            padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
+    return ValueListenableBuilder(
+      valueListenable: pronounsNotifier,
+      builder: (_, value, __) {
+        final bottomPadding = value.isNotEmpty ? 14.0 : 0.0; 
+        final topPadding = value.isNotEmpty ? 8.0 : 0.0;
+        return Padding(
+          padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),          
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.65,
             child: Text(
               value,
               style: ThemeStyle.profilePronounsStyle,
               textAlign: TextAlign.center,
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 
@@ -186,35 +186,46 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics()
-      ),
-        child: Column(
-          children: [
-    
-          profileInfoWidgets.buildProfilePicture(),
-          
-          const SizedBox(height: 12),
-    
-          profileInfoWidgets.buildUsername(),
-    
-          _buildPronouns(),
+    return NestedScrollView(
+      headerSliverBuilder: (_, __) {
+        return [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            expandedHeight: 286,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Column(
+                children: [
 
-          _buildBio(),
-    
-          const SizedBox(height: 25),
-    
-          _buildEditProfileButton(),
+                  profileInfoWidgets.buildProfilePicture(),
 
-          const SizedBox(height: 28),
+                  const SizedBox(height: 12),
 
-          _popularityWidgets(),
+                  profileInfoWidgets.buildUsername(),
 
+                  _buildPronouns(),
+
+                  _buildBio(),
+
+                  const SizedBox(height: 25),
+
+                  _buildEditProfileButton(),
+
+                  const SizedBox(height: 28),
+
+                  _popularityWidgets(),
+
+                ],
+              ),
+            ),
+          ),
+        ];
+      },
+      body: Column(
+        children: [
           tabBarWidgets.buildTabBar(),
-
-          tabBarWidgets.buildTabBarTabs()
-
+          Expanded(
+            child: tabBarWidgets.buildTabBarTabs(),
+          ),
         ],
       ),
     );
@@ -247,6 +258,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     bioNotifier.dispose();
     pronounsNotifier.dispose();
     isFollowingNotifier.dispose();
+    tabController.dispose();
     super.dispose();
   }
 

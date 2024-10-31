@@ -18,16 +18,13 @@ class ProfileTabBarWidgets {
 
   Widget buildTabBarTabs() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 12.0),
-      child: SizedBox( 
-        height: MediaQuery.of(context).size.height * 1, 
-        child: TabBarView(
-          controller: controller,
-          children: [
-            ProfilePostsListView(isMyProfile: isMyProfile),
-            Container(),
-          ],
-        ),
+      padding: EdgeInsets.symmetric(vertical: isMyProfile ? 2.0 : 20.0, horizontal: 12.0),
+      child: TabBarView(
+        controller: controller,
+        children: [
+          ProfilePostsListView(isMyProfile: isMyProfile),
+          Container(),
+        ],
       ),
     );
   }

@@ -60,7 +60,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
       builder: (_, profileData, __) {
         final bottomPadding = profileData.pronouns.isNotEmpty ? 14.0 : 0.0;
         final topPadding = profileData.pronouns.isNotEmpty ? 8.0 : 0.0;
-          return Padding(
+        return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.65,
@@ -136,41 +136,52 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics()
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 35.0),
-        child: Column(
-          children: [
+    return NestedScrollView(
+      headerSliverBuilder: (_, __) {
+        return [
+          SliverAppBar(
+            automaticallyImplyLeading: false,
+            expandedHeight: 350,
+            flexibleSpace: FlexibleSpaceBar(
+              background: Padding(
+                padding: const EdgeInsets.only(top: 35.0),
+                child: Column(
+                  children: [
+              
+                    const SizedBox(height: 27),
 
-            const SizedBox(height: 27),
-
-            profileInfoWidgets.buildProfilePicture(),
-            
-            const SizedBox(height: 12),
-
-            profileInfoWidgets.buildUsername(),
-
-            _buildPronouns(),
-
-            _buildBio(),
-      
-            const SizedBox(height: 25),
-
-            _buildEditProfileButton(),
-
-            const SizedBox(height: 28),
-
-            _popularityWidgets(),
-
-            tabBarWidgets.buildTabBar(),
-
-            tabBarWidgets.buildTabBarTabs(),
-
-          ],
-        ),
+                    profileInfoWidgets.buildProfilePicture(),
+              
+                    const SizedBox(height: 12),
+              
+                    profileInfoWidgets.buildUsername(),
+              
+                    _buildPronouns(),
+              
+                    _buildBio(),
+              
+                    const SizedBox(height: 25),
+              
+                    _buildEditProfileButton(),
+              
+                    const SizedBox(height: 28),
+              
+                    _popularityWidgets(),
+              
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ];
+      },
+      body: Column(
+        children: [
+          tabBarWidgets.buildTabBar(),
+          Expanded(
+            child: tabBarWidgets.buildTabBarTabs(),
+          ),
+        ],
       ),
     );
   }
