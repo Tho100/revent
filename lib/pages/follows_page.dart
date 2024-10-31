@@ -108,7 +108,7 @@ class FollowsPageState extends State<FollowsPage> {
             Visibility(
               visible: username != userData.user.username,
               child: MainButton(
-                customWidth: MediaQuery.of(context).size.width * 0.21,
+                customWidth: MediaQuery.of(context).size.width * 0.23,
                 customHeight: 40,
                 text: widget.pageType == 'Followers' ? 'Follow' : 'Unfollow',
                 onPressed: () => print(widget.pageType)
