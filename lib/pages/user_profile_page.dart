@@ -2,11 +2,14 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
+import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
+import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -34,6 +37,8 @@ class UserProfilePage extends StatefulWidget {
 
 class UserProfilePageState extends State<UserProfilePage> with SingleTickerProviderStateMixin {
 
+  final profilePostsData = GetIt.instance<ProfilePostsProvider>();
+
   final followersNotifier = ValueNotifier<int>(0);
   final followingNotifier = ValueNotifier<int>(0);
   final postsNotifier = ValueNotifier<int>(0);
@@ -45,6 +50,15 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
+
+  Future<void> _setPostsData() async {
+
+    final getPostsData = await ProfilePostsGetter()
+      .getPosts(username: widget.username);
+
+    profilePostsData.setUserProfileTitles(getPostsData);
+
+  }
 
   Future<void> _setProfileData() async {
 
@@ -215,11 +229,12 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   void initState() {
     super.initState();
     _setProfileData();
+    _setPostsData();
     profileInfoWidgets = ProfileInfoWidgets(context: context, username: widget.username, pfpData: widget.pfpData);
     tabController = TabController(length: 2, vsync: this);
-    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController);
+    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: false);
   }
-
+// TODO: Create a function to sepearte initialize late vars
   @override
   void dispose() {
     followersNotifier.dispose();

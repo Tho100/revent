@@ -1,13 +1,14 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/profile_data_provider.dart';
+import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
@@ -29,10 +30,24 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
+  final profilePostsData = GetIt.instance<ProfilePostsProvider>();
 
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
+
+  Future<void> _setPostsData() async {
+
+    if(profilePostsData.myProfileTitles.isEmpty) {
+
+      final getPostsData = await ProfilePostsGetter()
+        .getPosts(username: userData.user.username);
+
+      profilePostsData.setMyProfileTitles(getPostsData);
+
+    } 
+
+  }
 
   Widget _buildPronouns() {
     return Consumer<ProfileDataProvider>(
@@ -158,9 +173,10 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   void initState() {
     super.initState();
     navigationIndex.setPageIndex(0);
+    _setPostsData();
     profileInfoWidgets = ProfileInfoWidgets(context: context, username: userData.user.username, pfpData: profileData.profilePicture);
     tabController = TabController(length: 2, vsync: this);
-    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController);
+    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: true);
   }
 
   @override

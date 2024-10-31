@@ -8,10 +8,12 @@ class ProfileTabBarWidgets {
   final BuildContext context;
 
   final TabController controller;
+  final bool isMyProfile;
 
   ProfileTabBarWidgets({
     required this.context,
-    required this.controller
+    required this.controller,
+    required this.isMyProfile
   });
 
   Widget buildTabBarTabs() {
@@ -22,7 +24,7 @@ class ProfileTabBarWidgets {
         child: TabBarView(
           controller: controller,
           children: [
-            const ProfilePostsListView(),
+            ProfilePostsListView(isMyProfile: isMyProfile),
             Container(),
           ],
         ),
