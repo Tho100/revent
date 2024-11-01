@@ -173,7 +173,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
             child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
           ),
 
-          profileInfoWidgets.buildPopularityHeaderNotifier('posts', postsNotifier),
+          profileInfoWidgets.buildPopularityHeaderNotifier('vents', postsNotifier),
 
           GestureDetector(
             onTap: () => NavigatePage.followsPage(pageType: 'Following', username: widget.username),
