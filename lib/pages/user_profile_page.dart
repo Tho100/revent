@@ -191,7 +191,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
         return [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            expandedHeight: 286,
+            expandedHeight: pronounsNotifier.value.isNotEmpty ? 308 : 286,
             flexibleSpace: FlexibleSpaceBar(
               background: Column(
                 children: [
@@ -222,10 +222,15 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       },
       body: Column(
         children: [
+
+          const SizedBox(height: 16),
+
           tabBarWidgets.buildTabBar(),
+
           Expanded(
             child: tabBarWidgets.buildTabBarTabs(),
           ),
+
         ],
       ),
     );

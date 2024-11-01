@@ -61,7 +61,11 @@ class CreateNewItem {
     const updateTotalPostsQuery = 
       'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username';
 
-    await conn.execute(updateTotalPostsQuery);
+    final param = {
+      'username': userData.user.username
+    };
+
+    await conn.execute(updateTotalPostsQuery, param);
 
   }
 
