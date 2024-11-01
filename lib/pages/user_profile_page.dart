@@ -10,12 +10,12 @@ import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
-import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/profile/profile_body_widgets.dart';
 import 'package:revent/widgets/profile/profile_info_widgets.dart';
 import 'package:revent/widgets/profile/tabbar_widgets.dart';
 
@@ -191,60 +191,15 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   }
 
   Widget _buildBody() {
-    return RefreshIndicator(
-      color: ThemeColor.mediumBlack,
-      notificationPredicate: (notification) {
-        return notification.depth == 2;
-      },
+    return ProfileBodyWidgets(
       onRefresh: () async => await _setProfileData(),
-      child: NestedScrollView(
-        headerSliverBuilder: (_, __) {
-          return [
-            SliverAppBar(
-              automaticallyImplyLeading: false,
-              expandedHeight: pronounsNotifier.value.isNotEmpty ? 308 : 286,
-              flexibleSpace: FlexibleSpaceBar(
-                background: Column(
-                  children: [
-
-                    profileInfoWidgets.buildProfilePicture(),
-
-                    const SizedBox(height: 12),
-
-                    profileInfoWidgets.buildUsername(),
-
-                    _buildPronouns(),
-
-                    _buildBio(),
-
-                    const SizedBox(height: 25),
-
-                    _buildEditProfileButton(),
-
-                    const SizedBox(height: 28),
-
-                    _popularityWidgets(),
-
-                  ],
-                ),
-              ),
-            ),
-          ];
-        },
-        body: Column(
-          children: [
-
-            const SizedBox(height: 16),
-
-            tabBarWidgets.buildTabBar(),
-
-            Expanded(
-              child: tabBarWidgets.buildTabBarTabs(),
-            ),
-
-          ],
-        ),
-      ),
+      isPronounsNotEmpty: pronounsNotifier.value.isNotEmpty, 
+      tabBarWidgets: tabBarWidgets, 
+      profileInfoWidgets: profileInfoWidgets, 
+      pronounsWidget: _buildPronouns(), 
+      bioWidget: _buildBio(), 
+      userActionButtonWidget: _buildEditProfileButton(), 
+      popularityWidget: _popularityWidgets()
     );
   }
 
