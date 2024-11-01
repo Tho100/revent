@@ -138,52 +138,59 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   }
 
   Widget _buildBody() {
-    return NestedScrollView(
-      headerSliverBuilder: (_, __) {
-        return [
-          SliverAppBar(
-            automaticallyImplyLeading: false,
-            expandedHeight: profileData.pronouns.isNotEmpty ? 308 : 286,
-            flexibleSpace: FlexibleSpaceBar(
-              background: Column(
-                children: [
-            
-                  profileInfoWidgets.buildProfilePicture(),
-            
-                  const SizedBox(height: 12),
-            
-                  profileInfoWidgets.buildUsername(),
-            
-                  _buildPronouns(),
-            
-                  _buildBio(),
-            
-                  const SizedBox(height: 25),
-            
-                  _buildEditProfileButton(),
-            
-                  const SizedBox(height: 28),
-            
-                  _popularityWidgets(),
-            
-                ],
+    return RefreshIndicator(
+      notificationPredicate: (notification) {
+        return notification.depth == 2;
+      },
+      color: ThemeColor.mediumBlack,
+      onRefresh: () async => await CallRefresh().refreshProfile(username: userData.user.username),
+      child: NestedScrollView(
+        headerSliverBuilder: (_, __) {
+          return [
+            SliverAppBar(
+              automaticallyImplyLeading: false,
+              expandedHeight: profileData.pronouns.isNotEmpty ? 308 : 286,
+              flexibleSpace: FlexibleSpaceBar(
+                background: Column(
+                  children: [
+              
+                    profileInfoWidgets.buildProfilePicture(),
+              
+                    const SizedBox(height: 12),
+              
+                    profileInfoWidgets.buildUsername(),
+              
+                    _buildPronouns(),
+              
+                    _buildBio(),
+              
+                    const SizedBox(height: 25),
+              
+                    _buildEditProfileButton(),
+              
+                    const SizedBox(height: 28),
+              
+                    _popularityWidgets(),
+              
+                  ],
+                ),
               ),
             ),
-          ),
-        ];
-      },
-      body: Column(
-        children: [
+          ];
+        },
+        body: Column(
+          children: [
 
-          const SizedBox(height: 16),
+            const SizedBox(height: 16),
 
-          tabBarWidgets.buildTabBar(),
+            tabBarWidgets.buildTabBar(),
 
-          Expanded(
-            child: tabBarWidgets.buildTabBarTabs(),
-          ),
+            Expanded(
+              child: tabBarWidgets.buildTabBarTabs(),
+            ),
 
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -223,11 +230,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
           customBackOnPressed: () => NavigatePage.homePage(),
           actions: [_buildActionButton()]
         ).buildAppBar(),
-        body: RefreshIndicator(
-          color: ThemeColor.mediumBlack,
-          onRefresh: () async => await CallRefresh().refreshProfile(username: userData.user.username),
-          child: _buildBody()
-        ),
+        body: _buildBody(),
         bottomNavigationBar: UpdateNavigation(
           context: context,
         ).showNavigationBar(),
