@@ -11,7 +11,7 @@ class EmptyPage {
         style: GoogleFonts.inter(
           color: ThemeColor.white,
           fontWeight: FontWeight.w800,
-          fontSize: 15
+          fontSize: 17
         ),
       ),
     );

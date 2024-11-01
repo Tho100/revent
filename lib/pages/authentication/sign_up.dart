@@ -143,7 +143,7 @@ class SignUpPageState extends State<SignUpPage> {
           const SizedBox(height: 30),
 
           MainButton(
-            text: 'Sign Up',
+            text: 'Sign Up',// TODO: increase font size
             onPressed: () async { 
               FocusScope.of(context).unfocus(); 
               await _processRegistration();
