@@ -162,6 +162,7 @@ class SignInPageState extends State<SignInPage> {
 
           MainButton(
             text: 'Sign In',
+            customFontSize: 17,
             onPressed: () async {
               FocusScope.of(context).unfocus(); 
               await _processLogin();

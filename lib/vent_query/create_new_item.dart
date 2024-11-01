@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/profile_data_provider.dart';
@@ -18,7 +19,29 @@ class CreateNewItem {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = "INSERT INTO vent_info (creator, title, body_text, total_likes, total_comments) VALUES (:creator, :title, :body_text, :total_likes, :total_comments)";
+    await _insertVentInfo(
+      conn: conn, 
+      ventTitle: ventTitle, 
+      ventBodyText: ventBodyText
+    );
+
+    await _updateTotalPosts(conn: conn);
+    
+    _addVent(
+      ventTitle: ventTitle, 
+      ventBodyText: ventBodyText
+    );
+
+  }
+
+  Future<void> _insertVentInfo({
+    required MySQLConnectionPool conn,
+    required String ventTitle,
+    required String ventBodyText
+  }) async {
+
+    const insertVentInfoQuery = 'INSERT INTO vent_info (creator, title, body_text, total_likes, total_comments) VALUES (:creator, :title, :body_text, :total_likes, :total_comments)';
+
     final params = {
       'creator': userData.user.username,
       'title': ventTitle,
@@ -27,7 +50,29 @@ class CreateNewItem {
       'total_comments': 0,
     };
 
-    await conn.execute(query, params);
+    await conn.execute(insertVentInfoQuery, params);
+
+  }
+
+  Future<void> _updateTotalPosts({
+    required MySQLConnectionPool conn,
+  }) async {
+
+    const updateTotalPostsQuery = 
+      'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username';
+
+    final param = {
+      'username': userData.user.username
+    };
+
+    await conn.execute(updateTotalPostsQuery, param);
+
+  }
+
+  void _addVent({
+    required String ventTitle, 
+    required String ventBodyText
+  }) {
 
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);

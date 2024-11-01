@@ -79,6 +79,11 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
     isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
 
+    final getPostsData = await ProfilePostsGetter()
+      .getPosts(username: widget.username);
+
+    profilePostsData.setUserProfileTitles(getPostsData);
+
   }
 
   void _followUserOnPressed() async {
@@ -173,7 +178,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
             child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
           ),
 
-          profileInfoWidgets.buildPopularityHeaderNotifier('posts', postsNotifier),
+          profileInfoWidgets.buildPopularityHeaderNotifier('vents', postsNotifier),
 
           GestureDetector(
             onTap: () => NavigatePage.followsPage(pageType: 'Following', username: widget.username),
@@ -191,7 +196,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
         return [
           SliverAppBar(
             automaticallyImplyLeading: false,
-            expandedHeight: 286,
+            expandedHeight: pronounsNotifier.value.isNotEmpty ? 308 : 286,
             flexibleSpace: FlexibleSpaceBar(
               background: Column(
                 children: [
@@ -222,10 +227,15 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       },
       body: Column(
         children: [
+
+          const SizedBox(height: 16),
+
           tabBarWidgets.buildTabBar(),
+
           Expanded(
             child: tabBarWidgets.buildTabBarTabs(),
           ),
+
         ],
       ),
     );

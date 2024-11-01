@@ -18,4 +18,10 @@ class ProfilePostsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clearPostsData() {
+    _myProfileTitles.clear();
+    _userProfileTitles.clear();
+    notifyListeners();
+  }
+
 }

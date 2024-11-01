@@ -17,6 +17,7 @@ class MainScreenPage extends StatelessWidget {
 
         MainButton(
           text: 'Sign In',
+          customFontSize: 17,
           onPressed: () => NavigatePage.signInPage(),
         ),
 

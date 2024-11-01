@@ -18,7 +18,7 @@ class ProfileTabBarWidgets {
 
   Widget buildTabBarTabs() {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: isMyProfile ? 2.0 : 20.0, horizontal: 12.0),
+      padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 12.0),
       child: TabBarView(
         controller: controller,
         children: [
@@ -30,17 +30,14 @@ class ProfileTabBarWidgets {
   }
 
   Widget buildTabBar() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 18.0),
-      child: CustomTabBar(
-        controller: controller, 
-        tabAlignment: TabAlignment.fill,
-        tabs: const [
-          Tab(icon: Icon(CupertinoIcons.square_grid_2x2, size: 20)),
-          Tab(icon: Icon(CupertinoIcons.bookmark, size: 20)),
-        ],
-      ).buildTabBar(),
-    );
+    return CustomTabBar(
+      controller: controller, 
+      tabAlignment: TabAlignment.fill,
+      tabs: const [
+        Tab(icon: Icon(CupertinoIcons.square_grid_2x2, size: 20)),
+        Tab(icon: Icon(CupertinoIcons.bookmark, size: 20)),
+      ],
+    ).buildTabBar();
   }
 
 }
