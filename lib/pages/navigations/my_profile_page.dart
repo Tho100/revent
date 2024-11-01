@@ -225,7 +225,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
         ).buildAppBar(),
         body: RefreshIndicator(
           color: ThemeColor.mediumBlack,
-          onRefresh: () async => await CallRefresh().refreshProfile(),
+          onRefresh: () async => await CallRefresh().refreshProfile(username: userData.user.username),
           child: _buildBody()
         ),
         bottomNavigationBar: UpdateNavigation(

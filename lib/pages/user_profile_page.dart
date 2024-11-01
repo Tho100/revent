@@ -79,6 +79,11 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
     isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
 
+    final getPostsData = await ProfilePostsGetter()
+      .getPosts(username: widget.username);
+
+    profilePostsData.setUserProfileTitles(getPostsData);
+
   }
 
   void _followUserOnPressed() async {
