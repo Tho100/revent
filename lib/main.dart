@@ -42,11 +42,7 @@ void main() async {
 class MainRun extends StatelessWidget {
 
   const MainRun({super.key});
-/*theme: ThemeData(
-    textTheme: GoogleFonts.interTextTheme(
-      Theme.of(context).textTheme,
-    ),
-  ), */
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
