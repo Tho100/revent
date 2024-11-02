@@ -78,6 +78,20 @@ class FollowsPageState extends State<FollowsPage> {
     
   }
 
+  String _profileButtonText() {
+
+    if (widget.pageType == 'Followers') {
+      return 'Follow';
+
+    } else if (widget.pageType == 'Following') {
+      final isMyProfile = userData.user.username == widget.username;
+      return isMyProfile ? 'Unfollow' : 'Follow';
+    } 
+
+    return '';
+
+  }
+
   Widget _buildListViewItems(String username, Uint8List pfpData) {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(username: username, pfpData: pfpData),
@@ -110,8 +124,7 @@ class FollowsPageState extends State<FollowsPage> {
               child: MainButton(
                 customWidth: MediaQuery.of(context).size.width * 0.23,
                 customHeight: 40,
-                text: widget.pageType == 'Followers' 
-                  ? 'Follow' : userData.user.username == widget.username ? 'Unfollow' : 'Follow',
+                text: _profileButtonText(),
                 onPressed: () => print(widget.pageType)
               ),
             ),
