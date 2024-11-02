@@ -8,6 +8,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
@@ -72,11 +73,10 @@ class FollowsPageState extends State<FollowsPage> {
       followsUserDataNotifier.value = followsUserInfoList;
 
     } catch (err) {
-      print(err.toString());
+      SnackBarDialog.errorSnack(message: 'Failed to load profiles');
     }
     
   }
-
 
   Widget _buildListViewItems(String username, Uint8List pfpData) {
     return InkWellEffect(
@@ -104,13 +104,14 @@ class FollowsPageState extends State<FollowsPage> {
             ),
       
             const Spacer(),
-      
+
             Visibility(
               visible: username != userData.user.username,
               child: MainButton(
                 customWidth: MediaQuery.of(context).size.width * 0.23,
                 customHeight: 40,
-                text: widget.pageType == 'Followers' ? 'Follow' : 'Unfollow',
+                text: widget.pageType == 'Followers' 
+                  ? 'Follow' : userData.user.username == widget.username ? 'Unfollow' : 'Follow',
                 onPressed: () => print(widget.pageType)
               ),
             ),
