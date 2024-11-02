@@ -16,6 +16,13 @@ class ThemeStyle {
     fontSize: 12.5
   );
 
+  static const profileEmptyBioStyle = TextStyle(
+    color: ThemeColor.thirdWhite,
+    fontStyle: FontStyle.italic,
+    fontWeight: FontWeight.w700,
+    fontSize: 14
+  );
+
   static final profileBioStyle = GoogleFonts.inter(
     color: ThemeColor.secondaryWhite,
     fontWeight: FontWeight.w700,
