@@ -199,6 +199,13 @@ class VentPostPageState extends State<VentPostPage> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          child: Divider(color: ThemeColor.darkWhite),
+        ),
+
+        const SizedBox(height: 10),
 
         Padding(
           padding: const EdgeInsets.only(left: 4.0),
@@ -210,13 +217,6 @@ class VentPostPageState extends State<VentPostPage> {
               fontSize: 17,
             ),
           ),
-        ),
-
-        const SizedBox(height: 10),
-        
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5),
-          child: Divider(color: ThemeColor.darkWhite),
         ),
 
       ],
@@ -245,7 +245,7 @@ class VentPostPageState extends State<VentPostPage> {
 
                 _buildActionButtons(),
 
-                const SizedBox(height: 32),
+                const SizedBox(height: 20),
 
                 _buildCommentsHeader(),
 

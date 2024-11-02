@@ -123,13 +123,19 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       width: MediaQuery.of(context).size.width * 0.65,
       child: ValueListenableBuilder(
         valueListenable: bioNotifier,
-        builder: (_, value, __) {
-          return Text(
-            value,
-            style: ThemeStyle.profileBioStyle,
-            textAlign: TextAlign.center,
-            maxLines: 3,
-          );
+        builder: (_, bio, __) {
+          return bio.isEmpty 
+            ? const Text(
+              'No bio yet...',
+              style: ThemeStyle.profileEmptyBioStyle,
+              textAlign: TextAlign.center
+            )
+            : Text(
+              bio,
+              style: ThemeStyle.profileBioStyle,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+            );
         },
       ),
     );

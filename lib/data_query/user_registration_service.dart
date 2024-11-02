@@ -12,8 +12,6 @@ class UserRegistrationService {
 
   final userData = GetIt.instance<UserDataProvider>();
 
-  final defaultBioMsg = 'Hello!';
-
   Future<void> register({
     required String username,
     required String email,
@@ -100,7 +98,7 @@ class UserRegistrationService {
         'plan': 'Basic'
       },
       {
-        'bio': defaultBioMsg,
+        'bio': '',
         'followers': 0,
         'following': 0,
         'posts': 0,

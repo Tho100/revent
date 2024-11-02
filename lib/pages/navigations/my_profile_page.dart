@@ -82,12 +82,18 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
       builder: (_, profileData, __) {
         return SizedBox(
           width: MediaQuery.of(context).size.width * 0.65,
-          child: Text(
-            profileData.bio,
-            style: ThemeStyle.profileBioStyle,
-            textAlign: TextAlign.center,
-            maxLines: 3,
-          ),
+          child: profileData.bio.isEmpty 
+            ? const Text(
+              'No bio yet...',
+              style: ThemeStyle.profileEmptyBioStyle,
+              textAlign: TextAlign.center
+            )
+            : Text(
+              profileData.bio,
+              style: ThemeStyle.profileBioStyle,
+              textAlign: TextAlign.center,
+              maxLines: 3,
+            ),
         );
       },
     );
