@@ -10,7 +10,6 @@ class ProfileDataSetup {
   final profileData = GetIt.instance<ProfileDataProvider>();
 
   void _setUserProfileInfo({
-    required int totalPosts,
     required int followers,
     required int following,
     required String bio,
@@ -18,7 +17,6 @@ class ProfileDataSetup {
     required String profilePicBase64,
   }) {
 
-    profileData.setPosts(totalPosts);
     profileData.setFollowers(followers);
     profileData.setFollowing(following);
     profileData.setBio(bio);
@@ -40,7 +38,6 @@ class ProfileDataSetup {
       .getProfileData(isMyProfile: true, username: username);
 
     _setUserProfileInfo(
-      totalPosts: getProfileData['posts'], 
       followers: getProfileData['followers'], 
       following: getProfileData['following'], 
       bio: getProfileData['bio'], 

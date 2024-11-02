@@ -114,23 +114,27 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Consumer<ProfileDataProvider>(
         builder: (_, profileData, __) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              
-              GestureDetector(
-                onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userData.user.username),
-                child: profileInfoWidgets.buildPopularityHeader('followers', profileData.followers)
-              ),
-
-              profileInfoWidgets.buildPopularityHeader('vents', profileData.posts),
-
-              GestureDetector(
-                onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userData.user.username),
-                child: profileInfoWidgets.buildPopularityHeader('following', profileData.following)
-              ),
-
-            ],
+          return Consumer<ProfilePostsProvider>(
+            builder: (_, postsData, __) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  
+                  GestureDetector(
+                    onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userData.user.username),
+                    child: profileInfoWidgets.buildPopularityHeader('followers', profileData.followers)
+                  ),
+            
+                  profileInfoWidgets.buildPopularityHeader('vents', postsData.myProfileTitles.length),
+            
+                  GestureDetector(
+                    onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userData.user.username),
+                    child: profileInfoWidgets.buildPopularityHeader('following', profileData.following)
+                  ),
+            
+                ],
+              );
+            },
           );
         },
       ),
