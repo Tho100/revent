@@ -11,7 +11,6 @@ class ProfileDataProvider extends ChangeNotifier {
 
   int _followers = 0;
   int _following = 0;
-  int _posts = 0;
 
   String get bio => _bio;
   String get pronouns => _pronouns;
@@ -20,7 +19,6 @@ class ProfileDataProvider extends ChangeNotifier {
 
   int get followers => _followers;
   int get following => _following;
-  int get posts => _posts;
 
   void setBio(String bio) {
     _bio = bio;
@@ -47,13 +45,7 @@ class ProfileDataProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void setPosts(int posts) {
-    _posts = posts;
-    notifyListeners();
-  }
-
   void clearProfileData() {
-    _posts = 0;
     _followers = 0;
     _following = 0;
     _bio = '';

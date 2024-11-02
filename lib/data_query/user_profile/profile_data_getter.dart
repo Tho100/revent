@@ -11,8 +11,8 @@ class ProfileDataGetter {
     final conn = await ReventConnect.initializeConnection();
 
     final query = isMyProfile 
-      ? 'SELECT posts, following, followers, bio, pronouns, profile_picture FROM user_profile_info WHERE username = :username'
-      : 'SELECT posts, following, followers, bio, pronouns FROM user_profile_info WHERE username = :username';
+      ? 'SELECT following, followers, bio, pronouns, profile_picture FROM user_profile_info WHERE username = :username'
+      : 'SELECT following, followers, bio, pronouns FROM user_profile_info WHERE username = :username';
 
     final param = {
       'username': username
@@ -22,7 +22,6 @@ class ProfileDataGetter {
 
     final extractData = ExtractData(rowsData: retrievedInfo);
 
-    final posts = extractData.extractIntColumn('posts')[0];
     final following = extractData.extractIntColumn('following')[0];
     final followers = extractData.extractIntColumn('followers')[0];
     
@@ -30,7 +29,6 @@ class ProfileDataGetter {
     final pronouns = extractData.extractStringColumn('pronouns')[0];
 
     Map<String, dynamic> result = {
-      'posts': posts, 
       'followers': followers, 
       'following': following, 
       'bio': bio,

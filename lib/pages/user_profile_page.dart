@@ -70,8 +70,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
     final getProfileData = await ProfileDataGetter()
       .getProfileData(isMyProfile: false, username: widget.username);
-    
-    postsNotifier.value = getProfileData['posts'];
+        
     followersNotifier.value = getProfileData['followers']; 
     followingNotifier.value = getProfileData['following'];
     bioNotifier.value =  getProfileData['bio'];
@@ -83,6 +82,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       .getPosts(username: widget.username);
 
     profilePostsData.setUserProfileTitles(getPostsData);
+    
+    postsNotifier.value = profilePostsData.userProfileTitles.length;
 
   }
 
@@ -217,8 +218,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   @override
   void initState() {
     super.initState();
-    _setProfileData();
     _setPostsData();
+    _setProfileData();
     _initializeClasses();
   }
 
@@ -231,6 +232,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     pronounsNotifier.dispose();
     isFollowingNotifier.dispose();
     tabController.dispose();
+    profilePostsData.userProfileTitles.clear();
     super.dispose();
   }
 
