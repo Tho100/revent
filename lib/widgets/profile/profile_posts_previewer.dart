@@ -7,9 +7,11 @@ import 'package:revent/widgets/inkwell_effect.dart';
 class ProfilePostsPreviewer extends StatelessWidget {
 
   final String title;
+  final int totalLikes;
 
   const ProfilePostsPreviewer({
     required this.title,
+    required this.totalLikes,
     super.key
   });
 
@@ -35,11 +37,27 @@ class ProfilePostsPreviewer extends StatelessWidget {
 
           const Spacer(),
 
-          const Padding(
-            padding: EdgeInsets.only(bottom: 6.0),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
             child: Align(
-              alignment: Alignment.bottomRight,
-              child: Icon(CupertinoIcons.right_chevron, color: ThemeColor.white, size: 17)
+              alignment: Alignment.bottomLeft,
+              child: Row(
+                children: [
+
+                  const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 16),
+                  
+                  Text(
+                    totalLikes.toString(),
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 14
+                    ),
+                    textAlign: TextAlign.start,
+                  )
+
+                ],
+              )
             ),
           )
     

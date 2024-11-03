@@ -21,7 +21,7 @@ class CallRefresh {
 
   }
 
-  Future<void> refreshProfile({required String username}) async {
+  Future<void> refreshMyProfile({required String username}) async {
 
     final profileData = GetIt.instance<ProfileDataProvider>();
     final profilePostsData = GetIt.instance<ProfilePostsProvider>();
@@ -33,7 +33,11 @@ class CallRefresh {
     final getPostsData = await ProfilePostsGetter()
       .getPosts(username: username);
 
-    profilePostsData.setMyProfileTitles(getPostsData);
+    final title = getPostsData['title'] as List<String>;
+    final totalLikes = getPostsData['total_likes'] as List<int>;
+
+    profilePostsData.setMyProfileTitles(title);
+    profilePostsData.setMyProfileTotalLikes(totalLikes);
 
   }
 

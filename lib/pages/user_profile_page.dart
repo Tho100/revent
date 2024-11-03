@@ -62,7 +62,11 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     final getPostsData = await ProfilePostsGetter()
       .getPosts(username: widget.username);
 
-    profilePostsData.setUserProfileTitles(getPostsData);
+    final title = getPostsData['title'] as List<String>;
+    final totalLikes = getPostsData['total_likes'] as List<int>;
+
+    profilePostsData.setUserProfileTitles(title);
+    profilePostsData.setUserProfileTotalLikes(totalLikes);
 
   }
 
@@ -81,7 +85,11 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     final getPostsData = await ProfilePostsGetter()
       .getPosts(username: widget.username);
 
-    profilePostsData.setUserProfileTitles(getPostsData);
+    final title = getPostsData['title'] as List<String>;
+    final totalLikes = getPostsData['total_likes'] as List<int>;
+
+    profilePostsData.setUserProfileTitles(title);
+    profilePostsData.setUserProfileTotalLikes(totalLikes);
     
     postsNotifier.value = profilePostsData.userProfileTitles.length;
 
