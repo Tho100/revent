@@ -7,8 +7,6 @@ import 'package:revent/widgets/profile/profile_posts_listview.dart';
 
 class ProfileTabBarWidgets {
 
-  final BuildContext context; // TODO: Remove unused context
-
   final TabController controller;
   final bool isMyProfile;
 
@@ -16,7 +14,6 @@ class ProfileTabBarWidgets {
   final Uint8List pfpData;
 
   ProfileTabBarWidgets({
-    required this.context,
     required this.controller,
     required this.isMyProfile,
     required this.username,

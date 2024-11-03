@@ -2,13 +2,14 @@ import 'dart:typed_data';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:revent/global/constant.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
 class ProfilePictureDialog {
 
-  Future showPfpDialog(BuildContext context, Uint8List pfpData) {
+  Future showPfpDialog(Uint8List pfpData) {
     return showDialog(
-      context: context,
+      context: navigatorKey.currentContext!,
       barrierDismissible: true, 
       builder: (_) {
         return Dialog(
@@ -19,7 +20,7 @@ class ProfilePictureDialog {
 
               Positioned.fill(
                 child: GestureDetector(
-                  onTap: () => Navigator.of(context).pop(),
+                  onTap: () => Navigator.of(navigatorKey.currentContext!).pop(),
                   child: BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 4, sigmaY: 4),
                     child: Container(
