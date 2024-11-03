@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
@@ -8,8 +10,13 @@ class ProfilePostsListView extends StatelessWidget {
 
   final bool isMyProfile;
 
+  final String username;
+  final Uint8List pfpData;
+
   const ProfilePostsListView({
     required this.isMyProfile,
+    required this.username,
+    required this.pfpData,
     super.key
   });
 
@@ -20,7 +27,9 @@ class ProfilePostsListView extends StatelessWidget {
         alignment: Alignment.center,
         child: ProfilePostsPreviewer(
           title: title,
-          totalLikes: totalLikes
+          totalLikes: totalLikes,
+          username: username,
+          pfpData: pfpData,
         ),
       ),
     );

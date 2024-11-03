@@ -1,19 +1,53 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/constant.dart';
+import 'package:revent/pages/vent_post_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/vent_query/vent_data_getter.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 
 class ProfilePostsPreviewer extends StatelessWidget {
 
+  final String username;
   final String title;
+
   final int totalLikes;
+  final Uint8List pfpData;
 
   const ProfilePostsPreviewer({
+    required this.username,
     required this.title,
     required this.totalLikes,
+    required this.pfpData,
     super.key
   });
+
+  void _viewVentPostPage() async {
+
+    final ventDataInfo = await VentDataGetter()
+      .getProfilePostsVentData(title: title, creator: username);
+
+    final bodyText = ventDataInfo['body_text'];
+    final postTimestamp = ventDataInfo['post_timestamp'];
+    final totalComments = ventDataInfo['total_comments'];
+
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => VentPostPage(
+        title: title, 
+        bodyText: bodyText, 
+        postTimestamp: postTimestamp,
+        totalComments: totalComments,
+        totalLikes: totalLikes,
+        creator: username, 
+        pfpData: pfpData,
+      )),
+    );
+
+  }
 
   Widget _buildChild() {
     return Padding(
@@ -75,7 +109,7 @@ class ProfilePostsPreviewer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWellEffect(
-      onPressed: () => print('Pressed'),
+      onPressed: () => _viewVentPostPage(),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.transparent,
