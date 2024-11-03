@@ -43,7 +43,7 @@ class ActionsButton {
             offset: iconOffset,
             child: Icon(
               isLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, 
-              color: isLiked ? const Color.fromARGB(200, 255, 105, 180) : ThemeColor.white,
+              color: isLiked ? ThemeColor.likedColor : ThemeColor.white,
               size: 18.5, 
             ),
           ),

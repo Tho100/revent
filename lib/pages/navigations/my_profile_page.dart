@@ -51,7 +51,11 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
       final getPostsData = await ProfilePostsGetter()
         .getPosts(username: userData.user.username);
 
-      profilePostsData.setMyProfileTitles(getPostsData);
+      final title = getPostsData['title'] as List<String>;
+      final totalLikes = getPostsData['total_likes'] as List<int>;
+
+      profilePostsData.setMyProfileTitles(title);
+      profilePostsData.setMyProfileTotalLikes(totalLikes);
 
     } 
 
@@ -149,7 +153,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
   Widget _buildBody() {
     return ProfileBodyWidgets(
-      onRefresh: () async => await CallRefresh().refreshProfile(username: userData.user.username),
+      onRefresh: () async => await CallRefresh().refreshMyProfile(username: userData.user.username),
       isPronounsNotEmpty: profileData.pronouns.isNotEmpty, 
       tabBarWidgets: tabBarWidgets, 
       profileInfoWidgets: profileInfoWidgets, 
