@@ -146,7 +146,7 @@ class VentPostPageState extends State<VentPostPage> {
           widget.bodyText,
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
-            fontWeight: FontWeight.w800,
+            fontWeight: FontWeight.w700,
             fontSize: 14
           ),
         ),
