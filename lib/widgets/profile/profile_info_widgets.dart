@@ -10,13 +10,10 @@ import 'package:revent/widgets/profile_picture.dart';
 
 class ProfileInfoWidgets {
 
-  final BuildContext context;
-
   final String username;
   final Uint8List pfpData;
 
   ProfileInfoWidgets({
-    required this.context,
     required this.username,
     required this.pfpData,
   });
@@ -30,7 +27,7 @@ class ProfileInfoWidgets {
 
   Widget buildProfilePicture() {
     return InkWellEffect(
-      onPressed: () => ProfilePictureDialog().showPfpDialog(context, pfpData),
+      onPressed: () => ProfilePictureDialog().showPfpDialog(pfpData),
       child: ProfilePictureWidget(
         customHeight: 75,
         customWidth: 75,

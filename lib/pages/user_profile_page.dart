@@ -52,9 +52,17 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   late TabController tabController;
 
   void _initializeClasses() {
-    profileInfoWidgets = ProfileInfoWidgets(context: context, username: widget.username, pfpData: widget.pfpData);
     tabController = TabController(length: 2, vsync: this);
-    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: false);
+    profileInfoWidgets = ProfileInfoWidgets(
+      username: widget.username, 
+      pfpData: widget.pfpData
+    );
+    tabBarWidgets = ProfileTabBarWidgets(
+      controller: tabController, 
+      isMyProfile: false,
+      username: widget.username,
+      pfpData: widget.pfpData
+    );
   }
 
   Future<void> _setPostsData() async {

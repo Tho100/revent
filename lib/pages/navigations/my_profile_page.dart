@@ -39,9 +39,17 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   late TabController tabController;
 
   void _initializeClasses() {
-    profileInfoWidgets = ProfileInfoWidgets(context: context, username: userData.user.username, pfpData: profileData.profilePicture);
     tabController = TabController(length: 2, vsync: this);
-    tabBarWidgets = ProfileTabBarWidgets(context: context, controller: tabController, isMyProfile: true);
+    profileInfoWidgets = ProfileInfoWidgets(
+      username: userData.user.username, 
+      pfpData: profileData.profilePicture
+    );
+    tabBarWidgets = ProfileTabBarWidgets(
+      controller: tabController, 
+      isMyProfile: true, 
+      username: userData.user.username, 
+      pfpData: profileData.profilePicture
+    );
   }
 
   Future<void> _setPostsData() async {
