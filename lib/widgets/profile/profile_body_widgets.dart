@@ -45,25 +45,21 @@ class ProfileBodyWidgets extends StatelessWidget {
               flexibleSpace: FlexibleSpaceBar(
                 background: Column(
                   children: [
-              
+
                     profileInfoWidgets.buildProfilePicture(),
-              
+
                     const SizedBox(height: 12),
-              
                     profileInfoWidgets.buildUsername(),
-              
+
                     pronounsWidget,
-              
                     bioWidget,
-              
+
                     const SizedBox(height: 25),
-              
                     userActionButtonWidget,
-              
+
                     const SizedBox(height: 28),
-              
                     popularityWidget,
-              
+
                   ],
                 ),
               ),
@@ -74,7 +70,7 @@ class ProfileBodyWidgets extends StatelessWidget {
           children: [
 
             const SizedBox(height: 16),
-
+            
             tabBarWidgets.buildTabBar(),
 
             Expanded(
@@ -85,6 +81,7 @@ class ProfileBodyWidgets extends StatelessWidget {
         ),
       ),
     );
+
   }
 
 }

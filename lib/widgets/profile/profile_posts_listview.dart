@@ -31,60 +31,36 @@ class ProfilePostsListView extends StatelessWidget {
       .customMessage(message: 'No vent posted yet.');
   }
 
-  bool _isPostsEmpty(ProfilePostsProvider postsData) {
-    return isMyProfile ? postsData.myProfileTitles.isEmpty : postsData.userProfileTitles.isEmpty;
-  }
-
-  int _itemCount(ProfilePostsProvider postsData) {
-
-    final isPostsEmpty = _isPostsEmpty(postsData);
-    
-    if(isPostsEmpty) {
-      return 1;
-
-    } else {
-      return isMyProfile 
-        ? postsData.myProfileTitles.length : postsData.userProfileTitles.length;
-    }
-
-  }
-
-  Map<String, List<dynamic>> _profilePostsData(ProfilePostsProvider postsData) {
-
-    final titlesList = isMyProfile 
-      ? postsData.myProfileTitles : postsData.userProfileTitles;
-
-    final totalLikesList = isMyProfile 
-      ? postsData.myProfileTotalLikes : postsData.userProfileTotalLikes;
-
-    return {
-      'titles': titlesList,
-      'total_likes': totalLikesList,
-    };
-
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfilePostsProvider>(
       builder: (_, postsData, __) {
+
+        final titles = isMyProfile 
+          ? postsData.myProfileTitles 
+          : postsData.userProfileTitles;
+
+        final totalLikes = isMyProfile 
+          ? postsData.myProfileTotalLikes 
+          : postsData.userProfileTotalLikes;
+        
+        final isPostsEmpty = titles.isEmpty;
+        final itemCount = isPostsEmpty ? 1 : titles.length;
+
         return GridView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: _isPostsEmpty(postsData) ? 1 : 2,
-            crossAxisSpacing: _isPostsEmpty(postsData) ? 1 : 2,
+            crossAxisCount: isPostsEmpty ? 1 : 2,
+            crossAxisSpacing: isPostsEmpty ? 1 : 2,
             childAspectRatio: 0.85, 
           ),
-          itemCount: _itemCount(postsData),
+          itemCount: itemCount,
           itemBuilder: (_, index) {
-            final data = _profilePostsData(postsData);
-            final titles = data['titles']! as List<String>;
-            final totalLikes = data['total_likes']! as List<int>;
-            return titles.isNotEmpty 
-              ? _buildPreviewer(titles[index], totalLikes[index])
-              : _buildOnEmpty();
-          }
+            return isPostsEmpty 
+              ? _buildOnEmpty() 
+              : _buildPreviewer(titles[index], totalLikes[index]);
+          },
         );
       },
     );
