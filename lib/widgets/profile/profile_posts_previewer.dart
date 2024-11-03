@@ -23,7 +23,7 @@ class ProfilePostsPreviewer extends StatelessWidget {
         children: [
     
           SizedBox(
-            height: 155,
+            height: 150,
             child: Text(
               title,
               style: GoogleFonts.inter(
@@ -38,14 +38,16 @@ class ProfilePostsPreviewer extends StatelessWidget {
           const Spacer(),
 
           Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
+            padding: const EdgeInsets.only(bottom: 6.0),
             child: Align(
               alignment: Alignment.bottomLeft,
               child: Row(
                 children: [
 
-                  const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 16),
+                  const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 17),
                   
+                  const SizedBox(width: 6),
+
                   Text(
                     totalLikes.toString(),
                     style: GoogleFonts.inter(
@@ -54,7 +56,11 @@ class ProfilePostsPreviewer extends StatelessWidget {
                       fontSize: 14
                     ),
                     textAlign: TextAlign.start,
-                  )
+                  ),
+
+                  const Spacer(),
+
+                  const Icon(CupertinoIcons.chevron_right, color: ThemeColor.thirdWhite, size: 17),
 
                 ],
               )

@@ -73,7 +73,6 @@ class ProfilePostsListView extends StatelessWidget {
           physics: const NeverScrollableScrollPhysics(),
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: _isPostsEmpty(postsData) ? 1 : 2,
-            mainAxisSpacing: _isPostsEmpty(postsData) ? 1 : 2,
             crossAxisSpacing: _isPostsEmpty(postsData) ? 1 : 2,
             childAspectRatio: 0.85, 
           ),
