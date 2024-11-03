@@ -95,11 +95,7 @@ class SettingsPage extends StatelessWidget {
                 child: SettingsButton(
                   text: 'Sign out', 
                   isSignOutButton: true,
-                  onPressed: () => CustomAlertDialog.alertDialogCustomOnPress(
-                    message: 'Are you sure you want to sign out of your account?', 
-                    buttonMessage: 'Sign out', 
-                    onPressedEvent: () => _signOutOnPressed()
-                  ),
+                  onPressed: () => _signOutOnPressed()
                 ),
               ),
 
