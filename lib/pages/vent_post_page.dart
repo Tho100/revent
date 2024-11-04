@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/pages/post_comment_page.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -251,32 +252,29 @@ class VentPostPageState extends State<VentPostPage> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.only(top: 24, left: 18),
+      padding: const EdgeInsets.only(top: 20.0, left: 18.0, right: 18.0),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
         child: SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width - 45,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
 
-                const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-                _buildProfileHeader(),
+              _buildProfileHeader(),
 
-                const SizedBox(height: 18),
+              const SizedBox(height: 18),
 
-                _buildHeader(),
+              _buildHeader(),
 
-                _buildActionButtons(),
+              _buildActionButtons(),
 
-                const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-                _buildCommentsHeader(),
+              _buildCommentsHeader(),
 
-              ],
-            ),
+            ],
           ),
         ),
       ),
@@ -291,6 +289,19 @@ class VentPostPageState extends State<VentPostPage> {
         title: 'Vent',
         actions: [_buildActions()]
       ).buildAppBar(),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
+        child: FloatingActionButton(
+          backgroundColor: ThemeColor.white,
+          child: const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.mediumBlack),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title))
+            );
+          }
+        ),
+      ),
       body: _buildBody(),  
     );
   }
