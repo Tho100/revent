@@ -55,52 +55,48 @@ class ProfilePostsPreviewer extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-    
-          SizedBox(
-            height: 150,
-            child: Text(
-              title,
-              style: GoogleFonts.inter(
-                color: ThemeColor.white,
-                fontWeight: FontWeight.w800,
-                fontSize: 16
-              ),
-              textAlign: TextAlign.start,
+
+          Text(
+            title,
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 16,
+            ),
+            textAlign: TextAlign.start,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 4,
+          ),
+
+          const SizedBox(height: 25), 
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 4.0),
+            child: Row(
+              children: [
+
+                const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 17),
+
+                const SizedBox(width: 6),
+
+                Text(
+                  totalLikes.toString(),
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.white,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14,
+                  ),
+                  textAlign: TextAlign.start,
+                ),
+
+                const Spacer(),
+
+                const Icon(CupertinoIcons.chevron_right, color: ThemeColor.thirdWhite, size: 17),
+
+              ],
             ),
           ),
 
-          const Spacer(),
-
-          Padding(
-            padding: const EdgeInsets.only(bottom: 6.0),
-            child: Align(
-              alignment: Alignment.bottomLeft,
-              child: Row(
-                children: [
-
-                  const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 17),
-                  
-                  const SizedBox(width: 6),
-
-                  Text(
-                    totalLikes.toString(),
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.white,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 14
-                    ),
-                    textAlign: TextAlign.start,
-                  ),
-
-                  const Spacer(),
-
-                  const Icon(CupertinoIcons.chevron_right, color: ThemeColor.thirdWhite, size: 17),
-
-                ],
-              )
-            ),
-          )
-    
         ],
       ),
     );
@@ -115,11 +111,11 @@ class ProfilePostsPreviewer extends StatelessWidget {
           color: Colors.transparent,
           border: Border.all(
             color: ThemeColor.thirdWhite,
-            width: 0.8
+            width: 0.8,
           ),
           borderRadius: BorderRadius.circular(16),
         ),
-        child: _buildChild()
+        child: _buildChild(),
       ),
     );
   }

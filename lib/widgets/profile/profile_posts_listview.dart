@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
@@ -22,7 +23,7 @@ class ProfilePostsListView extends StatelessWidget {
 
   Widget _buildPreviewer(String title, int totalLikes) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
       child: Align(
         alignment: Alignment.center,
         child: ProfilePostsPreviewer(
@@ -36,8 +37,10 @@ class ProfilePostsListView extends StatelessWidget {
   }
 
   Widget _buildOnEmpty() {
-    return EmptyPage()
-      .customMessage(message: 'No vent posted yet.');
+    return Padding(
+      padding: const EdgeInsets.only(top: 35.0),
+      child: EmptyPage().customMessage(message: 'No vent posted yet.'),
+    );
   }
 
   @override
@@ -56,16 +59,12 @@ class ProfilePostsListView extends StatelessWidget {
         final isPostsEmpty = titles.isEmpty;
         final itemCount = isPostsEmpty ? 1 : titles.length;
 
-        return GridView.builder(
+        return DynamicHeightGridView(
           shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: isPostsEmpty ? 1 : 2,
-            crossAxisSpacing: isPostsEmpty ? 1 : 2,
-            childAspectRatio: 0.85, 
-          ),
           itemCount: itemCount,
-          itemBuilder: (_, index) {
+          mainAxisSpacing: 2,
+          crossAxisCount: isPostsEmpty ? 1 : 2,
+          builder: (_, index) {
             return isPostsEmpty 
               ? _buildOnEmpty() 
               : _buildPreviewer(titles[index], totalLikes[index]);
