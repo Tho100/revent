@@ -48,6 +48,8 @@ class BottomsheetVentPostActions {
   Future buildBottomsheet({
     required BuildContext context,
     required String creator,
+    required VoidCallback saveOnPressed,
+    required VoidCallback copyOnPressed,
     required VoidCallback reportOnPressed,
     required VoidCallback blockOnPressed,
     required VoidCallback deleteOnPressed,
@@ -65,13 +67,13 @@ class BottomsheetVentPostActions {
         _buildOptionButton(
           text: 'Save',
           icon: CupertinoIcons.bookmark,
-          onPressed: reportOnPressed
+          onPressed: saveOnPressed
         ),
 
         _buildOptionButton(
           text: 'Copy',
           icon: CupertinoIcons.doc_on_doc,
-          onPressed: blockOnPressed
+          onPressed: copyOnPressed
         ),
 
         _buildOptionButton(

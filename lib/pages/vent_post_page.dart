@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_vent_actions.dart';
@@ -9,6 +10,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
@@ -42,6 +44,19 @@ class VentPostPage extends StatefulWidget {
 }
 
 class VentPostPageState extends State<VentPostPage> {
+
+  void _copyBodyText() {
+
+    if(widget.bodyText.isNotEmpty) {
+      Clipboard.setData(ClipboardData(text: widget.bodyText));
+      SnackBarDialog.temporarySnack(message: 'Copied body text.');
+
+    } else {
+      SnackBarDialog.temporarySnack(message: 'Nothing to copy...');
+
+    }
+
+  }
 
   Future<void> _deletePostOnPressed() async {
 
@@ -161,8 +176,19 @@ class VentPostPageState extends State<VentPostPage> {
       onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
         context: context, 
         creator: widget.creator,
-        reportOnPressed: () {}, 
-        blockOnPressed: () {},
+        saveOnPressed: () {
+          Navigator.pop(context);
+        },
+        copyOnPressed: () {
+          _copyBodyText();
+          Navigator.pop(context);
+        },
+        reportOnPressed: () {
+          Navigator.pop(context);
+        }, 
+        blockOnPressed: () {
+          Navigator.pop(context);
+        },
         deleteOnPressed: () {
           CustomAlertDialog.alertDialogCustomOnPress(
             message: 'Delete this post?', 
