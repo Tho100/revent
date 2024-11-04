@@ -113,7 +113,7 @@ class FollowsPageState extends State<FollowsPage> {
               style: GoogleFonts.inter(
                 color: ThemeColor.white,
                 fontWeight: FontWeight.w800,
-                fontSize: 16,
+                fontSize: 15,
               ),
             ),
       
@@ -122,7 +122,7 @@ class FollowsPageState extends State<FollowsPage> {
             Visibility(
               visible: username != userData.user.username,
               child: MainButton(
-                customWidth: MediaQuery.of(context).size.width * 0.23,
+                customWidth: MediaQuery.of(context).size.width * 0.24,
                 customHeight: 40,
                 text: _profileButtonText(),
                 onPressed: () => print(widget.pageType)
