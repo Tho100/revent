@@ -252,32 +252,29 @@ class VentPostPageState extends State<VentPostPage> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.only(top: 24, left: 18),
+      padding: const EdgeInsets.only(top: 20.0, left: 18.0, right: 18.0),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
         child: SingleChildScrollView(
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width - 45, // Remove this and use const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0)
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
 
-                const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-                _buildProfileHeader(),
+              _buildProfileHeader(),
 
-                const SizedBox(height: 18),
+              const SizedBox(height: 18),
 
-                _buildHeader(),
+              _buildHeader(),
 
-                _buildActionButtons(),
+              _buildActionButtons(),
 
-                const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-                _buildCommentsHeader(),
+              _buildCommentsHeader(),
 
-              ],
-            ),
+            ],
           ),
         ),
       ),
