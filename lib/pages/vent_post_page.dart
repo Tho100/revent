@@ -7,6 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/pages/post_comment_page.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -256,7 +257,7 @@ class VentPostPageState extends State<VentPostPage> {
         behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
         child: SingleChildScrollView(
           child: SizedBox(
-            width: MediaQuery.of(context).size.width - 45,
+            width: MediaQuery.of(context).size.width - 45, // Remove this and use const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0)
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -291,6 +292,19 @@ class VentPostPageState extends State<VentPostPage> {
         title: 'Vent',
         actions: [_buildActions()]
       ).buildAppBar(),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
+        child: FloatingActionButton(
+          backgroundColor: ThemeColor.white,
+          child: const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.mediumBlack),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title))
+            );
+          }
+        ),
+      ),
       body: _buildBody(),  
     );
   }
