@@ -120,8 +120,26 @@ class VentActions {
 
   }
 
-  Future<void> savePost() async {}
+  Future<void> sendComment({
+    required String comment
+  }) async {
 
-  Future<void> sendComment() async {}
+    final conn = await ReventConnect.initializeConnection();
+
+    const insertCommentQuery = 
+      'INSERT INTO vent_comments_info (title, creator, commented_by, comment) VALUES (:title, :creator, :commented_by, :comment)'; 
+      
+    final params = {
+      'title': title,
+      'creator': creator,
+      'commented_by': userData.user.username,
+      'comment': comment
+    };
+
+    await conn.execute(insertCommentQuery, params);
+
+  }
+
+  Future<void> savePost() async {}
 
 }
