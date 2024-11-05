@@ -20,6 +20,11 @@ class DeleteVent {
 
     await _updateTotalPosts(conn: conn);
 
+    await _deleteComments(
+      conn: conn, 
+      title: ventTitle, 
+    );
+
     _removeVent(title: ventTitle);
 
   }
@@ -51,6 +56,23 @@ class DeleteVent {
     };
 
     await conn.execute(updateTotalPostsQuery, param);
+
+  }
+
+  Future<void> _deleteComments({
+    required MySQLConnectionPool conn,
+    required String title,
+  }) async {
+
+    const deleteCommentsQuery = 
+      'DELETE FROM vent_comments_info WHERE title = :title AND creator = :creator'; 
+      
+    final params = {
+      'title': title,
+      'creator': userData.user.username,
+    };
+
+    await conn.execute(deleteCommentsQuery, params);
 
   }
 
