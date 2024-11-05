@@ -260,8 +260,6 @@ class VentPostPageState extends State<VentPostPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
-              const SizedBox(height: 20),
-
               _buildProfileHeader(),
 
               const SizedBox(height: 18),
