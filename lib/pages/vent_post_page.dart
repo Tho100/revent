@@ -297,7 +297,7 @@ class VentPostPageState extends State<VentPostPage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title))
+              MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title, creator: widget.creator))
             );
           }
         ),

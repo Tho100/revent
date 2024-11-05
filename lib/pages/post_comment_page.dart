@@ -2,15 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/vent_query/vent_actions.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
 
 class PostCommentPage extends StatefulWidget {
 
   final String title;
+  final String creator;
   
   const PostCommentPage({
     required this.title,
+    required this.creator,
     super.key
   });
 
@@ -24,8 +27,27 @@ class PostCommentPageState extends State<PostCommentPage> {
   final commentController = TextEditingController();
 
   void _createCommentOnPressed(BuildContext context) async {
-    Navigator.pop(context);
-    SnackBarDialog.temporarySnack(message: 'Comment added');
+
+    try {
+
+      final commentText = commentController.text;
+
+      if(commentText.isNotEmpty) {
+
+        final ventActions = VentActions(title: widget.title, creator: widget.creator);
+
+        await ventActions.sendComment(comment: commentText)
+          .then((value) => Navigator.pop(context)
+        );
+
+        SnackBarDialog.temporarySnack(message: 'Comment added');
+
+      }
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Failed to send comment');
+    }
+
   }
 
   Widget _buildTitle() {
