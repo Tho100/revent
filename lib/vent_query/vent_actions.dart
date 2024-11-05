@@ -129,14 +129,38 @@ class VentActions {
     const insertCommentQuery = 
       'INSERT INTO vent_comments_info (title, creator, commented_by, comment) VALUES (:title, :creator, :commented_by, :comment)'; 
       
-    final params = {
+    final commentsParams = {
       'title': title,
       'creator': creator,
       'commented_by': userData.user.username,
       'comment': comment
     };
 
-    await conn.execute(insertCommentQuery, params);
+    await conn.execute(insertCommentQuery, commentsParams);
+
+    await _updateTotalComments(
+      conn: conn, 
+      title: title, 
+      creator: creator
+    );
+
+  }
+
+  Future<void> _updateTotalComments({
+    required MySQLConnectionPool conn,
+    required String title,
+    required String creator 
+  }) async {
+
+    const updateTotalCommentsQuery = 
+      'UPDATE vent_info SET total_comments = total_comments + 1 WHERE title = :title AND creator = :creator'; 
+      
+    final params = {
+      'title': title,
+      'creator': creator,
+    };
+
+    await conn.execute(updateTotalCommentsQuery, params);
 
   }
 
