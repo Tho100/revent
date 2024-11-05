@@ -39,14 +39,14 @@ class CreateVentPageState extends State<CreateVentPage> {
       await createItem.newVent(
         ventTitle: ventTitleController.text, 
         ventBodyText: ventBodyTextController.text
-      );
+      ).then((value) => {
         
-      SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
+        SnackBarDialog.temporarySnack(message: 'Vent has been posted.'),
 
-      if(context.mounted) {
-        Navigator.pop(context);
-      }
+        Navigator.pop(context)        
 
+      });
+        
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Failed to post vent.');
     }

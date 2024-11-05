@@ -31,14 +31,16 @@ class CallVentActions {
 
     try {
 
-      await DeleteVent().delete(ventTitle: title);
+      await DeleteVent().delete(ventTitle: title)
+        .then((value) {
+          
+          SnackBarDialog.temporarySnack(message: 'Post has been deleted.');
 
-      SnackBarDialog.temporarySnack(message: 'Post has been deleted.');
+          Navigator.pop(context);
+          Navigator.pop(context);
 
-      if(context.mounted) {
-        Navigator.pop(context);
-        Navigator.pop(context);
-      }
+        }
+      );
 
     } catch (err) {
       SnackBarDialog.temporarySnack(message: 'Failed to delete this post.');

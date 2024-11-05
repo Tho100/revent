@@ -65,12 +65,8 @@ class VentPostPageState extends State<VentPostPage> {
       context: context, 
       title: widget.title, 
       creator: widget.creator
-    ).deletePost();
-
-    if(context.mounted) {
-      Navigator.pop(context);
-    }
-
+    ).deletePost().then((value) => Navigator.pop(context));
+    
   }
 
   Widget _buildLikeButton() {

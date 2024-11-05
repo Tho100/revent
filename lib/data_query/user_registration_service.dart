@@ -37,12 +37,9 @@ class UserRegistrationService {
 
     await _saveUserData(hashPassword: hashPassword);
 
-    await VentDataSetup().setup();
+    await VentDataSetup().setup()
+      .then((value) => NavigatePage.homePage());
 
-    if(context.mounted) {
-      NavigatePage.homePage();
-    }
-  
   }
 
   void _showWarningOnDataAlreadyExists(BuildContext context, IResultSet data, String errorMessage) {
