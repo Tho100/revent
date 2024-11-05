@@ -97,11 +97,8 @@ class SplashScreenState extends State<SplashScreen> {
 
       userData.setUser(userSetup);
 
-      await _loadStartupData();
-
-      if(mounted) {
-        NavigatePage.homePage();
-      }
+      await _loadStartupData()
+        .then((value) => NavigatePage.homePage());
 
     } catch (err) {
       NavigatePage.mainScreenPage();

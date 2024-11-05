@@ -47,11 +47,9 @@ class UserLoginService {
     await _setUserProfileData(conn: conn, email: email);
     await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
 
-    await VentDataSetup().setup(); 
-
-    if(context.mounted) {
-      NavigatePage.homePage();
-    }
+    await VentDataSetup().setup()
+      .then((value) => NavigatePage.homePage()
+    ); 
 
   }
 

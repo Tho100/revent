@@ -131,6 +131,12 @@ class PostCommentPageState extends State<PostCommentPage> {
   }
 
   @override
+  void dispose() {
+    commentController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
@@ -142,4 +148,5 @@ class PostCommentPageState extends State<PostCommentPage> {
       body: _buildBody(context),
     );
   }
+  
 }
