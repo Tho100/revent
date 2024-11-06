@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/post_comment_page.dart';
@@ -12,7 +13,7 @@ import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/vent_query/vent_comments_getter.dart';
+import 'package:revent/vent_query/vent_comment_setup.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
@@ -54,22 +55,8 @@ class VentPostPageState extends State<VentPostPage> {
 
     try {
 
-      final commentsGetter = await VentCommentsGetter(
-        title: widget.title, 
-        creator: widget.creator
-      ).getComments();
-
-      final commentedBy = commentsGetter['commented_by']!;
-      final comment = commentsGetter['comment']!;
-
-      final comments = List.generate(commentedBy.length, (index) {
-        return VentComment(
-          commentedBy: commentedBy[index],
-          comment: comment[index],
-        );
-      });
-
-      ventCommentProvider.setComments(comments);
+      await VentCommentSetup()
+        .setup(title: widget.title, creator: widget.creator);
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
@@ -200,7 +187,7 @@ class VentPostPageState extends State<VentPostPage> {
 
   Widget _buildActions() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
+      icon: const Icon(CupertinoIcons.ellipsis_circle),
       onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
         context: context, 
         creator: widget.creator,
@@ -278,34 +265,55 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 20.0, left: 18.0, right: 18.0),
-      child: ScrollConfiguration(
-        behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              _buildProfileHeader(),
-
-              const SizedBox(height: 18),
-
-              _buildHeader(),
-
-              _buildActionButtons(),
-
-              const SizedBox(height: 20),
-
-              _buildCommentsHeader(),
-
-              const SizedBox(height: 25),
-
-              const VentCommentsListView()
-
-            ],
+    return RefreshIndicator(
+      color: ThemeColor.black,
+      onRefresh: () async => await CallRefresh()
+        .refreshVentPost(title: widget.title, creator: widget.creator),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 20.0, left: 18.0, right: 18.0),
+        child: ScrollConfiguration(
+          behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+    
+                _buildProfileHeader(),
+    
+                const SizedBox(height: 18),
+    
+                _buildHeader(),
+    
+                _buildActionButtons(),
+    
+                const SizedBox(height: 20),
+    
+                _buildCommentsHeader(),
+    
+                const SizedBox(height: 25),
+    
+                const VentCommentsListView()
+    
+              ],
+            ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildAddCommentFloatingButton() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
+      child: FloatingActionButton(
+        backgroundColor: ThemeColor.white,
+        child: const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.mediumBlack),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title, creator: widget.creator))
+          );
+        }
       ),
     );
   }
@@ -330,19 +338,7 @@ class VentPostPageState extends State<VentPostPage> {
         title: 'Vent',
         actions: [_buildActions()]
       ).buildAppBar(),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
-        child: FloatingActionButton(
-          backgroundColor: ThemeColor.white,
-          child: const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.mediumBlack),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title, creator: widget.creator))
-            );
-          }
-        ),
-      ),
+      floatingActionButton: _buildAddCommentFloatingButton(),
       body: _buildBody(),  
     );
   }

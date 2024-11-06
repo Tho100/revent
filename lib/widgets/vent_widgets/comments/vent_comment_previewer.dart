@@ -24,34 +24,37 @@ class VentCommentPreviewer extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaders() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 30.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-    
-          Text(
-            commentedBy,
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w800,
-              fontSize: 14
-            )
-          ),
-    
-          const SizedBox(height: 6),
-    
-          Text(
-            comment,
-            style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
-              fontWeight: FontWeight.w700,
-              fontSize: 14
-            )
-          ),
-    
-        ],
+  Widget _buildHeaders(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 110,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 30.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+      
+            Text(
+              commentedBy,
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontWeight: FontWeight.w800,
+                fontSize: 14
+              )
+            ),
+      
+            const SizedBox(height: 6),
+      
+            Text(
+              comment,
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontWeight: FontWeight.w700,
+                fontSize: 14
+              ),
+            ),
+      
+          ],
+        ),
       ),
     );
   }
@@ -69,7 +72,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
         const SizedBox(width: 12),
 
-        _buildHeaders()
+        _buildHeaders(context)
 
       ],
     );

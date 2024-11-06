@@ -161,10 +161,15 @@ class EditProfilePageState extends State<EditProfilePage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        ProfilePictureWidget(
-          customWidth: 80,
-          customHeight: 80,
-          profileDataNotifier: profilePicNotifier,
+        ValueListenableBuilder(
+          valueListenable: profilePicNotifier,
+          builder: (_, pfp, __) {
+            return ProfilePictureWidget(
+              customWidth: 80,
+              customHeight: 80,
+              pfpData: pfp,
+            );
+          }
         ),
 
         const SizedBox(height: 20),

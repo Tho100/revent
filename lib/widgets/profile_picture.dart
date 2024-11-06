@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:revent/themes/theme_color.dart';
 
 class ProfilePictureWidget extends StatelessWidget {
@@ -9,10 +8,8 @@ class ProfilePictureWidget extends StatelessWidget {
   final double? customWidth;
   final double? customHeight;
   final Uint8List? pfpData;
-  final ValueNotifier<Uint8List?>? profileDataNotifier;
 
   const ProfilePictureWidget({
-    this.profileDataNotifier,
     this.pfpData,
     this.customWidth,
     this.customHeight,
@@ -23,17 +20,6 @@ class ProfilePictureWidget extends StatelessWidget {
     CupertinoIcons.person, 
     color: ThemeColor.mediumBlack
   );
-
-  Widget _buildNotifierPfp() {
-    return ValueListenableBuilder<Uint8List?>(
-      valueListenable: profileDataNotifier!,
-      builder: (_, imageData, __) {
-        return imageData == null 
-          ? defaultEmptyIcon
-          : _buildPfp(pfpData: imageData);
-      },
-    );
-  }
 
   Widget _buildPfp({required Uint8List pfpData}) {
     return ClipOval(
