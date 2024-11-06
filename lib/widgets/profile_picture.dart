@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:revent/themes/theme_color.dart';
 
 class ProfilePictureWidget extends StatelessWidget {
