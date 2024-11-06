@@ -1,22 +1,24 @@
-import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/post_comment_page.dart';
+import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/vent_query/vent_comments_getter.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
+import 'package:revent/widgets/vent_widgets/comments/vent_comments_listview.dart';
 
 class VentPostPage extends StatefulWidget {
 
@@ -45,6 +47,35 @@ class VentPostPage extends StatefulWidget {
 }
 
 class VentPostPageState extends State<VentPostPage> {
+
+  final ventCommentProvider = GetIt.instance<VentCommentProvider>();
+
+  void _initializeComments() async {
+
+    try {
+
+      final commentsGetter = await VentCommentsGetter(
+        title: widget.title, 
+        creator: widget.creator
+      ).getComments();
+
+      final commentedBy = commentsGetter['commented_by']!;
+      final comment = commentsGetter['comment']!;
+
+      final comments = List.generate(commentedBy.length, (index) {
+        return VentComment(
+          commentedBy: commentedBy[index],
+          comment: comment[index],
+        );
+      });
+
+      ventCommentProvider.setComments(comments);
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
+    }
+
+  }
 
   void _copyBodyText() {
 
@@ -268,11 +299,27 @@ class VentPostPageState extends State<VentPostPage> {
 
               _buildCommentsHeader(),
 
+              const SizedBox(height: 25),
+
+              const VentCommentsListView()
+
             ],
           ),
         ),
       ),
     );
+  }
+
+  @override
+  void initState() {
+    _initializeComments();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    ventCommentProvider.deleteComments();
+    super.dispose();
   }
 
   @override

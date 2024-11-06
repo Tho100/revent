@@ -3,6 +3,7 @@ import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 
 class VentActions {
@@ -144,6 +145,8 @@ class VentActions {
       creator: creator
     );
 
+    _addComment(comment: comment);
+
   }
 
   Future<void> _updateTotalComments({
@@ -161,6 +164,21 @@ class VentActions {
     };
 
     await conn.execute(updateTotalCommentsQuery, params);
+
+  }
+
+  void _addComment({
+    required String comment
+  }) {
+
+    final ventCommentProvider = GetIt.instance<VentCommentProvider>();
+
+    final newComment = VentComment(
+      commentedBy: userData.user.username, 
+      comment: comment
+    );
+
+    ventCommentProvider.addComment(newComment);
 
   }
 

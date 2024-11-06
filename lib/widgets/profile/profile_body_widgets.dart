@@ -41,7 +41,7 @@ class ProfileBodyWidgets extends StatelessWidget {
           return [
             SliverAppBar(
               automaticallyImplyLeading: false,
-              expandedHeight: isPronounsNotEmpty ? 308 : 286,
+              expandedHeight: isPronounsNotEmpty ? 310 : 286,
               flexibleSpace: FlexibleSpaceBar(
                 background: Column(
                   children: [
