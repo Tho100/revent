@@ -160,15 +160,19 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   }
 
   Widget _buildBody() {
-    return ProfileBodyWidgets(
-      onRefresh: () async => await CallRefresh().refreshMyProfile(username: userData.user.username),
-      isPronounsNotEmpty: profileData.pronouns.isNotEmpty, 
-      tabBarWidgets: tabBarWidgets, 
-      profileInfoWidgets: profileInfoWidgets, 
-      pronounsWidget: _buildPronouns(), 
-      bioWidget: _buildBio(), 
-      userActionButtonWidget: _buildEditProfileButton(), 
-      popularityWidget: _popularityWidgets()
+    return Consumer<ProfileDataProvider>(
+      builder: (_, profileData, __) {
+        return ProfileBodyWidgets(
+          onRefresh: () async => await CallRefresh().refreshMyProfile(username: userData.user.username),
+          isPronounsNotEmpty: profileData.pronouns.isNotEmpty, 
+          tabBarWidgets: tabBarWidgets, 
+          profileInfoWidgets: profileInfoWidgets, 
+          pronounsWidget: _buildPronouns(), 
+          bioWidget: _buildBio(), 
+          userActionButtonWidget: _buildEditProfileButton(), 
+          popularityWidget: _popularityWidgets()
+        );
+      }
     );
   }
 
