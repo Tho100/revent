@@ -233,7 +233,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   Widget _buildActionButton() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_vertical, size: 22),
+      icon: const Icon(CupertinoIcons.ellipsis_circle, size: 22),
       onPressed: () => BottomsheetUserActions().buildBottomsheet(
         context: context, 
         reportOnPressed: () {}, 
