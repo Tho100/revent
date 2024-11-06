@@ -23,17 +23,6 @@ class ProfilePictureWidget extends StatelessWidget {
     color: ThemeColor.mediumBlack
   );
 
-  Widget _buildNotifierPfp() {
-    return ValueListenableBuilder<Uint8List?>(
-      valueListenable: profileDataNotifier!,
-      builder: (_, imageData, __) {
-        return imageData == null 
-          ? defaultEmptyIcon
-          : _buildPfp(pfpData: imageData);
-      },
-    );
-  }
-
   Widget _buildPfp({required Uint8List pfpData}) {
     return ClipOval(
       child: Image.memory(
@@ -55,7 +44,7 @@ class ProfilePictureWidget extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: (pfpData != null && pfpData!.isNotEmpty)
-        ? _buildNotifierPfp()
+        ? _buildPfp(pfpData: pfpData!)
         : defaultEmptyIcon, 
     );
   }
