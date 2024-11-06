@@ -214,15 +214,20 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   }
 
   Widget _buildBody() {
-    return ProfileBodyWidgets(
-      onRefresh: () async => await _setProfileData(),
-      isPronounsNotEmpty: pronounsNotifier.value.isNotEmpty, 
-      tabBarWidgets: tabBarWidgets, 
-      profileInfoWidgets: profileInfoWidgets, 
-      pronounsWidget: _buildPronouns(), 
-      bioWidget: _buildBio(), 
-      userActionButtonWidget: _buildEditProfileButton(), 
-      popularityWidget: _popularityWidgets()
+    return ValueListenableBuilder(
+      valueListenable: pronounsNotifier,
+      builder: (_, pronouns, __) {
+        return ProfileBodyWidgets(
+          onRefresh: () async => await _setProfileData(),
+          isPronounsNotEmpty: pronouns.isNotEmpty, 
+          tabBarWidgets: tabBarWidgets, 
+          profileInfoWidgets: profileInfoWidgets, 
+          pronounsWidget: _buildPronouns(), 
+          bioWidget: _buildBio(), 
+          userActionButtonWidget: _buildEditProfileButton(), 
+          popularityWidget: _popularityWidgets()
+        );      
+      }
     );
   }
 
