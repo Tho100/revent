@@ -8,10 +8,8 @@ class ProfilePictureWidget extends StatelessWidget {
   final double? customWidth;
   final double? customHeight;
   final Uint8List? pfpData;
-  final ValueNotifier<Uint8List?>? profileDataNotifier;
 
   const ProfilePictureWidget({
-    this.profileDataNotifier,
     this.pfpData,
     this.customWidth,
     this.customHeight,
