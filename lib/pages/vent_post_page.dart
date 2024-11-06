@@ -310,6 +310,22 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
+  Widget _buildAddCommentFloatingButton() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
+      child: FloatingActionButton(
+        backgroundColor: ThemeColor.white,
+        child: const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.mediumBlack),
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title, creator: widget.creator))
+          );
+        }
+      ),
+    );
+  }
+
   @override
   void initState() {
     _initializeComments();
@@ -330,19 +346,7 @@ class VentPostPageState extends State<VentPostPage> {
         title: 'Vent',
         actions: [_buildActions()]
       ).buildAppBar(),
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
-        child: FloatingActionButton(
-          backgroundColor: ThemeColor.white,
-          child: const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.mediumBlack),
-          onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title, creator: widget.creator))
-            );
-          }
-        ),
-      ),
+      floatingActionButton: _buildAddCommentFloatingButton(),
       body: _buildBody(),  
     );
   }

@@ -56,7 +56,7 @@ class ProfilePictureWidget extends StatelessWidget {
         shape: BoxShape.circle,
       ),
       child: (pfpData != null && pfpData!.isNotEmpty)
-        ? _buildPfp(pfpData: pfpData!)
+        ? _buildNotifierPfp()
         : defaultEmptyIcon, 
     );
   }
