@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/widgets/vent_widgets/comments/vent_comment_previewer.dart';
 
@@ -14,18 +15,38 @@ class VentCommentsListView extends StatelessWidget {
     );
   }
 
+  Widget _buildOnEmpty() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: EmptyPage()
+        .headerCustomMessage(header: 'No comment yet', subheader: 'Be the first to comment!'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<VentCommentProvider>(
       builder: (_, commentData, __) {
+
+        final isCommentsEmpty = commentData.ventComments.isEmpty;
+        final commentsCount = isCommentsEmpty ? 1 : commentData.ventComments.length;
+
         return ListView.builder(
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
-          itemCount: commentData.ventComments.length,
+          itemCount: commentsCount,
           itemBuilder: (_, index) {
-            final reversedIndex = commentData.ventComments.length - 1 - index;
-            final ventComment = commentData.ventComments[reversedIndex];
-            return _buildCommentPreview(ventComment);
+
+            if(isCommentsEmpty) {
+              return _buildOnEmpty();
+
+            } else {
+              final reversedIndex = commentData.ventComments.length - 1 - index;
+              final ventComment = commentData.ventComments[reversedIndex];
+              return _buildCommentPreview(ventComment);
+
+            }
+
           }
         );
       },

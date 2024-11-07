@@ -17,4 +17,37 @@ class EmptyPage {
     );
   }
 
+  Widget headerCustomMessage({
+    required String header, 
+    required String subheader
+  }) {
+    return Center(
+      child: Column(
+        children: [
+
+          Text(
+            header,
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 17
+            ),
+          ),
+
+          const SizedBox(height: 6),
+
+          Text(
+            subheader,
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 15
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+
 }
