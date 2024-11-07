@@ -71,7 +71,16 @@ class ProfileBodyWidgets extends StatelessWidget {
 
             const SizedBox(height: 16),
             
-            tabBarWidgets.buildTabBar(),
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+
+                tabBarWidgets.buildTabBar(),
+
+                const Divider(color: ThemeColor.lightGrey, height: 1)
+
+              ],
+            ),
 
             Expanded(
               child: tabBarWidgets.buildTabBarTabs(),

@@ -265,7 +265,7 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildBody() {
-    return RefreshIndicator(
+    return RefreshIndicator(      
       color: ThemeColor.black,
       onRefresh: () async => await CallRefresh()
         .refreshVentPost(title: widget.title, creator: widget.creator),
@@ -274,6 +274,7 @@ class VentPostPageState extends State<VentPostPage> {
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
           child: SingleChildScrollView(
+            physics: const AlwaysScrollableScrollPhysics(),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
