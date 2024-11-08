@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
@@ -18,17 +17,18 @@ class UserLoginService {
 
   final userData = GetIt.instance<UserDataProvider>();
 
-  Future<void> login(String email, String auth, bool isRememberMeChecked, BuildContext context) async {
+  Future<void> login({
+    required String email, 
+    required String auth, 
+    required bool isRememberMeChecked
+  }) async {
 
     final conn = await ReventConnect.initializeConnection();
 
-    final username = await userDataGetter
-      .getUsername(email: email, conn: conn);
+    final username = await userDataGetter.getUsername(email: email, conn: conn);
 
     if (username == null) {
-      if (context.mounted) {
-        CustomAlertDialog.alertDialog('Account not found.');
-      }
+      CustomAlertDialog.alertDialog('Account not found.');
       return;
     }
 
@@ -38,9 +38,7 @@ class UserLoginService {
     final isAuthMatched = AuthModel().computeHash(auth) == authenticationInformation;
 
     if(!isAuthMatched) {
-      if(context.mounted) {
-        CustomAlertDialog.alertDialog('Password is incorrect.');
-      }
+      CustomAlertDialog.alertDialog('Password is incorrect.');
       return;
     }
       
@@ -59,7 +57,7 @@ class UserLoginService {
 
     if(localUserInfo.isEmpty && isRememberMeChecked) {
       await localStorage.setupLocalAccountInformation(
-        userData.user.username, userData.user.email, userData.user.plan
+        username: userData.user.username, email: userData.user.email, plan: userData.user.plan
       );
     }
 
@@ -70,8 +68,7 @@ class UserLoginService {
     required String email
   }) async {
 
-    final accountInfo = await userDataGetter
-      .getUserStartupInfo(email: email, conn: conn);
+    final accountInfo = await userDataGetter.getUserStartupInfo(email: email, conn: conn);
       
     final username = accountInfo['username'];
     final accountPlan = accountInfo['plan'];

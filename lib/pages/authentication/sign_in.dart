@@ -36,8 +36,9 @@ class SignInPageState extends State<SignInPage> {
 
     try {
 
-      await UserLoginService().
-        login(email, auth, isRememberMeCheckedNotifier.value, context);
+      await UserLoginService().login(
+        email: email, auth: auth, isRememberMeChecked: isRememberMeCheckedNotifier.value
+      );
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong.');

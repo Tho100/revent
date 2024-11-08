@@ -6,7 +6,7 @@ import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
-import 'package:revent/vent_query/vent_comment_setup.dart';
+import 'package:revent/vent_query/comment/vent_comment_setup.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 
 class CallRefresh {
@@ -32,8 +32,7 @@ class CallRefresh {
 
     await ProfileDataSetup().setup(username: username);
 
-    final getPostsData = await ProfilePostsGetter()
-      .getPosts(username: username);
+    final getPostsData = await ProfilePostsGetter().getPosts(username: username);
 
     final title = getPostsData['title'] as List<String>;
     final totalLikes = getPostsData['total_likes'] as List<int>;
@@ -52,8 +51,9 @@ class CallRefresh {
 
     ventCommentProvider.deleteComments();
 
-    await VentCommentSetup()
-      .setup(title: title, creator: creator);
+    await VentCommentSetup().setup(
+      title: title, creator: creator
+    );
 
   }
 

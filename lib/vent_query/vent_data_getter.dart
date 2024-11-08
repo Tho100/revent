@@ -58,7 +58,9 @@ class VentDataGetter {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = 'SELECT body_text, created_at, total_comments FROM vent_info WHERE title = :title AND creator = :creator';
+    const query = 
+      'SELECT body_text, created_at, total_comments FROM vent_info WHERE title = :title AND creator = :creator';
+      
     final params = {
       'title': title,
       'creator': creator

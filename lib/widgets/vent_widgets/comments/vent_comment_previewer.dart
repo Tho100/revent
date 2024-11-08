@@ -9,10 +9,12 @@ class VentCommentPreviewer extends StatelessWidget {
 
   final String commentedBy;
   final String comment;
+  final Uint8List pfpData;
 
   const VentCommentPreviewer({
     required this.commentedBy,
     required this.comment,
+    required this.pfpData,
     super.key
   });
 
@@ -20,7 +22,7 @@ class VentCommentPreviewer extends StatelessWidget {
     return ProfilePictureWidget(
       customHeight: 35,
       customWidth: 35,
-      pfpData: Uint8List(0)
+      pfpData: pfpData
     );
   }
 

@@ -9,31 +9,14 @@ import 'package:revent/pages/create_vent_page.dart';
 import 'package:revent/pages/follows_page.dart';
 import 'package:revent/pages/home_page.dart';
 import 'package:revent/pages/main_screen_page.dart';
-import 'package:revent/pages/navigations/notifications_page.dart';
-import 'package:revent/pages/navigations/my_profile_page.dart';
-import 'package:revent/pages/navigations/search_page.dart';
+import 'package:revent/pages/navigation/notifications_page.dart';
+import 'package:revent/pages/navigation/my_profile_page.dart';
+import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/user_profile_page.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
-class NavigatePage {
-
-  static void homePage() {
-    Navigator.pushAndRemoveUntil(
-      navigatorKey.currentContext!,
-      PageRouteBuilder(pageBuilder: (_, __, ___) => const HomePage(), 
-        transitionDuration: const Duration(microseconds: 0)
-      ),
-      (route) => false,
-    );
-  }
-
-  static void mainScreenPage() {
-    Navigator.pushReplacement(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const MainScreenPage()),
-    );
-  }
+class _DockBarNavigationPages {
 
   static void searchPage() {
     Navigator.push(
@@ -62,6 +45,39 @@ class NavigatePage {
     );
   }
 
+}
+
+class NavigatePage {
+
+  static void homePage() {
+    Navigator.pushAndRemoveUntil(
+      navigatorKey.currentContext!,
+      PageRouteBuilder(pageBuilder: (_, __, ___) => const HomePage(), 
+        transitionDuration: const Duration(microseconds: 0)
+      ),
+      (route) => false,
+    );
+  }
+
+  static void mainScreenPage() {
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const MainScreenPage()),
+    );
+  }
+
+  static void searchPage() {
+    _DockBarNavigationPages.searchPage();
+  }
+
+  static void notificationsPage() {
+    _DockBarNavigationPages.notificationsPage();
+  }
+
+  static void myProfilePage() {
+    _DockBarNavigationPages.myProfilePage();
+  }
+
   static void settingsPage() {
     Navigator.push(
       navigatorKey.currentContext!,
@@ -76,11 +92,10 @@ class NavigatePage {
     );
   }
 
-  static void createVentCommunityPage() {
-    
-  }
-
-  static void followsPage({required String pageType, required String username}) {
+  static void followsPage({
+    required String pageType, 
+    required String username
+  }) {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => FollowsPage(pageType: pageType, username: username)),
@@ -101,7 +116,10 @@ class NavigatePage {
     );
   }
 
-  static void userProfilePage({required String username, required Uint8List pfpData}) {
+  static void userProfilePage({
+    required String username, 
+    required Uint8List pfpData
+  }) {
 
     final userData = GetIt.instance<UserDataProvider>();
 

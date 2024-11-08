@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
+import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
@@ -18,6 +19,7 @@ class VentActions {
 
   final ventData = GetIt.instance<VentDataProvider>();
   final userData = GetIt.instance<UserDataProvider>();
+  final profileData = GetIt.instance<ProfileDataProvider>();
 
   Future<void> likePost() async {
 
@@ -175,7 +177,8 @@ class VentActions {
 
     final newComment = VentComment(
       commentedBy: userData.user.username, 
-      comment: comment
+      comment: comment,
+      pfpData: profileData.profilePicture
     );
 
     ventCommentProvider.addComment(newComment);

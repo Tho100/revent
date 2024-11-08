@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
-import 'package:revent/vent_query/vent_comments_getter.dart';
+import 'package:revent/vent_query/comment/vent_comments_getter.dart';
 
 class VentCommentSetup {
 
@@ -18,11 +18,13 @@ class VentCommentSetup {
 
     final commentedBy = commentsGetter['commented_by']!;
     final comment = commentsGetter['comment']!;
+    final pfpData = commentsGetter['profile_picture']!;
 
     final comments = List.generate(commentedBy.length, (index) {
       return VentComment(
         commentedBy: commentedBy[index],
         comment: comment[index],
+        pfpData: pfpData[index]
       );
     });
 
