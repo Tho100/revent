@@ -77,6 +77,20 @@ class VentPostPageState extends State<VentPostPage> {
 
   }
 
+  Future<void> _onPageRefresh() async {
+
+    try {
+
+      await CallRefresh().refreshVentPost(
+        title: widget.title, creator: widget.creator
+      );
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
+    }
+
+  }
+
   Future<void> _deletePostOnPressed() async {
 
     await CallVentActions(
@@ -267,8 +281,7 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildBody() {
     return RefreshIndicator(      
       color: ThemeColor.black,
-      onRefresh: () async => await CallRefresh()
-        .refreshVentPost(title: widget.title, creator: widget.creator),
+      onRefresh: () async => await _onPageRefresh(),
       child: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
         child: ScrollConfiguration(
