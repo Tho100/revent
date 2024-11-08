@@ -1,13 +1,17 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 
 class VentComment {
 
   String commentedBy;
   String comment;
+  Uint8List pfpData;
 
   VentComment({
     required this.commentedBy,
     required this.comment,
+    required this.pfpData
   });
 
 }

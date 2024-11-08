@@ -12,6 +12,7 @@ class VentCommentsListView extends StatelessWidget {
     return VentCommentPreviewer(
       commentedBy: ventComment.commentedBy,
       comment: ventComment.comment,
+      pfpData: ventComment.pfpData
     );
   }
 
