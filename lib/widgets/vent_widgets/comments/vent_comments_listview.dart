@@ -17,11 +17,8 @@ class VentCommentsListView extends StatelessWidget {
   }
 
   Widget _buildOnEmpty() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: EmptyPage()
-        .headerCustomMessage(header: 'No comment yet', subheader: 'Be the first to comment!'),
-    );
+    return EmptyPage()
+      .headerCustomMessage(header: 'No comment yet', subheader: 'Be the first to comment!');
   }
 
   @override

@@ -77,6 +77,20 @@ class VentPostPageState extends State<VentPostPage> {
 
   }
 
+  Future<void> _onPageRefresh() async {
+
+    try {
+
+      await CallRefresh().refreshVentPost(
+        title: widget.title, creator: widget.creator
+      );
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
+    }
+
+  }
+
   Future<void> _deletePostOnPressed() async {
 
     await CallVentActions(
@@ -267,10 +281,9 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildBody() {
     return RefreshIndicator(      
       color: ThemeColor.black,
-      onRefresh: () async => await CallRefresh()
-        .refreshVentPost(title: widget.title, creator: widget.creator),
+      onRefresh: () async => await _onPageRefresh(),
       child: Padding(
-        padding: const EdgeInsets.only(top: 20.0, left: 18.0, right: 18.0),
+        padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
         child: ScrollConfiguration(
           behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
           child: SingleChildScrollView(
@@ -303,18 +316,37 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
-  Widget _buildAddCommentFloatingButton() {
+  Widget _buildAddComment() {
     return Padding(
-      padding: const EdgeInsets.only(right: 4.0, bottom: 8.0),
-      child: FloatingActionButton(
-        backgroundColor: ThemeColor.white,
-        child: const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.mediumBlack),
+      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
+      child: InkWellEffect(
         onPressed: () {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title, creator: widget.creator))
           );
-        }
+        },              
+        child: Container(
+          height: 48,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: ThemeColor.thirdWhite)
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15.0),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Add a comment...',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.thirdWhite,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 13
+                ),
+              ),
+            ),
+          )
+        )
       ),
     );
   }
@@ -339,8 +371,8 @@ class VentPostPageState extends State<VentPostPage> {
         title: 'Vent',
         actions: [_buildActions()]
       ).buildAppBar(),
-      floatingActionButton: _buildAddCommentFloatingButton(),
       body: _buildBody(),  
+      bottomNavigationBar: _buildAddComment(),
     );
   }
 
