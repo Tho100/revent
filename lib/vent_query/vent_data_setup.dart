@@ -7,12 +7,9 @@ class VentDataSetup {
 
   final ventData = GetIt.instance<VentDataProvider>();
   
-  final ventDataGetter = VentDataGetter();
-  final profilePicGetter = ProfilePictureGetter();
-
   Future<void> setup() async {
 
-    final ventsInfo = await ventDataGetter.getVentsData();
+    final ventsInfo = await VentDataGetter().getVentsData();
 
     final titles = ventsInfo['title']! as List<String>;
     final bodyText = ventsInfo['body_text']! as List<String>;
@@ -23,6 +20,8 @@ class VentDataSetup {
     final totalComments = ventsInfo['total_comments']! as List<int>;
 
     final isLiked = ventsInfo['is_liked']! as List<bool>;
+
+    final profilePicGetter = ProfilePictureGetter();
 
     final profilePic = await Future.wait(
       creator.map((username) async => await profilePicGetter.getProfilePictures(username: username)

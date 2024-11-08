@@ -32,8 +32,7 @@ class CallRefresh {
 
     await ProfileDataSetup().setup(username: username);
 
-    final getPostsData = await ProfilePostsGetter()
-      .getPosts(username: username);
+    final getPostsData = await ProfilePostsGetter().getPosts(username: username);
 
     final title = getPostsData['title'] as List<String>;
     final totalLikes = getPostsData['total_likes'] as List<int>;
@@ -52,8 +51,9 @@ class CallRefresh {
 
     ventCommentProvider.deleteComments();
 
-    await VentCommentSetup()
-      .setup(title: title, creator: creator);
+    await VentCommentSetup().setup(
+      title: title, creator: creator
+    );
 
   }
 

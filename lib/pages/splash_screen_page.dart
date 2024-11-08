@@ -83,9 +83,7 @@ class SplashScreenState extends State<SplashScreen> {
       final getLocalAccountType = readLocalData['plan']!;
 
       if(getLocalUsername.isEmpty) {
-        if(mounted) {
-          NavigatePage.mainScreenPage();
-        }
+        NavigatePage.mainScreenPage();
         return;
       }
 
@@ -98,7 +96,8 @@ class SplashScreenState extends State<SplashScreen> {
       userData.setUser(userSetup);
 
       await _loadStartupData()
-        .then((value) => NavigatePage.homePage());
+        .then((value) => NavigatePage.homePage()
+      );
 
     } catch (err) {
       NavigatePage.mainScreenPage();

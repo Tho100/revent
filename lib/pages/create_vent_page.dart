@@ -18,8 +18,6 @@ class CreateVentPage extends StatefulWidget {
 
 class CreateVentPageState extends State<CreateVentPage> {
 
-  final createItem = CreateNewItem();
-
   final ventTitleController = TextEditingController();
   final ventBodyTextController = TextEditingController();
 
@@ -36,7 +34,7 @@ class CreateVentPageState extends State<CreateVentPage> {
 
     try {
 
-      await createItem.newVent(
+      await CreateNewItem().newVent(
         ventTitle: ventTitleController.text, 
         ventBodyText: ventBodyTextController.text
       ).then((value) => {

@@ -34,8 +34,9 @@ class ProfileDataSetup {
     required String username
   }) async {
 
-    final getProfileData = await ProfileDataGetter()
-      .getProfileData(isMyProfile: true, username: username);
+    final getProfileData = await ProfileDataGetter().getProfileData(
+      isMyProfile: true, username: username
+    );
 
     _setUserProfileInfo(
       followers: getProfileData['followers'], 

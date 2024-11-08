@@ -41,7 +41,11 @@ class LocalStorageModel {
 
   }
 
-  Future<void> setupLocalAccountInformation(String username, String email, String plan) async {
+  Future<void> setupLocalAccountInformation({
+    required String username, 
+    required String email, 
+    required String plan
+  }) async {
 
     final localDir = await _readLocalDirectory();
     
