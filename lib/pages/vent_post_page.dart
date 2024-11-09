@@ -125,7 +125,7 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildCommentButton() {
     return ActionsButton().buildCommentsButton(
       text: widget.totalComments.toString(), 
-      onPressed: () => print('Commented')
+      onPressed: () => {}
     );
   }
 
@@ -201,7 +201,7 @@ class VentPostPageState extends State<VentPostPage> {
 
   Widget _buildActions() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_circle),
+      icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
       onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
         context: context, 
         creator: widget.creator,
@@ -257,7 +257,7 @@ class VentPostPageState extends State<VentPostPage> {
         
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 5),
-          child: Divider(color: ThemeColor.darkWhite),
+          child: Divider(color: ThemeColor.lightGrey),
         ),
 
         const SizedBox(height: 10),

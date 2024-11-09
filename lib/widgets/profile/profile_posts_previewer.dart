@@ -75,7 +75,7 @@ class ProfilePostsPreviewer extends StatelessWidget {
             child: Row(
               children: [
 
-                const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 17),
+                const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 18),
 
                 const SizedBox(width: 6),
 
@@ -91,7 +91,7 @@ class ProfilePostsPreviewer extends StatelessWidget {
 
                 const Spacer(),
 
-                const Icon(CupertinoIcons.chevron_right, color: ThemeColor.thirdWhite, size: 17),
+                const Icon(CupertinoIcons.chevron_right, color: ThemeColor.lightGrey, size: 18),
 
               ],
             ),
@@ -110,10 +110,10 @@ class ProfilePostsPreviewer extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.transparent,
           border: Border.all(
-            color: ThemeColor.thirdWhite,
+            color: ThemeColor.lightGrey,
             width: 0.8,
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(18),
         ),
         child: _buildChild(),
       ),

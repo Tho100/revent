@@ -73,7 +73,7 @@ class VentPreviewerState extends State<VentPreviewer> {
   Widget _buildCommentButton() {
     return ActionsButton().buildCommentsButton(
       text: widget.totalComments.toString(), 
-      onPressed: () => print('Commented')
+      onPressed: () => _viewVentPostPage()
     );
   }
 
@@ -173,10 +173,10 @@ class VentPreviewerState extends State<VentPreviewer> {
         decoration: BoxDecoration(
           color: Colors.transparent,
           border: Border.all(
-            color: ThemeColor.thirdWhite,
+            color: ThemeColor.lightGrey,
             width: 0.8
           ),
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
           padding: const EdgeInsets.all(14.0),

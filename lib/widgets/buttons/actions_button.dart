@@ -20,7 +20,7 @@ class ActionsButton {
           backgroundColor: ThemeColor.black,
           shape: const StadiumBorder(
             side: BorderSide(
-              color: ThemeColor.thirdWhite
+              color: ThemeColor.lightGrey
             )
           ),
         ),
@@ -101,16 +101,19 @@ class ActionsButton {
   Widget buildSaveButton({
     required VoidCallback onPressed,
   }) {
-    return _buildActionButton(
-      onPressed: onPressed, 
-      child: Transform.translate(
-        offset: iconOffset,
-        child: const Icon(
-          CupertinoIcons.bookmark, 
-          color: ThemeColor.white,
-          size: 18.5, 
-        ),
-      ),          
+    return SizedBox(
+      width: 52,
+      child: _buildActionButton(
+        onPressed: onPressed, 
+        child: Transform.translate(
+          offset: iconOffset,
+          child: const Icon(
+            CupertinoIcons.bookmark, 
+            color: ThemeColor.white,
+            size: 18.5, 
+          ),
+        ),          
+      ),
     );
   }
 

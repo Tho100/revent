@@ -178,7 +178,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
   Widget _buildActionButton() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_circle),
+      icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
       onPressed: () => print('Pressed')
     );
   }
