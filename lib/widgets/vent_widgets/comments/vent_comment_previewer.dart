@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/bottomsheet_widgets/comment_actions.dart';
 import 'package:revent/widgets/profile_picture.dart';
@@ -41,10 +42,13 @@ class VentCommentPreviewer extends StatelessWidget {
   }
 
   Widget _buildProfilePicture() {
-    return ProfilePictureWidget(
-      customHeight: 35,
-      customWidth: 35,
-      pfpData: pfpData
+    return GestureDetector(
+      onTap: () => NavigatePage.userProfilePage(username: commentedBy, pfpData: pfpData),
+      child: ProfilePictureWidget(
+        customHeight: 35,
+        customWidth: 35,
+        pfpData: pfpData
+      ),
     );
   }
 
@@ -60,13 +64,16 @@ class VentCommentPreviewer extends StatelessWidget {
             Row(
               children: [
 
-                Text(
-                  commentedBy,
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 14
-                  )
+                GestureDetector(
+                  onTap: () => NavigatePage.userProfilePage(username: commentedBy, pfpData: pfpData),
+                  child: Text(
+                    commentedBy,
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.thirdWhite,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 14
+                    )
+                  ),
                 ),
 
                 const Spacer(),
