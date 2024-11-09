@@ -279,40 +279,52 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildBody() {
-    return RefreshIndicator(      
-      color: ThemeColor.black,
-      onRefresh: () async => await _onPageRefresh(),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
-        child: ScrollConfiguration(
-          behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
-          child: SingleChildScrollView(
-            physics: const AlwaysScrollableScrollPhysics(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-    
-                _buildProfileHeader(),
-    
-                const SizedBox(height: 18),
-    
-                _buildHeader(),
-    
-                _buildActionButtons(),
-    
-                const SizedBox(height: 20),
-    
-                _buildCommentsHeader(),
-    
-                const SizedBox(height: 25),
-    
-                const VentCommentsListView()
-    
-              ],
+    return Consumer<VentCommentProvider>(
+      builder: (_, commentData, __) {
+        return RefreshIndicator(      
+          color: ThemeColor.black,
+          onRefresh: () async => await _onPageRefresh(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(
+                  parent: commentData.ventComments.isEmpty 
+                    ? const ClampingScrollPhysics() : const BouncingScrollPhysics()
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+        
+                    _buildProfileHeader(),
+        
+                    const SizedBox(height: 18),
+        
+                    _buildHeader(),
+        
+                    _buildActionButtons(),
+        
+                    const SizedBox(height: 20),
+        
+                    _buildCommentsHeader(),
+        
+                    const SizedBox(height: 25),
+        
+                    VentCommentsListView(
+                      title: widget.title, 
+                      creator: widget.creator
+                    ),
+        
+                    const SizedBox(height: 10),
+
+                  ],
+                ),
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
