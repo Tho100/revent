@@ -5,21 +5,47 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/vent_query/comment/vent_comment_actions.dart';
 import 'package:revent/widgets/bottomsheet_widgets/comment_actions.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
 class VentCommentPreviewer extends StatelessWidget {
 
+  final String title;
+  final String creator;
+
   final String commentedBy;
   final String comment;
+
   final Uint8List pfpData;
 
   const VentCommentPreviewer({
+    required this.title,
+    required this.creator,
     required this.commentedBy,
     required this.comment,
     required this.pfpData,
     super.key
   });
+
+  Future<void> _deleteOnPressed() async {
+
+    try {
+
+      await VentCommentActions(
+        username: commentedBy, 
+        commentText: comment, 
+        ventCreator: creator, 
+        ventTitle: title
+      ).delete().then((value) => SnackBarDialog.temporarySnack(message: 'Comment deleted'));
+
+    } catch (err) {
+      print(err.toString());
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
+    }
+    
+  }
 
   Widget _buildCommentActionButton() {
     return SizedBox(
@@ -29,9 +55,17 @@ class VentCommentPreviewer extends StatelessWidget {
         onPressed: () => BottomsheetCommentActions().buildBottomsheet(
           context: navigatorKey.currentContext!, 
           commenter: commentedBy, 
-          copyOnPressed: () => Clipboard.setData(ClipboardData(text: comment)), 
-          reportOnPressed: () {}, 
-          deleteOnPressed: () {}
+          copyOnPressed: () {
+            Clipboard.setData(ClipboardData(text: comment));
+            Navigator.pop(navigatorKey.currentContext!);
+          }, 
+          reportOnPressed: () {
+            Navigator.pop(navigatorKey.currentContext!);
+          }, 
+          deleteOnPressed: () async {  
+            await _deleteOnPressed();
+            Navigator.pop(navigatorKey.currentContext!);
+          }
         ),
         icon: Transform.translate(
           offset: const Offset(0, -10),

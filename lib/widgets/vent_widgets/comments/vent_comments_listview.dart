@@ -6,10 +6,19 @@ import 'package:revent/widgets/vent_widgets/comments/vent_comment_previewer.dart
 
 class VentCommentsListView extends StatelessWidget {
 
-  const VentCommentsListView({super.key});
+  final String title;
+  final String creator;
+
+  const VentCommentsListView({
+    required this.title,
+    required this.creator,
+    super.key
+  });
 
   Widget _buildCommentPreview(VentComment ventComment) {
     return VentCommentPreviewer(
+      title: title,
+      creator: creator,
       commentedBy: ventComment.commentedBy,
       comment: ventComment.comment,
       pfpData: ventComment.pfpData
