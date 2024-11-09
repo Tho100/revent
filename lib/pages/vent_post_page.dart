@@ -125,7 +125,7 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildCommentButton() {
     return ActionsButton().buildCommentsButton(
       text: widget.totalComments.toString(), 
-      onPressed: () => print('Commented')
+      onPressed: () => {}
     );
   }
 

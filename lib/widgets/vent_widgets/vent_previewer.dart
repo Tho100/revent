@@ -73,7 +73,7 @@ class VentPreviewerState extends State<VentPreviewer> {
   Widget _buildCommentButton() {
     return ActionsButton().buildCommentsButton(
       text: widget.totalComments.toString(), 
-      onPressed: () => print('Commented')
+      onPressed: () => _viewVentPostPage()
     );
   }
 
