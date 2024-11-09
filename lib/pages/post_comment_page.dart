@@ -106,7 +106,7 @@ class PostCommentPageState extends State<PostCommentPage> {
 
               const SizedBox(height: 12),
 
-              const Divider(color: ThemeColor.darkWhite),
+              const Divider(color: ThemeColor.lightGrey),
 
               const SizedBox(height: 30),
         

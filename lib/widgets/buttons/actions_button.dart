@@ -20,7 +20,7 @@ class ActionsButton {
           backgroundColor: ThemeColor.black,
           shape: const StadiumBorder(
             side: BorderSide(
-              color: ThemeColor.darkWhite
+              color: ThemeColor.lightGrey
             )
           ),
         ),

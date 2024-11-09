@@ -173,7 +173,7 @@ class VentPreviewerState extends State<VentPreviewer> {
         decoration: BoxDecoration(
           color: Colors.transparent,
           border: Border.all(
-            color: ThemeColor.darkWhite,
+            color: ThemeColor.lightGrey,
             width: 0.8
           ),
           borderRadius: BorderRadius.circular(20),
