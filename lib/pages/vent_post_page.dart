@@ -201,7 +201,7 @@ class VentPostPageState extends State<VentPostPage> {
 
   Widget _buildActions() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_circle),
+      icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
       onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
         context: context, 
         creator: widget.creator,
