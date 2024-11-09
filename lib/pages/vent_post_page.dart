@@ -314,8 +314,10 @@ class VentPostPageState extends State<VentPostPage> {
                     VentCommentsListView(
                       title: widget.title, 
                       creator: widget.creator
-                    )
+                    ),
         
+                    const SizedBox(height: 10),
+
                   ],
                 ),
               ),
