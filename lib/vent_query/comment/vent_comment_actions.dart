@@ -22,7 +22,8 @@ class VentCommentActions {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = 'DELETE FROM vent_comments_info WHERE commented_by = :commented_by AND comment = :comment AND title = :title AND creator = :creator';
+    const query = 
+      'DELETE FROM vent_comments_info WHERE commented_by = :commented_by AND comment = :comment AND title = :title AND creator = :creator';
 
     final params = {
       'commented_by': username,
