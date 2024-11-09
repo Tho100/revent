@@ -34,7 +34,7 @@ class VentCommentPreviewer extends StatelessWidget {
         ),
         icon: Transform.translate(
           offset: const Offset(0, -10),
-          child: const Icon(CupertinoIcons.ellipsis_vertical, color: ThemeColor.thirdWhite, size: 18)
+          child: const Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
         )
       ),
     );
