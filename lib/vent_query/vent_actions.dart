@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
+import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
@@ -175,9 +176,13 @@ class VentActions {
 
     final ventCommentProvider = GetIt.instance<VentCommentProvider>();
 
+    final now = DateTime.now();
+    final formattedTimestamp = FormatDate().formatPostTimestamp(now);
+
     final newComment = VentComment(
       commentedBy: userData.user.username, 
       comment: comment,
+      commentTimestamp: formattedTimestamp,
       pfpData: profileData.profilePicture
     );
 
