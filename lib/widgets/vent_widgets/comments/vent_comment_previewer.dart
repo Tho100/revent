@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/themes/theme_style.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/comment/vent_comment_actions.dart';
 import 'package:revent/widgets/bottomsheet_widgets/comment_actions.dart';
@@ -17,6 +18,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
   final String commentedBy;
   final String comment;
+  final String commentTimestamp;
 
   final Uint8List pfpData;
 
@@ -25,6 +27,7 @@ class VentCommentPreviewer extends StatelessWidget {
     required this.creator,
     required this.commentedBy,
     required this.comment,
+    required this.commentTimestamp,
     required this.pfpData,
     super.key
   });
@@ -107,6 +110,15 @@ class VentCommentPreviewer extends StatelessWidget {
                       fontSize: 14
                     )
                   ),
+                ),
+
+                Text(
+                  ' ${ThemeStyle.dotSeparator} $commentTimestamp',
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.thirdWhite,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 13
+                  )
                 ),
 
                 const Spacer(),

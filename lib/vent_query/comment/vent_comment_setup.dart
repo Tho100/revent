@@ -18,12 +18,14 @@ class VentCommentSetup {
 
     final commentedBy = commentsGetter['commented_by']!;
     final comment = commentsGetter['comment']!;
+    final commentTimestamp = commentsGetter['comment_timestamp']!;
     final pfpData = commentsGetter['profile_picture']!;
 
     final comments = List.generate(commentedBy.length, (index) {
       return VentComment(
         commentedBy: commentedBy[index],
         comment: comment[index],
+        commentTimestamp: commentTimestamp[index],
         pfpData: pfpData[index]
       );
     });

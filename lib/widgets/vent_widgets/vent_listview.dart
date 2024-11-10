@@ -1,3 +1,4 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
@@ -27,12 +28,13 @@ class VentListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<VentDataProvider>(
       builder: (_, ventData, __) {
-        return ListView.builder(
+        return DynamicHeightGridView(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics()
           ),
+          crossAxisCount: 1,
           itemCount: ventData.vents.length,
-          itemBuilder: (_, index) {
+          builder: (_, index) {
             final reversedVentIndex = ventData.vents.length - 1 - index;
             final vents = ventData.vents[reversedVentIndex]; 
             return _buildVentPreview(vents);

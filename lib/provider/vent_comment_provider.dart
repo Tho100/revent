@@ -6,11 +6,13 @@ class VentComment {
 
   String commentedBy;
   String comment;
+  String commentTimestamp;
   Uint8List pfpData;
 
   VentComment({
     required this.commentedBy,
     required this.comment,
+    required this.commentTimestamp,
     required this.pfpData
   });
 

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
+import 'package:revent/model/format_date.dart';
 
 class VentCommentsGetter {
 
@@ -13,13 +14,16 @@ class VentCommentsGetter {
     required this.creator
   });
 
+  final formatTimestamp = FormatDate();
+
   Future<Map<String, List<dynamic>>> getComments() async {
 
     final conn = await ReventConnect.initializeConnection();
 
     const getCommentsQuery = '''
       SELECT vent_comments_info.comment, 
-            vent_comments_info.commented_by, 
+            vent_comments_info.commented_by,
+            vent_comments_info.created_at, 
             user_profile_info.profile_picture 
       FROM vent_comments_info 
       JOIN user_profile_info 
@@ -39,6 +43,13 @@ class VentCommentsGetter {
 
     final comment = extractedData.extractStringColumn('comment');
     final commentedBy = extractedData.extractStringColumn('commented_by');
+
+    final commentTimestamp = results.rows.map((row) {
+      final createdAtValue = row.assoc()['created_at'];
+      final createdAt = DateTime.parse(createdAtValue!);
+      return formatTimestamp.formatPostTimestamp(createdAt);
+    }).toList();
+
     final profilePictures = extractedData.extractStringColumn('profile_picture')
       .map((pfp) => base64Decode(pfp))
       .toList();
@@ -46,6 +57,7 @@ class VentCommentsGetter {
     return {
       'commented_by': commentedBy,
       'comment': comment,
+      'comment_timestamp': commentTimestamp,
       'profile_picture': profilePictures
     };
 

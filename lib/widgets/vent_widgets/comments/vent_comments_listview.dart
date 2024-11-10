@@ -21,6 +21,7 @@ class VentCommentsListView extends StatelessWidget {
       creator: creator,
       commentedBy: ventComment.commentedBy,
       comment: ventComment.comment,
+      commentTimestamp: ventComment.commentTimestamp,
       pfpData: ventComment.pfpData
     );
   }

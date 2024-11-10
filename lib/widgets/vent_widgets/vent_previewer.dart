@@ -129,47 +129,41 @@ class VentPreviewerState extends State<VentPreviewer> {
   }
 
   Widget _buildTitle(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width-90,
-      child: Text(
-        widget.title,
-        style: GoogleFonts.inter(
-          color: ThemeColor.white,
-          fontWeight: FontWeight.w800,
-          fontSize: 16
-        ),
-        overflow: TextOverflow.fade,
-        softWrap: false,
+    return Text(
+      widget.title,
+      style: GoogleFonts.inter(
+        color: ThemeColor.white,
+        fontWeight: FontWeight.w800,
+        fontSize: 16
       ),
+      overflow: widget.bodyText.isEmpty ? TextOverflow.ellipsis : TextOverflow.fade,
+      softWrap: true,
+      maxLines: 2,
     );
   }
 
   Widget _buildBodyText() {
-    return Expanded(
-      child: Text(
-        widget.bodyText,
-        style: GoogleFonts.inter(
-          color: ThemeColor.secondaryWhite,
-          fontWeight: FontWeight.w800,
-          fontSize: 12.7
-        ),
-        overflow: TextOverflow.ellipsis,
-        maxLines: 2
+    return Text(
+      widget.bodyText,
+      style: GoogleFonts.inter(
+        color: ThemeColor.secondaryWhite,
+        fontWeight: FontWeight.w800,
+        fontSize: 12.7
       ),
+      overflow: TextOverflow.ellipsis,
+      maxLines: 2
     );
   }
 
   @override
   Widget build(BuildContext context) {
 
-    final containerHeight = widget.bodyText.isEmpty ? 160.0 : 221.0;
-    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 22.0;
-    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 12.0 : 26.0;
+    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 15.0;
+    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 15.0;
 
     return InkWellEffect(
       onPressed: () => _viewVentPostPage(),
       child: Container(
-        height: containerHeight,
         decoration: BoxDecoration(
           color: Colors.transparent,
           border: Border.all(
