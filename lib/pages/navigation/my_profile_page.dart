@@ -178,7 +178,14 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
   Widget _buildActionButton() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
+      icon: const Icon(CupertinoIcons.bars, size: 28),
+      onPressed: () => NavigatePage.settingsPage()
+    );
+  }
+
+  Widget _buildLeadingButton() {
+    return IconButton(
+      icon: const Icon(CupertinoIcons.lock, size: 24),
       onPressed: () => print('Pressed')
     );
   }
@@ -208,7 +215,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
         appBar: CustomAppBar(
           context: context, 
           title: '',
-          customBackOnPressed: () => NavigatePage.homePage(),
+          customLeading: _buildLeadingButton(),
           actions: [_buildActionButton()]
         ).buildAppBar(),
         body: _buildBody(),

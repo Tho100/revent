@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/call_refresh.dart';
-import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
+import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/vent_widgets/vent_listview.dart';
 
 class HomePage extends StatefulWidget {
@@ -61,12 +61,32 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   Widget _buildActionButton() {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 12),
-      child: IconButton(
-        icon: const Icon(CupertinoIcons.gear, size: 28),
-        color: ThemeColor.thirdWhite,
-        onPressed: () => NavigatePage.settingsPage(),
+      padding: const EdgeInsets.only(top: 10, right: 8),
+      child: InkWellEffect(
+      onPressed: () => print('Filter'),
+      child: Row(
+        children: [
+  
+          const SizedBox(width: 10),
+
+          const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
+  
+          const SizedBox(width: 8),
+  
+          Text(
+            'Best',
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 15
+            )
+          ),
+
+          const SizedBox(width: 10),
+  
+        ],
       ),
+      )
     );
   }
 
