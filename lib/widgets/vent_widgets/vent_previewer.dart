@@ -128,7 +128,7 @@ class VentPreviewerState extends State<VentPreviewer> {
     );
   }
 
-  Widget _buildTitle(BuildContext context) {
+  Widget _buildTitle() {
     return Text(
       widget.title,
       style: GoogleFonts.inter(
@@ -138,7 +138,7 @@ class VentPreviewerState extends State<VentPreviewer> {
       ),
       overflow: widget.bodyText.isEmpty ? TextOverflow.ellipsis : TextOverflow.fade,
       softWrap: true,
-      maxLines: 2,
+      maxLines: 2
     );
   }
 
@@ -151,7 +151,7 @@ class VentPreviewerState extends State<VentPreviewer> {
         fontSize: 12.7
       ),
       overflow: TextOverflow.ellipsis,
-      maxLines: 2
+      maxLines: 4
     );
   }
 
@@ -182,7 +182,7 @@ class VentPreviewerState extends State<VentPreviewer> {
         
               const SizedBox(height: 14),
         
-              _buildTitle(context),
+              _buildTitle(),
         
               const SizedBox(height: 12),
         

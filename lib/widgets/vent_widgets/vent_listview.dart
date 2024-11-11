@@ -10,7 +10,7 @@ class VentListView extends StatelessWidget {
 
   Widget _buildVentPreview(Vent ventData) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12.5),
+      padding: const EdgeInsets.only(bottom: 8.5),
       child: VentPreviewer(
         title: ventData.title,
         bodyText: ventData.bodyText,
