@@ -65,7 +65,7 @@ class ProfilePostsPreviewer extends StatelessWidget {
             ),
             textAlign: TextAlign.start,
             overflow: TextOverflow.ellipsis,
-            maxLines: 4,
+            maxLines: 7,
           ),
 
           const SizedBox(height: 25), 
