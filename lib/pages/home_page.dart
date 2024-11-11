@@ -63,29 +63,29 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     return Padding(
       padding: const EdgeInsets.only(top: 10, right: 8),
       child: InkWellEffect(
-      onPressed: () => print('Filter'),
-      child: Row(
-        children: [
-  
-          const SizedBox(width: 10),
+        onPressed: () => print('Filter'),
+        child: Row(
+          children: [
+    
+            const SizedBox(width: 10),
 
-          const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
-  
-          const SizedBox(width: 8),
-  
-          Text(
-            'Best',
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w800,
-              fontSize: 15
-            )
-          ),
+            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
+    
+            const SizedBox(width: 8),
+    
+            Text(
+              'Best',
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontWeight: FontWeight.w800,
+                fontSize: 15
+              )
+            ),
 
-          const SizedBox(width: 10),
-  
-        ],
-      ),
+            const SizedBox(width: 10),
+    
+          ],
+        ),
       )
     );
   }
