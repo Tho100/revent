@@ -11,7 +11,6 @@ import 'package:revent/pages/post_comment_page.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/themes/theme_style.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/comment/vent_comment_setup.dart';
@@ -149,14 +148,25 @@ class VentPostPageState extends State<VentPostPage> {
           const SizedBox(width: 10),
     
           Text(
-            '@${widget.creator} ${ThemeStyle.dotSeparator} ${widget.postTimestamp}',
+            '@${widget.creator}',
             style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
+              color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,
               fontSize: 14.5
             ),
           ),
+
+          const SizedBox(width: 8),
         
+          Text(
+            widget.postTimestamp,
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 14
+            ),
+          ),
+
         ],
       ),
     );

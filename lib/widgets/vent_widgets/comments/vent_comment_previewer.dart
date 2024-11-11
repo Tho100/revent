@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
@@ -22,7 +24,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
   final Uint8List pfpData;
 
-  const VentCommentPreviewer({
+  VentCommentPreviewer({
     required this.title,
     required this.creator,
     required this.commentedBy,
@@ -31,6 +33,8 @@ class VentCommentPreviewer extends StatelessWidget {
     required this.pfpData,
     super.key
   });
+
+  final userData = GetIt.instance<UserDataProvider>();
 
   Future<void> _deleteOnPressed() async {
 
@@ -105,21 +109,24 @@ class VentCommentPreviewer extends StatelessWidget {
                   child: Text(
                     commentedBy,
                     style: GoogleFonts.inter(
-                      color: ThemeColor.thirdWhite,
+                      color: ThemeColor.secondaryWhite,
                       fontWeight: FontWeight.w800,
                       fontSize: 14
                     )
                   ),
                 ),
 
+                const SizedBox(width: 8),
+
                 Text(
-                  ' ${ThemeStyle.dotSeparator} $commentTimestamp',
+                  '$commentTimestamp ${commentedBy == creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
                   style: GoogleFonts.inter(
                     color: ThemeColor.thirdWhite,
                     fontWeight: FontWeight.w800,
-                    fontSize: 13
-                  )
+                    fontSize: 13,
+                  ),
                 ),
+
 
                 const Spacer(),
 
@@ -127,6 +134,8 @@ class VentCommentPreviewer extends StatelessWidget {
 
               ],
             ),
+
+            const SizedBox(height: 2),
             
             Padding(
               padding: const EdgeInsets.only(right: 25.0),
