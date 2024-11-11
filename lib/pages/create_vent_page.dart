@@ -25,7 +25,7 @@ class CreateVentPageState extends State<CreateVentPage> {
 
   final hintTextColor = ThemeColor.thirdWhite;
 
-  Future<void> _createVentOnPressed(BuildContext context) async {
+  Future<void> _createVentOnPressed() async {
 
     if(ventTitleController.text.isEmpty) {
       CustomAlertDialog.alertDialog('Please enter vent title.');
@@ -75,7 +75,7 @@ class CreateVentPageState extends State<CreateVentPage> {
     );
   }  
 
-  Widget _buildBodyTextField(BuildContext context) { // TODO: Remove unused context param
+  Widget _buildBodyTextField() { 
     return Transform.translate(
       offset: const Offset(0, -25),
       child: TextFormField(
@@ -102,7 +102,7 @@ class CreateVentPageState extends State<CreateVentPage> {
     );
   }  
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return SingleChildScrollView(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -117,7 +117,7 @@ class CreateVentPageState extends State<CreateVentPage> {
         
           Padding(
             padding: const EdgeInsets.only(left: 17.0, right: 14.0),
-            child: _buildBodyTextField(context),
+            child: _buildBodyTextField(),
           ),
             
         ],
@@ -125,13 +125,13 @@ class CreateVentPageState extends State<CreateVentPage> {
     );
   }
 
-  Widget _buildActionButton(BuildContext context) {
+  Widget _buildActionButton() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: MainButton(
         customWidth: 100,
         text: 'Post', 
-        onPressed: () async => _createVentOnPressed(context),
+        onPressed: () async => _createVentOnPressed(),
       ),
     );
   }
@@ -188,9 +188,9 @@ class CreateVentPageState extends State<CreateVentPage> {
         context: context, 
         enableCenter: false,
         title: 'New vent',
-        actions: [_buildActionButton(context)],
+        actions: [_buildActionButton()],
       ).buildAppBar(),
-      body: _buildBody(context),
+      body: _buildBody(),
       bottomNavigationBar: _buildBottomOptions(),
     );
   }
