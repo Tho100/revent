@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/model/user_model.dart';
-import 'package:revent/pages/setttings/account/account_information.dart';
+import 'package:revent/pages/setttings/account_info_page.dart';
+import 'package:revent/pages/setttings/security_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -20,39 +20,10 @@ class SettingsPage extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(IconData icon, String message) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 16, 
-        vertical: 8
-      ),
-      child: Row(
-        children: [
-    
-          Padding(
-            padding: const EdgeInsets.only(bottom: 4.0),
-            child: Icon(icon, color: ThemeColor.thirdWhite, size: 24),
-          ),
-
-          const SizedBox(width: 8),
-
-          Text(
-            message,
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w700,
-              fontSize: 15
-            ),
-          )
-          
-        ]
-      ),
-    );
-  }
-
   Widget _buildBody(BuildContext context) {
 
-    const buttonHeightGap = 8.0;
+    const buttonGap = 8.0;
+    const newTopicButtonGap = 25.0;
 
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
@@ -61,11 +32,10 @@ class SettingsPage extends StatelessWidget {
           height: MediaQuery.of(context).size.height * 0.87,
           child: Column(
             children: [
-            
-              _buildHeader(CupertinoIcons.profile_circled, 'Account'),
-            
+                        
               SettingsButton(
                 text: 'Account information', 
+                icon: CupertinoIcons.person,
                 onPressed: () {
                   Navigator.push(
                     context, 
@@ -74,42 +44,65 @@ class SettingsPage extends StatelessWidget {
                 }
               ),
             
-              const SizedBox(height: buttonHeightGap),
+              const SizedBox(height: buttonGap),
               
               SettingsButton(
                 text: 'Privacy', 
+                icon: CupertinoIcons.lock,
                 onPressed: () {}
               ),
             
-              const SizedBox(height: buttonHeightGap),
+              const SizedBox(height: buttonGap),
+              
+              SettingsButton(
+                text: 'Security', 
+                icon: CupertinoIcons.shield,
+                onPressed: () {
+                  Navigator.push(
+                    context, 
+                    MaterialPageRoute(builder: (_) => const SecurityPage())
+                  );
+                }
+              ),
+
+              const SizedBox(height: buttonGap),
               
               SettingsButton(
                 text: 'Blocked', 
+                icon: CupertinoIcons.clear_circled,
                 onPressed: () {}
               ),
 
-              const Spacer(),
-        
-              Padding(
-                padding: const EdgeInsets.only(bottom: 18.0),
-                child: SettingsButton(
-                  text: 'Sign out', 
-                  isSignOutButton: true,
-                  onPressed: () => _signOutOnPressed()
-                ),
+              const SizedBox(height: newTopicButtonGap),
+
+              SettingsButton(
+                text: 'Liked', 
+                icon: CupertinoIcons.heart,
+                onPressed: () {}
+              ),
+            
+              const SizedBox(height: buttonGap),
+              
+              SettingsButton(
+                text: 'Saved', 
+                icon: CupertinoIcons.bookmark,
+                onPressed: () {}
               ),
 
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10.0),
-                child: Text(
-                  'v1.0.0',
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.secondaryWhite,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 13
-                  ),
-                ),
-              )
+              const SizedBox(height: 16),
+
+              const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 18.0),
+                child: Divider(color: ThemeColor.lightGrey),
+              ),
+
+              const SizedBox(height: 8),
+
+              SettingsButton(
+                text: 'Sign out', 
+                makeRed: true,
+                onPressed: () => _signOutOnPressed()
+              ),
               
             ]
           ),
