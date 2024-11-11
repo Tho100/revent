@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,14 +6,16 @@ import 'package:google_fonts/google_fonts.dart';
 class SettingsButton extends StatelessWidget {
 
   final String text;
+  final IconData? icon;
   final VoidCallback onPressed;
 
-  final bool? isSignOutButton;
+  final bool? makeRed;
 
   const SettingsButton({
     required this.text,
     required this.onPressed,
-    this.isSignOutButton,
+    this.icon,
+    this.makeRed,
     super.key,
   });
 
@@ -36,21 +39,30 @@ class SettingsButton extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
+                      if(icon != null) ... [
+
+                        Icon(icon, color: ThemeColor.white, size: 21),
+
+                        const SizedBox(width: 14)
+
+                      ],
+
                       Text(
                         text,
                         style: GoogleFonts.inter(
-                          color: isSignOutButton == true ? ThemeColor.darkRed : ThemeColor.white,
+                          color: makeRed == true ? ThemeColor.darkRed : ThemeColor.white,
                           fontWeight: FontWeight.w800,
-                          fontSize: 22
+                          fontSize: 19
                         ),
                         textAlign: TextAlign.center,
                       ),
 
                       const Spacer(),
 
+                      if(makeRed != true)
                       Icon(
                         Icons.arrow_forward_ios, 
-                        color: isSignOutButton == true ? ThemeColor.darkRed : ThemeColor.thirdWhite, 
+                        color: makeRed == true ? ThemeColor.darkRed : ThemeColor.thirdWhite, 
                         size: 20
                       ),
                       

@@ -63,6 +63,7 @@ class CreateVentPageState extends State<CreateVentPage> {
         fontSize: 24
       ),
       decoration: InputDecoration(
+        counterText: '',
         hintStyle: GoogleFonts.inter(
           color: hintTextColor,
           fontWeight: FontWeight.w800, 
@@ -77,7 +78,7 @@ class CreateVentPageState extends State<CreateVentPage> {
 
   Widget _buildBodyTextField() { 
     return Transform.translate(
-      offset: const Offset(0, -25),
+      offset: const Offset(0, -5),
       child: TextFormField(
         controller: ventBodyTextController,
         keyboardType: TextInputType.multiline,
@@ -89,6 +90,7 @@ class CreateVentPageState extends State<CreateVentPage> {
           fontSize: 16
         ),
         decoration: InputDecoration(
+          counterText: '',
           hintStyle: GoogleFonts.inter(
             color: hintTextColor,
             fontWeight: FontWeight.w700, 
