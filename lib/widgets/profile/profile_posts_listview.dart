@@ -40,6 +40,23 @@ class ProfilePostsListView extends StatelessWidget {
     return EmptyPage().customMessage(message: 'No vent posted yet.');
   }
 
+  Widget _buildListView({
+    required int itemCount,
+    required List<String> titles,
+    required List<int> totalLikes, 
+  }) {
+    return StaggeredGridView.countBuilder(
+      crossAxisCount: 2,
+      itemCount: itemCount,
+      itemBuilder: (_, index) {
+        return _buildPreviewer(titles[index], totalLikes[index]);
+      },
+      staggeredTileBuilder: (_) => const StaggeredTile.fit(1),
+      mainAxisSpacing: 2.0,
+      crossAxisSpacing: 2.0,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfilePostsProvider>(
@@ -54,20 +71,11 @@ class ProfilePostsListView extends StatelessWidget {
           : postsData.userProfileTotalLikes;
         
         final isPostsEmpty = titles.isEmpty;
-        final itemCount = isPostsEmpty ? 1 : titles.length;
+        final itemCount = titles.length;
 
         return isPostsEmpty 
           ? _buildOnEmpty() 
-          : StaggeredGridView.countBuilder(
-            crossAxisCount: 2,
-            itemCount: itemCount,
-            itemBuilder: (_, index) {
-              return _buildPreviewer(titles[index], totalLikes[index]);
-            },
-            staggeredTileBuilder: (_) => const StaggeredTile.fit(1),
-            mainAxisSpacing: 2.0,
-            crossAxisSpacing: 2.0,
-          );
+          : _buildListView(itemCount: itemCount, titles: titles, totalLikes: totalLikes);
       },
     );
   }

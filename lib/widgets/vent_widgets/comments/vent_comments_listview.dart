@@ -28,11 +28,27 @@ class VentCommentsListView extends StatelessWidget {
 
   Widget _buildOnEmpty() {
     return Padding(
-      padding: const EdgeInsets.only(top: 55),
+      padding: const EdgeInsets.only(top: 25),
       child: EmptyPage().headerCustomMessage(
         header: 'No comment yet', 
         subheader: 'Be the first to comment!'
       ),
+    );
+  }
+
+  Widget _buildListView({
+    required VentCommentProvider commentData,
+    required int commentsCount,
+  }) {
+    return ListView.builder(
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: commentsCount,
+      itemBuilder: (_, index) {
+        final reversedIndex = commentData.ventComments.length - 1 - index;
+        final ventComment = commentData.ventComments[reversedIndex];
+        return _buildCommentPreview(ventComment);
+      }
     );
   }
 
@@ -42,26 +58,11 @@ class VentCommentsListView extends StatelessWidget {
       builder: (_, commentData, __) {
 
         final isCommentsEmpty = commentData.ventComments.isEmpty;
-        final commentsCount = isCommentsEmpty ? 1 : commentData.ventComments.length;
+        final commentsCount = commentData.ventComments.length;
 
-        return ListView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemCount: commentsCount,
-          itemBuilder: (_, index) {
-
-            if(isCommentsEmpty) {
-              return _buildOnEmpty();
-
-            } else {
-              final reversedIndex = commentData.ventComments.length - 1 - index;
-              final ventComment = commentData.ventComments[reversedIndex];
-              return _buildCommentPreview(ventComment);
-
-            }
-
-          }
-        );
+        return isCommentsEmpty 
+          ? _buildOnEmpty()
+          : _buildListView(commentData: commentData, commentsCount: commentsCount);
       },
     );
   }
