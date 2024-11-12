@@ -38,7 +38,8 @@ class UserRegistrationService {
     await _saveUserData(hashPassword: hashPassword);
 
     await VentDataSetup().setup()
-      .then((value) => NavigatePage.homePage());
+      .then((value) => NavigatePage.homePage()
+    );
 
   }
 
@@ -47,7 +48,7 @@ class UserRegistrationService {
     if (data.rows.isNotEmpty) {
       if(context.mounted) {
         Navigator.pop(context);
-        CustomAlertDialog.alertDialog(errorMessage);
+        CustomAlertDialog.alertDialogTitle('Sign up failed', errorMessage);
       }
       return;
     }

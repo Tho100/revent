@@ -227,7 +227,7 @@ class VentPostPageState extends State<VentPostPage> {
           CustomAlertDialog.alertDialogCustomOnPress(
             message: 'Delete this post?', 
             buttonMessage: 'Delete',
-            onPressedEvent: () async => _deletePostOnPressed()
+            onPressedEvent: () async => await _deletePostOnPressed()
           );
         }
       )
@@ -310,7 +310,7 @@ class VentPostPageState extends State<VentPostPage> {
         
                     _buildActionButtons(),
         
-                    const SizedBox(height: 20),
+                    const SizedBox(height: 15),
         
                     _buildCommentsHeader(),
         
