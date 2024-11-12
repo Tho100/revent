@@ -27,7 +27,6 @@ class CustomAlertDialog {
         );
       }
     );
-
   }
   
   static Future alertDialogTitle(String title, String messages) {

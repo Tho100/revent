@@ -16,23 +16,27 @@ class UserRegistrationService {
     required String username,
     required String email,
     required String hashPassword,
-    required BuildContext context
+    required BuildContext context,
   }) async {
-    
+
     final getUsername = await _getDataInfo(
       'SELECT username FROM user_information WHERE username = :username',
-      {"username": username}
-    ); 
+      {"username": username},
+    );
 
-    _showWarningOnDataAlreadyExists(context, getUsername, 'Username is taken.');
+    if (_showWarningOnDataAlreadyExists(context, getUsername, 'Username is taken.')) {
+      return;
+    }
 
     final getEmail = await _getDataInfo(
       'SELECT email FROM user_information WHERE email = :email',
       {"email": email},
     );
-    
-    _showWarningOnDataAlreadyExists(context, getEmail, 'Email already exists.');
-    
+
+    if (_showWarningOnDataAlreadyExists(context, getEmail, 'Account with this email already exists.')) {
+      return;
+    }
+
     _setUserProfileData(username: username, email: email);
 
     await _saveUserData(hashPassword: hashPassword);
@@ -43,15 +47,19 @@ class UserRegistrationService {
 
   }
 
-  void _showWarningOnDataAlreadyExists(BuildContext context, IResultSet data, String errorMessage) {
+  bool _showWarningOnDataAlreadyExists(BuildContext context, IResultSet data, String errorMessage) {
 
     if (data.rows.isNotEmpty) {
-      if(context.mounted) {
-        Navigator.pop(context);
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         CustomAlertDialog.alertDialogTitle('Sign up failed', errorMessage);
-      }
-      return;
+      });
+
+      return true;
+
     }
+
+    return false; 
 
   }
 
