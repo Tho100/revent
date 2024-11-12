@@ -63,7 +63,7 @@ class SettingsButton extends StatelessWidget {
                       Icon(
                         Icons.arrow_forward_ios, 
                         color: makeRed == true ? ThemeColor.darkRed : ThemeColor.thirdWhite, 
-                        size: 20
+                        size: 18
                       ),
                       
                       const SizedBox(width: 25),

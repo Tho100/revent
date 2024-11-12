@@ -27,86 +27,81 @@ class SettingsPage extends StatelessWidget {
 
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
-      child: SingleChildScrollView(
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height * 0.87,
-          child: Column(
-            children: [
-                        
-              SettingsButton(
-                text: 'Account information', 
-                icon: CupertinoIcons.person,
-                onPressed: () {
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder: (_) => const AccountInformationPage())
-                  );
-                }
-              ),
-            
-              const SizedBox(height: buttonGap),
-              
-              SettingsButton(
-                text: 'Privacy', 
-                icon: CupertinoIcons.lock,
-                onPressed: () {}
-              ),
-            
-              const SizedBox(height: buttonGap),
-              
-              SettingsButton(
-                text: 'Security', 
-                icon: CupertinoIcons.shield,
-                onPressed: () {
-                  Navigator.push(
-                    context, 
-                    MaterialPageRoute(builder: (_) => const SecurityPage())
-                  );
-                }
-              ),
-
-              const SizedBox(height: buttonGap),
-              
-              SettingsButton(
-                text: 'Blocked', 
-                icon: CupertinoIcons.clear_circled,
-                onPressed: () {}
-              ),
-
-              const SizedBox(height: newTopicButtonGap),
-
-              SettingsButton(
-                text: 'Liked', 
-                icon: CupertinoIcons.heart,
-                onPressed: () {}
-              ),
-            
-              const SizedBox(height: buttonGap),
-              
-              SettingsButton(
-                text: 'Saved', 
-                icon: CupertinoIcons.bookmark,
-                onPressed: () {}
-              ),
-
-              const SizedBox(height: 16),
-
-              const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 18.0),
-                child: Divider(color: ThemeColor.lightGrey),
-              ),
-
-              const SizedBox(height: 8),
-
-              SettingsButton(
-                text: 'Sign out', 
-                makeRed: true,
-                onPressed: () => _signOutOnPressed()
-              ),
-              
-            ]
+      child: Column(
+        children: [
+                    
+          SettingsButton(
+            text: 'Account information', 
+            icon: CupertinoIcons.person,
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (_) => const AccountInformationPage())
+              );
+            }
           ),
-        )
+        
+          const SizedBox(height: buttonGap),
+          
+          SettingsButton(
+            text: 'Privacy', 
+            icon: CupertinoIcons.lock,
+            onPressed: () {}
+          ),
+        
+          const SizedBox(height: buttonGap),
+          
+          SettingsButton(
+            text: 'Security', 
+            icon: CupertinoIcons.shield,
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (_) => const SecurityPage())
+              );
+            }
+          ),
+
+          const SizedBox(height: buttonGap),
+          
+          SettingsButton(
+            text: 'Blocked', 
+            icon: CupertinoIcons.clear_circled,
+            onPressed: () {}
+          ),
+
+          const SizedBox(height: newTopicButtonGap),
+
+          SettingsButton(
+            text: 'Liked', 
+            icon: CupertinoIcons.heart,
+            onPressed: () {}
+          ),
+        
+          const SizedBox(height: buttonGap),
+          
+          SettingsButton(
+            text: 'Saved', 
+            icon: CupertinoIcons.bookmark,
+            onPressed: () {}
+          ),
+
+          const SizedBox(height: 16),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 18.0),
+            child: Divider(color: ThemeColor.lightGrey),
+          ),
+
+          const SizedBox(height: 8),
+
+          SettingsButton(
+            text: 'Sign out', 
+            makeRed: true,
+            onPressed: () => _signOutOnPressed()
+          ),
+          
+        ]
       ),
     );
   }
