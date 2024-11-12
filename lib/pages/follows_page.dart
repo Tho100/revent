@@ -148,7 +148,7 @@ class FollowsPageState extends State<FollowsPage> {
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.only(top: 18.0),
       child: Center(
@@ -180,7 +180,7 @@ class FollowsPageState extends State<FollowsPage> {
         context: context, 
         title: widget.pageType
       ).buildAppBar(),
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
 

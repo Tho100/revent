@@ -26,7 +26,7 @@ class PostCommentPageState extends State<PostCommentPage> {
 
   final commentController = TextEditingController();
 
-  void _createCommentOnPressed(BuildContext context) async {
+  void _createCommentOnPressed() async {
 
     try {
 
@@ -61,7 +61,7 @@ class PostCommentPageState extends State<PostCommentPage> {
     );
   }
 
-  Widget _buildCommentTextField(BuildContext context) {
+  Widget _buildCommentTextField() {
     return Transform.translate(
       offset: const Offset(0, -25),
       child: SizedBox(
@@ -78,6 +78,7 @@ class PostCommentPageState extends State<PostCommentPage> {
             fontSize: 16
           ),
           decoration: InputDecoration(
+            counterText: '',
             hintStyle: GoogleFonts.inter(
               color: ThemeColor.thirdWhite,
               fontWeight: FontWeight.w800, 
@@ -92,7 +93,7 @@ class PostCommentPageState extends State<PostCommentPage> {
     );
   }  
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
       child: ScrollConfiguration(
@@ -110,7 +111,7 @@ class PostCommentPageState extends State<PostCommentPage> {
 
               const SizedBox(height: 30),
         
-              _buildCommentTextField(context)
+              _buildCommentTextField()
         
             ],
           ),
@@ -119,13 +120,13 @@ class PostCommentPageState extends State<PostCommentPage> {
     );
   }
 
-  Widget _buildActionButton(BuildContext context) {
+  Widget _buildActionButton() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: MainButton(
         customWidth: 100,
         text: 'Post', 
-        onPressed: () async => _createCommentOnPressed(context),
+        onPressed: () async => _createCommentOnPressed(),
       ),
     );
   }
@@ -143,9 +144,9 @@ class PostCommentPageState extends State<PostCommentPage> {
         context: context, 
         title: 'Add a comment',
         enableCenter: false,
-        actions: [_buildActionButton(context)]
+        actions: [_buildActionButton()]
       ).buildAppBar(),
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
   

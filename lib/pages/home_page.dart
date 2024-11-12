@@ -90,7 +90,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     );
   }
 
-  SliverAppBar _buildCustomAppBar(BuildContext context) {
+  SliverAppBar _buildCustomAppBar() {
     return SliverAppBar(
       floating: true,
       snap: true,
@@ -130,7 +130,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (_, __) {
-          return [_buildCustomAppBar(context)];
+          return [_buildCustomAppBar()];
         },
         body: _buildTabBarTabs()
       ),

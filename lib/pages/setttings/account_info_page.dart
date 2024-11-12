@@ -78,7 +78,7 @@ class AccountInformationPageState extends State<AccountInformationPage> {
     );
   }
 
-  Widget _buildUpgradeButton(BuildContext context) {
+  Widget _buildUpgradeButton() {
     return MainButton(
       customWidth: MediaQuery.of(context).size.width * 0.26,
       customHeight: 46,
@@ -87,7 +87,27 @@ class AccountInformationPageState extends State<AccountInformationPage> {
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildJoinedDate() {
+    return FutureBuilder<String>(
+      future: _loadJoinedDate(),
+      builder: (_, snapshot) {
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return _buildHeaders('Joined date', '...');
+
+        } else if (snapshot.hasError) {
+          return _buildHeaders('Joined date', '0/0/0');
+
+        } else {
+          return _buildHeaders('Joined date', snapshot.data ?? '0/0/0');
+
+        }
+
+      },
+    );
+  }
+
+  Widget _buildBody() {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 24.0, left: 14.0),
@@ -100,26 +120,10 @@ class AccountInformationPageState extends State<AccountInformationPage> {
             _buildHeaders('Username', '@${userData.user.username}'),
             _buildHeaders('Email', userData.user.email),
 
-            FutureBuilder<String>(
-              future: _loadJoinedDate(),
-              builder: (_, snapshot) {
-
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return _buildHeaders('Joined date', '...');
-
-                } else if (snapshot.hasError) {
-                  return _buildHeaders('Joined date', '0/0/0');
-
-                } else {
-                  return _buildHeaders('Joined date', snapshot.data ?? '0/0/0');
-
-                }
-
-              },
-            ),
+            _buildJoinedDate(),
       
             _buildHeaders('Plan', userData.user.plan),
-            _buildUpgradeButton(context), 
+            _buildUpgradeButton(), 
                   
           ],
         ),
@@ -134,7 +138,7 @@ class AccountInformationPageState extends State<AccountInformationPage> {
         context: context, 
         title: 'Account Information'
       ).buildAppBar(),
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
   
