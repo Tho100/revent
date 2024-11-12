@@ -87,6 +87,7 @@ class VentCommentPreviewer extends StatelessWidget {
       child: ProfilePictureWidget(
         customHeight: 35,
         customWidth: 35,
+        customEmptyPfpSize: 20,
         pfpData: pfpData
       ),
     );

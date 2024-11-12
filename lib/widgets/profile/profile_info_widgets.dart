@@ -31,6 +31,7 @@ class ProfileInfoWidgets {
       child: ProfilePictureWidget(
         customHeight: 75,
         customWidth: 75,
+        customEmptyPfpSize: 30,
         pfpData: pfpData,
       ),
     );

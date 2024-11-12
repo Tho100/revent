@@ -6,35 +6,27 @@ import 'package:revent/widgets/alert_dialog_widget.dart';
 
 class CustomAlertDialog {
 
-  static Future alertDialog(String message) {
+  static Future alertDialog(String title) {
     return showDialog(
       barrierDismissible: false,
       context: navigatorKey.currentContext!, 
       builder: (context) {
         return AlertDialogWidget(
-          content: Text(
-            message,
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context), 
-              child: Text(
-                'OK',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
-                  fontWeight: FontWeight.w800
-                ),
+          title: title,
+          content: '',
+          actions: TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Close',
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontWeight: FontWeight.w800,
               )
             ),
-          ],
+          ),
         );
       }
     );
-
   }
   
   static Future alertDialogTitle(String title, String messages) {
@@ -42,32 +34,18 @@ class CustomAlertDialog {
       context: navigatorKey.currentContext!,
       builder: (BuildContext context) {
         return AlertDialogWidget(
-          title: Text(
-            title,
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontWeight: FontWeight.w800
-            )
-          ),
-          content: Text(
-            messages,
-            style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
-              fontWeight: FontWeight.w800,
-            )
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                'OK',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
-                  fontWeight: FontWeight.w800,
-                )
-              ),
+          title: title,
+          content: messages,
+          actions: TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              'Close',
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontWeight: FontWeight.w800,
+              )
             ),
-          ],
+          ),
         );
       },
     );
@@ -83,38 +61,36 @@ class CustomAlertDialog {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialogWidget(
-          content: Text(
-            message,
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontWeight: FontWeight.w800,
-            )
+          title: message,
+          content: '',
+          actions: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text(
+                  'Cancel',
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.secondaryWhite,
+                    fontWeight: FontWeight.w800,
+                  )
+                ),
+              ),
+
+              TextButton(
+                onPressed: onPressedEvent,
+                child: Text(
+                  buttonMessage,
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.darkRed,
+                    fontWeight: FontWeight.w800,
+                  )
+                ),
+              ),
+
+            ]
           ),
-          actions: [
-
-            TextButton(
-              onPressed: () => Navigator.pop(context),
-              child: Text(
-                'Cancel',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
-                  fontWeight: FontWeight.w800,
-                )
-              ),
-            ),
-
-            TextButton(
-              onPressed: onPressedEvent,
-              child: Text(
-                buttonMessage,
-                style: GoogleFonts.inter(
-                  color: ThemeColor.darkRed,
-                  fontWeight: FontWeight.w800,
-                )
-              ),
-            ),
-
-          ],
         );
       },
     );

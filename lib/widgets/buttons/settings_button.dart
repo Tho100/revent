@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -63,7 +62,7 @@ class SettingsButton extends StatelessWidget {
                       Icon(
                         Icons.arrow_forward_ios, 
                         color: makeRed == true ? ThemeColor.darkRed : ThemeColor.thirdWhite, 
-                        size: 20
+                        size: 18
                       ),
                       
                       const SizedBox(width: 25),
