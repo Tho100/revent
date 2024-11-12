@@ -167,6 +167,7 @@ class EditProfilePageState extends State<EditProfilePage> {
             return ProfilePictureWidget(
               customWidth: 80,
               customHeight: 80,
+              customEmptyPfpSize: 30,
               pfpData: pfp,
             );
           }

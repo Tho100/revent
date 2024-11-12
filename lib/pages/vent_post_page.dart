@@ -8,6 +8,7 @@ import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/post_comment_page.dart';
+import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -50,6 +51,7 @@ class VentPostPage extends StatefulWidget {
 class VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = GetIt.instance<VentCommentProvider>();
+  final profileData = GetIt.instance<ProfileDataProvider>();
 
   void _initializeComments() async {
 
@@ -133,6 +135,7 @@ class VentPostPageState extends State<VentPostPage> {
     return ProfilePictureWidget(
       customHeight: 35,
       customWidth: 35,
+      customEmptyPfpSize: 20,
       pfpData: widget.pfpData,
     );
   }
@@ -341,22 +344,36 @@ class VentPostPageState extends State<VentPostPage> {
           );
         },              
         child: Container(
-          height: 48,
+          height: 50,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(20),
             border: Border.all(color: ThemeColor.thirdWhite)
           ),
           child: Padding(
-            padding: const EdgeInsets.only(left: 15.0),
+            padding: const EdgeInsets.only(left: 12.0),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: Text(
-                'Add a comment...',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 13
-                ),
+              child: Row(
+                children: [
+
+                  ProfilePictureWidget(
+                    customHeight: 26,
+                    customWidth: 26,
+                    pfpData: profileData.profilePicture,
+                  ),
+
+                  const SizedBox(width: 10),
+
+                  Text(
+                    'Add a comment...',
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.thirdWhite,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 14
+                    ),
+                  ),
+
+                ],
               ),
             ),
           )

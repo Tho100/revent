@@ -7,19 +7,23 @@ class ProfilePictureWidget extends StatelessWidget {
   
   final double? customWidth;
   final double? customHeight;
+  final double? customEmptyPfpSize;
   final Uint8List? pfpData;
 
   const ProfilePictureWidget({
     this.pfpData,
     this.customWidth,
     this.customHeight,
+    this.customEmptyPfpSize,
     super.key
   });
 
-  final defaultEmptyIcon = const Icon(
-    CupertinoIcons.person, 
-    color: ThemeColor.mediumBlack
-  );
+  Widget _buildEmptyPfp() {
+    return Icon(
+      CupertinoIcons.person, 
+      color: ThemeColor.mediumBlack, size: customEmptyPfpSize ?? 18 
+    );
+  }
 
   Widget _buildPfp({required Uint8List pfpData}) {
     return ClipOval(
@@ -43,7 +47,7 @@ class ProfilePictureWidget extends StatelessWidget {
       ),
       child: (pfpData != null && pfpData!.isNotEmpty)
         ? _buildPfp(pfpData: pfpData!)
-        : defaultEmptyIcon, 
+        : _buildEmptyPfp()
     );
   }
 
