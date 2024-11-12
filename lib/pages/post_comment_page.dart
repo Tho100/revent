@@ -78,6 +78,7 @@ class PostCommentPageState extends State<PostCommentPage> {
             fontSize: 16
           ),
           decoration: InputDecoration(
+            counterText: '',
             hintStyle: GoogleFonts.inter(
               color: ThemeColor.thirdWhite,
               fontWeight: FontWeight.w800, 
