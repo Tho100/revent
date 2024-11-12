@@ -73,14 +73,60 @@ class SignInPageState extends State<SignInPage> {
     
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildRememberMeCheckBox() {
+    return CheckboxTheme(
+      data: CheckboxThemeData(
+        fillColor: MaterialStateColor.resolveWith(
+          (states) => ThemeColor.thirdWhite,
+        ),
+        checkColor: MaterialStateColor.resolveWith(
+          (states) => ThemeColor.secondaryWhite,
+        ),
+        overlayColor: MaterialStateColor.resolveWith(
+          (states) => ThemeColor.secondaryWhite.withOpacity(0.1),
+        ),
+        side: const BorderSide(
+          color: ThemeColor.thirdWhite,
+          width: 2.0,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+      ),
+      child: Row(
+        children: [
+          
+          ValueListenableBuilder(
+            valueListenable: isRememberMeCheckedNotifier,
+            builder: (_, value, __) {
+              return Checkbox(
+                value: value,
+                onChanged: (checkedValue) {
+                  isRememberMeCheckedNotifier.value = checkedValue ?? true;
+                },
+              );
+            },
+          ),
 
-    final mediaQuery = MediaQuery.of(context);
+          Text(
+            'Remember Me',
+            style: GoogleFonts.inter(
+              color: const Color.fromARGB(225, 225, 225, 225),
+              fontWeight: FontWeight.w800,
+              fontSize: 14,
+            ),
+          ),
 
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBody() {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: mediaQuery.size.width * 0.05,
-        vertical: mediaQuery.size.height * 0.05,
+        horizontal: MediaQuery.of(context).size.width * 0.05,
+        vertical: MediaQuery.of(context).size.height * 0.05,
       ),
       child: Column(
         children: [
@@ -111,52 +157,7 @@ class SignInPageState extends State<SignInPage> {
 
           const SizedBox(height: 15),
 
-          CheckboxTheme(
-            data: CheckboxThemeData(
-              fillColor: MaterialStateColor.resolveWith(
-                (states) => ThemeColor.thirdWhite,
-              ),
-              checkColor: MaterialStateColor.resolveWith(
-                (states) => ThemeColor.secondaryWhite,
-              ),
-              overlayColor: MaterialStateColor.resolveWith(
-                (states) => ThemeColor.secondaryWhite.withOpacity(0.1),
-              ),
-              side: const BorderSide(
-                color: ThemeColor.thirdWhite,
-                width: 2.0,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(4.0),
-              ),
-            ),
-            child: Row(
-              children: [
-                
-                ValueListenableBuilder(
-                  valueListenable: isRememberMeCheckedNotifier,
-                  builder: (_, value, __) {
-                    return Checkbox(
-                      value: value,
-                      onChanged: (checkedValue) {
-                        isRememberMeCheckedNotifier.value = checkedValue ?? true;
-                      },
-                    );
-                  },
-                ),
-
-                Text(
-                  'Remember Me',
-                  style: GoogleFonts.inter(
-                    color: const Color.fromARGB(225, 225, 225, 225),
-                    fontWeight: FontWeight.w800,
-                    fontSize: 14,
-                  ),
-                ),
-
-              ],
-            ),
-          ),
+          _buildRememberMeCheckBox(),
 
           const SizedBox(height: 30),
 
@@ -193,7 +194,7 @@ class SignInPageState extends State<SignInPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
 

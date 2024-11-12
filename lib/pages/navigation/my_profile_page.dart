@@ -119,10 +119,12 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
         customHeight: MediaQuery.of(context).size.height * 0.050,
         customFontSize: 15.5,
         text: 'Edit profile',
-        onPressed: () => Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => const EditProfilePage())
-        )
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const EditProfilePage())
+          );
+        }
       ),
     );
   }

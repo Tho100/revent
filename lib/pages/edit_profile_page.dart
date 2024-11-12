@@ -156,7 +156,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   }
 
-  Widget _buildProfilePicture(BuildContext context) {
+  Widget _buildProfilePicture() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -186,7 +186,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildBio(BuildContext context) {
+  Widget _buildBio() {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: SizedBox(
@@ -217,7 +217,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildPronouns(BuildContext context) {
+  Widget _buildPronouns() {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: SizedBox(
@@ -290,7 +290,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.only(top: 16.0, left: 14.0),
@@ -298,15 +298,15 @@ class EditProfilePageState extends State<EditProfilePage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             
-            _buildProfilePicture(context),
+            _buildProfilePicture(),
       
             const SizedBox(height: 42),
                 
-            _buildPronouns(context),
+            _buildPronouns(),
               
             const SizedBox(height: 40),
       
-            _buildBio(context),
+            _buildBio(),
       
           ],
         ),
@@ -335,12 +335,12 @@ class EditProfilePageState extends State<EditProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(context),
       appBar: CustomAppBar(
         context: context,
         title: 'Edit profile',
         actions: [_buildActionButton()]
       ).buildAppBar(),
+      body: _buildBody(),
     );
   }
 

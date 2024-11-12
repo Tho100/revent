@@ -95,14 +95,11 @@ class SignUpPageState extends State<SignUpPage> {
       
   }
 
-  Widget _buildBody(BuildContext context) {
-
-    final mediaQuery = MediaQuery.of(context);
-
+  Widget _buildBody() {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: mediaQuery.size.width * 0.05,
-        vertical: mediaQuery.size.height * 0.05,
+        horizontal: MediaQuery.of(context).size.width * 0.05,
+        vertical: MediaQuery.of(context).size.height * 0.05,
       ),
       child: Column(
         children: [
@@ -174,7 +171,7 @@ class SignUpPageState extends State<SignUpPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
 
