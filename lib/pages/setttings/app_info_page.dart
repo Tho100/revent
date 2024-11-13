@@ -38,6 +38,8 @@ class AppInfoPageState extends State<AppInfoPage> {
 
     SnackBarDialog.temporarySnack(message: "Cleared ${cacheSizeInMb.toDouble().toStringAsFixed(2)}Mb");
 
+    _initializeCacheSize();
+
   }
 
   void _initializeCacheSize() async {
@@ -84,7 +86,7 @@ class AppInfoPageState extends State<AppInfoPage> {
 
   Widget _buildClearCacheButton() {
     return MainButton(
-      customWidth: MediaQuery.of(context).size.width * 0.26,
+      customWidth: MediaQuery.of(context).size.width * 0.28,
       customHeight: 46,
       text: 'Clear cache', 
       onPressed: () => _clearAppCache()
@@ -116,7 +118,7 @@ class AppInfoPageState extends State<AppInfoPage> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
-                    "You can free up storage by clearing cache. Your data won't be affected.",
+                    "You can free up storage by clearing cache.\nYour data won't be affected.",
                     style: GoogleFonts.inter(
                       color: ThemeColor.thirdWhite,
                       fontWeight: FontWeight.w800,
