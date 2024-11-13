@@ -42,10 +42,10 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
         .getAccountAuthentication(conn: conn, username: userData.user.username);
 
       final currentPasswordInput = authController.currentPasswordController.text;
-      final currentPasswordInputHash = AuthModel().computeHash(currentPasswordInput);
+      final currentPasswordInputHash = HashingModel().computeHash(currentPasswordInput);
 
       final newPasswordInput = authController.newPasswordController.text;
-      final newPasswordInputHash = AuthModel().computeHash(newPasswordInput);
+      final newPasswordInputHash = HashingModel().computeHash(newPasswordInput);
 
       if(newPasswordInput == currentPasswordInput) {
         CustomAlertDialog.alertDialog("New password can't be the same as the old one");

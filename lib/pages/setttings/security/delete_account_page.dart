@@ -58,7 +58,7 @@ class DeleteAccountPageState extends State<DeleteAccountPage> {
       );
 
       final currentPasswordInput = authController.currentPasswordController.text;
-      final currentPasswordInputHash = AuthModel().computeHash(currentPasswordInput);
+      final currentPasswordInputHash = HashingModel().computeHash(currentPasswordInput);
 
       if(currentPasswordHash == currentPasswordInputHash) {
         _deleteAccountConfirmation();

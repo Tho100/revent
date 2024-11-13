@@ -37,7 +37,7 @@ class SignUpPageState extends State<SignUpPage> {
 
     try {
 
-      final authHash = AuthModel().computeHash(auth);
+      final authHash = HashingModel().computeHash(auth);
       
       await UserRegistrationService().register(
         username: username,

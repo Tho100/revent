@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:crypto/crypto.dart';
 
-class AuthModel { // TODO: Rename to hash model
+class HashingModel {
 
   String computeHash(String strInput) {
 
