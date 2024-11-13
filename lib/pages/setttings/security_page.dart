@@ -8,9 +8,6 @@ class SecurityPage extends StatelessWidget {
   const SecurityPage({super.key});
 
   Widget _buildBody() {
-
-    const buttonHeightGap = 8.0;
-
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Column(
@@ -21,7 +18,7 @@ class SecurityPage extends StatelessWidget {
             onPressed: () {}
           ),
 
-          const SizedBox(height: buttonHeightGap),
+          const SizedBox(height: 8),
 
           SettingsButton(
             text: 'Recovery key', 

@@ -61,13 +61,11 @@ class AppInfoPageState extends State<AppInfoPage> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.only(top: 0.0), // TODO: Remove unused padding
+      padding: const EdgeInsets.only(top: 15.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-
-          const SizedBox(height: 12),
-
+    
           Padding(
             padding: const EdgeInsets.only(left: 14.0),
             child: Column(
@@ -75,7 +73,7 @@ class AppInfoPageState extends State<AppInfoPage> {
               children: [
                 
                 _buildHeaders('Version', '1.0.0'),
-                _buildHeaders('Cache', '0.4Mb'),
+                _buildHeaders('Cache', '0.0Mb'),
                     
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -90,34 +88,34 @@ class AppInfoPageState extends State<AppInfoPage> {
                 ),
           
                 const SizedBox(height: 15),
-
+    
                 _buildClearCacheButton(),
-
+    
               ],
             ),
           ),
           
           const SizedBox(height: 15),
-
+    
           const Padding(
             padding: EdgeInsets.symmetric(horizontal: 18.0),
             child: Divider(color: ThemeColor.lightGrey),
           ),
-
+    
           const SizedBox(height: 8),
-
+    
           SettingsButton(
             text: 'Term and Conditions', 
             onPressed: () {}
           ),
-
+    
           const SizedBox(height: 8),
-
+    
           SettingsButton(
             text: 'Privacy Policy', 
             onPressed: () {}
           ),
-
+    
         ],
       ),
     );
@@ -133,4 +131,5 @@ class AppInfoPageState extends State<AppInfoPage> {
       body: _buildBody(),
     );
   }
+  
 }

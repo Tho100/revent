@@ -110,12 +110,10 @@ class AccountInformationPageState extends State<AccountInformationPage> {
   Widget _buildBody() {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(top: 24.0, left: 14.0),
+        padding: const EdgeInsets.only(top: 15.0, left: 14.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            const SizedBox(height: 12),
                         
             _buildHeaders('Username', '@${userData.user.username}'),
             _buildHeaders('Email', userData.user.email),
