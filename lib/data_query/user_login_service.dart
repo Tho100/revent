@@ -7,6 +7,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
+import 'package:revent/security/user_auth.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 
@@ -32,7 +33,7 @@ class UserLoginService {
       return;
     }
 
-    final authenticationInformation = await userDataGetter
+    final authenticationInformation = await UserAuth()
       .getAccountAuthentication(username: username, conn: conn);
       
     final isAuthMatched = AuthModel().computeHash(auth) == authenticationInformation;

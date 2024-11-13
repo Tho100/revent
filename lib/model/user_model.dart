@@ -1,4 +1,5 @@
 import 'package:get_it/get_it.dart';
+import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/profile_data_provider.dart';
@@ -20,6 +21,28 @@ class UserModel {
     await LocalStorageModel().deleteLocalData();
 
     NavigatePage.mainScreenPage();
+
+  }
+
+  Future<void> deleteAccountData({required String username}) async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    const queries = [
+      'DELETE FROM user_information WHERE username = :username',
+      'DELETE FROM user_profile_info WHERE username = :username',
+      'DELETE FROM user_follows_info WHERE follower = :username',
+      'DELETE FROM user_follows_info WHERE following = :username',
+      'DELETE FROM vent_info WHERE creator = :username',
+      'DELETE FROM vent_likes_info WHERE liked_by = :username',
+      'DELETE FROM vent_comments_info WHERE commented_by = :username',
+    ];
+
+    final param = {'username': username};
+
+    for(int i=0; i<queries.length; i++) {
+      await conn.execute(queries[i], param);
+    }
 
   }
 

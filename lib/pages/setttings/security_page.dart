@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:revent/pages/setttings/security/change_password_page.dart';
+import 'package:revent/pages/setttings/security/delete_account_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/settings_button.dart';
@@ -7,10 +9,7 @@ class SecurityPage extends StatelessWidget {
 
   const SecurityPage({super.key});
 
-  Widget _buildBody() {
-
-    const buttonHeightGap = 8.0;
-
+  Widget _buildBody(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Column(
@@ -18,10 +17,15 @@ class SecurityPage extends StatelessWidget {
 
           SettingsButton(
             text: 'Change password', 
-            onPressed: () {}
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ChangePasswordPage())
+              );
+            }
           ),
 
-          const SizedBox(height: buttonHeightGap),
+          const SizedBox(height: 8),
 
           SettingsButton(
             text: 'Recovery key', 
@@ -40,7 +44,12 @@ class SecurityPage extends StatelessWidget {
           SettingsButton(
             text: 'Delete account', 
             makeRed: true,
-            onPressed: () {}
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const DeleteAccountPage())
+              );
+            }
           ),
 
         ],
@@ -55,7 +64,7 @@ class SecurityPage extends StatelessWidget {
         context: context, 
         title: 'Security'
       ).buildAppBar(),
-      body: _buildBody(),
+      body: _buildBody(context),
     );
   }
 

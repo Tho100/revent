@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/model/user_model.dart';
 import 'package:revent/pages/setttings/account_info_page.dart';
+import 'package:revent/pages/setttings/app_info_page.dart';
 import 'package:revent/pages/setttings/security_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -84,6 +85,19 @@ class SettingsPage extends StatelessWidget {
             text: 'Saved', 
             icon: CupertinoIcons.bookmark,
             onPressed: () {}
+          ),
+
+          const SizedBox(height: newTopicButtonGap),
+
+          SettingsButton(
+            text: 'Info', 
+            icon: CupertinoIcons.info,
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (_) => const AppInfoPage())
+              );
+            }
           ),
 
           const SizedBox(height: 16),
