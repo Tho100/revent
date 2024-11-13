@@ -48,8 +48,8 @@ class SignInPageState extends State<SignInPage> {
   
   Future<void> _processLogin() async {
 
-    final authInput = authController.passwordController.text.trim();
-    final emailInput = authController.emailController.text.trim();
+    final authInput = authController.passwordController.text;
+    final emailInput = authController.emailController.text;
 
     if (!EmailValidator().validateEmail(emailInput)) {
       CustomAlertDialog.alertDialogTitle('Sign in failed', 'Email address is not valid.');

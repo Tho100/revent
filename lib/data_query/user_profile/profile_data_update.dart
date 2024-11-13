@@ -16,6 +16,7 @@ class ProfileDataUpdate {
     final conn = await ReventConnect.initializeConnection();
 
     const query = 'UPDATE user_profile_info SET bio = :bio_value WHERE username = :username';
+    
     final params = {
       'bio_value': bioText,
       'username': userData.user.username
@@ -34,6 +35,7 @@ class ProfileDataUpdate {
     final toBase64EncodedPfp = const Base64Encoder().convert(picData);
 
     const query = 'UPDATE user_profile_info SET profile_picture = :profile_pic_data WHERE username = :username';
+
     final params = {
       'profile_pic_data': toBase64EncodedPfp,
       'username': userData.user.username
@@ -50,6 +52,7 @@ class ProfileDataUpdate {
     final conn = await ReventConnect.initializeConnection();
 
     const query = 'UPDATE user_profile_info SET pronouns = :pronouns WHERE username = :username';
+
     final params = {
       'pronouns': pronouns,
       'username': userData.user.username

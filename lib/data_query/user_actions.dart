@@ -12,35 +12,29 @@ class UserActions {
 
   Future<void> userFollowAction({required bool follow}) async {
     
-    try {
+    final conn = await ReventConnect.initializeConnection();
 
-      final conn = await ReventConnect.initializeConnection();
+    await conn.transactional((conn) async {
 
-      await conn.transactional((conn) async {
+      final operationSymbol = follow ? '+' : '-'; 
 
-        final operationSymbol = follow ? '+' : '-'; 
+      final updateFollowingValueQuery = 
+        'UPDATE user_profile_info SET following = following $operationSymbol 1 WHERE username = :username';
+        
+      await conn.execute(updateFollowingValueQuery, {'username': userData.user.username});
 
-        final updateFollowingValueQuery = 
-          'UPDATE user_profile_info SET following = following $operationSymbol 1 WHERE username = :username';
-          
-        await conn.execute(updateFollowingValueQuery, {'username': userData.user.username});
+      final updateFollowerValueQuery = 
+        'UPDATE user_profile_info SET followers = followers $operationSymbol 1 WHERE username = :username';
 
-        final updateFollowerValueQuery = 
-          'UPDATE user_profile_info SET followers = followers $operationSymbol 1 WHERE username = :username';
+      await conn.execute(updateFollowerValueQuery, {'username': username});
 
-        await conn.execute(updateFollowerValueQuery, {'username': username});
+      final insertOrDeleteFollowerQuery = follow 
+        ? 'INSERT INTO user_follows_info (follower, following) VALUES (:follower, :following)'
+        : 'DELETE FROM user_follows_info WHERE following = :following AND follower = :follower';
 
-        final insertOrDeleteFollowerQuery = follow 
-          ? 'INSERT INTO user_follows_info (follower, following) VALUES (:follower, :following)'
-          : 'DELETE FROM user_follows_info WHERE following = :following AND follower = :follower';
+      await conn.execute(insertOrDeleteFollowerQuery, {'follower': userData.user.username, 'following': username});
 
-        await conn.execute(insertOrDeleteFollowerQuery, {'follower': userData.user.username, 'following': username});
-
-      });
-
-    } catch (err) {
-      print(err.toString());
-    }
+    });
     
   }
 

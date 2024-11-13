@@ -27,7 +27,9 @@ class CreateVentPageState extends State<CreateVentPage> {
 
   Future<void> _createVentOnPressed() async {
 
-    if(ventTitleController.text.isEmpty) {
+    final ventTitle = ventTitleController.text;
+
+    if(ventTitle.isEmpty) {
       CustomAlertDialog.alertDialog('Please enter vent title.');
       return;
     }
@@ -35,7 +37,7 @@ class CreateVentPageState extends State<CreateVentPage> {
     try {
 
       await CreateNewItem().newVent(
-        ventTitle: ventTitleController.text, 
+        ventTitle: ventTitle, 
         ventBodyText: ventBodyTextController.text
       ).then((value) => {
         

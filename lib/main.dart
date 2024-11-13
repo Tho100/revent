@@ -25,7 +25,7 @@ void initializeLocators() {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await dotenv.load(fileName: ".env");
+  await dotenv.load(fileName: '.env');
   initializeLocators();
   runApp(
     MultiProvider(

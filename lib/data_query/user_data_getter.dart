@@ -8,7 +8,7 @@ class UserDataGetter {
     required String email
   }) async {
 
-    const query = "SELECT username FROM user_information WHERE email = :email";
+    const query = 'SELECT username FROM user_information WHERE email = :email';
     final params = {'email': email};
     
     final results = await conn.execute(query, params);
@@ -26,7 +26,7 @@ class UserDataGetter {
     required String username
   }) async {
 
-    const query = "SELECT created_at FROM user_information WHERE username = :username";
+    const query = 'SELECT created_at FROM user_information WHERE username = :username';
     final params = {'username': username};
     
     final results = await conn.execute(query, params);
@@ -40,7 +40,7 @@ class UserDataGetter {
     required String email
   }) async {
 
-    const query = "SELECT username, plan FROM user_information WHERE email = :email";
+    const query = 'SELECT username, plan FROM user_information WHERE email = :email';
     final param = {'email': email};
     
     final results = await conn.execute(query, param);

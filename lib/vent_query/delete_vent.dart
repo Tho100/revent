@@ -34,7 +34,7 @@ class DeleteVent {
     required String ventTitle
   }) async {
 
-    const query = "DELETE FROM vent_info WHERE title = :title AND creator = :creator";
+    const query = 'DELETE FROM vent_info WHERE title = :title AND creator = :creator';
     final params = {
       'title': ventTitle,
       'creator': userData.user.username,

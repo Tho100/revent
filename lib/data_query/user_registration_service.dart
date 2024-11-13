@@ -21,7 +21,7 @@ class UserRegistrationService {
 
     final getUsername = await _getDataInfo(
       'SELECT username FROM user_information WHERE username = :username',
-      {"username": username},
+      {'username': username},
     );
 
     if (_showWarningOnDataAlreadyExists(context, getUsername, 'Username is taken.')) {
@@ -30,7 +30,7 @@ class UserRegistrationService {
 
     final getEmail = await _getDataInfo(
       'SELECT email FROM user_information WHERE email = :email',
-      {"email": email},
+      {'email': email},
     );
 
     if (_showWarningOnDataAlreadyExists(context, getEmail, 'Account with this email already exists.')) {

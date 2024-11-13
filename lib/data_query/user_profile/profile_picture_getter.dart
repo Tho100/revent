@@ -8,13 +8,14 @@ import 'package:revent/provider/user_data_provider.dart';
 
 class ProfilePictureGetter {
 
+  final userData = GetIt.instance<UserDataProvider>();
+
   Future<Uint8List> getProfilePictures({String? username}) async {
     
-    final userData = GetIt.instance<UserDataProvider>();
-
     final conn = await ReventConnect.initializeConnection();
 
     const query = 'SELECT profile_picture FROM user_profile_info WHERE username = :username';
+
     final params = {
       'username': username!.isNotEmpty ? username : userData.user.username
     };
@@ -22,6 +23,7 @@ class ProfilePictureGetter {
     final result = await conn.execute(query, params);
 
     final pfpData = ExtractData(rowsData: result).extractStringColumn('profile_picture');
+
     return base64Decode(pfpData[0]);
     
   }

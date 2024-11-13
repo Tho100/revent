@@ -34,7 +34,7 @@ class MainScreenPage extends StatelessWidget {
 
   Widget _buildLogoText() {
     return Text(
-      ">:(",
+      '>:(',
       style: GoogleFonts.inter(
         color: ThemeColor.white,
         fontSize: 22,
@@ -46,7 +46,7 @@ class MainScreenPage extends StatelessWidget {
 
   Widget _buildHeaderText() {
     return Text(
-      "Read & Vent.",
+      'Read & Vent.',
       style: GoogleFonts.inter(
         color: ThemeColor.white,
         fontSize: 42,
@@ -58,7 +58,7 @@ class MainScreenPage extends StatelessWidget {
 
   Widget _buildSubText() {
     return Text(
-      "Share your thoughts, stories, and more!",
+      'Share your thoughts, stories, and more!',
       style: GoogleFonts.inter(
         color: ThemeColor.thirdWhite,
         fontSize: 16,

@@ -8,23 +8,17 @@ class UserFollowing {
 
   Future<bool> isFollowing({required String username}) async {
 
-    try {
+    final conn = await ReventConnect.initializeConnection();
 
-      final conn = await ReventConnect.initializeConnection();
+    const query = 'SELECT 1 FROM user_follows_info WHERE following = :following AND follower = :follower LIMIT 1';
+    final param = {
+      'following': username,
+      'follower': userData.user.username
+    };
 
-      const query = 'SELECT 1 FROM user_follows_info WHERE following = :following AND follower = :follower LIMIT 1';
-      final param = {
-        'following': username,
-        'follower': userData.user.username
-      };
+    final results = await conn.execute(query, param);
 
-      final results = await conn.execute(query, param);
-
-      return results.rows.isNotEmpty;
-
-    } catch (err) {
-      return false;
-    }
+    return results.rows.isNotEmpty;
 
   }
 

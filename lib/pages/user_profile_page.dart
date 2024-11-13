@@ -11,6 +11,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/themes/theme_style.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
@@ -67,8 +68,9 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   Future<void> _setPostsData() async {
 
-    final getPostsData = await ProfilePostsGetter()
-      .getPosts(username: widget.username);
+    final getPostsData = await ProfilePostsGetter().getPosts(
+      username: widget.username
+    );
 
     final title = getPostsData['title'] as List<String>;
     final totalLikes = getPostsData['total_likes'] as List<int>;
@@ -80,36 +82,49 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   Future<void> _setProfileData() async {
 
-    final getProfileData = await ProfileDataGetter()
-      .getProfileData(isMyProfile: false, username: widget.username);
-        
-    followersNotifier.value = getProfileData['followers']; 
-    followingNotifier.value = getProfileData['following'];
-    bioNotifier.value =  getProfileData['bio'];
-    pronounsNotifier.value =  getProfileData['pronouns'];
+    try {
 
-    isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
+      final getProfileData = await ProfileDataGetter().getProfileData(
+        isMyProfile: false, username: widget.username
+      );
+          
+      followersNotifier.value = getProfileData['followers']; 
+      followingNotifier.value = getProfileData['following'];
+      bioNotifier.value =  getProfileData['bio'];
+      pronounsNotifier.value =  getProfileData['pronouns'];
 
-    final getPostsData = await ProfilePostsGetter()
-      .getPosts(username: widget.username);
+      isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
 
-    final title = getPostsData['title'] as List<String>;
-    final totalLikes = getPostsData['total_likes'] as List<int>;
+      final getPostsData = await ProfilePostsGetter()
+        .getPosts(username: widget.username);
 
-    profilePostsData.setUserProfileTitles(title);
-    profilePostsData.setUserProfileTotalLikes(totalLikes);
-    
-    postsNotifier.value = profilePostsData.userProfileTitles.length;
+      final title = getPostsData['title'] as List<String>;
+      final totalLikes = getPostsData['total_likes'] as List<int>;
+
+      profilePostsData.setUserProfileTitles(title);
+      profilePostsData.setUserProfileTotalLikes(totalLikes);
+      
+      postsNotifier.value = profilePostsData.userProfileTitles.length;
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
+    }
 
   }
 
   void _followUserOnPressed() async {
 
-    isFollowingNotifier.value 
-      ? await UserActions(username: widget.username).userFollowAction(follow: false)
-      : await UserActions(username: widget.username).userFollowAction(follow: true);
+    try {
 
-    isFollowingNotifier.value = !isFollowingNotifier.value;
+      isFollowingNotifier.value 
+        ? await UserActions(username: widget.username).userFollowAction(follow: false)
+        : await UserActions(username: widget.username).userFollowAction(follow: true);
+
+      isFollowingNotifier.value = !isFollowingNotifier.value;
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
+    }
 
   }
 
