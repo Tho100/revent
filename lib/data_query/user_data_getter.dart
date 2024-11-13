@@ -57,18 +57,4 @@ class UserDataGetter {
 
   }
 
-  Future<String> getAccountAuthentication({
-    required MySQLConnectionPool conn,
-    required String username
-  }) async {
-
-    const query = "SELECT password FROM user_information WHERE username = :username";
-    final params = {'username': username};
-
-    final results = await conn.execute(query, params);
-
-    return results.rows.last.assoc()['password']!;
-
-  }
-  
 }
