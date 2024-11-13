@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/model/app_cache.dart';
 import 'package:revent/pages/setttings/app_info/pp_page.dart';
 import 'package:revent/pages/setttings/app_info/tp_page.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -17,6 +18,16 @@ class AppInfoPage extends StatefulWidget {
 }
 
 class AppInfoPageState extends State<AppInfoPage> {
+  
+  final cacheNotifier = ValueNotifier<String>('');
+
+  void _initializeCacheSize() async {
+
+    final cacheSizeInMb = await AppCache().cacheSizeInMb();
+
+    cacheNotifier.value = "${cacheSizeInMb.toDouble().toStringAsFixed(2)}Mb";
+
+  }
 
   Widget _buildHeaders(String header, String value) {
     return Padding(
@@ -74,8 +85,14 @@ class AppInfoPageState extends State<AppInfoPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 
-                _buildHeaders('Version', '1.0.0'),
-                _buildHeaders('Cache', '0.0Mb'),
+                _buildHeaders('Version', '1.4.2'),
+
+                ValueListenableBuilder(
+                  valueListenable: cacheNotifier,
+                  builder: (_, cacheSize, __) {
+                    return _buildHeaders('Cache', cacheSize);
+                  },
+                ),
                     
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
@@ -131,6 +148,18 @@ class AppInfoPageState extends State<AppInfoPage> {
         ],
       ),
     );
+  }
+
+  @override 
+  void initState() {
+    super.initState();
+    _initializeCacheSize();
+  }
+
+  @override 
+  void dispose() {
+    cacheNotifier.dispose();
+    super.dispose();
   }
 
   @override
