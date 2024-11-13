@@ -50,9 +50,7 @@ class PrivacyPolicyPage extends StatelessWidget {
     As a user, you have the right to:
 
     Access: Request access to the personal data we hold about you.
-    Correction: Request corrections to any inaccurate or incomplete personal data.
     Deletion: Request that we delete your personal data, subject to legal obligations.
-    Opt-Out: Opt-out of receiving promotional or marketing emails by following the unsubscribe instructions in the email.
 
     7. Cookies and Tracking Technologies
 
@@ -60,7 +58,9 @@ class PrivacyPolicyPage extends StatelessWidget {
 
     8. Children's Privacy
 
-    Revent does not knowingly collect or solicit personal data from anyone under the age of 13. If we learn that we have collected personal data from a child under 13, we will take steps to delete that information as soon as possible. If you are a parent or guardian and believe we have collected personal data from your child, please contact us immediately.
+    Revent is available to users of all ages. However, we do not knowingly collect or solicit personal data from children under the age of 13.
+
+    If you are a parent or guardian and believe that we may have collected personal data from a child under 13, please contact us at revent@gmail.com, and we will take steps to remove such information.
 
     9. Changes to This Privacy Policy
 
