@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/pages/setttings/app_info/pp_page.dart';
+import 'package:revent/pages/setttings/app_info/tp_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/main_button.dart';
@@ -106,14 +108,24 @@ class AppInfoPageState extends State<AppInfoPage> {
     
           SettingsButton(
             text: 'Term and Conditions', 
-            onPressed: () {}
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const TermAndConditionsPage())
+              );
+            }
           ),
     
           const SizedBox(height: 8),
     
           SettingsButton(
             text: 'Privacy Policy', 
-            onPressed: () {}
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const PrivacyPolicyPage())
+              );
+            }
           ),
     
         ],
@@ -131,5 +143,5 @@ class AppInfoPageState extends State<AppInfoPage> {
       body: _buildBody(),
     );
   }
-  
+
 }
