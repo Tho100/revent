@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/pages/setttings/security/change_password_page.dart';
+import 'package:revent/pages/setttings/security/delete_account_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/settings_button.dart';
@@ -43,7 +44,12 @@ class SecurityPage extends StatelessWidget {
           SettingsButton(
             text: 'Delete account', 
             makeRed: true,
-            onPressed: () {}
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const DeleteAccountPage())
+              );
+            }
           ),
 
         ],
