@@ -33,10 +33,12 @@ class UserLoginService {
       return;
     }
 
-    final authenticationInformation = await UserAuth()
-      .getAccountAuthentication(username: username, conn: conn);
+    final authenticationInformation = await UserAuth().getAccountAuthentication(
+      conn: conn, 
+      username: username
+    );
       
-    final isAuthMatched = AuthModel().computeHash(auth) == authenticationInformation;
+    final isAuthMatched = HashingModel().computeHash(auth) == authenticationInformation;
 
     if(!isAuthMatched) {
       CustomAlertDialog.alertDialog('Password is incorrect.');
