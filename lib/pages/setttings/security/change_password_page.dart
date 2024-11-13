@@ -29,6 +29,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
   final newPasswordNotifier = ValueNotifier<bool>(false);
 
   final userAuth = UserAuth();
+  final hashingModel = HashingModel();
 
   final userData = GetIt.instance<UserDataProvider>();
 
@@ -38,14 +39,16 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
 
       final conn = await ReventConnect.initializeConnection();
 
-      final currentPasswordHash = await userAuth
-        .getAccountAuthentication(conn: conn, username: userData.user.username);
+      final currentPasswordHash = await userAuth.getAccountAuthentication(
+        conn: conn, 
+        username: userData.user.username
+      );
 
       final currentPasswordInput = authController.currentPasswordController.text;
-      final currentPasswordInputHash = HashingModel().computeHash(currentPasswordInput);
+      final currentPasswordInputHash = hashingModel.computeHash(currentPasswordInput);
 
       final newPasswordInput = authController.newPasswordController.text;
-      final newPasswordInputHash = HashingModel().computeHash(newPasswordInput);
+      final newPasswordInputHash = hashingModel.computeHash(newPasswordInput);
 
       if(newPasswordInput == currentPasswordInput) {
         CustomAlertDialog.alertDialog("New password can't be the same as the old one");

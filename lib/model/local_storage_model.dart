@@ -4,8 +4,8 @@ import 'package:path_provider/path_provider.dart';
 
 class LocalStorageModel {
 
-  final _fileName = "info.txt";
-  final _folderName = "ReventInfos";
+  final _fileName = 'info.txt';
+  final _folderName = 'ReventInfos';
 
   Future<Map<String, String>> readLocalAccountInformation() async {
 

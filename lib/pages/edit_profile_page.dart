@@ -143,7 +143,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
       final concatenatedPronouns = isBothEmpty 
         ? '' 
-        : "${pronounOneController.text}/${pronounTwoController.text}";
+        : '${pronounOneController.text}/${pronounTwoController.text}';
 
       await ProfileDataUpdate().updatePronouns(pronouns: concatenatedPronouns);
 
