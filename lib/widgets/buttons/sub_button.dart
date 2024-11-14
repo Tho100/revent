@@ -6,14 +6,12 @@ class SubButton extends StatelessWidget {
 
   final String text;
   final VoidCallback onPressed;
-  final double? customWidth;
   final double? customHeight;
   final double? customFontSize;
 
   const SubButton({
     required this.text, 
     required this.onPressed,
-    this.customWidth,
     this.customHeight,
     this.customFontSize,
     super.key
