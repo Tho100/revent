@@ -24,7 +24,7 @@ class UserRegistrationService {
       {'username': username},
     );
 
-    if (_showWarningOnDataAlreadyExists(context, getUsername, 'Username is taken.')) {
+    if (_showWarningOnDataAlreadyExists(context, getUsername, 'Username is taken')) {
       return;
     }
 
@@ -33,7 +33,7 @@ class UserRegistrationService {
       {'email': email},
     );
 
-    if (_showWarningOnDataAlreadyExists(context, getEmail, 'Account with this email already exists.')) {
+    if (_showWarningOnDataAlreadyExists(context, getEmail, 'Account with this email already exists')) {
       return;
     }
 

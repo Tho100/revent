@@ -23,8 +23,7 @@ class SettingsPage extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
 
-    const buttonGap = 8.0;
-    const newTopicButtonGap = 25.0;
+    const buttonGap = 14.0;
 
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
@@ -71,7 +70,7 @@ class SettingsPage extends StatelessWidget {
             onPressed: () {}
           ),
 
-          const SizedBox(height: newTopicButtonGap),
+          const SizedBox(height: buttonGap),
 
           SettingsButton(
             text: 'Liked', 
@@ -87,7 +86,7 @@ class SettingsPage extends StatelessWidget {
             onPressed: () {}
           ),
 
-          const SizedBox(height: newTopicButtonGap),
+          const SizedBox(height: buttonGap),
 
           SettingsButton(
             text: 'Info', 

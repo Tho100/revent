@@ -8,8 +8,8 @@ import 'package:revent/pages/setttings/app_info/tp_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
 import 'package:revent/widgets/buttons/settings_button.dart';
+import 'package:revent/widgets/buttons/sub_button.dart';
 
 class AppInfoPage extends StatefulWidget {
 
@@ -85,9 +85,7 @@ class AppInfoPageState extends State<AppInfoPage> {
   }
 
   Widget _buildClearCacheButton() {
-    return MainButton(
-      customWidth: MediaQuery.of(context).size.width * 0.28,
-      customHeight: 46,
+    return SubButton(
       text: 'Clear cache', 
       onPressed: () => _clearAppCache()
     );

@@ -29,7 +29,7 @@ class UserLoginService {
     final username = await userDataGetter.getUsername(email: email, conn: conn);
 
     if (username == null) {
-      CustomAlertDialog.alertDialog('Account not found.');
+      CustomAlertDialog.alertDialog('Account not found');
       return;
     }
 
@@ -41,7 +41,7 @@ class UserLoginService {
     final isAuthMatched = HashingModel().computeHash(auth) == authenticationInformation;
 
     if(!isAuthMatched) {
-      CustomAlertDialog.alertDialog('Password is incorrect.');
+      CustomAlertDialog.alertDialog('Password is incorrect');
       return;
     }
       

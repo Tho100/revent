@@ -10,7 +10,7 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/buttons/sub_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
 import 'package:revent/widgets/text_field/main_textfield.dart';
 
@@ -96,7 +96,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     }
 
     if (isSaved) {
-      SnackBarDialog.temporarySnack(message: 'Saved changes.');
+      SnackBarDialog.temporarySnack(message: 'Saved changes');
     }
 
   }
@@ -108,7 +108,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
     if(isProfileSelected) {
       _setProfilePic();
-      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
+      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated');
     }
 
   }
@@ -123,7 +123,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: 'Failed to save changes');
       return false;
     }
 
@@ -150,7 +150,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: 'Failed to save changes');
       return false;
     }
 
@@ -175,11 +175,9 @@ class EditProfilePageState extends State<EditProfilePage> {
 
         const SizedBox(height: 20),
 
-        MainButton(
-          customWidth: MediaQuery.of(context).size.width * 0.55,
-          customHeight: 46,
-          customFontSize: 15,
+        SubButton(
           text: 'Change profile picture', 
+          customFontSize: 14,
           onPressed: () => _changeProfilePicOnPressed()
         ),
 
@@ -294,18 +292,18 @@ class EditProfilePageState extends State<EditProfilePage> {
   Widget _buildBody() {
     return SingleChildScrollView(
       child: Padding(
-        padding: const EdgeInsets.only(top: 16.0, left: 14.0),
+        padding: const EdgeInsets.only(top: 15.0, left: 14.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             
             _buildProfilePicture(),
       
-            const SizedBox(height: 42),
+            const SizedBox(height: 45),
                 
             _buildPronouns(),
               
-            const SizedBox(height: 40),
+            const SizedBox(height: 30),
       
             _buildBio(),
       

@@ -43,7 +43,7 @@ class CallVentActions {
       await DeleteVent().delete(ventTitle: title)
         .then((value) {
           
-          SnackBarDialog.temporarySnack(message: 'Post has been deleted.');
+          SnackBarDialog.temporarySnack(message: 'Post has been deleted');
 
           Navigator.pop(context);
           Navigator.pop(context);
@@ -52,7 +52,7 @@ class CallVentActions {
       );
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to delete this post.');
+      SnackBarDialog.temporarySnack(message: 'Failed to delete this post');
     }
 
   }

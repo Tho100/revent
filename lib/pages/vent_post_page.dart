@@ -70,7 +70,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     if(widget.bodyText.isNotEmpty) {
       Clipboard.setData(ClipboardData(text: widget.bodyText));
-      SnackBarDialog.temporarySnack(message: 'Copied body text.');
+      SnackBarDialog.temporarySnack(message: 'Copied body text');
 
     } else {
       SnackBarDialog.temporarySnack(message: 'Nothing to copy...');

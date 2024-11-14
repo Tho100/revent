@@ -41,7 +41,7 @@ class SignInPageState extends State<SignInPage> {
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
     }
 
   }
@@ -52,17 +52,17 @@ class SignInPageState extends State<SignInPage> {
     final emailInput = authController.emailController.text;
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle('Sign in failed', 'Email address is not valid.');
+      CustomAlertDialog.alertDialogTitle('Sign in failed', 'Email address is not valid');
       return;
     }
 
     if (emailInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle('Sign in failed', 'Please enter your email address.');
+      CustomAlertDialog.alertDialogTitle('Sign in failed', 'Please enter your email address');
       return;
     }
 
     if (authInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle('Sign in failed', 'Please enter your password.');              
+      CustomAlertDialog.alertDialogTitle('Sign in failed', 'Please enter your password');              
       return;
     }
 
