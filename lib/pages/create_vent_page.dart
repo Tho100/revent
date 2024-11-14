@@ -7,7 +7,7 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/buttons/sub_button.dart';
 
 class CreateVentPage extends StatefulWidget {
 
@@ -132,8 +132,7 @@ class CreateVentPageState extends State<CreateVentPage> {
   Widget _buildActionButton() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: MainButton(
-        customWidth: 100,
+      child: SubButton(
         text: 'Post', 
         onPressed: () async => _createVentOnPressed(),
       ),

@@ -7,7 +7,7 @@ import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/buttons/sub_button.dart';
 
 class AccountInformationPage extends StatefulWidget {
 
@@ -79,9 +79,7 @@ class AccountInformationPageState extends State<AccountInformationPage> {
   }
 
   Widget _buildUpgradeButton() {
-    return MainButton(
-      customWidth: MediaQuery.of(context).size.width * 0.26,
-      customHeight: 46,
+    return SubButton(
       text: 'Upgrade', 
       onPressed: () => print('Upgrade')
     );

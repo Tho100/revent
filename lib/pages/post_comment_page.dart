@@ -4,7 +4,7 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/vent_actions.dart';
 import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/buttons/sub_button.dart';
 
 class PostCommentPage extends StatefulWidget {
 
@@ -123,10 +123,9 @@ class PostCommentPageState extends State<PostCommentPage> {
   Widget _buildActionButton() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: MainButton(
-        customWidth: 100,
+      child: SubButton(
         text: 'Post', 
-        onPressed: () async => _createCommentOnPressed(),
+        onPressed: () => _createCommentOnPressed(),
       ),
     );
   }
