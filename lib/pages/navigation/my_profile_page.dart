@@ -164,9 +164,13 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   Widget _buildBody() {
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
+
+        final bioTotalLines = profileData.bio.split('\n').length;
+
         return ProfileBodyWidgets(
           onRefresh: () async => await CallRefresh().refreshMyProfile(username: userData.user.username),
           isPronounsNotEmpty: profileData.pronouns.isNotEmpty, 
+          bioTotalLines: bioTotalLines,
           tabBarWidgets: tabBarWidgets, 
           profileInfoWidgets: profileInfoWidgets, 
           pronounsWidget: _buildPronouns(), 
@@ -174,6 +178,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
           userActionButtonWidget: _buildEditProfileButton(), 
           popularityWidget: _popularityWidgets()
         );
+        
       }
     );
   }
