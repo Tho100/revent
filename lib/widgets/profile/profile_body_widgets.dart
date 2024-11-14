@@ -8,7 +8,8 @@ class ProfileBodyWidgets extends StatelessWidget {
   final Future<void> Function() onRefresh;
   
   final bool isPronounsNotEmpty;
-  final int bioTotalLines;
+  
+  final double bioHeight;
 
   final ProfileTabBarWidgets tabBarWidgets;
   final ProfileInfoWidgets profileInfoWidgets;
@@ -21,7 +22,7 @@ class ProfileBodyWidgets extends StatelessWidget {
   const ProfileBodyWidgets({
     required this.onRefresh,
     required this.isPronounsNotEmpty,
-    required this.bioTotalLines,
+    required this.bioHeight,
     required this.tabBarWidgets,
     required this.profileInfoWidgets,
     required this.pronounsWidget,
@@ -30,6 +31,18 @@ class ProfileBodyWidgets extends StatelessWidget {
     required this.popularityWidget,
     super.key
   });
+
+  double _setExpandedHeight() {
+
+    if (isPronounsNotEmpty || bioHeight == 51.0 || bioHeight == 34.0) {
+      return (bioHeight >= 34.0 && bioHeight <= 51.0) ? 342 : 310;
+
+    } else {
+      return 286;
+
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +57,7 @@ class ProfileBodyWidgets extends StatelessWidget {
           return [
             SliverAppBar(
               automaticallyImplyLeading: false,
-              expandedHeight: isPronounsNotEmpty || bioTotalLines > 1 ? (bioTotalLines > 1 ? 342 : 310) : 286,
+              expandedHeight: _setExpandedHeight(),
               flexibleSpace: FlexibleSpaceBar(
                 background: Column(
                   children: [

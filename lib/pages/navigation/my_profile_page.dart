@@ -38,6 +38,8 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
+  double bioHeight = 0.0;
+
   void _initializeClasses() {
     tabController = TabController(length: 2, vsync: this);
     profileInfoWidgets = ProfileInfoWidgets(
@@ -90,24 +92,37 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   }
 
   Widget _buildBio() {
-    return Consumer<ProfileDataProvider>(
-      builder: (_, profileData, __) {
-        return SizedBox(
-          width: MediaQuery.of(context).size.width * 0.65,
-          child: profileData.bio.isEmpty 
-            ? const Text(
-              'No bio yet...',
-              style: ThemeStyle.profileEmptyBioStyle,
-              textAlign: TextAlign.center
-            )
-            : Text(
-              profileData.bio,
-              style: ThemeStyle.profileBioStyle,
-              textAlign: TextAlign.center,
-              maxLines: 3,
-            ),
-        );
-      },
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.65,
+        child: Consumer<ProfileDataProvider>(
+        builder: (_, profileData, __) {
+          return Builder(
+            builder: (context) {
+
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                final renderBox = context.findRenderObject();
+                if (renderBox is RenderBox) {
+                  final size = renderBox.size;
+                  bioHeight = size.height; 
+                }
+              });
+
+              return profileData.bio.isEmpty
+                ? const Text(
+                  'No bio yet...',
+                  style: ThemeStyle.profileEmptyBioStyle,
+                  textAlign: TextAlign.center,
+                )
+                : Text(
+                  profileData.bio,
+                  style: ThemeStyle.profileBioStyle,
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                );
+            },
+          );
+        },
+      ),
     );
   }
 
@@ -164,13 +179,10 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   Widget _buildBody() {
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
-
-        final bioTotalLines = profileData.bio.split('\n').length;
-
         return ProfileBodyWidgets(
           onRefresh: () async => await CallRefresh().refreshMyProfile(username: userData.user.username),
           isPronounsNotEmpty: profileData.pronouns.isNotEmpty, 
-          bioTotalLines: bioTotalLines,
+          bioHeight: bioHeight,
           tabBarWidgets: tabBarWidgets, 
           profileInfoWidgets: profileInfoWidgets, 
           pronounsWidget: _buildPronouns(), 
@@ -178,7 +190,6 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
           userActionButtonWidget: _buildEditProfileButton(), 
           popularityWidget: _popularityWidgets()
         );
-        
       }
     );
   }

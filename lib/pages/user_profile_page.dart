@@ -52,6 +52,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
+  double bioHeight = 0.0;
+
   void _initializeClasses() {
     tabController = TabController(length: 2, vsync: this);
     profileInfoWidgets = ProfileInfoWidgets(
@@ -155,18 +157,31 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       child: ValueListenableBuilder(
         valueListenable: bioNotifier,
         builder: (_, bio, __) {
-          return bio.isEmpty 
-            ? const Text(
-              'No bio yet...',
-              style: ThemeStyle.profileEmptyBioStyle,
-              textAlign: TextAlign.center
-            )
-            : Text(
-              bio,
-              style: ThemeStyle.profileBioStyle,
-              textAlign: TextAlign.center,
-              maxLines: 3,
-            );
+          return Builder(
+            builder: (context) {
+
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                final renderBox = context.findRenderObject();
+                if (renderBox is RenderBox) {
+                  final size = renderBox.size;
+                  bioHeight = size.height; 
+                }
+              });
+
+              return bio.isEmpty 
+                ? const Text(
+                  'No bio yet...',
+                  style: ThemeStyle.profileEmptyBioStyle,
+                  textAlign: TextAlign.center
+                )
+                : Text(
+                  bio,
+                  style: ThemeStyle.profileBioStyle,
+                  textAlign: TextAlign.center,
+                  maxLines: 3,
+                );  
+            },
+          );
         },
       ),
     );
@@ -232,13 +247,10 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     return ValueListenableBuilder(
       valueListenable: pronounsNotifier,
       builder: (_, pronouns, __) {
-
-        final bioTotalLines = bioNotifier.value.split('\n').length;
-
         return ProfileBodyWidgets(
           onRefresh: () async => await _setProfileData(),
           isPronounsNotEmpty: pronouns.isNotEmpty, 
-          bioTotalLines: bioTotalLines,
+          bioHeight: bioHeight,
           tabBarWidgets: tabBarWidgets, 
           profileInfoWidgets: profileInfoWidgets, 
           pronounsWidget: _buildPronouns(), 
@@ -246,7 +258,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
           userActionButtonWidget: _buildEditProfileButton(), 
           popularityWidget: _popularityWidgets()
         );      
-        
       }
     );
   }
