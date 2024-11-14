@@ -222,7 +222,7 @@ class EditProfilePageState extends State<EditProfilePage> {
               controller: bioController, 
               hintText: 'Enter your bio here...',
               maxLines: 3,
-              maxLength: 100,
+              maxLength: 108,
             ),
             
             const SizedBox(height: 8),
