@@ -10,7 +10,7 @@ import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/widgets/buttons/sub_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
@@ -121,8 +121,7 @@ class FollowsPageState extends State<FollowsPage> {
 
             Visibility(
               visible: username != userData.user.username,
-              child: MainButton(
-                customWidth: MediaQuery.of(context).size.width * 0.24,
+              child: SubButton(
                 customHeight: 40,
                 text: _profileButtonText(),
                 onPressed: () => print(widget.pageType)
