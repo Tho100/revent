@@ -30,7 +30,7 @@ class CreateVentPageState extends State<CreateVentPage> {
     final ventTitle = ventTitleController.text;
 
     if(ventTitle.isEmpty) {
-      CustomAlertDialog.alertDialog('Please enter vent title.');
+      CustomAlertDialog.alertDialog('Please enter vent title');
       return;
     }
 
@@ -41,14 +41,14 @@ class CreateVentPageState extends State<CreateVentPage> {
         ventBodyText: ventBodyTextController.text
       ).then((value) => {
         
-        SnackBarDialog.temporarySnack(message: 'Vent has been posted.'),
+        SnackBarDialog.temporarySnack(message: 'Vent has been posted'),
 
         Navigator.pop(context)        
 
       });
         
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to post vent.');
+      SnackBarDialog.errorSnack(message: 'Failed to post vent');
     }
 
   }

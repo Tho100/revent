@@ -96,7 +96,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     }
 
     if (isSaved) {
-      SnackBarDialog.temporarySnack(message: 'Saved changes.');
+      SnackBarDialog.temporarySnack(message: 'Saved changes');
     }
 
   }
@@ -108,7 +108,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
     if(isProfileSelected) {
       _setProfilePic();
-      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
+      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated');
     }
 
   }
@@ -123,7 +123,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: 'Failed to save changes');
       return false;
     }
 
@@ -150,7 +150,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: 'Failed to save changes');
       return false;
     }
 
