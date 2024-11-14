@@ -36,7 +36,7 @@ class AppInfoPageState extends State<AppInfoPage> {
       await tempDir.delete(recursive: true);
     }
 
-    SnackBarDialog.temporarySnack(message: "Cleared ${cacheSizeInMb.toDouble().toStringAsFixed(2)}Mb");
+    SnackBarDialog.temporarySnack(message: "Freed up ${cacheSizeInMb.toDouble().toStringAsFixed(2)}Mb");
 
     _initializeCacheSize();
 
