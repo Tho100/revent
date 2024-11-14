@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
@@ -10,7 +11,7 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/sub_button.dart';
+import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 import 'package:revent/widgets/text_field/main_textfield.dart';
 
@@ -157,31 +158,47 @@ class EditProfilePageState extends State<EditProfilePage> {
   }
 
   Widget _buildProfilePicture() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-
-        ValueListenableBuilder(
-          valueListenable: profilePicNotifier,
-          builder: (_, pfp, __) {
-            return ProfilePictureWidget(
-              customWidth: 80,
-              customHeight: 80,
-              customEmptyPfpSize: 30,
-              pfpData: pfp,
-            );
-          }
+    return Padding(
+      padding: const EdgeInsets.only(left: 4.0),
+      child: InkWellEffect(
+        onPressed: () => _changeProfilePicOnPressed(),
+        child: SizedBox(
+          width: 88,
+          height: 88,
+          child: Stack(
+            children: [
+        
+              ValueListenableBuilder(
+                valueListenable: profilePicNotifier,
+                builder: (_, pfp, __) {
+                  return ProfilePictureWidget(
+                    customWidth: 85,
+                    customHeight: 85,
+                    customEmptyPfpSize: 30,
+                    pfpData: pfp,
+                  );
+                }
+              ),
+        
+              Align(
+                alignment: Alignment.bottomRight,
+                child: SizedBox(
+                  width: 30,
+                  height: 30,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: ThemeColor.white,
+                      borderRadius: BorderRadius.circular(360)
+                    ),
+                    child: const Icon(CupertinoIcons.camera, color: ThemeColor.mediumBlack, size: 16),
+                  ),
+                ),
+              ),
+        
+            ],
+          ),
         ),
-
-        const SizedBox(height: 20),
-
-        SubButton(
-          text: 'Change profile picture', 
-          customFontSize: 14,
-          onPressed: () => _changeProfilePicOnPressed()
-        ),
-
-      ],
+      ),
     );
   }
 
@@ -208,7 +225,7 @@ class EditProfilePageState extends State<EditProfilePage> {
               maxLength: 100,
             ),
             
-            const SizedBox(height: 12),
+            const SizedBox(height: 8),
         
           ],
         ),
@@ -303,10 +320,12 @@ class EditProfilePageState extends State<EditProfilePage> {
                 
             _buildPronouns(),
               
-            const SizedBox(height: 30),
+            const SizedBox(height: 20),
       
             _buildBio(),
       
+            const SizedBox(height: 20),
+
           ],
         ),
       ),
