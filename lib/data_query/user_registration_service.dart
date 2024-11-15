@@ -40,7 +40,7 @@ class UserRegistrationService {
     _setUserProfileData(username: username, email: email);
 
     await _saveUserData(hashPassword: hashPassword);
-
+    
     await VentDataSetup().setup()
       .then((value) => NavigatePage.homePage()
     );

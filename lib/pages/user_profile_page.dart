@@ -157,14 +157,13 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       child: ValueListenableBuilder(
         valueListenable: bioNotifier,
         builder: (_, bio, __) {
-          return Builder(
-            builder: (context) {
+          return LayoutBuilder(
+            builder: (context, _) {
 
-              WidgetsBinding.instance.addPostFrameCallback((_) {
+              Future.microtask(() {
                 final renderBox = context.findRenderObject();
-                if (renderBox is RenderBox) {
-                  final size = renderBox.size;
-                  bioHeight = size.height; 
+                if (renderBox is RenderBox && bioHeight != renderBox.size.height) {
+                  bioHeight = renderBox.size.height;
                 }
               });
 

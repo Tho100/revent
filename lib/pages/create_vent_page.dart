@@ -176,6 +176,18 @@ class CreateVentPageState extends State<CreateVentPage> {
     );
   }
 
+  Future<bool> _onClosePage() async {
+
+    if(ventBodyTextController.text.isNotEmpty || ventTitleController.text.isNotEmpty) {
+      return await CustomAlertDialog.alertDialogDiscardConfirmation(
+        message: 'Discard post?', 
+      );
+    }
+
+    return true;
+    
+  }
+
   @override
   void dispose() {
     ventTitleController.dispose();
@@ -185,16 +197,26 @@ class CreateVentPageState extends State<CreateVentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: true,
-      appBar: CustomAppBar(
-        context: context, 
-        enableCenter: false,
-        title: 'New vent',
-        actions: [_buildActionButton()],
-      ).buildAppBar(),
-      body: _buildBody(),
-      bottomNavigationBar: _buildBottomOptions(),
+    return WillPopScope(
+      onWillPop: () async => await _onClosePage(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: CustomAppBar(
+          context: context, 
+          enableCenter: false,
+          title: 'New vent',
+          actions: [_buildActionButton()],
+          customBackOnPressed: () async {
+            if(await _onClosePage()) {
+              if(context.mounted) {
+                Navigator.pop(context);
+              }
+            }
+          },
+        ).buildAppBar(),
+        body: _buildBody(),
+        bottomNavigationBar: _buildBottomOptions(),
+      ),
     );
   }
   
