@@ -78,9 +78,7 @@ class SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    final loadingDialog = SingleTextLoading();
-
-    loadingDialog.startLoading(
+    SingleTextLoading().startLoading(
       title: 'Creating account...', 
       context: context
     );
