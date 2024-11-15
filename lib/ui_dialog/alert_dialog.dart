@@ -96,4 +96,45 @@ class CustomAlertDialog {
     );
   }
 
+  static Future<bool> alertDialogDiscardConfirmation({required String message}) async {
+    return await showDialog(
+      context: navigatorKey.currentContext!,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialogWidget(
+          title: message,
+          content: '',
+          actions: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(false),
+                child: Text(
+                  'Cancel',
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.secondaryWhite,
+                    fontWeight: FontWeight.w800,
+                  )
+                ),
+              ),
+
+              TextButton(
+                onPressed: () => Navigator.of(context).pop(true),
+                child: Text(
+                  'Discard',
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.darkRed,
+                    fontWeight: FontWeight.w800,
+                  )
+                ),
+              ),
+
+            ]
+          ),
+        );
+      },
+    );
+  }
+
 }
