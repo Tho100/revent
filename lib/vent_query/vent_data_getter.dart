@@ -51,6 +51,72 @@ class VentDataGetter {
 
   }
 
+  Future<Map<String, dynamic>> getFollowingVentsData() async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    const getFollowingQuery = 'SELECT following FROM user_follows_info WHERE follower = :follower';
+
+    final followingParam = {'follower': userData.user.username};
+
+    final followingResults = await conn.execute(getFollowingQuery, followingParam);
+
+    final extractedFollowing = ExtractData(rowsData: followingResults);
+
+    final followingUsernames = extractedFollowing.extractStringColumn('following');
+
+    List<String> title = [];
+    List<String> bodyText = [];
+    List<String> creator = [];
+
+    List<int> totalLikes = [];
+    List<int> totalComments = [];
+
+    List<String> postTimestamp = [];
+
+    for(var following in followingUsernames) {
+
+      const query = 
+        'SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info WHERE creator = :following';
+      
+      final param = {'following': following};
+
+      final retrievedVents = await conn.execute(query, param);
+
+      final extractData = ExtractData(rowsData: retrievedVents);
+
+      title.addAll(extractData.extractStringColumn('title'));
+      bodyText.addAll(extractData.extractStringColumn('body_text'));
+      creator.addAll(extractData.extractStringColumn('creator'));
+
+      totalLikes.addAll(extractData.extractIntColumn('total_likes'));
+      totalComments.addAll(extractData.extractIntColumn('total_comments'));
+
+      postTimestamp.addAll(retrievedVents.rows.map((row) {
+        final createdAtValue = row.assoc()['created_at'];
+        final createdAt = DateTime.parse(createdAtValue!);
+        return formatPostTimestamp.formatPostTimestamp(createdAt);
+      }).toList());
+      
+    }
+
+    final isLikedState = await _ventPostLikedState(
+      conn: conn,
+      title: title,
+    );
+
+    return {
+      'title': title,
+      'body_text': bodyText,
+      'creator': creator,
+      'post_timestamp': postTimestamp,
+      'total_likes': totalLikes,
+      'total_comments': totalComments,
+      'is_liked': isLikedState
+    };
+
+  }
+
   Future<Map<String, dynamic>> getProfilePostsVentData({
     required String title,
     required String creator

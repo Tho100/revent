@@ -6,6 +6,7 @@ import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/vent_widgets/vent_listview.dart';
@@ -23,7 +24,19 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
   
+  final followingIsLoadedNotifier = ValueNotifier<bool>(false);
+
   late TabController tabController;
+
+  Future<void> _followingVentsOnRefresh() async {
+
+    followingIsLoadedNotifier.value = false;
+
+    await CallRefresh().refreshFollowingVents().then((_) {
+      followingIsLoadedNotifier.value = false;
+    });
+
+  }
 
   Widget _buildForYouListView() {
     return Center(
@@ -32,9 +45,35 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         child: RefreshIndicator(
           color: ThemeColor.black,
           onRefresh: () async => await CallRefresh().refreshVents(),
-          child: const VentListView(),
+          child: const VentListView(loadForFollowingTab: false),
         ),
       ),
+    );
+  }
+
+  Widget _buildFollowingListView() {
+    return ValueListenableBuilder(
+      valueListenable: followingIsLoadedNotifier,
+      builder: (_, isLoaded, __) {
+        if(isLoaded) {
+          return Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width - 28,
+              child: RefreshIndicator(
+                color: ThemeColor.black,
+                onRefresh: () async => await _followingVentsOnRefresh(),
+                child: const VentListView(loadForFollowingTab: true),
+              ),
+            ),
+          );
+
+        } else {
+          return const Center(
+            child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
+          );
+
+        }
+      },
     );
   }
 
@@ -43,7 +82,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       controller: tabController,
       children: [
         _buildForYouListView(), 
-        Container(),           
+        _buildFollowingListView(),           
       ],
     );
   }
@@ -116,11 +155,19 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     super.initState();
     navigationIndex.setPageIndex(0);
     tabController = TabController(length: 2, vsync: this);
+    tabController.addListener(() async {
+      if (tabController.index == 1) {
+        await VentDataSetup().setupFollowing().then((_) {
+          followingIsLoadedNotifier.value = true;
+        });
+      }
+    });
   }
 
   @override
   void dispose() {
     tabController.dispose();
+    followingIsLoadedNotifier.dispose();
     super.dispose();
   }
 
