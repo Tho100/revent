@@ -3,7 +3,6 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/themes/theme_style.dart';
 import 'package:revent/ui_dialog/profile_picture_dialog.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
@@ -21,7 +20,11 @@ class ProfileInfoWidgets {
   Widget buildUsername() {
     return Text(
       username,
-      style: ThemeStyle.profileUsernameStyle
+      style: GoogleFonts.inter(
+        color: ThemeColor.white,
+        fontWeight: FontWeight.w800,
+        fontSize: 20.5
+      ),
     );
   }
 
