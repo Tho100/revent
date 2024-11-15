@@ -90,8 +90,6 @@ class SignUpPageState extends State<SignUpPage> {
       email: emailInput, 
       auth: authInput, 
     );
-
-    loadingDialog.stopLoading();
       
   }
 
