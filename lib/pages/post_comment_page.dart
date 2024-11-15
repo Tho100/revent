@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/vent_actions.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -130,6 +131,18 @@ class PostCommentPageState extends State<PostCommentPage> {
     );
   }
 
+  Future<bool> _onClosePage() async {
+
+    if(commentController.text.isNotEmpty) {
+      return await CustomAlertDialog.alertDialogDiscardConfirmation(
+        message: 'Discard comment?', 
+      );
+    }
+
+    return true;
+    
+  }
+
   @override
   void dispose() {
     commentController.dispose();
@@ -138,14 +151,24 @@ class PostCommentPageState extends State<PostCommentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        context: context, 
-        title: 'Add a comment',
-        enableCenter: false,
-        actions: [_buildActionButton()]
-      ).buildAppBar(),
-      body: _buildBody(),
+    return WillPopScope(
+      onWillPop: () async => _onClosePage(), 
+      child: Scaffold(
+        appBar: CustomAppBar(
+          context: context, 
+          title: 'Add a comment',
+          enableCenter: false,
+          actions: [_buildActionButton()],
+          customBackOnPressed: () async {
+            if(await _onClosePage()) {
+              if(context.mounted) {
+                Navigator.pop(context);
+              }
+            }
+          },
+        ).buildAppBar(),
+        body: _buildBody(),
+      ),
     );
   }
   

@@ -180,7 +180,7 @@ class CreateVentPageState extends State<CreateVentPage> {
 
     if(ventBodyTextController.text.isNotEmpty || ventTitleController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
-        message: 'Discord post?', 
+        message: 'Discard post?', 
       );
     }
 
