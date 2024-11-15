@@ -6,6 +6,7 @@ import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
+import 'package:revent/provider/vent_following_data_provider.dart';
 import 'package:revent/vent_query/comment/vent_comment_setup.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 
@@ -20,6 +21,16 @@ class CallRefresh {
     ventData.deleteVentsData();
 
     await VentDataSetup().setup();
+
+  }
+
+  Future<void> refreshFollowingVents() async {
+
+    final ventData = GetIt.instance<VentFollowingDataProvider>();
+
+    ventData.deleteVentsData();
+
+    await VentDataSetup().setupFollowing();
 
   }
 

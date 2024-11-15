@@ -5,13 +5,7 @@ import 'package:revent/themes/theme_color.dart';
 class ThemeStyle {
 
   static const dotSeparator = ' • ';
-
-  static final profileUsernameStyle = GoogleFonts.inter(
-    color: ThemeColor.white,
-    fontWeight: FontWeight.w800,
-    fontSize: 20.5
-  );
-
+  
   static final profilePronounsStyle = GoogleFonts.inter(
     color: ThemeColor.secondaryWhite,
     fontWeight: FontWeight.w700,
