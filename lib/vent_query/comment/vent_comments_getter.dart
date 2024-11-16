@@ -20,7 +20,8 @@ class VentCommentsGetter {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const getCommentsQuery = '''
+    const getCommentsQuery = 
+    '''
       SELECT vent_comments_info.comment, 
             vent_comments_info.commented_by,
             vent_comments_info.created_at, 
@@ -44,11 +45,10 @@ class VentCommentsGetter {
     final comment = extractedData.extractStringColumn('comment');
     final commentedBy = extractedData.extractStringColumn('commented_by');
 
-    final commentTimestamp = results.rows.map((row) {
-      final createdAtValue = row.assoc()['created_at'];
-      final createdAt = DateTime.parse(createdAtValue!);
-      return formatTimestamp.formatPostTimestamp(createdAt);
-    }).toList();
+    final commentTimestamp = extractedData
+      .extractStringColumn('created_at')
+      .map((timestamp) => formatTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
+      .toList();
 
     final profilePictures = extractedData.extractStringColumn('profile_picture')
       .map((pfp) => base64Decode(pfp))

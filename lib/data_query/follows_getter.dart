@@ -6,40 +6,42 @@ import 'package:revent/model/extract_data.dart';
 class FollowsGetter {
 
   Future<Map<String, List<dynamic>>> getFollows({
-    required String followType, 
-    required String username
+    required String followType,
+    required String username,
   }) async {
-
     final conn = await ReventConnect.initializeConnection();
 
-    final columnName = followType == 'Followers' 
-      ? 'follower' : 'following'; 
+    final columnName = followType == 'Followers' ? 'follower' : 'following';
+    final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
 
-    final getUsernameQuery = followType == 'Followers' 
-      ? 'SELECT $columnName FROM user_follows_info WHERE following = :username'
-      : 'SELECT $columnName FROM user_follows_info WHERE follower = :username';
+    final getFollowsWithProfilePicQuery = 
+    '''
+      SELECT ufi.$columnName AS username, upi.profile_picture AS profile_picture
+      FROM user_follows_info ufi
+      JOIN user_profile_info upi
+      ON ufi.$columnName = upi.username
+      WHERE ufi.$oppositeColumn = :username
+    ''';
 
-    final followsParam = {'username': username};
+    final params = {'username': username};
 
-    final results = await conn.execute(getUsernameQuery, followsParam);
+    final results = await conn.execute(getFollowsWithProfilePicQuery, params);
 
-    final extractedFollows = ExtractData(rowsData: results).extractStringColumn(columnName);
+    final extractedData = ExtractData(rowsData: results);
 
-    final profilePicBase64 = await Future.wait(extractedFollows.map((username) async {
-      const getProfilePicQuery = 'SELECT profile_picture FROM user_profile_info WHERE username = :username';
-      final profilePicParam = {'username': username};
-
-      final results = await conn.execute(getProfilePicQuery, profilePicParam);
-      final extractedPfp = ExtractData(rowsData: results).extractStringColumn('profile_picture')[0];
-      
-      return base64Decode(extractedPfp);
-    }));
+    final usernames = extractedData.extractStringColumn('username');
+    
+    final profilePictures = extractedData
+      .extractStringColumn('profile_picture')
+      .map((pfp) => base64Decode(pfp))
+      .toList();
 
     return {
-      'username': extractedFollows,
-      'profile_pic': profilePicBase64
+      'username': usernames,
+      'profile_pic': profilePictures,
     };
 
   }
+
 
 }
