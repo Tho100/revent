@@ -1,20 +1,17 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
-import 'package:revent/provider/vent_following_data_provider.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer.dart';
 
 class VentListView extends StatelessWidget {
 
-  final bool loadForFollowingTab;
+  final dynamic provider;
 
   const VentListView({
-    required this.loadForFollowingTab,
-    super.key
+    required this.provider,
+    super.key,
   });
 
-  Widget _buildForYouVentPreview(Vent ventData) {
+  Widget _buildVentPreview(dynamic ventData) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.5),
       child: VentPreviewer(
@@ -30,65 +27,28 @@ class VentListView extends StatelessWidget {
     );
   }
 
-  Widget _buildFollowingVentPreview(VentFollowing ventData) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.5),
-      child: VentPreviewer(
-        title: ventData.title,
-        bodyText: ventData.bodyText,
-        creator: ventData.creator,
-        postTimestamp: ventData.postTimestamp,
-        totalLikes: ventData.totalLikes,
-        totalComments: ventData.totalComments,
-        pfpData: ventData.profilePic,
-        isPostLiked: ventData.isPostLiked,
+  Widget _buildVentList(BuildContext context) {
+
+    final ventDataList = provider.vents;
+
+    return DynamicHeightGridView(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics()
       ),
-    );
-  }
-
-  Widget _buildForYouVents() {
-    return Consumer<VentDataProvider>(
-      builder: (_, ventData, __) {
-        return DynamicHeightGridView(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()
-          ),
-          crossAxisCount: 1,
-          itemCount: ventData.vents.length,
-          builder: (_, index) {
-            final reversedVentIndex = ventData.vents.length - 1 - index;
-            final vents = ventData.vents[reversedVentIndex]; 
-            return _buildForYouVentPreview(vents);
-          }
-        );
+      crossAxisCount: 1,
+      itemCount: ventDataList.length,
+      builder: (_, index) {
+        final reversedVentIndex = ventDataList.length - 1 - index;
+        final vents = ventDataList[reversedVentIndex];
+        return _buildVentPreview(vents);
       },
     );
-  }
 
-  Widget _buildFollowingVents() {
-    return Consumer<VentFollowingDataProvider>(
-      builder: (_, ventData, __) {
-        return DynamicHeightGridView(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()
-          ),
-          crossAxisCount: 1,
-          itemCount: ventData.vents.length,
-          builder: (_, index) {
-            final reversedVentIndex = ventData.vents.length - 1 - index;
-            final vents = ventData.vents[reversedVentIndex]; 
-            return _buildFollowingVentPreview(vents);
-          }
-        );
-      },
-    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return loadForFollowingTab 
-      ? _buildFollowingVents()
-      : _buildForYouVents();
+    return _buildVentList(context);
   }
 
 }

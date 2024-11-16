@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/provider/vent_data_provider.dart';
+import 'package:revent/provider/vent_following_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
@@ -45,7 +48,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         child: RefreshIndicator(
           color: ThemeColor.black,
           onRefresh: () async => await CallRefresh().refreshVents(),
-          child: const VentListView(loadForFollowingTab: false),
+          child: VentListView(provider: Provider.of<VentDataProvider>(context)),
         ),
       ),
     );
@@ -62,7 +65,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
               child: RefreshIndicator(
                 color: ThemeColor.black,
                 onRefresh: () async => await _followingVentsOnRefresh(),
-                child: const VentListView(loadForFollowingTab: true),
+                child: VentListView(provider: Provider.of<VentFollowingDataProvider>(context)),
               ),
             ),
           );
