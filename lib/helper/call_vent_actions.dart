@@ -31,7 +31,6 @@ class CallVentActions {
       await VentActions(title: title, creator: creator).likePost();
 
     } catch (err) {
-      print(err.toString());
       SnackBarDialog.temporarySnack(message: 'Failed to like this post');
     }
 

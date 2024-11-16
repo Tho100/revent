@@ -36,7 +36,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     followingIsLoadedNotifier.value = false;
 
     await CallRefresh().refreshFollowingVents().then((_) {
-      followingIsLoadedNotifier.value = false;
+      followingIsLoadedNotifier.value = true;
     });
 
   }
