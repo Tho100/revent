@@ -28,7 +28,7 @@ class VentListView extends StatelessWidget {
     );
   }
 
-  Widget _buildVentList(BuildContext context) {
+  Widget _buildVentList() {
 
     final ventDataList = provider.vents;
 
@@ -55,7 +55,7 @@ class VentListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return provider.vents.isEmpty 
       ? _buildOnEmpty()
-      : _buildVentList(context);
+      : _buildVentList();
   }
 
 }
