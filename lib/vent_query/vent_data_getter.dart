@@ -19,20 +19,19 @@ class VentDataGetter {
     
     final retrievedVents = await conn.execute(query);
 
-    final extractData = ExtractData(rowsData: retrievedVents);
+    final extractedData = ExtractData(rowsData: retrievedVents);
 
-    final title = extractData.extractStringColumn('title');
-    final bodyText = extractData.extractStringColumn('body_text');
-    final creator = extractData.extractStringColumn('creator');
+    final title = extractedData.extractStringColumn('title');
+    final bodyText = extractedData.extractStringColumn('body_text');
+    final creator = extractedData.extractStringColumn('creator');
 
-    final totalLikes = extractData.extractIntColumn('total_likes');
-    final totalComments = extractData.extractIntColumn('total_comments');
+    final totalLikes = extractedData.extractIntColumn('total_likes');
+    final totalComments = extractedData.extractIntColumn('total_comments');
 
-    final postTimestamp = retrievedVents.rows.map((row) {
-      final createdAtValue = row.assoc()['created_at'];
-      final createdAt = DateTime.parse(createdAtValue!);
-      return formatPostTimestamp.formatPostTimestamp(createdAt);
-    }).toList();
+    final postTimestamp = extractedData
+      .extractStringColumn('created_at')
+      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
+      .toList();
 
     final isLikedState = await _ventPostLikedState(
       conn: conn,
@@ -55,7 +54,8 @@ class VentDataGetter {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const getFollowingQuery = '''
+    const getFollowingQuery = 
+    '''
       SELECT v.title, v.body_text, v.creator, v.created_at, v.total_likes, v.total_comments
       FROM vent_info v
       INNER JOIN user_follows_info u ON u.following = v.creator
@@ -74,11 +74,10 @@ class VentDataGetter {
     final totalLikes = extractedData.extractIntColumn('total_likes');
     final totalComments = extractedData.extractIntColumn('total_comments');
     
-    final postTimestamp = followingResults.rows.map((row) {
-      final createdAtValue = row.assoc()['created_at'];
-      final createdAt = DateTime.parse(createdAtValue!);
-      return formatPostTimestamp.formatPostTimestamp(createdAt);
-    }).toList();
+    final postTimestamp = extractedData
+      .extractStringColumn('created_at')
+      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
+      .toList();
 
     final isLikedState = await _ventPostLikedState(
       conn: conn,
@@ -94,8 +93,8 @@ class VentDataGetter {
       'total_comments': totalComments,
       'is_liked': isLikedState
     };
-  }
 
+  }
 
   Future<Map<String, dynamic>> getProfilePostsVentData({
     required String title,
@@ -119,10 +118,11 @@ class VentDataGetter {
     final bodyText = extractData.extractStringColumn('body_text')[0];
     final totalComments = extractData.extractIntColumn('total_comments')[0];
     
-    final retrievedPostTimestamp = results.rows.last.assoc()['created_at'];
-    final createdAt = DateTime.parse(retrievedPostTimestamp!);
-    final postTimestamp = formatPostTimestamp.formatPostTimestamp(createdAt);
-
+    final postTimestamp = extractData
+      .extractStringColumn('created_at')
+      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
+      .toList()[0];
+      
     return {
       'body_text': bodyText,
       'post_timestamp': postTimestamp,

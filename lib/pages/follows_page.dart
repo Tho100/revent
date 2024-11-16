@@ -57,8 +57,9 @@ class FollowsPageState extends State<FollowsPage> {
 
     try {
 
-      final getFollowsInfo = await FollowsGetter()
-        .getFollows(followType: widget.pageType, username: widget.username);
+      final getFollowsInfo = await FollowsGetter().getFollows(
+        followType: widget.pageType, username: widget.username
+      );
 
       final usernames = getFollowsInfo['username']!;
       final profilePics = getFollowsInfo['profile_pic']!;
@@ -73,6 +74,7 @@ class FollowsPageState extends State<FollowsPage> {
       followsUserDataNotifier.value = followsUserInfoList;
 
     } catch (err) {
+      SnackBarDialog.errorSnack(message: err.toString());
       SnackBarDialog.errorSnack(message: 'Failed to load profiles');
     }
     

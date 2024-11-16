@@ -28,7 +28,7 @@ class ProfileDataGetter {
     final bio = extractData.extractStringColumn('bio')[0];
     final pronouns = extractData.extractStringColumn('pronouns')[0];
 
-    Map<String, dynamic> result = {
+    final results = {
       'followers': followers, 
       'following': following, 
       'bio': bio,
@@ -36,10 +36,10 @@ class ProfileDataGetter {
     };
 
     if (isMyProfile) {
-      result['profile_pic'] = extractData.extractStringColumn('profile_picture')[0];
+      results['profile_pic'] = extractData.extractStringColumn('profile_picture')[0];
     }
 
-    return result;
+    return results;
 
   }
 
