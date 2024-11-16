@@ -55,50 +55,30 @@ class VentDataGetter {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const getFollowingQuery = 'SELECT following FROM user_follows_info WHERE follower = :follower';
+    const getFollowingQuery = '''
+      SELECT v.title, v.body_text, v.creator, v.created_at, v.total_likes, v.total_comments
+      FROM vent_info v
+      INNER JOIN user_follows_info u ON u.following = v.creator
+      WHERE u.follower = :follower
+    ''';
 
     final followingParam = {'follower': userData.user.username};
-
+    
     final followingResults = await conn.execute(getFollowingQuery, followingParam);
 
-    final extractedFollowing = ExtractData(rowsData: followingResults);
+    final extractedData = ExtractData(rowsData: followingResults);
 
-    final followingUsernames = extractedFollowing.extractStringColumn('following');
-
-    List<String> title = [];
-    List<String> bodyText = [];
-    List<String> creator = [];
-
-    List<int> totalLikes = [];
-    List<int> totalComments = [];
-
-    List<String> postTimestamp = [];
-
-    for(var following in followingUsernames) {
-
-      const query = 
-        'SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info WHERE creator = :following';
-      
-      final param = {'following': following};
-
-      final retrievedVents = await conn.execute(query, param);
-
-      final extractData = ExtractData(rowsData: retrievedVents);
-
-      title.addAll(extractData.extractStringColumn('title'));
-      bodyText.addAll(extractData.extractStringColumn('body_text'));
-      creator.addAll(extractData.extractStringColumn('creator'));
-
-      totalLikes.addAll(extractData.extractIntColumn('total_likes'));
-      totalComments.addAll(extractData.extractIntColumn('total_comments'));
-
-      postTimestamp.addAll(retrievedVents.rows.map((row) {
-        final createdAtValue = row.assoc()['created_at'];
-        final createdAt = DateTime.parse(createdAtValue!);
-        return formatPostTimestamp.formatPostTimestamp(createdAt);
-      }).toList());
-      
-    }
+    final title = extractedData.extractStringColumn('title');
+    final bodyText = extractedData.extractStringColumn('body_text');
+    final creator = extractedData.extractStringColumn('creator');
+    final totalLikes = extractedData.extractIntColumn('total_likes');
+    final totalComments = extractedData.extractIntColumn('total_comments');
+    
+    final postTimestamp = followingResults.rows.map((row) {
+      final createdAtValue = row.assoc()['created_at'];
+      final createdAt = DateTime.parse(createdAtValue!);
+      return formatPostTimestamp.formatPostTimestamp(createdAt);
+    }).toList();
 
     final isLikedState = await _ventPostLikedState(
       conn: conn,
@@ -114,8 +94,8 @@ class VentDataGetter {
       'total_comments': totalComments,
       'is_liked': isLikedState
     };
-
   }
+
 
   Future<Map<String, dynamic>> getProfilePostsVentData({
     required String title,
