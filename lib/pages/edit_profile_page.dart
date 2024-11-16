@@ -85,13 +85,13 @@ class EditProfilePageState extends State<EditProfilePage> {
     bool isSaved = true;
 
     if (isBioChanges) {
-      if (await _saveBio() == false) {
+      if (!await _saveBio()) {
         isSaved = false; 
       }
     }
 
     if (isPronounsChanges) {
-      if (await _savePronouns() == false) {
+      if (!await _savePronouns()) {
         isSaved = false; 
       }
     }
