@@ -10,7 +10,9 @@ class UserFollowing {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = 'SELECT 1 FROM user_follows_info WHERE following = :following AND follower = :follower LIMIT 1';
+    const query = 
+      'SELECT 1 FROM user_follows_info WHERE following = :following AND follower = :follower LIMIT 1';
+      
     final param = {
       'following': username,
       'follower': userData.user.username

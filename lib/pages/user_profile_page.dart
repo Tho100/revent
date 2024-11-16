@@ -97,8 +97,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
       isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
 
-      final getPostsData = await ProfilePostsGetter()
-        .getPosts(username: widget.username);
+      final getPostsData = await ProfilePostsGetter().getPosts(username: widget.username);
 
       final title = getPostsData['title'] as List<String>;
       final totalLikes = getPostsData['total_likes'] as List<int>;

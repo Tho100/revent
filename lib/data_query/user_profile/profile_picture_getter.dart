@@ -22,9 +22,9 @@ class ProfilePictureGetter {
 
     final result = await conn.execute(query, params);
 
-    final pfpData = ExtractData(rowsData: result).extractStringColumn('profile_picture');
+    final pfpData = ExtractData(rowsData: result).extractStringColumn('profile_picture')[0];
 
-    return base64Decode(pfpData[0]);
+    return base64Decode(pfpData);
     
   }
 

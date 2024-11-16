@@ -57,8 +57,9 @@ class VentPostPageState extends State<VentPostPage> {
 
     try {
 
-      await VentCommentSetup()
-        .setup(title: widget.title, creator: widget.creator);
+      await VentCommentSetup().setup(
+        title: widget.title, creator: widget.creator
+      );
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');

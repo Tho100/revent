@@ -74,7 +74,6 @@ class FollowsPageState extends State<FollowsPage> {
       followsUserDataNotifier.value = followsUserInfoList;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: err.toString());
       SnackBarDialog.errorSnack(message: 'Failed to load profiles');
     }
     

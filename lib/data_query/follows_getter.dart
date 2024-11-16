@@ -14,7 +14,8 @@ class FollowsGetter {
     final columnName = followType == 'Followers' ? 'follower' : 'following';
     final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
 
-    final getFollowsWithProfilePicQuery = '''
+    final getFollowsWithProfilePicQuery = 
+    '''
       SELECT ufi.$columnName AS username, upi.profile_picture AS profile_picture
       FROM user_follows_info ufi
       JOIN user_profile_info upi
@@ -29,6 +30,7 @@ class FollowsGetter {
     final extractedData = ExtractData(rowsData: results);
 
     final usernames = extractedData.extractStringColumn('username');
+    
     final profilePictures = extractedData
       .extractStringColumn('profile_picture')
       .map((pfp) => base64Decode(pfp))
@@ -38,7 +40,7 @@ class FollowsGetter {
       'username': usernames,
       'profile_pic': profilePictures,
     };
-    
+
   }
 
 

@@ -27,8 +27,9 @@ class ProfilePostsPreviewer extends StatelessWidget {
 
   void _viewVentPostPage() async {
 
-    final ventDataInfo = await VentDataGetter()
-      .getProfilePostsVentData(title: title, creator: username);
+    final ventDataInfo = await VentDataGetter().getProfilePostsVentData(
+      title: title, creator: username
+    );
 
     final bodyText = ventDataInfo['body_text'];
     final postTimestamp = ventDataInfo['post_timestamp'];
