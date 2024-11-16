@@ -1,5 +1,6 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:revent/pages/empty_page.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer.dart';
 
 class VentListView extends StatelessWidget {
@@ -46,9 +47,15 @@ class VentListView extends StatelessWidget {
 
   }
 
+  Widget _buildOnEmpty() {
+    return EmptyPage().customMessage(message: 'Nothing to see here.');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return _buildVentList(context);
+    return provider.vents.isEmpty 
+      ? _buildOnEmpty()
+      : _buildVentList(context);
   }
 
 }
