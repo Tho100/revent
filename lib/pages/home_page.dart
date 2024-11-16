@@ -163,7 +163,8 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         await VentDataSetup().setupFollowing().then((_) {
           followingIsLoadedNotifier.value = true;
         });
-      }
+      } 
+      navigationIndex.setTabIndex(tabController.index);
     });
   }
 

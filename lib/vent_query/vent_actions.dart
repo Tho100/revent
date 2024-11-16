@@ -3,10 +3,12 @@ import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_date.dart';
+import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
+import 'package:revent/provider/vent_following_data_provider.dart';
 
 class VentActions {
 
@@ -15,10 +17,14 @@ class VentActions {
 
   VentActions({
     required this.title,
-    required this.creator
+    required this.creator,
   });
 
+  final navigation = GetIt.instance<NavigationProvider>();
+
   final ventData = GetIt.instance<VentDataProvider>();
+  final ventFollowingData = GetIt.instance<VentFollowingDataProvider>();
+
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
@@ -26,7 +32,11 @@ class VentActions {
 
     final conn = await ReventConnect.initializeConnection();
 
-    final index = ventData.vents.indexWhere(
+    final index = navigation.activeTabIndex == 0
+      ? ventData.vents.indexWhere(
+        (vent) => vent.title == title && vent.creator == creator
+      )
+      : ventFollowingData.vents.indexWhere(
       (vent) => vent.title == title && vent.creator == creator
     );
 
@@ -58,7 +68,7 @@ class VentActions {
 
     _updatePostLikeValue(
       index: index,
-      isUserLikedPost: isUserLikedPost
+      isUserLikedPost: isUserLikedPost,
     );
 
   }
@@ -118,8 +128,16 @@ class VentActions {
     required bool isUserLikedPost,
   }) {
 
-    if(index != -1) {
-      ventData.likeVent(index, isUserLikedPost);
+    if(navigation.activeTabIndex == 0) {
+      if(index != -1) {
+        ventData.likeVent(index, isUserLikedPost);
+      }
+
+    } else if (navigation.activeTabIndex == 1) {
+      if(index != -1) {
+        ventFollowingData.likeVent(index, isUserLikedPost);
+      }
+
     }
 
   }
