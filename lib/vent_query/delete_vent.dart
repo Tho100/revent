@@ -64,15 +64,25 @@ class DeleteVent {
     required String title,
   }) async {
 
-    const deleteCommentsQuery = 
-      'DELETE FROM vent_comments_info WHERE title = :title AND creator = :creator'; 
-      
     final params = {
       'title': title,
       'creator': userData.user.username,
     };
 
-    await conn.execute(deleteCommentsQuery, params);
+    await conn.transactional((conn) async {
+
+      const deleteCommentsQuery = 
+        'DELETE FROM vent_comments_info WHERE title = :title AND creator = :creator'; 
+        
+      await conn.execute(deleteCommentsQuery, params);
+
+      const deleteCommentsLikesInfoQuery = 
+        'DELETE FROM vent_comments_likes_info WHERE title = :title AND creator = :creator'; 
+        
+
+      await conn.execute(deleteCommentsLikesInfoQuery, params);
+
+    });
 
   }
 
