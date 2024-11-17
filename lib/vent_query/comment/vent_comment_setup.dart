@@ -16,9 +16,14 @@ class VentCommentSetup {
       creator: creator
     ).getComments();
 
+    // TODO: Add type casting
     final commentedBy = commentsGetter['commented_by']!;
     final comment = commentsGetter['comment']!;
     final commentTimestamp = commentsGetter['comment_timestamp']!;
+
+    final totalLikes = commentsGetter['total_likes']!;
+    final isLiked = commentsGetter['is_liked']!;
+
     final pfpData = commentsGetter['profile_picture']!;
 
     final comments = List.generate(commentedBy.length, (index) {
@@ -26,6 +31,8 @@ class VentCommentSetup {
         commentedBy: commentedBy[index],
         comment: comment[index],
         commentTimestamp: commentTimestamp[index],
+        totalLikes: totalLikes[index],
+        isCommentLiked: isLiked[index],
         pfpData: pfpData[index]
       );
     });

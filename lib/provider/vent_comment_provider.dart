@@ -7,13 +7,20 @@ class VentComment {
   String commentedBy;
   String comment;
   String commentTimestamp;
+
+  int totalLikes;
+
+  bool isCommentLiked;
+  
   Uint8List pfpData;
 
   VentComment({
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
-    required this.pfpData
+    required this.pfpData,
+    this.totalLikes = 0,
+    this.isCommentLiked = false,
   });
 
 }
@@ -44,6 +51,20 @@ class VentCommentProvider extends ChangeNotifier {
       _ventComments.removeAt(index);
       notifyListeners();
     }
+  }
+
+  void likeComment(int index, bool isUserLikedComment) {
+
+    _ventComments[index].isCommentLiked = isUserLikedComment 
+      ? false
+      : true;
+
+    _ventComments[index].isCommentLiked 
+      ? _ventComments[index].totalLikes += 1
+      : _ventComments[index].totalLikes -= 1;
+
+    notifyListeners();
+    
   }
 
 }

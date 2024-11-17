@@ -62,7 +62,7 @@ class VentPostPageState extends State<VentPostPage> {
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: err.toString());
     }
 
   }
@@ -89,7 +89,7 @@ class VentPostPageState extends State<VentPostPage> {
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: err.toString());
     }
 
   }

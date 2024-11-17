@@ -22,6 +22,9 @@ class VentCommentPreviewer extends StatelessWidget {
   final String comment;
   final String commentTimestamp;
 
+  final int totalLikes;
+  final bool isCommentLiked;
+
   final Uint8List pfpData;
 
   VentCommentPreviewer({
@@ -30,6 +33,8 @@ class VentCommentPreviewer extends StatelessWidget {
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
+    required this.totalLikes,
+    required this.isCommentLiked,
     required this.pfpData,
     super.key
   });
@@ -46,6 +51,23 @@ class VentCommentPreviewer extends StatelessWidget {
         ventCreator: creator, 
         ventTitle: title
       ).delete().then((value) => SnackBarDialog.temporarySnack(message: 'Comment deleted'));
+
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
+    }
+    
+  }
+
+  Future<void> _likeOnPressed() async {
+
+    try {
+
+      await VentCommentActions(
+        username: commentedBy, 
+        commentText: comment, 
+        ventCreator: creator, 
+        ventTitle: title
+      ).like().then((value) => SnackBarDialog.temporarySnack(message: 'Comment liked'));
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
@@ -148,6 +170,28 @@ class VentCommentPreviewer extends StatelessWidget {
                   fontSize: 14
                 ),
               ),
+            ),
+      
+            const SizedBox(height: 6),
+            
+            Row(
+              children: [
+          
+                IconButton(
+                  onPressed: () async => await _likeOnPressed(),
+                  icon: const Icon(CupertinoIcons.heart, color: ThemeColor.secondaryWhite, size: 18),
+                ),
+          
+                Text(
+                  totalLikes.toString(),
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.secondaryWhite,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 13
+                  )
+                )
+          
+              ]
             ),
       
           ],
