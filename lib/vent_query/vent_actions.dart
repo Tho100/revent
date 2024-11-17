@@ -149,13 +149,14 @@ class VentActions {
     final conn = await ReventConnect.initializeConnection();
 
     const insertCommentQuery = 
-      'INSERT INTO vent_comments_info (title, creator, commented_by, comment) VALUES (:title, :creator, :commented_by, :comment)'; 
+      'INSERT INTO vent_comments_info (title, creator, commented_by, comment, total_likes) VALUES (:title, :creator, :commented_by, :comment, :total_likes)'; 
       
     final commentsParams = {
       'title': title,
       'creator': creator,
       'commented_by': userData.user.username,
-      'comment': comment
+      'comment': comment,
+      'total_likes': 0
     };
 
     await conn.execute(insertCommentQuery, commentsParams);
