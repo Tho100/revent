@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:get_it/get_it.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/vent_query/comment/vent_comments_getter.dart';
@@ -16,15 +18,14 @@ class VentCommentSetup {
       creator: creator
     ).getComments();
 
-    // TODO: Add type casting
-    final commentedBy = commentsGetter['commented_by']!;
-    final comment = commentsGetter['comment']!;
-    final commentTimestamp = commentsGetter['comment_timestamp']!;
+    final commentedBy = commentsGetter['commented_by']! as List<String>;
+    final comment = commentsGetter['comment']! as List<String>;
+    final commentTimestamp = commentsGetter['comment_timestamp']! as List<String>;
 
-    final totalLikes = commentsGetter['total_likes']!;
-    final isLiked = commentsGetter['is_liked']!;
+    final totalLikes = commentsGetter['total_likes']! as List<int>;
+    final isLiked = commentsGetter['is_liked']! as List<bool>;
 
-    final pfpData = commentsGetter['profile_picture']!;
+    final pfpData = commentsGetter['profile_picture']! as List<Uint8List>;
 
     final comments = List.generate(commentedBy.length, (index) {
       return VentComment(
