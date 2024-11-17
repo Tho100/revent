@@ -67,7 +67,7 @@ class VentCommentPreviewer extends StatelessWidget {
         commentText: comment, 
         ventCreator: creator, 
         ventTitle: title
-      ).like().then((value) => SnackBarDialog.temporarySnack(message: 'Comment liked'));
+      ).like();
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
@@ -115,7 +115,97 @@ class VentCommentPreviewer extends StatelessWidget {
     );
   }
 
-  Widget _buildHeaders(BuildContext context) {
+  Widget _buildLikeAndReplyButtons() {
+    return Transform.translate(
+      offset: const Offset(-2, 0),
+      child: Row(
+        children: [
+    
+          IconButton(
+            onPressed: () async => await _likeOnPressed(),
+            icon: Icon(isCommentLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isCommentLiked ? ThemeColor.likedColor : ThemeColor.secondaryWhite, size: 18),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(), 
+          ),
+        
+          const SizedBox(width: 4),
+    
+          Text(
+            totalLikes.toString(),
+            style: GoogleFonts.inter(
+              color: ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 13,
+            ),
+          ),
+    
+          const SizedBox(width: 16),
+    
+          Text(
+            'Reply',
+            style: GoogleFonts.inter(
+              color: ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 13
+            )
+          )
+    
+        ],
+      ),
+    );
+  }
+
+  Widget _buildCommentHeader() {
+    return Row(
+      children: [
+
+        GestureDetector(
+          onTap: () => NavigatePage.userProfilePage(username: commentedBy, pfpData: pfpData),
+          child: Text(
+            commentedBy,
+            style: GoogleFonts.inter(
+              color: ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 14
+            )
+          ),
+        ),
+
+        const SizedBox(width: 8),
+
+        Text(
+          '$commentTimestamp ${commentedBy == creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
+          style: GoogleFonts.inter(
+            color: ThemeColor.thirdWhite,
+            fontWeight: FontWeight.w800,
+            fontSize: 13,
+          ),
+        ),
+
+
+        const Spacer(),
+
+        _buildCommentActionButton()
+
+      ],
+    );
+  }
+
+  Widget _buildCommentText() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 25.0),
+      child: Text(
+        comment,
+        style: GoogleFonts.inter(
+          color: ThemeColor.secondaryWhite,
+          fontWeight: FontWeight.w700,
+          fontSize: 14
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCommentBody(BuildContext context) {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 84,
       child: Padding(
@@ -124,75 +214,15 @@ class VentCommentPreviewer extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            Row(
-              children: [
-
-                GestureDetector(
-                  onTap: () => NavigatePage.userProfilePage(username: commentedBy, pfpData: pfpData),
-                  child: Text(
-                    commentedBy,
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.secondaryWhite,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 14
-                    )
-                  ),
-                ),
-
-                const SizedBox(width: 8),
-
-                Text(
-                  '$commentTimestamp ${commentedBy == creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 13,
-                  ),
-                ),
-
-
-                const Spacer(),
-
-                _buildCommentActionButton()
-
-              ],
-            ),
+            _buildCommentHeader(),
 
             const SizedBox(height: 2),
             
-            Padding(
-              padding: const EdgeInsets.only(right: 25.0),
-              child: Text(
-                comment,
-                style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 14
-                ),
-              ),
-            ),
+            _buildCommentText(),
       
-            const SizedBox(height: 6),
-            
-            Row(
-              children: [
-          
-                IconButton(
-                  onPressed: () async => await _likeOnPressed(),
-                  icon: const Icon(CupertinoIcons.heart, color: ThemeColor.secondaryWhite, size: 18),
-                ),
-          
-                Text(
-                  totalLikes.toString(),
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.secondaryWhite,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 13
-                  )
-                )
-          
-              ]
-            ),
+            const SizedBox(height: 18),
+
+            _buildLikeAndReplyButtons(),
       
           ],
         ),
@@ -213,7 +243,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
         const SizedBox(width: 12),
 
-        _buildHeaders(context)
+        _buildCommentBody(context)
 
       ],
     );
