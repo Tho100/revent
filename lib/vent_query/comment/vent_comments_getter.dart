@@ -62,7 +62,7 @@ class VentCommentsGetter {
       .toList();
 
     final isLikedState = await _commentLikedState(
-      conn: conn, commentedBy: commentedBy
+      conn: conn, commentedBy: commentedBy, comments: comment
     );
 
     return {
@@ -79,10 +79,11 @@ class VentCommentsGetter {
   Future<List<bool>> _commentLikedState({
     required MySQLConnectionPool conn,
     required List<String> commentedBy,
+    required List<String> comments,
   }) async {
 
-    const readLikesQuery = 
-      'SELECT commented_by FROM vent_comments_likes_info WHERE liked_by = :liked_by AND creator = :creator AND title = :title';
+    const readLikesQuery =
+      'SELECT commented_by, comment FROM vent_comments_likes_info WHERE liked_by = :liked_by AND creator = :creator AND title = :title';
 
     final params = {
       'liked_by': userData.user.username,
@@ -90,16 +91,18 @@ class VentCommentsGetter {
       'title': title,
     };
 
-    final retrievedTitles = await conn.execute(readLikesQuery, params);
+    final results = await conn.execute(readLikesQuery, params);
 
-    final extractTitlesData = ExtractData(rowsData: retrievedTitles);
+    final likedPairs = results.rows.map((row) {
+      return '${row.assoc()['commented_by']}|${row.assoc()['comment']}';
+    }).toSet();
 
-    final likedCommentCommenter = extractTitlesData.extractStringColumn('commented_by');
+    return List<bool>.generate(
+      commentedBy.length,
+      (i) => likedPairs.contains('${commentedBy[i]}|${comments[i]}'),
+    );
     
-    final likedCommentedSet = Set<String>.from(likedCommentCommenter);
-
-    return commentedBy.map((c) => likedCommentedSet.contains(c)).toList();
-
   }
+
 
 }

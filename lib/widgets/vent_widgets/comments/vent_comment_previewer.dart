@@ -123,11 +123,11 @@ class VentCommentPreviewer extends StatelessWidget {
     
           IconButton(
             onPressed: () async => await _likeOnPressed(),
-            icon: const Icon(CupertinoIcons.heart, color: ThemeColor.secondaryWhite, size: 18),
+            icon: Icon(isCommentLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isCommentLiked ? ThemeColor.likedColor : ThemeColor.secondaryWhite, size: 18),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(), 
           ),
-    
+        
           const SizedBox(width: 4),
     
           Text(
