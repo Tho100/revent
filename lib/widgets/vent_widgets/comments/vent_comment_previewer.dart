@@ -67,7 +67,7 @@ class VentCommentPreviewer extends StatelessWidget {
         commentText: comment, 
         ventCreator: creator, 
         ventTitle: title
-      ).like().then((value) => SnackBarDialog.temporarySnack(message: 'Comment liked'));
+      ).like();
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
@@ -172,26 +172,44 @@ class VentCommentPreviewer extends StatelessWidget {
               ),
             ),
       
-            const SizedBox(height: 6),
+            const SizedBox(height: 18),
+
+            Transform.translate(
+              offset: const Offset(-1, 0),
+              child: Row(
+                children: [
             
-            Row(
-              children: [
-          
-                IconButton(
-                  onPressed: () async => await _likeOnPressed(),
-                  icon: const Icon(CupertinoIcons.heart, color: ThemeColor.secondaryWhite, size: 18),
-                ),
-          
-                Text(
-                  totalLikes.toString(),
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.secondaryWhite,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 13
+                  IconButton(
+                    onPressed: () async => await _likeOnPressed(),
+                    icon: const Icon(CupertinoIcons.heart, color: ThemeColor.secondaryWhite, size: 18),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(), 
+                  ),
+            
+                  const SizedBox(width: 4),
+            
+                  Text(
+                    totalLikes.toString(),
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.secondaryWhite,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 13,
+                    ),
+                  ),
+            
+                  const SizedBox(width: 16),
+            
+                  Text(
+                    'Reply',
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.secondaryWhite,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 13
+                    )
                   )
-                )
-          
-              ]
+            
+                ],
+              ),
             ),
       
           ],
