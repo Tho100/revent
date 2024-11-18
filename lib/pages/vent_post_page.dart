@@ -115,6 +115,8 @@ class VentPostPageState extends State<VentPostPage> {
         title: widget.title, creator: widget.creator
       );
 
+      _filterCommentToBest();
+
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
     }
@@ -141,6 +143,8 @@ class VentPostPageState extends State<VentPostPage> {
       await CallRefresh().refreshVentPost(
         title: widget.title, creator: widget.creator
       );
+
+      _filterCommentToBest();
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
@@ -180,40 +184,44 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildFilterButton() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 6, right: 4),
-      child: InkWellEffect(
-        onPressed: () {
-          BottomsheetCommentFilter().buildBottomsheet(
-            context: context, 
-            bestOnPressed: () => _filterOnPressed(type: 'best'), 
-            latestOnPressed: () => _filterOnPressed(type: 'latest'),
-            oldestOnPressed: () => _filterOnPressed(type: 'oldest'),
-          );
-        },
-        child: Row(
-          children: [
+    return SizedBox(
+      width: 80,
+      height: 35,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 6),
+        child: InkWellEffect(
+          onPressed: () {
+            BottomsheetCommentFilter().buildBottomsheet(
+              context: context, 
+              bestOnPressed: () => _filterOnPressed(type: 'best'), 
+              latestOnPressed: () => _filterOnPressed(type: 'latest'),
+              oldestOnPressed: () => _filterOnPressed(type: 'oldest'),
+            );
+          },
+          child: Row(
+            children: [
+      
+              const SizedBox(width: 10),
     
-            const SizedBox(width: 10),
-
-            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
+              const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
+      
+              const SizedBox(width: 8),
+      
+              Text(
+                'Best',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.thirdWhite,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 15
+                )
+              ),
     
-            const SizedBox(width: 8),
-    
-            Text(
-              'Best',
-              style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
-                fontWeight: FontWeight.w800,
-                fontSize: 15
-              )
-            ),
-
-            const SizedBox(width: 10),
-    
-          ],
-        ),
-      )
+              const SizedBox(width: 10),
+      
+            ],
+          ),
+        )
+      ),
     );
   }
 
@@ -364,7 +372,7 @@ class VentPostPageState extends State<VentPostPage> {
           children: [
             
             Padding(
-              padding: const EdgeInsets.only(left: 4.0), // TODO: Remove this padding. Move to the Row EdgeInsets.symmetric(horizontal: 4)
+              padding: const EdgeInsets.only(left: 6.0),
               child: Text(
                 'Comments',
                 style: GoogleFonts.inter(
@@ -374,11 +382,11 @@ class VentPostPageState extends State<VentPostPage> {
                 ),
               ),
             ),
-
+      
             const Spacer(),
-
+      
             _buildFilterButton(),
-
+      
           ],
         ),
 
