@@ -115,6 +115,8 @@ class VentPostPageState extends State<VentPostPage> {
         title: widget.title, creator: widget.creator
       );
 
+      _filterCommentToBest();
+
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
     }
@@ -141,6 +143,8 @@ class VentPostPageState extends State<VentPostPage> {
       await CallRefresh().refreshVentPost(
         title: widget.title, creator: widget.creator
       );
+
+      _filterCommentToBest();
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
