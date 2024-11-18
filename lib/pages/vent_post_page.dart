@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/model/format_date.dart';
 import 'package:revent/pages/post_comment_page.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
@@ -54,6 +55,58 @@ class VentPostPageState extends State<VentPostPage> {
   final ventCommentProvider = GetIt.instance<VentCommentProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
+  final formatTimestamp = FormatDate();
+
+  void _filterCommentToBest() {
+
+    final sortedComments = ventCommentProvider.ventComments
+      .toList()
+      ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+
+    ventCommentProvider.setComments(sortedComments);
+
+  }
+
+  void _filterCommentToLatest() {
+
+    final sortedComments = ventCommentProvider.ventComments
+      .toList()
+      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.commentTimestamp)
+        .compareTo(formatTimestamp.parseFormattedTimestamp(a.commentTimestamp)));
+
+    ventCommentProvider.setComments(sortedComments);
+
+  }
+
+  void _filterCommentToOldest() {
+
+    final sortedComments = ventCommentProvider.ventComments
+      .toList()
+      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.commentTimestamp)
+        .compareTo(formatTimestamp.parseFormattedTimestamp(b.commentTimestamp)));
+
+    ventCommentProvider.setComments(sortedComments);
+
+  }
+
+  void _filterOnPressed({required String type}) {
+    
+    switch (type) {
+      case == 'best':
+      _filterCommentToBest();
+      break;
+    case == 'latest':
+      _filterCommentToLatest();
+      break;
+    case == 'oldest':
+      _filterCommentToOldest();
+      break;
+    }
+
+    Navigator.pop(context);
+
+  }
+
   void _initializeComments() async {
 
     try {
@@ -63,7 +116,7 @@ class VentPostPageState extends State<VentPostPage> {
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: err.toString());
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
     }
 
   }
@@ -90,7 +143,7 @@ class VentPostPageState extends State<VentPostPage> {
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: err.toString());
+      SnackBarDialog.errorSnack(message: 'Something went wrong');
     }
 
   }
@@ -128,14 +181,14 @@ class VentPostPageState extends State<VentPostPage> {
 
   Widget _buildFilterButton() {
     return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 8),
+      padding: const EdgeInsets.only(top: 6, right: 4),
       child: InkWellEffect(
         onPressed: () {
           BottomsheetCommentFilter().buildBottomsheet(
             context: context, 
-            bestOnPressed: () {}, 
-            latestOnPressed: () {}, 
-            oldestOnPressed: () {}
+            bestOnPressed: () => _filterOnPressed(type: 'best'), 
+            latestOnPressed: () => _filterOnPressed(type: 'latest'),
+            oldestOnPressed: () => _filterOnPressed(type: 'oldest'),
           );
         },
         child: Row(
@@ -309,9 +362,9 @@ class VentPostPageState extends State<VentPostPage> {
 
         Row(
           children: [
-
+            
             Padding(
-              padding: const EdgeInsets.only(left: 4.0),
+              padding: const EdgeInsets.only(left: 4.0), // TODO: Remove this padding. Move to the Row EdgeInsets.symmetric(horizontal: 4)
               child: Text(
                 'Comments',
                 style: GoogleFonts.inter(

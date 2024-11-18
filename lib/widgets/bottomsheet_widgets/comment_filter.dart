@@ -47,7 +47,7 @@ class BottomsheetCommentFilter {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'User Action'),
+        const BottomsheetTitle(title: 'Filter Comments'),
 
         _buildOptionButton(
           text: 'Best',
