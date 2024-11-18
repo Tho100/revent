@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
@@ -27,6 +30,9 @@ class PostCommentPageState extends State<PostCommentPage> {
 
   final commentController = TextEditingController();
 
+  final commentProvider = GetIt.instance<VentCommentProvider>();
+  final userData = GetIt.instance<UserDataProvider>();
+
   void _createCommentOnPressed() async {
 
     try {
@@ -34,6 +40,15 @@ class PostCommentPageState extends State<PostCommentPage> {
       final commentText = commentController.text;
 
       if(commentText.isNotEmpty) {
+
+        final commentIndex = commentProvider.ventComments.indexWhere(
+          (comment) => comment.comment == commentText && comment.commentedBy == userData.user.username
+        );
+
+        if(commentIndex != -1) {
+          CustomAlertDialog.alertDialogTitle("Can't post comment", 'You have already posted similar comment');
+          return;
+        } 
 
         final ventActions = VentActions(title: widget.title, creator: widget.creator);
 
