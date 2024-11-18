@@ -16,6 +16,7 @@ import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/comment/vent_comment_setup.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/bottomsheet_widgets/comment_filter.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
@@ -122,6 +123,44 @@ class VentPostPageState extends State<VentPostPage> {
           }
         );
       },
+    );
+  }
+
+  Widget _buildFilterButton() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 10, right: 8),
+      child: InkWellEffect(
+        onPressed: () {
+          BottomsheetCommentFilter().buildBottomsheet(
+            context: context, 
+            bestOnPressed: () {}, 
+            latestOnPressed: () {}, 
+            oldestOnPressed: () {}
+          );
+        },
+        child: Row(
+          children: [
+    
+            const SizedBox(width: 10),
+
+            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
+    
+            const SizedBox(width: 8),
+    
+            Text(
+              'Best',
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontWeight: FontWeight.w800,
+                fontSize: 15
+              )
+            ),
+
+            const SizedBox(width: 10),
+    
+          ],
+        ),
+      )
     );
   }
 
@@ -268,16 +307,26 @@ class VentPostPageState extends State<VentPostPage> {
 
         const SizedBox(height: 10),
 
-        Padding(
-          padding: const EdgeInsets.only(left: 4.0),
-          child: Text(
-            'Comments',
-            style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
-              fontWeight: FontWeight.w800,
-              fontSize: 17,
+        Row(
+          children: [
+
+            Padding(
+              padding: const EdgeInsets.only(left: 4.0),
+              child: Text(
+                'Comments',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.secondaryWhite,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 17,
+                ),
+              ),
             ),
-          ),
+
+            const Spacer(),
+
+            _buildFilterButton(),
+
+          ],
         ),
 
       ],
