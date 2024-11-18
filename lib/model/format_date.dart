@@ -29,6 +29,30 @@ class FormatDate {
 
   }
 
+  int parseFormattedTimestamp(String timestamp) {
+
+    if (timestamp.endsWith('m')) {
+      return int.parse(timestamp.replaceAll('m', ''));
+      
+    } else if (timestamp.endsWith('h')) {
+
+      return int.parse(timestamp.replaceAll('h', '')) * 60; 
+
+    } else if (timestamp.endsWith('d')) {
+      return int.parse(timestamp.replaceAll('d', '')) * 1440; 
+
+    } else if (timestamp.endsWith('mo')) {
+      return int.parse(timestamp.replaceAll('mo', '')) * 43200; 
+
+    } else if (timestamp.endsWith('y')) {
+      return int.parse(timestamp.replaceAll('y', '')) * 525600;
+
+    }
+
+    return 0; 
+
+  }
+
   String formatLongDate(String timestamp) {
 
     final parsedDate = DateTime.parse(timestamp);
