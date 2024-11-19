@@ -9,7 +9,8 @@ import 'package:revent/widgets/bottomsheet_title.dart';
 class BottomsheetCommentFilter {
 
   Widget _buildOptionButton({
-    required String text, 
+    required String text,
+    required bool isCurrentlySelected,
     required IconData icon, 
     required VoidCallback onPressed
   }) {
@@ -26,7 +27,15 @@ class BottomsheetCommentFilter {
           Text(
             text,
             style: ThemeStyle.btnBottomsheetTextStyle
-          )
+          ),
+
+          const Spacer(),
+
+          if(isCurrentlySelected)
+          const Padding(
+            padding: EdgeInsets.only(right: 12.0),
+            child: Icon(CupertinoIcons.circle_fill, color: ThemeColor.white, size: 14),
+          ),
 
         ],
       )
@@ -35,6 +44,7 @@ class BottomsheetCommentFilter {
 
   Future buildBottomsheet({
     required BuildContext context,
+    required String currentFilter,
     required VoidCallback bestOnPressed,
     required VoidCallback latestOnPressed,
     required VoidCallback oldestOnPressed,
@@ -51,18 +61,21 @@ class BottomsheetCommentFilter {
 
         _buildOptionButton(
           text: 'Best',
+          isCurrentlySelected: currentFilter == 'Best',
           icon: CupertinoIcons.star,
           onPressed: bestOnPressed
         ),
 
         _buildOptionButton(
           text: 'Latest',
+          isCurrentlySelected: currentFilter == 'Latest',
           icon: CupertinoIcons.up_arrow,
           onPressed: latestOnPressed
         ),
 
         _buildOptionButton(
           text: 'Oldest',
+          isCurrentlySelected: currentFilter == 'Oldest',
           icon: CupertinoIcons.down_arrow,
           onPressed: oldestOnPressed
         ),

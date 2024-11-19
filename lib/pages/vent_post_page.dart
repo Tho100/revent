@@ -57,6 +57,8 @@ class VentPostPageState extends State<VentPostPage> {
 
   final formatTimestamp = FormatDate();
 
+  final filterTextNotifier = ValueNotifier<String>('Best');
+
   void _filterCommentToBest() {
 
     final sortedComments = ventCommentProvider.ventComments
@@ -89,19 +91,21 @@ class VentPostPageState extends State<VentPostPage> {
 
   }
 
-  void _filterOnPressed({required String type}) {
+  void _filterOnPressed({required String filter}) {
     
-    switch (type) {
-      case == 'best':
+    switch (filter) {
+      case == 'Best':
       _filterCommentToBest();
       break;
-    case == 'latest':
+    case == 'Latest':
       _filterCommentToLatest();
       break;
-    case == 'oldest':
+    case == 'Oldest':
       _filterCommentToOldest();
       break;
     }
+
+    filterTextNotifier.value = filter;
 
     Navigator.pop(context);
 
@@ -193,9 +197,10 @@ class VentPostPageState extends State<VentPostPage> {
           onPressed: () {
             BottomsheetCommentFilter().buildBottomsheet(
               context: context, 
-              bestOnPressed: () => _filterOnPressed(type: 'best'), 
-              latestOnPressed: () => _filterOnPressed(type: 'latest'),
-              oldestOnPressed: () => _filterOnPressed(type: 'oldest'),
+              currentFilter: filterTextNotifier.value,
+              bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
+              latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
+              oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
             );
           },
           child: Row(
@@ -207,13 +212,18 @@ class VentPostPageState extends State<VentPostPage> {
       
               const SizedBox(width: 8),
       
-              Text(
-                'Best',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 15
-                )
+              ValueListenableBuilder(
+                valueListenable: filterTextNotifier,
+                builder: (_, filterText, __) {
+                  return Text(
+                    filterText,
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.thirdWhite,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 15
+                    )
+                  );
+                },
               ),
     
               const SizedBox(width: 10),
@@ -502,6 +512,7 @@ class VentPostPageState extends State<VentPostPage> {
   @override
   void dispose() {
     ventCommentProvider.deleteComments();
+    filterTextNotifier.dispose();
     super.dispose();
   }
 
