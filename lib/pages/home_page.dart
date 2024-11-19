@@ -286,7 +286,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       } 
       navigation.setTabIndex(tabController.index);
     });
-    _filterVentsToBest();
+    _filterVentsToLatest();
   }
 
   @override
