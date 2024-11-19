@@ -4,12 +4,14 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_refresh.dart';
+import 'package:revent/model/format_date.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/provider/vent_following_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
+import 'package:revent/widgets/bottomsheet_widgets/vent_filter.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/vent_widgets/vent_listview.dart';
@@ -26,10 +28,66 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
-  
+  final ventData = GetIt.instance<VentDataProvider>();
+
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
+  final filterTextNotifier = ValueNotifier<String>('Best');
+
+  final formatTimestamp = FormatDate();
 
   late TabController tabController;
+
+  void _filterVentsToBest() {
+
+    final sortedVents = ventData.vents
+      .toList()
+      ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+
+    ventData.setVents(sortedVents);
+
+  }
+
+  void _filterVentsToLatest() {
+
+    final sortedVents = ventData.vents
+      .toList()
+      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
+        .compareTo(formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
+
+    ventData.setVents(sortedVents);
+
+  }
+
+  void _filterVentsToOldest() {
+
+    final sortedVents = ventData.vents
+      .toList()
+      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
+        .compareTo(formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
+
+    ventData.setVents(sortedVents);
+
+  }
+
+  void _filterOnPressed({required String filter}) {
+    
+    switch (filter) {
+      case == 'Best':
+      _filterVentsToBest();
+      break;
+    case == 'Latest':
+      _filterVentsToLatest();
+      break;
+    case == 'Oldest':
+      _filterVentsToOldest();
+      break;
+    }
+
+    filterTextNotifier.value = filter;
+
+    Navigator.pop(context);
+
+  }
 
   Future<void> _followingVentsOnRefresh() async {
 
@@ -105,7 +163,15 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     return Padding(
       padding: const EdgeInsets.only(top: 10, right: 8),
       child: InkWellEffect(
-        onPressed: () => print('Filter'),
+        onPressed: () {
+          BottomsheetVentFilter().buildBottomsheet(
+            context: context, 
+            currentFilter: filterTextNotifier.value,
+            bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
+            latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
+            oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
+          );
+        },
         child: Row(
           children: [
     
@@ -115,13 +181,18 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     
             const SizedBox(width: 8),
     
-            Text(
-              'Best',
-              style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
-                fontWeight: FontWeight.w800,
-                fontSize: 15
-              )
+            ValueListenableBuilder(
+              valueListenable: filterTextNotifier,
+              builder: (_, filterText, __) {
+                return Text(
+                  filterText,
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.thirdWhite,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15
+                  )
+                );
+              }
             ),
 
             const SizedBox(width: 10),
@@ -166,12 +237,14 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       } 
       navigationIndex.setTabIndex(tabController.index);
     });
+    _filterVentsToBest();
   }
 
   @override
   void dispose() {
     tabController.dispose();
     followingIsLoadedNotifier.dispose();
+    filterTextNotifier.dispose();
     super.dispose();
   }
 
