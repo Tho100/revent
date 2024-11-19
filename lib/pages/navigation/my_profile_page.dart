@@ -104,6 +104,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
               profileData.bio,
               style: ThemeStyle.profileBioStyle,
               textAlign: TextAlign.start,
+              overflow: TextOverflow.fade,
               maxLines: 2,
             );
         },

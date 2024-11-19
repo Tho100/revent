@@ -43,6 +43,21 @@ class EditProfilePageState extends State<EditProfilePage> {
   bool isBioChanges = false;
   bool isPronounsChanges = false;
 
+  void _enforceMaxLines() {
+
+    final text = bioController.text;
+
+    final lines = text.split('\n');
+
+    if (lines.length > 4) {
+      bioController.text = lines.take(4).join('\n');
+      bioController.selection = TextSelection.fromPosition(
+        TextPosition(offset: bioController.text.length),
+      );
+    }
+
+  }
+
   void _setTextFieldsListeners() {
 
     bioController.addListener(() {
@@ -65,6 +80,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   void _setBioText() {
     bioController.text = profileData.bio;
+    bioController.addListener(_enforceMaxLines);
   }
 
   void _setPronouns() {
@@ -221,8 +237,8 @@ class EditProfilePageState extends State<EditProfilePage> {
             MainTextField(
               controller: bioController, 
               hintText: 'Enter your bio here...',
-              maxLines: 3,
-              maxLength: 108,
+              maxLines: 4,
+              maxLength: 150,
             ),
             
             const SizedBox(height: 8),
