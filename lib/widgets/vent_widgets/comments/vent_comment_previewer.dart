@@ -166,7 +166,7 @@ class VentCommentPreviewer extends StatelessWidget {
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,
-              fontSize: 14
+              fontSize: 13
             )
           ),
         ),
@@ -178,7 +178,7 @@ class VentCommentPreviewer extends StatelessWidget {
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,
-            fontSize: 13,
+            fontSize: 12,
           ),
         ),
 

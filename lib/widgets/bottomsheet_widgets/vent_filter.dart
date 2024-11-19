@@ -6,7 +6,7 @@ import 'package:revent/widgets/bottomsheet.dart';
 import 'package:revent/widgets/bottomsheet_bar.dart';
 import 'package:revent/widgets/bottomsheet_title.dart';
 
-class BottomsheetCommentFilter {
+class BottomsheetVentFilter {
 
   Widget _buildOptionButton({
     required String text,
@@ -57,7 +57,7 @@ class BottomsheetCommentFilter {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Filter Comments'),
+        const BottomsheetTitle(title: 'Filter Vents'),
 
         _buildOptionButton(
           text: 'Best',
