@@ -27,8 +27,10 @@ class HomePage extends StatefulWidget {
 
 class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
-  final navigationIndex = GetIt.instance<NavigationProvider>();
+  final navigation = GetIt.instance<NavigationProvider>();
+
   final ventData = GetIt.instance<VentDataProvider>();
+  final ventFollowingData = GetIt.instance<VentFollowingDataProvider>();
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final filterTextNotifier = ValueNotifier<String>('Best');
@@ -39,33 +41,71 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   void _filterVentsToBest() {
 
-    final sortedVents = ventData.vents
-      .toList()
-      ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+    if (navigation.activeTabIndex == 0) {
 
-    ventData.setVents(sortedVents);
+      final sortedVents = ventData.vents
+        .toList()
+        ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+
+      ventData.setVents(sortedVents);
+
+    } else {
+
+      final sortedVents = ventFollowingData.vents
+        .toList()
+        ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+        
+      ventFollowingData.setVents(sortedVents);
+
+    }
 
   }
 
   void _filterVentsToLatest() {
 
-    final sortedVents = ventData.vents
-      .toList()
-      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
-        .compareTo(formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
+    if (navigation.activeTabIndex == 0) {
 
-    ventData.setVents(sortedVents);
+      final sortedVents = ventData.vents
+        .toList()
+        ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
+          .compareTo(formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
+
+      ventData.setVents(sortedVents);
+
+    } else {
+
+      final sortedVents = ventFollowingData.vents
+        .toList()
+        ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
+          .compareTo(formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
+        
+      ventFollowingData.setVents(sortedVents);
+      
+    }
 
   }
 
   void _filterVentsToOldest() {
 
-    final sortedVents = ventData.vents
-      .toList()
-      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
-        .compareTo(formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
+    if (navigation.activeTabIndex == 0) {
 
-    ventData.setVents(sortedVents);
+      final sortedVents = ventData.vents
+        .toList()
+        ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
+          .compareTo(formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
+
+      ventData.setVents(sortedVents);
+
+    } else {
+
+      final sortedVents = ventFollowingData.vents
+        .toList()
+        ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
+          .compareTo(formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
+        
+      ventFollowingData.setVents(sortedVents);
+      
+    }
 
   }
 
@@ -95,6 +135,15 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
     await CallRefresh().refreshFollowingVents().then((_) {
       followingIsLoadedNotifier.value = true;
+      _filterVentsToBest();
+    });
+
+  }
+
+  Future<void> _forYouVentsOnRefresh() async {
+
+    await CallRefresh().refreshVents().then((_) {
+      _filterVentsToBest();
     });
 
   }
@@ -105,7 +154,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         width: MediaQuery.of(context).size.width - 28,
         child: RefreshIndicator(
           color: ThemeColor.black,
-          onRefresh: () async => await CallRefresh().refreshVents(),
+          onRefresh: () async => await _forYouVentsOnRefresh(),
           child: VentListView(provider: Provider.of<VentDataProvider>(context)),
         ),
       ),
@@ -227,7 +276,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
-    navigationIndex.setPageIndex(0);
+    navigation.setPageIndex(0);
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(() async {
       if (tabController.index == 1) {
@@ -235,7 +284,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
           followingIsLoadedNotifier.value = true;
         });
       } 
-      navigationIndex.setTabIndex(tabController.index);
+      navigation.setTabIndex(tabController.index);
     });
     _filterVentsToBest();
   }
