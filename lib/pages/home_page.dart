@@ -95,6 +95,15 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
     await CallRefresh().refreshFollowingVents().then((_) {
       followingIsLoadedNotifier.value = true;
+      _filterVentsToBest();
+    });
+
+  }
+
+  Future<void> _forYouVentsOnRefresh() async {
+
+    await CallRefresh().refreshVents().then((_) {
+      _filterVentsToBest();
     });
 
   }
@@ -105,7 +114,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         width: MediaQuery.of(context).size.width - 28,
         child: RefreshIndicator(
           color: ThemeColor.black,
-          onRefresh: () async => await CallRefresh().refreshVents(),
+          onRefresh: () async => await _forYouVentsOnRefresh(),
           child: VentListView(provider: Provider.of<VentDataProvider>(context)),
         ),
       ),
