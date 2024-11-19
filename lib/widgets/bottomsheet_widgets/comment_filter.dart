@@ -69,14 +69,14 @@ class BottomsheetCommentFilter {
         _buildOptionButton(
           text: 'Latest',
           isCurrentlySelected: currentFilter == 'Latest',
-          icon: CupertinoIcons.up_arrow,
+          icon: CupertinoIcons.bolt,
           onPressed: latestOnPressed
         ),
 
         _buildOptionButton(
           text: 'Oldest',
           isCurrentlySelected: currentFilter == 'Oldest',
-          icon: CupertinoIcons.down_arrow,
+          icon: CupertinoIcons.clock,
           onPressed: oldestOnPressed
         ),
 
