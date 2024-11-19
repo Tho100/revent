@@ -189,7 +189,7 @@ class VentPostPageState extends State<VentPostPage> {
 
   Widget _buildFilterButton() {
     return SizedBox(
-      width: 80,
+      width: 96,
       height: 35,
       child: Padding(
         padding: const EdgeInsets.only(top: 6),
@@ -204,6 +204,7 @@ class VentPostPageState extends State<VentPostPage> {
             );
           },
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
             children: [
       
               const SizedBox(width: 10),
