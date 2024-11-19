@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/data_query/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/model/disable_whitespace.dart';
+import 'package:revent/model/textinput_formatter.dart';
 import 'package:revent/model/email_validator.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -113,7 +113,7 @@ class SignUpPageState extends State<SignUpPage> {
           MainTextField(
             hintText: 'Enter a username', 
             maxLength: 24,
-            inputFormatters: DisableWhitespaceTextField().disable(),
+            inputFormatters: TextInputFormatterModel().disableWhitespaces(),
             controller: authController.usernameController
           ),
 
@@ -121,7 +121,7 @@ class SignUpPageState extends State<SignUpPage> {
 
           MainTextField(
             hintText: 'Enter your email address', 
-            inputFormatters: DisableWhitespaceTextField().disable(),
+            inputFormatters: TextInputFormatterModel().disableWhitespaces(),
             controller: authController.emailController
           ),
 
