@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_profile/profile_data_update.dart';
-import 'package:revent/model/disable_whitespace.dart';
+import 'package:revent/model/textinput_formatter.dart';
 import 'package:revent/model/profile_picture_model.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -43,6 +43,21 @@ class EditProfilePageState extends State<EditProfilePage> {
   bool isBioChanges = false;
   bool isPronounsChanges = false;
 
+  void _enforceMaxLines() {
+
+    final text = bioController.text;
+
+    final lines = text.split('\n');
+
+    if (lines.length > 4) {
+      bioController.text = lines.take(4).join('\n');
+      bioController.selection = TextSelection.fromPosition(
+        TextPosition(offset: bioController.text.length),
+      );
+    }
+
+  }
+
   void _setTextFieldsListeners() {
 
     bioController.addListener(() {
@@ -65,6 +80,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
   void _setBioText() {
     bioController.text = profileData.bio;
+    bioController.addListener(_enforceMaxLines);
   }
 
   void _setPronouns() {
@@ -221,8 +237,8 @@ class EditProfilePageState extends State<EditProfilePage> {
             MainTextField(
               controller: bioController, 
               hintText: 'Enter your bio here...',
-              maxLines: 3,
-              maxLength: 108,
+              maxLines: 4,
+              maxLength: 150,
             ),
             
             const SizedBox(height: 8),
@@ -258,7 +274,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                     hintText: '',
                     maxLines: 1,
                     maxLength: 10,
-                    inputFormatters: DisableWhitespaceTextField().disable()
+                    inputFormatters: TextInputFormatterModel().disableWhitespacesAndSymbols()
                   ),
                 ),
 
@@ -281,7 +297,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                     hintText: '',
                     maxLines: 1,
                     maxLength: 10,
-                    inputFormatters: DisableWhitespaceTextField().disable()
+                    inputFormatters: TextInputFormatterModel().disableWhitespacesAndSymbols()
                   ),
                 ),
 

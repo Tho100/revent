@@ -33,7 +33,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   final ventFollowingData = GetIt.instance<VentFollowingDataProvider>();
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
-  final filterTextNotifier = ValueNotifier<String>('Best');
+  final filterTextNotifier = ValueNotifier<String>('Latest');
 
   final formatTimestamp = FormatDate();
 
@@ -286,7 +286,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       } 
       navigation.setTabIndex(tabController.index);
     });
-    _filterVentsToBest();
+    _filterVentsToLatest();
   }
 
   @override

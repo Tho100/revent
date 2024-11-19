@@ -33,8 +33,8 @@ class BottomsheetCommentFilter {
 
           if(isCurrentlySelected)
           const Padding(
-            padding: EdgeInsets.only(right: 12.0),
-            child: Icon(CupertinoIcons.circle_fill, color: ThemeColor.white, size: 14),
+            padding: EdgeInsets.only(right: 16.0),
+            child: Icon(CupertinoIcons.circle_fill, color: ThemeColor.white, size: 12),
           ),
 
         ],

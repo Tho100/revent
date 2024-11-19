@@ -52,8 +52,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
-  double bioHeight = 0.0;
-
   void _initializeClasses() {
     tabController = TabController(length: 2, vsync: this);
     profileInfoWidgets = ProfileInfoWidgets(
@@ -133,8 +131,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     return ValueListenableBuilder(
       valueListenable: pronounsNotifier,
       builder: (_, value, __) {
-        final bottomPadding = value.isNotEmpty ? 14.0 : 0.0; 
-        final topPadding = value.isNotEmpty ? 8.0 : 0.0;
+        final bottomPadding = value.isNotEmpty ? 12.0 : 0.0; 
+        final topPadding = value.isNotEmpty ? 6.0 : 0.0;
         return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),          
           child: SizedBox(
@@ -142,7 +140,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
             child: Text(
               value,
               style: ThemeStyle.profilePronounsStyle,
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.start,
             ),
           ),
         );
@@ -152,34 +150,23 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   Widget _buildBio() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.65,
+      width: MediaQuery.of(context).size.width * 0.68,
       child: ValueListenableBuilder(
         valueListenable: bioNotifier,
         builder: (_, bio, __) {
-          return LayoutBuilder(
-            builder: (context, _) {
-
-              Future.microtask(() {
-                final renderBox = context.findRenderObject();
-                if (renderBox is RenderBox && bioHeight != renderBox.size.height) {
-                  bioHeight = renderBox.size.height;
-                }
-              });
-
-              return bio.isEmpty 
-                ? const Text(
-                  'No bio yet...',
-                  style: ThemeStyle.profileEmptyBioStyle,
-                  textAlign: TextAlign.center
-                )
-                : Text(
-                  bio,
-                  style: ThemeStyle.profileBioStyle,
-                  textAlign: TextAlign.center,
-                  maxLines: 3,
-                );  
-            },
-          );
+          return bio.isEmpty 
+            ? const Text(
+              'No bio yet...',
+              style: ThemeStyle.profileEmptyBioStyle,
+              textAlign: TextAlign.start
+            )
+            : Text(
+              bio,
+              style: ThemeStyle.profileBioStyle,
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.fade,
+              maxLines: 2,
+            );  
         },
       ),
     );
@@ -187,8 +174,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   Widget _buildEditProfileButton() {
 
-    final buttonWidth = MediaQuery.of(context).size.width * 0.45;
-    final buttonHeight = MediaQuery.of(context).size.height * 0.050;
+    final buttonWidth = MediaQuery.of(context).size.width * 0.87;
+    final buttonHeight = MediaQuery.of(context).size.height * 0.052;
     const fontSize = 15.5;
 
     return Align(
@@ -218,26 +205,23 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   }
 
   Widget _popularityWidgets() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-    
-          GestureDetector(
-            onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
-            child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
-          ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+  
+        profileInfoWidgets.buildPopularityHeaderNotifier('vents', postsNotifier),
 
-          profileInfoWidgets.buildPopularityHeaderNotifier('vents', postsNotifier),
+        GestureDetector(
+          onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
+          child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
+        ),
 
-          GestureDetector(
-            onTap: () => NavigatePage.followsPage(pageType: 'Following', username: widget.username),
-            child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
-          ),
-    
-        ],
-      ),
+        GestureDetector(
+          onTap: () => NavigatePage.followsPage(pageType: 'Following', username: widget.username),
+          child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
+        ),
+  
+      ],
     );
   }
 
@@ -247,8 +231,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       builder: (_, pronouns, __) {
         return ProfileBodyWidgets(
           onRefresh: () async => await _setProfileData(),
-          isPronounsNotEmpty: pronouns.isNotEmpty, 
-          bioHeight: bioHeight,
           tabBarWidgets: tabBarWidgets, 
           profileInfoWidgets: profileInfoWidgets, 
           pronounsWidget: _buildPronouns(), 

@@ -41,8 +41,8 @@ class ProfileInfoWidgets {
   }
 
   Widget buildPopularityHeader(String header, int value) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
 
         Text(
@@ -52,16 +52,21 @@ class ProfileInfoWidgets {
             fontWeight: FontWeight.w800,
             fontSize: 20
           ),
+          textAlign: TextAlign.start,
         ),
 
-        const SizedBox(height: 4),
+        const SizedBox(width: 6),
 
-        Text(
-          header,
-          style: GoogleFonts.inter(
-            color: ThemeColor.white,
-            fontWeight: FontWeight.w700,
-            fontSize: 14.5
+        Padding(
+          padding: const EdgeInsets.only(bottom: 2.0),
+          child: Text(
+            header,
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 13
+            ),
+            textAlign: TextAlign.start,
           ),
         ),
 
@@ -70,8 +75,8 @@ class ProfileInfoWidgets {
   }
 
   Widget buildPopularityHeaderNotifier(String header, ValueNotifier notifier) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.end,
       children: [
 
         ValueListenableBuilder(
@@ -84,18 +89,23 @@ class ProfileInfoWidgets {
                 fontWeight: FontWeight.w800,
                 fontSize: 20
               ),
+              textAlign: TextAlign.start,
             );
           },
         ),
 
-        const SizedBox(height: 4),
+        const SizedBox(width: 6),
 
-        Text(
-          header,
-          style: GoogleFonts.inter(
-            color: ThemeColor.white,
-            fontWeight: FontWeight.w700,
-            fontSize: 14.5
+        Padding(
+          padding: const EdgeInsets.only(bottom: 2.0),
+          child: Text(
+            header,
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w700,
+              fontSize: 13
+            ),
+            textAlign: TextAlign.start,
           ),
         ),
 

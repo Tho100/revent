@@ -191,47 +191,44 @@ class VentPostPageState extends State<VentPostPage> {
     return SizedBox(
       width: 96,
       height: 35,
-      child: Padding(
-        padding: const EdgeInsets.only(top: 6),
-        child: InkWellEffect(
-          onPressed: () {
-            BottomsheetCommentFilter().buildBottomsheet(
-              context: context, 
-              currentFilter: filterTextNotifier.value,
-              bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
-              latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
-              oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
-            );
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-      
-              const SizedBox(width: 10),
+      child: InkWellEffect(
+        onPressed: () {
+          BottomsheetCommentFilter().buildBottomsheet(
+            context: context, 
+            currentFilter: filterTextNotifier.value,
+            bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
+            latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
+            oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
     
-              const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
-      
-              const SizedBox(width: 8),
-      
-              ValueListenableBuilder(
-                valueListenable: filterTextNotifier,
-                builder: (_, filterText, __) {
-                  return Text(
-                    filterText,
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.thirdWhite,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 15
-                    )
-                  );
-                },
-              ),
+            const SizedBox(width: 10),
+  
+            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
     
-              const SizedBox(width: 10),
-      
-            ],
-          ),
-        )
+            const SizedBox(width: 8),
+    
+            ValueListenableBuilder(
+              valueListenable: filterTextNotifier,
+              builder: (_, filterText, __) {
+                return Text(
+                  filterText,
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.thirdWhite,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15
+                  )
+                );
+              },
+            ),
+  
+            const SizedBox(width: 8),
+    
+          ],
+        ),
       ),
     );
   }
@@ -377,7 +374,7 @@ class VentPostPageState extends State<VentPostPage> {
           child: Divider(color: ThemeColor.lightGrey),
         ),
 
-        const SizedBox(height: 10),
+        const SizedBox(height: 8),
 
         Row(
           children: [
@@ -432,7 +429,7 @@ class VentPostPageState extends State<VentPostPage> {
         
                     _buildActionButtons(),
         
-                    const SizedBox(height: 15),
+                    const SizedBox(height: 12),
         
                     _buildCommentsHeader(),
         

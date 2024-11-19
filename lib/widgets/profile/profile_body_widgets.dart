@@ -6,11 +6,7 @@ import 'package:revent/widgets/profile/tabbar_widgets.dart';
 class ProfileBodyWidgets extends StatelessWidget {
 
   final Future<void> Function() onRefresh;
-  
-  final bool isPronounsNotEmpty;
-  
-  final double bioHeight;
-
+    
   final ProfileTabBarWidgets tabBarWidgets;
   final ProfileInfoWidgets profileInfoWidgets;
   
@@ -21,8 +17,6 @@ class ProfileBodyWidgets extends StatelessWidget {
 
   const ProfileBodyWidgets({
     required this.onRefresh,
-    required this.isPronounsNotEmpty,
-    required this.bioHeight,
     required this.tabBarWidgets,
     required this.profileInfoWidgets,
     required this.pronounsWidget,
@@ -31,18 +25,6 @@ class ProfileBodyWidgets extends StatelessWidget {
     required this.popularityWidget,
     super.key
   });
-
-  double _setExpandedHeight() {
-
-    if (isPronounsNotEmpty || bioHeight == 51.0 || bioHeight == 34.0) {
-      return (bioHeight >= 34.0 && bioHeight <= 51.0) ? 342 : 310;
-
-    } else {
-      return 286;
-
-    }
-
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,24 +39,44 @@ class ProfileBodyWidgets extends StatelessWidget {
           return [
             SliverAppBar(
               automaticallyImplyLeading: false,
-              expandedHeight: _setExpandedHeight(),
+              expandedHeight: 252,
               flexibleSpace: FlexibleSpaceBar(
                 background: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    profileInfoWidgets.buildProfilePicture(),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 24.0, top: 8.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                    
+                          profileInfoWidgets.buildProfilePicture(),
+                    
+                          const SizedBox(width: 16),
 
-                    const SizedBox(height: 12),
-                    profileInfoWidgets.buildUsername(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
 
-                    pronounsWidget,
-                    bioWidget,
+                              const SizedBox(height: 4),
+                              
+                              profileInfoWidgets.buildUsername(),
+                              pronounsWidget,
+                              bioWidget,
 
-                    const SizedBox(height: 25),
-                    userActionButtonWidget,
+                            ],
+                          ),
+                    
+                        ],
+                      ),
+                    ),
 
                     const SizedBox(height: 28),
                     popularityWidget,
+
+                    const SizedBox(height: 28),
+                    userActionButtonWidget,
 
                   ],
                 ),
@@ -84,8 +86,6 @@ class ProfileBodyWidgets extends StatelessWidget {
         },
         body: Column(
           children: [
-
-            const SizedBox(height: 16), // 16
             
             Column(
               mainAxisSize: MainAxisSize.min,
