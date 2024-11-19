@@ -120,7 +120,7 @@ class VentCommentPreviewer extends StatelessWidget {
       offset: const Offset(-2, 0),
       child: Row(
         children: [
-    
+      
           IconButton(
             onPressed: () async => await _likeOnPressed(),
             icon: Icon(isCommentLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isCommentLiked ? ThemeColor.likedColor : ThemeColor.secondaryWhite, size: 18),
@@ -129,7 +129,7 @@ class VentCommentPreviewer extends StatelessWidget {
           ),
         
           const SizedBox(width: 4),
-    
+      
           Text(
             totalLikes.toString(),
             style: GoogleFonts.inter(
@@ -138,9 +138,9 @@ class VentCommentPreviewer extends StatelessWidget {
               fontSize: 13,
             ),
           ),
-    
+      
           const SizedBox(width: 16),
-    
+      
           Text(
             'Reply',
             style: GoogleFonts.inter(
@@ -149,7 +149,7 @@ class VentCommentPreviewer extends StatelessWidget {
               fontSize: 13
             )
           )
-    
+      
         ],
       ),
     );
@@ -181,7 +181,6 @@ class VentCommentPreviewer extends StatelessWidget {
             fontSize: 12,
           ),
         ),
-
 
         const Spacer(),
 
@@ -220,7 +219,7 @@ class VentCommentPreviewer extends StatelessWidget {
             
             _buildCommentText(),
       
-            const SizedBox(height: 18),
+            const SizedBox(height: 14),
 
             _buildLikeAndReplyButtons(),
       
