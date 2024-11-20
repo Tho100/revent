@@ -49,10 +49,9 @@ class BottomsheetVentPostActions {
     required BuildContext context,
     required String creator,
     required VoidCallback saveOnPressed,
-    required VoidCallback copyOnPressed,
     required VoidCallback reportOnPressed,
-    required VoidCallback blockOnPressed,
-    required VoidCallback deleteOnPressed,
+    VoidCallback? copyOnPressed,
+    VoidCallback? deleteOnPressed,
   }) {
     return Bottomsheet().buildBottomSheet(
       context: context, 
@@ -70,6 +69,7 @@ class BottomsheetVentPostActions {
           onPressed: saveOnPressed
         ),
 
+        if(copyOnPressed != null)
         _buildOptionButton(
           text: 'Copy',
           icon: CupertinoIcons.doc_on_doc,
@@ -80,10 +80,10 @@ class BottomsheetVentPostActions {
           text: 'Report',
           icon: CupertinoIcons.flag,
           isRed: true,
-          onPressed: blockOnPressed
+          onPressed: reportOnPressed
         ),
 
-        if(userData.user.username == creator)
+        if(userData.user.username == creator && deleteOnPressed != null)
         _buildOptionButton(
           text: 'Delete',
           icon: CupertinoIcons.trash,
