@@ -160,12 +160,15 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
               style: ThemeStyle.profileEmptyBioStyle,
               textAlign: TextAlign.start
             )
-            : Text(
-              bio,
-              style: ThemeStyle.profileBioStyle,
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.fade,
-              maxLines: 2,
+            : GestureDetector(
+              onTap: () => NavigatePage.fullBioPage(bio: bio),
+              child: Text(
+                bio,
+                style: ThemeStyle.profileBioStyle,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
+              ),
             );  
         },
       ),

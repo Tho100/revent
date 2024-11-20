@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
@@ -7,6 +8,7 @@ import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent_post_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
@@ -83,6 +85,32 @@ class VentPreviewerState extends State<VentPreviewer> {
     );
   }
 
+  Widget _buildVentOptionsButton() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 2.0),
+      child: SizedBox(
+        width: 25,
+        height: 25,
+        child: IconButton(
+          onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
+            context: context, 
+            creator: widget.creator,
+            saveOnPressed: () {
+              Navigator.pop(context);
+            },
+            reportOnPressed: () {
+              Navigator.pop(context);
+            }, 
+          ),
+          icon: Transform.translate(
+            offset: const Offset(0, -10),
+            child: const Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
+          )
+        ),
+      ),
+    );
+  }
+
   Widget _buildCommunityAndCreatorHeader() {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(username: widget.creator, pfpData: widget.pfpData),
@@ -104,21 +132,21 @@ class VentPreviewerState extends State<VentPreviewer> {
               style: GoogleFonts.inter(
                 color: ThemeColor.secondaryWhite,
                 fontWeight: FontWeight.w800,
-                fontSize: 13
+                fontSize: 14
               ),
             ),
           ),
     
-          const Spacer(),
+          const SizedBox(width: 8),
     
           Padding(
-            padding: const EdgeInsets.only(bottom: 12.5, right: 4.0),
+            padding: const EdgeInsets.only(bottom: 3.0),
             child: Text(
               widget.postTimestamp,
               style: GoogleFonts.inter(
                 color: ThemeColor.thirdWhite,
                 fontWeight: FontWeight.w800,
-                fontSize: 13.2
+                fontSize: 13
               ),
             ),
           ),
@@ -178,7 +206,17 @@ class VentPreviewerState extends State<VentPreviewer> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
         
-              _buildCommunityAndCreatorHeader(),
+              Row(
+                children: [
+
+                  _buildCommunityAndCreatorHeader(),
+        
+                  const Spacer(),
+
+                  _buildVentOptionsButton(),
+
+                ],
+              ),
         
               const SizedBox(height: 14),
         

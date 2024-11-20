@@ -14,6 +14,7 @@ import 'package:revent/pages/navigation/my_profile_page.dart';
 import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/user_profile_page.dart';
+import 'package:revent/pages/view_full_bio_page.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
 class _DockBarNavigationPages {
@@ -137,6 +138,13 @@ class NavigatePage {
 
     }
 
+  }
+
+  static void fullBioPage({required String bio}) {
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => ViewFullBioPage(bio: bio)),
+    );
   }
 
 }

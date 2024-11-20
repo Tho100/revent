@@ -102,7 +102,7 @@ class ActionsButton {
     required VoidCallback onPressed,
   }) {
     return SizedBox(
-      width: 52,
+      width: 44,
       child: _buildActionButton(
         onPressed: onPressed, 
         child: Transform.translate(
@@ -110,7 +110,7 @@ class ActionsButton {
           child: const Icon(
             CupertinoIcons.bookmark, 
             color: ThemeColor.white,
-            size: 18.5, 
+            size: 16, 
           ),
         ),          
       ),

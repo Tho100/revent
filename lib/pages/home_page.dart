@@ -135,7 +135,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
     await CallRefresh().refreshFollowingVents().then((_) {
       followingIsLoadedNotifier.value = true;
-      _filterVentsToBest();
+      _filterVentsToLatest();
     });
 
   }
@@ -143,7 +143,8 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   Future<void> _forYouVentsOnRefresh() async {
 
     await CallRefresh().refreshVents().then((_) {
-      _filterVentsToBest();
+      _filterVentsToLatest();
+      filterTextNotifier.value = 'Latest';
     });
 
   }

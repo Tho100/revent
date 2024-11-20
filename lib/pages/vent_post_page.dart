@@ -146,9 +146,10 @@ class VentPostPageState extends State<VentPostPage> {
 
       await CallRefresh().refreshVentPost(
         title: widget.title, creator: widget.creator
-      );
-
-      _filterCommentToBest();
+      ).then((_) {
+        _filterCommentToBest();
+        filterTextNotifier.value = 'Best';
+      });
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
@@ -184,6 +185,19 @@ class VentPostPageState extends State<VentPostPage> {
           }
         );
       },
+    );
+  }
+
+  Widget _buildCommentButton() {
+    return ActionsButton().buildCommentsButton(
+      text: widget.totalComments.toString(), 
+      onPressed: () => {}
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return ActionsButton().buildSaveButton(
+      onPressed: () => {}
     );
   }
 
@@ -230,13 +244,6 @@ class VentPostPageState extends State<VentPostPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildCommentButton() {
-    return ActionsButton().buildCommentsButton(
-      text: widget.totalComments.toString(), 
-      onPressed: () => {}
     );
   }
 
@@ -329,9 +336,6 @@ class VentPostPageState extends State<VentPostPage> {
         reportOnPressed: () {
           Navigator.pop(context);
         }, 
-        blockOnPressed: () {
-          Navigator.pop(context);
-        },
         deleteOnPressed: () {
           CustomAlertDialog.alertDialogCustomOnPress(
             message: 'Delete this post?', 
@@ -345,7 +349,7 @@ class VentPostPageState extends State<VentPostPage> {
 
   Widget _buildActionButtons() {
 
-    final topPadding = widget.bodyText.isEmpty ? 0.0 : 30.0;
+    final topPadding = widget.bodyText.isEmpty ? 0.0 : 25.0;
     
     return Padding(
       padding: EdgeInsets.only(top: topPadding),
@@ -357,6 +361,10 @@ class VentPostPageState extends State<VentPostPage> {
           const SizedBox(width: 8),
 
           _buildCommentButton(),
+
+          const Spacer(),
+
+          _buildSaveButton()
 
         ],
       ),
@@ -374,7 +382,7 @@ class VentPostPageState extends State<VentPostPage> {
           child: Divider(color: ThemeColor.lightGrey),
         ),
 
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
 
         Row(
           children: [
@@ -433,7 +441,7 @@ class VentPostPageState extends State<VentPostPage> {
         
                     _buildCommentsHeader(),
         
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 20),
         
                     VentCommentsListView(
                       title: widget.title, 
