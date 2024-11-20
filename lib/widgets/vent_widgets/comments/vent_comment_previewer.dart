@@ -208,7 +208,7 @@ class VentCommentPreviewer extends StatelessWidget {
     return SizedBox(
       width: MediaQuery.of(context).size.width - 84,
       child: Padding(
-        padding: const EdgeInsets.only(bottom: 28.0),
+        padding: const EdgeInsets.only(bottom: 25.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

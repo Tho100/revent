@@ -342,7 +342,7 @@ class VentPostPageState extends State<VentPostPage> {
 
   Widget _buildActionButtons() {
 
-    final topPadding = widget.bodyText.isEmpty ? 0.0 : 30.0;
+    final topPadding = widget.bodyText.isEmpty ? 0.0 : 25.0;
     
     return Padding(
       padding: EdgeInsets.only(top: topPadding),
@@ -371,7 +371,7 @@ class VentPostPageState extends State<VentPostPage> {
           child: Divider(color: ThemeColor.lightGrey),
         ),
 
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
 
         Row(
           children: [
@@ -430,7 +430,7 @@ class VentPostPageState extends State<VentPostPage> {
         
                     _buildCommentsHeader(),
         
-                    const SizedBox(height: 25),
+                    const SizedBox(height: 20),
         
                     VentCommentsListView(
                       title: widget.title, 
