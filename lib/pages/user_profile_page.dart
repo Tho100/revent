@@ -166,7 +166,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
                 bio,
                 style: ThemeStyle.profileBioStyle,
                 textAlign: TextAlign.start,
-                overflow: TextOverflow.fade,
+                overflow: TextOverflow.ellipsis,
                 maxLines: 2,
               ),
             );  
