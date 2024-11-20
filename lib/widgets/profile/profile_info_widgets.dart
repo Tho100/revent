@@ -62,7 +62,7 @@ class ProfileInfoWidgets {
           child: Text(
             header,
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w700,
               fontSize: 13
             ),
@@ -101,7 +101,7 @@ class ProfileInfoWidgets {
           child: Text(
             header,
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w700,
               fontSize: 13
             ),
