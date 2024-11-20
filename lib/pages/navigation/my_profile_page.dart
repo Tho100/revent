@@ -100,12 +100,15 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
               style: ThemeStyle.profileEmptyBioStyle,
               textAlign: TextAlign.start,
             )
-            : Text(
-              profileData.bio,
-              style: ThemeStyle.profileBioStyle,
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.fade,
-              maxLines: 2,
+            : GestureDetector(
+              onTap: () => NavigatePage.fullBioPage(bio: profileData.bio),
+              child: Text(
+                profileData.bio,
+                style: ThemeStyle.profileBioStyle,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.fade,
+                maxLines: 2,
+              ),
             );
         },
       ),
