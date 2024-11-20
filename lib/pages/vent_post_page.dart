@@ -188,6 +188,19 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
+  Widget _buildCommentButton() {
+    return ActionsButton().buildCommentsButton(
+      text: widget.totalComments.toString(), 
+      onPressed: () => {}
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return ActionsButton().buildSaveButton(
+      onPressed: () => {}
+    );
+  }
+
   Widget _buildFilterButton() {
     return SizedBox(
       width: 96,
@@ -231,13 +244,6 @@ class VentPostPageState extends State<VentPostPage> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget _buildCommentButton() {
-    return ActionsButton().buildCommentsButton(
-      text: widget.totalComments.toString(), 
-      onPressed: () => {}
     );
   }
 
@@ -355,6 +361,10 @@ class VentPostPageState extends State<VentPostPage> {
           const SizedBox(width: 8),
 
           _buildCommentButton(),
+
+          const Spacer(),
+
+          _buildSaveButton()
 
         ],
       ),
