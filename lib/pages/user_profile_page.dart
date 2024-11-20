@@ -131,10 +131,10 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     return ValueListenableBuilder(
       valueListenable: pronounsNotifier,
       builder: (_, value, __) {
-        final bottomPadding = value.isNotEmpty ? 12.0 : 0.0; 
-        final topPadding = value.isNotEmpty ? 6.0 : 0.0;
+        final bottomPadding = value.isNotEmpty ? 11.0 : 0.0; 
+        final topPadding = value.isNotEmpty ? 5.0 : 0.0;
         return Padding(
-          padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),          
+          padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),  
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.65,
             child: Text(
@@ -154,11 +154,14 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       child: ValueListenableBuilder(
         valueListenable: bioNotifier,
         builder: (_, bio, __) {
-          return bio.isEmpty 
-            ? const Text(
-              'No bio yet...',
-              style: ThemeStyle.profileEmptyBioStyle,
-              textAlign: TextAlign.start
+          return bio.isEmpty
+            ? Transform.translate(
+              offset: const Offset(0, -5),
+              child: const Text(
+                'No bio yet...',
+                style: ThemeStyle.profileEmptyBioStyle,
+                textAlign: TextAlign.start
+              ),
             )
             : GestureDetector(
               onTap: () => NavigatePage.fullBioPage(bio: bio),

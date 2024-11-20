@@ -20,9 +20,9 @@ class ThemeStyle {
   );
 
   static final profileBioStyle = GoogleFonts.inter(
-    color: ThemeColor.secondaryWhite,
+    color: ThemeColor.white,
     fontWeight: FontWeight.w700,
-    fontSize: 14
+    fontSize: 13.8
   );
 
   static final btnBottomsheetTextStyle = GoogleFonts.inter(

@@ -72,8 +72,8 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   Widget _buildPronouns() {
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
-        final bottomPadding = profileData.pronouns.isNotEmpty ? 12.0 : 0.0;
-        final topPadding = profileData.pronouns.isNotEmpty ? 6.0 : 0.0;
+        final bottomPadding = profileData.pronouns.isNotEmpty ? 11.0 : 0.0;
+        final topPadding = profileData.pronouns.isNotEmpty ? 5.0 : 0.0;
         return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
           child: SizedBox(
@@ -95,10 +95,13 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
       child: Consumer<ProfileDataProvider>(
         builder: (_, profileData, __) {
           return profileData.bio.isEmpty
-            ? const Text(
-              'No bio yet...',
-              style: ThemeStyle.profileEmptyBioStyle,
-              textAlign: TextAlign.start,
+            ? Transform.translate(
+              offset: const Offset(0, -5),
+              child: const Text(
+                'No bio yet...',
+                style: ThemeStyle.profileEmptyBioStyle,
+                textAlign: TextAlign.start,
+              ),
             )
             : GestureDetector(
               onTap: () => NavigatePage.fullBioPage(bio: profileData.bio),
