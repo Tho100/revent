@@ -61,7 +61,7 @@ class NavigationBarDock extends StatelessWidget {
                     final isSelected = value == index;
                     final iconColor = index == 2
                       ? ThemeColor.thirdWhite
-                      : (isSelected ? ThemeColor.secondaryWhite : ThemeColor.thirdWhite);
+                      : (isSelected ? ThemeColor.white : ThemeColor.thirdWhite);
 
                     return Container(
                       alignment: Alignment.center, 

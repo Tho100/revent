@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
@@ -16,7 +15,6 @@ class BottomsheetVentPostActions {
   Widget _buildOptionButton({
     required String text, 
     required IconData icon, 
-    bool? isRed = false,
     required VoidCallback onPressed
   }) {
     return ElevatedButton(
@@ -25,19 +23,13 @@ class BottomsheetVentPostActions {
       child: Row(
         children: [
 
-          Icon(icon, color: isRed! ? ThemeColor.darkRed : ThemeColor.secondaryWhite),
+          Icon(icon, color: ThemeColor.secondaryWhite),
 
           const SizedBox(width: 15),
 
           Text(
             text,
-            style: isRed
-              ? GoogleFonts.inter(
-              color: ThemeColor.darkRed,
-              fontWeight: FontWeight.w800,
-              fontSize: 17,
-              ) 
-            : ThemeStyle.btnBottomsheetTextStyle,
+            style: ThemeStyle.btnBottomsheetTextStyle,
           )
 
         ],
@@ -50,6 +42,7 @@ class BottomsheetVentPostActions {
     required String creator,
     required VoidCallback saveOnPressed,
     required VoidCallback reportOnPressed,
+    required VoidCallback blockOnPressed,
     VoidCallback? copyOnPressed,
     VoidCallback? deleteOnPressed,
   }) {
@@ -79,15 +72,19 @@ class BottomsheetVentPostActions {
         _buildOptionButton(
           text: 'Report',
           icon: CupertinoIcons.flag,
-          isRed: true,
           onPressed: reportOnPressed
+        ),
+
+        _buildOptionButton(
+          text: 'Block @$creator',
+          icon: CupertinoIcons.clear_circled,
+          onPressed: blockOnPressed
         ),
 
         if(userData.user.username == creator && deleteOnPressed != null)
         _buildOptionButton(
           text: 'Delete',
           icon: CupertinoIcons.trash,
-          isRed: true,
           onPressed: deleteOnPressed
         ),
 

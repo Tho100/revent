@@ -37,6 +37,7 @@ class SignInPageState extends State<SignInPage> {
     try {
 
       await UserLoginService().login(
+        context: context, 
         email: email, auth: auth, isRememberMeChecked: isRememberMeCheckedNotifier.value
       );
 

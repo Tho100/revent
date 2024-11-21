@@ -54,16 +54,22 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
   Future<void> _setPostsData() async {
 
-    if(profilePostsData.myProfileTitles.isEmpty) {
+    if(profilePostsData.myProfile.titles.isEmpty) {
 
-      final getPostsData = await ProfilePostsGetter()
-        .getPosts(username: userData.user.username);
+      final getPostsData = await ProfilePostsGetter().getPosts(
+        username: userData.user.username
+      );
 
       final title = getPostsData['title'] as List<String>;
       final totalLikes = getPostsData['total_likes'] as List<int>;
 
-      profilePostsData.setMyProfileTitles(title);
-      profilePostsData.setMyProfileTotalLikes(totalLikes);
+      final totalComments = getPostsData['total_comments'] as List<int>;
+      final postTimestamp = getPostsData['post_timestamp'] as List<String>;
+
+      profilePostsData.setTitles('my_profile', title);
+      profilePostsData.setTotalLikes('my_profile', totalLikes);
+      profilePostsData.setTotalComments('my_profile', totalComments);
+      profilePostsData.setPostTimestamp('my_profile', postTimestamp);
 
     } 
 
@@ -96,7 +102,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
         builder: (_, profileData, __) {
           return profileData.bio.isEmpty
             ? Transform.translate(
-              offset: const Offset(0, -5),
+              offset: Offset(0, profileData.pronouns.isEmpty ? -5 : -2),
               child: const Text(
                 'No bio yet...',
                 style: ThemeStyle.profileEmptyBioStyle,
@@ -145,7 +151,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 
-                profileInfoWidgets.buildPopularityHeader('vents', postsData.myProfileTitles.length),
+                profileInfoWidgets.buildPopularityHeader('vents', postsData.myProfile.titles.length),
 
                 GestureDetector(
                   onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userData.user.username),

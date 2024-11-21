@@ -1,43 +1,58 @@
 import 'package:flutter/material.dart';
 
+class ProfilePostsData {
+
+  List<String> titles = [];
+
+  List<int> totalLikes = [];
+  List<int> totalComments = [];
+
+  List<String> postTimestamp = [];
+
+  void clear() {
+    titles.clear();
+    totalLikes.clear();
+    totalComments.clear();
+    postTimestamp.clear();
+  } 
+
+}
+
 class ProfilePostsProvider extends ChangeNotifier {
 
-  List<String> _myProfileTitles = [];
-  List<String> _userProfileTitles = [];
+  final Map<String, ProfilePostsData> _profileData = {
+    'my_profile': ProfilePostsData(),
+    'user_profile': ProfilePostsData(),
+  };
 
-  List<int> _myProfileTotalLikes = [];
-  List<int> _userProfileTotalLikes = [];
+  ProfilePostsData get myProfile => _profileData['my_profile']!;
+  ProfilePostsData get userProfile => _profileData['user_profile']!;
 
-  List<String> get myProfileTitles => _myProfileTitles;
-  List<String> get userProfileTitles => _userProfileTitles;
-
-  List<int> get myProfileTotalLikes => _myProfileTotalLikes;
-  List<int> get userProfileTotalLikes => _userProfileTotalLikes;
-
-  void setMyProfileTitles(List<String> titles) {
-    _myProfileTitles = titles;
+  void setTitles(String profileKey, List<String> titles) {
+    _profileData[profileKey]?.titles = titles;
     notifyListeners();
   }
 
-  void setUserProfileTitles(List<String> titles) {
-    _userProfileTitles = titles;
+  void setTotalLikes(String profileKey, List<int> totalLikes) {
+    _profileData[profileKey]?.totalLikes = totalLikes;
     notifyListeners();
   }
 
-  void setMyProfileTotalLikes(List<int> totalLikes) {
-    _myProfileTotalLikes = totalLikes;
+  void setTotalComments(String profileKey, List<int> totalComments) {
+    _profileData[profileKey]?.totalComments = totalComments;
     notifyListeners();
   }
 
-  void setUserProfileTotalLikes(List<int> totalLikes) {
-    _userProfileTotalLikes = totalLikes;
+  void setPostTimestamp(String profileKey, List<String> postTimestamp) {
+    _profileData[profileKey]?.postTimestamp = postTimestamp;
     notifyListeners();
   }
 
   void clearPostsData() {
-    _myProfileTitles.clear();
-    _userProfileTitles.clear();
+    for (var profile in _profileData.values) {
+      profile.clear();
+    }
+
     notifyListeners();
   }
-
 }
