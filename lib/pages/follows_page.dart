@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api
+
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -11,17 +13,18 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/sub_button.dart';
+import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
-class _FollowsUserData {
-
+class _FollowsProfilesData {
+  
   final String username;
   final Uint8List profilePic;
 
-  _FollowsUserData({
-    required this.username, 
-    required this.profilePic
+  _FollowsProfilesData({
+    required this.username,
+    required this.profilePic,
   });
 
 }
@@ -42,41 +45,75 @@ class FollowsPage extends StatefulWidget {
 
 }
 
-class FollowsPageState extends State<FollowsPage> {
-
-  final followsUserDataNotifier = ValueNotifier<List<_FollowsUserData>>([]);
+class FollowsPageState extends State<FollowsPage> with SingleTickerProviderStateMixin {
 
   final userData = GetIt.instance<UserDataProvider>();
+
+  final ValueNotifier<List<_FollowsProfilesData>> followersData = ValueNotifier([]);
+  final ValueNotifier<List<_FollowsProfilesData>> followingData = ValueNotifier([]);
+
+  final emptyPageMessageNotifier = ValueNotifier<String>('');
 
   final emptyMessages = {
     'Followers': 'No followers yet.',
     'Following': 'No following yet.',
   };
 
-  Future<void> _loadData() async {
+  late TabController tabController;
+
+  bool followersTabNotLoaded = true;
+  bool followingTabNotLoaded = true;
+
+  Future<List<_FollowsProfilesData>> _fetchFollowsData(String followType) async {
+
+    final getFollowsInfo = await FollowsGetter().getFollows(
+      followType: followType,
+      username: widget.username,
+    );
+
+    final usernames = getFollowsInfo['username']!;
+    final profilePics = getFollowsInfo['profile_pic']!;
+
+    return List.generate(usernames.length, (index) {
+      return _FollowsProfilesData(
+        username: usernames[index],
+        profilePic: profilePics[index],
+      );
+    });
+
+  }
+
+  Future<void> _loadFollowsData({required String page}) async {
 
     try {
 
-      final getFollowsInfo = await FollowsGetter().getFollows(
-        followType: widget.pageType, username: widget.username
-      );
+      if (page == 'Followers') {
 
-      final usernames = getFollowsInfo['username']!;
-      final profilePics = getFollowsInfo['profile_pic']!;
+        if (followersTabNotLoaded) {
+          final followersInfoList = await _fetchFollowsData('Followers');
+          followersData.value = followersInfoList;
+          followersTabNotLoaded = false;
+        }
 
-      final followsUserInfoList = List.generate(usernames.length, (index) {
-        return _FollowsUserData(
-          username: usernames[index],
-          profilePic: profilePics[index],
-        );
-      });
+        emptyPageMessageNotifier.value = followersData.value.isEmpty
+          ? emptyMessages['Followers']! : '';
 
-      followsUserDataNotifier.value = followsUserInfoList;
+      } else if (page == 'Following') {
+
+        if (followingTabNotLoaded) {
+          final followingInfoList = await _fetchFollowsData('Following');
+          followingData.value = followingInfoList;
+          followingTabNotLoaded = false;
+        }
+
+        emptyPageMessageNotifier.value = followingData.value.isEmpty
+          ? emptyMessages['Following']! : '';
+      }
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Failed to load profiles');
     }
-    
+
   }
 
   String _profileButtonText() {
@@ -125,7 +162,7 @@ class FollowsPageState extends State<FollowsPage> {
               child: SubButton(
                 customHeight: 40,
                 text: _profileButtonText(),
-                onPressed: () => print(widget.pageType)
+                onPressed: () => {}
               ),
             ),
       
@@ -135,42 +172,87 @@ class FollowsPageState extends State<FollowsPage> {
     );
   }
 
-  Widget _buildListView() {
-    return ListView.builder(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics()
-      ),
-      itemCount: followsUserDataNotifier.value.length,
-      itemBuilder: (_, index) {
-        final followsUserData = followsUserDataNotifier.value[index];
-        return _buildListViewItems(followsUserData.username, followsUserData.profilePic);
-      },
+  Widget _buildEmptyPage() {
+    return ValueListenableBuilder(
+      valueListenable: emptyPageMessageNotifier,
+      builder: (_, message, __) {
+        return EmptyPage().customMessage(message: message);
+      }
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildFollowsListView({required ValueNotifier data}) {
     return Padding(
-      padding: const EdgeInsets.only(top: 18.0),
-      child: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width - 28,
-          child: ValueListenableBuilder(
-            valueListenable: followsUserDataNotifier, 
-            builder: (_, followsUserDataList, __) {
-              return followsUserDataList.isEmpty 
-                ?  EmptyPage().customMessage(message: emptyMessages[widget.pageType]!)
-                : _buildListView();
-            }
-          )
-        ),
+      padding: const EdgeInsets.only(left: 16.5, right: 16.5, top: 25.0),
+      child: ValueListenableBuilder(
+        valueListenable: data,
+        builder: (_, followsData, __) {
+      
+          if(followsData.isEmpty) {
+            return _buildEmptyPage();
+          }
+    
+          return ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(
+              parent: BouncingScrollPhysics()
+            ),
+            itemCount: followsData.length,
+            itemBuilder: (_, index) {
+              final followsUserData = followsData[index];
+              return _buildListViewItems(followsUserData.username, followsUserData.profilePic);
+            },
+          );
+    
+        }
       ),
     );
+  }
+
+  Widget _buildTabBarTabs() {
+    return TabBarView(
+      controller: tabController,
+      children: [
+        _buildFollowsListView(data: followersData), 
+        _buildFollowsListView(data: followingData),           
+      ],
+    );
+  }
+
+  PreferredSizeWidget _buildTabBar() {
+    return CustomTabBar(
+      controller: tabController, 
+      tabAlignment: TabAlignment.center,
+      tabs: const [
+        Tab(text: 'Followers'),
+        Tab(text: 'Following'),
+      ],
+    ).buildTabBar();
   }
 
   @override
   void initState() {
     super.initState();
-    _loadData();
+    _loadFollowsData(page: widget.pageType);
+    tabController = TabController(
+      length: 2, 
+      vsync: this,
+      initialIndex: widget.pageType == 'Followers' ? 0 : 1
+    );
+    tabController.addListener(() async {
+      if (!tabController.indexIsChanging) { 
+        final currentPage = tabController.index == 0 ? 'Followers' : 'Following';
+        await _loadFollowsData(page: currentPage);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    tabController.dispose();
+    followersData.dispose();
+    followingData.dispose();
+    emptyPageMessageNotifier.dispose();
+    super.dispose();
   }
 
   @override
@@ -178,9 +260,10 @@ class FollowsPageState extends State<FollowsPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: widget.pageType
+        title: userData.user.username,
+        bottom: _buildTabBar()
       ).buildAppBar(),
-      body: _buildBody(),
+      body: _buildTabBarTabs(),
     );
   }
 
