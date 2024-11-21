@@ -74,9 +74,13 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
     final title = getPostsData['title'] as List<String>;
     final totalLikes = getPostsData['total_likes'] as List<int>;
+    final totalComments = getPostsData['total_comments'] as List<int>;
+    final postTimestamp = getPostsData['post_timestamp'] as List<String>;
 
-    profilePostsData.setUserProfileTitles(title);
-    profilePostsData.setUserProfileTotalLikes(totalLikes);
+    profilePostsData.setTitles('user_profile', title);
+    profilePostsData.setTotalLikes('user_profile', totalLikes);
+    profilePostsData.setTotalComments('user_profile', totalComments);
+    profilePostsData.setPostTimestamp('user_profile', postTimestamp);
 
   }
 
@@ -100,10 +104,10 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       final title = getPostsData['title'] as List<String>;
       final totalLikes = getPostsData['total_likes'] as List<int>;
 
-      profilePostsData.setUserProfileTitles(title);
-      profilePostsData.setUserProfileTotalLikes(totalLikes);
+      profilePostsData.setTitles('user_profile', title);
+      profilePostsData.setTotalLikes('user_profile', totalLikes);
       
-      postsNotifier.value = profilePostsData.userProfileTitles.length;
+      postsNotifier.value = profilePostsData.userProfile.titles.length;
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
@@ -156,7 +160,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
         builder: (_, bio, __) {
           return bio.isEmpty
             ? Transform.translate(
-              offset: const Offset(0, -5),
+              offset: Offset(0, pronounsNotifier.value.isEmpty ? -5 : -2),
               child: const Text(
                 'No bio yet...',
                 style: ThemeStyle.profileEmptyBioStyle,
@@ -276,7 +280,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     pronounsNotifier.dispose();
     isFollowingNotifier.dispose();
     tabController.dispose();
-    profilePostsData.userProfileTitles.clear();
+    profilePostsData.clearPostsData();
     super.dispose();
   }
 

@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/profile/profile_posts_listview.dart';
@@ -38,8 +37,8 @@ class ProfileTabBarWidgets {
       controller: controller, 
       tabAlignment: TabAlignment.fill,
       tabs: const [
-        Tab(icon: Icon(CupertinoIcons.square_grid_2x2, size: 20)),
-        Tab(icon: Icon(CupertinoIcons.bookmark, size: 20)),
+        Tab(text: 'Vents'),
+        Tab(text: 'Saved'),
       ],
     ).buildTabBar();
   }

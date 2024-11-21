@@ -104,7 +104,7 @@ class VentDataGetter {
     final conn = await ReventConnect.initializeConnection();
 
     const query = 
-      'SELECT body_text, created_at, total_comments FROM vent_info WHERE title = :title AND creator = :creator';
+      'SELECT body_text FROM vent_info WHERE title = :title AND creator = :creator';
       
     final params = {
       'title': title,
@@ -116,17 +116,9 @@ class VentDataGetter {
     final extractData = ExtractData(rowsData: results);
 
     final bodyText = extractData.extractStringColumn('body_text')[0];
-    final totalComments = extractData.extractIntColumn('total_comments')[0];
-    
-    final postTimestamp = extractData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList()[0];
-      
+       
     return {
       'body_text': bodyText,
-      'post_timestamp': postTimestamp,
-      'total_comments': totalComments,
     };
 
   }

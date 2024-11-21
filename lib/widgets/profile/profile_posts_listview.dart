@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
@@ -21,14 +21,16 @@ class ProfilePostsListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildPreviewer(String title, int totalLikes) {
+  Widget _buildPreviewer(String title, int totalLikes, int totalComments, String postTimestamp) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
       child: Align(
         alignment: Alignment.center,
         child: ProfilePostsPreviewer(
           title: title,
           totalLikes: totalLikes,
+          totalComments: totalComments,
+          postTimestamp: postTimestamp,
           username: username,
           pfpData: pfpData,
         ),
@@ -44,18 +46,20 @@ class ProfilePostsListView extends StatelessWidget {
     required int itemCount,
     required List<String> titles,
     required List<int> totalLikes, 
+    required List<int> totalComments, 
+    required List<String> postTimestamp, 
   }) {
-    return StaggeredGridView.countBuilder(
-      crossAxisCount: 2,
+    return DynamicHeightGridView(
+      crossAxisCount: 1,
       itemCount: itemCount,
-      itemBuilder: (_, index) {
-        return _buildPreviewer(titles[index], totalLikes[index]);
+      builder: (_, index) {
+        return _buildPreviewer(
+          titles[index], totalLikes[index], totalComments[index], postTimestamp[index]
+        );
       },
-      staggeredTileBuilder: (_) => const StaggeredTile.fit(1),
-      mainAxisSpacing: 2.0,
-      crossAxisSpacing: 2.0,
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -63,19 +67,33 @@ class ProfilePostsListView extends StatelessWidget {
       builder: (_, postsData, __) {
 
         final titles = isMyProfile 
-          ? postsData.myProfileTitles 
-          : postsData.userProfileTitles;
+          ? postsData.myProfile.titles 
+          : postsData.userProfile.titles;
 
         final totalLikes = isMyProfile 
-          ? postsData.myProfileTotalLikes 
-          : postsData.userProfileTotalLikes;
+          ? postsData.myProfile.totalLikes 
+          : postsData.userProfile.totalLikes;
         
+        final totalComments = isMyProfile 
+          ? postsData.myProfile.totalComments 
+          : postsData.userProfile.totalComments;
+
+        final postTimestamp = isMyProfile 
+          ? postsData.myProfile.postTimestamp 
+          : postsData.userProfile.postTimestamp;
+
         final isPostsEmpty = titles.isEmpty;
         final itemCount = titles.length;
 
         return isPostsEmpty 
           ? _buildOnEmpty() 
-          : _buildListView(itemCount: itemCount, titles: titles, totalLikes: totalLikes);
+          : _buildListView(
+            itemCount: itemCount, 
+            titles: titles, 
+            totalLikes: totalLikes, 
+            totalComments: totalComments, 
+            postTimestamp: postTimestamp
+          );
       },
     );
   }

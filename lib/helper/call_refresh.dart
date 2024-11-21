@@ -47,9 +47,13 @@ class CallRefresh {
 
     final title = getPostsData['title'] as List<String>;
     final totalLikes = getPostsData['total_likes'] as List<int>;
+    final totalComments = getPostsData['total_comments'] as List<int>;
+    final postTimestamp = getPostsData['post_timestamp'] as List<String>;
 
-    profilePostsData.setMyProfileTitles(title);
-    profilePostsData.setMyProfileTotalLikes(totalLikes);
+    profilePostsData.setTitles('my_profile', title);
+    profilePostsData.setTotalLikes('my_profile', totalLikes);
+    profilePostsData.setTotalComments('my_profile', totalComments);
+    profilePostsData.setPostTimestamp('my_profile', postTimestamp);
 
   }
 
