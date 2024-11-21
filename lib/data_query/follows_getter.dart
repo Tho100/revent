@@ -9,9 +9,10 @@ class FollowsGetter {
     required String followType,
     required String username,
   }) async {
+
     final conn = await ReventConnect.initializeConnection();
 
-    final columnName = followType == 'Followers' ? 'follower' : 'following'; // TODO: Improve this logic, probably remove this
+    final columnName = followType == 'Followers' ? 'follower' : 'following';
     final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
 
     final getFollowsWithProfilePicQuery = 
