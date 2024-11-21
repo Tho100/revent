@@ -9,6 +9,7 @@ class FollowsGetter {
     required String followType,
     required String username,
   }) async {
+
     final conn = await ReventConnect.initializeConnection();
 
     final columnName = followType == 'Followers' ? 'follower' : 'following';
