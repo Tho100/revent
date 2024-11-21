@@ -50,6 +50,7 @@ class BottomsheetVentPostActions {
     required String creator,
     required VoidCallback saveOnPressed,
     required VoidCallback reportOnPressed,
+    required VoidCallback blockOnPressed,
     VoidCallback? copyOnPressed,
     VoidCallback? deleteOnPressed,
   }) {
@@ -81,6 +82,13 @@ class BottomsheetVentPostActions {
           icon: CupertinoIcons.flag,
           isRed: true,
           onPressed: reportOnPressed
+        ),
+
+        _buildOptionButton(
+          text: 'Block @$creator',
+          icon: CupertinoIcons.clear_circled,
+          isRed: true,
+          onPressed: blockOnPressed
         ),
 
         if(userData.user.username == creator && deleteOnPressed != null)

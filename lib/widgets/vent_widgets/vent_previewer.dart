@@ -101,6 +101,9 @@ class VentPreviewerState extends State<VentPreviewer> {
             reportOnPressed: () {
               Navigator.pop(context);
             }, 
+            blockOnPressed: () {
+              Navigator.pop(context);
+            },
           ),
           icon: Transform.translate(
             offset: const Offset(0, -10),

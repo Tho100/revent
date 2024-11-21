@@ -336,6 +336,9 @@ class VentPostPageState extends State<VentPostPage> {
         reportOnPressed: () {
           Navigator.pop(context);
         }, 
+        blockOnPressed: () {
+          Navigator.pop(context);
+        },
         deleteOnPressed: () {
           CustomAlertDialog.alertDialogCustomOnPress(
             message: 'Delete this post?', 
