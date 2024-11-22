@@ -25,9 +25,12 @@ class CreateVentPageState extends State<CreateVentPage> {
 
   final hintTextColor = ThemeColor.thirdWhite;
 
+  final isArchivedVentNotifier = ValueNotifier<bool>(false);
+
   Future<void> _createVentOnPressed() async {
 
     final ventTitle = ventTitleController.text;
+    final ventBodyText = ventBodyTextController.text;
 
     if(ventTitle.isEmpty) {
       CustomAlertDialog.alertDialog('Please enter vent title');
@@ -36,9 +39,17 @@ class CreateVentPageState extends State<CreateVentPage> {
 
     try {
 
+      if(isArchivedVentNotifier.value) {
+        await CreateNewItem().newArchiveVent(
+          ventTitle: ventTitle, 
+          ventBodyText: ventBodyText
+        ).then((value) => Navigator.pop(context));
+        return;
+      }
+
       await CreateNewItem().newVent(
         ventTitle: ventTitle, 
-        ventBodyText: ventBodyTextController.text
+        ventBodyText: ventBodyText
       ).then((value) => {
         
         SnackBarDialog.temporarySnack(message: 'Vent has been posted'),
@@ -129,12 +140,61 @@ class CreateVentPageState extends State<CreateVentPage> {
     );
   }
 
-  Widget _buildActionButton() {
+  Widget _buildPostButton() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SubButton(
         text: 'Post', 
         onPressed: () async => _createVentOnPressed(),
+      ),
+    );
+  }
+
+  Widget _buildArchiveVentCheckBox() {
+    return CheckboxTheme(
+      data: CheckboxThemeData(
+        fillColor: MaterialStateColor.resolveWith(
+          (states) => ThemeColor.thirdWhite,
+        ),
+        checkColor: MaterialStateColor.resolveWith(
+          (states) => ThemeColor.secondaryWhite,
+        ),
+        overlayColor: MaterialStateColor.resolveWith(
+          (states) => ThemeColor.secondaryWhite.withOpacity(0.1),
+        ),
+        side: const BorderSide(
+          color: ThemeColor.thirdWhite,
+          width: 2.0,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(4.0),
+        ),
+      ),
+      child: Row(
+        children: [
+          
+          ValueListenableBuilder(
+            valueListenable: isArchivedVentNotifier,
+            builder: (_, value, __) {
+              return Checkbox(
+                value: value,
+                onChanged: (checkedValue) {
+                  isArchivedVentNotifier.value = checkedValue ?? true;
+                },
+              );
+            },
+          ),
+
+          Text(
+            'Archive',
+            style: GoogleFonts.inter(
+              color: const Color.fromARGB(225, 225, 225, 225),
+              fontWeight: FontWeight.w800,
+              fontSize: 12,
+            ),
+          ),
+
+        ],
       ),
     );
   }
@@ -156,6 +216,8 @@ class CreateVentPageState extends State<CreateVentPage> {
               onPressed: () => print('Pressed'),
               icon: const Icon(CupertinoIcons.square_list, color: ThemeColor.thirdWhite, size: 24),
             ),
+
+            _buildArchiveVentCheckBox(),
           
             const Spacer(),
           
@@ -192,6 +254,7 @@ class CreateVentPageState extends State<CreateVentPage> {
   void dispose() {
     ventTitleController.dispose();
     ventBodyTextController.dispose();
+    isArchivedVentNotifier.dispose();
     super.dispose();
   }
 
@@ -205,7 +268,7 @@ class CreateVentPageState extends State<CreateVentPage> {
           context: context, 
           enableCenter: false,
           title: 'New vent',
-          actions: [_buildActionButton()],
+          actions: [_buildPostButton()],
           customBackOnPressed: () async {
             if(await _onClosePage()) {
               if(context.mounted) {

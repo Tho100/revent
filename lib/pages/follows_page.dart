@@ -90,7 +90,7 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
       if (page == 'Followers') {
 
         if (followersTabNotLoaded) {
-          final followersInfoList = await _fetchFollowsData('Followers');
+          final followersInfoList = await _fetchFollowsData('Followers'); // TODO: Remove unused assignment
           followersData.value = followersInfoList;
           followersTabNotLoaded = false;
         }

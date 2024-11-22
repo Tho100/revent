@@ -123,6 +123,33 @@ class VentDataGetter {
 
   }
 
+  Future<Map<String, dynamic>> getArchiveVentData({
+    required String title,
+    required String creator
+  }) async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    const query = 
+      'SELECT body_text FROM archive_vent_info WHERE title = :title AND creator = :creator';
+      
+    final params = {
+      'title': title,
+      'creator': creator
+    };
+
+    final results = await conn.execute(query, params);
+
+    final extractData = ExtractData(rowsData: results);
+
+    final bodyText = extractData.extractStringColumn('body_text')[0];
+       
+    return {
+      'body_text': bodyText,
+    };
+
+  }
+
   Future<List<bool>> _ventPostLikedState({
     required MySQLConnectionPool conn,
     required List<String> title,

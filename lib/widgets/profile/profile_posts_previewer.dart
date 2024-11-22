@@ -11,6 +11,8 @@ import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 
+// TODO: Create separated class for ventpreviewer widgets 
+
 class ProfilePostsPreviewer extends StatelessWidget {
 
   final String username;
