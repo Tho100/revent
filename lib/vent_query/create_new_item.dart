@@ -89,4 +89,24 @@ class CreateNewItem {
 
   }
 
+  Future<void> newArchiveVent({
+    required String ventTitle,
+    required String ventBodyText,
+  }) async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    const insertVentInfoQuery = 'INSERT INTO archive_vent_info (creator, title, body_text) VALUES (:creator, :title, :body_text)';
+
+    final params = {
+      'creator': userData.user.username,
+      'title': ventTitle,
+      'body_text': ventBodyText,
+    };
+
+    await conn.execute(insertVentInfoQuery, params);
+
+  }
+
+
 }

@@ -2,7 +2,7 @@ import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_date.dart';
 
-class ProfilePostsDataGetter {
+class ArchiveVentDataGetter {
 
   final formatPostTimestamp = FormatDate();
 
@@ -12,7 +12,7 @@ class ProfilePostsDataGetter {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = 'SELECT title, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
+    const query = 'SELECT title, created_at FROM archive_vent_info WHERE creator = :username';
     final param = {
       'username': username
     };
@@ -22,8 +22,6 @@ class ProfilePostsDataGetter {
     final extractData = ExtractData(rowsData: retrievedInfo);
     
     final title = extractData.extractStringColumn('title');
-    final totalLikes = extractData.extractIntColumn('total_likes');
-    final totalComments = extractData.extractIntColumn('total_comments');
 
     final postTimestamp = extractData
       .extractStringColumn('created_at')
@@ -32,8 +30,6 @@ class ProfilePostsDataGetter {
 
     return {
       'title': title,
-      'total_likes': totalLikes,
-      'total_comments': totalComments,
       'post_timestamp': postTimestamp
     };
 
@@ -47,7 +43,7 @@ class ProfilePostsDataGetter {
     final conn = await ReventConnect.initializeConnection();
 
     const query = 
-      'SELECT body_text FROM vent_info WHERE title = :title AND creator = :creator';
+      'SELECT body_text FROM archive_vent_info WHERE title = :title AND creator = :creator';
       
     final params = {
       'title': title,
@@ -59,7 +55,7 @@ class ProfilePostsDataGetter {
     final extractData = ExtractData(rowsData: results);
 
     final bodyText = extractData.extractStringColumn('body_text')[0];
-      
+       
     return {
       'body_text': bodyText,
     };

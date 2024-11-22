@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer.dart';
 
-class VentListView extends StatelessWidget {
+class HomeVentListView extends StatelessWidget {
 
   final dynamic provider;
 
-  const VentListView({
+  const HomeVentListView({
     required this.provider,
     super.key,
   });

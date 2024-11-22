@@ -16,6 +16,6 @@ class ThemeColor {
   static const thirdWhite = Color.fromARGB(255, 117, 117, 117);
   static const darkWhite = Color.fromARGB(255, 75, 75, 75);
 
-  static const likedColor = Color.fromARGB(198, 255, 10, 137);
+  static const likedColor = Color.fromARGB(198, 253, 2, 108);
   
 }

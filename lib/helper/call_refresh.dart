@@ -43,7 +43,7 @@ class CallRefresh {
 
     await ProfileDataSetup().setup(username: username);
 
-    final getPostsData = await ProfilePostsGetter().getPosts(username: username);
+    final getPostsData = await ProfilePostsDataGetter().getPosts(username: username);
 
     final title = getPostsData['title'] as List<String>;
     final totalLikes = getPostsData['total_likes'] as List<int>;

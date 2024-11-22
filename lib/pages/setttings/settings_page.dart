@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/model/user_model.dart';
+import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/pages/setttings/account_info_page.dart';
 import 'package:revent/pages/setttings/app_info_page.dart';
 import 'package:revent/pages/setttings/security_page.dart';
@@ -84,6 +85,19 @@ class SettingsPage extends StatelessWidget {
             text: 'Saved', 
             icon: CupertinoIcons.bookmark,
             onPressed: () {}
+          ),
+
+          const SizedBox(height: buttonGap),
+          
+          SettingsButton(
+            text: 'Archive', 
+            icon: CupertinoIcons.archivebox,
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const ArchivedVentPage())
+              );
+            }
           ),
 
           const SizedBox(height: buttonGap),
