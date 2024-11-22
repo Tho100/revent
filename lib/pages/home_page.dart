@@ -149,17 +149,27 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   }
 
-  Widget _buildForYouListView() {
+  Widget _buildVentListViewBody({
+    required Widget child,
+    required Future<void> Function() onRefresh
+  }) {
     return Center(
       child: SizedBox(
         width: MediaQuery.of(context).size.width - 28,
         child: RefreshIndicator(
           color: ThemeColor.black,
-          onRefresh: () async => await _forYouVentsOnRefresh(),
-          child: VentListView(provider: Provider.of<VentDataProvider>(context)),
+          onRefresh: onRefresh,
+          child: child
         ),
       ),
     );
+  }
+
+  Widget _buildForYouListView() {
+    return _buildVentListViewBody(
+      onRefresh: () async => await _forYouVentsOnRefresh(),
+      child: HomeVentListView(provider: Provider.of<VentDataProvider>(context))
+    ); 
   }
 
   Widget _buildFollowingListView() {
@@ -167,16 +177,10 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       valueListenable: followingIsLoadedNotifier,
       builder: (_, isLoaded, __) {
         if(isLoaded) {
-          return Center(
-            child: SizedBox(
-              width: MediaQuery.of(context).size.width - 28,
-              child: RefreshIndicator(
-                color: ThemeColor.black,
-                onRefresh: () async => await _followingVentsOnRefresh(),
-                child: VentListView(provider: Provider.of<VentFollowingDataProvider>(context)),
-              ),
-            ),
-          );
+          return _buildVentListViewBody(
+            onRefresh: () async => await _followingVentsOnRefresh(),
+            child: HomeVentListView(provider: Provider.of<VentFollowingDataProvider>(context)),
+          ); 
 
         } else {
           return const Center(

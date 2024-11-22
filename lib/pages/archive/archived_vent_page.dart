@@ -3,12 +3,12 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:revent/global/constant.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/archive_vent_data_getter.dart';
-import 'package:revent/vent_query/vent_data_getter.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
@@ -38,25 +38,25 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
+  final archiveDataGetter = ArchiveVentDataGetter();
+  
   ValueNotifier<List<_ArchivedVentsData>> archivedVentsData = ValueNotifier([]);
 
   void _viewVentPostPage(String title) async {
 
-    final archiveDataInfo = await VentDataGetter().getArchiveVentData(
+    final archiveDataInfo = await archiveDataGetter.getBodyText(
       title: title, creator: userData.user.username
     );
 
     final bodyText = archiveDataInfo['body_text'];
 
-    if(context.mounted) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (_) => ViewArchiveVentPage(
-          title: title, 
-          bodyText: bodyText, 
-        )),
-      );
-    }
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => ViewArchiveVentPage(
+        title: title, 
+        bodyText: bodyText, 
+      )),
+    );
 
   }
 
@@ -64,7 +64,7 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
 
     try {
 
-      final archiveVentsInfo = await ArchiveVentDataGetter().getPosts(
+      final archiveVentsInfo = await archiveDataGetter.getPosts(
         username: userData.user.username
       );
 

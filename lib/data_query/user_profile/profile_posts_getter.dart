@@ -2,7 +2,7 @@ import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_date.dart';
 
-class ProfilePostsGetter {
+class ProfilePostsDataGetter {
 
   final formatPostTimestamp = FormatDate();
 
@@ -35,6 +35,33 @@ class ProfilePostsGetter {
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'post_timestamp': postTimestamp
+    };
+
+  }
+
+  Future<Map<String, dynamic>> getBodyText({
+    required String title,
+    required String creator
+  }) async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    const query = 
+      'SELECT body_text FROM vent_info WHERE title = :title AND creator = :creator';
+      
+    final params = {
+      'title': title,
+      'creator': creator
+    };
+
+    final results = await conn.execute(query, params);
+
+    final extractData = ExtractData(rowsData: results);
+
+    final bodyText = extractData.extractStringColumn('body_text')[0];
+      
+    return {
+      'body_text': bodyText,
     };
 
   }

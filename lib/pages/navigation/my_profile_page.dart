@@ -56,7 +56,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
     if(profilePostsData.myProfile.titles.isEmpty) {
 
-      final getPostsData = await ProfilePostsGetter().getPosts(
+      final getPostsData = await ProfilePostsDataGetter().getPosts(
         username: userData.user.username
       );
 
