@@ -42,7 +42,7 @@ class BottomsheetVentPostActions {
     required String creator,
     required VoidCallback saveOnPressed,
     required VoidCallback reportOnPressed,
-    required VoidCallback blockOnPressed,
+    VoidCallback? blockOnPressed,
     VoidCallback? copyOnPressed,
     VoidCallback? deleteOnPressed,
   }) {
@@ -75,7 +75,7 @@ class BottomsheetVentPostActions {
           onPressed: reportOnPressed
         ),
 
-        // TODO: Hide this button if creator is equals to current user
+        if(userData.user.username != creator && blockOnPressed != null)
         _buildOptionButton(
           text: 'Block @$creator',
           icon: CupertinoIcons.clear_circled,
