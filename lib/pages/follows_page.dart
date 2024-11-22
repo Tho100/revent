@@ -90,8 +90,7 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
       if (page == 'Followers') {
 
         if (followersTabNotLoaded) {
-          final followersInfoList = await _fetchFollowsData('Followers'); // TODO: Remove unused assignment
-          followersData.value = followersInfoList;
+          followersData.value = await _fetchFollowsData('Followers');
           followersTabNotLoaded = false;
         }
 
@@ -101,8 +100,7 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
       } else if (page == 'Following') {
 
         if (followingTabNotLoaded) {
-          final followingInfoList = await _fetchFollowsData('Following');
-          followingData.value = followingInfoList;
+          followingData.value = await _fetchFollowsData('Following');
           followingTabNotLoaded = false;
         }
 
