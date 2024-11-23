@@ -105,33 +105,30 @@ class ProfileSavedPreviewer extends StatelessWidget {
       viewVentPostOnPressed: () => _viewVentPostPage(),
     );
 
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ventPreviewer.buildMainContainer(
-        children: [
-          
-          Row(
-            children: [
+    return ventPreviewer.buildMainContainer(
+      children: [
+        
+        Row(
+          children: [
 
-              ventPreviewer.buildHeaders(),
+            ventPreviewer.buildHeaders(),
 
-              const Spacer(),
+            const Spacer(),
 
-              ventPreviewer.buildVentOptionsButton(),
+            ventPreviewer.buildVentOptionsButton(),
 
-            ]
-          ),
+          ]
+        ),
 
-          const SizedBox(height: 14),
+        const SizedBox(height: 14),
 
-          ventPreviewer.buildTitle(),
+        ventPreviewer.buildTitle(),
 
-          const SizedBox(height: 25), 
+        const SizedBox(height: 25), 
 
-          _buildLikesAndCommentsInfo(),
+        _buildLikesAndCommentsInfo(),
 
-        ],
-      ), 
+      ],
     );
   }
 

@@ -6,8 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
-import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
-import 'package:revent/data_query/user_profile/profile_saved_getter.dart';
+import 'package:revent/helper/call_profile_posts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
@@ -69,53 +68,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     );
   }
 
-  Future<void> _setPostsData() async {
-
-    final getPostsData = await ProfilePostsDataGetter().getPosts(
-      username: widget.username
-    );
-
-    final title = getPostsData['title'] as List<String>;
-    final totalLikes = getPostsData['total_likes'] as List<int>;
-    final totalComments = getPostsData['total_comments'] as List<int>;
-    final postTimestamp = getPostsData['post_timestamp'] as List<String>;
-
-    profilePostsData.setTitles('user_profile', title);
-    profilePostsData.setTotalLikes('user_profile', totalLikes);
-    profilePostsData.setTotalComments('user_profile', totalComments);
-    profilePostsData.setPostTimestamp('user_profile', postTimestamp);
-
-  }
-
-  Future<void> _setSavedData() async {
-
-    if(profileSavedData.myProfile.titles.isEmpty) {
-
-      final getPostsData = await ProfileSavedDataGetter().getSaved(
-        username: widget.username
-      );
-
-      final creator = getPostsData['creator'] as List<String>;
-      final profilePicture = getPostsData['profile_picture'] as List<Uint8List>;
-
-      final title = getPostsData['title'] as List<String>;
-      final totalLikes = getPostsData['total_likes'] as List<int>;
-
-      final totalComments = getPostsData['total_comments'] as List<int>;
-      final postTimestamp = getPostsData['post_timestamp'] as List<String>;
-
-      profileSavedData.setCreator('user_profile', creator);
-      profileSavedData.setProfilePicture('user_profile', profilePicture);
-
-      profileSavedData.setTitles('user_profile', title);
-      profileSavedData.setTotalLikes('user_profile', totalLikes);
-      profileSavedData.setTotalComments('user_profile', totalComments);
-      profileSavedData.setPostTimestamp('user_profile', postTimestamp);
-
-    } 
-
-  }
-
   Future<void> _setProfileData() async {
 
     try {
@@ -131,15 +83,16 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
       isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
 
-      // TODO: clear and call _setPostsData/_setSavedData
+      profilePostsData.userProfile.clear();
+      profileSavedData.userProfile.clear();
 
-      final getPostsData = await ProfilePostsDataGetter().getPosts(username: widget.username);
+      final callProfilePosts = CallProfilePosts(
+        userType: 'user_profile',
+        username: widget.username
+      );
 
-      final title = getPostsData['title'] as List<String>;
-      final totalLikes = getPostsData['total_likes'] as List<int>;
-
-      profilePostsData.setTitles('user_profile', title);
-      profilePostsData.setTotalLikes('user_profile', totalLikes);
+      await callProfilePosts.setPostsData();
+      await callProfilePosts.setSavedData();
       
       postsNotifier.value = profilePostsData.userProfile.titles.length;
 
@@ -300,8 +253,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   @override
   void initState() {
     super.initState();
-    _setPostsData();
-    _setSavedData();
     _setProfileData();
     _initializeClasses();
   }

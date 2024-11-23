@@ -1,11 +1,8 @@
-import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
-import 'package:revent/data_query/user_profile/profile_saved_getter.dart';
+import 'package:revent/helper/call_profile_posts.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
@@ -58,55 +55,15 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     );
   }
 
-  Future<void> _setPostsData() async {
+  void _initializePostsData() async {
 
-    if(profilePostsData.myProfile.titles.isEmpty) {
+    final callProfilePosts = CallProfilePosts(
+      userType: 'my_profile',
+      username: userData.user.username
+    );
 
-      final getPostsData = await ProfilePostsDataGetter().getPosts(
-        username: userData.user.username
-      );
-
-      final title = getPostsData['title'] as List<String>;
-      final totalLikes = getPostsData['total_likes'] as List<int>;
-
-      final totalComments = getPostsData['total_comments'] as List<int>;
-      final postTimestamp = getPostsData['post_timestamp'] as List<String>;
-
-      profilePostsData.setTitles('my_profile', title);
-      profilePostsData.setTotalLikes('my_profile', totalLikes);
-      profilePostsData.setTotalComments('my_profile', totalComments);
-      profilePostsData.setPostTimestamp('my_profile', postTimestamp);
-
-    } 
-
-  }
-
-  Future<void> _setSavedData() async {
-
-    if(profileSavedData.myProfile.titles.isEmpty) {
-
-      final getPostsData = await ProfileSavedDataGetter().getSaved(
-        username: userData.user.username
-      );
-
-      final creator = getPostsData['creator'] as List<String>;
-      final profilePicture = getPostsData['profile_picture'] as List<Uint8List>;
-
-      final title = getPostsData['title'] as List<String>;
-      final totalLikes = getPostsData['total_likes'] as List<int>;
-
-      final totalComments = getPostsData['total_comments'] as List<int>;
-      final postTimestamp = getPostsData['post_timestamp'] as List<String>;
-
-      profileSavedData.setCreator('my_profile', creator);
-      profileSavedData.setProfilePicture('my_profile', profilePicture);
-
-      profileSavedData.setTitles('my_profile', title);
-      profileSavedData.setTotalLikes('my_profile', totalLikes);
-      profileSavedData.setTotalComments('my_profile', totalComments);
-      profileSavedData.setPostTimestamp('my_profile', postTimestamp);
-
-    } 
+    await callProfilePosts.setPostsData();
+    await callProfilePosts.setSavedData();
 
   }
 
@@ -210,7 +167,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
         return ProfileBodyWidgets(
-          onRefresh: () async => await CallRefresh().refreshMyProfile(username: userData.user.username),
+          onRefresh: () async => await CallRefresh().refreshMyProfile(),
           tabBarWidgets: tabBarWidgets, 
           profileInfoWidgets: profileInfoWidgets, 
           pronounsWidget: _buildPronouns(), 
@@ -232,15 +189,14 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   Widget _buildLeadingButton() {
     return IconButton(
       icon: const Icon(CupertinoIcons.lock, size: 24),
-      onPressed: () => print('Pressed')
+      onPressed: () {}
     );
   }
 
   @override
   void initState() {
     super.initState();
-    _setPostsData();
-    _setSavedData();
+    _initializePostsData();
     _initializeClasses();
   }
 
