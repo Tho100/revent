@@ -188,7 +188,7 @@ class CreateVentPageState extends State<CreateVentPage> {
           Text(
             'Archive',
             style: GoogleFonts.inter(
-              color: const Color.fromARGB(225, 225, 225, 225),
+              color: ThemeColor.thirdWhite,
               fontWeight: FontWeight.w800,
               fontSize: 12,
             ),
@@ -208,12 +208,12 @@ class CreateVentPageState extends State<CreateVentPage> {
           children: [
           
             IconButton(
-              onPressed: () => print('Pressed'),
+              onPressed: () {},
               icon: const Icon(CupertinoIcons.link, color: ThemeColor.thirdWhite, size: 22),
             ),
           
             IconButton(
-              onPressed: () => print('Pressed'),
+              onPressed: () {},
               icon: const Icon(CupertinoIcons.square_list, color: ThemeColor.thirdWhite, size: 24),
             ),
 
