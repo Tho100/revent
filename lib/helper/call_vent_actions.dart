@@ -65,7 +65,13 @@ class CallVentActions {
       await CreateNewItem().newSaveVent(
         ventTitle: title, 
         creator: creator
-      ).then((value) => SnackBarDialog.temporarySnack(message: 'Saved vent'));
+      ).then((ventIsAlreadySaved) {
+
+        ventIsAlreadySaved 
+          ? SnackBarDialog.temporarySnack(message: "You've already saved this vent")
+          : SnackBarDialog.temporarySnack(message: 'Saved vent');  
+
+    });
           
     } catch (err) {
       SnackBarDialog.temporarySnack(message: 'Failed to save this vent');
