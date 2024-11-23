@@ -74,7 +74,7 @@ class CallVentActions {
     });
           
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to save this vent');
+      SnackBarDialog.errorSnack(message: 'Failed to save this vent');
     }
 
   }
