@@ -1,8 +1,11 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
+import 'package:revent/data_query/user_profile/profile_saved_getter.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/edit_profile_page.dart';
@@ -10,6 +13,7 @@ import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/model/update_navigation.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
+import 'package:revent/provider/profile_saved_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -32,7 +36,9 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
+
   final profilePostsData = GetIt.instance<ProfilePostsProvider>();
+  final profileSavedData = GetIt.instance<ProfileSavedProvider>();
 
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
@@ -70,6 +76,35 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
       profilePostsData.setTotalLikes('my_profile', totalLikes);
       profilePostsData.setTotalComments('my_profile', totalComments);
       profilePostsData.setPostTimestamp('my_profile', postTimestamp);
+
+    } 
+
+  }
+
+  Future<void> _setSavedData() async {
+
+    if(profileSavedData.myProfile.titles.isEmpty) {
+
+      final getPostsData = await ProfileSavedDataGetter().getSaved(
+        username: userData.user.username
+      );
+
+      final creator = getPostsData['creator'] as List<String>;
+      final profilePicture = getPostsData['profile_picture'] as List<Uint8List>;
+
+      final title = getPostsData['title'] as List<String>;
+      final totalLikes = getPostsData['total_likes'] as List<int>;
+
+      final totalComments = getPostsData['total_comments'] as List<int>;
+      final postTimestamp = getPostsData['post_timestamp'] as List<String>;
+
+      profileSavedData.setCreator('my_profile', creator);
+      profileSavedData.setProfilePicture('my_profile', profilePicture);
+
+      profileSavedData.setTitles('my_profile', title);
+      profileSavedData.setTotalLikes('my_profile', totalLikes);
+      profileSavedData.setTotalComments('my_profile', totalComments);
+      profileSavedData.setPostTimestamp('my_profile', postTimestamp);
 
     } 
 
@@ -205,6 +240,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   void initState() {
     super.initState();
     _setPostsData();
+    _setSavedData();
     _initializeClasses();
   }
 

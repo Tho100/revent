@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
-import 'package:revent/widgets/profile/profile_posts_previewer.dart';
+import 'package:revent/widgets/profile/posts/profile_posts_previewer.dart';
 
 class ProfilePostsListView extends StatelessWidget {
 
