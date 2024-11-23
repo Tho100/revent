@@ -167,7 +167,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
         return ProfileBodyWidgets(
-          onRefresh: () async => await CallRefresh().refreshMyProfile(username: userData.user.username),
+          onRefresh: () async => await CallRefresh().refreshMyProfile(),
           tabBarWidgets: tabBarWidgets, 
           profileInfoWidgets: profileInfoWidgets, 
           pronounsWidget: _buildPronouns(), 

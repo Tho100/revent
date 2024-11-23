@@ -21,25 +21,37 @@ class CallProfilePosts {
 
   Future<void> setPostsData() async {
 
-    final getPostsData = await ProfilePostsDataGetter().getPosts(
-      username: username
-    );
+    final isDataEmpty = userType == 'my_profile' 
+      ? profileSavedData.myProfile.titles.isEmpty 
+      : profileSavedData.userProfile.titles.isEmpty;
 
-    final title = getPostsData['title'] as List<String>;
-    final totalLikes = getPostsData['total_likes'] as List<int>;
-    final totalComments = getPostsData['total_comments'] as List<int>;
-    final postTimestamp = getPostsData['post_timestamp'] as List<String>;
+    if(isDataEmpty) {
 
-    profilePostsData.setTitles(userType, title);
-    profilePostsData.setTotalLikes(userType, totalLikes);
-    profilePostsData.setTotalComments(userType, totalComments);
-    profilePostsData.setPostTimestamp(userType, postTimestamp);
+      final getPostsData = await ProfilePostsDataGetter().getPosts(
+        username: username
+      );
+
+      final title = getPostsData['title'] as List<String>;
+      final totalLikes = getPostsData['total_likes'] as List<int>;
+      final totalComments = getPostsData['total_comments'] as List<int>;
+      final postTimestamp = getPostsData['post_timestamp'] as List<String>;
+
+      profilePostsData.setTitles(userType, title);
+      profilePostsData.setTotalLikes(userType, totalLikes);
+      profilePostsData.setTotalComments(userType, totalComments);
+      profilePostsData.setPostTimestamp(userType, postTimestamp);
+      
+    }
 
   }
 
   Future<void> setSavedData() async {
 
-    if(profileSavedData.myProfile.titles.isEmpty) {
+    final isDataEmpty = userType == 'my_profile' 
+      ? profileSavedData.myProfile.titles.isEmpty 
+      : profileSavedData.userProfile.titles.isEmpty;
+
+    if(isDataEmpty) {
 
       final getPostsData = await ProfileSavedDataGetter().getSaved(
         username: username

@@ -1,8 +1,9 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_profile/profile_data_setup.dart';
-import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
+import 'package:revent/helper/call_profile_posts.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
+import 'package:revent/provider/profile_saved_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
@@ -34,26 +35,26 @@ class CallRefresh {
 
   }
 
-  Future<void> refreshMyProfile({required String username}) async {
+  Future<void> refreshMyProfile() async {
 
     final profileData = GetIt.instance<ProfileDataProvider>();
     final profilePostsData = GetIt.instance<ProfilePostsProvider>();
+    final profileSavedData = GetIt.instance<ProfileSavedProvider>();
 
     profileData.clearProfileData();
 
-    await ProfileDataSetup().setup(username: username);
+    await ProfileDataSetup().setup(username: userData.user.username);
 
-    final getPostsData = await ProfilePostsDataGetter().getPosts(username: username);
+    final callProfilePosts = CallProfilePosts(
+      userType: 'my_profile', 
+      username: userData.user.username
+    );
 
-    final title = getPostsData['title'] as List<String>;
-    final totalLikes = getPostsData['total_likes'] as List<int>;
-    final totalComments = getPostsData['total_comments'] as List<int>;
-    final postTimestamp = getPostsData['post_timestamp'] as List<String>;
+    profilePostsData.myProfile.clear();
+    profileSavedData.myProfile.clear();
 
-    profilePostsData.setTitles('my_profile', title);
-    profilePostsData.setTotalLikes('my_profile', totalLikes);
-    profilePostsData.setTotalComments('my_profile', totalComments);
-    profilePostsData.setPostTimestamp('my_profile', postTimestamp);
+    await callProfilePosts.setPostsData();
+    await callProfilePosts.setSavedData();
 
   }
 
