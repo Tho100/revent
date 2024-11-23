@@ -167,6 +167,16 @@ class VentPostPageState extends State<VentPostPage> {
     
   }
 
+  Future<void> _savePostOnPressed() async {
+
+    await CallVentActions(
+      context: context,
+      title: widget.title,
+      creator: widget.creator
+    ).savePost();
+
+  }
+
   Widget _buildLikeButton() {
     return Consumer<VentDataProvider>(
       builder: (_, ventData, __) {
@@ -191,7 +201,7 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildCommentButton() {
     return ActionsButton().buildCommentsButton(
       text: widget.totalComments.toString(), 
-      onPressed: () => {}
+      onPressed: () async => await _savePostOnPressed(),
     );
   }
 
@@ -326,8 +336,11 @@ class VentPostPageState extends State<VentPostPage> {
       onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
         context: context, 
         creator: widget.creator,
-        saveOnPressed: () {
-          Navigator.pop(context);
+        saveOnPressed: () async {
+          await _savePostOnPressed();
+          if(context.mounted) {
+            Navigator.pop(context);
+          }
         },
         copyOnPressed: () {
           _copyBodyText();

@@ -82,9 +82,7 @@ class VentPreviewerWidgets {
           onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
             context: context, 
             creator: creator!,
-            saveOnPressed: () {
-              Navigator.pop(context);
-            },
+            saveOnPressed: saveOnPressed!,
             reportOnPressed: () {
               Navigator.pop(context);
             }, 

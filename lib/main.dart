@@ -6,6 +6,7 @@ import 'package:revent/global/constant.dart';
 import 'package:revent/pages/splash_screen_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
+import 'package:revent/provider/profile_saved_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
@@ -22,6 +23,7 @@ void initializeLocators() {
   locators.registerLazySingleton<VentFollowingDataProvider>(() => VentFollowingDataProvider());
   locators.registerLazySingleton<ProfileDataProvider>(() => ProfileDataProvider());
   locators.registerLazySingleton<ProfilePostsProvider>(() => ProfilePostsProvider());
+  locators.registerLazySingleton<ProfileSavedProvider>(() => ProfileSavedProvider());
   locators.registerLazySingleton<VentCommentProvider>(() => VentCommentProvider());
 }
 
@@ -38,6 +40,7 @@ void main() async {
         ChangeNotifierProvider(create: (context) => GetIt.instance<UserDataProvider>()),
         ChangeNotifierProvider(create: (context) => GetIt.instance<ProfileDataProvider>()),
         ChangeNotifierProvider(create: (context) => GetIt.instance<ProfilePostsProvider>()),
+        ChangeNotifierProvider(create: (context) => GetIt.instance<ProfileSavedProvider>()),
         ChangeNotifierProvider(create: (context) => GetIt.instance<VentCommentProvider>()),
       ],
       child: const MainRun(),

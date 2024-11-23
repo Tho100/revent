@@ -52,6 +52,16 @@ class VentPreviewerState extends State<VentPreviewer> {
     );
   }
 
+  Future<void> _saveVentOnPressed() async {
+
+    await CallVentActions(
+      context: context,
+      title: widget.title,
+      creator: widget.creator
+    ).savePost();
+
+  }
+
   Widget _buildLikeButton() {
     return ActionsButton().buildLikeButton(
       text: widget.totalLikes.toString(), 
@@ -89,6 +99,12 @@ class VentPreviewerState extends State<VentPreviewer> {
       pfpData: widget.pfpData,
       postTimestamp: widget.postTimestamp,
       viewVentPostOnPressed: () => _viewVentPostPage(),
+      saveOnPressed: () async {
+        await _saveVentOnPressed();
+        if(context.mounted) {
+          Navigator.pop(context);
+        }
+      },
     );
 
     final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 15.0;

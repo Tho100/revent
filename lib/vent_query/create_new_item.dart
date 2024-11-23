@@ -108,5 +108,23 @@ class CreateNewItem {
 
   }
 
+  Future<void> newSaveVent({
+    required String ventTitle,
+    required String creator
+  }) async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    const insertVentInfoQuery = 'INSERT INTO saved_vent_info (saved_by, creator, title) VALUES (:saved_by, :creator, :title)';
+
+    final params = {
+      'saved_by': userData.user.username,
+      'creator': creator,
+      'title': ventTitle,
+    };
+
+    await conn.execute(insertVentInfoQuery, params);
+
+  }
 
 }

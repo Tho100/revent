@@ -12,7 +12,9 @@ class ProfilePostsDataGetter {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = 'SELECT title, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
+    const query = 
+      'SELECT title, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
+      
     final param = {
       'username': username
     };
