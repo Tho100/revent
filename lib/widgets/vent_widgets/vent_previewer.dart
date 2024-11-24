@@ -2,9 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/global/constant.dart';
-import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/pages/vent_post_page.dart';
-import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class VentPreviewer extends StatefulWidget {
@@ -52,43 +50,6 @@ class VentPreviewerState extends State<VentPreviewer> {
     );
   }
 
-  Future<void> _saveVentOnPressed() async {
-
-    await CallVentActions(
-      context: context,
-      title: widget.title,
-      creator: widget.creator
-    ).savePost();
-
-  }
-
-  Widget _buildLikeButton() {
-    return ActionsButton().buildLikeButton(
-      text: widget.totalLikes.toString(), 
-      isLiked: widget.isPostLiked,
-      onPressed: () async {
-        await CallVentActions(
-          context: context, 
-          title: widget.title, 
-          creator: widget.creator
-        ).likePost();
-      }
-    );
-  }
-
-  Widget _buildCommentButton() {
-    return ActionsButton().buildCommentsButton(
-      text: widget.totalComments.toString(), 
-      onPressed: () => _viewVentPostPage()
-    );
-  }
-
-  Widget _buildSaveButton() {
-    return ActionsButton().buildSaveButton(
-      onPressed: () => {}
-    );
-  }
-
   Widget _buildVentPreview() {
 
     final ventPreviewer = VentPreviewerWidgets(
@@ -98,13 +59,10 @@ class VentPreviewerState extends State<VentPreviewer> {
       creator: widget.creator,
       pfpData: widget.pfpData,
       postTimestamp: widget.postTimestamp,
-      viewVentPostOnPressed: () => _viewVentPostPage(),
-      saveOnPressed: () async {
-        await _saveVentOnPressed();
-        if(context.mounted) {
-          Navigator.pop(context);
-        }
-      },
+      isPostLiked: widget.isPostLiked,
+      totalLikes: widget.totalLikes,
+      totalComments: widget.totalComments,
+      viewVentPostOnPressed: () => _viewVentPostPage()
     );
 
     final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 15.0;
@@ -140,15 +98,15 @@ class VentPreviewerState extends State<VentPreviewer> {
           child: Row(
             children: [
                   
-              _buildLikeButton(),
+              ventPreviewer.buildLikeButton(),
                   
               const SizedBox(width: 8),
                   
-              _buildCommentButton(),
+              ventPreviewer.buildCommentButton(),
 
               const Spacer(),
 
-              _buildSaveButton()
+              ventPreviewer.buildSaveButton()
                   
             ],
           ),
