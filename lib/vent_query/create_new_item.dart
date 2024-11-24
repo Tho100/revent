@@ -108,38 +108,4 @@ class CreateNewItem {
 
   }
 
-  Future<bool> newSaveVent({
-    required String ventTitle,
-    required String creator
-  }) async {
-
-    final conn = await ReventConnect.initializeConnection();
-
-    const getSavedVentQuery = 'SELECT * FROM saved_vent_info WHERE creator = :creator AND title = :title';
-
-    final selectParams = {
-      'creator': creator,
-      'title': ventTitle
-    };
-
-    final results = await conn.execute(getSavedVentQuery, selectParams);
-
-    if(results.rows.isNotEmpty) {
-      return true;
-    }
-
-    const insertVentInfoQuery = 'INSERT INTO saved_vent_info (saved_by, creator, title) VALUES (:saved_by, :creator, :title)';
-
-    final params = {
-      'saved_by': userData.user.username,
-      'creator': creator,
-      'title': ventTitle,
-    };
-
-    await conn.execute(insertVentInfoQuery, params);
-
-    return false;
-
-  }
-
 }

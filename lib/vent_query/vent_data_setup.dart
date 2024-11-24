@@ -22,6 +22,7 @@ class VentDataSetup {
     final totalComments = ventsInfo['total_comments']! as List<int>;
 
     final isLiked = ventsInfo['is_liked']! as List<bool>;
+    final isSaved = ventsInfo['is_saved']! as List<bool>;
 
     final profilePicGetter = ProfilePictureGetter();
 
@@ -39,7 +40,8 @@ class VentDataSetup {
         profilePic: profilePic[index],
         totalLikes: totalLikes[index],
         totalComments: totalComments[index],
-        isPostLiked: isLiked[index]
+        isPostLiked: isLiked[index],
+        isPostSaved: isSaved[index],
       );
     });
 
@@ -60,6 +62,7 @@ class VentDataSetup {
     final totalComments = ventsInfo['total_comments']! as List<int>;
 
     final isLiked = ventsInfo['is_liked']! as List<bool>;
+    final isSaved = ventsInfo['is_saved']! as List<bool>;
 
     final profilePicGetter = ProfilePictureGetter();
 
@@ -77,7 +80,8 @@ class VentDataSetup {
         profilePic: profilePic[index],
         totalLikes: totalLikes[index],
         totalComments: totalComments[index],
-        isPostLiked: isLiked[index]
+        isPostLiked: isLiked[index],
+        isPostSaved: isSaved[index],
       );
     });
 

@@ -99,6 +99,7 @@ class ActionsButton {
   }
 
   Widget buildSaveButton({
+    required bool isSaved,
     required VoidCallback onPressed,
   }) {
     return SizedBox(
@@ -107,8 +108,8 @@ class ActionsButton {
         onPressed: onPressed, 
         child: Transform.translate(
           offset: iconOffset,
-          child: const Icon(
-            CupertinoIcons.bookmark, 
+          child: Icon(
+            isSaved ? CupertinoIcons.bookmark_fill : CupertinoIcons.bookmark, 
             color: ThemeColor.white,
             size: 16, 
           ),

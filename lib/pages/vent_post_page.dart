@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/call_vent_actions.dart';
+import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/pages/post_comment_page.dart';
@@ -167,16 +168,6 @@ class VentPostPageState extends State<VentPostPage> {
     
   }
 
-  Future<void> _savePostOnPressed() async {
-
-    await CallVentActions(
-      context: context,
-      title: widget.title,
-      creator: widget.creator
-    ).savePost();
-
-  }
-
   Widget _buildLikeButton() {
     return Consumer<VentDataProvider>(
       builder: (_, ventData, __) {
@@ -201,14 +192,32 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildCommentButton() {
     return ActionsButton().buildCommentsButton(
       text: widget.totalComments.toString(), 
-      onPressed: () async => await _savePostOnPressed(),
+      onPressed: () {},
     );
   }
 
   Widget _buildSaveButton() {
+
+    final currentProvider = CurrentProvider(
+      context: context, 
+      title: widget.title, 
+      creator: widget.creator
+    ).getProvider();
+
+    final ventIndex = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
+
     return ActionsButton().buildSaveButton(
-      onPressed: () => {}
+      isSaved: ventData.vents[ventIndex].isPostSaved,
+      onPressed: () async { 
+        await CallVentActions(
+          context: context, 
+          title: widget.title, 
+          creator: widget.creator
+        ).savePost();
+      }
     );
+
   }
 
   Widget _buildFilterButton() {
@@ -331,13 +340,29 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildActions() {
+
+    final currentProvider = CurrentProvider(
+      context: context, 
+      title: widget.title, 
+      creator: widget.creator
+    ).getProvider();
+
+    final ventIndex = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
+
     return IconButton(
       icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
       onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
         context: context, 
+        title: widget.title,
         creator: widget.creator,
+        isPostSaved: ventData.vents[ventIndex].isPostSaved,
         saveOnPressed: () async {
-          await _savePostOnPressed();
+          await CallVentActions(
+            context: context, 
+            title: widget.title, 
+            creator: widget.creator
+          ).savePost();
           if(context.mounted) {
             Navigator.pop(context);
           }
@@ -361,6 +386,7 @@ class VentPostPageState extends State<VentPostPage> {
         }
       )
     );
+
   }
 
   Widget _buildActionButtons() {

@@ -15,6 +15,7 @@ class VentPreviewer extends StatefulWidget {
   final int totalComments;
   final Uint8List pfpData;
   final bool isPostLiked;
+  final bool isPostSaved;
 
   const VentPreviewer({
     required this.title,
@@ -25,6 +26,7 @@ class VentPreviewer extends StatefulWidget {
     required this.totalComments,
     required this.pfpData,
     required this.isPostLiked,
+    required this.isPostSaved,
     super.key
   });
 
@@ -60,6 +62,7 @@ class VentPreviewerState extends State<VentPreviewer> {
       pfpData: widget.pfpData,
       postTimestamp: widget.postTimestamp,
       isPostLiked: widget.isPostLiked,
+      isPostSaved: widget.isPostSaved,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage()

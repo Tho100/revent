@@ -209,6 +209,95 @@ class VentActions {
 
   }
 
-  Future<void> savePost() async {}
+  Future<void> savePost() async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    // TODO: Create a separated function for this
+    final index = navigation.activeTabIndex == 0
+      ? ventData.vents.indexWhere(
+        (vent) => vent.title == title && vent.creator == creator
+      )
+      : ventFollowingData.vents.indexWhere(
+      (vent) => vent.title == title && vent.creator == creator
+    );
+
+    const savedInfoParamsQuery = 'WHERE title = :title AND creator = :creator AND saved_by = :saved_by';
+
+    final savedInfoParams = {
+      'title': title,
+      'creator': creator,
+      'saved_by': userData.user.username,
+    };
+
+    final isUserSavedPost = await _isUserSavedPost(
+      conn: conn, 
+      savedInfoParamsQuery: savedInfoParamsQuery, 
+      savedInfoParams: savedInfoParams
+    );
+
+    await _updateSavedInfo(
+      conn: conn, 
+      isUserSavedPost: isUserSavedPost, 
+      savedInfoParamsQuery: savedInfoParamsQuery, 
+      savedInfoParams: savedInfoParams
+    );
+
+    _updatePostSavedValue(
+      index: index, 
+      isUserSavedPost: isUserSavedPost
+    );
+
+  }
+
+  Future<bool> _isUserSavedPost({
+    required MySQLConnectionPool conn,
+    required String savedInfoParamsQuery,
+    required Map<String, String> savedInfoParams,
+  }) async {
+
+    final readSavedInfoQuery = 
+      'SELECT * FROM saved_vent_info $savedInfoParamsQuery';
+
+    final savedInfoResults = await conn.execute(readSavedInfoQuery, savedInfoParams);
+
+    return ExtractData(rowsData: savedInfoResults)
+      .extractStringColumn('saved_by').isNotEmpty;
+
+  }
+
+  Future<void> _updateSavedInfo({
+    required MySQLConnectionPool conn, 
+    required bool isUserSavedPost,
+    required String savedInfoParamsQuery,
+    required Map<String, String> savedInfoParams,
+  }) async {
+
+    final query = isUserSavedPost 
+      ? 'DELETE FROM saved_vent_info $savedInfoParamsQuery'
+      : 'INSERT INTO saved_vent_info (title, creator, saved_by) VALUES (:title, :creator, :saved_by)';
+
+    await conn.execute(query, savedInfoParams);
+
+  }
+
+  void _updatePostSavedValue({
+    required int index,
+    required bool isUserSavedPost,
+  }) {
+
+    if(navigation.activeTabIndex == 0) {
+      if(index != -1) {
+        ventData.saveVent(index, isUserSavedPost);
+      }
+
+    } else if (navigation.activeTabIndex == 1) {
+      if(index != -1) {
+        ventFollowingData.saveVent(index, isUserSavedPost);
+      }
+
+    }
+
+  }
 
 }

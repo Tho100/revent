@@ -24,6 +24,7 @@ class HomeVentListView extends StatelessWidget {
         totalComments: ventData.totalComments,
         pfpData: ventData.profilePic,
         isPostLiked: ventData.isPostLiked,
+        isPostSaved: ventData.isPostSaved,
       ),
     );
   }

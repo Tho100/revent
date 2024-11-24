@@ -15,6 +15,7 @@ class VentFollowing {
   int totalComments;
 
   bool isPostLiked;
+  bool isPostSaved;
 
   VentFollowing({
     required this.title,
@@ -24,7 +25,8 @@ class VentFollowing {
     required this.profilePic,
     this.totalLikes = 0,
     this.totalComments = 0,
-    this.isPostLiked = false
+    this.isPostLiked = false,
+    this.isPostSaved = false
   });
 
 }
@@ -66,6 +68,16 @@ class VentFollowingDataProvider extends ChangeNotifier {
     _vents[index].isPostLiked 
       ? _vents[index].totalLikes += 1
       : _vents[index].totalLikes -= 1;
+
+    notifyListeners();
+    
+  }
+
+  void saveVent(int index, bool isUserSavedPost) {
+
+    _vents[index].isPostSaved = isUserSavedPost 
+      ? false
+      : true;
 
     notifyListeners();
     
