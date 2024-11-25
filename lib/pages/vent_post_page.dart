@@ -168,62 +168,6 @@ class VentPostPageState extends State<VentPostPage> {
     
   }
 
-  Widget _buildLikeButton() {
-
-    final currentProvider = CurrentProvider(
-      context: context, 
-      title: widget.title, 
-      creator: widget.creator
-    ).getProvider();
-
-    final ventIndex = currentProvider['vent_index'];
-    final ventData = currentProvider['vent_data'];
-
-    return ActionsButton().buildLikeButton(
-      text: ventData.vents[ventIndex].totalLikes.toString(), 
-      isLiked: ventData.vents[ventIndex].isPostLiked,
-      onPressed: () async { 
-        await CallVentActions(
-          context: context, 
-          title: widget.title, 
-          creator: widget.creator
-        ).likePost();
-      }
-    );
-
-  }
-
-  Widget _buildCommentButton() {
-    return ActionsButton().buildCommentsButton(
-      text: widget.totalComments.toString(), 
-      onPressed: () {},
-    );
-  }
-
-  Widget _buildSaveButton() {
-
-    final currentProvider = CurrentProvider(
-      context: context, 
-      title: widget.title, 
-      creator: widget.creator
-    ).getProvider();
-
-    final ventIndex = currentProvider['vent_index'];
-    final ventData = currentProvider['vent_data'];
-
-    return ActionsButton().buildSaveButton(
-      isSaved: ventData.vents[ventIndex].isPostSaved,
-      onPressed: () async { 
-        await CallVentActions(
-          context: context, 
-          title: widget.title, 
-          creator: widget.creator
-        ).savePost();
-      }
-    );
-
-  }
-
   Widget _buildFilterButton() {
     return SizedBox(
       width: 96,
@@ -343,7 +287,7 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildVentOptionButton() {
 
     final ventPreviewer = VentPreviewerWidgets(
       context: navigatorKey.currentContext!,
@@ -360,19 +304,82 @@ class VentPostPageState extends State<VentPostPage> {
           buttonMessage: 'Delete',
           onPressedEvent: () async => await _deletePostOnPressed()
         );
-      }
+      },
+      blockOnPressed: () => Navigator.pop(context),
+      reportOnPressed: () => Navigator.pop(context),
     );
 
-    return ventPreviewer.buildVentOptionsButton(
-      customIconWidget: const Icon(CupertinoIcons.ellipsis_circle, size: 25)
+    return Padding(
+      padding: const EdgeInsets.only(right: 18.0),
+      child: ventPreviewer.buildVentOptionsButton(
+        customIconWidget: const Icon(CupertinoIcons.ellipsis_circle, size: 25)
+      ),
     );
 
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildLikeButton() {
+    return Builder(
+      builder: (context) {
+        
+        final getProvider = CurrentProvider(
+          title: widget.title, creator: widget.creator
+        ).getRealTimeProvider(context: context);
 
-    final topPadding = widget.bodyText.isEmpty ? 0.0 : 25.0;
+        final ventIndex = getProvider['vent_index'];
+        final ventData = getProvider['vent_data'];
+
+        return ActionsButton().buildLikeButton(
+          text: ventData.vents[ventIndex].totalLikes.toString(), 
+          isLiked: ventData.vents[ventIndex].isPostLiked,
+          onPressed: () async {
+            await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).likePost();
+          }
+        );
+      },
+    );
+  }
+
+  Widget _buildCommentButton() {
+    return ActionsButton().buildCommentsButton(
+      text: widget.totalComments.toString(), 
+      onPressed: () {}
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return Builder(
+      builder: (context) {
+        
+        final getProvider = CurrentProvider(
+          title: widget.title, creator: widget.creator
+        ).getRealTimeProvider(context: context);
+
+        final ventIndex = getProvider['vent_index'];
+        final ventData = getProvider['vent_data'];
+
+        return ActionsButton().buildSaveButton(
+          isSaved: ventData.vents[ventIndex].isPostSaved,
+          onPressed: () async {
+            await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).savePost();
+          }
+        );
+      },
+    );
+  }
+
+  Widget _buildActionButtons() {
     
+    final topPadding = widget.bodyText.isEmpty ? 0.0 : 25.0;
+
     return Padding(
       padding: EdgeInsets.only(top: topPadding),
       child: Row(
@@ -550,7 +557,7 @@ class VentPostPageState extends State<VentPostPage> {
       appBar: CustomAppBar(
         context: context, 
         title: 'Vent',
-        actions: [_buildActions()]
+        actions: [_buildVentOptionButton()]
       ).buildAppBar(),
       body: _buildBody(),  
       bottomNavigationBar: _buildAddComment(),

@@ -2,7 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/pages/vent_post_page.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class HomeVentPreviewer extends StatefulWidget {
@@ -61,11 +63,24 @@ class HomeVentPreviewerState extends State<HomeVentPreviewer> {
       creator: widget.creator,
       pfpData: widget.pfpData,
       postTimestamp: widget.postTimestamp,
-      isPostLiked: widget.isPostLiked,
-      isPostSaved: widget.isPostSaved,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
-      viewVentPostOnPressed: () => _viewVentPostPage()
+      viewVentPostOnPressed: () => _viewVentPostPage(),
+      deleteOnPressed: () async {
+        CustomAlertDialog.alertDialogCustomOnPress(
+          message: 'Delete this post?', 
+          buttonMessage: 'Delete',
+          onPressedEvent: () async {
+            await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).deletePost();
+          }
+        );
+      },
+      reportOnPressed: () {},
+      blockOnPressed: () {},
     );
 
     final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 15.0;

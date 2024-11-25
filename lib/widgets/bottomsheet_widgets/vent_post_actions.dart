@@ -41,7 +41,7 @@ class BottomsheetVentPostActions {
     required BuildContext context,
     required String title,
     required String creator,
-    required VoidCallback reportOnPressed,
+    VoidCallback? reportOnPressed,
     VoidCallback? removeSavedPostOnPressed,
     VoidCallback? blockOnPressed,
     VoidCallback? copyOnPressed,
@@ -71,6 +71,7 @@ class BottomsheetVentPostActions {
           onPressed: copyOnPressed
         ),
 
+        if(reportOnPressed != null)
         _buildOptionButton(
           text: 'Report',
           icon: CupertinoIcons.flag,

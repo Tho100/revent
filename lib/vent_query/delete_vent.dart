@@ -1,7 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
-import 'package:revent/global/constant.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
@@ -97,12 +96,11 @@ class DeleteVent {
   void _removeVent() {
 
     final currentProvider = CurrentProvider(
-      context: navigatorKey.currentContext!, 
       title: title, 
       creator: creator
     ).getProvider();
 
-    final ventIndex = currentProvider['index'];    
+    final ventIndex = currentProvider['vent_index'];    
     final ventData = currentProvider['vent_data'];    
 
     if(ventIndex != -1) {
