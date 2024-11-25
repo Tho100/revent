@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/current_provider.dart';
@@ -18,11 +19,11 @@ import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/comment/vent_comment_setup.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/comment_filter.dart';
-import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 import 'package:revent/widgets/vent_widgets/comments/vent_comments_listview.dart';
+import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class VentPostPage extends StatefulWidget {
 
@@ -343,31 +344,29 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildActions() {
-    return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
-      onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
-        context: context, 
-        title: widget.title,
-        creator: widget.creator,
-        copyOnPressed: () {
-          _copyBodyText();
-          Navigator.pop(context);
-        },
-        reportOnPressed: () {
-          Navigator.pop(context);
-        }, 
-        blockOnPressed: () {
-          Navigator.pop(context);
-        },
-        deleteOnPressed: () {
-          CustomAlertDialog.alertDialogCustomOnPress(
-            message: 'Delete this post?', 
-            buttonMessage: 'Delete',
-            onPressedEvent: () async => await _deletePostOnPressed()
-          );
-        }
-      )
+
+    final ventPreviewer = VentPreviewerWidgets(
+      context: navigatorKey.currentContext!,
+      title: widget.title,
+      bodyText: '',
+      creator: widget.creator,
+      copyOnPressed: () {
+        _copyBodyText();
+        Navigator.pop(context);
+      },
+      deleteOnPressed: () {
+        CustomAlertDialog.alertDialogCustomOnPress(
+          message: 'Delete this post?', 
+          buttonMessage: 'Delete',
+          onPressedEvent: () async => await _deletePostOnPressed()
+        );
+      }
     );
+
+    return ventPreviewer.buildVentOptionsButton(
+      customIconWidget: const Icon(CupertinoIcons.ellipsis_circle, size: 25)
+    );
+
   }
 
   Widget _buildActionButtons() {

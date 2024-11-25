@@ -26,9 +26,11 @@ class VentPreviewerWidgets {
   final bool? isPostSaved;
 
   final VoidCallback? viewVentPostOnPressed;
+  final VoidCallback? copyOnPressed;
   final VoidCallback? reportOnPressed;
   final VoidCallback? blockOnPressed;
   final VoidCallback? removeSavedOnPressed;
+  final VoidCallback? deleteOnPressed;
 
   const VentPreviewerWidgets({
     required this.context,
@@ -44,7 +46,9 @@ class VentPreviewerWidgets {
     this.viewVentPostOnPressed,
     this.reportOnPressed,
     this.blockOnPressed,
-    this.removeSavedOnPressed
+    this.removeSavedOnPressed,
+    this.deleteOnPressed,
+    this.copyOnPressed
   });
 
   Widget buildLikeButton() {
@@ -81,7 +85,7 @@ class VentPreviewerWidgets {
     );
   }
 
-  Widget buildVentOptionsButton() {
+  Widget buildVentOptionsButton({Widget? customIconWidget}) {
     return Padding(
       padding: const EdgeInsets.only(right: 2.0),
       child: SizedBox(
@@ -92,6 +96,7 @@ class VentPreviewerWidgets {
             context: context, 
             title: title!,
             creator: creator!,
+            copyOnPressed: copyOnPressed!,
             removeSavedPostOnPressed: removeSavedOnPressed!,
             reportOnPressed: () {
               Navigator.pop(context);
@@ -99,8 +104,9 @@ class VentPreviewerWidgets {
             blockOnPressed: () {
               Navigator.pop(context);
             },
+            deleteOnPressed: deleteOnPressed!
           ),
-          icon: Transform.translate(
+          icon: customIconWidget ?? Transform.translate(
             offset: const Offset(0, -10),
             child: const Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
           )
