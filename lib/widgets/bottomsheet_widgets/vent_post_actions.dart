@@ -41,9 +41,8 @@ class BottomsheetVentPostActions {
     required BuildContext context,
     required String title,
     required String creator,
-    required VoidCallback saveOnPressed,
     required VoidCallback reportOnPressed,
-    required bool isPostSaved,
+    VoidCallback? removeSavedPostOnPressed,
     VoidCallback? blockOnPressed,
     VoidCallback? copyOnPressed,
     VoidCallback? deleteOnPressed,
@@ -58,10 +57,11 @@ class BottomsheetVentPostActions {
 
         const BottomsheetTitle(title: 'Post Action'),
 
+        if(removeSavedPostOnPressed != null)
         _buildOptionButton(
-          text: isPostSaved ? 'Remove from saved' : 'Save',
-          icon: isPostSaved ? CupertinoIcons.bookmark_fill : CupertinoIcons.bookmark,
-          onPressed: saveOnPressed
+          text: 'Remove from saved',
+          icon: CupertinoIcons.bookmark_fill,
+          onPressed: removeSavedPostOnPressed
         ),
 
         if(copyOnPressed != null)

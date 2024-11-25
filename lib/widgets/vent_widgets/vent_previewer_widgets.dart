@@ -90,17 +90,6 @@ class VentPreviewerWidgets {
             context: context, 
             title: title!,
             creator: creator!,
-            isPostSaved: isPostSaved!,
-            saveOnPressed: () async {
-              await CallVentActions(
-                context: context, 
-                title: title!, 
-                creator: creator!
-              ).savePost();
-              if(context.mounted) {
-                Navigator.pop(context);
-              }
-            },
             reportOnPressed: () {
               Navigator.pop(context);
             }, 

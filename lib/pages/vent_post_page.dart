@@ -340,33 +340,12 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildActions() {
-
-    final currentProvider = CurrentProvider(
-      context: context, 
-      title: widget.title, 
-      creator: widget.creator
-    ).getProvider();
-
-    final ventIndex = currentProvider['vent_index'];
-    final ventData = currentProvider['vent_data'];
-
     return IconButton(
       icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
       onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
         context: context, 
         title: widget.title,
         creator: widget.creator,
-        isPostSaved: ventData.vents[ventIndex].isPostSaved,
-        saveOnPressed: () async {
-          await CallVentActions(
-            context: context, 
-            title: widget.title, 
-            creator: widget.creator
-          ).savePost();
-          if(context.mounted) {
-            Navigator.pop(context);
-          }
-        },
         copyOnPressed: () {
           _copyBodyText();
           Navigator.pop(context);
@@ -386,7 +365,6 @@ class VentPostPageState extends State<VentPostPage> {
         }
       )
     );
-
   }
 
   Widget _buildActionButtons() {
