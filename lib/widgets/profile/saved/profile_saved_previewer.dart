@@ -44,7 +44,6 @@ class ProfileSavedPreviewer extends StatelessWidget {
         title: title, 
         bodyText: bodyText, 
         postTimestamp: postTimestamp,
-        totalComments: totalComments,
         totalLikes: totalLikes,
         creator: username, 
         pfpData: pfpData,

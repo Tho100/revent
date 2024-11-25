@@ -25,7 +25,7 @@ class HomeVentPreviewer extends StatefulWidget {
     required this.creator,
     required this.postTimestamp,
     required this.totalLikes,
-    required this.totalComments,
+    required this.totalComments, // TODO: Remove unused totalComments param
     required this.pfpData,
     required this.isPostLiked,
     required this.isPostSaved,
@@ -46,7 +46,6 @@ class HomeVentPreviewerState extends State<HomeVentPreviewer> {
         title: widget.title, 
         bodyText: widget.bodyText, 
         postTimestamp: widget.postTimestamp,
-        totalComments: widget.totalComments,
         totalLikes: widget.totalLikes,
         creator: widget.creator, 
         pfpData: widget.pfpData,
@@ -66,7 +65,7 @@ class HomeVentPreviewerState extends State<HomeVentPreviewer> {
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
-      deleteOnPressed: () async {
+      deleteOnPressed: () async { // TODO: Remove this async
         CustomAlertDialog.alertDialogCustomOnPress(
           message: 'Delete this post?', 
           buttonMessage: 'Delete',

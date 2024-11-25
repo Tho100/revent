@@ -32,7 +32,6 @@ class VentPostPage extends StatefulWidget {
   final String postTimestamp;
   final String creator;
   final int totalLikes;
-  final int totalComments;
   final Uint8List pfpData;
 
   const VentPostPage({
@@ -41,7 +40,6 @@ class VentPostPage extends StatefulWidget {
     required this.postTimestamp,
     required this.creator,
     required this.totalLikes,
-    required this.totalComments,
     required this.pfpData,
     super.key
   });
@@ -159,7 +157,7 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Future<void> _deletePostOnPressed() async {
-
+    // TODO: Remove this unused function
     await CallVentActions(
       context: context, 
       title: widget.title, 
@@ -345,9 +343,13 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildCommentButton() {
-    return ActionsButton().buildCommentsButton(
-      text: widget.totalComments.toString(), 
-      onPressed: () {}
+    return Consumer<VentCommentProvider>(
+      builder: (_, commentsData, __) {
+        return ActionsButton().buildCommentsButton(
+          text: commentsData.ventComments.length.toString(), 
+          onPressed: () {}
+        );
+      },
     );
   }
 
