@@ -5,7 +5,7 @@ import 'package:revent/global/constant.dart';
 import 'package:revent/pages/vent_post_page.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
-class VentPreviewer extends StatefulWidget {
+class HomeVentPreviewer extends StatefulWidget {
 
   final String title;
   final String bodyText;
@@ -17,7 +17,7 @@ class VentPreviewer extends StatefulWidget {
   final bool isPostLiked;
   final bool isPostSaved;
 
-  const VentPreviewer({
+  const HomeVentPreviewer({
     required this.title,
     required this.bodyText,
     required this.creator,
@@ -31,11 +31,11 @@ class VentPreviewer extends StatefulWidget {
   });
 
   @override
-  State<VentPreviewer> createState() => VentPreviewerState();
+  State<HomeVentPreviewer> createState() => HomeVentPreviewerState();
 
 }
 
-class VentPreviewerState extends State<VentPreviewer> {
+class HomeVentPreviewerState extends State<HomeVentPreviewer> {
 
   void _viewVentPostPage() {
     Navigator.push(
