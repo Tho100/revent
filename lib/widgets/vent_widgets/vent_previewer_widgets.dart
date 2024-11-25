@@ -50,17 +50,16 @@ class VentPreviewerWidgets {
 
   Widget buildLikeButton() {
 
-    final currentProvider = CurrentProvider(
-      title: title!, 
-      creator: creator!
-    ).getProvider();
+    final getProvider = CurrentProvider(
+      title: title!, creator: creator!
+    ).getRealTimeProvider(context: context);
 
-    final ventIndex = currentProvider['vent_index'];
-    final ventData = currentProvider['vent_data'];
+    final ventIndex = getProvider['vent_index'];
+    final ventData = getProvider['vent_data'];
 
     return ActionsButton().buildLikeButton(
-      text: ventData.vents[ventIndex].totalLikes.toString(), 
-      isLiked: ventData.vents[ventIndex].isPostLiked,
+      text: ventIndex == -1 ? '0' : ventData.vents[ventIndex].totalLikes.toString(), 
+      isLiked: ventIndex == -1 ? false : ventData.vents[ventIndex].isPostLiked,
       onPressed: () async {
         await CallVentActions(
           context: context, 
@@ -69,6 +68,7 @@ class VentPreviewerWidgets {
         ).likePost();
       }
     );
+    
   }
 
   Widget buildCommentButton() {
@@ -80,16 +80,15 @@ class VentPreviewerWidgets {
 
   Widget buildSaveButton() {
 
-    final currentProvider = CurrentProvider(
-      title: title!, 
-      creator: creator!
-    ).getProvider();
+    final getProvider = CurrentProvider(
+      title: title!, creator: creator!
+    ).getRealTimeProvider(context: context);
 
-    final ventIndex = currentProvider['vent_index'];
-    final ventData = currentProvider['vent_data'];
+    final ventIndex = getProvider['vent_index'];
+    final ventData = getProvider['vent_data'];
 
     return ActionsButton().buildSaveButton(
-      isSaved: ventData.vents[ventIndex].isPostSaved,
+      isSaved: ventIndex == -1 ? false :ventData.vents[ventIndex].isPostSaved,
       onPressed: () async {
         await CallVentActions(
           context: context, 
@@ -98,7 +97,7 @@ class VentPreviewerWidgets {
         ).savePost();
       }
     );
-
+  
   }
 
   Widget buildVentOptionsButton({Widget? customIconWidget}) {

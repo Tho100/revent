@@ -352,7 +352,7 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildSaveButton() {
     return Builder(
       builder: (context) {
-        
+        // TODO: Simplify this code by creating a separated function
         final getProvider = CurrentProvider(
           title: widget.title, creator: widget.creator
         ).getRealTimeProvider(context: context);
