@@ -40,7 +40,7 @@ class CallVentActions {
 
     try {
 
-      await DeleteVent().delete(ventTitle: title)
+      await DeleteVent(title: title, creator: creator).delete()
         .then((value) {
           
           SnackBarDialog.temporarySnack(message: 'Post has been deleted');

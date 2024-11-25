@@ -1,31 +1,39 @@
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/global/constant.dart';
+import 'package:revent/helper/current_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
 
 class DeleteVent {
+  
+  final String title;
+  final String creator;
 
-  final ventData = GetIt.instance<VentDataProvider>();
+  DeleteVent({
+    required this.title,
+    required this.creator,
+  });
+
   final userData = GetIt.instance<UserDataProvider>();
 
-  Future<void> delete({required String ventTitle}) async {
+  Future<void> delete() async {
 
     final conn = await ReventConnect.initializeConnection();
 
     await _deleteVentInfo(
       conn: conn, 
-      ventTitle: ventTitle
+      ventTitle: title
     );
 
     await _updateTotalPosts(conn: conn);
 
     await _deleteComments(
       conn: conn, 
-      title: ventTitle, 
+      title: title, 
     );
 
-    _removeVent(title: ventTitle);
+    _removeVent();
 
   }
 
@@ -86,12 +94,19 @@ class DeleteVent {
 
   }
 
-  void _removeVent({required String title}) {
+  void _removeVent() {
 
-    final index = ventData.vents.indexWhere((vent) => vent.title == title);
+    final currentProvider = CurrentProvider(
+      context: navigatorKey.currentContext!, 
+      title: title, 
+      creator: creator
+    ).getProvider();
 
-    if(index != -1) {
-      ventData.deleteVent(index);
+    final ventIndex = currentProvider['index'];    
+    final ventData = currentProvider['vent_data'];    
+
+    if(ventIndex != -1) {
+      ventData.deleteVent(ventIndex);
     }
 
   }
