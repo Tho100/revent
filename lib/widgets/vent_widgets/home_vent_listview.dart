@@ -9,7 +9,7 @@ class HomeVentListView extends StatelessWidget {
 
   const HomeVentListView({
     required this.provider,
-    super.key,
+    super.key
   });
 
   Widget _buildVentPreview(dynamic ventData) {
@@ -30,12 +30,12 @@ class HomeVentListView extends StatelessWidget {
   }
 
   Widget _buildVentList() {
-
+    
     final ventDataList = provider.vents;
 
     return DynamicHeightGridView(
       physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics()
+        parent: BouncingScrollPhysics(),
       ),
       crossAxisCount: 1,
       itemCount: ventDataList.length,

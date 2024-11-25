@@ -33,6 +33,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   final ventFollowingData = GetIt.instance<VentFollowingDataProvider>();
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
+
   final filterTextNotifier = ValueNotifier<String>('Latest');
 
   final formatTimestamp = FormatDate();
@@ -135,6 +136,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
     await CallRefresh().refreshFollowingVents().then((_) {
       followingIsLoadedNotifier.value = true;
+      filterTextNotifier.value = 'Latest';
       _filterVentsToLatest();
     });
 
@@ -143,8 +145,8 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   Future<void> _forYouVentsOnRefresh() async {
 
     await CallRefresh().refreshVents().then((_) {
-      _filterVentsToLatest();
       filterTextNotifier.value = 'Latest';
+      _filterVentsToLatest();
     });
 
   }
@@ -168,26 +170,30 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   Widget _buildForYouListView() {
     return _buildVentListViewBody(
       onRefresh: () async => await _forYouVentsOnRefresh(),
-      child: HomeVentListView(provider: Provider.of<VentDataProvider>(context))
-    ); 
+      child: HomeVentListView(
+        provider: Provider.of<VentDataProvider>(context)
+      ),
+    );
   }
 
   Widget _buildFollowingListView() {
     return ValueListenableBuilder(
       valueListenable: followingIsLoadedNotifier,
       builder: (_, isLoaded, __) {
-        if(isLoaded) {
-          return _buildVentListViewBody(
-            onRefresh: () async => await _followingVentsOnRefresh(),
-            child: HomeVentListView(provider: Provider.of<VentFollowingDataProvider>(context)),
-          ); 
 
-        } else {
+        if(!isLoaded) {
           return const Center(
             child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
           );
-
         }
+
+        return _buildVentListViewBody(
+          onRefresh: () async => await _followingVentsOnRefresh(),
+          child: HomeVentListView(
+            provider: Provider.of<VentFollowingDataProvider>(context)
+          ),
+        ); 
+
       },
     );
   }
@@ -288,7 +294,10 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         await VentDataSetup().setupFollowing().then((_) {
           followingIsLoadedNotifier.value = true;
         });
-      } 
+      } else if (tabController.index == 0) {
+        _filterVentsToLatest();
+      }
+      filterTextNotifier.value = 'Latest';
       navigation.setTabIndex(tabController.index);
     });
     _filterVentsToLatest();

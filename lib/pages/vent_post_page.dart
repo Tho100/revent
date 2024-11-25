@@ -32,7 +32,6 @@ class VentPostPage extends StatefulWidget {
   final String postTimestamp;
   final String creator;
   final int totalLikes;
-  final int totalComments;
   final Uint8List pfpData;
 
   const VentPostPage({
@@ -41,7 +40,6 @@ class VentPostPage extends StatefulWidget {
     required this.postTimestamp,
     required this.creator,
     required this.totalLikes,
-    required this.totalComments,
     required this.pfpData,
     super.key
   });
@@ -156,16 +154,6 @@ class VentPostPageState extends State<VentPostPage> {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
     }
 
-  }
-
-  Future<void> _deletePostOnPressed() async {
-
-    await CallVentActions(
-      context: context, 
-      title: widget.title, 
-      creator: widget.creator
-    ).deletePost().then((value) => Navigator.pop(context));
-    
   }
 
   Widget _buildFilterButton() {
@@ -302,7 +290,13 @@ class VentPostPageState extends State<VentPostPage> {
         CustomAlertDialog.alertDialogCustomOnPress(
           message: 'Delete this post?', 
           buttonMessage: 'Delete',
-          onPressedEvent: () async => await _deletePostOnPressed()
+          onPressedEvent: () async {
+            await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).deletePost().then((value) => Navigator.pop(context));
+          }
         );
       },
       blockOnPressed: () => Navigator.pop(context),
@@ -345,16 +339,20 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildCommentButton() {
-    return ActionsButton().buildCommentsButton(
-      text: widget.totalComments.toString(), 
-      onPressed: () {}
+    return Consumer<VentCommentProvider>(
+      builder: (_, commentsData, __) {
+        return ActionsButton().buildCommentsButton(
+          text: commentsData.ventComments.length.toString(), 
+          onPressed: () {}
+        );
+      },
     );
   }
 
   Widget _buildSaveButton() {
     return Builder(
       builder: (context) {
-        
+        // TODO: Simplify this code by creating a separated function
         final getProvider = CurrentProvider(
           title: widget.title, creator: widget.creator
         ).getRealTimeProvider(context: context);
