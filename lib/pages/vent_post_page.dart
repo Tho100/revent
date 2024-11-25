@@ -156,16 +156,6 @@ class VentPostPageState extends State<VentPostPage> {
 
   }
 
-  Future<void> _deletePostOnPressed() async {
-    // TODO: Remove this unused function
-    await CallVentActions(
-      context: context, 
-      title: widget.title, 
-      creator: widget.creator
-    ).deletePost().then((value) => Navigator.pop(context));
-    
-  }
-
   Widget _buildFilterButton() {
     return SizedBox(
       width: 96,
@@ -300,7 +290,13 @@ class VentPostPageState extends State<VentPostPage> {
         CustomAlertDialog.alertDialogCustomOnPress(
           message: 'Delete this post?', 
           buttonMessage: 'Delete',
-          onPressedEvent: () async => await _deletePostOnPressed()
+          onPressedEvent: () async {
+            await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).deletePost().then((value) => Navigator.pop(context));
+          }
         );
       },
       blockOnPressed: () => Navigator.pop(context),
