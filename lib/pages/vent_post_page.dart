@@ -12,7 +12,6 @@ import 'package:revent/model/format_date.dart';
 import 'package:revent/pages/post_comment_page.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
@@ -169,24 +168,28 @@ class VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildLikeButton() {
-    return Consumer<VentDataProvider>(
-      builder: (_, ventData, __) {
-        final index = ventData.vents.indexWhere(
-          (vent) => vent.title == widget.title && vent.creator == widget.creator
-        );
-        return ActionsButton().buildLikeButton(
-          text: ventData.vents[index].totalLikes.toString(), 
-          isLiked: ventData.vents[index].isPostLiked,
-          onPressed: () async { 
-            await CallVentActions(
-              context: context, 
-              title: widget.title, 
-              creator: widget.creator
-            ).likePost();
-          }
-        );
-      },
+
+    final currentProvider = CurrentProvider(
+      context: context, 
+      title: widget.title, 
+      creator: widget.creator
+    ).getProvider();
+
+    final ventIndex = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
+
+    return ActionsButton().buildLikeButton(
+      text: ventData.vents[ventIndex].totalLikes.toString(), 
+      isLiked: ventData.vents[ventIndex].isPostLiked,
+      onPressed: () async { 
+        await CallVentActions(
+          context: context, 
+          title: widget.title, 
+          creator: widget.creator
+        ).likePost();
+      }
     );
+
   }
 
   Widget _buildCommentButton() {
