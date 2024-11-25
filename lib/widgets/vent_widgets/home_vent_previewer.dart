@@ -2,10 +2,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/pages/vent_post_page.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
-class VentPreviewer extends StatefulWidget {
+class HomeVentPreviewer extends StatefulWidget {
 
   final String title;
   final String bodyText;
@@ -17,7 +19,7 @@ class VentPreviewer extends StatefulWidget {
   final bool isPostLiked;
   final bool isPostSaved;
 
-  const VentPreviewer({
+  const HomeVentPreviewer({
     required this.title,
     required this.bodyText,
     required this.creator,
@@ -31,11 +33,11 @@ class VentPreviewer extends StatefulWidget {
   });
 
   @override
-  State<VentPreviewer> createState() => VentPreviewerState();
+  State<HomeVentPreviewer> createState() => HomeVentPreviewerState();
 
 }
 
-class VentPreviewerState extends State<VentPreviewer> {
+class HomeVentPreviewerState extends State<HomeVentPreviewer> {
 
   void _viewVentPostPage() {
     Navigator.push(
@@ -61,11 +63,24 @@ class VentPreviewerState extends State<VentPreviewer> {
       creator: widget.creator,
       pfpData: widget.pfpData,
       postTimestamp: widget.postTimestamp,
-      isPostLiked: widget.isPostLiked,
-      isPostSaved: widget.isPostSaved,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
-      viewVentPostOnPressed: () => _viewVentPostPage()
+      viewVentPostOnPressed: () => _viewVentPostPage(),
+      deleteOnPressed: () async {
+        CustomAlertDialog.alertDialogCustomOnPress(
+          message: 'Delete this post?', 
+          buttonMessage: 'Delete',
+          onPressedEvent: () async {
+            await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).deletePost();
+          }
+        );
+      },
+      reportOnPressed: () {},
+      blockOnPressed: () {},
     );
 
     final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 15.0;

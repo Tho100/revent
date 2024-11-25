@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/helper/current_provider.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/navigation_provider.dart';
@@ -28,17 +29,20 @@ class VentActions {
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
+  int _getVentIndex() {
+
+    final currentProvider = CurrentProvider(
+      title: title, 
+      creator: creator
+    ).getProvider();
+
+    return currentProvider['vent_index'];
+
+  }
+
   Future<void> likePost() async {
 
     final conn = await ReventConnect.initializeConnection();
-
-    final index = navigation.activeTabIndex == 0
-      ? ventData.vents.indexWhere(
-        (vent) => vent.title == title && vent.creator == creator
-      )
-      : ventFollowingData.vents.indexWhere(
-      (vent) => vent.title == title && vent.creator == creator
-    );
 
     const likesInfoParameterQuery = 'WHERE title = :title AND creator = :creator AND liked_by = :liked_by';
 
@@ -67,7 +71,6 @@ class VentActions {
     );
 
     _updatePostLikeValue(
-      index: index,
       isUserLikedPost: isUserLikedPost,
     );
 
@@ -99,7 +102,7 @@ class VentActions {
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT * FROM vent_likes_info $likesInfoParameterQuery';
+      'SELECT * FROM liked_vent_info $likesInfoParameterQuery';
 
     final likesInfoResults = await conn.execute(readLikesInfoQuery, likesInfoParams);
 
@@ -116,17 +119,18 @@ class VentActions {
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE FROM vent_likes_info $likesInfoParameterQuery'
-      : 'INSERT INTO vent_likes_info (title, creator, liked_by) VALUES (:title, :creator, :liked_by)';
+      ? 'DELETE FROM liked_vent_info $likesInfoParameterQuery'
+      : 'INSERT INTO liked_vent_info (title, creator, liked_by) VALUES (:title, :creator, :liked_by)';
 
     await conn.execute(query, likesInfoParams);
 
   }
 
   void _updatePostLikeValue({
-    required int index,
     required bool isUserLikedPost,
   }) {
+
+    final index = _getVentIndex();
 
     if(navigation.activeTabIndex == 0) {
       if(index != -1) {
@@ -213,15 +217,6 @@ class VentActions {
 
     final conn = await ReventConnect.initializeConnection();
 
-    // TODO: Create a separated function for this
-    final index = navigation.activeTabIndex == 0
-      ? ventData.vents.indexWhere(
-        (vent) => vent.title == title && vent.creator == creator
-      )
-      : ventFollowingData.vents.indexWhere(
-      (vent) => vent.title == title && vent.creator == creator
-    );
-
     const savedInfoParamsQuery = 'WHERE title = :title AND creator = :creator AND saved_by = :saved_by';
 
     final savedInfoParams = {
@@ -244,7 +239,6 @@ class VentActions {
     );
 
     _updatePostSavedValue(
-      index: index, 
       isUserSavedPost: isUserSavedPost
     );
 
@@ -282,9 +276,10 @@ class VentActions {
   }
 
   void _updatePostSavedValue({
-    required int index,
     required bool isUserSavedPost,
   }) {
+
+    final index = _getVentIndex();
 
     if(navigation.activeTabIndex == 0) {
       if(index != -1) {

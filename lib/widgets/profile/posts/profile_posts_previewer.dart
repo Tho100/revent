@@ -102,7 +102,6 @@ class ProfilePostsPreviewer extends StatelessWidget {
       creator: username,
       pfpData: pfpData,
       postTimestamp: postTimestamp,
-      isPostSaved: false,
       viewVentPostOnPressed: () => _viewVentPostPage(),
     );
 

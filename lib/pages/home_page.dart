@@ -14,7 +14,7 @@ import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_filter.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
-import 'package:revent/widgets/vent_widgets/vent_listview.dart';
+import 'package:revent/widgets/vent_widgets/home_vent_listview.dart';
 
 class HomePage extends StatefulWidget {
 

@@ -40,7 +40,7 @@ class CallVentActions {
 
     try {
 
-      await DeleteVent().delete(ventTitle: title)
+      await DeleteVent(title: title, creator: creator).delete()
         .then((value) {
           
           SnackBarDialog.temporarySnack(message: 'Post has been deleted');
@@ -52,7 +52,7 @@ class CallVentActions {
       );
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to delete this post');
+      SnackBarDialog.temporarySnack(message: 'Failed to delete vent post');
     }
 
   }
@@ -64,7 +64,7 @@ class CallVentActions {
       await VentActions(title: title, creator: creator).savePost();
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save this vent');
+      SnackBarDialog.errorSnack(message: 'Failed to save vent post');
     }
 
   }

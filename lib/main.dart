@@ -34,14 +34,14 @@ void main() async {
   runApp(
     MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (context) => GetIt.instance<VentDataProvider>()),
-        ChangeNotifierProvider(create: (context) => GetIt.instance<VentFollowingDataProvider>()),
-        ChangeNotifierProvider(create: (context) => GetIt.instance<NavigationProvider>()),
-        ChangeNotifierProvider(create: (context) => GetIt.instance<UserDataProvider>()),
-        ChangeNotifierProvider(create: (context) => GetIt.instance<ProfileDataProvider>()),
-        ChangeNotifierProvider(create: (context) => GetIt.instance<ProfilePostsProvider>()),
-        ChangeNotifierProvider(create: (context) => GetIt.instance<ProfileSavedProvider>()),
-        ChangeNotifierProvider(create: (context) => GetIt.instance<VentCommentProvider>()),
+        ChangeNotifierProvider(create: (_) => GetIt.instance<VentDataProvider>()),
+        ChangeNotifierProvider(create: (_) => GetIt.instance<VentFollowingDataProvider>()),
+        ChangeNotifierProvider(create: (_) => GetIt.instance<NavigationProvider>()),
+        ChangeNotifierProvider(create: (_) => GetIt.instance<UserDataProvider>()),
+        ChangeNotifierProvider(create: (_) => GetIt.instance<ProfileDataProvider>()),
+        ChangeNotifierProvider(create: (_) => GetIt.instance<ProfilePostsProvider>()),
+        ChangeNotifierProvider(create: (_) => GetIt.instance<ProfileSavedProvider>()),
+        ChangeNotifierProvider(create: (_) => GetIt.instance<VentCommentProvider>()),
       ],
       child: const MainRun(),
     ),

@@ -1,7 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/widgets/vent_widgets/vent_previewer.dart';
+import 'package:revent/widgets/vent_widgets/home_vent_previewer.dart';
 
 class HomeVentListView extends StatelessWidget {
 
@@ -15,7 +15,7 @@ class HomeVentListView extends StatelessWidget {
   Widget _buildVentPreview(dynamic ventData) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.5),
-      child: VentPreviewer(
+      child: HomeVentPreviewer(
         title: ventData.title,
         bodyText: ventData.bodyText,
         creator: ventData.creator,

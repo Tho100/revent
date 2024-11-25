@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/current_provider.dart';
@@ -12,18 +13,17 @@ import 'package:revent/model/format_date.dart';
 import 'package:revent/pages/post_comment_page.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/comment/vent_comment_setup.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/comment_filter.dart';
-import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
 import 'package:revent/widgets/vent_widgets/comments/vent_comments_listview.dart';
+import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class VentPostPage extends StatefulWidget {
 
@@ -168,58 +168,6 @@ class VentPostPageState extends State<VentPostPage> {
     
   }
 
-  Widget _buildLikeButton() {
-    return Consumer<VentDataProvider>(
-      builder: (_, ventData, __) {
-        final index = ventData.vents.indexWhere(
-          (vent) => vent.title == widget.title && vent.creator == widget.creator
-        );
-        return ActionsButton().buildLikeButton(
-          text: ventData.vents[index].totalLikes.toString(), 
-          isLiked: ventData.vents[index].isPostLiked,
-          onPressed: () async { 
-            await CallVentActions(
-              context: context, 
-              title: widget.title, 
-              creator: widget.creator
-            ).likePost();
-          }
-        );
-      },
-    );
-  }
-
-  Widget _buildCommentButton() {
-    return ActionsButton().buildCommentsButton(
-      text: widget.totalComments.toString(), 
-      onPressed: () {},
-    );
-  }
-
-  Widget _buildSaveButton() {
-
-    final currentProvider = CurrentProvider(
-      context: context, 
-      title: widget.title, 
-      creator: widget.creator
-    ).getProvider();
-
-    final ventIndex = currentProvider['vent_index'];
-    final ventData = currentProvider['vent_data'];
-
-    return ActionsButton().buildSaveButton(
-      isSaved: ventData.vents[ventIndex].isPostSaved,
-      onPressed: () async { 
-        await CallVentActions(
-          context: context, 
-          title: widget.title, 
-          creator: widget.creator
-        ).savePost();
-      }
-    );
-
-  }
-
   Widget _buildFilterButton() {
     return SizedBox(
       width: 96,
@@ -339,60 +287,99 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
-  Widget _buildActions() {
+  Widget _buildVentOptionButton() {
 
-    final currentProvider = CurrentProvider(
-      context: context, 
-      title: widget.title, 
-      creator: widget.creator
-    ).getProvider();
+    final ventPreviewer = VentPreviewerWidgets(
+      context: navigatorKey.currentContext!,
+      title: widget.title,
+      bodyText: '',
+      creator: widget.creator,
+      copyOnPressed: () {
+        _copyBodyText();
+        Navigator.pop(context);
+      },
+      deleteOnPressed: () {
+        CustomAlertDialog.alertDialogCustomOnPress(
+          message: 'Delete this post?', 
+          buttonMessage: 'Delete',
+          onPressedEvent: () async => await _deletePostOnPressed()
+        );
+      },
+      blockOnPressed: () => Navigator.pop(context),
+      reportOnPressed: () => Navigator.pop(context),
+    );
 
-    final ventIndex = currentProvider['vent_index'];
-    final ventData = currentProvider['vent_data'];
-
-    return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
-      onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
-        context: context, 
-        title: widget.title,
-        creator: widget.creator,
-        isPostSaved: ventData.vents[ventIndex].isPostSaved,
-        saveOnPressed: () async {
-          await CallVentActions(
-            context: context, 
-            title: widget.title, 
-            creator: widget.creator
-          ).savePost();
-          if(context.mounted) {
-            Navigator.pop(context);
-          }
-        },
-        copyOnPressed: () {
-          _copyBodyText();
-          Navigator.pop(context);
-        },
-        reportOnPressed: () {
-          Navigator.pop(context);
-        }, 
-        blockOnPressed: () {
-          Navigator.pop(context);
-        },
-        deleteOnPressed: () {
-          CustomAlertDialog.alertDialogCustomOnPress(
-            message: 'Delete this post?', 
-            buttonMessage: 'Delete',
-            onPressedEvent: () async => await _deletePostOnPressed()
-          );
-        }
-      )
+    return Padding(
+      padding: const EdgeInsets.only(right: 18.0),
+      child: ventPreviewer.buildVentOptionsButton(
+        customIconWidget: const Icon(CupertinoIcons.ellipsis_circle, size: 25)
+      ),
     );
 
   }
 
-  Widget _buildActionButtons() {
+  Widget _buildLikeButton() {
+    return Builder(
+      builder: (context) {
+        
+        final getProvider = CurrentProvider(
+          title: widget.title, creator: widget.creator
+        ).getRealTimeProvider(context: context);
 
-    final topPadding = widget.bodyText.isEmpty ? 0.0 : 25.0;
+        final ventIndex = getProvider['vent_index'];
+        final ventData = getProvider['vent_data'];
+
+        return ActionsButton().buildLikeButton(
+          text: ventData.vents[ventIndex].totalLikes.toString(), 
+          isLiked: ventData.vents[ventIndex].isPostLiked,
+          onPressed: () async {
+            await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).likePost();
+          }
+        );
+      },
+    );
+  }
+
+  Widget _buildCommentButton() {
+    return ActionsButton().buildCommentsButton(
+      text: widget.totalComments.toString(), 
+      onPressed: () {}
+    );
+  }
+
+  Widget _buildSaveButton() {
+    return Builder(
+      builder: (context) {
+        
+        final getProvider = CurrentProvider(
+          title: widget.title, creator: widget.creator
+        ).getRealTimeProvider(context: context);
+
+        final ventIndex = getProvider['vent_index'];
+        final ventData = getProvider['vent_data'];
+
+        return ActionsButton().buildSaveButton(
+          isSaved: ventData.vents[ventIndex].isPostSaved,
+          onPressed: () async {
+            await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).savePost();
+          }
+        );
+      },
+    );
+  }
+
+  Widget _buildActionButtons() {
     
+    final topPadding = widget.bodyText.isEmpty ? 0.0 : 25.0;
+
     return Padding(
       padding: EdgeInsets.only(top: topPadding),
       child: Row(
@@ -570,7 +557,7 @@ class VentPostPageState extends State<VentPostPage> {
       appBar: CustomAppBar(
         context: context, 
         title: 'Vent',
-        actions: [_buildActions()]
+        actions: [_buildVentOptionButton()]
       ).buildAppBar(),
       body: _buildBody(),  
       bottomNavigationBar: _buildAddComment(),

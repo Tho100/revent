@@ -119,7 +119,7 @@ class VentDataGetter {
   }) async {
 
     final queryBasedOnType = {
-      'liked': 'SELECT title FROM vent_likes_info WHERE liked_by = :liked_by',
+      'liked': 'SELECT title FROM liked_vent_info WHERE liked_by = :liked_by',
       'saved': 'SELECT title FROM saved_vent_info WHERE saved_by = :saved_by'
     };
 

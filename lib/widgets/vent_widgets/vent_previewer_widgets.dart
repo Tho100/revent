@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/call_vent_actions.dart';
+import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
@@ -22,12 +23,13 @@ class VentPreviewerWidgets {
   final int? totalLikes;
   final int? totalComments;
   final Uint8List? pfpData;
-  final bool? isPostLiked;
-  final bool? isPostSaved;
 
   final VoidCallback? viewVentPostOnPressed;
+  final VoidCallback? copyOnPressed;
   final VoidCallback? reportOnPressed;
   final VoidCallback? blockOnPressed;
+  final VoidCallback? removeSavedOnPressed;
+  final VoidCallback? deleteOnPressed;
 
   const VentPreviewerWidgets({
     required this.context,
@@ -38,17 +40,27 @@ class VentPreviewerWidgets {
     this.totalLikes,
     this.totalComments,
     this.pfpData,
-    this.isPostLiked,
-    this.isPostSaved,
     this.viewVentPostOnPressed,
     this.reportOnPressed,
     this.blockOnPressed,
+    this.removeSavedOnPressed,
+    this.deleteOnPressed,
+    this.copyOnPressed
   });
 
   Widget buildLikeButton() {
+
+    final currentProvider = CurrentProvider(
+      title: title!, 
+      creator: creator!
+    ).getProvider();
+
+    final ventIndex = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
+
     return ActionsButton().buildLikeButton(
-      text: totalLikes.toString(), 
-      isLiked: isPostLiked!,
+      text: ventData.vents[ventIndex].totalLikes.toString(), 
+      isLiked: ventData.vents[ventIndex].isPostLiked,
       onPressed: () async {
         await CallVentActions(
           context: context, 
@@ -67,8 +79,17 @@ class VentPreviewerWidgets {
   }
 
   Widget buildSaveButton() {
+
+    final currentProvider = CurrentProvider(
+      title: title!, 
+      creator: creator!
+    ).getProvider();
+
+    final ventIndex = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
+
     return ActionsButton().buildSaveButton(
-      isSaved: isPostSaved!,
+      isSaved: ventData.vents[ventIndex].isPostSaved,
       onPressed: () async {
         await CallVentActions(
           context: context, 
@@ -77,38 +98,36 @@ class VentPreviewerWidgets {
         ).savePost();
       }
     );
+
   }
 
-  Widget buildVentOptionsButton() {
+  Widget buildVentOptionsButton({Widget? customIconWidget}) {
     return Padding(
       padding: const EdgeInsets.only(right: 2.0),
       child: SizedBox(
         width: 25,
         height: 25,
         child: IconButton(
-          onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
-            context: context, 
-            title: title!,
-            creator: creator!,
-            isPostSaved: isPostSaved!,
-            saveOnPressed: () async {
-              await CallVentActions(
-                context: context, 
-                title: title!, 
-                creator: creator!
-              ).savePost();
-              if(context.mounted) {
-                Navigator.pop(context);
-              }
-            },
-            reportOnPressed: () {
-              Navigator.pop(context);
-            }, 
-            blockOnPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          icon: Transform.translate(
+          onPressed: () {
+
+            if (copyOnPressed == null && removeSavedOnPressed == null && 
+              deleteOnPressed == null && reportOnPressed == null && blockOnPressed == null) {
+              return;
+            }
+
+            BottomsheetVentPostActions().buildBottomsheet(
+              context: context, 
+              title: title!,
+              creator: creator!,
+              copyOnPressed: copyOnPressed,
+              removeSavedPostOnPressed: removeSavedOnPressed,
+              reportOnPressed: reportOnPressed,
+              blockOnPressed: blockOnPressed,
+              deleteOnPressed: deleteOnPressed
+            );
+
+          },
+          icon: customIconWidget ?? Transform.translate(
             offset: const Offset(0, -10),
             child: const Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
           )

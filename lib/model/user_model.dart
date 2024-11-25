@@ -34,7 +34,7 @@ class UserModel {
       'DELETE FROM user_follows_info WHERE follower = :username',
       'DELETE FROM user_follows_info WHERE following = :username',
       'DELETE FROM vent_info WHERE creator = :username',
-      'DELETE FROM vent_likes_info WHERE liked_by = :username',
+      'DELETE FROM liked_vent_info WHERE liked_by = :username',
       'DELETE FROM vent_comments_info WHERE commented_by = :username',
     ];
 
