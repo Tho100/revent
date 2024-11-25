@@ -23,9 +23,9 @@ class VentPreviewerWidgets {
   final int? totalComments;
   final Uint8List? pfpData;
   final bool? isPostLiked;
+  final bool? isPostSaved;
 
   final VoidCallback? viewVentPostOnPressed;
-  final VoidCallback? saveOnPressed;
   final VoidCallback? reportOnPressed;
   final VoidCallback? blockOnPressed;
 
@@ -39,8 +39,8 @@ class VentPreviewerWidgets {
     this.totalComments,
     this.pfpData,
     this.isPostLiked,
+    this.isPostSaved,
     this.viewVentPostOnPressed,
-    this.saveOnPressed,
     this.reportOnPressed,
     this.blockOnPressed,
   });
@@ -68,7 +68,14 @@ class VentPreviewerWidgets {
 
   Widget buildSaveButton() {
     return ActionsButton().buildSaveButton(
-      onPressed: () => {}
+      isSaved: isPostSaved!,
+      onPressed: () async {
+        await CallVentActions(
+          context: context, 
+          title: title!, 
+          creator: creator!
+        ).savePost();
+      }
     );
   }
 
@@ -81,8 +88,19 @@ class VentPreviewerWidgets {
         child: IconButton(
           onPressed: () => BottomsheetVentPostActions().buildBottomsheet(
             context: context, 
+            title: title!,
             creator: creator!,
-            saveOnPressed: saveOnPressed!,
+            isPostSaved: isPostSaved!,
+            saveOnPressed: () async {
+              await CallVentActions(
+                context: context, 
+                title: title!, 
+                creator: creator!
+              ).savePost();
+              if(context.mounted) {
+                Navigator.pop(context);
+              }
+            },
             reportOnPressed: () {
               Navigator.pop(context);
             }, 

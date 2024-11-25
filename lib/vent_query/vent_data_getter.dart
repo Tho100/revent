@@ -33,9 +33,16 @@ class VentDataGetter {
       .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();
 
-    final isLikedState = await _ventPostLikedState(
+    final isLikedState = await _ventPostState(
       conn: conn,
       title: title,
+      stateType: 'liked'
+    );
+
+    final isSavedState = await _ventPostState(
+      conn: conn,
+      title: title,
+      stateType: 'saved'
     );
 
     return {
@@ -45,7 +52,8 @@ class VentDataGetter {
       'post_timestamp': postTimestamp,
       'total_likes': totalLikes,
       'total_comments': totalComments,
-      'is_liked': isLikedState
+      'is_liked': isLikedState,
+      'is_saved': isSavedState
     };
 
   }
@@ -79,9 +87,16 @@ class VentDataGetter {
       .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();
 
-    final isLikedState = await _ventPostLikedState(
+    final isLikedState = await _ventPostState(
       conn: conn,
       title: title,
+      stateType: 'liked'
+    );
+
+    final isSavedState = await _ventPostState(
+      conn: conn,
+      title: title,
+      stateType: 'saved'
     );
 
     return {
@@ -91,31 +106,39 @@ class VentDataGetter {
       'post_timestamp': postTimestamp,
       'total_likes': totalLikes,
       'total_comments': totalComments,
-      'is_liked': isLikedState
+      'is_liked': isLikedState,
+      'is_saved': isSavedState
     };
 
   }
 
-  Future<List<bool>> _ventPostLikedState({
+  Future<List<bool>> _ventPostState({
     required MySQLConnectionPool conn,
     required List<String> title,
+    required String stateType,
   }) async {
 
-    const readLikesQuery = 'SELECT title FROM vent_likes_info WHERE liked_by = :liked_by';
-
-    final params = {
-      'liked_by': userData.user.username,
+    final queryBasedOnType = {
+      'liked': 'SELECT title FROM vent_likes_info WHERE liked_by = :liked_by',
+      'saved': 'SELECT title FROM saved_vent_info WHERE saved_by = :saved_by'
     };
 
-    final retrievedTitles = await conn.execute(readLikesQuery, params);
+    final paramBasedOnType = {
+      'liked': {'liked_by': userData.user.username},
+      'saved': {'saved_by': userData.user.username},
+    };
+
+    final retrievedTitles = await conn.execute(
+      queryBasedOnType[stateType]!, paramBasedOnType[stateType]
+    );
 
     final extractTitlesData = ExtractData(rowsData: retrievedTitles);
 
-    final likedPostTitle = extractTitlesData.extractStringColumn('title');
+    final postTitles = extractTitlesData.extractStringColumn('title');
     
-    final likedTitlesSet = Set<String>.from(likedPostTitle);
+    final titlesSet = Set<String>.from(postTitles);
 
-    return title.map((t) => likedTitlesSet.contains(t)).toList();
+    return title.map((t) => titlesSet.contains(t)).toList();
 
   }
 

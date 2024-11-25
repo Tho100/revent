@@ -39,9 +39,11 @@ class BottomsheetVentPostActions {
 
   Future buildBottomsheet({
     required BuildContext context,
+    required String title,
     required String creator,
     required VoidCallback saveOnPressed,
     required VoidCallback reportOnPressed,
+    required bool isPostSaved,
     VoidCallback? blockOnPressed,
     VoidCallback? copyOnPressed,
     VoidCallback? deleteOnPressed,
@@ -57,8 +59,8 @@ class BottomsheetVentPostActions {
         const BottomsheetTitle(title: 'Post Action'),
 
         _buildOptionButton(
-          text: 'Save',
-          icon: CupertinoIcons.bookmark,
+          text: isPostSaved ? 'Remove from saved' : 'Save',
+          icon: isPostSaved ? CupertinoIcons.bookmark_fill : CupertinoIcons.bookmark,
           onPressed: saveOnPressed
         ),
 
