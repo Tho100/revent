@@ -104,6 +104,7 @@ class ProfileSavedPreviewer extends StatelessWidget {
       postTimestamp: postTimestamp,
       isPostSaved: true,
       viewVentPostOnPressed: () => _viewVentPostPage(),
+      removeSavedOnPressed: () => print('Removed'),
     );
 
     return ventPreviewer.buildMainContainer(

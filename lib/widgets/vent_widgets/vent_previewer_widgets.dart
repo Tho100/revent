@@ -28,6 +28,7 @@ class VentPreviewerWidgets {
   final VoidCallback? viewVentPostOnPressed;
   final VoidCallback? reportOnPressed;
   final VoidCallback? blockOnPressed;
+  final VoidCallback? removeSavedOnPressed;
 
   const VentPreviewerWidgets({
     required this.context,
@@ -43,6 +44,7 @@ class VentPreviewerWidgets {
     this.viewVentPostOnPressed,
     this.reportOnPressed,
     this.blockOnPressed,
+    this.removeSavedOnPressed
   });
 
   Widget buildLikeButton() {
@@ -90,6 +92,7 @@ class VentPreviewerWidgets {
             context: context, 
             title: title!,
             creator: creator!,
+            removeSavedPostOnPressed: removeSavedOnPressed!,
             reportOnPressed: () {
               Navigator.pop(context);
             }, 
