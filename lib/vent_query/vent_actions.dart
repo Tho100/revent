@@ -104,7 +104,7 @@ class VentActions {
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT * FROM vent_likes_info $likesInfoParameterQuery';
+      'SELECT * FROM liked_vent_info $likesInfoParameterQuery';
 
     final likesInfoResults = await conn.execute(readLikesInfoQuery, likesInfoParams);
 
@@ -121,8 +121,8 @@ class VentActions {
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE FROM vent_likes_info $likesInfoParameterQuery'
-      : 'INSERT INTO vent_likes_info (title, creator, liked_by) VALUES (:title, :creator, :liked_by)';
+      ? 'DELETE FROM liked_vent_info $likesInfoParameterQuery'
+      : 'INSERT INTO liked_vent_info (title, creator, liked_by) VALUES (:title, :creator, :liked_by)';
 
     await conn.execute(query, likesInfoParams);
 
