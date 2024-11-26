@@ -88,7 +88,7 @@ class VentPreviewerWidgets {
     final ventData = getProvider['vent_data'];
 
     return ActionsButton().buildSaveButton(
-      isSaved: ventIndex == -1 ? false :ventData.vents[ventIndex].isPostSaved,
+      isSaved: ventIndex == -1 ? false : ventData.vents[ventIndex].isPostSaved,
       onPressed: () async {
         await CallVentActions(
           context: context, 

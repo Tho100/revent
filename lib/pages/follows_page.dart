@@ -121,19 +121,6 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
 
   }
 
-  Widget _buildProfileActionButton() {
-    return ValueListenableBuilder(
-      valueListenable: profileActionTextNotifier,
-      builder: (_, text, __) {
-        return SubButton(
-          customHeight: 40,
-          text: text,
-          onPressed: () => {}
-        );
-      },
-    );
-  }
-
   Widget _buildListViewItems(String username, Uint8List pfpData) {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(username: username, pfpData: pfpData),
@@ -162,7 +149,16 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
             const Spacer(),
 
             if(username != userData.user.username)
-            _buildProfileActionButton(),
+            ValueListenableBuilder(
+              valueListenable: profileActionTextNotifier,
+              builder: (_, text, __) {
+                return SubButton(
+                  customHeight: 40,
+                  text: text,
+                  onPressed: () => {}
+                );
+              },
+            ),
       
           ],
         ),
