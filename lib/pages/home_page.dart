@@ -40,6 +40,24 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   late TabController tabController;
 
+  void _onTabChanged() async {
+
+    if (tabController.index == 1) {
+      await VentDataSetup().setupFollowing().then((_) {
+        followingIsLoadedNotifier.value = true;
+      });
+
+    } else if (tabController.index == 0) {
+      _filterVentsToLatest();
+
+    }
+    
+    filterTextNotifier.value = 'Latest';
+
+    navigation.setTabIndex(tabController.index);
+    
+  }
+
   void _filterVentsToBest() {
 
     if (navigation.activeTabIndex == 0) {
@@ -289,17 +307,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     super.initState();
     navigation.setPageIndex(0);
     tabController = TabController(length: 2, vsync: this);
-    tabController.addListener(() async {
-      if (tabController.index == 1) {
-        await VentDataSetup().setupFollowing().then((_) {
-          followingIsLoadedNotifier.value = true;
-        });
-      } else if (tabController.index == 0) {
-        _filterVentsToLatest();
-      }
-      filterTextNotifier.value = 'Latest';
-      navigation.setTabIndex(tabController.index);
-    });
+    tabController.addListener(_onTabChanged);
     _filterVentsToLatest();
   }
 
