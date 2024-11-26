@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/provider/vent_following_data_provider.dart';
 
@@ -21,15 +22,29 @@ class CurrentProvider {
 
     dynamic ventData;
 
-    if(navigation.pageIndex == 0) {
-      ventData = navigation.activeTabIndex == 0 
+    int index = 0;
+
+    if(navigation.currentPageIndex == 0) {
+
+      ventData = navigation.homeTabIndex == 0 
         ? GetIt.instance<VentDataProvider>()
         : GetIt.instance<VentFollowingDataProvider>();
-    } 
 
-    final index = ventData.vents.indexWhere(
-      (vent) => vent.title == title && vent.creator == creator
-    );
+      index = ventData.vents.indexWhere(
+        (vent) => vent.title == title && vent.creator == creator
+      );
+
+    } else if (navigation.currentPageIndex == 4) {
+
+      ventData = GetIt.instance<ProfilePostsProvider>();
+
+      final profileData = ventData.myProfile;
+
+      index = profileData.titles.indexWhere(
+        (ventTitle) => ventTitle == title
+      );
+
+    }
 
     return {
       'vent_index': index,
@@ -42,15 +57,27 @@ class CurrentProvider {
 
     dynamic ventData;
 
-    if(navigation.pageIndex == 0) {
-      ventData = navigation.activeTabIndex == 0 
-        ? Provider.of<VentDataProvider>(context)  
-        : Provider.of<VentFollowingDataProvider>(context); 
-    } 
+    int index = 0;
 
-    final index = ventData.vents.indexWhere(
-      (vent) => vent.title == title && vent.creator == creator
-    );
+    if(navigation.currentPageIndex == 0) {
+
+      ventData = navigation.homeTabIndex == 0 
+        ? Provider.of<VentDataProvider>(context)  
+        : Provider.of<VentFollowingDataProvider>(context);
+
+      index = ventData.vents.indexWhere(
+        (vent) => vent.title == title && vent.creator == creator
+      );
+
+    } else if (navigation.currentPageIndex == 4) {
+
+      ventData = Provider.of<ProfilePostsProvider>(context); 
+
+      index = ventData.titles.indexWhere(
+        (vent) => vent.title == title
+      );
+
+    }
 
     return {
       'vent_index': index,
