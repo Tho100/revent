@@ -53,6 +53,7 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
   final ValueNotifier<List<_FollowsProfilesData>> followingData = ValueNotifier([]);
 
   final emptyPageMessageNotifier = ValueNotifier<String>('');
+  final profileActionTextNotifier = ValueNotifier<String>('');
 
   final emptyMessages = {
     'Followers': 'No followers yet.',
@@ -94,6 +95,8 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
           followersTabNotLoaded = false;
         }
 
+        profileActionTextNotifier.value = 'Follow';
+
         emptyPageMessageNotifier.value = followersData.value.isEmpty
           ? emptyMessages['Followers']! : '';
 
@@ -103,6 +106,10 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
           followingData.value = await _fetchFollowsData('Following');
           followingTabNotLoaded = false;
         }
+
+        final isMyProfile = userData.user.username == widget.username;
+
+        profileActionTextNotifier.value = isMyProfile ? 'Unfollow' : 'Follow';
 
         emptyPageMessageNotifier.value = followingData.value.isEmpty
           ? emptyMessages['Following']! : '';
@@ -114,18 +121,17 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
 
   }
 
-  String _profileButtonText() {
-
-    if (widget.pageType == 'Followers') {
-      return 'Follow';
-
-    } else if (widget.pageType == 'Following') {
-      final isMyProfile = userData.user.username == widget.username;
-      return isMyProfile ? 'Unfollow' : 'Follow';
-    } 
-
-    return '';
-
+  Widget _buildProfileActionButton() {
+    return ValueListenableBuilder(
+      valueListenable: profileActionTextNotifier,
+      builder: (_, text, __) {
+        return SubButton(
+          customHeight: 40,
+          text: text,
+          onPressed: () => {}
+        );
+      },
+    );
   }
 
   Widget _buildListViewItems(String username, Uint8List pfpData) {
@@ -155,14 +161,8 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
       
             const Spacer(),
 
-            Visibility(
-              visible: username != userData.user.username,
-              child: SubButton(
-                customHeight: 40,
-                text: _profileButtonText(),
-                onPressed: () => {}
-              ),
-            ),
+            if(username != userData.user.username)
+            _buildProfileActionButton(),
       
           ],
         ),
@@ -249,6 +249,7 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
     tabController.dispose();
     followersData.dispose();
     followingData.dispose();
+    profileActionTextNotifier.dispose();
     emptyPageMessageNotifier.dispose();
     super.dispose();
   }
