@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/pages/vent_post_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class ProfilePostsPreviewer extends StatelessWidget {
@@ -102,6 +104,20 @@ class ProfilePostsPreviewer extends StatelessWidget {
       pfpData: pfpData,
       postTimestamp: postTimestamp,
       viewVentPostOnPressed: () => _viewVentPostPage(),
+      reportOnPressed: () {},
+      deleteOnPressed: () {
+        CustomAlertDialog.alertDialogCustomOnPress(
+          message: 'Delete this post?', 
+          buttonMessage: 'Delete',
+          onPressedEvent: () async {
+            await CallVentActions(
+              context: navigatorKey.currentContext!, 
+              title: title, 
+              creator: username
+            ).deletePost();
+          }
+        );
+      }
     );
 
     return ventPreviewer.buildMainContainer(
