@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/vent_query/delete_archive_vent.dart';
 import 'package:revent/vent_query/delete_vent.dart';
 import 'package:revent/vent_query/vent_actions.dart';
 
@@ -53,6 +54,27 @@ class CallVentActions {
 
     } catch (err) {
       SnackBarDialog.temporarySnack(message: 'Failed to delete vent post');
+    }
+
+  }
+
+  Future<void> deleteArchivePost() async {
+
+    try {
+
+      await DeleteArchiveVent(title: title).delete()
+        .then((value) {
+          
+          SnackBarDialog.temporarySnack(message: 'Archive has been deleted');
+
+          Navigator.pop(context);
+          Navigator.pop(context);
+
+        }
+      );
+
+    } catch (err) {
+      SnackBarDialog.temporarySnack(message: 'Failed to delete this archive');
     }
 
   }
