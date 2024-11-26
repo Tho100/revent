@@ -16,8 +16,6 @@ class HomeVentPreviewer extends StatefulWidget {
   final int totalLikes;
   final int totalComments;
   final Uint8List pfpData;
-  final bool isPostLiked;
-  final bool isPostSaved;
 
   const HomeVentPreviewer({
     required this.title,
@@ -27,8 +25,6 @@ class HomeVentPreviewer extends StatefulWidget {
     required this.totalLikes,
     required this.totalComments,
     required this.pfpData,
-    required this.isPostLiked,
-    required this.isPostSaved,
     super.key
   });
 

@@ -40,21 +40,30 @@ class CreateVentPageState extends State<CreateVentPage> {
     try {
 
       if(isArchivedVentNotifier.value) {
+
         await CreateNewItem().newArchiveVent(
           ventTitle: ventTitle, 
           ventBodyText: ventBodyText
-        ).then((value) => Navigator.pop(context));
+        ).then((value) {
+
+          SnackBarDialog.temporarySnack(message: 'Added vent to archive');
+
+          Navigator.pop(context);
+
+        });
+
         return;
+
       }
 
       await CreateNewItem().newVent(
         ventTitle: ventTitle, 
         ventBodyText: ventBodyText
-      ).then((value) => {
+      ).then((value) {
         
-        SnackBarDialog.temporarySnack(message: 'Vent has been posted'),
+        SnackBarDialog.temporarySnack(message: 'Vent has been posted');
 
-        Navigator.pop(context)        
+        Navigator.pop(context);        
 
       });
         
