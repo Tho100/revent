@@ -21,8 +21,8 @@ class CurrentProvider {
 
     dynamic ventData;
 
-    if(navigation.pageIndex == 0) {
-      ventData = navigation.activeTabIndex == 0 
+    if(navigation.currentPageIndex == 0) {
+      ventData = navigation.homeTabIndex == 0 
         ? GetIt.instance<VentDataProvider>()
         : GetIt.instance<VentFollowingDataProvider>();
     } 
@@ -42,8 +42,8 @@ class CurrentProvider {
 
     dynamic ventData;
 
-    if(navigation.pageIndex == 0) {
-      ventData = navigation.activeTabIndex == 0 
+    if(navigation.currentPageIndex == 0) {
+      ventData = navigation.homeTabIndex == 0 
         ? Provider.of<VentDataProvider>(context)  
         : Provider.of<VentFollowingDataProvider>(context); 
     } 

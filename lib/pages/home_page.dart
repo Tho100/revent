@@ -54,13 +54,13 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     
     filterTextNotifier.value = 'Latest';
 
-    navigation.setTabIndex(tabController.index);
+    navigation.setHomeTabIndex(tabController.index);
     
   }
 
   void _filterVentsToBest() {
 
-    if (navigation.activeTabIndex == 0) {
+    if (navigation.homeTabIndex == 0) {
 
       final sortedVents = ventData.vents
         .toList()
@@ -82,7 +82,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   void _filterVentsToLatest() {
 
-    if (navigation.activeTabIndex == 0) {
+    if (navigation.homeTabIndex == 0) {
 
       final sortedVents = ventData.vents
         .toList()
@@ -106,7 +106,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   void _filterVentsToOldest() {
 
-    if (navigation.activeTabIndex == 0) {
+    if (navigation.homeTabIndex == 0) {
 
       final sortedVents = ventData.vents
         .toList()

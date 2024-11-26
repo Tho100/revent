@@ -132,12 +132,12 @@ class VentActions {
 
     final index = _getVentIndex();
 
-    if(navigation.activeTabIndex == 0) {
+    if(navigation.homeTabIndex == 0) {
       if(index != -1) {
         ventData.likeVent(index, isUserLikedPost);
       }
 
-    } else if (navigation.activeTabIndex == 1) {
+    } else if (navigation.homeTabIndex == 1) {
       if(index != -1) {
         ventFollowingData.likeVent(index, isUserLikedPost);
       }
@@ -281,12 +281,12 @@ class VentActions {
 
     final index = _getVentIndex();
 
-    if(navigation.activeTabIndex == 0) {
+    if(navigation.homeTabIndex == 0) {
       if(index != -1) {
         ventData.saveVent(index, isUserSavedPost);
       }
 
-    } else if (navigation.activeTabIndex == 1) {
+    } else if (navigation.homeTabIndex == 1) {
       if(index != -1) {
         ventFollowingData.saveVent(index, isUserSavedPost);
       }
