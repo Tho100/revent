@@ -6,6 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
+import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -153,6 +154,11 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
       child: ValueListenableBuilder(
         valueListenable: archivedVentsData,
         builder: (_, data, __) {
+
+          if(data.isEmpty) {
+            return _buildOnEmpty();
+          }
+
           return DynamicHeightGridView(
             physics: const AlwaysScrollableScrollPhysics(
               parent: BouncingScrollPhysics()
@@ -164,9 +170,14 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
               return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
             },
           );
+          
         },
       ),
     );
+  }
+
+  Widget _buildOnEmpty() {
+    return EmptyPage().customMessage(message: 'Your archive is empty.');
   }
 
   @override
