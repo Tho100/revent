@@ -282,9 +282,13 @@ class VentPostPageState extends State<VentPostPage> {
       title: widget.title,
       bodyText: '',
       creator: widget.creator,
-      copyOnPressed: () {
-        _copyBodyText();
+      editOnPressed: () {
         Navigator.pop(context);
+        NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
+      },
+      copyOnPressed: () {
+        Navigator.pop(context);
+        _copyBodyText();
       },
       deleteOnPressed: () {
         CustomAlertDialog.alertDialogCustomOnPress(

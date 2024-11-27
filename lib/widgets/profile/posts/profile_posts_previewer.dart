@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_vent_actions.dart';
+import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent_post_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -32,13 +33,19 @@ class ProfilePostsPreviewer extends StatelessWidget {
     super.key
   });
 
-  void _viewVentPostPage() async {
+  Future<String> _getBodyText() async {
 
     final ventDataInfo = await ProfilePostsDataGetter().getBodyText(
       title: title, creator: username
     );
 
-    final bodyText = ventDataInfo['body_text'];
+    return ventDataInfo['body_text'];
+
+  }
+
+  void _viewVentPostPage() async {
+
+    final bodyText = await _getBodyText();
 
     Navigator.push(
       navigatorKey.currentContext!,
@@ -104,6 +111,11 @@ class ProfilePostsPreviewer extends StatelessWidget {
       pfpData: pfpData,
       postTimestamp: postTimestamp,
       viewVentPostOnPressed: () => _viewVentPostPage(),
+      editOnPressed: () async {
+        Navigator.pop(navigatorKey.currentContext!);
+        final bodyText = await _getBodyText();
+        NavigatePage.editVentPage(title: title, body: bodyText);
+      },
       reportOnPressed: () {},
       blockOnPressed: () {},
       deleteOnPressed: () {
