@@ -105,6 +105,7 @@ class ProfilePostsPreviewer extends StatelessWidget {
       postTimestamp: postTimestamp,
       viewVentPostOnPressed: () => _viewVentPostPage(),
       reportOnPressed: () {},
+      blockOnPressed: () {},
       deleteOnPressed: () {
         CustomAlertDialog.alertDialogCustomOnPress(
           message: 'Delete this post?', 

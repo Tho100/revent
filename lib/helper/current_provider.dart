@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
+import 'package:revent/provider/profile_saved_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/provider/vent_following_data_provider.dart';
 
@@ -26,9 +27,13 @@ class CurrentProvider {
 
     if(navigation.currentPageIndex == 0) {
 
-      ventData = navigation.homeTabIndex == 0 
-        ? GetIt.instance<VentDataProvider>()
-        : GetIt.instance<VentFollowingDataProvider>();
+      if(navigation.homeTabIndex == 0) {
+        ventData = GetIt.instance<VentDataProvider>();
+
+      } else if (navigation.homeTabIndex == 1) {
+        ventData = GetIt.instance<VentFollowingDataProvider>();
+
+      }
 
       index = ventData.vents.indexWhere(
         (vent) => vent.title == title && vent.creator == creator
@@ -36,7 +41,13 @@ class CurrentProvider {
 
     } else if (navigation.currentPageIndex == 4) {
 
-      ventData = GetIt.instance<ProfilePostsProvider>();
+      if(navigation.profileTabIndex == 0) {
+        ventData = GetIt.instance<ProfilePostsProvider>();
+
+      } else if (navigation.profileTabIndex == 1) {
+        ventData = GetIt.instance<ProfileSavedProvider>();
+
+      }
 
       final profileData = ventData.myProfile;
 
@@ -44,7 +55,7 @@ class CurrentProvider {
         (ventTitle) => ventTitle == title
       );
 
-    }
+    } 
 
     return {
       'vent_index': index,

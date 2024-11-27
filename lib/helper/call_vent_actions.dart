@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/delete_archive_vent.dart';
+import 'package:revent/vent_query/delete_saved_vent.dart';
 import 'package:revent/vent_query/delete_vent.dart';
 import 'package:revent/vent_query/vent_actions.dart';
 
@@ -75,6 +76,26 @@ class CallVentActions {
 
     } catch (err) {
       SnackBarDialog.temporarySnack(message: 'Failed to delete this archive');
+    }
+
+  }
+
+  Future<void> removeSavedPost() async {
+
+    try {
+
+      await DeleteSavedVent(title: title, creator: creator).delete()
+        .then((value) {
+          
+          SnackBarDialog.temporarySnack(message: 'Removed vent from Saved');
+
+          Navigator.pop(context);
+
+        }
+      );
+
+    } catch (err) {
+      SnackBarDialog.temporarySnack(message: 'Failed to delete this saved post');
     }
 
   }
