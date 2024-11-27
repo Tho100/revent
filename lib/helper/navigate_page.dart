@@ -6,6 +6,7 @@ import 'package:revent/global/constant.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/create_vent_page.dart';
+import 'package:revent/pages/edit_vent_page.dart';
 import 'package:revent/pages/follows_page.dart';
 import 'package:revent/pages/home_page.dart';
 import 'package:revent/pages/main_screen_page.dart';
@@ -127,7 +128,7 @@ class NavigatePage {
     if(username != userData.user.username) {
       Navigator.push(
         navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (context) => UserProfilePage(
+        MaterialPageRoute(builder: (_) => UserProfilePage(
           username: username, pfpData: pfpData
           )
         )
@@ -138,6 +139,16 @@ class NavigatePage {
 
     }
 
+  }
+
+  static void editVentPage({
+    required String title, 
+    required String body
+  }) {
+    Navigator.push(
+      navigatorKey.currentContext!, 
+      MaterialPageRoute(builder: (_) => EditVentPage(title: title, body: body))
+    );
   }
 
   static void fullBioPage({required String bio}) {

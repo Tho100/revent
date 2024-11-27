@@ -72,4 +72,24 @@ class ProfileSavedProvider extends ChangeNotifier {
 
     notifyListeners();
   }
+
+  void deleteVent(int index) {
+
+    final profile = _profileData['my_profile'];
+
+    if (profile != null) {
+
+      if (index >= 0 && index < profile.titles.length) {
+        profile.titles.removeAt(index);
+        profile.totalLikes.removeAt(index);
+        profile.totalComments.removeAt(index);
+        profile.postTimestamp.removeAt(index);
+        profile.pfpData.removeAt(index);
+        profile.creator.removeAt(index);
+        notifyListeners();
+      }
+      
+    }
+
+  }
 }

@@ -41,6 +41,7 @@ class BottomsheetVentPostActions {
     required BuildContext context,
     required String title,
     required String creator,
+    VoidCallback? editOnPressed,
     VoidCallback? reportOnPressed,
     VoidCallback? removeSavedPostOnPressed,
     VoidCallback? blockOnPressed,
@@ -56,6 +57,13 @@ class BottomsheetVentPostActions {
         const BottomsheetBar(),
 
         const BottomsheetTitle(title: 'Post Action'),
+
+        if(userData.user.username == creator && editOnPressed != null)
+        _buildOptionButton(
+          text: 'Edit',
+          icon: CupertinoIcons.square_pencil,
+          onPressed: editOnPressed
+        ),
 
         if(removeSavedPostOnPressed != null)
         _buildOptionButton(

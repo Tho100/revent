@@ -33,6 +33,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
+  final navigation = GetIt.instance<NavigationProvider>();
 
   final profilePostsData = GetIt.instance<ProfilePostsProvider>();
   final profileSavedData = GetIt.instance<ProfileSavedProvider>();
@@ -198,6 +199,9 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     super.initState();
     _initializePostsData();
     _initializeClasses();
+    tabController.addListener(() {
+      navigation.setProfileTabIndex(tabController.index);
+    });
   }
 
   @override

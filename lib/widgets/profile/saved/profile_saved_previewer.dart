@@ -5,11 +5,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/pages/vent_post_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class ProfileSavedPreviewer extends StatelessWidget {
+
+  final bool isMyProfile;
 
   final String username;
   final String title;
@@ -21,6 +24,7 @@ class ProfileSavedPreviewer extends StatelessWidget {
   final Uint8List pfpData;
 
   const ProfileSavedPreviewer({
+    required this.isMyProfile,
     required this.username,
     required this.title,
     required this.totalLikes,
@@ -102,9 +106,16 @@ class ProfileSavedPreviewer extends StatelessWidget {
       pfpData: pfpData,
       postTimestamp: postTimestamp,
       viewVentPostOnPressed: () => _viewVentPostPage(),
-      removeSavedOnPressed: () => print('Removed'),
       reportOnPressed: () {},
       blockOnPressed: () {},
+      removeSavedOnPressed: isMyProfile 
+        ? () async {
+        await CallVentActions(
+          context: navigatorKey.currentContext!, 
+          title: title, 
+          creator: username
+        ).removeSavedPost();
+      } : null 
     );
 
     return ventPreviewer.buildMainContainer(

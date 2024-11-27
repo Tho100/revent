@@ -25,6 +25,7 @@ class VentPreviewerWidgets {
   final Uint8List? pfpData;
 
   final VoidCallback? viewVentPostOnPressed;
+  final VoidCallback? editOnPressed;
   final VoidCallback? copyOnPressed;
   final VoidCallback? reportOnPressed;
   final VoidCallback? blockOnPressed;
@@ -41,6 +42,7 @@ class VentPreviewerWidgets {
     this.totalComments,
     this.pfpData,
     this.viewVentPostOnPressed,
+    this.editOnPressed,
     this.reportOnPressed,
     this.blockOnPressed,
     this.removeSavedOnPressed,
@@ -118,6 +120,7 @@ class VentPreviewerWidgets {
               context: context, 
               title: title!,
               creator: creator!,
+              editOnPressed: editOnPressed,
               copyOnPressed: copyOnPressed,
               removeSavedPostOnPressed: removeSavedOnPressed,
               reportOnPressed: reportOnPressed,
