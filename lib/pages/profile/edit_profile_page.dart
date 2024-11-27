@@ -5,7 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_profile/profile_data_update.dart';
 import 'package:revent/model/textinput_formatter.dart';
-import 'package:revent/model/profile_picture_model.dart';
+import 'package:revent/model/profile_picture/profile_picture_model.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';

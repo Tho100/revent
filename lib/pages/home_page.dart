@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/model/format_date.dart';
-import 'package:revent/model/update_navigation.dart';
+import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/vent_data_provider.dart';
 import 'package:revent/provider/vent_following_data_provider.dart';
@@ -329,9 +329,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         },
         body: _buildTabBarTabs()
       ),
-      bottomNavigationBar: UpdateNavigation(
-        context: context,
-      ).showNavigationBar(),
+      bottomNavigationBar: PageNavigationBar()
     );
   }
 

@@ -6,9 +6,9 @@ import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
-import 'package:revent/helper/call_profile_posts.dart';
+import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/model/update_navigation.dart';
+import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/profile_saved_provider.dart';
 import 'package:revent/themes/theme_style.dart';
@@ -86,13 +86,13 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       profilePostsData.userProfile.clear();
       profileSavedData.userProfile.clear();
 
-      final callProfilePosts = CallProfilePosts(
+      final callProfilePosts = ProfilePostsSetup(
         userType: 'user_profile',
         username: widget.username
       );
 
-      await callProfilePosts.setPostsData();
-      await callProfilePosts.setSavedData();
+      await callProfilePosts.setupPosts();
+      await callProfilePosts.setupSaved();
       
       postsNotifier.value = profilePostsData.userProfile.titles.length;
 
@@ -279,9 +279,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
         actions: [_buildActionButton()]
       ).buildAppBar(),
       body: _buildBody(),
-      bottomNavigationBar: UpdateNavigation(
-        context: context,
-      ).showNavigationBar(),
+      bottomNavigationBar: PageNavigationBar()
     );
   }
   

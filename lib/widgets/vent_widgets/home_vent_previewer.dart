@@ -4,18 +4,20 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/pages/vent_post_page.dart';
+import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
-// TODO: Convert this to stateless
-class HomeVentPreviewer extends StatefulWidget {
+
+class HomeVentPreviewer extends StatelessWidget {
 
   final String title;
   final String bodyText;
   final String creator;
+
   final String postTimestamp;
   final int totalLikes;
   final int totalComments;
+
   final Uint8List pfpData;
 
   const HomeVentPreviewer({
@@ -29,23 +31,16 @@ class HomeVentPreviewer extends StatefulWidget {
     super.key
   });
 
-  @override
-  State<HomeVentPreviewer> createState() => HomeVentPreviewerState();
-
-}
-
-class HomeVentPreviewerState extends State<HomeVentPreviewer> {
-
   void _viewVentPostPage() {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => VentPostPage(
-        title: widget.title, 
-        bodyText: widget.bodyText, 
-        postTimestamp: widget.postTimestamp,
-        totalLikes: widget.totalLikes,
-        creator: widget.creator, 
-        pfpData: widget.pfpData,
+        title: title, 
+        bodyText: bodyText, 
+        postTimestamp: postTimestamp,
+        totalLikes: totalLikes,
+        creator: creator, 
+        pfpData: pfpData,
       )),
     );
   }
@@ -54,17 +49,17 @@ class HomeVentPreviewerState extends State<HomeVentPreviewer> {
 
     final ventPreviewer = VentPreviewerWidgets(
       context: navigatorKey.currentContext!,
-      title: widget.title,
-      bodyText: widget.bodyText,
-      creator: widget.creator,
-      pfpData: widget.pfpData,
-      postTimestamp: widget.postTimestamp,
-      totalLikes: widget.totalLikes,
-      totalComments: widget.totalComments,
+      title: title,
+      bodyText: bodyText,
+      creator: creator,
+      pfpData: pfpData,
+      postTimestamp: postTimestamp,
+      totalLikes: totalLikes,
+      totalComments: totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
       editOnPressed: () {
         Navigator.pop(navigatorKey.currentContext!);
-        NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
+        NavigatePage.editVentPage(title: title, body: bodyText);
       },
       deleteOnPressed: () {
         CustomAlertDialog.alertDialogCustomOnPress(
@@ -72,9 +67,9 @@ class HomeVentPreviewerState extends State<HomeVentPreviewer> {
           buttonMessage: 'Delete',
           onPressedEvent: () async {
             await CallVentActions(
-              context: context, 
-              title: widget.title, 
-              creator: widget.creator
+              context: navigatorKey.currentContext!, 
+              title: title, 
+              creator: creator
             ).deletePost();
           }
         );
@@ -83,8 +78,8 @@ class HomeVentPreviewerState extends State<HomeVentPreviewer> {
       blockOnPressed: () {},
     );
 
-    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 15.0;
-    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 15.0;
+    final actionButtonsPadding = bodyText.isEmpty ? 0.0 : 15.0;
+    final actionButtonsHeightGap = bodyText.isEmpty ? 0.0 : 15.0;
 
     return ventPreviewer.buildMainContainer(
       children: [

@@ -2,12 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/call_profile_posts.dart';
+import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/pages/edit_profile_page.dart';
+import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/model/update_navigation.dart';
+import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/profile_saved_provider.dart';
@@ -58,13 +58,13 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
   void _initializePostsData() async {
 
-    final callProfilePosts = CallProfilePosts(
+    final callProfilePosts = ProfilePostsSetup(
       userType: 'my_profile',
       username: userData.user.username
     );
 
-    await callProfilePosts.setPostsData();
-    await callProfilePosts.setSavedData();
+    await callProfilePosts.setupPosts();
+    await callProfilePosts.setupSaved();
 
   }
 
@@ -226,9 +226,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
           actions: [_buildActionButton()]
         ).buildAppBar(),
         body: _buildBody(),
-        bottomNavigationBar: UpdateNavigation(
-          context: context,
-        ).showNavigationBar(),
+        bottomNavigationBar: PageNavigationBar()
       ),
     );
   }
