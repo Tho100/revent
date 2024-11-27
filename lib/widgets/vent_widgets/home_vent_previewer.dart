@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/pages/vent_post_page.dart';
+import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 

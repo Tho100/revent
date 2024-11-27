@@ -5,17 +5,17 @@ import 'package:get_it/get_it.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
-import 'package:revent/pages/create_vent_page.dart';
-import 'package:revent/pages/edit_vent_page.dart';
-import 'package:revent/pages/follows_page.dart';
+import 'package:revent/pages/vent/create_vent_page.dart';
+import 'package:revent/pages/vent/edit_vent_page.dart';
+import 'package:revent/pages/profile/follows_page.dart';
 import 'package:revent/pages/home_page.dart';
 import 'package:revent/pages/main_screen_page.dart';
 import 'package:revent/pages/navigation/notifications_page.dart';
 import 'package:revent/pages/navigation/my_profile_page.dart';
 import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
-import 'package:revent/pages/user_profile_page.dart';
-import 'package:revent/pages/view_full_bio_page.dart';
+import 'package:revent/pages/profile/user_profile_page.dart';
+import 'package:revent/pages/profile/view_full_bio_page.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
 class _DockBarNavigationPages {

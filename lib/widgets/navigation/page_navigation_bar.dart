@@ -3,17 +3,16 @@ import 'package:get_it/get_it.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/widgets/bottomsheet_widgets/create.dart';
-import 'package:revent/widgets/navigation_bar_dock.dart';
+import 'package:revent/widgets/navigation/navigation_bar_dock.dart';
 
-class UpdateNavigation {
+class PageNavigationBar extends StatelessWidget {
 
-  final BuildContext context;
-
-  UpdateNavigation({required this.context});
+  PageNavigationBar({super.key});
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
 
-  Widget showNavigationBar() {
+  @override
+  Widget build(BuildContext context) {
     return NavigationBarDock(
       homeOnPressed: () => NavigatePage.homePage(),
       searchOnPressed: () => NavigatePage.searchPage(),

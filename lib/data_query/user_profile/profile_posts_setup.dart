@@ -6,12 +6,12 @@ import 'package:revent/data_query/user_profile/profile_saved_getter.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/profile_saved_provider.dart';
 
-class CallProfilePosts {
+class ProfilePostsSetup {
 
   final String userType;
   final String username;
 
-  CallProfilePosts({
+  ProfilePostsSetup({
     required this.userType,
     required this.username
   });
@@ -19,7 +19,7 @@ class CallProfilePosts {
   final profilePostsData = GetIt.instance<ProfilePostsProvider>();
   final profileSavedData = GetIt.instance<ProfileSavedProvider>();
 
-  Future<void> setPostsData() async {
+  Future<void> setupPosts() async {
 
     final isDataEmpty = userType == 'my_profile' 
       ? profileSavedData.myProfile.titles.isEmpty 
@@ -45,7 +45,7 @@ class CallProfilePosts {
 
   }
 
-  Future<void> setSavedData() async {
+  Future<void> setupSaved() async {
 
     final isDataEmpty = userType == 'my_profile' 
       ? profileSavedData.myProfile.titles.isEmpty 

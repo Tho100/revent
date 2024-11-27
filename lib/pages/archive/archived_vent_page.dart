@@ -11,7 +11,7 @@ import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/vent_query/archive_vent_data_getter.dart';
+import 'package:revent/vent_query/archive/archive_vent_data_getter.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 

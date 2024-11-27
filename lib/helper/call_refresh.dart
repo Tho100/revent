@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_profile/profile_data_setup.dart';
-import 'package:revent/helper/call_profile_posts.dart';
+import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/profile_saved_provider.dart';
@@ -45,7 +45,7 @@ class CallRefresh {
 
     await ProfileDataSetup().setup(username: userData.user.username);
 
-    final callProfilePosts = CallProfilePosts(
+    final callProfilePosts = ProfilePostsSetup(
       userType: 'my_profile', 
       username: userData.user.username
     );
@@ -53,8 +53,8 @@ class CallRefresh {
     profilePostsData.myProfile.clear();
     profileSavedData.myProfile.clear();
 
-    await callProfilePosts.setPostsData();
-    await callProfilePosts.setSavedData();
+    await callProfilePosts.setupPosts();
+    await callProfilePosts.setupSaved();
 
   }
 

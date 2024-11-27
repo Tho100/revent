@@ -2,7 +2,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:revent/data_query/user_profile/profile_data_update.dart';
 import 'package:revent/model/image_compressor.dart';
-import 'package:revent/model/profile_picture_picker.dart';
+import 'package:revent/model/profile_picture/profile_picture_picker.dart';
 
 class ProfilePictureModel {
 
