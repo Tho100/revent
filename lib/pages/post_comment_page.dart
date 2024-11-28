@@ -56,12 +56,12 @@ class PostCommentPageState extends State<PostCommentPage> {
           .then((value) => Navigator.pop(context)
         );
 
-        SnackBarDialog.temporarySnack(message: 'Comment added');
+        SnackBarDialog.temporarySnack(message: 'Comment added.');
 
       }
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to send comment');
+      SnackBarDialog.errorSnack(message: 'Failed to send comment.');
     }
 
   }

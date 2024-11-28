@@ -69,7 +69,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
       }
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
     
   }

@@ -99,7 +99,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       postsNotifier.value = profilePostsData.userProfile.titles.length;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 
   }
@@ -115,7 +115,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       isFollowingNotifier.value = !isFollowingNotifier.value;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 
   }

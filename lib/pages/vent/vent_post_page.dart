@@ -123,7 +123,7 @@ class VentPostPageState extends State<VentPostPage> {
       _filterCommentToBest();
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 
   }
@@ -132,7 +132,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     if(widget.bodyText.isNotEmpty) {
       Clipboard.setData(ClipboardData(text: widget.bodyText));
-      SnackBarDialog.temporarySnack(message: 'Copied body text');
+      SnackBarDialog.temporarySnack(message: 'Copied body text.');
 
     } else {
       SnackBarDialog.temporarySnack(message: 'Nothing to copy...');
@@ -153,7 +153,7 @@ class VentPostPageState extends State<VentPostPage> {
       });
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 
   }
@@ -168,7 +168,7 @@ class VentPostPageState extends State<VentPostPage> {
 
   }
 
-  bool _isOnProfile() {
+  bool _isFromProfile() {
     return 
       navigation.currentRoute == '/profile/my_profile/' || 
       navigation.currentRoute == '/profile/user_profile/';
@@ -183,7 +183,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     dynamic totalLikes, isVentLiked;
 
-    if(_isOnProfile()) {
+    if(_isFromProfile()) {
 
       final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
 
@@ -218,7 +218,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     bool isVentSaved;
 
-    if(_isOnProfile()) {
+    if(_isFromProfile()) {
 
       final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
 

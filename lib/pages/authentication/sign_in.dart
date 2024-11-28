@@ -42,7 +42,7 @@ class SignInPageState extends State<SignInPage> {
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 
   }

@@ -113,7 +113,7 @@ class EditProfilePageState extends State<EditProfilePage> {
     }
 
     if (isSaved) {
-      SnackBarDialog.temporarySnack(message: 'Saved changes');
+      SnackBarDialog.temporarySnack(message: 'Saved changes.');
     }
 
   }
@@ -125,7 +125,7 @@ class EditProfilePageState extends State<EditProfilePage> {
 
     if(isProfileSelected) {
       _setProfilePic();
-      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated');
+      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
     }
 
   }
@@ -140,7 +140,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes');
+      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
       return false;
     }
 
@@ -154,7 +154,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       final isBothFilled = pronounOneController.text.isNotEmpty && pronounTwoController.text.isNotEmpty;
 
       if (!isBothEmpty && !isBothFilled) {
-        CustomAlertDialog.alertDialog('Both fields must be filled or left empty');
+        CustomAlertDialog.alertDialog('Both fields must be filled or left empty.');
         return false; 
       }
 
@@ -167,7 +167,7 @@ class EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes');
+      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
       return false;
     }
 

@@ -26,14 +26,14 @@ class CallVentActions {
       final userData = GetIt.instance<UserDataProvider>();
 
       if(creator == userData.user.username) {
-        SnackBarDialog.temporarySnack(message: 'Cannot like your own vent post');
+        SnackBarDialog.temporarySnack(message: "You can't like your own post.");
         return;
       }
 
       await VentActions(title: title, creator: creator).likePost();
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to like this post');
+      SnackBarDialog.temporarySnack(message: 'Failed to like this post.');
     }
 
   }
@@ -45,7 +45,7 @@ class CallVentActions {
       await DeleteVent(title: title, creator: creator).delete()
         .then((value) {
           
-          SnackBarDialog.temporarySnack(message: 'Post has been deleted');
+          SnackBarDialog.temporarySnack(message: 'Post has been deleted.');
 
           Navigator.pop(context);
           Navigator.pop(context);
@@ -54,7 +54,7 @@ class CallVentActions {
       );
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to delete vent post');
+      SnackBarDialog.temporarySnack(message: 'Failed to delete this post.');
     }
 
   }
@@ -66,7 +66,7 @@ class CallVentActions {
       await DeleteArchiveVent(title: title).delete()
         .then((value) {
           
-          SnackBarDialog.temporarySnack(message: 'Archive has been deleted');
+          SnackBarDialog.temporarySnack(message: 'Archive has been deleted.');
 
           Navigator.pop(context);
           Navigator.pop(context);
@@ -75,7 +75,7 @@ class CallVentActions {
       );
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to delete this archive');
+      SnackBarDialog.temporarySnack(message: 'Failed to delete this archive.');
     }
 
   }
@@ -87,7 +87,7 @@ class CallVentActions {
       await DeleteSavedVent(title: title, creator: creator).delete()
         .then((value) {
           
-          SnackBarDialog.temporarySnack(message: 'Removed vent from Saved');
+          SnackBarDialog.temporarySnack(message: 'Removed post from Saved.');
 
           Navigator.pop(context);
 
@@ -95,7 +95,7 @@ class CallVentActions {
       );
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to delete this saved post');
+      SnackBarDialog.temporarySnack(message: 'Failed to delete this saved post.');
     }
 
   }
@@ -107,7 +107,7 @@ class CallVentActions {
       await VentActions(title: title, creator: creator).savePost();
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save vent post');
+      SnackBarDialog.errorSnack(message: 'Failed to save this post.');
     }
 
   }

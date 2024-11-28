@@ -47,7 +47,7 @@ class SignUpPageState extends State<SignUpPage> {
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
     
   }
@@ -64,12 +64,12 @@ class SignUpPageState extends State<SignUpPage> {
     }
 
     if (usernameInput.contains(RegExp(r'[&%;?]'))) {
-      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Username cannot contain special characters');
+      CustomAlertDialog.alertDialogTitle('Sign up failed', "Username can't include special characters");
       return;
     }
 
     if (authInput.length <= 5) {
-      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Password must contain more than 5 characters');
+      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Password must be at least 6 characters long');
       return;
     }
 

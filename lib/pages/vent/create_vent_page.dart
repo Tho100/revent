@@ -47,7 +47,7 @@ class CreateVentPageState extends State<CreateVentPage> {
           ventBodyText: ventBodyText
         ).then((value) {
 
-          SnackBarDialog.temporarySnack(message: 'Added vent to archive');
+          SnackBarDialog.temporarySnack(message: 'Added vent to archive.');
 
           Navigator.pop(context);
 
@@ -67,14 +67,14 @@ class CreateVentPageState extends State<CreateVentPage> {
         ventBodyText: ventBodyText
       ).then((value) {
         
-        SnackBarDialog.temporarySnack(message: 'Vent has been posted');
+        SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
 
         Navigator.pop(context);        
 
       });
         
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to post vent');
+      SnackBarDialog.errorSnack(message: 'Failed to post vent.');
     }
 
   }
