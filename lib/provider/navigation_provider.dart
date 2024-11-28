@@ -6,9 +6,18 @@ class NavigationProvider extends ChangeNotifier {
   int _homeTabIndex = 0;
   int _profileTabIndex = 0;
 
+  String _currentRoute = '/home/';
+
   int get currentPageIndex => _currentPageIndex;
   int get homeTabIndex => _homeTabIndex;
   int get profileTabIndex => _profileTabIndex;
+
+  String get currentRoute => _currentRoute; 
+
+  void setCurrentRoute(String route) {
+    _currentRoute = route;
+    notifyListeners();
+  }
 
   void setPageIndex(int index) {
     _currentPageIndex = index;

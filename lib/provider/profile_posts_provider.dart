@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:revent/provider/navigation_provider.dart';
 
 class ProfilePostsData {
 
@@ -9,11 +11,16 @@ class ProfilePostsData {
 
   List<String> postTimestamp = [];
 
+  List<bool> isPostLiked = [];
+  List<bool> isPostSaved = [];
+
   void clear() {
     titles.clear();
     totalLikes.clear();
     totalComments.clear();
     postTimestamp.clear();
+    isPostLiked.clear();
+    isPostSaved.clear();
   } 
 
 }
@@ -48,6 +55,16 @@ class ProfilePostsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setIsPostLiked(String profileKey, List<bool> isPostLiked) {
+    _profileData[profileKey]?.isPostLiked = isPostLiked;
+    notifyListeners(); 
+  }
+
+  void setIsPostSaved(String profileKey, List<bool> isPostSaved) {
+    _profileData[profileKey]?.isPostSaved = isPostSaved;
+    notifyListeners(); 
+  }
+
   void clearPostsData() {
     for (var profile in _profileData.values) {
       profile.clear();
@@ -72,6 +89,54 @@ class ProfilePostsProvider extends ChangeNotifier {
       
     }
 
+  }
+
+  void likeVent(int index, bool isUserLikedPost) {
+
+    final navigation = GetIt.instance<NavigationProvider>();
+
+    final profileKey = navigation.currentRoute == '/profile/posts/my_profile' 
+      ? 'my_profile'
+      : 'user_profile';
+
+    final profile = _profileData[profileKey];
+
+    if(profile != null) {
+
+      profile.isPostLiked[index] = isUserLikedPost 
+        ? false
+        : true;
+
+      profile.isPostLiked[index] 
+        ? profile.totalLikes[index] += 1
+        : profile.totalLikes[index] -= 1;
+
+      notifyListeners();
+
+    }
+    
+  }
+
+  void saveVent(int index, bool isUserSavedPost) {
+
+    final navigation = GetIt.instance<NavigationProvider>();
+
+    final profileKey = navigation.currentRoute == '/profile/my_profile/' 
+      ? 'my_profile'
+      : 'user_profile';
+
+    final profile = _profileData[profileKey];
+
+    if(profile != null) {
+
+      profile.isPostSaved[index] = isUserSavedPost 
+        ? false
+        : true;
+
+      notifyListeners();
+
+    }
+    
   }
 
 }

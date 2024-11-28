@@ -54,7 +54,7 @@ class ProfilePostsListView extends StatelessWidget {
       itemCount: itemCount,
       builder: (_, index) {
         return _buildPreviewer(
-          titles[index], totalLikes[index], totalComments[index], postTimestamp[index]
+          titles[index], totalLikes[index], totalComments[index], postTimestamp[index],
         );
       },
     );
@@ -92,7 +92,7 @@ class ProfilePostsListView extends StatelessWidget {
             titles: titles, 
             totalLikes: totalLikes, 
             totalComments: totalComments, 
-            postTimestamp: postTimestamp
+            postTimestamp: postTimestamp,
           );
       },
     );

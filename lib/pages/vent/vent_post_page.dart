@@ -11,6 +11,7 @@ import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/pages/post_comment_page.dart';
+import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -53,6 +54,7 @@ class VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = GetIt.instance<VentCommentProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
+  final navigation = GetIt.instance<NavigationProvider>();
 
   final formatTimestamp = FormatDate();
 
@@ -153,6 +155,83 @@ class VentPostPageState extends State<VentPostPage> {
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong');
     }
+
+  }
+
+  Map<String, dynamic> _getLikesInfo() {
+
+    final isOnProfile = 
+      navigation.currentRoute == '/profile/my_profile/' || 
+      navigation.currentRoute == '/profile/user_profile/';
+
+    final getProvider = CurrentProvider(
+      title: widget.title, creator: widget.creator
+    ).getRealTimeProvider(context: context);
+
+    final ventIndex = getProvider['vent_index'];
+    final ventData = getProvider['vent_data'];
+
+    dynamic totalLikes;
+    dynamic isLiked;
+
+    if(isOnProfile) {
+
+      final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
+
+      totalLikes = isMyProfile
+        ? ventData.myProfile.totalLikes[ventIndex].toString()
+        : ventData.userProfile.totalLikes[ventIndex].toString();
+
+      isLiked = isMyProfile
+        ? ventData.myProfile.isPostLiked[ventIndex]
+        : ventData.userProfile.isPostLiked[ventIndex];
+
+    } else {
+
+      totalLikes = ventData.vents[ventIndex].totalLikes.toString();
+      isLiked = ventData.vents[ventIndex].isPostLiked;
+
+    }
+
+    return {
+      'total_likes': totalLikes,
+      'is_liked': isLiked
+    };
+
+  }
+
+  Map<String, dynamic> _getSavedInfo() {
+
+    final isOnProfile = 
+      navigation.currentRoute == '/profile/my_profile/' || 
+      navigation.currentRoute == '/profile/user_profile/';
+
+    final getProvider = CurrentProvider(
+      title: widget.title, creator: widget.creator
+    ).getRealTimeProvider(context: context);
+
+    final ventIndex = getProvider['vent_index'];
+    final ventData = getProvider['vent_data'];
+
+    dynamic isSaved;
+
+    if(isOnProfile) {
+
+      final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
+
+      isSaved = isMyProfile 
+        ? ventData.myProfile.isPostSaved[ventIndex]
+        : ventData.userProfile.isPostSaved[ventIndex];
+
+    } else {
+
+      isSaved = ventData.vents[ventIndex].isPostSaved;
+      
+    }
+
+    return {
+      'is_saved': isSaved,
+    };
 
   }
 
@@ -319,17 +398,10 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildLikeButton() {
     return Builder(
       builder: (context) {
-        
-        final getProvider = CurrentProvider(
-          title: widget.title, creator: widget.creator
-        ).getRealTimeProvider(context: context);
-
-        final ventIndex = getProvider['vent_index'];
-        final ventData = getProvider['vent_data'];
-
+        final likesInfo = _getLikesInfo();
         return ActionsButton().buildLikeButton(
-          text: ventData.vents[ventIndex].totalLikes.toString(), 
-          isLiked: ventData.vents[ventIndex].isPostLiked,
+          text: likesInfo['total_likes'], 
+          isLiked: likesInfo['is_liked'],
           onPressed: () async {
             await CallVentActions(
               context: context, 
@@ -356,16 +428,9 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildSaveButton() {
     return Builder(
       builder: (context) {
-
-        final getProvider = CurrentProvider(
-          title: widget.title, creator: widget.creator
-        ).getRealTimeProvider(context: context);
-
-        final ventIndex = getProvider['vent_index'];
-        final ventData = getProvider['vent_data'];
-
+        final savedInfo = _getSavedInfo();
         return ActionsButton().buildSaveButton(
-          isSaved: ventData.vents[ventIndex].isPostSaved,
+          isSaved: savedInfo['is_saved'],
           onPressed: () async {
             await CallVentActions(
               context: context, 

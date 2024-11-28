@@ -29,14 +29,14 @@ class VentActions {
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
-  int _getVentIndex() {
+  dynamic _getVentIndex() {
 
     final currentProvider = CurrentProvider(
       title: title, 
       creator: creator
     ).getProvider();
 
-    return currentProvider['vent_index'];
+    return currentProvider;
 
   }
 
@@ -130,19 +130,12 @@ class VentActions {
     required bool isUserLikedPost,
   }) {
 
-    final index = _getVentIndex();
+    final currentProvider = _getVentIndex();
 
-    if(navigation.homeTabIndex == 0) {
-      if(index != -1) {
-        ventData.likeVent(index, isUserLikedPost);
-      }
+    final index = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
 
-    } else if (navigation.homeTabIndex == 1) {
-      if(index != -1) {
-        ventFollowingData.likeVent(index, isUserLikedPost);
-      }
-
-    }
+    ventData.likeVent(index, isUserLikedPost);
 
   }
 
@@ -279,19 +272,12 @@ class VentActions {
     required bool isUserSavedPost,
   }) {
 
-    final index = _getVentIndex();
+    final currentProvider = _getVentIndex();
 
-    if(navigation.homeTabIndex == 0) {
-      if(index != -1) {
-        ventData.saveVent(index, isUserSavedPost);
-      }
+    final index = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
 
-    } else if (navigation.homeTabIndex == 1) {
-      if(index != -1) {
-        ventFollowingData.saveVent(index, isUserSavedPost);
-      }
-
-    }
+    ventData.saveVent(index, isUserSavedPost);
 
   }
 

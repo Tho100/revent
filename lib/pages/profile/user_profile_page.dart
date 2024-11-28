@@ -8,6 +8,7 @@ import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/profile_posts_provider.dart';
 import 'package:revent/provider/profile_saved_provider.dart';
@@ -41,6 +42,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   final profilePostsData = GetIt.instance<ProfilePostsProvider>();
   final profileSavedData = GetIt.instance<ProfileSavedProvider>();
+  final navigation = GetIt.instance<NavigationProvider>();
 
   final followersNotifier = ValueNotifier<int>(0);
   final followingNotifier = ValueNotifier<int>(0);
@@ -253,6 +255,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   @override
   void initState() {
     super.initState();
+    navigation.setCurrentRoute('/profile/user_profile/');
     _setProfileData();
     _initializeClasses();
   }

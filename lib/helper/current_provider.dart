@@ -72,9 +72,13 @@ class CurrentProvider {
 
     if(navigation.currentPageIndex == 0) {
 
-      ventData = navigation.homeTabIndex == 0 
-        ? Provider.of<VentDataProvider>(context)  
-        : Provider.of<VentFollowingDataProvider>(context);
+      if(navigation.homeTabIndex == 0) {
+        ventData = Provider.of<VentDataProvider>(context);
+
+      } else if (navigation.homeTabIndex == 1) {
+        ventData = Provider.of<VentFollowingDataProvider>(context);
+
+      }
 
       index = ventData.vents.indexWhere(
         (vent) => vent.title == title && vent.creator == creator
@@ -82,13 +86,21 @@ class CurrentProvider {
 
     } else if (navigation.currentPageIndex == 4) {
 
-      ventData = Provider.of<ProfilePostsProvider>(context); 
+      if(navigation.profileTabIndex == 0) {
+        ventData = Provider.of<ProfilePostsProvider>(context);
 
-      index = ventData.titles.indexWhere(
-        (vent) => vent.title == title
+      } else if (navigation.profileTabIndex == 1) {
+        ventData = Provider.of<ProfileSavedProvider>(context);
+
+      }
+
+      final profileData = ventData.myProfile;
+
+      index = profileData.titles.indexWhere(
+        (ventTitle) => ventTitle == title
       );
 
-    }
+    } 
 
     return {
       'vent_index': index,
