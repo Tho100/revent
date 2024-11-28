@@ -29,7 +29,7 @@ class VentActions {
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
-  dynamic _getVentIndex() {
+  Map<String, dynamic> _getVentProvider() {
 
     final currentProvider = CurrentProvider(
       title: title, 
@@ -130,7 +130,7 @@ class VentActions {
     required bool isUserLikedPost,
   }) {
 
-    final currentProvider = _getVentIndex();
+    final currentProvider = _getVentProvider();
 
     final index = currentProvider['vent_index'];
     final ventData = currentProvider['vent_data'];
@@ -272,7 +272,7 @@ class VentActions {
     required bool isUserSavedPost,
   }) {
 
-    final currentProvider = _getVentIndex();
+    final currentProvider = _getVentProvider();
 
     final index = currentProvider['vent_index'];
     final ventData = currentProvider['vent_data'];

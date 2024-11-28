@@ -158,23 +158,32 @@ class VentPostPageState extends State<VentPostPage> {
 
   }
 
-  Map<String, dynamic> _getLikesInfo() {
+  Map<String, dynamic> _getVentProvider() {
 
-    final isOnProfile = 
-      navigation.currentRoute == '/profile/my_profile/' || 
-      navigation.currentRoute == '/profile/user_profile/';
-
-    final getProvider = CurrentProvider(
+    final currentProvider = CurrentProvider(
       title: widget.title, creator: widget.creator
     ).getRealTimeProvider(context: context);
 
-    final ventIndex = getProvider['vent_index'];
-    final ventData = getProvider['vent_data'];
+    return currentProvider;
 
-    dynamic totalLikes;
-    dynamic isLiked;
+  }
 
-    if(isOnProfile) {
+  bool _isOnProfile() {
+    return 
+      navigation.currentRoute == '/profile/my_profile/' || 
+      navigation.currentRoute == '/profile/user_profile/';
+  }
+
+  Map<String, dynamic> _getLikesInfo() {
+
+    final currentProvider = _getVentProvider();
+
+    final ventIndex = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
+
+    dynamic totalLikes, isVentLiked;
+
+    if(_isOnProfile()) {
 
       final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
 
@@ -182,56 +191,48 @@ class VentPostPageState extends State<VentPostPage> {
         ? ventData.myProfile.totalLikes[ventIndex].toString()
         : ventData.userProfile.totalLikes[ventIndex].toString();
 
-      isLiked = isMyProfile
+      isVentLiked = isMyProfile
         ? ventData.myProfile.isPostLiked[ventIndex]
         : ventData.userProfile.isPostLiked[ventIndex];
 
     } else {
 
       totalLikes = ventData.vents[ventIndex].totalLikes.toString();
-      isLiked = ventData.vents[ventIndex].isPostLiked;
+      isVentLiked = ventData.vents[ventIndex].isPostLiked;
 
     }
 
     return {
       'total_likes': totalLikes,
-      'is_liked': isLiked
+      'is_liked': isVentLiked
     };
 
   }
 
-  Map<String, dynamic> _getSavedInfo() {
+  bool _isVentSaved() {
 
-    final isOnProfile = 
-      navigation.currentRoute == '/profile/my_profile/' || 
-      navigation.currentRoute == '/profile/user_profile/';
+    final currentProvider = _getVentProvider();
 
-    final getProvider = CurrentProvider(
-      title: widget.title, creator: widget.creator
-    ).getRealTimeProvider(context: context);
+    final ventIndex = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
 
-    final ventIndex = getProvider['vent_index'];
-    final ventData = getProvider['vent_data'];
+    bool isVentSaved;
 
-    dynamic isSaved;
-
-    if(isOnProfile) {
+    if(_isOnProfile()) {
 
       final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
 
-      isSaved = isMyProfile 
+      isVentSaved = isMyProfile 
         ? ventData.myProfile.isPostSaved[ventIndex]
         : ventData.userProfile.isPostSaved[ventIndex];
 
     } else {
 
-      isSaved = ventData.vents[ventIndex].isPostSaved;
+      isVentSaved = ventData.vents[ventIndex].isPostSaved;
       
     }
 
-    return {
-      'is_saved': isSaved,
-    };
+    return isVentSaved;
 
   }
 
@@ -428,9 +429,8 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildSaveButton() {
     return Builder(
       builder: (context) {
-        final savedInfo = _getSavedInfo();
         return ActionsButton().buildSaveButton(
-          isSaved: savedInfo['is_saved'],
+          isSaved: _isVentSaved(),
           onPressed: () async {
             await CallVentActions(
               context: context, 
