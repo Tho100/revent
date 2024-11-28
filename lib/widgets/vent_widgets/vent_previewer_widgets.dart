@@ -155,7 +155,7 @@ class VentPreviewerWidgets {
           Padding(
             padding: const EdgeInsets.only(bottom: 4.0),
             child: Text(
-              '@$creator',
+              creator!,
               style: GoogleFonts.inter(
                 color: ThemeColor.secondaryWhite,
                 fontWeight: FontWeight.w800,

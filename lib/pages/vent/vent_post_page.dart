@@ -302,7 +302,7 @@ class VentPostPageState extends State<VentPostPage> {
           const SizedBox(width: 10),
     
           Text(
-            '@${widget.creator}',
+            widget.creator,
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,
