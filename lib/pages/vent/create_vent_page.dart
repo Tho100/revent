@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/create_new_item.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -46,9 +47,14 @@ class CreateVentPageState extends State<CreateVentPage> {
           ventBodyText: ventBodyText
         ).then((value) {
 
-          SnackBarDialog.temporarySnack(message: 'Added vent to archive');
+          SnackBarDialog.temporarySnack(message: 'Added vent to archive.');
 
           Navigator.pop(context);
+
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => const ArchivedVentPage())
+          );
 
         });
 
@@ -61,14 +67,14 @@ class CreateVentPageState extends State<CreateVentPage> {
         ventBodyText: ventBodyText
       ).then((value) {
         
-        SnackBarDialog.temporarySnack(message: 'Vent has been posted');
+        SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
 
         Navigator.pop(context);        
 
       });
         
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to post vent');
+      SnackBarDialog.errorSnack(message: 'Failed to post vent.');
     }
 
   }

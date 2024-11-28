@@ -69,7 +69,7 @@ class DeleteAccountPageState extends State<DeleteAccountPage> {
       }
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
     
   }

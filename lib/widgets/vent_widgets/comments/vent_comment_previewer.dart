@@ -50,10 +50,12 @@ class VentCommentPreviewer extends StatelessWidget {
         commentText: comment, 
         ventCreator: creator, 
         ventTitle: title
-      ).delete().then((value) => SnackBarDialog.temporarySnack(message: 'Comment deleted'));
+      ).delete().then(
+        (value) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
+      );
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
     
   }
@@ -70,7 +72,7 @@ class VentCommentPreviewer extends StatelessWidget {
       ).like();
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
     
   }

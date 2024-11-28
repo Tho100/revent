@@ -82,7 +82,7 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
       });
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to load archives');
+      SnackBarDialog.errorSnack(message: 'Failed to load archives.');
     }
 
   }

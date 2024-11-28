@@ -36,11 +36,17 @@ class ProfilePostsSetup {
       final totalComments = getPostsData['total_comments'] as List<int>;
       final postTimestamp = getPostsData['post_timestamp'] as List<String>;
 
+      final isPostLiked = getPostsData['is_liked'] as List<bool>;
+      final isPostSaved = getPostsData['is_saved'] as List<bool>;
+
       profilePostsData.setTitles(userType, title);
       profilePostsData.setTotalLikes(userType, totalLikes);
       profilePostsData.setTotalComments(userType, totalComments);
       profilePostsData.setPostTimestamp(userType, postTimestamp);
       
+      profilePostsData.setIsPostLiked(userType, isPostLiked);
+      profilePostsData.setIsPostSaved(userType, isPostSaved);
+
     }
 
   }
@@ -66,6 +72,9 @@ class ProfilePostsSetup {
       final totalComments = getPostsData['total_comments'] as List<int>;
       final postTimestamp = getPostsData['post_timestamp'] as List<String>;
 
+      final isPostLiked = getPostsData['is_liked'] as List<bool>;
+      final isPostSaved = getPostsData['is_saved'] as List<bool>;
+
       profileSavedData.setCreator(userType, creator);
       profileSavedData.setProfilePicture(userType, profilePicture);
 
@@ -73,6 +82,9 @@ class ProfilePostsSetup {
       profileSavedData.setTotalLikes(userType, totalLikes);
       profileSavedData.setTotalComments(userType, totalComments);
       profileSavedData.setPostTimestamp(userType, postTimestamp);
+
+      profileSavedData.setIsPostLiked(userType, isPostLiked);
+      profileSavedData.setIsPostSaved(userType, isPostSaved);
 
     } 
 

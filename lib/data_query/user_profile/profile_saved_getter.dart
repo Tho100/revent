@@ -1,12 +1,17 @@
 import 'dart:convert';
 
+import 'package:get_it/get_it.dart';
+import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_date.dart';
+import 'package:revent/provider/user_data_provider.dart';
 
 class ProfileSavedDataGetter {
 
   final formatPostTimestamp = FormatDate();
+
+  final userData = GetIt.instance<UserDataProvider>();
 
   Future<Map<String, List<dynamic>>> getSaved({
     required String username,
@@ -58,14 +63,48 @@ class ProfileSavedDataGetter {
       .map((pfpBase64) => base64Decode(pfpBase64))
       .toList();
 
+    final isLikedState = await _ventPostLikeState(
+      conn: conn,
+      title: titles,
+      stateType: 'liked'
+    );
+
+    final isSavedState = List.generate(titles.length, (_) => true);
+
     return {
       'creator': creator,
       'title': titles,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'post_timestamp': postTimestamp,
-      'profile_picture': profilePicture
+      'profile_picture': profilePicture,
+      'is_liked': isLikedState,
+      'is_saved': isSavedState,
     };
+
+  }
+
+  Future<List<bool>> _ventPostLikeState({
+    required MySQLConnectionPool conn,
+    required List<String> title,
+    required String stateType,
+  }) async {
+
+    const query = 'SELECT title FROM liked_vent_info WHERE liked_by = :liked_by';
+
+    final param = {
+      'liked_by': userData.user.username,
+    };
+
+    final retrievedTitles = await conn.execute(query, param);
+
+    final extractTitlesData = ExtractData(rowsData: retrievedTitles);
+
+    final postTitles = extractTitlesData.extractStringColumn('title');
+    
+    final titlesSet = Set<String>.from(postTitles);
+
+    return title.map((t) => titlesSet.contains(t)).toList();
 
   }
 

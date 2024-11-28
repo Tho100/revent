@@ -306,6 +306,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   void initState() {
     super.initState();
     navigation.setPageIndex(0);
+    navigation.setCurrentRoute('/home/');
     tabController = TabController(length: 2, vsync: this);
     tabController.addListener(_onTabChanged);
     _filterVentsToLatest();

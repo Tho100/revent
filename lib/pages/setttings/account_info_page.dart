@@ -113,7 +113,7 @@ class AccountInformationPageState extends State<AccountInformationPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
                         
-            _buildHeaders('Username', '@${userData.user.username}'),
+            _buildHeaders('Username', userData.user.username),
             _buildHeaders('Email', userData.user.email),
 
             _buildJoinedDate(),

@@ -36,11 +36,11 @@ class EditVentPageState extends State<EditVentPage> {
         body: widget.body, 
         newBody: newBodyText, 
       ).save().then(
-        (value) => SnackBarDialog.temporarySnack(message: 'Saved changes')
+        (value) => SnackBarDialog.temporarySnack(message: 'Saved changes.')
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes');
+      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
     }
 
   }

@@ -11,6 +11,7 @@ import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/pages/post_comment_page.dart';
+import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile_data_provider.dart';
 import 'package:revent/provider/vent_comment_provider.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -53,6 +54,7 @@ class VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = GetIt.instance<VentCommentProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
+  final navigation = GetIt.instance<NavigationProvider>();
 
   final formatTimestamp = FormatDate();
 
@@ -121,7 +123,7 @@ class VentPostPageState extends State<VentPostPage> {
       _filterCommentToBest();
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 
   }
@@ -130,7 +132,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     if(widget.bodyText.isNotEmpty) {
       Clipboard.setData(ClipboardData(text: widget.bodyText));
-      SnackBarDialog.temporarySnack(message: 'Copied body text');
+      SnackBarDialog.temporarySnack(message: 'Copied body text.');
 
     } else {
       SnackBarDialog.temporarySnack(message: 'Nothing to copy...');
@@ -151,8 +153,86 @@ class VentPostPageState extends State<VentPostPage> {
       });
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
+
+  }
+
+  Map<String, dynamic> _getVentProvider() {
+
+    final currentProvider = CurrentProvider(
+      title: widget.title, creator: widget.creator
+    ).getRealTimeProvider(context: context);
+
+    return currentProvider;
+
+  }
+
+  bool _isFromProfile() {
+    return 
+      navigation.currentRoute == '/profile/my_profile/' || 
+      navigation.currentRoute == '/profile/user_profile/';
+  }
+
+  Map<String, dynamic> _getLikesInfo() {
+
+    final currentProvider = _getVentProvider();
+
+    final ventIndex = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
+
+    dynamic totalLikes, isVentLiked;
+
+    if(_isFromProfile()) {
+
+      final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
+
+      totalLikes = isMyProfile
+        ? ventData.myProfile.totalLikes[ventIndex].toString()
+        : ventData.userProfile.totalLikes[ventIndex].toString();
+
+      isVentLiked = isMyProfile
+        ? ventData.myProfile.isPostLiked[ventIndex]
+        : ventData.userProfile.isPostLiked[ventIndex];
+
+    } else {
+
+      totalLikes = ventData.vents[ventIndex].totalLikes.toString();
+      isVentLiked = ventData.vents[ventIndex].isPostLiked;
+
+    }
+
+    return {
+      'total_likes': totalLikes,
+      'is_liked': isVentLiked
+    };
+
+  }
+
+  bool _isVentSaved() {
+
+    final currentProvider = _getVentProvider();
+
+    final ventIndex = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
+
+    bool isVentSaved;
+
+    if(_isFromProfile()) {
+
+      final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
+
+      isVentSaved = isMyProfile 
+        ? ventData.myProfile.isPostSaved[ventIndex]
+        : ventData.userProfile.isPostSaved[ventIndex];
+
+    } else {
+
+      isVentSaved = ventData.vents[ventIndex].isPostSaved;
+      
+    }
+
+    return isVentSaved;
 
   }
 
@@ -222,7 +302,7 @@ class VentPostPageState extends State<VentPostPage> {
           const SizedBox(width: 10),
     
           Text(
-            '@${widget.creator}',
+            widget.creator,
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,
@@ -319,17 +399,10 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildLikeButton() {
     return Builder(
       builder: (context) {
-        
-        final getProvider = CurrentProvider(
-          title: widget.title, creator: widget.creator
-        ).getRealTimeProvider(context: context);
-
-        final ventIndex = getProvider['vent_index'];
-        final ventData = getProvider['vent_data'];
-
+        final likesInfo = _getLikesInfo();
         return ActionsButton().buildLikeButton(
-          text: ventData.vents[ventIndex].totalLikes.toString(), 
-          isLiked: ventData.vents[ventIndex].isPostLiked,
+          text: likesInfo['total_likes'], 
+          isLiked: likesInfo['is_liked'],
           onPressed: () async {
             await CallVentActions(
               context: context, 
@@ -356,16 +429,8 @@ class VentPostPageState extends State<VentPostPage> {
   Widget _buildSaveButton() {
     return Builder(
       builder: (context) {
-
-        final getProvider = CurrentProvider(
-          title: widget.title, creator: widget.creator
-        ).getRealTimeProvider(context: context);
-
-        final ventIndex = getProvider['vent_index'];
-        final ventData = getProvider['vent_data'];
-
         return ActionsButton().buildSaveButton(
-          isSaved: ventData.vents[ventIndex].isPostSaved,
+          isSaved: _isVentSaved(),
           onPressed: () async {
             await CallVentActions(
               context: context, 
