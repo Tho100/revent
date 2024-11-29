@@ -272,6 +272,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     isFollowingNotifier.dispose();
     tabController.dispose();
     profilePostsData.clearPostsData();
+    profileSavedData.clearPostsData();
     super.dispose();
   }
 
