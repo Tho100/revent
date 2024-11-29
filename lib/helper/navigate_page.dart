@@ -62,7 +62,7 @@ class NavigatePage {
         transitionDuration: const Duration(microseconds: 0)
       ),
       (route) => false,
-    ).then((value) {
+    ).then((_) {
       _navigation.setPageIndex(0);
       _navigation.setCurrentRoute(AppRoute.home);
     });
@@ -144,7 +144,7 @@ class NavigatePage {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => UserProfilePage(username: username, pfpData: pfpData))
-    ).then((value) {
+    ).then((_) {
       _navigation.setCurrentRoute(AppRoute.userProfile);
     }); 
 

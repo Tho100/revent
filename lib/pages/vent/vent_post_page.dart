@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/app_route.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/current_provider.dart';
@@ -170,8 +171,8 @@ class VentPostPageState extends State<VentPostPage> {
 
   bool _isFromProfile() {
     return 
-      navigation.currentRoute == '/profile/my_profile/' || 
-      navigation.currentRoute == '/profile/user_profile/';
+      navigation.currentRoute == AppRoute.myProfile || 
+      navigation.currentRoute == AppRoute.userProfile;
   }
 
   Map<String, dynamic> _getLikesInfo() {
@@ -185,7 +186,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     if(_isFromProfile()) {
 
-      final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
+      final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
 
       totalLikes = isMyProfile
         ? ventData.myProfile.totalLikes[ventIndex].toString()
@@ -220,7 +221,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     if(_isFromProfile()) {
 
-      final isMyProfile = navigation.currentRoute == '/profile/my_profile/';
+      final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
 
       isVentSaved = isMyProfile 
         ? ventData.myProfile.isPostSaved[ventIndex]
