@@ -55,6 +55,13 @@ class NavigatePage {
 
   static final _navigation = GetIt.instance<NavigationProvider>();
 
+  static void mainScreenPage() {
+    Navigator.pushReplacement(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => const MainScreenPage()),
+    );
+  }
+
   static void homePage() {
     Navigator.pushAndRemoveUntil(
       navigatorKey.currentContext!,
@@ -66,13 +73,6 @@ class NavigatePage {
       _navigation.setPageIndex(0);
       _navigation.setCurrentRoute(AppRoute.home);
     });
-  }
-
-  static void mainScreenPage() {
-    Navigator.pushReplacement(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const MainScreenPage()),
-    );
   }
 
   static void searchPage() {
