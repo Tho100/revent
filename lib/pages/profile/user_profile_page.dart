@@ -10,8 +10,8 @@ import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
-import 'package:revent/provider/profile_posts_provider.dart';
-import 'package:revent/provider/profile_saved_provider.dart';
+import 'package:revent/provider/profile/profile_posts_provider.dart';
+import 'package:revent/provider/profile/profile_saved_provider.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -258,6 +258,9 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     navigation.setCurrentRoute('/profile/user_profile/');
     _setProfileData();
     _initializeClasses();
+    tabController.addListener(() {
+      navigation.setProfileTabIndex(tabController.index);
+    });
   }
 
   @override

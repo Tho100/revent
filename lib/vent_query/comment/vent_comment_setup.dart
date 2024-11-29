@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:get_it/get_it.dart';
-import 'package:revent/provider/vent_comment_provider.dart';
+import 'package:revent/provider/vent/vent_comment_provider.dart';
 import 'package:revent/vent_query/comment/vent_comments_getter.dart';
 
 class VentCommentSetup {

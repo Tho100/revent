@@ -5,11 +5,11 @@ import 'package:revent/helper/current_provider.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/profile_data_provider.dart';
+import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent_comment_provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
-import 'package:revent/provider/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_comment_provider.dart';
+import 'package:revent/provider/vent/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_data_provider.dart';
 
 class VentActions {
 

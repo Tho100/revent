@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/provider/vent_comment_provider.dart';
+import 'package:revent/provider/vent/vent_comment_provider.dart';
 import 'package:revent/widgets/vent_widgets/comments/vent_comment_previewer.dart';
 
 class VentCommentsListView extends StatelessWidget {

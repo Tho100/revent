@@ -3,7 +3,7 @@ import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent_comment_provider.dart';
+import 'package:revent/provider/vent/vent_comment_provider.dart';
 
 class VentCommentActions {
 

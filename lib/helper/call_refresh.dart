@@ -1,13 +1,13 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_profile/profile_data_setup.dart';
 import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
-import 'package:revent/provider/profile_data_provider.dart';
-import 'package:revent/provider/profile_posts_provider.dart';
-import 'package:revent/provider/profile_saved_provider.dart';
+import 'package:revent/provider/profile/profile_data_provider.dart';
+import 'package:revent/provider/profile/profile_posts_provider.dart';
+import 'package:revent/provider/profile/profile_saved_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent_comment_provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
-import 'package:revent/provider/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_comment_provider.dart';
+import 'package:revent/provider/vent/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_data_provider.dart';
 import 'package:revent/vent_query/comment/vent_comment_setup.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 

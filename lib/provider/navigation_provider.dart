@@ -16,22 +16,18 @@ class NavigationProvider extends ChangeNotifier {
 
   void setCurrentRoute(String route) {
     _currentRoute = route;
-    notifyListeners();
   }
 
   void setPageIndex(int index) {
     _currentPageIndex = index;
-    notifyListeners();
   }
 
   void setHomeTabIndex(int index) {
     _homeTabIndex = index;
-    notifyListeners();
   }
   
   void setProfileTabIndex(int index) {
     _profileTabIndex = index;
-    notifyListeners();
   }
 
 }

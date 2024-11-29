@@ -2,9 +2,9 @@ import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/format_date.dart';
-import 'package:revent/provider/profile_data_provider.dart';
+import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_data_provider.dart';
 
 class CreateNewItem {
 

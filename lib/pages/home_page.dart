@@ -4,11 +4,12 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_refresh.dart';
+import 'package:revent/helper/current_provider.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
-import 'package:revent/provider/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_filter.dart';
@@ -37,6 +38,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   final filterTextNotifier = ValueNotifier<String>('Latest');
 
   final formatTimestamp = FormatDate();
+  final currentProvider = CurrentProvider();
 
   late TabController tabController;
 
@@ -60,71 +62,49 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   void _filterVentsToBest() {
 
-    if (navigation.homeTabIndex == 0) {
+    final ventData = currentProvider.getProviderOnly();
 
-      final sortedVents = ventData.vents
-        .toList()
+    if (ventData.vents is List<Vent>) {
+
+      final vents = (ventData.vents as List<Vent>)
         ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
 
-      ventData.setVents(sortedVents);
+      ventData.setVents(vents);
 
-    } else {
+    } else if (ventData.vents is List<VentFollowing>) {
 
-      final sortedVents = ventFollowingData.vents
-        .toList()
+      final vents = (ventData.vents as List<VentFollowing>)
         ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
-        
-      ventFollowingData.setVents(sortedVents);
 
-    }
+      ventData.setVents(vents);
+
+    } 
 
   }
 
   void _filterVentsToLatest() {
 
-    if (navigation.homeTabIndex == 0) {
+    final ventData = currentProvider.getProviderOnly();
 
-      final sortedVents = ventData.vents
-        .toList()
-        ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
-          .compareTo(formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
+    final sortedVents = ventData.vents
+      .toList()
+      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
+        .compareTo(formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
 
-      ventData.setVents(sortedVents);
-
-    } else {
-
-      final sortedVents = ventFollowingData.vents
-        .toList()
-        ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
-          .compareTo(formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
-        
-      ventFollowingData.setVents(sortedVents);
-      
-    }
+    ventData.setVents(sortedVents);
 
   }
 
   void _filterVentsToOldest() {
 
-    if (navigation.homeTabIndex == 0) {
+    final ventData = currentProvider.getProviderOnly();
 
-      final sortedVents = ventData.vents
-        .toList()
-        ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
-          .compareTo(formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
+    final sortedVents = ventData.vents
+      .toList()
+      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
+        .compareTo(formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
 
-      ventData.setVents(sortedVents);
-
-    } else {
-
-      final sortedVents = ventFollowingData.vents
-        .toList()
-        ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
-          .compareTo(formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
-        
-      ventFollowingData.setVents(sortedVents);
-      
-    }
+    ventData.setVents(sortedVents);
 
   }
 
