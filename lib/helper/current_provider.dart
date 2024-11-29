@@ -9,15 +9,45 @@ import 'package:revent/provider/vent_following_data_provider.dart';
 
 class CurrentProvider {
 
-  String title;
-  String creator;
+  final String? title;
+  final String? creator;
 
   CurrentProvider({
-    required this.title,
-    required this.creator,
+    this.title,
+    this.creator,
   });
 
   final navigation = GetIt.instance<NavigationProvider>();
+
+  dynamic getProviderOnly() {
+
+    dynamic ventData;
+
+    if(navigation.currentPageIndex == 0) {
+
+      if(navigation.homeTabIndex == 0) {
+        ventData = GetIt.instance<VentDataProvider>();
+
+      } else if (navigation.homeTabIndex == 1) {
+        ventData = GetIt.instance<VentFollowingDataProvider>();
+
+      }
+
+    } else if (navigation.currentPageIndex == 4) {
+
+      if(navigation.profileTabIndex == 0) {
+        ventData = GetIt.instance<ProfilePostsProvider>();
+
+      } else if (navigation.profileTabIndex == 1) {
+        ventData = GetIt.instance<ProfileSavedProvider>();
+
+      }
+
+    } 
+
+    return ventData;
+
+  }
 
   Map<String, dynamic> getProvider() {
 
