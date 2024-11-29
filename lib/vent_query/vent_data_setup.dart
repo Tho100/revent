@@ -1,8 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_profile/profile_picture_getter.dart';
-import 'package:revent/provider/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_data_provider.dart';
 import 'package:revent/vent_query/vent_data_getter.dart';
-import 'package:revent/provider/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_data_provider.dart';
 
 class VentDataSetup {
 

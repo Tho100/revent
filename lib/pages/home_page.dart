@@ -8,8 +8,8 @@ import 'package:revent/helper/current_provider.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/vent_data_provider.dart';
-import 'package:revent/provider/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_filter.dart';
@@ -61,7 +61,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   }
 
   void _filterVentsToBest() {
-    
+
     final ventData = currentProvider.getProviderOnly();
 
     if (ventData.vents is List<Vent>) {

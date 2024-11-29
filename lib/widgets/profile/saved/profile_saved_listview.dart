@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/provider/profile_saved_provider.dart';
+import 'package:revent/provider/profile/profile_saved_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/widgets/profile/saved/profile_saved_previewer.dart';
 

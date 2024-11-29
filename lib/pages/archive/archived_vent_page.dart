@@ -7,7 +7,7 @@ import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/provider/profile_data_provider.dart';
+import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
