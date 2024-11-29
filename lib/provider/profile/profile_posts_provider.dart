@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:revent/helper/app_route.dart';
 import 'package:revent/provider/navigation_provider.dart';
 
 class ProfilePostsData {
@@ -95,7 +96,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     final navigation = GetIt.instance<NavigationProvider>();
 
-    final profileKey = navigation.currentRoute == '/profile/posts/my_profile' 
+    final profileKey = navigation.currentRoute == AppRoute.myProfile
       ? 'my_profile'
       : 'user_profile';
 

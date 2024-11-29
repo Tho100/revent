@@ -255,7 +255,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   @override
   void initState() {
     super.initState();
-    navigation.setCurrentRoute('/profile/user_profile/');
     _setProfileData();
     _initializeClasses();
     tabController.addListener(() {
@@ -273,6 +272,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     isFollowingNotifier.dispose();
     tabController.dispose();
     profilePostsData.clearPostsData();
+    profileSavedData.clearPostsData();
     super.dispose();
   }
 

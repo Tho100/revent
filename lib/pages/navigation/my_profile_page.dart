@@ -197,7 +197,6 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   @override
   void initState() {
     super.initState();
-    navigation.setCurrentRoute('/profile/my_profile/');
     _initializePostsData();
     _initializeClasses();
     tabController.addListener(() {
@@ -213,7 +212,6 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
   @override
   Widget build(BuildContext context) {
-    navigationIndex.setPageIndex(4);
     return WillPopScope(
       onWillPop: () async {
         NavigatePage.homePage();

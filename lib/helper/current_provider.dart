@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/helper/app_route.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_posts_provider.dart';
 import 'package:revent/provider/profile/profile_saved_provider.dart';
@@ -19,35 +20,50 @@ class CurrentProvider {
 
   final navigation = GetIt.instance<NavigationProvider>();
 
-  // TODO: simplify codebase
+  dynamic _returnHomeProvider({
+    required bool realTime, 
+    BuildContext? context
+  }) {
+
+    if(navigation.homeTabIndex == 0) {
+      return realTime 
+        ? Provider.of<VentDataProvider>(context!) : GetIt.instance<VentDataProvider>();
+
+    } else if (navigation.homeTabIndex == 1) {
+      return realTime 
+      ? Provider.of<VentFollowingDataProvider>(context!) : GetIt.instance<VentFollowingDataProvider>();
+
+    }
+
+  }
+
+  dynamic _returnProfileProvider({
+    required bool realTime, 
+    BuildContext? context
+  }) {
+
+    if(navigation.profileTabIndex == 0) {
+      return realTime 
+        ? Provider.of<ProfilePostsProvider>(context!) : GetIt.instance<ProfilePostsProvider>();
+
+    } else if (navigation.profileTabIndex == 1) {
+      return realTime 
+        ? Provider.of<ProfileSavedProvider>(context!) : GetIt.instance<ProfileSavedProvider>();
+
+    }
+
+  }
 
   dynamic getProviderOnly() {
 
-    dynamic ventData;
+    if(navigation.currentRoute == AppRoute.home) {
+      return _returnHomeProvider(realTime: false);
 
-    if(navigation.currentRoute == '/home/') {
-
-      if(navigation.homeTabIndex == 0) {
-        ventData = GetIt.instance<VentDataProvider>();
-
-      } else if (navigation.homeTabIndex == 1) {
-        ventData = GetIt.instance<VentFollowingDataProvider>();
-
-      }
-
-    } else if (navigation.currentRoute == '/profile/my_profile/' || navigation.currentRoute == '/profile/user_profile/') {
-
-      if(navigation.profileTabIndex == 0) {
-        ventData = GetIt.instance<ProfilePostsProvider>();
-
-      } else if (navigation.profileTabIndex == 1) {
-        ventData = GetIt.instance<ProfileSavedProvider>();
-
-      }
-
+    } else if (navigation.currentRoute == AppRoute.myProfile || 
+              navigation.currentRoute == AppRoute.userProfile) {
+      return _returnProfileProvider(realTime: false);
+      
     } 
-
-    return ventData;
 
   }
 
@@ -55,43 +71,31 @@ class CurrentProvider {
 
     dynamic ventData;
 
-    int index = 0;
+    int ventIndex = 0;
 
-    if(navigation.currentRoute == '/home/') {
+    if(navigation.currentRoute == AppRoute.home) {
 
-      if(navigation.homeTabIndex == 0) {
-        ventData = GetIt.instance<VentDataProvider>();
+      ventData = _returnHomeProvider(realTime: false);
 
-      } else if (navigation.homeTabIndex == 1) {
-        ventData = GetIt.instance<VentFollowingDataProvider>();
-
-      }
-
-      index = ventData.vents.indexWhere(
+      ventIndex = ventData.vents.indexWhere(
         (vent) => vent.title == title && vent.creator == creator
       );
 
-    } else if (navigation.currentRoute == '/profile/my_profile/' || navigation.currentRoute == '/profile/user_profile/') {
+    } else if (navigation.currentRoute == AppRoute.myProfile || navigation.currentRoute == AppRoute.userProfile) {
 
-      if(navigation.profileTabIndex == 0) {
-        ventData = GetIt.instance<ProfilePostsProvider>();
+      ventData = _returnProfileProvider(realTime: false);
 
-      } else if (navigation.profileTabIndex == 1) {
-        ventData = GetIt.instance<ProfileSavedProvider>();
-
-      }
-
-      final profileData = navigation.currentRoute == '/profile/my_profile/' 
+      final profileData = navigation.currentRoute == AppRoute.myProfile
         ? ventData.myProfile : ventData.userProfile;
 
-      index = profileData.titles.indexWhere(
+      ventIndex = profileData.titles.indexWhere(
         (ventTitle) => ventTitle == title
       );
 
     } 
 
     return {
-      'vent_index': index,
+      'vent_index': ventIndex,
       'vent_data': ventData
     };
 
@@ -101,43 +105,31 @@ class CurrentProvider {
 
     dynamic ventData;
 
-    int index = 0;
+    int ventIndex = 0;
 
-    if(navigation.currentRoute == '/home/') {
+    if(navigation.currentRoute == AppRoute.home) {
 
-      if(navigation.homeTabIndex == 0) {
-        ventData = Provider.of<VentDataProvider>(context);
+      ventData = _returnHomeProvider(realTime: true, context: context);
 
-      } else if (navigation.homeTabIndex == 1) {
-        ventData = Provider.of<VentFollowingDataProvider>(context);
-
-      }
-
-      index = ventData.vents.indexWhere(
+      ventIndex = ventData.vents.indexWhere(
         (vent) => vent.title == title && vent.creator == creator
       );
 
-    } else if (navigation.currentRoute == '/profile/my_profile/' || navigation.currentRoute == '/profile/user_profile/') {
+    } else if (navigation.currentRoute == AppRoute.myProfile || navigation.currentRoute == AppRoute.userProfile) {
 
-      if(navigation.profileTabIndex == 0) {
-        ventData = Provider.of<ProfilePostsProvider>(context);
+      ventData = _returnProfileProvider(realTime: false);
 
-      } else if (navigation.profileTabIndex == 1) {
-        ventData = Provider.of<ProfileSavedProvider>(context);
-
-      }
-
-      final profileData = navigation.currentRoute == '/profile/my_profile/' 
+      final profileData = navigation.currentRoute == AppRoute.myProfile
         ? ventData.myProfile : ventData.userProfile;
 
-      index = profileData.titles.indexWhere(
+      ventIndex = profileData.titles.indexWhere(
         (ventTitle) => ventTitle == title
       );
 
     } 
 
     return {
-      'vent_index': index,
+      'vent_index': ventIndex,
       'vent_data': ventData
     };
 

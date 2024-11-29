@@ -13,7 +13,6 @@ class NotificationsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    navigationIndex.setPageIndex(3);
     return WillPopScope(
       onWillPop: () async {
         NavigatePage.homePage();
