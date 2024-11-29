@@ -58,7 +58,7 @@ class CurrentProvider {
 
     int index = 0;
 
-    if(navigation.currentRoute == '/home/') {
+    if(navigation.currentRoute == AppRoute.home) {
 
       if(navigation.homeTabIndex == 0) {
         ventData = GetIt.instance<VentDataProvider>();
@@ -72,7 +72,7 @@ class CurrentProvider {
         (vent) => vent.title == title && vent.creator == creator
       );
 
-    } else if (navigation.currentRoute == '/profile/my_profile/' || navigation.currentRoute == '/profile/user_profile/') {
+    } else if (navigation.currentRoute == AppRoute.myProfile || navigation.currentRoute == AppRoute.userProfile) {
 
       if(navigation.profileTabIndex == 0) {
         ventData = GetIt.instance<ProfilePostsProvider>();
@@ -82,7 +82,7 @@ class CurrentProvider {
 
       }
 
-      final profileData = navigation.currentRoute == '/profile/my_profile/' 
+      final profileData = navigation.currentRoute == AppRoute.myProfile
         ? ventData.myProfile : ventData.userProfile;
 
       index = profileData.titles.indexWhere(
@@ -104,7 +104,7 @@ class CurrentProvider {
 
     int index = 0;
 
-    if(navigation.currentRoute == '/home/') {
+    if(navigation.currentRoute == AppRoute.home) {
 
       if(navigation.homeTabIndex == 0) {
         ventData = Provider.of<VentDataProvider>(context);
@@ -118,7 +118,7 @@ class CurrentProvider {
         (vent) => vent.title == title && vent.creator == creator
       );
 
-    } else if (navigation.currentRoute == '/profile/my_profile/' || navigation.currentRoute == '/profile/user_profile/') {
+    } else if (navigation.currentRoute == AppRoute.myProfile || navigation.currentRoute == AppRoute.userProfile) {
 
       if(navigation.profileTabIndex == 0) {
         ventData = Provider.of<ProfilePostsProvider>(context);
@@ -128,7 +128,7 @@ class CurrentProvider {
 
       }
 
-      final profileData = navigation.currentRoute == '/profile/my_profile/' 
+      final profileData = navigation.currentRoute == AppRoute.myProfile
         ? ventData.myProfile : ventData.userProfile;
 
       index = profileData.titles.indexWhere(

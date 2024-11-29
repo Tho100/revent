@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/app_route.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/vent/create_vent_page.dart';
@@ -16,6 +17,7 @@ import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
 import 'package:revent/pages/profile/view_full_bio_page.dart';
+import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
 class _DockBarNavigationPages {
@@ -51,6 +53,8 @@ class _DockBarNavigationPages {
 
 class NavigatePage {
 
+  static final _navigation = GetIt.instance<NavigationProvider>();
+
   static void homePage() {
     Navigator.pushAndRemoveUntil(
       navigatorKey.currentContext!,
@@ -58,7 +62,10 @@ class NavigatePage {
         transitionDuration: const Duration(microseconds: 0)
       ),
       (route) => false,
-    );
+    ).then((value) {
+      _navigation.setPageIndex(0);
+      _navigation.setCurrentRoute(AppRoute.home);
+    });
   }
 
   static void mainScreenPage() {
@@ -70,14 +77,18 @@ class NavigatePage {
 
   static void searchPage() {
     _DockBarNavigationPages.searchPage();
+    _navigation.setPageIndex(1);
   }
 
   static void notificationsPage() {
     _DockBarNavigationPages.notificationsPage();
+    _navigation.setPageIndex(3);
   }
 
   static void myProfilePage() {
     _DockBarNavigationPages.myProfilePage();
+    _navigation.setPageIndex(4);
+    _navigation.setCurrentRoute(AppRoute.myProfile);
   }
 
   static void settingsPage() {
@@ -125,19 +136,17 @@ class NavigatePage {
 
     final userData = GetIt.instance<UserDataProvider>();
 
-    if(username != userData.user.username) {
-      Navigator.push(
-        navigatorKey.currentContext!,
-        MaterialPageRoute(builder: (_) => UserProfilePage(
-          username: username, pfpData: pfpData
-          )
-        )
-      ); 
-
-    } else {
+    if(username == userData.user.username) {
       myProfilePage();
-
+      return;
     }
+
+    Navigator.push(
+      navigatorKey.currentContext!,
+      MaterialPageRoute(builder: (_) => UserProfilePage(username: username, pfpData: pfpData))
+    ).then((value) {
+      _navigation.setCurrentRoute(AppRoute.userProfile);
+    }); 
 
   }
 

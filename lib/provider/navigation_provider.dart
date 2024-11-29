@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revent/helper/app_route.dart';
 
 class NavigationProvider extends ChangeNotifier {
   
@@ -6,7 +7,7 @@ class NavigationProvider extends ChangeNotifier {
   int _homeTabIndex = 0;
   int _profileTabIndex = 0;
 
-  String _currentRoute = '/home/';
+  String _currentRoute = AppRoute.home;
 
   int get currentPageIndex => _currentPageIndex;
   int get homeTabIndex => _homeTabIndex;

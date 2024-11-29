@@ -13,7 +13,6 @@ class SearchPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    navigationIndex.setPageIndex(1);
     return WillPopScope(
       onWillPop: () async {
         NavigatePage.homePage();
