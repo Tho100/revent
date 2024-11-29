@@ -258,6 +258,9 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     navigation.setCurrentRoute('/profile/user_profile/');
     _setProfileData();
     _initializeClasses();
+    tabController.addListener(() {
+      navigation.setProfileTabIndex(tabController.index);
+    });
   }
 
   @override
