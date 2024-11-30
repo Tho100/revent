@@ -63,32 +63,31 @@ class NavigatePage {
   }
 
   static void homePage() {
+    _navigation.setPageIndex(0);
+    _navigation.setCurrentRoute(AppRoute.home);
     Navigator.pushAndRemoveUntil(
       navigatorKey.currentContext!,
       PageRouteBuilder(pageBuilder: (_, __, ___) => const HomePage(), 
         transitionDuration: const Duration(microseconds: 0)
       ),
       (route) => false,
-    ).then((_) {
-      _navigation.setPageIndex(0);
-      _navigation.setCurrentRoute(AppRoute.home);
-    });
+    );
   }
 
   static void searchPage() {
-    _DockBarNavigationPages.searchPage();
     _navigation.setPageIndex(1);
+    _DockBarNavigationPages.searchPage();
   }
 
   static void notificationsPage() {
-    _DockBarNavigationPages.notificationsPage();
     _navigation.setPageIndex(3);
+    _DockBarNavigationPages.notificationsPage();
   }
 
   static void myProfilePage() {
-    _DockBarNavigationPages.myProfilePage();
     _navigation.setPageIndex(4);
     _navigation.setCurrentRoute(AppRoute.myProfile);
+    _DockBarNavigationPages.myProfilePage();
   }
 
   static void settingsPage() {
@@ -141,12 +140,12 @@ class NavigatePage {
       return;
     }
 
+    _navigation.setCurrentRoute(AppRoute.userProfile);
+    
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => UserProfilePage(username: username, pfpData: pfpData))
-    ).then((_) {
-      _navigation.setCurrentRoute(AppRoute.userProfile);
-    }); 
+    );
 
   }
 

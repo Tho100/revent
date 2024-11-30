@@ -77,7 +77,7 @@ class SplashScreenState extends State<SplashScreen> {
     try {
 
       final readLocalData = await localModel.readLocalAccountInformation();
-
+      // TODO: Update this to "localUsername", 'localEmail' etc
       final getLocalUsername = readLocalData['username']!;
       final getLocalEmail = readLocalData['email']!;
       final getLocalAccountType = readLocalData['plan']!;
