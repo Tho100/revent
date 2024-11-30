@@ -7,6 +7,7 @@ import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/create_new_item.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/vent_query/verify_vent.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/buttons/sub_button.dart';
@@ -41,9 +42,18 @@ class CreateVentPageState extends State<CreateVentPage> {
 
     try {
 
+      final isVentAlreadyExists = await VerifyVent(title: ventTitle).ventIsAlreadyExists();
+
+      if(isVentAlreadyExists) {
+        CustomAlertDialog.alertDialog('Vent with similar title already exists');
+        return;
+      }
+
       final loading = SpinnerLoading();
 
-      loading.startLoading(context: context);
+      if(context.mounted) {
+        loading.startLoading(context: context);
+      }
 
       if(isArchivedVentNotifier.value) {
 
