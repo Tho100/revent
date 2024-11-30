@@ -31,7 +31,7 @@ class CurrentProvider {
 
     } else if (navigation.homeTabIndex == 1) {
       return realTime 
-      ? Provider.of<VentFollowingDataProvider>(context!) : GetIt.instance<VentFollowingDataProvider>();
+        ? Provider.of<VentFollowingDataProvider>(context!) : GetIt.instance<VentFollowingDataProvider>();
 
     }
 
@@ -117,7 +117,7 @@ class CurrentProvider {
 
     } else if (navigation.currentRoute == AppRoute.myProfile || navigation.currentRoute == AppRoute.userProfile) {
 
-      ventData = _returnProfileProvider(realTime: false);
+      ventData = _returnProfileProvider(realTime: true, context: context);
 
       final profileData = navigation.currentRoute == AppRoute.myProfile
         ? ventData.myProfile : ventData.userProfile;

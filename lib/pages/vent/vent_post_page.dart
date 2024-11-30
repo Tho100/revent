@@ -197,7 +197,7 @@ class VentPostPageState extends State<VentPostPage> {
         : ventData.userProfile.isPostLiked[ventIndex];
 
     } else {
-
+    
       totalLikes = ventData.vents[ventIndex].totalLikes.toString();
       isVentLiked = ventData.vents[ventIndex].isPostLiked;
 

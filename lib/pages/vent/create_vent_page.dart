@@ -2,10 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
+import 'package:revent/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/create_new_item.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/vent_query/verify_vent.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/widgets/buttons/sub_button.dart';
@@ -40,12 +42,27 @@ class CreateVentPageState extends State<CreateVentPage> {
 
     try {
 
+      final isVentAlreadyExists = await VerifyVent(title: ventTitle).ventIsAlreadyExists();
+
+      if(isVentAlreadyExists) {
+        CustomAlertDialog.alertDialog('Vent with similar title already exists');
+        return;
+      }
+
+      final loading = SpinnerLoading();
+
+      if(context.mounted) {
+        loading.startLoading(context: context);
+      }
+
       if(isArchivedVentNotifier.value) {
 
         await CreateNewItem().newArchiveVent(
           ventTitle: ventTitle, 
           ventBodyText: ventBodyText
         ).then((value) {
+
+          loading.stopLoading();
 
           SnackBarDialog.temporarySnack(message: 'Added vent to archive.');
 
@@ -66,7 +83,9 @@ class CreateVentPageState extends State<CreateVentPage> {
         ventTitle: ventTitle, 
         ventBodyText: ventBodyText
       ).then((value) {
-        
+
+        loading.stopLoading();
+
         SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
 
         Navigator.pop(context);        
