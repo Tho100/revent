@@ -77,20 +77,20 @@ class SplashScreenState extends State<SplashScreen> {
     try {
 
       final readLocalData = await localModel.readLocalAccountInformation();
-      // TODO: Update this to "localUsername", 'localEmail' etc
-      final getLocalUsername = readLocalData['username']!;
-      final getLocalEmail = readLocalData['email']!;
-      final getLocalAccountType = readLocalData['plan']!;
 
-      if(getLocalUsername.isEmpty) {
+      final username = readLocalData['username']!;
+      final email = readLocalData['email']!;
+      final accountPlan = readLocalData['plan']!;
+
+      if(username.isEmpty) {
         NavigatePage.mainScreenPage();
         return;
       }
 
       final userSetup = User(
-        username: getLocalUsername, 
-        email: getLocalEmail, 
-        plan: getLocalAccountType, 
+        username: username, 
+        email: email, 
+        plan: accountPlan, 
       );
 
       userData.setUser(userSetup);
