@@ -117,7 +117,7 @@ class CurrentProvider {
 
     } else if (navigation.currentRoute == AppRoute.myProfile || navigation.currentRoute == AppRoute.userProfile) {
 
-      ventData = _returnProfileProvider(realTime: true);
+      ventData = _returnProfileProvider(realTime: true, context: context);
 
       final profileData = navigation.currentRoute == AppRoute.myProfile
         ? ventData.myProfile : ventData.userProfile;
