@@ -42,6 +42,11 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   late TabController tabController;
 
+  final homeTabs = const [
+    Tab(text: 'For you'),
+    Tab(text: 'Following'),
+  ];
+
   void _onTabChanged() async {
 
     if (tabController.index == 1) {
@@ -210,10 +215,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     return CustomTabBar(
       controller: tabController, 
       tabAlignment: TabAlignment.center,
-      tabs: const [
-        Tab(text: 'For you'),
-        Tab(text: 'Following'),
-      ],
+      tabs: homeTabs,
     ).buildTabBar();
   }
 
@@ -225,6 +227,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
           BottomsheetVentFilter().buildBottomsheet(
             context: context, 
             currentFilter: filterTextNotifier.value,
+            tabName: homeTabs[tabController.index].text!,
             bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
             latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
             oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
@@ -285,7 +288,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: 2, vsync: this);
+    tabController = TabController(length: homeTabs.length, vsync: this);
     tabController.addListener(_onTabChanged);
     _filterVentsToLatest();
   }

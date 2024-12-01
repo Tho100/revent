@@ -48,6 +48,7 @@ class BottomsheetVentFilter {
   Future buildBottomsheet({
     required BuildContext context,
     required String currentFilter,
+    required String tabName,
     required VoidCallback bestOnPressed,
     required VoidCallback latestOnPressed,
     required VoidCallback oldestOnPressed,
@@ -60,7 +61,7 @@ class BottomsheetVentFilter {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Filter Vents'),
+        BottomsheetTitle(title: 'Sort $tabName'),
 
         _buildOptionButton(
           text: 'Best',
