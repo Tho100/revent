@@ -5,12 +5,10 @@ import 'package:revent/provider/user_data_provider.dart';
 class SaveVentEdit {
 
   final String title;
-  final String body;
   final String newBody;
 
   SaveVentEdit({
     required this.title,
-    required this.body, // TODO: Remove this unused param
     required this.newBody,
   });
 

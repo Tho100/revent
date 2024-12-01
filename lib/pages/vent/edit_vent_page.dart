@@ -37,7 +37,6 @@ class EditVentPageState extends State<EditVentPage> {
 
         await SaveVentEdit(
           title: widget.title, 
-          body: widget.body, 
           newBody: newBodyText, 
         ).saveArchive();
 
@@ -45,7 +44,6 @@ class EditVentPageState extends State<EditVentPage> {
 
         await SaveVentEdit(
           title: widget.title, 
-          body: widget.body, 
           newBody: newBodyText, 
         ).save();
 
