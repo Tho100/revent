@@ -151,11 +151,12 @@ class NavigatePage {
 
   static void editVentPage({
     required String title, 
-    required String body
+    required String body,
+    bool? isArchive = false
   }) {
     Navigator.push(
       navigatorKey.currentContext!, 
-      MaterialPageRoute(builder: (_) => EditVentPage(title: title, body: body))
+      MaterialPageRoute(builder: (_) => EditVentPage(title: title, body: body, isArchive: isArchive!))
     );
   }
 
