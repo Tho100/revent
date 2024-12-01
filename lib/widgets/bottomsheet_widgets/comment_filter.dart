@@ -60,7 +60,7 @@ class BottomsheetCommentFilter {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Filter Comments'),
+        const BottomsheetTitle(title: 'Sort Comments'),
 
         _buildOptionButton(
           text: 'Best',
