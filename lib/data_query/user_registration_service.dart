@@ -93,7 +93,8 @@ class UserRegistrationService {
     const queries = 
     [
       'INSERT INTO user_information (username, email, password, plan) VALUES (:username, :email, :password, :plan)',
-      'INSERT INTO user_profile_info (bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)'
+      'INSERT INTO user_profile_info (bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)',
+      'INSERT INTO user_privacy_info (username) VALUES (:username)'
     ];
 
     final params = [
@@ -109,6 +110,9 @@ class UserRegistrationService {
         'following': 0,
         'posts': 0,
         'profile_pic': '',
+        'username': userData.user.username
+      },
+      {
         'username': userData.user.username
       }
     ];
