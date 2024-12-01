@@ -9,10 +9,12 @@ class EditVentPage extends StatefulWidget {
 
   final String title;
   final String body;
+  final bool isArchive;
 
   const EditVentPage({
     required this.title,
     required this.body,
+    required this.isArchive,
     super.key
   });
 
@@ -31,13 +33,23 @@ class EditVentPageState extends State<EditVentPage> {
 
       final newBodyText = ventBodyTextController.text;
 
-      await SaveVentEdit(
-        title: widget.title, 
-        body: widget.body, 
-        newBody: newBodyText, 
-      ).save().then(
-        (value) => SnackBarDialog.temporarySnack(message: 'Saved changes.')
-      );
+      if(widget.isArchive) {
+
+        await SaveVentEdit(
+          title: widget.title, 
+          newBody: newBodyText, 
+        ).saveArchive();
+
+      } else {
+
+        await SaveVentEdit(
+          title: widget.title, 
+          newBody: newBodyText, 
+        ).save();
+
+      }
+
+      SnackBarDialog.temporarySnack(message: 'Saved changes.');
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Failed to save changes.');

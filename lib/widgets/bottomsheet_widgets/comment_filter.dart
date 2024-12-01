@@ -31,10 +31,13 @@ class BottomsheetCommentFilter {
 
           const Spacer(),
 
-          if(isCurrentlySelected)
-          const Padding(
-            padding: EdgeInsets.only(right: 16.0),
-            child: Icon(CupertinoIcons.circle_fill, color: ThemeColor.white, size: 12),
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: Icon(
+              isCurrentlySelected ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
+              color: isCurrentlySelected ? ThemeColor.white : ThemeColor.thirdWhite, 
+              size: 20
+            ),
           ),
 
         ],
@@ -57,7 +60,7 @@ class BottomsheetCommentFilter {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Filter Comments'),
+        const BottomsheetTitle(title: 'Sort Comments'),
 
         _buildOptionButton(
           text: 'Best',

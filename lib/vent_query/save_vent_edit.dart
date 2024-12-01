@@ -5,12 +5,10 @@ import 'package:revent/provider/user_data_provider.dart';
 class SaveVentEdit {
 
   final String title;
-  final String body;
   final String newBody;
 
   SaveVentEdit({
     required this.title,
-    required this.body,
     required this.newBody,
   });
 
@@ -21,12 +19,29 @@ class SaveVentEdit {
     final conn = await ReventConnect.initializeConnection();
 
     const query = 
-      'UPDATE vent_info SET body_text = :new_body WHERE title = :title AND creator = :creator AND body_text = :body';
+      'UPDATE vent_info SET body_text = :new_body WHERE title = :title AND creator = :creator';
 
     final param = {
       'title': title,
       'creator': userData.user.username,
-      'body': body,
+      'new_body': newBody
+    };
+
+    await conn.execute(query, param);
+
+  }
+
+
+  Future<void> saveArchive() async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    const query = 
+      'UPDATE archive_vent_info SET body_text = :new_body WHERE title = :title AND creator = :creator';
+
+    final param = {
+      'title': title,
+      'creator': userData.user.username,
       'new_body': newBody
     };
 

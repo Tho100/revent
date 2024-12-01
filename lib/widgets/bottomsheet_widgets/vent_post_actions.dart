@@ -79,7 +79,7 @@ class BottomsheetVentPostActions {
           onPressed: copyOnPressed
         ),
 
-        if(reportOnPressed != null)
+        if(userData.user.username != creator && reportOnPressed != null)
         _buildOptionButton(
           text: 'Report',
           icon: CupertinoIcons.flag,

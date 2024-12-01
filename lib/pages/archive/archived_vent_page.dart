@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_vent_actions.dart';
+import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
@@ -45,13 +46,19 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
   
   ValueNotifier<List<_ArchivedVentsData>> archivedVentsData = ValueNotifier([]);
 
-  void _viewVentPostPage(String title) async {
+  Future<String> _getBodyText({required String title}) async {
 
     final archiveDataInfo = await archiveDataGetter.getBodyText(
       title: title, creator: userData.user.username
     );
 
-    final bodyText = archiveDataInfo['body_text'];
+    return archiveDataInfo['body_text'];
+
+  } 
+
+  void _viewVentPostPage(String title) async {
+
+    final bodyText = await _getBodyText(title: title);
 
     Navigator.push(
       navigatorKey.currentContext!,
@@ -111,6 +118,14 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
       pfpData: profileData.profilePicture,
       postTimestamp: postTimestamp,
       viewVentPostOnPressed: () => _viewVentPostPage(title),
+      editOnPressed: () async {
+
+        Navigator.pop(navigatorKey.currentContext!);
+        
+        final bodyText = await _getBodyText(title: title);
+        NavigatePage.editVentPage(title: title, body: bodyText, isArchive: true);
+
+      },
       deleteOnPressed: () {
         CustomAlertDialog.alertDialogCustomOnPress(
           message: 'Delete this archive?', 
