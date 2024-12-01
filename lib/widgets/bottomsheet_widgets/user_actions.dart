@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/bottomsheet.dart';
@@ -20,17 +19,13 @@ class BottomsheetUserActions {
       child: Row(
         children: [
 
-          Icon(icon, color: ThemeColor.darkRed),
+          Icon(icon, color: ThemeColor.secondaryWhite),
 
           const SizedBox(width: 15),
 
           Text(
             text,
-            style: GoogleFonts.inter(
-              color: ThemeColor.darkRed,
-              fontWeight: FontWeight.w800,
-              fontSize: 17,
-            ),
+            style: ThemeStyle.btnBottomsheetTextStyle
           )
 
         ],
