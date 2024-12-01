@@ -42,6 +42,7 @@ class BottomsheetCommentActions {
     required String commenter,
     required VoidCallback copyOnPressed,
     required VoidCallback reportOnPressed,
+    required VoidCallback blockOnPressed,
     required VoidCallback deleteOnPressed,
   }) {
     return Bottomsheet().buildBottomSheet(
@@ -71,6 +72,13 @@ class BottomsheetCommentActions {
           text: 'Delete',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
+        ),
+
+        if(userData.user.username != commenter)
+        _buildOptionButton(
+          text: 'Block @$commenter',
+          icon: CupertinoIcons.clear_circled,
+          onPressed: blockOnPressed
         ),
 
         const SizedBox(height: 25),

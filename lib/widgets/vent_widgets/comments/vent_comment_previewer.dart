@@ -92,6 +92,9 @@ class VentCommentPreviewer extends StatelessWidget {
           reportOnPressed: () {
             Navigator.pop(navigatorKey.currentContext!);
           }, 
+          blockOnPressed: () {
+            Navigator.pop(navigatorKey.currentContext!);
+          },
           deleteOnPressed: () async {  
             await _deleteOnPressed();
             Navigator.pop(navigatorKey.currentContext!);
