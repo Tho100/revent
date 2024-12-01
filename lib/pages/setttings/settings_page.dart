@@ -4,6 +4,7 @@ import 'package:revent/model/user_model.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/pages/setttings/account_info_page.dart';
 import 'package:revent/pages/setttings/app_info_page.dart';
+import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/pages/setttings/security_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -47,7 +48,12 @@ class SettingsPage extends StatelessWidget {
           SettingsButton(
             text: 'Privacy', 
             icon: CupertinoIcons.lock,
-            onPressed: () {}
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (_) => const PrivacyPage())
+              );
+            }
           ),
         
           const SizedBox(height: buttonGap),

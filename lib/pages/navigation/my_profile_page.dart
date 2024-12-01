@@ -6,6 +6,7 @@ import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
+import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
@@ -180,17 +181,22 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     );
   }
 
-  Widget _buildActionButton() {
+  Widget _buildSettingsActionButton() {
     return IconButton(
       icon: const Icon(CupertinoIcons.bars, size: 28),
       onPressed: () => NavigatePage.settingsPage()
     );
   }
 
-  Widget _buildLeadingButton() {
+  Widget _buildPrivacyLeadingButton() {
     return IconButton(
       icon: const Icon(CupertinoIcons.lock, size: 24),
-      onPressed: () {}
+      onPressed: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => const PrivacyPage())
+        );
+      }
     );
   }
 
@@ -221,8 +227,8 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
         appBar: CustomAppBar(
           context: context, 
           title: '',
-          customLeading: _buildLeadingButton(),
-          actions: [_buildActionButton()]
+          customLeading: _buildPrivacyLeadingButton(),
+          actions: [_buildSettingsActionButton()]
         ).buildAppBar(),
         body: _buildBody(),
         bottomNavigationBar: PageNavigationBar()
