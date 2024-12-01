@@ -217,23 +217,19 @@ class VentPostPageState extends State<VentPostPage> {
     final ventIndex = currentProvider['vent_index'];
     final ventData = currentProvider['vent_data'];
 
-    bool isVentSaved;
-
     if(_isFromProfile()) {
 
       final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
 
-      isVentSaved = isMyProfile 
+      return isMyProfile 
         ? ventData.myProfile.isPostSaved[ventIndex]
         : ventData.userProfile.isPostSaved[ventIndex];
 
     } else {
 
-      isVentSaved = ventData.vents[ventIndex].isPostSaved;
+      return ventData.vents[ventIndex].isPostSaved;
       
     }
-
-    return isVentSaved;
 
   }
 
