@@ -22,6 +22,16 @@ class PrivacyPageState extends State<PrivacyPage> {
 
   final userPrivacyActions = UserPrivacyActions();
 
+  void _loadCurrentOptions() async {
+
+    final currentOptions = await userPrivacyActions.getCurrentOptions();
+
+    privateAccountNotifier.value = currentOptions['account'] != 0;
+    hideFollowingListNotifier.value = currentOptions['following'] != 0;
+    hideSavedPostNotifier.value = currentOptions['saved'] != 0;     
+
+  }
+
   Future<void> _privateAccountOnPressed() async {
 
     privateAccountNotifier.value 
@@ -125,6 +135,12 @@ class PrivacyPageState extends State<PrivacyPage> {
         ],
       ),
     );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadCurrentOptions();
   }
 
   @override
