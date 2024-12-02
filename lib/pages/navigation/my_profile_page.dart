@@ -103,14 +103,17 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
                 textAlign: TextAlign.start,
               ),
             )
-            : GestureDetector(
+            : Transform.translate(
+              offset: Offset(0, profileData.pronouns.isEmpty ? -5 : -2),
+              child: GestureDetector(
               onTap: () => NavigatePage.fullBioPage(bio: profileData.bio),
-              child: Text(
-                profileData.bio,
-                style: ThemeStyle.profileBioStyle,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
+                child: Text(
+                  profileData.bio,
+                  style: ThemeStyle.profileBioStyle,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
               ),
             );
         },

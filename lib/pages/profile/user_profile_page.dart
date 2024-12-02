@@ -193,14 +193,17 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
                 textAlign: TextAlign.start
               ),
             )
-            : GestureDetector(
-              onTap: () => NavigatePage.fullBioPage(bio: bio),
-              child: Text(
-                bio,
-                style: ThemeStyle.profileBioStyle,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 3,
+            : Transform.translate(
+              offset: Offset(0, pronounsNotifier.value.isEmpty ? -5 : -2),
+                child: GestureDetector(
+                onTap: () => NavigatePage.fullBioPage(bio: bio),
+                child: Text(
+                  bio,
+                  style: ThemeStyle.profileBioStyle,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
               ),
             );  
         },
