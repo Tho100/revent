@@ -281,8 +281,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     );
   }
 
-  // TODO: Rename to _buildOptionsActionButton
-  Widget _buildActionButton() {
+  Widget _buildOptionsActionButton() {
     return IconButton(
       icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
       onPressed: () => BottomsheetUserActions().buildBottomsheet(
