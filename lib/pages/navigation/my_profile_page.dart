@@ -110,7 +110,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
                 style: ThemeStyle.profileBioStyle,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                maxLines: 3,
               ),
             );
         },

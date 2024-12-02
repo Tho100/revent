@@ -200,7 +200,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
                 style: ThemeStyle.profileBioStyle,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+                maxLines: 3,
               ),
             );  
         },
@@ -322,7 +322,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       appBar: CustomAppBar(
         context: context, 
         title: '',
-        actions: [_buildActionButton()]
+        actions: [_buildOptionsActionButton()]
       ).buildAppBar(),
       body: _buildBody(),
       bottomNavigationBar: PageNavigationBar()
