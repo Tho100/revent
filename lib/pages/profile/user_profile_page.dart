@@ -271,17 +271,19 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       builder: (_, pronouns, __) {
         return ProfileBodyWidgets(
           onRefresh: () async => await _setProfileData(),
-          tabBarWidgets: tabBarWidgets, 
+          tabBarWidgets: tabBarWidgets,
           profileInfoWidgets: profileInfoWidgets, 
-          pronounsWidget: _buildPronouns(), 
-          bioWidget: _buildBio(), 
+          pronounsWidget: _buildPronouns(),
+          bioWidget: _buildBio(),
           userActionButtonWidget: _buildFollowButton(), 
-          popularityWidget: _popularityWidgets()
+          popularityWidget: _popularityWidgets(),
+          isPrivateAccount: isPrivateAccount,
         );      
       }
     );
   }
 
+  // TODO: Rename to _buildOptionsActionButton
   Widget _buildActionButton() {
     return IconButton(
       icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
@@ -322,7 +324,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: isPrivateAccount ? 'Private Account' : '',
+        title: '',
         actions: [_buildActionButton()]
       ).buildAppBar(),
       body: _buildBody(),
