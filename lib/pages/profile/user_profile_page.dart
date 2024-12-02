@@ -79,9 +79,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       username: widget.username
     );
 
-    setState(() {
-      isPrivateAccount = getCurrentOptions['account'] != 0;
-    });
+    isPrivateAccount = getCurrentOptions['account'] != 0;
 
   }
 
