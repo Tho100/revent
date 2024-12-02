@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
+import 'package:revent/data_query/user_privacy_actions.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -56,6 +57,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
+  bool isPrivateAccount = false;
+
   void _initializeClasses() {
     tabController = TabController(length: 2, vsync: this);
     profileInfoWidgets = ProfileInfoWidgets(
@@ -66,13 +69,47 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       controller: tabController, 
       isMyProfile: false,
       username: widget.username,
-      pfpData: widget.pfpData
+      pfpData: widget.pfpData,
     );
+  }
+
+  Future<void> _isPrivateAccount() async {
+
+    final getCurrentOptions = await UserPrivacyActions().getCurrentOptions(
+      username: widget.username
+    );
+
+    isPrivateAccount = getCurrentOptions['account'] != 0;
+
+  }
+
+  Future<void> _setPrivateAccountData() async {
+
+    final getProfileData = await ProfileDataGetter().getProfileData(
+      isMyProfile: false, username: widget.username
+    );
+        
+    followersNotifier.value = getProfileData['followers']; 
+    followingNotifier.value = getProfileData['following'];
+    bioNotifier.value =  getProfileData['bio'];
+    pronounsNotifier.value =  getProfileData['pronouns'];
+
+    isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
+    
+    postsNotifier.value = 0;
+
   }
 
   Future<void> _setProfileData() async {
 
     try {
+
+      await _isPrivateAccount();
+
+      if(isPrivateAccount) {
+        await _setPrivateAccountData();
+        return;
+      }
 
       final getProfileData = await ProfileDataGetter().getProfileData(
         isMyProfile: false, username: widget.username
@@ -156,14 +193,17 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
                 textAlign: TextAlign.start
               ),
             )
-            : GestureDetector(
-              onTap: () => NavigatePage.fullBioPage(bio: bio),
-              child: Text(
-                bio,
-                style: ThemeStyle.profileBioStyle,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 2,
+            : Transform.translate(
+              offset: Offset(0, pronounsNotifier.value.isEmpty ? -5 : -2),
+                child: GestureDetector(
+                onTap: () => NavigatePage.fullBioPage(bio: bio),
+                child: Text(
+                  bio,
+                  style: ThemeStyle.profileBioStyle,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 3,
+                ),
               ),
             );  
         },
@@ -171,7 +211,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     );
   }
 
-  Widget _buildEditProfileButton() {
+  Widget _buildFollowButton() {
 
     final buttonWidth = MediaQuery.of(context).size.width * 0.87;
     final buttonHeight = MediaQuery.of(context).size.height * 0.052;
@@ -211,12 +251,14 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
         profileInfoWidgets.buildPopularityHeaderNotifier('vents', postsNotifier),
 
         GestureDetector(
-          onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
+          onTap: () => isPrivateAccount 
+            ? null : NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
         ),
 
         GestureDetector(
-          onTap: () => NavigatePage.followsPage(pageType: 'Following', username: widget.username),
+          onTap: () => isPrivateAccount 
+            ? null : NavigatePage.followsPage(pageType: 'Following', username: widget.username),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
         ),
   
@@ -230,18 +272,19 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       builder: (_, pronouns, __) {
         return ProfileBodyWidgets(
           onRefresh: () async => await _setProfileData(),
-          tabBarWidgets: tabBarWidgets, 
+          tabBarWidgets: tabBarWidgets,
           profileInfoWidgets: profileInfoWidgets, 
-          pronounsWidget: _buildPronouns(), 
-          bioWidget: _buildBio(), 
-          userActionButtonWidget: _buildEditProfileButton(), 
-          popularityWidget: _popularityWidgets()
+          pronounsWidget: _buildPronouns(),
+          bioWidget: _buildBio(),
+          userActionButtonWidget: _buildFollowButton(), 
+          popularityWidget: _popularityWidgets(),
+          isPrivateAccount: isPrivateAccount,
         );      
       }
     );
   }
 
-  Widget _buildActionButton() {
+  Widget _buildOptionsActionButton() {
     return IconButton(
       icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
       onPressed: () => BottomsheetUserActions().buildBottomsheet(
@@ -282,7 +325,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       appBar: CustomAppBar(
         context: context, 
         title: '',
-        actions: [_buildActionButton()]
+        actions: [_buildOptionsActionButton()]
       ).buildAppBar(),
       body: _buildBody(),
       bottomNavigationBar: PageNavigationBar()

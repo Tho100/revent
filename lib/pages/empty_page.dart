@@ -9,9 +9,9 @@ class EmptyPage {
       child: Text(
         message,
         style: GoogleFonts.inter(
-          color: ThemeColor.white,
+          color: ThemeColor.secondaryWhite,
           fontWeight: FontWeight.w800,
-          fontSize: 17
+          fontSize: 15
         ),
       ),
     );

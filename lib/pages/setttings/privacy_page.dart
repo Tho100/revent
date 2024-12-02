@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_privacy_actions.dart';
+import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/app_bar.dart';
 
@@ -24,7 +26,11 @@ class PrivacyPageState extends State<PrivacyPage> {
 
   void _loadCurrentOptions() async {
 
-    final currentOptions = await userPrivacyActions.getCurrentOptions();
+    final userData = GetIt.instance<UserDataProvider>();
+
+    final currentOptions = await userPrivacyActions.getCurrentOptions(
+      username: userData.user.username
+    );
 
     privateAccountNotifier.value = currentOptions['account'] != 0;
     hideFollowingListNotifier.value = currentOptions['following'] != 0;

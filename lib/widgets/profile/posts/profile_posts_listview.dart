@@ -39,7 +39,9 @@ class ProfilePostsListView extends StatelessWidget {
   }
 
   Widget _buildOnEmpty() {
-    return EmptyPage().customMessage(message: 'No vent posted yet.');
+    return EmptyPage().customMessage(
+      message: 'No vent posted yet.'
+    );
   }
 
   Widget _buildListView({
@@ -59,7 +61,6 @@ class ProfilePostsListView extends StatelessWidget {
       },
     );
   }
-
 
   @override
   Widget build(BuildContext context) {

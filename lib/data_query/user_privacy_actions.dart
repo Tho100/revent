@@ -22,7 +22,7 @@ class UserPrivacyActions {
 
   }
   
-  Future<Map<String, int>> getCurrentOptions() async {
+  Future<Map<String, int>> getCurrentOptions({required String username}) async {
 
     final conn = await ReventConnect.initializeConnection();
 
@@ -30,7 +30,7 @@ class UserPrivacyActions {
       'SELECT privated_profile, privated_following_list, privated_saved_vents FROM user_privacy_info WHERE username = :username';
 
     final param = {
-      'username': userData.user.username,
+      'username': username,
     };
 
     final results = await conn.execute(query, param);

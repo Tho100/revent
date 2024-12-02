@@ -39,7 +39,9 @@ class ProfileSavedListView extends StatelessWidget {
   }
 
   Widget _buildOnEmpty() {
-    return EmptyPage().customMessage(message: 'No saved vent yet.');
+    return EmptyPage().customMessage(
+      message: 'No saved vent yet.'
+    );
   }
 
   Widget _buildListView({

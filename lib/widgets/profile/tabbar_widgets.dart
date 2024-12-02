@@ -8,6 +8,7 @@ import 'package:revent/widgets/profile/saved/profile_saved_listview.dart';
 class ProfileTabBarWidgets {
 
   final TabController controller;
+
   final bool isMyProfile;
 
   final String username;
@@ -17,7 +18,7 @@ class ProfileTabBarWidgets {
     required this.controller,
     required this.isMyProfile,
     required this.username,
-    required this.pfpData
+    required this.pfpData,
   });
 
   Widget buildTabBarTabs() {
@@ -26,8 +27,17 @@ class ProfileTabBarWidgets {
       child: TabBarView(
         controller: controller,
         children: [
-          ProfilePostsListView(isMyProfile: isMyProfile, username: username, pfpData: pfpData),
-          ProfileSavedListView(isMyProfile: isMyProfile),
+
+          ProfilePostsListView(
+            isMyProfile: isMyProfile,
+            username: username,
+            pfpData: pfpData,
+          ),
+
+          ProfileSavedListView(
+            isMyProfile: isMyProfile,
+          ),
+
         ],
       ),
     );
