@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
+import 'package:revent/data_query/user_privacy_actions.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -56,6 +57,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
+  bool isPrivateAccount = false;
+
   void _initializeClasses() {
     tabController = TabController(length: 2, vsync: this);
     profileInfoWidgets = ProfileInfoWidgets(
@@ -66,13 +69,49 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       controller: tabController, 
       isMyProfile: false,
       username: widget.username,
-      pfpData: widget.pfpData
+      pfpData: widget.pfpData,
     );
+  }
+
+  Future<void> _isPrivateAccount() async {
+
+    final getCurrentOptions = await UserPrivacyActions().getCurrentOptions(
+      username: widget.username
+    );
+
+    setState(() {
+      isPrivateAccount = getCurrentOptions['account'] != 0;
+    });
+
+  }
+
+  Future<void> _setPrivateAccountData() async {
+
+    final getProfileData = await ProfileDataGetter().getProfileData(
+      isMyProfile: false, username: widget.username
+    );
+        
+    followersNotifier.value = getProfileData['followers']; 
+    followingNotifier.value = getProfileData['following'];
+    bioNotifier.value =  getProfileData['bio'];
+    pronounsNotifier.value =  getProfileData['pronouns'];
+
+    isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
+    
+    postsNotifier.value = 0;
+
   }
 
   Future<void> _setProfileData() async {
 
     try {
+
+      await _isPrivateAccount();
+
+      if(isPrivateAccount) {
+        await _setPrivateAccountData();
+        return;
+      }
 
       final getProfileData = await ProfileDataGetter().getProfileData(
         isMyProfile: false, username: widget.username
@@ -171,6 +210,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     );
   }
 
+  // TODO: Update this to _buildFollowButton
   Widget _buildEditProfileButton() {
 
     final buttonWidth = MediaQuery.of(context).size.width * 0.87;
@@ -211,12 +251,14 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
         profileInfoWidgets.buildPopularityHeaderNotifier('vents', postsNotifier),
 
         GestureDetector(
-          onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
+          onTap: () => isPrivateAccount 
+            ? null : NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
         ),
 
         GestureDetector(
-          onTap: () => NavigatePage.followsPage(pageType: 'Following', username: widget.username),
+          onTap: () => isPrivateAccount 
+            ? null : NavigatePage.followsPage(pageType: 'Following', username: widget.username),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
         ),
   
@@ -281,7 +323,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: '',
+        title: isPrivateAccount ? 'Private Account' : '',
         actions: [_buildActionButton()]
       ).buildAppBar(),
       body: _buildBody(),
