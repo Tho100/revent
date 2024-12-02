@@ -27,13 +27,15 @@ class ProfileTabBarWidgets {
       child: TabBarView(
         controller: controller,
         children: [
-          
+
           ProfilePostsListView(
-            isMyProfile: isMyProfile, username: username, pfpData: pfpData
+            isMyProfile: isMyProfile,
+            username: username,
+            pfpData: pfpData,
           ),
 
           ProfileSavedListView(
-            isMyProfile: isMyProfile
+            isMyProfile: isMyProfile,
           ),
 
         ],
