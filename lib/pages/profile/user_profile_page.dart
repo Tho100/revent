@@ -210,8 +210,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     );
   }
 
-  // TODO: Update this to _buildFollowButton
-  Widget _buildEditProfileButton() {
+  Widget _buildFollowButton() {
 
     final buttonWidth = MediaQuery.of(context).size.width * 0.87;
     final buttonHeight = MediaQuery.of(context).size.height * 0.052;
@@ -276,7 +275,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
           profileInfoWidgets: profileInfoWidgets, 
           pronounsWidget: _buildPronouns(), 
           bioWidget: _buildBio(), 
-          userActionButtonWidget: _buildEditProfileButton(), 
+          userActionButtonWidget: _buildFollowButton(), 
           popularityWidget: _popularityWidgets()
         );      
       }
