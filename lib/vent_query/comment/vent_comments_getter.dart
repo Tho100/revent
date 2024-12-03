@@ -65,12 +65,17 @@ class VentCommentsGetter {
       conn: conn, commentedBy: commentedBy, comments: comment
     );
 
+    final isLikedByCreatorState = await _commentLikedByCreatorState(
+      conn: conn, commentedBy: commentedBy, comments: comment
+    );
+
     return {
       'commented_by': commentedBy,
       'comment': comment,
       'comment_timestamp': commentTimestamp,
       'total_likes': totalLikes,
       'is_liked': isLikedState,
+      'is_liked_by_creator': isLikedByCreatorState,
       'profile_picture': profilePictures,
     };
 
@@ -104,5 +109,32 @@ class VentCommentsGetter {
     
   }
 
+  Future<List<bool>> _commentLikedByCreatorState({
+    required MySQLConnectionPool conn,
+    required List<String> commentedBy,
+    required List<String> comments,
+  }) async {
+
+    const readLikesQuery =
+      'SELECT commented_by, comment FROM vent_comments_likes_info WHERE liked_by = :liked_by AND creator = :creator AND title = :title';
+
+    final params = {
+      'liked_by': creator,
+      'creator': creator,
+      'title': title,
+    };
+
+    final results = await conn.execute(readLikesQuery, params);
+
+    final likedPairs = results.rows.map((row) {
+      return '${row.assoc()['commented_by']}|${row.assoc()['comment']}';
+    }).toSet();
+
+    return List<bool>.generate(
+      commentedBy.length,
+      (i) => likedPairs.contains('${commentedBy[i]}|${comments[i]}'),
+    );
+    
+  }
 
 }

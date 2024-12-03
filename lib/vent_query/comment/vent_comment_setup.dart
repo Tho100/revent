@@ -23,7 +23,9 @@ class VentCommentSetup {
     final commentTimestamp = commentsGetter['comment_timestamp']! as List<String>;
 
     final totalLikes = commentsGetter['total_likes']! as List<int>;
+
     final isLiked = commentsGetter['is_liked']! as List<bool>;
+    final isLikedByCreator = commentsGetter['is_liked_by_creator']! as List<bool>;
 
     final pfpData = commentsGetter['profile_picture']! as List<Uint8List>;
 
@@ -34,6 +36,7 @@ class VentCommentSetup {
         commentTimestamp: commentTimestamp[index],
         totalLikes: totalLikes[index],
         isCommentLiked: isLiked[index],
+        isCommentLikedByCreator: isLikedByCreator[index],
         pfpData: pfpData[index]
       );
     });

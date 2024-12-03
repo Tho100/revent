@@ -23,9 +23,12 @@ class VentCommentPreviewer extends StatelessWidget {
   final String commentTimestamp;
 
   final int totalLikes;
+
   final bool isCommentLiked;
+  final bool isCommentLikedByCreator;
 
   final Uint8List pfpData;
+  final Uint8List creatorPfpData;
 
   VentCommentPreviewer({
     required this.title,
@@ -35,7 +38,9 @@ class VentCommentPreviewer extends StatelessWidget {
     required this.commentTimestamp,
     required this.totalLikes,
     required this.isCommentLiked,
+    required this.isCommentLikedByCreator,
     required this.pfpData,
+    required this.creatorPfpData,
     super.key
   });
 
@@ -120,6 +125,33 @@ class VentCommentPreviewer extends StatelessWidget {
     );
   }
 
+  Widget _buildLikedByCreator() {
+    return Transform.translate(
+      offset: const Offset(0, 3),
+      child: SizedBox(
+        height: 25,
+        width: 25,
+        child: Stack(
+          children: [
+      
+            ProfilePictureWidget(
+              pfpData: creatorPfpData,
+              customEmptyPfpSize: 16,
+              customWidth: 21,
+              customHeight: 21,
+            ),
+      
+            const Align(
+              alignment: Alignment.bottomRight,
+              child: Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 17)
+            ),
+      
+          ]
+        ),
+      ),
+    );
+  }
+
   Widget _buildLikeAndReplyButtons() {
     return Transform.translate(
       offset: const Offset(-2, 0),
@@ -153,7 +185,12 @@ class VentCommentPreviewer extends StatelessWidget {
               fontWeight: FontWeight.w800,
               fontSize: 13
             )
-          )
+          ),
+
+          const SizedBox(width: 25),
+
+          if(isCommentLikedByCreator)
+          _buildLikedByCreator()
       
         ],
       ),
