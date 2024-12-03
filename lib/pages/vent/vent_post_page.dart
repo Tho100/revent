@@ -11,7 +11,7 @@ import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/format_date.dart';
-import 'package:revent/pages/post_comment_page.dart';
+import 'package:revent/pages/comment/post_comment_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
@@ -593,7 +593,7 @@ class VentPostPageState extends State<VentPostPage> {
                       fontSize: 14
                     ),
                   ),
-
+                  
                 ],
               ),
             ),

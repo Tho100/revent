@@ -5,6 +5,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/pages/comment/edit_comment_page.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
@@ -90,6 +91,16 @@ class VentCommentPreviewer extends StatelessWidget {
         onPressed: () => BottomsheetCommentActions().buildBottomsheet(
           context: navigatorKey.currentContext!, 
           commenter: commentedBy, 
+          editOnPressed: () {
+            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.push(
+              navigatorKey.currentContext!, 
+              MaterialPageRoute(builder: (_) => EditCommentPage(
+                title: title, creator: creator, originalComment: comment
+                )
+              )
+            );
+          },
           copyOnPressed: () {
             Clipboard.setData(ClipboardData(text: comment));
             Navigator.pop(navigatorKey.currentContext!);
