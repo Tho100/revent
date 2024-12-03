@@ -8,6 +8,7 @@ import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_privacy_actions.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
+import 'package:revent/helper/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
@@ -321,14 +322,24 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+      onWillPop: () async {
+        navigation.setCurrentRoute(AppRoute.home);
+        return true;
+      },
+      child: Scaffold(
       appBar: CustomAppBar(
         context: context, 
         title: '',
+        customBackOnPressed: () {
+          navigation.setCurrentRoute(AppRoute.home);
+          Navigator.pop(context);
+        },
         actions: [_buildOptionsActionButton()]
       ).buildAppBar(),
       body: _buildBody(),
       bottomNavigationBar: PageNavigationBar()
+      ),
     );
   }
   

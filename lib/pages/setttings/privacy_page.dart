@@ -76,6 +76,9 @@ class PrivacyPageState extends State<PrivacyPage> {
                       notifier.value = !isToggled;
                       onToggled();
                     },
+                    activeColor: ThemeColor.white,
+                    trackColor: ThemeColor.darkWhite,
+                    thumbColor: isToggled ? ThemeColor.black : ThemeColor.white,
                   );
                 }
               ),
