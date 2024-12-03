@@ -135,7 +135,6 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: ''
       ).buildAppBar(),
       resizeToAvoidBottomInset: false,
       body: _buildBody(context),

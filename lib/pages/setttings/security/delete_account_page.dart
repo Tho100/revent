@@ -126,7 +126,6 @@ class DeleteAccountPageState extends State<DeleteAccountPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: ''
       ).buildAppBar(),
       resizeToAvoidBottomInset: false,
       body: _buildBody(context),
