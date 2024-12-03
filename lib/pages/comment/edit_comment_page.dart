@@ -116,12 +116,9 @@ class EditCommentPageState extends State<EditCommentPage> {
   }
 
   Widget _buildActionButton() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: IconButton(
-        icon: const Icon(Icons.check, size: 22),
-        onPressed: () async => _saveOnPressed()
-      ),
+    return IconButton(
+      icon: const Icon(Icons.check, size: 22),
+      onPressed: () async => _saveOnPressed()
     );
   }
 

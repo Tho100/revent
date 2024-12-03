@@ -313,12 +313,9 @@ class EditProfilePageState extends State<EditProfilePage> {
   }
 
   Widget _buildActionButton() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 8.0),
-      child: IconButton(
-        icon: const Icon(Icons.check, size: 22),
-        onPressed: () => _saveChangesOnPressed(),
-      ),
+    return IconButton(
+      icon: const Icon(Icons.check, size: 22),
+      onPressed: () => _saveChangesOnPressed(),
     );
   }
 
