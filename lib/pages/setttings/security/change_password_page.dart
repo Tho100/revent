@@ -74,7 +74,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
     
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: MediaQuery.of(context).size.width * 0.05,
@@ -137,7 +137,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
         context: context, 
       ).buildAppBar(),
       resizeToAvoidBottomInset: false,
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
   
