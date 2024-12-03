@@ -2,52 +2,43 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/vent_query/save_vent_edit.dart';
+import 'package:revent/vent_query/comment/save_comment_edit.dart';
 import 'package:revent/widgets/app_bar.dart';
 
-class EditVentPage extends StatefulWidget {
+class EditCommentPage extends StatefulWidget {
 
   final String title;
-  final String body;
-  final bool isArchive;
+  final String creator;
+  final String originalComment;
 
-  const EditVentPage({
+  const EditCommentPage({
     required this.title,
-    required this.body,
-    required this.isArchive,
+    required this.creator,
+    required this.originalComment,
     super.key
   });
 
   @override
-  State<EditVentPage> createState() => EditVentPageState();
+  State<EditCommentPage> createState() => EditCommentPageState();
   
 }
 
-class EditVentPageState extends State<EditVentPage> {
+class EditCommentPageState extends State<EditCommentPage> {
 
-  final ventBodyTextController = TextEditingController();
+  final commentController = TextEditingController();
 
   Future<void> _saveOnPressed() async {
 
     try {
 
-      final newBodyText = ventBodyTextController.text;
+      final newCommentText = commentController.text;
 
-      if(widget.isArchive) {
-
-        await SaveVentEdit(
-          title: widget.title, 
-          newBody: newBodyText, 
-        ).saveArchive();
-
-      } else {
-
-        await SaveVentEdit(
-          title: widget.title, 
-          newBody: newBodyText, 
-        ).save();
-
-      }
+      await SaveCommentEdit(
+        title: widget.title,
+        creator: widget.creator,
+        originalComment: widget.originalComment, 
+        newComment: newCommentText, 
+      ).save();
 
       SnackBarDialog.temporarySnack(message: 'Saved changes.');
 
@@ -72,7 +63,7 @@ class EditVentPageState extends State<EditVentPage> {
     return Transform.translate(
       offset: const Offset(0, -5),
       child: TextFormField(
-        controller: ventBodyTextController,
+        controller: commentController,
         autofocus: true,
         keyboardType: TextInputType.multiline,
         maxLength: 2850,
@@ -89,7 +80,7 @@ class EditVentPageState extends State<EditVentPage> {
             fontWeight: FontWeight.w700, 
             fontSize: 16
           ),
-          hintText: 'Body text (optional)',
+          hintText: 'Your comment',
           border: InputBorder.none,
           contentPadding: EdgeInsets.zero, 
         ),
@@ -134,12 +125,12 @@ class EditVentPageState extends State<EditVentPage> {
   @override
   void initState() {
     super.initState();
-    ventBodyTextController.text = widget.body;
+    commentController.text = widget.originalComment;
   }
 
   @override
   void dispose() {
-    ventBodyTextController.dispose();
+    commentController.dispose();
     super.dispose();
   }
 
@@ -149,7 +140,7 @@ class EditVentPageState extends State<EditVentPage> {
       appBar: CustomAppBar(
         context: context, 
         actions: [_buildActionButton()],
-        title: 'Edit Vent'
+        title: 'Edit Comment'
       ).buildAppBar(),
       body: _buildBody(),
     );

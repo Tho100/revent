@@ -55,6 +55,18 @@ class VentCommentProvider extends ChangeNotifier {
     }
   }
 
+  void editComment(String username, String newComment, String originalComment) {
+    
+    final index = ventComments.indexWhere(
+      (comment) => comment.commentedBy == username && comment.comment == originalComment
+    );
+
+    ventComments[index].comment = newComment;
+
+    notifyListeners();
+
+  }
+
   void likeComment(int index, bool isUserLikedComment) {
 
     _ventComments[index].isCommentLiked = isUserLikedComment 

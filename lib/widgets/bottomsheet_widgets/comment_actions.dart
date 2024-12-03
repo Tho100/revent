@@ -40,6 +40,7 @@ class BottomsheetCommentActions {
   Future buildBottomsheet({
     required BuildContext context,
     required String commenter,
+    required VoidCallback editOnPressed,
     required VoidCallback copyOnPressed,
     required VoidCallback reportOnPressed,
     required VoidCallback blockOnPressed,
@@ -54,6 +55,13 @@ class BottomsheetCommentActions {
         const BottomsheetBar(),
 
         const BottomsheetTitle(title: 'Comment Action'),
+
+        if(userData.user.username == commenter)
+        _buildOptionButton(
+          text: 'Edit',
+          icon: CupertinoIcons.square_pencil,
+          onPressed: editOnPressed
+        ),
 
         _buildOptionButton(
           text: 'Copy',
