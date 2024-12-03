@@ -11,7 +11,8 @@ class VentComment {
   int totalLikes;
 
   bool isCommentLiked;
-  
+  bool isCommentLikedByCreator;
+
   Uint8List pfpData;
 
   VentComment({
@@ -21,6 +22,7 @@ class VentComment {
     required this.pfpData,
     this.totalLikes = 0,
     this.isCommentLiked = false,
+    this.isCommentLikedByCreator = false
   });
 
 }

@@ -57,7 +57,6 @@ class ViewArchiveVentPage extends StatelessWidget {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: ''
       ).buildAppBar(),
       body: _buildBody(),
     );

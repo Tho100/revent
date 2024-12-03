@@ -74,7 +74,7 @@ class DeleteAccountPageState extends State<DeleteAccountPage> {
     
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: MediaQuery.of(context).size.width * 0.05,
@@ -126,10 +126,9 @@ class DeleteAccountPageState extends State<DeleteAccountPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: ''
       ).buildAppBar(),
       resizeToAvoidBottomInset: false,
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
   

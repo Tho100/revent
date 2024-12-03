@@ -5,19 +5,19 @@ import 'package:revent/themes/theme_color.dart';
 
 class CustomAppBar {
 
-  final String title;
-  final Color? backgroundColor;
+  final BuildContext? context;
+  final String? title;
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
-  final BuildContext? context;
-  final VoidCallback? customBackOnPressed;
+  final Color? backgroundColor;
   final Widget? customLeading;
   final bool? enableCenter;
   final Color? leadingColor;
+  final VoidCallback? customBackOnPressed;
 
   const CustomAppBar({
     required this.context,
-    required this.title,
+    this.title,
     this.actions,
     this.bottom,
     this.backgroundColor,
@@ -32,7 +32,7 @@ class CustomAppBar {
       centerTitle: enableCenter ?? true,
       automaticallyImplyLeading: false,
       title: Text(
-        title,
+        title ?? '',
         style: GoogleFonts.inter(
           color: ThemeColor.white,
           fontWeight: FontWeight.w800,

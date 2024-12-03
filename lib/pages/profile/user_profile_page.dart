@@ -330,7 +330,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       child: Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: '',
         customBackOnPressed: () {
           navigation.setCurrentRoute(AppRoute.home);
           Navigator.pop(context);

@@ -229,7 +229,6 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
       child: Scaffold(
         appBar: CustomAppBar(
           context: context, 
-          title: '',
           customLeading: _buildPrivacyLeadingButton(),
           actions: [_buildSettingsActionButton()]
         ).buildAppBar(),
