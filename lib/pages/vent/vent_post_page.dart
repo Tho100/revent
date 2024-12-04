@@ -573,11 +573,16 @@ class VentPostPageState extends State<VentPostPage> {
         
                     const SizedBox(height: 20),
         
-                    VentCommentsListView(
-                      title: widget.title, 
-                      creator: widget.creator,
-                      creatorPfpData: widget.pfpData,
-                      isCommentDisabled: enableCommentNotifier.value,
+                    ValueListenableBuilder(
+                      valueListenable: enableCommentNotifier,
+                      builder: (_, isEnabled, __) {
+                        return VentCommentsListView(
+                          title: widget.title, 
+                          creator: widget.creator,
+                          creatorPfpData: widget.pfpData,
+                          isCommentEnabled: enableCommentNotifier.value,
+                        );
+                      },
                     ),
         
                     const SizedBox(height: 10),

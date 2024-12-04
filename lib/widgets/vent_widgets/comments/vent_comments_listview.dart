@@ -11,13 +11,13 @@ class VentCommentsListView extends StatelessWidget {
   final String title;
   final String creator;
   final Uint8List creatorPfpData;
-  final bool isCommentDisabled;
+  final bool isCommentEnabled;
 
   const VentCommentsListView({
     required this.title,
     required this.creator,
     required this.creatorPfpData,
-    required this.isCommentDisabled,
+    required this.isCommentEnabled,
     super.key
   });
 
@@ -40,10 +40,10 @@ class VentCommentsListView extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(top: 35),
       child: EmptyPage().headerCustomMessage(
-        header: isCommentDisabled 
-          ? 'Comment disabled' : 'No comment yet', 
-        subheader: isCommentDisabled 
-          ? 'The creator has disabled comments for this post.' : 'Be the first to comment!'
+        header: isCommentEnabled 
+          ? 'No comment yet' : 'Comment disabled', 
+        subheader: isCommentEnabled 
+          ? 'Be the first to comment!' : 'The creator has disabled comments for this post.'
       ),
     );
   }
