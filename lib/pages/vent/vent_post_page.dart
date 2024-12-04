@@ -15,6 +15,7 @@ import 'package:revent/pages/comment/post_comment_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/provider/vent/active_vent_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
@@ -376,13 +377,17 @@ class VentPostPageState extends State<VentPostPage> {
         
         const SizedBox(height: 14),
 
-        SelectableText(
-          widget.bodyText,
-          style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
-            fontWeight: FontWeight.w700,
-            fontSize: 14
-          ),
+        Consumer<ActiveVentProvider>(
+          builder: (_, data, __) {
+            return SelectableText(
+            data.body,
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontWeight: FontWeight.w700,
+                fontSize: 14
+              ),
+            );
+          },
         ),
 
       ],
@@ -693,9 +698,10 @@ class VentPostPageState extends State<VentPostPage> {
 
   @override
   void initState() {
-    _loadCommentsSettings().then(
-      (_) => _initializeComments()
-    );
+    _loadCommentsSettings().then((_) {
+      _initializeComments();
+      GetIt.instance<ActiveVentProvider>().setBody(widget.bodyText);
+    });
     super.initState();
   }
 

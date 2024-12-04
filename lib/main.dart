@@ -9,6 +9,7 @@ import 'package:revent/provider/profile/profile_posts_provider.dart';
 import 'package:revent/provider/profile/profile_saved_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
+import 'package:revent/provider/vent/active_vent_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
 import 'package:revent/provider/vent/vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_following_data_provider.dart';
@@ -21,10 +22,11 @@ void initializeLocators() {
   locators.registerLazySingleton<UserDataProvider>(() => UserDataProvider());
   locators.registerLazySingleton<VentDataProvider>(() => VentDataProvider());
   locators.registerLazySingleton<VentFollowingDataProvider>(() => VentFollowingDataProvider());
+  locators.registerLazySingleton<VentCommentProvider>(() => VentCommentProvider());
+  locators.registerLazySingleton<ActiveVentProvider>(() => ActiveVentProvider());
   locators.registerLazySingleton<ProfileDataProvider>(() => ProfileDataProvider());
   locators.registerLazySingleton<ProfilePostsProvider>(() => ProfilePostsProvider());
   locators.registerLazySingleton<ProfileSavedProvider>(() => ProfileSavedProvider());
-  locators.registerLazySingleton<VentCommentProvider>(() => VentCommentProvider());
 }
 
 void main() async {
@@ -42,6 +44,7 @@ void main() async {
         ChangeNotifierProvider(create: (_) => GetIt.instance<ProfilePostsProvider>()),
         ChangeNotifierProvider(create: (_) => GetIt.instance<ProfileSavedProvider>()),
         ChangeNotifierProvider(create: (_) => GetIt.instance<VentCommentProvider>()),
+        ChangeNotifierProvider(create: (_) => GetIt.instance<ActiveVentProvider>()),
       ],
       child: const MainRun(),
     ),
