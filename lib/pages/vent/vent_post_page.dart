@@ -67,25 +67,25 @@ class VentPostPageState extends State<VentPostPage> {
   final filterTextNotifier = ValueNotifier<String>('Best');
   final enableCommentNotifier = ValueNotifier<bool>(true);
 
-  void _loadCommentsSettings() async {
+  Future<void> _loadCommentsSettings() async {
 
-    if(userData.user.username == widget.creator) {
+    final currentOptions = await commentSettings.getCurrentOptions(
+      title: widget.title, creator: widget.creator
+    );
 
-      final currentOptions = await commentSettings.getCurrentOptions(
-        title: widget.title, creator: widget.creator
-      );
-
-      enableCommentNotifier.value = currentOptions['comment_enabled'] == 1;
-
-    }
+    enableCommentNotifier.value = currentOptions['comment_enabled'] == 1;
 
   }
 
-  Future<void> _enableCommentOnPressed() async {
+  Future<void> _toggleCommentsOnPressed() async {
 
     enableCommentNotifier.value 
       ? commentSettings.toggleComment(isEnableComment: 1, title: widget.title)
       : commentSettings.toggleComment(isEnableComment: 0, title: widget.title);
+
+    if(enableCommentNotifier.value == false) {
+      ventCommentProvider.deleteComments();
+    }
 
   }
 
@@ -145,6 +145,10 @@ class VentPostPageState extends State<VentPostPage> {
 
     try {
 
+      if(enableCommentNotifier.value == false) {
+        return;
+      }
+
       await VentCommentSetup().setup(
         title: widget.title, creator: widget.creator
       );
@@ -174,8 +178,13 @@ class VentPostPageState extends State<VentPostPage> {
 
     try {
 
+      if(enableCommentNotifier.value == false) {
+        return;
+      }
+
       await CallRefresh().refreshVentPost(
-        title: widget.title, creator: widget.creator
+        title: widget.title, 
+        creator: widget.creator, 
       ).then((_) {
         _filterCommentToBest();
         filterTextNotifier.value = 'Best';
@@ -549,7 +558,7 @@ class VentPostPageState extends State<VentPostPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-        
+
                     _buildProfileHeader(),
         
                     const SizedBox(height: 18),
@@ -568,6 +577,7 @@ class VentPostPageState extends State<VentPostPage> {
                       title: widget.title, 
                       creator: widget.creator,
                       creatorPfpData: widget.pfpData,
+                      isCommentDisabled: enableCommentNotifier.value,
                     ),
         
                     const SizedBox(height: 10),
@@ -591,7 +601,7 @@ class VentPostPageState extends State<VentPostPage> {
           BottomsheetCommentsSettings().buildBottomsheet(
             context: context, 
             notifier: enableCommentNotifier, 
-            onToggled: () async => await _enableCommentOnPressed(), 
+            onToggled: () async => await _toggleCommentsOnPressed(), 
             text: 'Enable comment'
           );
         },
@@ -678,7 +688,9 @@ class VentPostPageState extends State<VentPostPage> {
 
   @override
   void initState() {
-    _initializeComments();
+    _loadCommentsSettings().then(
+      (_) => _initializeComments()
+    );
     super.initState();
   }
 

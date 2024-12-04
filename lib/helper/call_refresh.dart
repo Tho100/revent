@@ -63,9 +63,7 @@ class CallRefresh {
     required String creator
   }) async {
 
-    final ventCommentProvider = GetIt.instance<VentCommentProvider>();
-
-    ventCommentProvider.deleteComments();
+    GetIt.instance<VentCommentProvider>().deleteComments();
 
     await VentCommentSetup().setup(
       title: title, creator: creator
