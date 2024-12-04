@@ -14,13 +14,16 @@ import 'package:revent/model/format_date.dart';
 import 'package:revent/pages/comment/post_comment_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
+import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/comment/vent_comment_setup.dart';
+import 'package:revent/vent_query/comment/vent_comments_settings.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/comment_filter.dart';
+import 'package:revent/widgets/bottomsheet_widgets/comment_settings.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/profile_picture.dart';
@@ -55,11 +58,36 @@ class VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = GetIt.instance<VentCommentProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
+  final userData = GetIt.instance<UserDataProvider>();
   final navigation = GetIt.instance<NavigationProvider>();
 
   final formatTimestamp = FormatDate();
+  final commentSettings = VentCommentsSettings();
 
   final filterTextNotifier = ValueNotifier<String>('Best');
+  final enableCommentNotifier = ValueNotifier<bool>(true);
+
+  void _loadCommentsSettings() async {
+
+    if(userData.user.username == widget.creator) {
+
+      final currentOptions = await commentSettings.getCurrentOptions(
+        title: widget.title, creator: widget.creator
+      );
+
+      enableCommentNotifier.value = currentOptions['comment_enabled'] == 1;
+
+    }
+
+  }
+
+  Future<void> _enableCommentOnPressed() async {
+
+    enableCommentNotifier.value 
+      ? commentSettings.toggleComment(isEnableComment: 1, title: widget.title)
+      : commentSettings.toggleComment(isEnableComment: 0, title: widget.title);
+
+  }
 
   void _filterCommentToBest() {
 
@@ -554,51 +582,97 @@ class VentPostPageState extends State<VentPostPage> {
     );
   }
 
+  Widget _buildCommentSettingsButton() {
+    return SizedBox(
+      height: 45,
+      width: 45,
+      child: ElevatedButton(
+        onPressed: () async {
+          _loadCommentsSettings();
+          BottomsheetCommentsSettings().buildBottomsheet(
+            context: context, 
+            notifier: enableCommentNotifier, 
+            onToggled: () async => await _enableCommentOnPressed(), 
+            text: 'Enable comment'
+          );
+        },
+        style: ElevatedButton.styleFrom(
+          foregroundColor: ThemeColor.thirdWhite,
+          backgroundColor: ThemeColor.black,
+          side: const BorderSide(
+            color: ThemeColor.thirdWhite,
+            width: 1.5
+          ),
+          shape: const StadiumBorder(),
+        ),
+        child: Transform.translate(
+          offset: const Offset(-3, -2),
+          child: const Icon(CupertinoIcons.gear, color: ThemeColor.thirdWhite)
+        )
+      ),
+    );
+  }
+
   Widget _buildAddComment() {
     return Padding(
       padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
-      child: InkWellEffect(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title, creator: widget.creator))
-          );
-        },              
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: ThemeColor.thirdWhite)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 12.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Row(
-                children: [
-
-                  ProfilePictureWidget(
-                    customHeight: 26,
-                    customWidth: 26,
-                    pfpData: profileData.profilePicture,
-                  ),
-
-                  const SizedBox(width: 10),
-
-                  Text(
-                    'Add a comment...',
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.thirdWhite,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14
+      child: Row(
+        children: [
+          Expanded(
+            child: InkWellEffect(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title, creator: widget.creator))
+                );
+              },              
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  border: Border.all(color: ThemeColor.thirdWhite)
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Row(
+                      children: [
+          
+                        ProfilePictureWidget(
+                          customHeight: 26,
+                          customWidth: 26,
+                          pfpData: profileData.profilePicture,
+                        ),
+          
+                        const SizedBox(width: 10),
+          
+                        Text(
+                          'Add a comment...',
+                          style: GoogleFonts.inter(
+                            color: ThemeColor.thirdWhite,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 14
+                          ),
+                        ),
+                        
+                      ],
                     ),
                   ),
-                  
-                ],
-              ),
+                )
+              )
             ),
-          )
-        )
+          ),
+
+          if(userData.user.username == widget.creator) ... [
+
+            const SizedBox(width: 12),
+
+            _buildCommentSettingsButton()
+
+          ]
+
+        ],
       ),
     );
   }
@@ -613,6 +687,7 @@ class VentPostPageState extends State<VentPostPage> {
   void dispose() {
     ventCommentProvider.deleteComments();
     filterTextNotifier.dispose();
+    enableCommentNotifier.dispose();
     super.dispose();
   }
 
