@@ -587,8 +587,7 @@ class VentPostPageState extends State<VentPostPage> {
       height: 45,
       width: 45,
       child: ElevatedButton(
-        onPressed: () async {
-          _loadCommentsSettings();
+        onPressed: () {
           BottomsheetCommentsSettings().buildBottomsheet(
             context: context, 
             notifier: enableCommentNotifier, 
