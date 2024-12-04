@@ -141,7 +141,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
     final navigation = GetIt.instance<NavigationProvider>();
 
-    final profileKey = navigation.currentRoute == '/profile/my_profile/' 
+    final profileKey = navigation.currentRoute == AppRoute.myProfile
       ? 'my_profile'
       : 'user_profile';
 
