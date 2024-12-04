@@ -207,12 +207,6 @@ class VentPostPageState extends State<VentPostPage> {
 
   }
 
-  bool _isFromProfile() {
-    return 
-      navigation.currentRoute == AppRoute.myProfile || 
-      navigation.currentRoute == AppRoute.userProfile;
-  }
-
   Map<String, dynamic> _getLikesInfo() {
 
     final currentProvider = _getVentProvider();
@@ -222,7 +216,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     dynamic totalLikes, isVentLiked;
 
-    if(_isFromProfile()) {
+    if(AppRoute.isOnProfile) {
 
       final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
 
@@ -255,7 +249,7 @@ class VentPostPageState extends State<VentPostPage> {
     final ventIndex = currentProvider['vent_index'];
     final ventData = currentProvider['vent_data'];
 
-    if(_isFromProfile()) {
+    if(AppRoute.isOnProfile) {
 
       final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
 

@@ -81,7 +81,7 @@ class CurrentProvider {
         (vent) => vent.title == title && vent.creator == creator
       );
 
-    } else if (navigation.currentRoute == AppRoute.myProfile || navigation.currentRoute == AppRoute.userProfile) {
+    } else if (AppRoute.isOnProfile) {
 
       ventData = _returnProfileProvider(realTime: false);
 
@@ -115,7 +115,7 @@ class CurrentProvider {
         (vent) => vent.title == title && vent.creator == creator
       );
 
-    } else if (navigation.currentRoute == AppRoute.myProfile || navigation.currentRoute == AppRoute.userProfile) {
+    } else if (AppRoute.isOnProfile) {
 
       ventData = _returnProfileProvider(realTime: true, context: context);
 
