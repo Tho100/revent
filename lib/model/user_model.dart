@@ -10,13 +10,9 @@ class UserModel {
 
   void signOutUser() async {
 
-    final userData = GetIt.instance<UserDataProvider>();
-    final profileData = GetIt.instance<ProfileDataProvider>();
-    final profilePostsData = GetIt.instance<ProfilePostsProvider>();
-
-    userData.clearUserData();
-    profileData.clearProfileData();
-    profilePostsData.clearPostsData();
+    GetIt.instance<UserDataProvider>().clearUserData();
+    GetIt.instance<ProfileDataProvider>().clearProfileData();
+    GetIt.instance<ProfilePostsProvider>().clearPostsData();
 
     await LocalStorageModel().deleteLocalData();
 

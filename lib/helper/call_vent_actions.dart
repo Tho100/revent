@@ -26,7 +26,7 @@ class CallVentActions {
       final userData = GetIt.instance<UserDataProvider>();
 
       if(creator == userData.user.username) {
-        SnackBarDialog.temporarySnack(message: "You can't like your own post.");
+        SnackBarDialog.temporarySnack(message: "Can't like your own post.");
         return;
       }
 

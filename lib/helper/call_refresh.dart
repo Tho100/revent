@@ -17,9 +17,7 @@ class CallRefresh {
 
   Future<void> refreshVents() async {
 
-    final ventData = GetIt.instance<VentDataProvider>();
-
-    ventData.deleteVentsData();
+    GetIt.instance<VentDataProvider>().deleteVentsData();
 
     await VentDataSetup().setup();
 
@@ -27,9 +25,7 @@ class CallRefresh {
 
   Future<void> refreshFollowingVents() async {
 
-    final ventData = GetIt.instance<VentFollowingDataProvider>();
-
-    ventData.deleteVentsData();
+    GetIt.instance<VentFollowingDataProvider>().deleteVentsData();
 
     await VentDataSetup().setupFollowing();
 
@@ -63,9 +59,7 @@ class CallRefresh {
     required String creator
   }) async {
 
-    final ventCommentProvider = GetIt.instance<VentCommentProvider>();
-
-    ventCommentProvider.deleteComments();
+    GetIt.instance<VentCommentProvider>().deleteComments();
 
     await VentCommentSetup().setup(
       title: title, creator: creator
