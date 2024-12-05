@@ -61,7 +61,8 @@ class VentPostPageState extends State<VentPostPage> {
   final profileData = GetIt.instance<ProfileDataProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final navigation = GetIt.instance<NavigationProvider>();
-
+  final activeVent = GetIt.instance<ActiveVentProvider>();
+  
   final formatTimestamp = FormatDate();
   final commentSettings = VentCommentsSettings();
 
@@ -694,7 +695,7 @@ class VentPostPageState extends State<VentPostPage> {
   void initState() {
     _loadCommentsSettings().then((_) {
       _initializeComments();
-      GetIt.instance<ActiveVentProvider>().setBody(widget.bodyText);
+      activeVent.setBody(widget.bodyText);
     });
     super.initState();
   }
@@ -702,6 +703,7 @@ class VentPostPageState extends State<VentPostPage> {
   @override
   void dispose() {
     ventCommentProvider.deleteComments();
+    activeVent.clearData();
     filterTextNotifier.dispose();
     enableCommentNotifier.dispose();
     super.dispose();

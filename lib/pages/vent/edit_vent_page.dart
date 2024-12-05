@@ -129,7 +129,7 @@ class EditVentPageState extends State<EditVentPage> {
     );
   }
 
-  Widget _buildActionButton() {
+  Widget _buildSaveChangesButton() {
     return IconButton(
       icon: const Icon(Icons.check, size: 22),
       onPressed: () async => _saveOnPressed()
@@ -138,7 +138,7 @@ class EditVentPageState extends State<EditVentPage> {
 
   Future<bool> _onClosePage() async {
 
-    if(ventBodyTextController.text.isNotEmpty) {
+    if(ventBodyTextController.text != widget.body) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: 'Discard edit?',
       );
@@ -167,8 +167,15 @@ class EditVentPageState extends State<EditVentPage> {
       child: Scaffold(
         appBar: CustomAppBar(
           context: context, 
-          actions: [_buildActionButton()],
-          title: 'Edit Vent'
+          actions: [_buildSaveChangesButton()],
+          title: 'Edit Vent',
+          customBackOnPressed: () async {
+            if(await _onClosePage()) {
+              if(context.mounted) {
+                Navigator.pop(context);
+              }
+            }
+          },
         ).buildAppBar(),
         body: _buildBody(),
       ),

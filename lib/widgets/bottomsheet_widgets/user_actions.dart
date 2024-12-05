@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/bottomsheet.dart';
 import 'package:revent/widgets/bottomsheet_bar.dart';
@@ -19,7 +18,7 @@ class BottomsheetUserActions {
       child: Row(
         children: [
 
-          Icon(icon, color: ThemeColor.secondaryWhite),
+          Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
 
           const SizedBox(width: 15),
 

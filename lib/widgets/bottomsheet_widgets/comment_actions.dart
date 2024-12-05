@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/themes/theme_color.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/bottomsheet.dart';
 import 'package:revent/widgets/bottomsheet_bar.dart';
@@ -23,7 +22,7 @@ class BottomsheetCommentActions {
       child: Row(
         children: [
 
-          Icon(icon, color:ThemeColor.secondaryWhite),
+          Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
 
           const SizedBox(width: 15),
 
@@ -69,6 +68,7 @@ class BottomsheetCommentActions {
           onPressed: copyOnPressed
         ),
 
+        if(userData.user.username != commenter)
         _buildOptionButton(
           text: 'Report comment',
           icon: CupertinoIcons.flag,
