@@ -9,8 +9,8 @@ class AppRoute {
   static const myProfile = '/profile/my_profile/';
   static const userProfile = '/profile/user_profile/';
 
-  static final isOnProfile = 
-    _navigation.currentRoute == myProfile || 
-    _navigation.currentRoute == userProfile;
+  static bool get isOnProfile =>
+      _navigation.currentRoute == myProfile || 
+      _navigation.currentRoute == userProfile;
   
 }

@@ -49,9 +49,8 @@ class BottomsheetVentFilter {
     required BuildContext context,
     required String currentFilter,
     required String tabName,
-    required VoidCallback bestOnPressed,
+    required VoidCallback trendingOnPressed,
     required VoidCallback latestOnPressed,
-    required VoidCallback oldestOnPressed,
   }) {
     return Bottomsheet().buildBottomSheet(
       context: context, 
@@ -64,10 +63,10 @@ class BottomsheetVentFilter {
         BottomsheetTitle(title: 'Sort $tabName'),
 
         _buildOptionButton(
-          text: 'Best',
-          isCurrentlySelected: currentFilter == 'Best',
-          icon: CupertinoIcons.star,
-          onPressed: bestOnPressed
+          text: 'Trending',
+          isCurrentlySelected: currentFilter == 'Trending',
+          icon: CupertinoIcons.flame,
+          onPressed: trendingOnPressed
         ),
 
         _buildOptionButton(
@@ -75,13 +74,6 @@ class BottomsheetVentFilter {
           isCurrentlySelected: currentFilter == 'Latest',
           icon: CupertinoIcons.bolt,
           onPressed: latestOnPressed
-        ),
-
-        _buildOptionButton(
-          text: 'Oldest',
-          isCurrentlySelected: currentFilter == 'Oldest',
-          icon: CupertinoIcons.clock,
-          onPressed: oldestOnPressed
         ),
 
         const SizedBox(height: 25),

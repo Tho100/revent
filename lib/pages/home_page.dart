@@ -71,15 +71,37 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
     if (ventData.vents is List<Vent>) {
 
-      final vents = (ventData.vents as List<Vent>)
-        ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+      final filteredVents = <Vent>[];
+      final unfilteredVents = <Vent>[];
+
+      for (var vent in ventData.vents) {
+        vent.totalLikes >= 5 && vent.totalComments >= 1 
+          ? filteredVents.add(vent)
+          : unfilteredVents.add(vent);
+      }
+
+      filteredVents.sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+      unfilteredVents.sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+
+      final vents = [...filteredVents, ...unfilteredVents];
 
       ventData.setVents(vents);
 
     } else if (ventData.vents is List<VentFollowing>) {
 
-      final vents = (ventData.vents as List<VentFollowing>)
-        ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+      final filteredVents = <VentFollowing>[];
+      final unfilteredVents = <VentFollowing>[];
+
+      for (var vent in ventData.vents) {
+        vent.totalLikes >= 5 && vent.totalComments >= 1 
+          ? filteredVents.add(vent)
+          : unfilteredVents.add(vent);
+      }
+
+      filteredVents.sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+      unfilteredVents.sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
+
+      final vents = [...filteredVents, ...unfilteredVents];
 
       ventData.setVents(vents);
 
@@ -100,30 +122,14 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   }
 
-  void _filterVentsToOldest() {
-
-    final ventData = currentProvider.getProviderOnly();
-
-    final sortedVents = ventData.vents
-      .toList()
-      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
-        .compareTo(formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
-
-    ventData.setVents(sortedVents);
-
-  }
-
   void _filterOnPressed({required String filter}) {
     
     switch (filter) {
-      case == 'Best':
+      case == 'Trending':
       _filterVentsToBest();
       break;
     case == 'Latest':
       _filterVentsToLatest();
-      break;
-    case == 'Oldest':
-      _filterVentsToOldest();
       break;
     }
 
@@ -228,9 +234,8 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
             context: context, 
             currentFilter: filterTextNotifier.value,
             tabName: homeTabs[tabController.index].text!,
-            bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
+            trendingOnPressed: () => _filterOnPressed(filter: 'Trending'), 
             latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
-            oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
           );
         },
         child: Row(
