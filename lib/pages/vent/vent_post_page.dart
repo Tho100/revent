@@ -10,7 +10,7 @@ import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/model/format_date.dart';
+import 'package:revent/model/filter/comments_filter.dart';
 import 'package:revent/pages/comment/post_comment_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
@@ -63,11 +63,11 @@ class VentPostPageState extends State<VentPostPage> {
   final navigation = GetIt.instance<NavigationProvider>();
   final activeVent = GetIt.instance<ActiveVentProvider>();
   
-  final formatTimestamp = FormatDate();
-  final commentSettings = VentCommentsSettings();
-
-  final filterTextNotifier = ValueNotifier<String>('Best');
   final enableCommentNotifier = ValueNotifier<bool>(true);
+  final filterTextNotifier = ValueNotifier<String>('Best');
+
+  final commentSettings = VentCommentsSettings();
+  final commentsFilter = CommentsFilter();
 
   Future<void> _loadCommentsSettings() async {
 
@@ -91,49 +91,17 @@ class VentPostPageState extends State<VentPostPage> {
 
   }
 
-  void _filterCommentToBest() {
-
-    final sortedComments = ventCommentProvider.ventComments
-      .toList()
-      ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
-
-    ventCommentProvider.setComments(sortedComments);
-
-  }
-
-  void _filterCommentToLatest() {
-
-    final sortedComments = ventCommentProvider.ventComments
-      .toList()
-      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.commentTimestamp)
-        .compareTo(formatTimestamp.parseFormattedTimestamp(a.commentTimestamp)));
-
-    ventCommentProvider.setComments(sortedComments);
-
-  }
-
-  void _filterCommentToOldest() {
-
-    final sortedComments = ventCommentProvider.ventComments
-      .toList()
-      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.commentTimestamp)
-        .compareTo(formatTimestamp.parseFormattedTimestamp(b.commentTimestamp)));
-
-    ventCommentProvider.setComments(sortedComments);
-
-  }
-
   void _filterOnPressed({required String filter}) {
     
     switch (filter) {
       case == 'Best':
-      _filterCommentToBest();
+      commentsFilter.filterCommentToBest();
       break;
     case == 'Latest':
-      _filterCommentToLatest();
+      commentsFilter.filterCommentToLatest();
       break;
     case == 'Oldest':
-      _filterCommentToOldest();
+      commentsFilter.filterCommentToOldest();
       break;
     }
 
@@ -155,7 +123,7 @@ class VentPostPageState extends State<VentPostPage> {
         title: widget.title, creator: widget.creator
       );
 
-      _filterCommentToBest();
+      commentsFilter.filterCommentToBest();
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
@@ -188,7 +156,7 @@ class VentPostPageState extends State<VentPostPage> {
         title: widget.title, 
         creator: widget.creator, 
       ).then((_) {
-        _filterCommentToBest();
+        commentsFilter.filterCommentToBest();
         filterTextNotifier.value = 'Best';
       });
 

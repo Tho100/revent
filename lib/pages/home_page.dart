@@ -4,8 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/call_refresh.dart';
-import 'package:revent/helper/current_provider.dart';
-import 'package:revent/model/format_date.dart';
+import 'package:revent/model/filter/home_filter.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/vent/vent_data_provider.dart';
@@ -29,16 +28,13 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
   final navigation = GetIt.instance<NavigationProvider>();
-
   final ventData = GetIt.instance<VentDataProvider>();
   final ventFollowingData = GetIt.instance<VentFollowingDataProvider>();
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
-
   final filterTextNotifier = ValueNotifier<String>('Latest');
 
-  final formatTimestamp = FormatDate();
-  final currentProvider = CurrentProvider();
+  final filterModel = HomeFilter();
 
   late TabController tabController;
 
@@ -55,7 +51,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
       });
 
     } else if (tabController.index == 0) {
-      _filterVentsToLatest();
+      filterModel.filterHomeToLatest();
 
     }
     
@@ -65,71 +61,14 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     
   }
 
-  void _filterVentsToBest() {
-
-    final ventData = currentProvider.getProviderOnly();
-
-    if (ventData.vents is List<Vent>) {
-
-      final filteredVents = <Vent>[];
-      final unfilteredVents = <Vent>[];
-
-      for (var vent in ventData.vents) {
-        vent.totalLikes >= 5 && vent.totalComments >= 1 
-          ? filteredVents.add(vent)
-          : unfilteredVents.add(vent);
-      }
-
-      filteredVents.sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
-      unfilteredVents.sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
-
-      final vents = [...filteredVents, ...unfilteredVents];
-
-      ventData.setVents(vents);
-
-    } else if (ventData.vents is List<VentFollowing>) {
-
-      final filteredVents = <VentFollowing>[];
-      final unfilteredVents = <VentFollowing>[];
-
-      for (var vent in ventData.vents) {
-        vent.totalLikes >= 5 && vent.totalComments >= 1 
-          ? filteredVents.add(vent)
-          : unfilteredVents.add(vent);
-      }
-
-      filteredVents.sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
-      unfilteredVents.sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
-
-      final vents = [...filteredVents, ...unfilteredVents];
-
-      ventData.setVents(vents);
-
-    } 
-
-  }
-
-  void _filterVentsToLatest() {
-
-    final ventData = currentProvider.getProviderOnly();
-
-    final sortedVents = ventData.vents
-      .toList()
-      ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
-        .compareTo(formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
-
-    ventData.setVents(sortedVents);
-
-  }
-
   void _filterOnPressed({required String filter}) {
     
     switch (filter) {
       case == 'Trending':
-      _filterVentsToBest();
+      filterModel.filterHomeToTrending();
       break;
     case == 'Latest':
-      _filterVentsToLatest();
+      filterModel.filterHomeToLatest();
       break;
     }
 
@@ -146,7 +85,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     await CallRefresh().refreshFollowingVents().then((_) {
       followingIsLoadedNotifier.value = true;
       filterTextNotifier.value = 'Latest';
-      _filterVentsToLatest();
+      filterModel.filterHomeToLatest();
     });
 
   }
@@ -155,7 +94,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
     await CallRefresh().refreshVents().then((_) {
       filterTextNotifier.value = 'Latest';
-      _filterVentsToLatest();
+      filterModel.filterHomeToLatest();
     });
 
   }
@@ -295,7 +234,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     super.initState();
     tabController = TabController(length: homeTabs.length, vsync: this);
     tabController.addListener(_onTabChanged);
-    _filterVentsToLatest();
+    filterModel.filterHomeToLatest();
   }
 
   @override
