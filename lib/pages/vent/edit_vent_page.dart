@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/save_vent_edit.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -131,6 +132,18 @@ class EditVentPageState extends State<EditVentPage> {
     );
   }
 
+  Future<bool> _onClosePage() async {
+
+    if(ventBodyTextController.text.isNotEmpty) {
+      return await CustomAlertDialog.alertDialogDiscardConfirmation(
+        message: 'Discard edit?',
+      );
+    }
+
+    return true;
+    
+  }
+
   @override
   void initState() {
     super.initState();
@@ -145,13 +158,16 @@ class EditVentPageState extends State<EditVentPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        context: context, 
-        actions: [_buildActionButton()],
-        title: 'Edit Vent'
-      ).buildAppBar(),
-      body: _buildBody(),
+    return WillPopScope(
+      onWillPop: () async => _onClosePage(),
+      child: Scaffold(
+        appBar: CustomAppBar(
+          context: context, 
+          actions: [_buildActionButton()],
+          title: 'Edit Vent'
+        ).buildAppBar(),
+        body: _buildBody(),
+      ),
     );
   }
 
