@@ -43,6 +43,7 @@ class EmptyPage {
               fontWeight: FontWeight.w800,
               fontSize: 15
             ),
+            textAlign: TextAlign.center
           ),
 
         ],
