@@ -129,7 +129,7 @@ class EditVentPageState extends State<EditVentPage> {
     );
   }
 
-  Widget _buildActionButton() {
+  Widget _buildSaveChangesButton() {
     return IconButton(
       icon: const Icon(Icons.check, size: 22),
       onPressed: () async => _saveOnPressed()
@@ -167,7 +167,7 @@ class EditVentPageState extends State<EditVentPage> {
       child: Scaffold(
         appBar: CustomAppBar(
           context: context, 
-          actions: [_buildActionButton()],
+          actions: [_buildSaveChangesButton()],
           title: 'Edit Vent',
           customBackOnPressed: () async {
             if(await _onClosePage()) {
