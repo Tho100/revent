@@ -52,6 +52,10 @@ class EditVentPageState extends State<EditVentPage> {
 
       SnackBarDialog.temporarySnack(message: 'Saved changes.');
 
+      if(context.mounted) {
+        Navigator.pop(context);
+      }
+
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Failed to save changes.');
     }
