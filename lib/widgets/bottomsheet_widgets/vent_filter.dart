@@ -20,7 +20,7 @@ class BottomsheetVentFilter {
       child: Row(
         children: [
 
-          Icon(icon, color: ThemeColor.secondaryWhite),
+          Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
 
           const SizedBox(width: 15),
 

@@ -39,6 +39,8 @@ class ThemeStyle {
       borderRadius: BorderRadius.zero, 
     ),
   );
+  
+  static const btnBottomsheetIconColor = ThemeColor.thirdWhite;
 
   static InputDecoration txtFieldStye({
     required String hintText, 
