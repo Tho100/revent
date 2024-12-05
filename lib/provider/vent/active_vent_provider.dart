@@ -10,5 +10,9 @@ class ActiveVentProvider extends ChangeNotifier {
     _body = body;
     notifyListeners();
   }
+  
+  void clearData() {
+    _body = ''; 
+  }
 
 }

@@ -10,7 +10,7 @@ class AppRoute {
   static const userProfile = '/profile/user_profile/';
 
   static bool get isOnProfile =>
-      _navigation.currentRoute == myProfile || 
-      _navigation.currentRoute == userProfile;
+    _navigation.currentRoute == myProfile || 
+    _navigation.currentRoute == userProfile;
   
 }
