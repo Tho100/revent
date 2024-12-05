@@ -138,7 +138,7 @@ class EditVentPageState extends State<EditVentPage> {
 
   Future<bool> _onClosePage() async {
 
-    if(ventBodyTextController.text.isNotEmpty) {
+    if(ventBodyTextController.text != widget.body) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: 'Discard edit?',
       );
@@ -168,7 +168,14 @@ class EditVentPageState extends State<EditVentPage> {
         appBar: CustomAppBar(
           context: context, 
           actions: [_buildActionButton()],
-          title: 'Edit Vent'
+          title: 'Edit Vent',
+          customBackOnPressed: () async {
+            if(await _onClosePage()) {
+              if(context.mounted) {
+                Navigator.pop(context);
+              }
+            }
+          },
         ).buildAppBar(),
         body: _buildBody(),
       ),
