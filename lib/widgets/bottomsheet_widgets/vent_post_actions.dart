@@ -60,7 +60,7 @@ class BottomsheetVentPostActions {
 
         if(userData.user.username == creator && editOnPressed != null)
         _buildOptionButton(
-          text: 'Edit',
+          text: 'Edit post',
           icon: CupertinoIcons.square_pencil,
           onPressed: editOnPressed
         ),
@@ -74,14 +74,14 @@ class BottomsheetVentPostActions {
 
         if(copyOnPressed != null)
         _buildOptionButton(
-          text: 'Copy',
+          text: 'Copy body',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
         ),
 
         if(userData.user.username != creator && reportOnPressed != null)
         _buildOptionButton(
-          text: 'Report',
+          text: 'Report post',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
@@ -95,7 +95,7 @@ class BottomsheetVentPostActions {
 
         if(userData.user.username == creator && deleteOnPressed != null)
         _buildOptionButton(
-          text: 'Delete',
+          text: 'Delete post',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),

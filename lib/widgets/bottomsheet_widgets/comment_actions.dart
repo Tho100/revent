@@ -58,26 +58,26 @@ class BottomsheetCommentActions {
 
         if(userData.user.username == commenter)
         _buildOptionButton(
-          text: 'Edit',
+          text: 'Edit comment',
           icon: CupertinoIcons.square_pencil,
           onPressed: editOnPressed
         ),
 
         _buildOptionButton(
-          text: 'Copy',
+          text: 'Copy text',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
         ),
 
         _buildOptionButton(
-          text: 'Report',
+          text: 'Report comment',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
         if(userData.user.username == commenter)
         _buildOptionButton(
-          text: 'Delete',
+          text: 'Delete comment',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),
