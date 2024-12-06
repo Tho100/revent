@@ -50,6 +50,57 @@ class ProfileBodyWidgets extends StatelessWidget {
     );
   }
 
+  Widget _buildProfileInfo() {
+    return Padding(
+      padding: EdgeInsets.only(left: 24.0, top: isPrivateAccount! ? 25.0 : 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          profileInfoWidgets.buildProfilePicture(),
+          
+          const SizedBox(width: 16),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              const SizedBox(height: 4),
+
+              profileInfoWidgets.buildUsername(),
+              pronounsWidget,
+              bioWidget,
+
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPostsAndSavedTabs() {
+    return Column(
+      children: [
+
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+
+            tabBarWidgets.buildTabBar(),
+
+            const Divider(color: ThemeColor.lightGrey, height: 1),
+
+          ],
+        ),
+
+        Expanded(
+          child: tabBarWidgets.buildTabBarTabs()
+        )
+
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -64,32 +115,8 @@ class ProfileBodyWidgets extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // TODO: Create a separated function for this code
-                Padding(
-                  padding: EdgeInsets.only(left: 24.0, top: isPrivateAccount! ? 25.0 : 8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      profileInfoWidgets.buildProfilePicture(),
-                      
-                      const SizedBox(width: 16),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-
-                          const SizedBox(height: 4),
-
-                          profileInfoWidgets.buildUsername(),
-                          pronounsWidget,
-                          bioWidget,
-
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                
+                _buildProfileInfo(),
 
                 const SizedBox(height: 28),
                 popularityWidget,
@@ -103,32 +130,9 @@ class ProfileBodyWidgets extends StatelessWidget {
             ),
           ),
         ],
-        body: Column(
-          children: [
-
-            if (isPrivateAccount!)
-              _buildPrivateAccountMessage()
-            else ... [
-              // TODO: Create a separated function for this code
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-
-                  tabBarWidgets.buildTabBar(),
-
-                  const Divider(color: ThemeColor.lightGrey, height: 1),
-
-                ],
-              ),
-
-              Expanded(
-                child: tabBarWidgets.buildTabBarTabs()
-              ),
-
-            ]
-
-          ],
-        ),
+        body: isPrivateAccount! 
+          ? _buildPrivateAccountMessage()
+          : _buildPostsAndSavedTabs()
       ),
     );
 
