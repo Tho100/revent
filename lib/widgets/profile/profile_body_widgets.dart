@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/profile/profile_info_widgets.dart';
 import 'package:revent/widgets/profile/tabbar_widgets.dart';
+import 'package:revent/pages/empty_page.dart';
 
 class ProfileBodyWidgets extends StatelessWidget {
 
@@ -31,6 +31,76 @@ class ProfileBodyWidgets extends StatelessWidget {
     super.key
   });
 
+  Widget _buildPrivateAccountMessage() {
+    return Column(
+      children: [
+
+        const SizedBox(height: 35),
+
+        const Icon(CupertinoIcons.lock, color: ThemeColor.secondaryWhite, size: 32),
+
+        const SizedBox(height: 18),
+
+        EmptyPage().headerCustomMessage(
+          header: 'This is a private account', 
+          subheader: 'Only followers can see the \nposts, followers and following list on this profile.'
+        )
+
+      ],
+    );
+  }
+
+  Widget _buildProfileInfo() {
+    return Padding(
+      padding: EdgeInsets.only(left: 24.0, top: isPrivateAccount! ? 25.0 : 8.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          profileInfoWidgets.buildProfilePicture(),
+          
+          const SizedBox(width: 16),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              const SizedBox(height: 4),
+
+              profileInfoWidgets.buildUsername(),
+              pronounsWidget,
+              bioWidget,
+
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPostsAndSavedTabs() {
+    return Column(
+      children: [
+
+        Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+
+            tabBarWidgets.buildTabBar(),
+
+            const Divider(color: ThemeColor.lightGrey, height: 1),
+
+          ],
+        ),
+
+        Expanded(
+          child: tabBarWidgets.buildTabBarTabs()
+        )
+
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -45,55 +115,8 @@ class ProfileBodyWidgets extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                if (isPrivateAccount!)
-                Padding(
-                  padding: const EdgeInsets.only(left: 24.0, top: 5.0),
-                  child: Row(
-                    children: [
-
-                      const Icon(CupertinoIcons.lock, color: ThemeColor.secondaryWhite, size: 16),
-
-                      const SizedBox(width: 4),
-
-                      Text(
-                        'This is a private account.',
-                        style: GoogleFonts.inter(
-                          color: ThemeColor.secondaryWhite,
-                          fontWeight: FontWeight.w800,
-                          fontSize: 13,
-                        ),
-                      ),
-
-                    ],
-                  ),
-                ),
-
-                Padding(
-                  padding: EdgeInsets.only(left: 24.0, top: isPrivateAccount! ? 25.0 : 8.0),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      profileInfoWidgets.buildProfilePicture(),
-                      
-                      const SizedBox(width: 16),
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-
-                          const SizedBox(height: 4),
-
-                          profileInfoWidgets.buildUsername(),
-                          pronounsWidget,
-                          bioWidget,
-
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
+                
+                _buildProfileInfo(),
 
                 const SizedBox(height: 28),
                 popularityWidget,
@@ -107,26 +130,9 @@ class ProfileBodyWidgets extends StatelessWidget {
             ),
           ),
         ],
-        body: Column(
-          children: [
-
-            Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-
-                tabBarWidgets.buildTabBar(),
-
-                const Divider(color: ThemeColor.lightGrey, height: 1),
-
-              ],
-            ),
-
-            Expanded(
-              child: tabBarWidgets.buildTabBarTabs()
-            ),
-
-          ],
-        ),
+        body: isPrivateAccount! 
+          ? _buildPrivateAccountMessage()
+          : _buildPostsAndSavedTabs()
       ),
     );
 
