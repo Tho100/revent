@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/profile_picture.dart';
 import 'package:revent/widgets/text_field/main_textfield.dart';
 
 class SearchPage extends StatefulWidget {
@@ -129,6 +132,22 @@ class SearchPageState extends State<SearchPage> {
     );
   }
 
+  Widget _buildProfilePictureLeading() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 14.0),
+      child: GestureDetector(
+        onTap: () => NavigatePage.myProfilePage(),
+        child: Center(
+          child: ProfilePictureWidget(
+            pfpData: GetIt.instance<ProfileDataProvider>().profilePicture,
+            customWidth: 36,
+            customHeight: 36,
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -152,7 +171,7 @@ class SearchPageState extends State<SearchPage> {
         appBar: CustomAppBar(
           title: 'Search',
           context: context,
-          customLeading: const SizedBox(),
+          customLeading: _buildProfilePictureLeading()
         ).buildAppBar(),
         body: _buildBody(),
         bottomNavigationBar: PageNavigationBar()
