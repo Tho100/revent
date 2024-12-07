@@ -1,15 +1,143 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/text_field/main_textfield.dart';
 
-class SearchPage extends StatelessWidget {
+class SearchPage extends StatefulWidget {
 
-  SearchPage({super.key});
+  const SearchPage({super.key});
 
+  @override
+  State<SearchPage> createState() => SearchPageState();
+
+}
+
+class SearchPageState extends State<SearchPage> {
+  // TODO: Probably unnecessary
   final navigationIndex = GetIt.instance<NavigationProvider>();
+
+  final searchController = TextEditingController();
+
+  final chipsSelectedNotifier = ValueNotifier<List<bool>>([]);
+
+  List<String> chipsTags = [];
+
+  void _initializeTags() {
+    
+    chipsTags = [
+      'vent', 
+      'random',
+      'support',
+      'life',
+      'family',
+      'parents',
+      'lgbtq+',
+      'help',
+      'question',
+      'religion',
+    ];
+
+    chipsSelectedNotifier.value = List<bool>.generate(chipsTags.length, (_) => false);
+
+  }
+
+  Widget _buildSearchBar() {
+    return Align(
+      alignment: Alignment.center,
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.89,
+        child: MainTextField(
+          controller: searchController, 
+          hintText: 'Search for anything...'
+        ),
+      ),
+    );
+  }
+
+  // ChoiceChips/ActionChips: Multiple-tag-selection/Single-tag-selection
+  Widget _buildChip(String label, int index) {
+    return ValueListenableBuilder(
+      valueListenable: chipsSelectedNotifier,
+      builder: (_, chipSelected, __) {
+        return ChoiceChip(
+        label: Text('#$label'),
+          selected: chipSelected[index],
+          onSelected: (bool selected) {
+            chipsSelectedNotifier.value[index] = selected;
+          },
+          selectedColor: Colors.blueAccent,
+          backgroundColor: Colors.grey[200],
+        );
+      },
+    );
+  }
+  Widget _buildTagsChoiceChips() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        Text(
+          'Tags',
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontWeight: FontWeight.w800,
+            fontSize: 14
+          ),
+        ),
+
+        const SizedBox(height: 8),
+
+        SizedBox(
+          width: MediaQuery.of(context).size.width * 0.86,
+          child: Wrap(
+            spacing: 8.0, 
+            children: [
+              for(int i=0; i<chipsSelectedNotifier.value.length; i++) ... [
+                _buildChip(chipsTags[i], i),
+              ]
+            ],
+          ),
+        ),
+
+      ],
+    );
+  }
+// Tommorow me: Check if the page is looking good, 
+//  if yes, then commit "Added Search page" then checkout to refactor and do TODOs
+  Widget _buildBody() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 15),
+      child: Column(
+        children: [
+    
+          _buildSearchBar(),
+
+          const SizedBox(height: 25),
+  
+          _buildTagsChoiceChips(),
+
+        ]
+      ),
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeTags();
+  }
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +149,10 @@ class SearchPage extends StatelessWidget {
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Search',
-          customBackOnPressed: () => NavigatePage.homePage(),
+          customBackOnPressed: () => NavigatePage.homePage(), // TODO: Remove leading
           context: context
         ).buildAppBar(),
+        body: _buildBody(),
         bottomNavigationBar: PageNavigationBar()
       ),
     );
