@@ -55,24 +55,31 @@ class SearchPageState extends State<SearchPage> {
     );
   }
 
-  // ChoiceChips/ActionChips: Multiple-tag-selection/Single-tag-selection
   Widget _buildChip(String label, int index) {
     return ValueListenableBuilder(
       valueListenable: chipsSelectedNotifier,
       builder: (_, chipSelected, __) {
         return ChoiceChip(
-        label: Text('#$label'),
+        label: Text(
+          '#$label',
+            style: GoogleFonts.inter(
+              color: ThemeColor.mediumBlack,
+              fontWeight: FontWeight.w700,
+              fontSize: 14
+            )
+          ),
           selected: chipSelected[index],
           onSelected: (bool selected) {
             chipsSelectedNotifier.value[index] = selected;
             chipsSelectedNotifier.value = List.from(chipSelected);
           },
-          selectedColor: Colors.blueAccent,
-          backgroundColor: Colors.grey[200],
+          selectedColor: ThemeColor.thirdWhite,
+          backgroundColor: ThemeColor.white,
         );
       },
     );
   }
+  
   Widget _buildTagsChoiceChips() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
