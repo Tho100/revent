@@ -50,7 +50,7 @@ class SearchPageState extends State<SearchPage> {
     return Align(
       alignment: Alignment.center,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.89,
+        width: MediaQuery.of(context).size.width * 0.91,
         child: MainTextField(
           controller: searchController, 
           hintText: 'Search for anything...'
@@ -101,7 +101,7 @@ class SearchPageState extends State<SearchPage> {
         const SizedBox(height: 8),
 
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.86,
+          width: MediaQuery.of(context).size.width * 0.88,
           child: Wrap(
             spacing: 8.0, 
             children: [
