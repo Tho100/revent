@@ -65,6 +65,7 @@ class SearchPageState extends State<SearchPage> {
           selected: chipSelected[index],
           onSelected: (bool selected) {
             chipsSelectedNotifier.value[index] = selected;
+            chipsSelectedNotifier.value = List.from(chipSelected);
           },
           selectedColor: Colors.blueAccent,
           backgroundColor: Colors.grey[200],
