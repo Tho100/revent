@@ -112,7 +112,7 @@ class SearchPageState extends State<SearchPage> {
     
           _buildSearchBar(),
 
-          const SizedBox(height: 25),
+          const SizedBox(height: 32),
   
           _buildTagsChoiceChips(),
 
