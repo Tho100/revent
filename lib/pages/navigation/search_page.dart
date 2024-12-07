@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -132,9 +133,16 @@ class SearchPageState extends State<SearchPage> {
     );
   }
 
+  Widget _buildSettingsActionButton() {
+    return IconButton(
+      icon: const Icon(CupertinoIcons.bars, size: 28),
+      onPressed: () => NavigatePage.settingsPage()
+    );
+  }
+
   Widget _buildProfilePictureLeading() {
     return Padding(
-      padding: const EdgeInsets.only(left: 14.0),
+      padding: const EdgeInsets.only(left: 12.0),
       child: GestureDetector(
         onTap: () => NavigatePage.myProfilePage(),
         child: Center(
@@ -171,7 +179,8 @@ class SearchPageState extends State<SearchPage> {
         appBar: CustomAppBar(
           title: 'Search',
           context: context,
-          customLeading: _buildProfilePictureLeading()
+          customLeading: _buildProfilePictureLeading(),
+          actions: [_buildSettingsActionButton()]
         ).buildAppBar(),
         body: _buildBody(),
         bottomNavigationBar: PageNavigationBar()
