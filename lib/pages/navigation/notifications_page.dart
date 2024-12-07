@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/navigation_pages_widgets.dart';
 
 class NotificationsPage extends StatelessWidget {
 
-  NotificationsPage({super.key});
-
-  final navigationIndex = GetIt.instance<NavigationProvider>();
+  const NotificationsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +19,9 @@ class NotificationsPage extends StatelessWidget {
         appBar: CustomAppBar(
           title: 'Notifications',
           customBackOnPressed: () => NavigatePage.homePage(),
-          context: context
+          context: context,
+          customLeading: NavigationPagesWidgets.profilePictureLeading(),
+          actions: [NavigationPagesWidgets.settingsActionButton()]
         ).buildAppBar(),
         bottomNavigationBar: PageNavigationBar()
       ),
