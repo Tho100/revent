@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -42,15 +43,23 @@ class SearchPageState extends State<SearchPage> {
     chipsSelectedNotifier.value = List<bool>.generate(chipsTags.length, (_) => false);
 
   }
-
+  // TODO: add search icon next to the hint text
   Widget _buildSearchBar() {
     return Align(
       alignment: Alignment.center,
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.91,
         child: MainTextField(
+          maxLines: 1,
           controller: searchController, 
-          hintText: 'Search for anything...'
+          hintText: 'Search for anything...',
+          textInputAction: TextInputAction.done,
+          onFieldSubmitted: (searchText) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => SearchResultsPage(searchText: searchText))
+            );
+          },
         ),
       ),
     );

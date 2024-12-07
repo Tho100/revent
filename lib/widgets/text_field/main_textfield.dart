@@ -11,7 +11,10 @@ class MainTextField extends StatelessWidget {
   final int? maxLength;
   final int? maxLines;
   final bool? autoFocus;
+  final bool? readOnly;
+  final TextInputAction? textInputAction;
   final List<TextInputFormatter>? inputFormatters;
+  final void Function(String)? onFieldSubmitted;
 
   const MainTextField({
     required this.controller,
@@ -19,7 +22,10 @@ class MainTextField extends StatelessWidget {
     this.maxLength,
     this.maxLines,
     this.autoFocus,
+    this.readOnly,
+    this.textInputAction,
     this.inputFormatters,
+    this.onFieldSubmitted,
     super.key
   });
 
@@ -29,7 +35,10 @@ class MainTextField extends StatelessWidget {
       controller: controller,
       maxLength: maxLength,
       maxLines: maxLines,
+      readOnly: readOnly ?? false,
       autofocus: autoFocus ?? false,
+      onFieldSubmitted: onFieldSubmitted,
+      textInputAction: textInputAction,
       inputFormatters: inputFormatters,
       decoration: ThemeStyle.txtFieldStye(hintText: hintText!),
       style: GoogleFonts.inter(
