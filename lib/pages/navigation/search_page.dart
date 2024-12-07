@@ -143,7 +143,8 @@ class SearchPageState extends State<SearchPage> {
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Search',
-          context: context
+          context: context,
+          customLeading: const SizedBox(),
         ).buildAppBar(),
         body: _buildBody(),
         bottomNavigationBar: PageNavigationBar()
