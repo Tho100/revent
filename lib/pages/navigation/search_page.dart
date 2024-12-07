@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -19,8 +16,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class SearchPageState extends State<SearchPage> {
-  // TODO: Probably unnecessary
-  final navigationIndex = GetIt.instance<NavigationProvider>();
 
   final searchController = TextEditingController();
 
@@ -108,8 +103,7 @@ class SearchPageState extends State<SearchPage> {
       ],
     );
   }
-// Tommorow me: Check if the page is looking good, 
-//  if yes, then commit "Added Search page" then checkout to refactor and do TODOs
+
   Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.only(top: 15),
@@ -149,7 +143,6 @@ class SearchPageState extends State<SearchPage> {
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Search',
-          customBackOnPressed: () => NavigatePage.homePage(), // TODO: Remove leading
           context: context
         ).buildAppBar(),
         body: _buildBody(),
