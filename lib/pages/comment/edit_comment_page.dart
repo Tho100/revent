@@ -140,7 +140,7 @@ class EditCommentPageState extends State<EditCommentPage> {
       appBar: CustomAppBar(
         context: context, 
         actions: [_buildActionButton()],
-        title: 'Edit Comment'
+        title: 'Edit comment'
       ).buildAppBar(),
       body: _buildBody(),
     );

@@ -25,7 +25,7 @@ class _DockBarNavigationPages {
   static void searchPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      PageRouteBuilder(pageBuilder: (_, __, ___) => SearchPage(),
+      PageRouteBuilder(pageBuilder: (_, __, ___) => const SearchPage(),
         transitionDuration: const Duration(microseconds: 0)
       ),
     );
@@ -34,7 +34,7 @@ class _DockBarNavigationPages {
   static void notificationsPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      PageRouteBuilder(pageBuilder: (_, __, ___) => NotificationsPage(),
+      PageRouteBuilder(pageBuilder: (_, __, ___) => const NotificationsPage(),
         transitionDuration: const Duration(microseconds: 0)
       ),
     );

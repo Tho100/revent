@@ -212,7 +212,7 @@ class VentPreviewerWidgets {
       style: GoogleFonts.inter(
         color: ThemeColor.secondaryWhite,
         fontWeight: FontWeight.w800,
-        fontSize: 12.7
+        fontSize: 13
       ),
       overflow: TextOverflow.ellipsis,
       maxLines: 4
