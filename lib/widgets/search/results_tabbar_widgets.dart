@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
+import 'package:revent/widgets/search/posts/search_posts_listview.dart';
 
 class SearchResultsTabBarWidgets {
 
@@ -19,7 +20,7 @@ class SearchResultsTabBarWidgets {
         controller: controller,
         children: [
 
-          Container(),
+          const SearchPostsListView(),
           Container(),
           Container(),
 

@@ -19,7 +19,7 @@ class CallRefresh {
 
     GetIt.instance<VentDataProvider>().deleteVentsData();
 
-    await VentDataSetup().setup();
+    await VentDataSetup().setupForYou();
 
   }
 

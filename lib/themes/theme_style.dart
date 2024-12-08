@@ -44,14 +44,18 @@ class ThemeStyle {
 
   static InputDecoration txtFieldStye({
     required String hintText, 
-    IconButton? customSuffix, 
-    TextStyle? customCounterStyle
+    Widget? customSuffix, 
+    Widget? customPrefix, 
+    TextStyle? customCounterStyle,
+    double? customTopPadding,
+    double? customBottomPadding,
   }) {
     return InputDecoration(
       hintText: hintText,
       counterText: '',
       suffixIcon: customSuffix,
-      contentPadding: const EdgeInsets.fromLTRB(20, 22, 10, 25),
+      prefixIcon: customPrefix,
+      contentPadding: EdgeInsets.fromLTRB(20, customTopPadding ?? 22, 10, customBottomPadding ?? 25),
       hintStyle: GoogleFonts.inter(
         color: ThemeColor.thirdWhite, 
         fontWeight: FontWeight.w700
