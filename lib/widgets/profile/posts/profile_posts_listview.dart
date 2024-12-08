@@ -21,7 +21,9 @@ class ProfilePostsListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildPreviewer(String title, int totalLikes, int totalComments, String postTimestamp) {
+  Widget _buildPreviewer(
+    String title, String bodyText, int totalLikes, int totalComments, String postTimestamp
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
       child: Align(
@@ -47,6 +49,7 @@ class ProfilePostsListView extends StatelessWidget {
   Widget _buildListView({
     required int itemCount,
     required List<String> titles,
+    required List<String> bodyText,
     required List<int> totalLikes, 
     required List<int> totalComments, 
     required List<String> postTimestamp, 
@@ -56,7 +59,7 @@ class ProfilePostsListView extends StatelessWidget {
       itemCount: itemCount,
       builder: (_, index) {
         return _buildPreviewer(
-          titles[index], totalLikes[index], totalComments[index], postTimestamp[index],
+          titles[index], bodyText[index], totalLikes[index], totalComments[index], postTimestamp[index],
         );
       },
     );
@@ -70,6 +73,10 @@ class ProfilePostsListView extends StatelessWidget {
         final titles = isMyProfile 
           ? postsData.myProfile.titles 
           : postsData.userProfile.titles;
+
+        final bodyText = isMyProfile 
+          ? postsData.myProfile.bodyText 
+          : postsData.userProfile.bodyText;
 
         final totalLikes = isMyProfile 
           ? postsData.myProfile.totalLikes 
@@ -90,7 +97,8 @@ class ProfilePostsListView extends StatelessWidget {
           ? _buildOnEmpty() 
           : _buildListView(
             itemCount: itemCount, 
-            titles: titles, 
+            titles: titles,
+            bodyText: bodyText, 
             totalLikes: totalLikes, 
             totalComments: totalComments, 
             postTimestamp: postTimestamp,
