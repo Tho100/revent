@@ -8,7 +8,7 @@ import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
-class HomeVentPreviewer extends StatelessWidget {
+class DefaultVentPreviewer extends StatelessWidget {
 
   final String title;
   final String bodyText;
@@ -20,7 +20,7 @@ class HomeVentPreviewer extends StatelessWidget {
 
   final Uint8List pfpData;
 
-  const HomeVentPreviewer({
+  const DefaultVentPreviewer({
     required this.title,
     required this.bodyText,
     required this.creator,

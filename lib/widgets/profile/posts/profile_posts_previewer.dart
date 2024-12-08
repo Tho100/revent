@@ -11,7 +11,7 @@ import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
-
+// TODO: Load body text, delete this and use DefaultVentPreviewer
 class ProfilePostsPreviewer extends StatelessWidget {
 
   final String username;
