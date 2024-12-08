@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
-import 'package:revent/widgets/vent_widgets/home_vent_previewer.dart';
+import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
 
 class SearchPostsListView extends StatelessWidget {
 
   const SearchPostsListView({super.key});
 
-  Widget _buildVentPreview(dynamic ventData) {
+  Widget _buildVentPreview(SearchVents ventData) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.5),
-      child: HomeVentPreviewer(
+      child: DefaultVentPreviewer(
         title: ventData.title,
         bodyText: ventData.bodyText,
         creator: ventData.creator,

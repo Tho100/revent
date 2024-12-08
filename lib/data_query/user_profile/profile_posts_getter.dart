@@ -18,7 +18,7 @@ class ProfilePostsDataGetter {
     final conn = await ReventConnect.initializeConnection();
 
     const query = 
-      'SELECT title, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
+      'SELECT title, body_text, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
       
     final param = {
       'username': username
@@ -29,6 +29,7 @@ class ProfilePostsDataGetter {
     final extractData = ExtractData(rowsData: retrievedInfo);
     
     final title = extractData.extractStringColumn('title');
+    final bodyText = extractData.extractStringColumn('body_text');
     final totalLikes = extractData.extractIntColumn('total_likes');
     final totalComments = extractData.extractIntColumn('total_comments');
 
@@ -51,6 +52,7 @@ class ProfilePostsDataGetter {
 
     return {
       'title': title,
+      'body_text': bodyText,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'post_timestamp': postTimestamp,

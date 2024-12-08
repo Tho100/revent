@@ -11,6 +11,7 @@ class ProfileSavedData {
   List<Uint8List> pfpData = [];
 
   List<String> titles = [];
+  List<String> bodyText = [];
 
   List<int> totalLikes = [];
   List<int> totalComments = [];
@@ -55,6 +56,11 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   void setTitles(String profileKey, List<String> titles) {
     _profileData[profileKey]?.titles = titles;
+    notifyListeners();
+  }
+
+  void setBodyText(String profileKey, List<String> bodyText) {
+    _profileData[profileKey]?.bodyText = bodyText;
     notifyListeners();
   }
 

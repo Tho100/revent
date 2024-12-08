@@ -8,7 +8,7 @@ import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
-class HomeVentPreviewer extends StatelessWidget {
+class DefaultVentPreviewer extends StatelessWidget {
 
   final String title;
   final String bodyText;
@@ -20,7 +20,9 @@ class HomeVentPreviewer extends StatelessWidget {
 
   final Uint8List pfpData;
 
-  const HomeVentPreviewer({
+  final bool? isMyProfile;
+
+  const DefaultVentPreviewer({
     required this.title,
     required this.bodyText,
     required this.creator,
@@ -28,6 +30,7 @@ class HomeVentPreviewer extends StatelessWidget {
     required this.totalLikes,
     required this.totalComments,
     required this.pfpData,
+    this.isMyProfile = false,
     super.key
   });
 
@@ -57,6 +60,14 @@ class HomeVentPreviewer extends StatelessWidget {
       totalLikes: totalLikes,
       totalComments: totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
+      removeSavedOnPressed: isMyProfile!
+        ? () async {
+        await CallVentActions(
+          context: navigatorKey.currentContext!, 
+          title: title, 
+          creator: creator
+        ).removeSavedPost();
+      } : null,
       editOnPressed: () {
         Navigator.pop(navigatorKey.currentContext!);
         NavigatePage.editVentPage(title: title, body: bodyText);

@@ -22,8 +22,8 @@ class ProfilePostsSetup {
   Future<void> setupPosts() async {
 
     final isDataEmpty = userType == 'my_profile' 
-      ? profileSavedData.myProfile.titles.isEmpty 
-      : profileSavedData.userProfile.titles.isEmpty;
+      ? profilePostsData.myProfile.titles.isEmpty 
+      : profilePostsData.userProfile.titles.isEmpty;
 
     if(isDataEmpty) {
 
@@ -32,14 +32,18 @@ class ProfilePostsSetup {
       );
 
       final title = getPostsData['title'] as List<String>;
+      final bodyText = getPostsData['body_text'] as List<String>;
+
       final totalLikes = getPostsData['total_likes'] as List<int>;
       final totalComments = getPostsData['total_comments'] as List<int>;
+
       final postTimestamp = getPostsData['post_timestamp'] as List<String>;
 
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
       final isPostSaved = getPostsData['is_saved'] as List<bool>;
 
       profilePostsData.setTitles(userType, title);
+      profilePostsData.setBodyText(userType, bodyText);
       profilePostsData.setTotalLikes(userType, totalLikes);
       profilePostsData.setTotalComments(userType, totalComments);
       profilePostsData.setPostTimestamp(userType, postTimestamp);
@@ -67,9 +71,11 @@ class ProfilePostsSetup {
       final profilePicture = getPostsData['profile_picture'] as List<Uint8List>;
 
       final title = getPostsData['title'] as List<String>;
-      final totalLikes = getPostsData['total_likes'] as List<int>;
+      final bodyText = getPostsData['body_text'] as List<String>;
 
+      final totalLikes = getPostsData['total_likes'] as List<int>;
       final totalComments = getPostsData['total_comments'] as List<int>;
+
       final postTimestamp = getPostsData['post_timestamp'] as List<String>;
 
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
@@ -79,6 +85,7 @@ class ProfilePostsSetup {
       profileSavedData.setProfilePicture(userType, profilePicture);
 
       profileSavedData.setTitles(userType, title);
+      profileSavedData.setBodyText(userType, bodyText);
       profileSavedData.setTotalLikes(userType, totalLikes);
       profileSavedData.setTotalComments(userType, totalComments);
       profileSavedData.setPostTimestamp(userType, postTimestamp);

@@ -35,7 +35,7 @@ class VentPreviewerWidgets {
   final VoidCallback? removeSavedOnPressed;
   final VoidCallback? deleteOnPressed;
 
-  const VentPreviewerWidgets({
+  VentPreviewerWidgets({
     required this.context,
     this.title,
     this.bodyText,
@@ -53,6 +53,8 @@ class VentPreviewerWidgets {
     this.copyOnPressed
   });
 
+  final navigation = GetIt.instance<NavigationProvider>();
+
   Widget buildLikeButton() {
 
     final getProvider = CurrentProvider(
@@ -62,9 +64,27 @@ class VentPreviewerWidgets {
     final ventIndex = getProvider['vent_index'];
     final ventData = getProvider['vent_data'];
 
+    dynamic profileData;
+
+    if(navigation.currentRoute == AppRoute.myProfile) {
+      profileData = ventData.myProfile;
+
+    } else if (navigation.currentRoute == AppRoute.userProfile) {
+      profileData = ventData.userProfile;
+
+    }
+
+    final totalLikes = AppRoute.isOnProfile 
+      ? profileData.totalLikes[ventIndex].toString()
+      : ventData.vents[ventIndex].totalLikes.toString();
+
+    final isLiked = AppRoute.isOnProfile 
+      ? profileData.isPostLiked[ventIndex]
+      : ventData.vents[ventIndex].isPostLiked;
+
     return ActionsButton().buildLikeButton(
-      text: ventIndex == -1 ? '0' : ventData.vents[ventIndex].totalLikes.toString(), 
-      isLiked: ventIndex == -1 ? false : ventData.vents[ventIndex].isPostLiked,
+      text: ventIndex == -1 ? '0' : totalLikes,
+      isLiked: ventIndex == -1 ? false : isLiked,
       onPressed: () async {
         await CallVentActions(
           context: context, 
@@ -92,8 +112,22 @@ class VentPreviewerWidgets {
     final ventIndex = getProvider['vent_index'];
     final ventData = getProvider['vent_data'];
 
+    dynamic profileData;
+
+    if(navigation.currentRoute == AppRoute.myProfile) {
+      profileData = ventData.myProfile;
+
+    } else if (navigation.currentRoute == AppRoute.userProfile) {
+      profileData = ventData.userProfile;
+
+    }
+
+    final isSaved = AppRoute.isOnProfile 
+      ? profileData.isPostSaved[ventIndex]
+      : ventData.vents[ventIndex].isPostSaved;
+
     return ActionsButton().buildSaveButton(
-      isSaved: ventIndex == -1 ? false : ventData.vents[ventIndex].isPostSaved,
+      isSaved: ventIndex == -1 ? false : isSaved,
       onPressed: () async {
         await CallVentActions(
           context: context, 
@@ -142,6 +176,7 @@ class VentPreviewerWidgets {
   }
 
   Widget buildHeaders() {
+    // TODO: Fix for some reason the tab index doesn't change, user able to check profile header 
 
     final disableGoToProfile = 
       AppRoute.isOnProfile && GetIt.instance<NavigationProvider>().profileTabIndex == 0;

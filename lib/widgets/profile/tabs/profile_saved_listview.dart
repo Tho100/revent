@@ -2,38 +2,34 @@ import 'dart:typed_data';
 
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile/profile_saved_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/widgets/profile/saved/profile_saved_previewer.dart';
+import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
 
 class ProfileSavedListView extends StatelessWidget {
 
   final bool isMyProfile;
 
-  ProfileSavedListView({
+  const ProfileSavedListView({
     required this.isMyProfile,
     super.key
   });
 
-  final userData = GetIt.instance<UserDataProvider>();
-
-  Widget _buildPreviewer(String creator, Uint8List pfpData, String title, int totalLikes, int totalComments, String postTimestamp) {
+  Widget _buildPreviewer(
+    String title, String bodyText, String creator, int totalLikes, int totalComments, String postTimestamp, Uint8List pfpData
+  ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-      child: Align(
-        alignment: Alignment.center,
-        child: ProfileSavedPreviewer(
-          isMyProfile: isMyProfile,
-          title: title,
-          totalLikes: totalLikes,
-          totalComments: totalComments,
-          postTimestamp: postTimestamp,
-          username: creator,
-          pfpData: pfpData,
-        ),
+      child: DefaultVentPreviewer(
+        isMyProfile: isMyProfile,
+        title: title,
+        bodyText: bodyText,
+        totalLikes: totalLikes,
+        totalComments: totalComments,
+        postTimestamp: postTimestamp,
+        creator: creator,
+        pfpData: pfpData,
       ),
     );
   }
@@ -46,24 +42,26 @@ class ProfileSavedListView extends StatelessWidget {
 
   Widget _buildListView({
     required int itemCount,
-    required List<String> creator,
-    required List<Uint8List> pfpData,
     required List<String> titles,
+    required List<String> bodyText,
+    required List<String> creator,
     required List<int> totalLikes, 
     required List<int> totalComments, 
     required List<String> postTimestamp, 
+    required List<Uint8List> pfpData,
   }) {
     return DynamicHeightGridView(
       crossAxisCount: 1,
       itemCount: itemCount,
       builder: (_, index) {
         return _buildPreviewer(
-          creator[index], 
-          pfpData[index],
           titles[index], 
+          bodyText[index],
+          creator[index], 
           totalLikes[index], 
           totalComments[index], 
-          postTimestamp[index]
+          postTimestamp[index],
+          pfpData[index]
         );
       },
     );
@@ -86,6 +84,10 @@ class ProfileSavedListView extends StatelessWidget {
           ? savedData.myProfile.titles 
           : savedData.userProfile.titles;
 
+        final bodyText = isMyProfile 
+          ? savedData.myProfile.bodyText 
+          : savedData.userProfile.bodyText;
+
         final totalLikes = isMyProfile 
           ? savedData.myProfile.totalLikes 
           : savedData.userProfile.totalLikes;
@@ -105,12 +107,13 @@ class ProfileSavedListView extends StatelessWidget {
           ? _buildOnEmpty() 
           : _buildListView(
             itemCount: itemCount,
-            creator: usernames,
-            pfpData: pfpData, 
             titles: titles, 
+            bodyText: bodyText,
+            creator: usernames,
             totalLikes: totalLikes, 
             totalComments: totalComments, 
-            postTimestamp: postTimestamp
+            postTimestamp: postTimestamp,
+            pfpData: pfpData
           );
       },
     );

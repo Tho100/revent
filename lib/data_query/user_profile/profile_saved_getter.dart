@@ -23,6 +23,7 @@ class ProfileSavedDataGetter {
       SELECT 
         vi.creator,
         vi.title,
+        vi.body_text,
         vi.total_likes,
         vi.total_comments,
         vi.created_at,
@@ -48,7 +49,9 @@ class ProfileSavedDataGetter {
     final extractData = ExtractData(rowsData: retrievedInfo);
     
     final creator = extractData.extractStringColumn('creator');
+
     final titles = extractData.extractStringColumn('title');
+    final bodyText = extractData.extractStringColumn('body_text');
 
     final totalComments = extractData.extractIntColumn('total_comments');
     final totalLikes = extractData.extractIntColumn('total_likes');
@@ -74,6 +77,7 @@ class ProfileSavedDataGetter {
     return {
       'creator': creator,
       'title': titles,
+      'body_text': bodyText,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'post_timestamp': postTimestamp,
