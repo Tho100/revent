@@ -2,23 +2,19 @@ import 'dart:typed_data';
 
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile/profile_saved_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
 
 class ProfileSavedListView extends StatelessWidget {
 
   final bool isMyProfile;
 
-  ProfileSavedListView({
+  const ProfileSavedListView({
     required this.isMyProfile,
     super.key
   });
-
-  final userData = GetIt.instance<UserDataProvider>();
 
   Widget _buildPreviewer(
     String title, String bodyText, String creator, int totalLikes, int totalComments, String postTimestamp, Uint8List pfpData
