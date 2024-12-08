@@ -83,4 +83,8 @@ class SearchPostsProvider extends ChangeNotifier {
     
   }
 
+  void clearVents() {
+    _vents.clear();
+  }
+
 }

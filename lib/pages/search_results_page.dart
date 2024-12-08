@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/provider/search/search_posts_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
@@ -64,7 +66,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
             const Divider(color: ThemeColor.lightGrey, height: 1),
 
           ],
-        ),// TODO: Add some height gap here
+        ),
 
         Expanded(
           child: resultsTabBarWidgets.buildTabBarTabs()
@@ -132,6 +134,12 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     super.initState();
     _initializeClasses();
     _initializeSearchData();
+  }
+
+  @override
+  void dispose() {
+    GetIt.instance<SearchPostsProvider>().clearVents();
+    super.dispose();
   }
 
   @override
