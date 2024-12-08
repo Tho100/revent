@@ -2,8 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
-import 'package:revent/widgets/profile/posts/profile_posts_listview.dart';
-import 'package:revent/widgets/profile/saved/profile_saved_listview.dart';
+import 'package:revent/widgets/profile/tabs/profile_posts_listview.dart';
+import 'package:revent/widgets/profile/tabs/profile_saved_listview.dart';
 
 class ProfileTabBarWidgets {
 
