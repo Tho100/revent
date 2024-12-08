@@ -50,7 +50,7 @@ class SplashScreenState extends State<SplashScreen> {
     
     await ProfileDataSetup().setup(username: userData.user.username);
 
-    await VentDataSetup().setup();
+    await VentDataSetup().setupForYou();
 
   }
 

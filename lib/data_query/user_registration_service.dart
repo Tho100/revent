@@ -41,7 +41,7 @@ class UserRegistrationService {
 
     await _saveUserData(hashPassword: hashPassword);
     
-    await VentDataSetup().setup()
+    await VentDataSetup().setupForYou()
       .then((value) => NavigatePage.homePage()
     );
 
