@@ -26,17 +26,14 @@ class ProfilePostsListView extends StatelessWidget {
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
-      child: Align(
-        alignment: Alignment.center,
-        child: DefaultVentPreviewer(
-          title: title,
-          totalLikes: totalLikes,
-          bodyText: bodyText,
-          totalComments: totalComments,
-          postTimestamp: postTimestamp,
-          creator: username,
-          pfpData: pfpData,
-        ),
+      child: DefaultVentPreviewer(
+        title: title,
+        totalLikes: totalLikes,
+        bodyText: bodyText,
+        totalComments: totalComments,
+        postTimestamp: postTimestamp,
+        creator: username,
+        pfpData: pfpData,
       ),
     );
   }
