@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile/profile_posts_provider.dart';
-import 'package:revent/widgets/profile/posts/profile_posts_previewer.dart';
+import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
 
 class ProfilePostsListView extends StatelessWidget {
 
@@ -28,12 +28,13 @@ class ProfilePostsListView extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
       child: Align(
         alignment: Alignment.center,
-        child: ProfilePostsPreviewer(
+        child: DefaultVentPreviewer(
           title: title,
           totalLikes: totalLikes,
+          bodyText: bodyText,
           totalComments: totalComments,
           postTimestamp: postTimestamp,
-          username: username,
+          creator: username,
           pfpData: pfpData,
         ),
       ),

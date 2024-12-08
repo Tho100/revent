@@ -9,7 +9,7 @@ class SearchPostsListView extends StatelessWidget {
 
   const SearchPostsListView({super.key});
 
-  Widget _buildVentPreview(dynamic ventData) {
+  Widget _buildVentPreview(SearchVents ventData) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.5),
       child: DefaultVentPreviewer(
