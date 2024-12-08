@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/search/results_tabbar_widgets.dart';
 
@@ -23,13 +25,28 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
   late TabController tabController;
   late SearchResultsTabBarWidgets resultsTabBarWidgets;
-
+  /// TODO: Clear search results data on close
+  /// TODO: Add bottom-navigation bar
   void _initializeClasses() {
     tabController = TabController(length: 3, vsync: this);
     resultsTabBarWidgets = SearchResultsTabBarWidgets(
       controller: tabController, 
       searchText: widget.searchText
     );
+  }
+
+  Future<void> _initializeSearchData() async {
+
+    try {
+
+      await VentDataSetup().setupSearch(
+        searchText: widget.searchText
+      );
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    }
+
   }
 
   Widget _buildResultsTabs() {
@@ -47,7 +64,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
             const Divider(color: ThemeColor.lightGrey, height: 1),
 
           ],
-        ),
+        ),// TODO: Add some height gap here
 
         Expanded(
           child: resultsTabBarWidgets.buildTabBarTabs()
@@ -114,6 +131,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   void initState() {
     super.initState();
     _initializeClasses();
+    _initializeSearchData();
   }
 
   @override

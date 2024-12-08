@@ -11,13 +11,24 @@ class VentDataGetter {
 
   final userData = GetIt.instance<UserDataProvider>();
 
-  Future<Map<String, dynamic>> getVentsData() async {
+  Future<Map<String, dynamic>> getVentsData({
+    bool? isFromSearch = false, 
+    String? searchTitleText
+  }) async {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const query = 'SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info';
+    final query = isFromSearch! 
+      ? 'SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info WHERE title LIKE :search_text'
+      : 'SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info';
     
-    final retrievedVents = await conn.execute(query);
+    final searchParam = {
+      'search_text': searchTitleText != null ? '%$searchTitleText%' : ''
+    };
+
+    final retrievedVents = isFromSearch 
+      ? await conn.execute(query, searchParam)
+      : await conn.execute(query);
 
     final extractedData = ExtractData(rowsData: retrievedVents);
 

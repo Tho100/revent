@@ -126,7 +126,7 @@ class CurrentProvider {
         (ventTitle) => ventTitle == title
       );
 
-    } 
+    } // TODO: Add searchposts provider
 
     return {
       'vent_index': ventIndex,
