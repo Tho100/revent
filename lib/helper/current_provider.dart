@@ -5,6 +5,7 @@ import 'package:revent/helper/app_route.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_posts_provider.dart';
 import 'package:revent/provider/profile/profile_saved_provider.dart';
+import 'package:revent/provider/search/search_posts_provider.dart';
 import 'package:revent/provider/vent/vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_following_data_provider.dart';
 
@@ -54,6 +55,14 @@ class CurrentProvider {
 
   }
 
+  dynamic _returnSearchProvider({
+    required bool realTime, 
+    BuildContext? context
+  }) {
+    return realTime 
+      ? Provider.of<SearchPostsProvider>(context!) : GetIt.instance<SearchPostsProvider>();
+  }
+
   dynamic getProviderOnly() {
 
     if(navigation.currentRoute == AppRoute.home) {
@@ -63,7 +72,10 @@ class CurrentProvider {
               navigation.currentRoute == AppRoute.userProfile) {
       return _returnProfileProvider(realTime: false);
       
-    } 
+    } else if (navigation.currentRoute == AppRoute.searchResults) {
+      return _returnSearchProvider(realTime: false);
+
+    }
 
   }
 
@@ -92,7 +104,15 @@ class CurrentProvider {
         (ventTitle) => ventTitle == title
       );
 
-    } 
+    } else if (navigation.currentRoute == AppRoute.searchResults) {
+
+      ventData = _returnSearchProvider(realTime: false);
+
+      ventIndex = ventData.vents.indexWhere(
+        (vent) => vent.title == title && vent.creator == creator
+      );
+
+    }
 
     return {
       'vent_index': ventIndex,
@@ -126,7 +146,15 @@ class CurrentProvider {
         (ventTitle) => ventTitle == title
       );
 
-    } // TODO: Add searchposts provider
+    } else if (navigation.currentRoute == AppRoute.searchResults) {
+
+      ventData = _returnSearchProvider(realTime: true, context: context);
+
+      ventIndex = ventData.vents.indexWhere(
+        (vent) => vent.title == title && vent.creator == creator
+      );
+
+    }
 
     return {
       'vent_index': ventIndex,

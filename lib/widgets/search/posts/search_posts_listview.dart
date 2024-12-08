@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
 import 'package:revent/widgets/vent_widgets/home_vent_previewer.dart';
 
-class SearchVentListView extends StatelessWidget {
+class SearchPostsListView extends StatelessWidget {
 
-  const SearchVentListView({super.key});
+  const SearchPostsListView({super.key});
 
   Widget _buildVentPreview(dynamic ventData) {
     return Padding(

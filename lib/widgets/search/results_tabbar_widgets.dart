@@ -20,7 +20,7 @@ class SearchResultsTabBarWidgets {
         controller: controller,
         children: [
 
-          const SearchVentListView(),
+          const SearchPostsListView(),
           Container(),
           Container(),
 
