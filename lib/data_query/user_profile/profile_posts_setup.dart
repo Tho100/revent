@@ -33,8 +33,10 @@ class ProfilePostsSetup {
 
       final title = getPostsData['title'] as List<String>;
       final bodyText = getPostsData['body_text'] as List<String>;
+
       final totalLikes = getPostsData['total_likes'] as List<int>;
       final totalComments = getPostsData['total_comments'] as List<int>;
+
       final postTimestamp = getPostsData['post_timestamp'] as List<String>;
 
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
@@ -69,9 +71,11 @@ class ProfilePostsSetup {
       final profilePicture = getPostsData['profile_picture'] as List<Uint8List>;
 
       final title = getPostsData['title'] as List<String>;
-      final totalLikes = getPostsData['total_likes'] as List<int>;
+      final bodyText = getPostsData['body_text'] as List<String>;
 
+      final totalLikes = getPostsData['total_likes'] as List<int>;
       final totalComments = getPostsData['total_comments'] as List<int>;
+
       final postTimestamp = getPostsData['post_timestamp'] as List<String>;
 
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
@@ -81,6 +85,7 @@ class ProfilePostsSetup {
       profileSavedData.setProfilePicture(userType, profilePicture);
 
       profileSavedData.setTitles(userType, title);
+      profileSavedData.setBodyText(userType, bodyText);
       profileSavedData.setTotalLikes(userType, totalLikes);
       profileSavedData.setTotalComments(userType, totalComments);
       profileSavedData.setPostTimestamp(userType, postTimestamp);

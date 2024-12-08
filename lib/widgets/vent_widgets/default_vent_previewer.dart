@@ -20,6 +20,8 @@ class DefaultVentPreviewer extends StatelessWidget {
 
   final Uint8List pfpData;
 
+  final bool? isMyProfile;
+
   const DefaultVentPreviewer({
     required this.title,
     required this.bodyText,
@@ -28,6 +30,7 @@ class DefaultVentPreviewer extends StatelessWidget {
     required this.totalLikes,
     required this.totalComments,
     required this.pfpData,
+    this.isMyProfile = false,
     super.key
   });
 
@@ -57,6 +60,14 @@ class DefaultVentPreviewer extends StatelessWidget {
       totalLikes: totalLikes,
       totalComments: totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
+      removeSavedOnPressed: isMyProfile!
+        ? () async {
+        await CallVentActions(
+          context: navigatorKey.currentContext!, 
+          title: title, 
+          creator: creator
+        ).removeSavedPost();
+      } : null,
       editOnPressed: () {
         Navigator.pop(navigatorKey.currentContext!);
         NavigatePage.editVentPage(title: title, body: bodyText);
