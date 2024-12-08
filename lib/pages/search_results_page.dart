@@ -82,8 +82,8 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     return Align(
       alignment: Alignment.center,
       child: Container(
-        height: 65,
         width: MediaQuery.of(context).size.width * 0.91,
+        height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: ThemeColor.thirdWhite)
@@ -95,7 +95,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
               alignment: Alignment.centerLeft,
               child: Padding(
                 padding: EdgeInsets.only(left: 18.0),
-                child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 21),
+                child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
               ),
             ),
 

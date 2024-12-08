@@ -1,12 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/themes/theme_color.dart';
+import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/navigation_pages_widgets.dart';
-import 'package:revent/widgets/text_field/main_textfield.dart';
 
 class SearchPage extends StatefulWidget {
 
@@ -43,16 +44,28 @@ class SearchPageState extends State<SearchPage> {
     chipsSelectedNotifier.value = List<bool>.generate(chipsTags.length, (_) => false);
 
   }
-  // TODO: add search icon next to the hint text
+
   Widget _buildSearchBar() {
     return Align(
       alignment: Alignment.center,
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.91,
-        child: MainTextField(
+        child: TextFormField(
           maxLines: 1,
-          controller: searchController, 
-          hintText: 'Search for anything...',
+          controller: searchController,
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontWeight: FontWeight.w700,
+          ),
+          decoration: ThemeStyle.txtFieldStye(
+            customBottomPadding: 18,
+            customTopPadding: 18,
+            hintText: 'Search for anything...',
+            customPrefix: const Padding(
+              padding: EdgeInsets.only(left: 8.0), 
+              child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
+            ),
+          ),
           textInputAction: TextInputAction.done,
           onFieldSubmitted: (searchText) {
             Navigator.push(
