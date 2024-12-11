@@ -1,18 +1,20 @@
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:revent/global/constant.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/app_route.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/vent_query/search_data_getter.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
-class DefaultVentPreviewer extends StatelessWidget {
+class DefaultVentPreviewer extends StatefulWidget {
 
   final String title;
   final String bodyText;
@@ -25,6 +27,7 @@ class DefaultVentPreviewer extends StatelessWidget {
   final Uint8List pfpData;
 
   final bool? isMyProfile;
+  final bool? useV2ActionButtons;
 
   const DefaultVentPreviewer({
     required this.title,
@@ -35,75 +38,42 @@ class DefaultVentPreviewer extends StatelessWidget {
     required this.totalComments,
     required this.pfpData,
     this.isMyProfile = false,
+    this.useV2ActionButtons = false,
     super.key
   });
 
-  Future<String> _getSearchResultsBodyText() async {
+  @override
+  State<DefaultVentPreviewer> createState() => _DefaultVentPreviewerState();
 
-    return await SearchDataGetter(
-      title: title, 
-      creator: creator
-    ).getBodyText();
+}
 
-  }
+class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
 
-  Future<String> _initializeBodyText() async {
+  late VentPreviewerWidgets ventPreviewer;
+  late String ventBodyText;
 
-    final navigation = GetIt.instance<NavigationProvider>();
-
-    final customBodyTextPage = [AppRoute.searchResults];
-
-    if(customBodyTextPage.contains(navigation.currentRoute)) {
-      return await _getSearchResultsBodyText();
-
-    } else {
-      return bodyText;
-
-    }
-
-  }
-
-  void _viewVentPostPage() async {
-    
-    final ventBodyText = await _initializeBodyText();
-
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => VentPostPage(
-        title: title, 
-        bodyText: ventBodyText, 
-        postTimestamp: postTimestamp,
-        totalLikes: totalLikes,
-        creator: creator, 
-        pfpData: pfpData,
-      )),
-    );
-
-  }
-
-  Widget _buildVentPreview() {
-
-    final ventPreviewer = VentPreviewerWidgets(
-      context: navigatorKey.currentContext!,
-      title: title,
-      bodyText: bodyText,
-      creator: creator,
-      pfpData: pfpData,
-      postTimestamp: postTimestamp,
-      totalLikes: totalLikes,
-      totalComments: totalComments,
+  void _initializeVentPreviewer() {
+    ventPreviewer = VentPreviewerWidgets(
+      context: context,
+      title: widget.title,
+      bodyText: widget.bodyText,
+      creator: widget.creator,
+      pfpData: widget.pfpData,
+      postTimestamp: widget.postTimestamp,
+      totalLikes: widget.totalLikes,
+      totalComments: widget.totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
-      removeSavedOnPressed: isMyProfile!
+      removeSavedOnPressed: widget.isMyProfile!
         ? () async {
         await CallVentActions(
-          context: navigatorKey.currentContext!, 
-          title: title, 
-          creator: creator
+          context: context, 
+          title: widget.title, 
+          creator: widget.creator
         ).removeSavedPost();
       } : null,
       editOnPressed: () {
-        Navigator.pop(navigatorKey.currentContext!);
-        NavigatePage.editVentPage(title: title, body: bodyText);
+        Navigator.pop(context);
+        NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
       },
       deleteOnPressed: () {
         CustomAlertDialog.alertDialogCustomOnPress(
@@ -111,9 +81,9 @@ class DefaultVentPreviewer extends StatelessWidget {
           buttonMessage: 'Delete',
           onPressedEvent: () async {
             await CallVentActions(
-              context: navigatorKey.currentContext!, 
-              title: title, 
-              creator: creator
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
             ).deletePost();
           }
         );
@@ -121,9 +91,91 @@ class DefaultVentPreviewer extends StatelessWidget {
       reportOnPressed: () {},
       blockOnPressed: () {},
     );
+  }
 
-    final actionButtonsPadding = bodyText.isEmpty ? 0.0 : 15.0;
-    final actionButtonsHeightGap = bodyText.isEmpty ? 0.0 : 15.0;
+  void _initializeBodyText() async {
+
+    final navigation = GetIt.instance<NavigationProvider>();
+
+    final customBodyTextPage = [AppRoute.searchResults];
+
+    if(customBodyTextPage.contains(navigation.currentRoute)) {
+      ventBodyText = await _getSearchResultsBodyText();
+
+    } else {
+      ventBodyText = widget.bodyText;
+
+    }
+
+  }
+
+  Future<String> _getSearchResultsBodyText() async {
+
+    return await SearchDataGetter(
+      title: widget.title, 
+      creator: widget.creator
+    ).getBodyText();
+
+  }
+
+  void _viewVentPostPage() {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => VentPostPage(
+        title: widget.title, 
+        bodyText: ventBodyText, 
+        postTimestamp: widget.postTimestamp,
+        totalLikes: widget.totalLikes,
+        creator: widget.creator, 
+        pfpData: widget.pfpData,
+      )),
+    );
+  }
+
+  Widget _v2ActionButtonsWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4.0, bottom: 4.0),
+      child: Row(
+        children: [
+
+          const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 18.5),
+
+          const SizedBox(width: 6),
+
+          Text(
+            widget.totalLikes.toString(),
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 13.5,
+            ),
+            textAlign: TextAlign.start,
+          ),
+
+          const SizedBox(width: 18),
+
+          const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.white, size: 18.5),
+  
+          const SizedBox(width: 6), 
+  
+          Text(
+            widget.totalComments.toString(),
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 13.5,
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+
+  Widget _buildVentPreview() {
+    
+    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 15.0;
+    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 15.0;
 
     return ventPreviewer.buildMainContainer(
       children: [
@@ -152,7 +204,9 @@ class DefaultVentPreviewer extends StatelessWidget {
   
         Padding(
           padding: EdgeInsets.only(top: actionButtonsPadding),
-          child: Row(
+          child: widget.useV2ActionButtons! 
+            ? _v2ActionButtonsWidget()
+            : Row(
             children: [
                   
               ventPreviewer.buildLikeButton(),
@@ -175,8 +229,15 @@ class DefaultVentPreviewer extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    _initializeBodyText();
+    _initializeVentPreviewer();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return _buildVentPreview();
   }
-  
+
 } 

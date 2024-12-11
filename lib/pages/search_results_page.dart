@@ -31,6 +31,8 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   late TabController tabController;
   late SearchResultsTabBarWidgets resultsTabBarWidgets;
 
+  final pageIsLoadedNotifier = ValueNotifier<bool>(false);
+
   void _initializeClasses() {
     tabController = TabController(length: 3, vsync: this);
     resultsTabBarWidgets = SearchResultsTabBarWidgets(
@@ -43,9 +45,9 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
     try {
 
-      await VentDataSetup().setupSearch(
-        searchText: widget.searchText
-      );
+      await VentDataSetup().setupSearch(searchText: widget.searchText).then((_) {
+        pageIsLoadedNotifier.value = true;
+      });
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
@@ -57,7 +59,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     return Column(
       children: [
 
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
 
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -70,9 +72,25 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
           ],
         ),
 
-        Expanded(
-          child: resultsTabBarWidgets.buildTabBarTabs()
-        )
+        ValueListenableBuilder(
+          valueListenable: pageIsLoadedNotifier,
+          builder: (_, isLoaded, __) {
+
+            if(!isLoaded) {
+              return const SizedBox(
+                height: 300,
+                child: Center(
+                  child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
+                ),
+              );
+            }
+
+            return Expanded(
+              child: resultsTabBarWidgets.buildTabBarTabs()
+            );
+
+          }
+        ),
 
       ],
     );
@@ -122,7 +140,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
       headerSliverBuilder: (_, __) => [
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.only(top: 15.0),
+            padding: const EdgeInsets.only(top: 4.0),
             child: _buildSearchTextContainer(),           
           ),
         ),
@@ -143,6 +161,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   void dispose() {
     GetIt.instance<SearchPostsProvider>().clearVents();
     tabController.dispose();
+    pageIsLoadedNotifier.dispose();
     super.dispose();
   }
 
