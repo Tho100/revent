@@ -61,7 +61,7 @@ class ProfilePostsDataGetter {
     };
 
   }
-
+  // TODO: Remove this function
   Future<Map<String, dynamic>> getBodyText({
     required String title,
     required String creator

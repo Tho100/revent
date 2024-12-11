@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 class SearchVents {
 
   String title;
-  String bodyText;
   String creator;
   String postTimestamp;
 
@@ -19,7 +18,6 @@ class SearchVents {
 
   SearchVents({
     required this.title,
-    required this.bodyText,
     required this.creator,
     required this.postTimestamp,
     required this.profilePic,

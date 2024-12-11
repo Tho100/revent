@@ -1,11 +1,15 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/app_route.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
+import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/vent_query/search_data_getter.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class DefaultVentPreviewer extends StatelessWidget {
@@ -34,18 +38,47 @@ class DefaultVentPreviewer extends StatelessWidget {
     super.key
   });
 
-  void _viewVentPostPage() {
+  Future<String> _getSearchResultsBodyText() async {
+
+    return await SearchDataGetter(
+      title: title, 
+      creator: creator
+    ).getBodyText();
+
+  }
+
+  Future<String> _initializeBodyText() async {
+
+    final navigation = GetIt.instance<NavigationProvider>();
+
+    final customBodyTextPage = [AppRoute.searchResults];
+
+    if(customBodyTextPage.contains(navigation.currentRoute)) {
+      return await _getSearchResultsBodyText();
+
+    } else {
+      return bodyText;
+
+    }
+
+  }
+
+  void _viewVentPostPage() async {
+    
+    final ventBodyText = await _initializeBodyText();
+
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => VentPostPage(
         title: title, 
-        bodyText: bodyText, 
+        bodyText: ventBodyText, 
         postTimestamp: postTimestamp,
         totalLikes: totalLikes,
         creator: creator, 
         pfpData: pfpData,
       )),
     );
+
   }
 
   Widget _buildVentPreview() {

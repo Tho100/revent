@@ -152,10 +152,9 @@ class VentDataSetup {
         searchTitleText: searchText,
       ),
       setVents: GetIt.instance<SearchPostsProvider>().setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, 
+      ventBuilder: (title, _, creator, postTimestamp, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SearchVents(
         title: title,
-        bodyText: bodyText,
         creator: creator,
         postTimestamp: postTimestamp,
         profilePic: profilePic,
