@@ -31,6 +31,8 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   late TabController tabController;
   late SearchResultsTabBarWidgets resultsTabBarWidgets;
 
+  final pageIsLoadedNotifier = ValueNotifier<bool>(false);
+
   void _initializeClasses() {
     tabController = TabController(length: 3, vsync: this);
     resultsTabBarWidgets = SearchResultsTabBarWidgets(
@@ -43,9 +45,9 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
     try {
 
-      await VentDataSetup().setupSearch(
-        searchText: widget.searchText
-      );
+      await VentDataSetup().setupSearch(searchText: widget.searchText).then((_) {
+        pageIsLoadedNotifier.value = true;
+      });
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
@@ -70,9 +72,25 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
           ],
         ),
 
-        Expanded(
-          child: resultsTabBarWidgets.buildTabBarTabs()
-        )
+        ValueListenableBuilder(
+          valueListenable: pageIsLoadedNotifier,
+          builder: (_, isLoaded, __) {
+
+            if(!isLoaded) {
+              return const SizedBox(
+                height: 300,
+                child: Center(
+                  child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
+                ),
+              );
+            }
+
+            return Expanded(
+              child: resultsTabBarWidgets.buildTabBarTabs()
+            );
+
+          }
+        ),
 
       ],
     );
@@ -143,6 +161,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   void dispose() {
     GetIt.instance<SearchPostsProvider>().clearVents();
     tabController.dispose();
+    pageIsLoadedNotifier.dispose();
     super.dispose();
   }
 
