@@ -1,13 +1,16 @@
 import 'dart:typed_data';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/app_route.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/vent_query/search_data_getter.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
@@ -25,6 +28,7 @@ class DefaultVentPreviewer extends StatelessWidget {
   final Uint8List pfpData;
 
   final bool? isMyProfile;
+  final bool? useV2ActionButtons;
 
   const DefaultVentPreviewer({
     required this.title,
@@ -35,6 +39,7 @@ class DefaultVentPreviewer extends StatelessWidget {
     required this.totalComments,
     required this.pfpData,
     this.isMyProfile = false,
+    this.useV2ActionButtons = false,
     super.key
   });
 
@@ -79,6 +84,46 @@ class DefaultVentPreviewer extends StatelessWidget {
       )),
     );
 
+  }
+
+  Widget _v2ActionButtonsWidget() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 4.0, bottom: 4.0),
+      child: Row(
+        children: [
+
+          const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 18.5),
+
+          const SizedBox(width: 6),
+
+          Text(
+            totalLikes.toString(),
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 13.5,
+            ),
+            textAlign: TextAlign.start,
+          ),
+
+          const SizedBox(width: 18),
+
+          const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.white, size: 18.5),
+  
+          const SizedBox(width: 6), 
+  
+          Text(
+            totalComments.toString(),
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 13.5,
+            ),
+          ),
+
+        ],
+      ),
+    );
   }
 
   Widget _buildVentPreview() {
@@ -152,7 +197,9 @@ class DefaultVentPreviewer extends StatelessWidget {
   
         Padding(
           padding: EdgeInsets.only(top: actionButtonsPadding),
-          child: Row(
+          child: useV2ActionButtons! 
+            ? _v2ActionButtonsWidget()
+            : Row(
             children: [
                   
               ventPreviewer.buildLikeButton(),

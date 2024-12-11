@@ -20,6 +20,7 @@ class SearchPostsListView extends StatelessWidget {
         totalLikes: ventData.totalLikes,
         totalComments: ventData.totalComments,
         pfpData: ventData.profilePic,
+        useV2ActionButtons: true,
       ),
     );
   }
