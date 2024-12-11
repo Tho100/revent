@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/global/constant.dart';
 import 'package:revent/helper/app_route.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -15,7 +14,7 @@ import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/vent_query/search_data_getter.dart';
 import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
 
-class DefaultVentPreviewer extends StatelessWidget {
+class DefaultVentPreviewer extends StatefulWidget {
 
   final String title;
   final String bodyText;
@@ -43,47 +42,94 @@ class DefaultVentPreviewer extends StatelessWidget {
     super.key
   });
 
-  Future<String> _getSearchResultsBodyText() async {
+  @override
+  State<DefaultVentPreviewer> createState() => _DefaultVentPreviewerState();
 
-    return await SearchDataGetter(
-      title: title, 
-      creator: creator
-    ).getBodyText();
+}
 
+class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
+
+  late VentPreviewerWidgets ventPreviewer;
+  late String ventBodyText;
+
+  void _initializeVentPreviewer() {
+    ventPreviewer = VentPreviewerWidgets(
+      context: context,
+      title: widget.title,
+      bodyText: widget.bodyText,
+      creator: widget.creator,
+      pfpData: widget.pfpData,
+      postTimestamp: widget.postTimestamp,
+      totalLikes: widget.totalLikes,
+      totalComments: widget.totalComments,
+      viewVentPostOnPressed: () => _viewVentPostPage(),
+      removeSavedOnPressed: widget.isMyProfile!
+        ? () async {
+        await CallVentActions(
+          context: context, 
+          title: widget.title, 
+          creator: widget.creator
+        ).removeSavedPost();
+      } : null,
+      editOnPressed: () {
+        Navigator.pop(context);
+        NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
+      },
+      deleteOnPressed: () {
+        CustomAlertDialog.alertDialogCustomOnPress(
+          message: 'Delete this post?', 
+          buttonMessage: 'Delete',
+          onPressedEvent: () async {
+            await CallVentActions(
+              context: context, 
+              title: widget.title, 
+              creator: widget.creator
+            ).deletePost();
+          }
+        );
+      },
+      reportOnPressed: () {},
+      blockOnPressed: () {},
+    );
   }
 
-  Future<String> _initializeBodyText() async {
+  void _initializeBodyText() async {
 
     final navigation = GetIt.instance<NavigationProvider>();
 
     final customBodyTextPage = [AppRoute.searchResults];
 
     if(customBodyTextPage.contains(navigation.currentRoute)) {
-      return await _getSearchResultsBodyText();
+      ventBodyText = await _getSearchResultsBodyText();
 
     } else {
-      return bodyText;
+      ventBodyText = widget.bodyText;
 
     }
 
   }
 
-  void _viewVentPostPage() async {
-    
-    final ventBodyText = await _initializeBodyText();
+  Future<String> _getSearchResultsBodyText() async {
 
+    return await SearchDataGetter(
+      title: widget.title, 
+      creator: widget.creator
+    ).getBodyText();
+
+  }
+
+  void _viewVentPostPage() {
     Navigator.push(
-      navigatorKey.currentContext!,
+      context,
       MaterialPageRoute(builder: (_) => VentPostPage(
-        title: title, 
+        title: widget.title, 
         bodyText: ventBodyText, 
-        postTimestamp: postTimestamp,
-        totalLikes: totalLikes,
-        creator: creator, 
-        pfpData: pfpData,
+        postTimestamp: widget.postTimestamp,
+        totalLikes: widget.totalLikes,
+        creator: widget.creator, 
+        pfpData: widget.pfpData,
       )),
     );
-
   }
 
   Widget _v2ActionButtonsWidget() {
@@ -97,7 +143,7 @@ class DefaultVentPreviewer extends StatelessWidget {
           const SizedBox(width: 6),
 
           Text(
-            totalLikes.toString(),
+            widget.totalLikes.toString(),
             style: GoogleFonts.inter(
               color: ThemeColor.white,
               fontWeight: FontWeight.w800,
@@ -113,7 +159,7 @@ class DefaultVentPreviewer extends StatelessWidget {
           const SizedBox(width: 6), 
   
           Text(
-            totalComments.toString(),
+            widget.totalComments.toString(),
             style: GoogleFonts.inter(
               color: ThemeColor.white,
               fontWeight: FontWeight.w800,
@@ -127,48 +173,9 @@ class DefaultVentPreviewer extends StatelessWidget {
   }
 
   Widget _buildVentPreview() {
-
-    final ventPreviewer = VentPreviewerWidgets(
-      context: navigatorKey.currentContext!,
-      title: title,
-      bodyText: bodyText,
-      creator: creator,
-      pfpData: pfpData,
-      postTimestamp: postTimestamp,
-      totalLikes: totalLikes,
-      totalComments: totalComments,
-      viewVentPostOnPressed: () => _viewVentPostPage(),
-      removeSavedOnPressed: isMyProfile!
-        ? () async {
-        await CallVentActions(
-          context: navigatorKey.currentContext!, 
-          title: title, 
-          creator: creator
-        ).removeSavedPost();
-      } : null,
-      editOnPressed: () {
-        Navigator.pop(navigatorKey.currentContext!);
-        NavigatePage.editVentPage(title: title, body: bodyText);
-      },
-      deleteOnPressed: () {
-        CustomAlertDialog.alertDialogCustomOnPress(
-          message: 'Delete this post?', 
-          buttonMessage: 'Delete',
-          onPressedEvent: () async {
-            await CallVentActions(
-              context: navigatorKey.currentContext!, 
-              title: title, 
-              creator: creator
-            ).deletePost();
-          }
-        );
-      },
-      reportOnPressed: () {},
-      blockOnPressed: () {},
-    );
-
-    final actionButtonsPadding = bodyText.isEmpty ? 0.0 : 15.0;
-    final actionButtonsHeightGap = bodyText.isEmpty ? 0.0 : 15.0;
+    
+    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 15.0;
+    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 15.0;
 
     return ventPreviewer.buildMainContainer(
       children: [
@@ -197,7 +204,7 @@ class DefaultVentPreviewer extends StatelessWidget {
   
         Padding(
           padding: EdgeInsets.only(top: actionButtonsPadding),
-          child: useV2ActionButtons! 
+          child: widget.useV2ActionButtons! 
             ? _v2ActionButtonsWidget()
             : Row(
             children: [
@@ -222,8 +229,15 @@ class DefaultVentPreviewer extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    _initializeBodyText();
+    _initializeVentPreviewer();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return _buildVentPreview();
   }
-  
+
 } 
