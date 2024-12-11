@@ -31,7 +31,6 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   late TabController tabController;
   late SearchResultsTabBarWidgets resultsTabBarWidgets;
 
-  /// TODO: Add bottom-navigation bar
   void _initializeClasses() {
     tabController = TabController(length: 3, vsync: this);
     resultsTabBarWidgets = SearchResultsTabBarWidgets(

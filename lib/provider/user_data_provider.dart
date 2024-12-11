@@ -34,7 +34,6 @@ class UserDataProvider extends ChangeNotifier {
 
   void clearUserData() {
     _user = User(username: '', email: '', plan: '', joinedDate: '');
-    notifyListeners();
   }
 
 }
