@@ -34,11 +34,9 @@ class VentDataGetter {
 
     final title = extractedData.extractStringColumn('title');
 
-    List<String> bodyText = [];
-
-    if(!isFromSearch) {
-      bodyText = extractedData.extractStringColumn('body_text');
-    }
+    final bodyText = isFromSearch 
+      ? List<String>.generate(title.length, (_) => '')
+      : extractedData.extractStringColumn('body_text');
 
     final creator = extractedData.extractStringColumn('creator');
 
