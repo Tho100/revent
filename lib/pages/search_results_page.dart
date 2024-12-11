@@ -57,7 +57,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     return Column(
       children: [
 
-        const SizedBox(height: 20),
+        const SizedBox(height: 15),
 
         Column(
           mainAxisSize: MainAxisSize.min,
@@ -122,7 +122,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
       headerSliverBuilder: (_, __) => [
         SliverToBoxAdapter(
           child: Padding(
-            padding: const EdgeInsets.only(top: 15.0),
+            padding: const EdgeInsets.only(top: 4.0),
             child: _buildSearchTextContainer(),           
           ),
         ),
