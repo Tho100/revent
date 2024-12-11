@@ -9,6 +9,7 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/widgets/search/results_tabbar_widgets.dart';
 
 class SearchResultsPage extends StatefulWidget {
@@ -30,7 +31,6 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   late TabController tabController;
   late SearchResultsTabBarWidgets resultsTabBarWidgets;
 
-  /// TODO: Add bottom-navigation bar
   void _initializeClasses() {
     tabController = TabController(length: 3, vsync: this);
     resultsTabBarWidgets = SearchResultsTabBarWidgets(
@@ -152,7 +152,8 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
       appBar: CustomAppBar(
         context: context,
       ).buildAppBar(),    
-      body: _buildBody()
+      body: _buildBody(),
+      bottomNavigationBar: PageNavigationBar(),
     );
   }
 

@@ -14,7 +14,7 @@ class SearchPostsListView extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 8.5),
       child: DefaultVentPreviewer(
         title: ventData.title,
-        bodyText: ventData.bodyText,
+        bodyText: '',
         creator: ventData.creator,
         postTimestamp: ventData.postTimestamp,
         totalLikes: ventData.totalLikes,

@@ -19,7 +19,7 @@ class VentDataGetter {
     final conn = await ReventConnect.initializeConnection();
 
     final query = isFromSearch! 
-      ? 'SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info WHERE title LIKE :search_text'
+      ? 'SELECT title, creator, created_at, total_likes, total_comments FROM vent_info WHERE title LIKE :search_text'
       : 'SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info';
     
     final searchParam = {
@@ -33,7 +33,11 @@ class VentDataGetter {
     final extractedData = ExtractData(rowsData: retrievedVents);
 
     final title = extractedData.extractStringColumn('title');
-    final bodyText = extractedData.extractStringColumn('body_text');
+
+    final bodyText = isFromSearch 
+      ? List<String>.generate(title.length, (_) => '')
+      : extractedData.extractStringColumn('body_text');
+
     final creator = extractedData.extractStringColumn('creator');
 
     final totalLikes = extractedData.extractIntColumn('total_likes');
