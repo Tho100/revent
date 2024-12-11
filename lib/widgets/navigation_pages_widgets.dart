@@ -22,8 +22,8 @@ class NavigationPagesWidgets {
         child: Center(
           child: ProfilePictureWidget(
             pfpData: GetIt.instance<ProfileDataProvider>().profilePicture,
-            customWidth: 36,
-            customHeight: 36,
+            customWidth: 34,
+            customHeight: 34,
           ),
         ),
       ),
