@@ -1,6 +1,9 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -9,15 +12,18 @@ import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/vent_actions.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/sub_button.dart';
+import 'package:revent/widgets/profile_picture.dart';
 
 class PostCommentPage extends StatefulWidget {
 
   final String title;
   final String creator;
+  final Uint8List creatorPfp;
   
   const PostCommentPage({
     required this.title,
     required this.creator,
+    required this.creatorPfp,
     super.key
   });
 
@@ -66,6 +72,36 @@ class PostCommentPageState extends State<PostCommentPage> {
 
   }
 
+  Widget _buildCreatorInfo() {
+    return Row(
+      children: [
+
+        SizedBox(
+          width: 35,
+          height: 35,
+          child: ProfilePictureWidget(
+            customHeight: 35,
+            customWidth: 35,
+            customEmptyPfpSize: 20,
+            pfpData: widget.creatorPfp
+          ),
+        ),
+
+        const SizedBox(width: 10),
+
+        Text(
+          widget.creator,
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontWeight: FontWeight.w800,
+            fontSize: 14.5
+          ),
+        ),
+
+      ]
+    );
+  }
+
   Widget _buildTitle() {
     return Text(
       widget.title,
@@ -79,7 +115,7 @@ class PostCommentPageState extends State<PostCommentPage> {
 
   Widget _buildCommentTextField() {
     return Transform.translate(
-      offset: const Offset(0, -25),
+      offset: const Offset(0, -8),
       child: SizedBox(
         height: MediaQuery.of(context).size.height - 185,
         child: TextFormField(
@@ -109,6 +145,32 @@ class PostCommentPageState extends State<PostCommentPage> {
     );
   }  
 
+  Widget _buildTextFieldRow() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        SizedBox(
+          width: 35,
+          height: 35,
+          child: ProfilePictureWidget(
+            customHeight: 35,
+            customWidth: 35,
+            customEmptyPfpSize: 20,
+            pfpData: GetIt.instance<ProfileDataProvider>().profilePicture
+          ),
+        ),
+
+        const SizedBox(width: 10),
+
+        Expanded(
+          child: _buildCommentTextField()
+        ),
+
+      ],
+    );
+  }
+
   Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
@@ -119,6 +181,10 @@ class PostCommentPageState extends State<PostCommentPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
         
+              _buildCreatorInfo(),
+
+              const SizedBox(height: 18),
+
               _buildTitle(),
 
               const SizedBox(height: 12),
@@ -127,7 +193,7 @@ class PostCommentPageState extends State<PostCommentPage> {
 
               const SizedBox(height: 30),
         
-              _buildCommentTextField()
+              _buildTextFieldRow()
         
             ],
           ),
