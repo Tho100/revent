@@ -588,7 +588,7 @@ class VentPostPageState extends State<VentPostPage> {
           shape: const StadiumBorder(),
         ),
         child: Transform.translate(
-          offset: const Offset(-3, -3),
+          offset: const Offset(-3, -1),
           child: const Icon(CupertinoIcons.gear, color: ThemeColor.thirdWhite)
         )
       ),
