@@ -24,23 +24,23 @@ class UserModel {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const queries = [
-      'DELETE FROM user_information WHERE username = :username',
-      'DELETE FROM user_profile_info WHERE username = :username',
-      'DELETE FROM user_follows_info WHERE follower = :username',
-      'DELETE FROM user_follows_info WHERE following = :username',
-      'DELETE FROM vent_info WHERE creator = :username',
-      'DELETE FROM saved_vent_info WHERE creator = :username',
-      'DELETE FROM archive_vent_info WHERE creator = :username',
-      'DELETE FROM liked_vent_info WHERE liked_by = :username',
-      'DELETE FROM vent_comments_info WHERE commented_by = :username',
-    ];
+    const query = '''
+      DELETE ui, upi, ufi, vi, svi, avi, lvi, vci, vcli
+      FROM user_information ui
+      LEFT JOIN user_profile_info upi ON upi.username = ui.username
+      LEFT JOIN user_follows_info ufi ON ufi.follower = ui.username
+      LEFT JOIN vent_info vi ON vi.creator = ui.username
+      LEFT JOIN saved_vent_info svi ON svi.creator = ui.username
+      LEFT JOIN archive_vent_info avi ON avi.creator = ui.username
+      LEFT JOIN liked_vent_info lvi ON lvi.liked_by = ui.username
+      LEFT JOIN vent_comments_info vci ON vci.commented_by = ui.username
+      LEFT JOIN vent_comments_likes_info vcli ON vcli.liked_by = ui.username
+      WHERE ui.username = :username;
+    ''';
 
     final param = {'username': username};
 
-    for(int i=0; i<queries.length; i++) {
-      await conn.execute(queries[i], param);
-    }
+    await conn.execute(query, param);
 
   }
 
