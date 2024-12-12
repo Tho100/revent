@@ -142,7 +142,7 @@ class PostCommentPageState extends State<PostCommentPage> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.only(top: 20.0, left: 16.0, right: 16.0),
+      padding: const EdgeInsets.only(top: 15.0, left: 16.0, right: 16.0),
       child: ScrollConfiguration(
         behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
         child: SingleChildScrollView(
