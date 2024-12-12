@@ -53,7 +53,7 @@ class EditCommentPageState extends State<EditCommentPage> {
 
   Widget _buildBodyTextField() { 
     return Transform.translate(
-      offset: const Offset(0, -5),
+      offset: const Offset(0, -8),
       child: TextFormField(
         controller: commentController,
         autofocus: true,
@@ -62,14 +62,14 @@ class EditCommentPageState extends State<EditCommentPage> {
         maxLines: null,
         style: GoogleFonts.inter(
           color: ThemeColor.secondaryWhite,
-          fontWeight: FontWeight.w700,
+          fontWeight: FontWeight.w800,
           fontSize: 16
         ),
         decoration: InputDecoration(
           counterText: '',
           hintStyle: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
-            fontWeight: FontWeight.w700, 
+            fontWeight: FontWeight.w800, 
             fontSize: 16
           ),
           hintText: 'Your comment',
@@ -82,7 +82,7 @@ class EditCommentPageState extends State<EditCommentPage> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.only(left: 17.0, top: 15.0),
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 15.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -102,10 +102,7 @@ class EditCommentPageState extends State<EditCommentPage> {
 
           Expanded(
             child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.only(right: 14.0),
-                child: _buildBodyTextField(),
-              ),
+              child: _buildBodyTextField(),
             ),
           ),
             
