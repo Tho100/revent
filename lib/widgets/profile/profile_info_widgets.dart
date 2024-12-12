@@ -32,8 +32,8 @@ class ProfileInfoWidgets {
     return InkWellEffect(
       onPressed: () => ProfilePictureDialog().showPfpDialog(pfpData),
       child: ProfilePictureWidget(
-        customHeight: 75,
-        customWidth: 75,
+        customHeight: 70,
+        customWidth: 70,
         customEmptyPfpSize: 30,
         pfpData: pfpData,
       ),
