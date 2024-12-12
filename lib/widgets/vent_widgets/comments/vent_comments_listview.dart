@@ -43,7 +43,7 @@ class VentCommentsListView extends StatelessWidget {
         header: isCommentEnabled 
           ? 'No comment yet' : 'Comment disabled', 
         subheader: isCommentEnabled 
-          ? 'Be the first to comment!' : 'The creator has disabled comments for this post.'
+          ? 'Be the first to comment!' : 'The author has disabled comment for this post.'
       ),
     );
   }
