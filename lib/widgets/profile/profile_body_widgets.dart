@@ -59,7 +59,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
           profileInfoWidgets.buildProfilePicture(),
           
-          const SizedBox(width: 16),
+          const SizedBox(width: 12),
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,

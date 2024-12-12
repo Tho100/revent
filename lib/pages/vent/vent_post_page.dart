@@ -588,7 +588,7 @@ class VentPostPageState extends State<VentPostPage> {
           shape: const StadiumBorder(),
         ),
         child: Transform.translate(
-          offset: const Offset(-3, -3),
+          offset: const Offset(-3, -1),
           child: const Icon(CupertinoIcons.gear, color: ThemeColor.thirdWhite)
         )
       ),
@@ -605,7 +605,9 @@ class VentPostPageState extends State<VentPostPage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => PostCommentPage(title: widget.title, creator: widget.creator))
+                  MaterialPageRoute(builder: (_) => PostCommentPage(
+                    title: widget.title, creator: widget.creator, creatorPfp: widget.pfpData
+                  ))
                 );
               },              
               child: Container(

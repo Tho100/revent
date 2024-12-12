@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:get_it/get_it.dart';
+import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/comment/save_comment_edit.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/profile_picture.dart';
+import 'package:revent/widgets/text_field/comment_textfield.dart';
 
 class EditCommentPage extends StatefulWidget {
 
@@ -48,69 +50,33 @@ class EditCommentPageState extends State<EditCommentPage> {
 
   }
 
-  Widget _buildTitle() {
-    return Text(
-      widget.title,
-      style: GoogleFonts.inter(
-        color: ThemeColor.white,
-        fontWeight: FontWeight.w800,
-        fontSize: 21
-      ),
-    );
-  }
-
-  Widget _buildBodyTextField() { 
-    return Transform.translate(
-      offset: const Offset(0, -5),
-      child: TextFormField(
-        controller: commentController,
-        autofocus: true,
-        keyboardType: TextInputType.multiline,
-        maxLength: 2850,
-        maxLines: null,
-        style: GoogleFonts.inter(
-          color: ThemeColor.secondaryWhite,
-          fontWeight: FontWeight.w700,
-          fontSize: 16
-        ),
-        decoration: InputDecoration(
-          counterText: '',
-          hintStyle: GoogleFonts.inter(
-            color: ThemeColor.thirdWhite,
-            fontWeight: FontWeight.w700, 
-            fontSize: 16
-          ),
-          hintText: 'Your comment',
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.zero, 
-        ),
-      ),
-    );
-  }
-
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
-      child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-    
-            const SizedBox(height: 4),
-          
-            Padding(
-              padding: const EdgeInsets.only(left: 16.0, right: 12.0, bottom: 8.0),
-              child: _buildTitle(),
-            ),   
-          
-            Padding(
-              padding: const EdgeInsets.only(left: 17.0, right: 14.0),
-              child: _buildBodyTextField(),
+      padding: const EdgeInsets.only(top: 15.0, left: 16.0, right: 16.0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+
+          SizedBox(
+            width: 35,
+            height: 35,
+            child: ProfilePictureWidget(
+              customHeight: 35,
+              customWidth: 35,
+              customEmptyPfpSize: 20,
+              pfpData: GetIt.instance<ProfileDataProvider>().profilePicture
             ),
-              
-          ],
-        ),
+          ),
+
+          const SizedBox(width: 10),
+
+          Expanded(
+            child: SingleChildScrollView(
+              child: CommentTextField(controller: commentController),
+            ),
+          ),
+            
+        ],
       ),
     );
   }

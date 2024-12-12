@@ -143,7 +143,7 @@ class SettingsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        title: 'Settings',
+        title: 'Settings and activity',
         context: context
       ).buildAppBar(),
       body: _buildBody(context),
