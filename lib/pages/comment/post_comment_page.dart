@@ -13,6 +13,7 @@ import 'package:revent/vent_query/vent_actions.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/sub_button.dart';
 import 'package:revent/widgets/profile_picture.dart';
+import 'package:revent/widgets/text_field/comment_textfield.dart';
 
 class PostCommentPage extends StatefulWidget {
 
@@ -36,12 +37,12 @@ class PostCommentPageState extends State<PostCommentPage> {
 
   final commentController = TextEditingController();
 
-  final commentProvider = GetIt.instance<VentCommentProvider>();
-  final userData = GetIt.instance<UserDataProvider>();
-
   void _createCommentOnPressed() async {
 
     try {
+
+      final commentProvider = GetIt.instance<VentCommentProvider>();
+      final userData = GetIt.instance<UserDataProvider>();
 
       final commentText = commentController.text;
 
@@ -113,38 +114,6 @@ class PostCommentPageState extends State<PostCommentPage> {
     );
   }
 
-  Widget _buildCommentTextField() {
-    return Transform.translate(
-      offset: const Offset(0, -8),
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height - 185,
-        child: TextFormField(
-          controller: commentController,
-          keyboardType: TextInputType.multiline,
-          autofocus: true,
-          maxLength: 1000,
-          maxLines: null,
-          style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
-            fontWeight: FontWeight.w800,
-            fontSize: 16
-          ),
-          decoration: InputDecoration(
-            counterText: '',
-            hintStyle: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w800, 
-              fontSize: 16
-            ),
-            hintText: 'Your comment',
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.zero, 
-          ),
-        ),
-      ),
-    );
-  }  
-
   Widget _buildTextFieldRow() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -164,7 +133,7 @@ class PostCommentPageState extends State<PostCommentPage> {
         const SizedBox(width: 10),
 
         Expanded(
-          child: _buildCommentTextField()
+          child: CommentTextField(controller: commentController)
         ),
 
       ],
