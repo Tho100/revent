@@ -28,12 +28,12 @@ class DeleteAccountPageState extends State<DeleteAccountPage> {
 
   final currentPasswordNotifier = ValueNotifier<bool>(false);
 
-  final userAuth = UserAuth();
-  final userModel = UserModel();
-
   final userData = GetIt.instance<UserDataProvider>();
 
   void _deleteAccountConfirmation() {
+
+    final userModel = UserModel();
+
     CustomAlertDialog.alertDialogCustomOnPress(
       message: 'Delete your account?', 
       buttonMessage: 'Delete', 
@@ -44,6 +44,7 @@ class DeleteAccountPageState extends State<DeleteAccountPage> {
         );
       } 
     );
+
   }
 
   Future<void> _deleteOnPressed() async {
@@ -52,7 +53,7 @@ class DeleteAccountPageState extends State<DeleteAccountPage> {
 
       final conn = await ReventConnect.initializeConnection();
 
-      final currentPasswordHash = await userAuth.getAccountAuthentication(
+      final currentPasswordHash = await UserAuth().getAccountAuthentication(
         conn: conn, 
         username: userData.user.username
       );
