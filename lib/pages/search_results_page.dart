@@ -9,6 +9,7 @@ import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/widgets/search/results_tabbar_widgets.dart';
 
@@ -39,6 +40,12 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
       controller: tabController, 
       searchText: widget.searchText
     );
+  }
+
+  void _clearDataOnClose() {
+    GetIt.instance<SearchPostsProvider>().clearVents();
+    tabController.dispose();
+    pageIsLoadedNotifier.dispose();
   }
 
   Future<void> _initializeSearchData() async {
@@ -106,31 +113,37 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
           borderRadius: BorderRadius.circular(16),
           border: Border.all(color: ThemeColor.thirdWhite)
         ),
-        child: Stack(
-          children: [
-
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Padding(
-                padding: EdgeInsets.only(left: 18.0),
-                child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
-              ),
-            ),
-
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                widget.searchText,
-                style: GoogleFonts.inter(
-                  color: ThemeColor.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16,
+        child: InkWellEffect(
+          onPressed: () {
+            _clearDataOnClose();
+            Navigator.pop(context);
+          },
+          child: Stack(
+            children: [
+    
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 18.0),
+                  child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
                 ),
               ),
-            ),
-
-          ],
-        )
+    
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  widget.searchText,
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.white,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+    
+            ],
+          )
+        ),
       ),
     );
   }
@@ -159,9 +172,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
   @override
   void dispose() {
-    GetIt.instance<SearchPostsProvider>().clearVents();
-    tabController.dispose();
-    pageIsLoadedNotifier.dispose();
+    _clearDataOnClose();
     super.dispose();
   }
 
