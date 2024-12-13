@@ -118,10 +118,11 @@ class VentDataGetter {
 
     const query = '''
       SELECT title, creator, created_at, total_likes, total_comments 
-        FROM vent_info WHERE title LIKE :search_text
+        FROM vent_info 
+        WHERE LOWER(title) LIKE LOWER(:search_text) OR LOWER(body_text) LIKE LOWER(:search_text)
     ''';
     
-    final searchParam = {'search_text': searchTitleText};
+    final searchParam = {'search_text': '%$searchTitleText%'};
 
     final retrievedVents = await conn.execute(query, searchParam);
    
