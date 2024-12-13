@@ -215,6 +215,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
 
   @override
   void dispose() {
+    navigation.setProfileTabIndex(0);
     tabController.dispose();
     super.dispose();
   }

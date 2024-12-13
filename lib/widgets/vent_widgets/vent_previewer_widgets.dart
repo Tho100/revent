@@ -176,7 +176,6 @@ class VentPreviewerWidgets {
   }
 
   Widget buildHeaders() {
-    // TODO: Fix for some reason the tab index doesn't change, user able to check profile header 
 
     final disableGoToProfile = 
       AppRoute.isOnProfile && GetIt.instance<NavigationProvider>().profileTabIndex == 0;
