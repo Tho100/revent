@@ -147,8 +147,7 @@ class VentDataSetup {
 
   Future<void> setupSearch({required String searchText}) async {
     await _setupVents<SearchVents>(
-      dataGetter: () => VentDataGetter().getVentsData(
-        isFromSearch: true,
+      dataGetter: () => VentDataGetter().getSearchVentsData(
         searchTitleText: searchText,
       ),
       setVents: GetIt.instance<SearchPostsProvider>().setVents,
