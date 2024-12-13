@@ -209,12 +209,15 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
     _initializePostsData();
     _initializeClasses();
     tabController.addListener(() {
-      navigation.setProfileTabIndex(tabController.index);
+      setState(() {
+        navigation.setProfileTabIndex(tabController.index); 
+      });
     });
   }
 
   @override
   void dispose() {
+    navigation.setProfileTabIndex(0);
     tabController.dispose();
     super.dispose();
   }

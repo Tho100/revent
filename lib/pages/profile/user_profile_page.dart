@@ -302,12 +302,15 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
     _setProfileData();
     _initializeClasses();
     tabController.addListener(() {
-      navigation.setProfileTabIndex(tabController.index);
+      setState(() {
+        navigation.setProfileTabIndex(tabController.index);
+      });
     });
   }
 
   @override
   void dispose() {
+    navigation.setProfileTabIndex(0);
     followersNotifier.dispose();
     followingNotifier.dispose();
     postsNotifier.dispose();
@@ -322,15 +325,15 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return WillPopScope( // TODO: Try to remove this 
+      onWillPop: () async { 
         navigation.setCurrentRoute(AppRoute.home);
         return true;
       },
       child: Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        customBackOnPressed: () {
+        customBackOnPressed: () { // TODO: Try to remove this and use dispose
           navigation.setCurrentRoute(AppRoute.home);
           Navigator.pop(context);
         },
