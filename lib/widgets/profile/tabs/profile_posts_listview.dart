@@ -21,7 +21,7 @@ class ProfilePostsListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildPreviewer(
+  Widget _buildPreviewer( // TODO: Add lines
     String title, String bodyText, int totalLikes, int totalComments, String postTimestamp
   ) {
     return Padding(
@@ -56,7 +56,7 @@ class ProfilePostsListView extends StatelessWidget {
       crossAxisCount: 1,
       itemCount: itemCount,
       builder: (_, index) {
-        return _buildPreviewer(
+        return _buildPreviewer( // TODO: Add lines
           titles[index], bodyText[index], totalLikes[index], totalComments[index], postTimestamp[index],
         );
       },

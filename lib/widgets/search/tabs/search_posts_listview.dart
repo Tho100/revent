@@ -43,7 +43,7 @@ class SearchPostsListView extends StatelessWidget {
       },
     );
   }
-
+  // TODO: Remove this unused function
   Widget _buildResults() {
     return Consumer<SearchPostsProvider>(
       builder: (_, ventData, __) {
