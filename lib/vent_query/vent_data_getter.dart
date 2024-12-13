@@ -11,32 +11,18 @@ class VentDataGetter {
 
   final userData = GetIt.instance<UserDataProvider>();
 
-  Future<Map<String, dynamic>> getVentsData({
-    bool? isFromSearch = false, 
-    String? searchTitleText
-  }) async {
+  Future<Map<String, dynamic>> getVentsData() async {
 
     final conn = await ReventConnect.initializeConnection();
 
-    final query = isFromSearch! 
-      ? 'SELECT title, creator, created_at, total_likes, total_comments FROM vent_info WHERE title LIKE :search_text'
-      : 'SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info';
+    const query = 'SELECT title, body_text, creator, created_at, total_likes, total_comments FROM vent_info';
     
-    final searchParam = {
-      'search_text': searchTitleText != null ? '%$searchTitleText%' : ''
-    };
-
-    final retrievedVents = isFromSearch 
-      ? await conn.execute(query, searchParam)
-      : await conn.execute(query);
+    final retrievedVents = await conn.execute(query);
 
     final extractedData = ExtractData(rowsData: retrievedVents);
 
     final title = extractedData.extractStringColumn('title');
-
-    final bodyText = isFromSearch 
-      ? List<String>.generate(title.length, (_) => '')
-      : extractedData.extractStringColumn('body_text');
+    final bodyText =  extractedData.extractStringColumn('body_text');
 
     final creator = extractedData.extractStringColumn('creator');
 
@@ -77,12 +63,11 @@ class VentDataGetter {
 
     final conn = await ReventConnect.initializeConnection();
 
-    const getFollowingQuery = 
-    '''
+    const getFollowingQuery = '''
       SELECT v.title, v.body_text, v.creator, v.created_at, v.total_likes, v.total_comments
-      FROM vent_info v
-      INNER JOIN user_follows_info u ON u.following = v.creator
-      WHERE u.follower = :follower
+        FROM vent_info v
+          INNER JOIN user_follows_info u ON u.following = v.creator
+          WHERE u.follower = :follower
     ''';
 
     final followingParam = {'follower': userData.user.username};
@@ -97,6 +82,60 @@ class VentDataGetter {
     final totalLikes = extractedData.extractIntColumn('total_likes');
     final totalComments = extractedData.extractIntColumn('total_comments');
     
+    final postTimestamp = extractedData
+      .extractStringColumn('created_at')
+      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
+      .toList();
+
+    final isLikedState = await _ventPostState(
+      conn: conn,
+      title: title,
+      stateType: 'liked'
+    );
+
+    final isSavedState = await _ventPostState(
+      conn: conn,
+      title: title,
+      stateType: 'saved'
+    );
+
+    return {
+      'title': title,
+      'body_text': bodyText,
+      'creator': creator,
+      'post_timestamp': postTimestamp,
+      'total_likes': totalLikes,
+      'total_comments': totalComments,
+      'is_liked': isLikedState,
+      'is_saved': isSavedState
+    };
+
+  }
+
+  Future<Map<String, dynamic>> getSearchVentsData({required String? searchTitleText}) async {
+
+    final conn = await ReventConnect.initializeConnection();
+
+    const query = '''
+      SELECT title, creator, created_at, total_likes, total_comments 
+        FROM vent_info WHERE title LIKE :search_text
+    ''';
+    
+    final searchParam = {'search_text': searchTitleText};
+
+    final retrievedVents = await conn.execute(query, searchParam);
+   
+    final extractedData = ExtractData(rowsData: retrievedVents);
+
+    final title = extractedData.extractStringColumn('title');
+
+    final bodyText = List<String>.generate(title.length, (_) => '');
+
+    final creator = extractedData.extractStringColumn('creator');
+
+    final totalLikes = extractedData.extractIntColumn('total_likes');
+    final totalComments = extractedData.extractIntColumn('total_comments');
+
     final postTimestamp = extractedData
       .extractStringColumn('created_at')
       .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
