@@ -26,10 +26,12 @@ class SearchPostsListView extends StatelessWidget {
   }
 
   Widget _buildOnEmpty() {
-    return EmptyPage().customMessage(message: 'No results.');
+    return EmptyPage().customMessage(
+      message: 'No results.'
+    );
   }
 
-  Widget _buildVentList(List<SearchVents> ventDataList) {
+  Widget _buildListView(List<SearchVents> ventDataList) {
     return DynamicHeightGridView(
       physics: const AlwaysScrollableScrollPhysics(
         parent: BouncingScrollPhysics(),
@@ -43,8 +45,9 @@ class SearchPostsListView extends StatelessWidget {
       },
     );
   }
-  // TODO: Remove this unused function
-  Widget _buildResults() {
+
+  @override
+  Widget build(BuildContext context) {
     return Consumer<SearchPostsProvider>(
       builder: (_, ventData, __) {
 
@@ -52,15 +55,10 @@ class SearchPostsListView extends StatelessWidget {
 
         return ventDataList.isEmpty 
           ? _buildOnEmpty() 
-          : _buildVentList(ventDataList);
+          : _buildListView(ventDataList);
 
       }
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return _buildResults();
   }
 
 }
