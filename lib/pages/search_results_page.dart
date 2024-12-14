@@ -1,9 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/data_query/search/search_accounts_getter.dart';
 import 'package:revent/helper/app_route.dart';
 import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/provider/search/search_accounts_provider.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
@@ -36,20 +40,53 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
   void _initializeClasses() {
     tabController = TabController(length: 3, vsync: this);
+    tabController.addListener(_onTabChanged);
     resultsTabBarWidgets = SearchResultsTabBarWidgets(
       controller: tabController, 
       searchText: widget.searchText
     );
   }
 
-  void _clearDataOnClose() {
-    GetIt.instance<SearchPostsProvider>().clearVents();
-    tabController.dispose();
-    pageIsLoadedNotifier.dispose();
+  Future<void> _setupAccountsSearch() async {
+
+    final accountsData = await SearchAccountsGetter().getAccounts(searchText: widget.searchText);
+
+    final usernames = accountsData['username'] as List<String>;
+    final profilePictures = accountsData['profile_pic'] as List<Uint8List>;
+
+    final setupAccounts = SearchAccountsData(
+      usernames: usernames, 
+      profilePictures: profilePictures
+    );
+
+    GetIt.instance<SearchAccountsProvider>().setAccounts(setupAccounts);
+
   }
 
-  Future<void> _initializeSearchData() async {
+  void _onTabChanged() async {
+    
+    // TODO: Create a separated folder called 'setup' on helper and create 'setup_search' for this one and for the rest 
 
+    try {
+
+      if (tabController.index == 0) {
+        await VentDataSetup().setupSearch(searchText: widget.searchText).then((_) {
+          pageIsLoadedNotifier.value = true;
+        });
+
+      } else if (tabController.index == 1) {
+        await _setupAccountsSearch();
+
+      }
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    }
+
+  }
+
+  void _initializeSearchVentsData() async {
+    
     try {
 
       await VentDataSetup().setupSearch(searchText: widget.searchText).then((_) {
@@ -60,6 +97,13 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 
+  }
+
+  void _clearDataOnClose() {
+    GetIt.instance<SearchPostsProvider>().clearVents();
+    GetIt.instance<SearchAccountsProvider>().clearAccounts();
+    tabController.dispose();
+    pageIsLoadedNotifier.dispose();
   }
 
   Widget _buildResultsTabs() {
@@ -166,7 +210,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   void initState() {
     super.initState();
     _initializeClasses();
-    _initializeSearchData();
+    _initializeSearchVentsData();
     GetIt.instance<NavigationProvider>().setCurrentRoute(AppRoute.searchResults);
   }
 

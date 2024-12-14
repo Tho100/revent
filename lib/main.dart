@@ -6,6 +6,7 @@ import 'package:revent/pages/splash_screen_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_posts_provider.dart';
 import 'package:revent/provider/profile/profile_saved_provider.dart';
+import 'package:revent/provider/search/search_accounts_provider.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
@@ -30,6 +31,7 @@ void initializeLocators() {
   getIt.registerLazySingleton<ProfilePostsProvider>(() => ProfilePostsProvider());
   getIt.registerLazySingleton<ProfileSavedProvider>(() => ProfileSavedProvider());
   getIt.registerLazySingleton<SearchPostsProvider>(() => SearchPostsProvider());
+  getIt.registerLazySingleton<SearchAccountsProvider>(() => SearchAccountsProvider());
 
 }
 
@@ -54,6 +56,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => getIt<VentCommentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ActiveVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SearchPostsProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<SearchAccountsProvider>()),
   ];
 
   runApp(
