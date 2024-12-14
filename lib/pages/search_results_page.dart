@@ -47,6 +47,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     );
   }
 
+  // TODO: Create a separated folder called 'setup' on helper and create 'setup_search' for this one and for the rest 
   Future<void> _setupAccountsSearch() async {
 
     final accountsData = await SearchAccountsGetter().getAccounts(searchText: widget.searchText);
@@ -65,18 +66,10 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
   void _onTabChanged() async {
     
-    // TODO: Create a separated folder called 'setup' on helper and create 'setup_search' for this one and for the rest 
-
     try {
 
-      if (tabController.index == 0) {
-        await VentDataSetup().setupSearch(searchText: widget.searchText).then((_) {
-          pageIsLoadedNotifier.value = true;
-        });
-
-      } else if (tabController.index == 1) {
+      if (tabController.index == 1) {
         await _setupAccountsSearch();
-
       }
 
     } catch (err) {
