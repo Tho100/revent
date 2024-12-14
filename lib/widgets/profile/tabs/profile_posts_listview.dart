@@ -21,21 +21,15 @@ class ProfilePostsListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildPreviewer(
-    String title, 
-    String bodyText, 
-    int totalLikes, 
-    int totalComments, 
-    String postTimestamp
-  ) {
+  Widget _buildPreviewer(ProfilePostsData postsData, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
       child: DefaultVentPreviewer(
-        title: title,
-        totalLikes: totalLikes,
-        bodyText: bodyText,
-        totalComments: totalComments,
-        postTimestamp: postTimestamp,
+        title: postsData.titles[index],
+        totalLikes: postsData.totalLikes[index],
+        totalComments: postsData.totalComments[index],
+        bodyText: postsData.bodyText[index],
+        postTimestamp: postsData.postTimestamp[index],
         creator: username,
         pfpData: pfpData,
       ),
@@ -48,25 +42,12 @@ class ProfilePostsListView extends StatelessWidget {
     );
   }
 
-  Widget _buildListView({
-    required int itemCount,
-    required List<String> titles,
-    required List<String> bodyText,
-    required List<int> totalLikes, 
-    required List<int> totalComments, 
-    required List<String> postTimestamp, 
-  }) {
+  Widget _buildListView(ProfilePostsData postsData) {
     return DynamicHeightGridView(
       crossAxisCount: 1,
-      itemCount: itemCount,
+      itemCount: postsData.titles.length,
       builder: (_, index) {
-        return _buildPreviewer(
-          titles[index], 
-          bodyText[index], 
-          totalLikes[index], 
-          totalComments[index], 
-          postTimestamp[index],
-        );
+        return _buildPreviewer(postsData, index);
       },
     );
   }
@@ -76,39 +57,17 @@ class ProfilePostsListView extends StatelessWidget {
     return Consumer<ProfilePostsProvider>(
       builder: (_, postsData, __) {
 
-        final titles = isMyProfile 
-          ? postsData.myProfile.titles 
-          : postsData.userProfile.titles;
+        final activeProfile = isMyProfile 
+          ? postsData.myProfile : postsData.userProfile;
 
-        final bodyText = isMyProfile 
-          ? postsData.myProfile.bodyText 
-          : postsData.userProfile.bodyText;
+        final isPostsEmpty = activeProfile.titles.isEmpty;
 
-        final totalLikes = isMyProfile 
-          ? postsData.myProfile.totalLikes 
-          : postsData.userProfile.totalLikes;
-        
-        final totalComments = isMyProfile 
-          ? postsData.myProfile.totalComments 
-          : postsData.userProfile.totalComments;
+        if(isPostsEmpty) {
+          return _buildOnEmpty();
+        }
 
-        final postTimestamp = isMyProfile 
-          ? postsData.myProfile.postTimestamp 
-          : postsData.userProfile.postTimestamp;
+        return _buildListView(activeProfile);
 
-        final isPostsEmpty = titles.isEmpty;
-        final itemCount = titles.length;
-
-        return isPostsEmpty 
-          ? _buildOnEmpty() 
-          : _buildListView(
-            itemCount: itemCount, 
-            titles: titles,
-            bodyText: bodyText, 
-            totalLikes: totalLikes, 
-            totalComments: totalComments, 
-            postTimestamp: postTimestamp,
-          );
       },
     );
   }
