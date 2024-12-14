@@ -17,7 +17,13 @@ class ProfileSavedListView extends StatelessWidget {
   });
 
   Widget _buildPreviewer(
-    String title, String bodyText, String creator, int totalLikes, int totalComments, String postTimestamp, Uint8List pfpData
+    String title, 
+    String bodyText, 
+    String creator, 
+    int totalLikes, 
+    int totalComments, 
+    String postTimestamp, 
+    Uint8List pfpData
   ) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
