@@ -56,7 +56,7 @@ class SearchAccountsListView extends StatelessWidget {
 
   Widget _buildListView(SearchAccountsData accountsData) {
     return Padding(
-      padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+      padding: const EdgeInsets.only(left: 7.5, right: 10, top: 10),
       child: ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics()
