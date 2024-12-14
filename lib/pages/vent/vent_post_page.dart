@@ -366,7 +366,10 @@ class VentPostPageState extends State<VentPostPage> {
       creator: widget.creator,
       editOnPressed: () {
         Navigator.pop(context);
-        NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
+        NavigatePage.editVentPage(
+          title: widget.title, 
+          body: GetIt.instance<ActiveVentProvider>().body
+        );
       },
       copyOnPressed: () {
         Navigator.pop(context);
