@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -16,26 +14,18 @@ class ProfileSavedListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildPreviewer(
-    String title, 
-    String bodyText, 
-    String creator, 
-    int totalLikes, 
-    int totalComments, 
-    String postTimestamp, 
-    Uint8List pfpData
-  ) {
+  Widget _buildPreviewer(ProfileSavedData savedData, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
       child: DefaultVentPreviewer(
         isMyProfile: isMyProfile,
-        title: title,
-        bodyText: bodyText,
-        totalLikes: totalLikes,
-        totalComments: totalComments,
-        postTimestamp: postTimestamp,
-        creator: creator,
-        pfpData: pfpData,
+        title: savedData.titles[index],
+        bodyText: savedData.bodyText[index],
+        totalLikes: savedData.totalLikes[index],
+        totalComments: savedData.totalComments[index],
+        postTimestamp: savedData.postTimestamp[index],
+        creator: savedData.creator[index],
+        pfpData: savedData.pfpData[index],
       ),
     );
   }
@@ -46,29 +36,12 @@ class ProfileSavedListView extends StatelessWidget {
     );
   }
 
-  Widget _buildListView({
-    required int itemCount,
-    required List<String> titles,
-    required List<String> bodyText,
-    required List<String> creator,
-    required List<int> totalLikes, 
-    required List<int> totalComments, 
-    required List<String> postTimestamp, 
-    required List<Uint8List> pfpData,
-  }) {
+  Widget _buildListView(ProfileSavedData savedData) {
     return DynamicHeightGridView(
       crossAxisCount: 1,
-      itemCount: itemCount,
+      itemCount: savedData.titles.length,
       builder: (_, index) {
-        return _buildPreviewer(
-          titles[index], 
-          bodyText[index],
-          creator[index], 
-          totalLikes[index], 
-          totalComments[index], 
-          postTimestamp[index],
-          pfpData[index]
-        );
+        return _buildPreviewer(savedData, index);
       },
     );
   }
@@ -78,49 +51,17 @@ class ProfileSavedListView extends StatelessWidget {
     return Consumer<ProfileSavedProvider>(
       builder: (_, savedData, __) {
 
-        final usernames = isMyProfile 
-          ? savedData.myProfile.creator 
-          : savedData.userProfile.creator;
+        final activeProfile = isMyProfile 
+          ? savedData.myProfile : savedData.userProfile;
 
-        final pfpData = isMyProfile 
-          ? savedData.myProfile.pfpData 
-          : savedData.userProfile.pfpData;
+        final isPostsEmpty = activeProfile.titles.isEmpty;
 
-        final titles = isMyProfile 
-          ? savedData.myProfile.titles 
-          : savedData.userProfile.titles;
+        if(isPostsEmpty) {
+          return _buildOnEmpty();
+        }
 
-        final bodyText = isMyProfile 
-          ? savedData.myProfile.bodyText 
-          : savedData.userProfile.bodyText;
+        return _buildListView(activeProfile);
 
-        final totalLikes = isMyProfile 
-          ? savedData.myProfile.totalLikes 
-          : savedData.userProfile.totalLikes;
-        
-        final totalComments = isMyProfile 
-          ? savedData.myProfile.totalComments 
-          : savedData.userProfile.totalComments;
-
-        final postTimestamp = isMyProfile 
-          ? savedData.myProfile.postTimestamp 
-          : savedData.userProfile.postTimestamp;
-
-        final isPostsEmpty = titles.isEmpty;
-        final itemCount = titles.length;
-
-        return isPostsEmpty 
-          ? _buildOnEmpty() 
-          : _buildListView(
-            itemCount: itemCount,
-            titles: titles, 
-            bodyText: bodyText,
-            creator: usernames,
-            totalLikes: totalLikes, 
-            totalComments: totalComments, 
-            postTimestamp: postTimestamp,
-            pfpData: pfpData
-          );
       },
     );
   }
