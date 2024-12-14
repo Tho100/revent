@@ -311,6 +311,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   @override
   void dispose() {
     navigation.setProfileTabIndex(0);
+    navigation.setCurrentRoute(AppRoute.home);
     followersNotifier.dispose();
     followingNotifier.dispose();
     postsNotifier.dispose();
@@ -325,23 +326,13 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope( // TODO: Try to remove this 
-      onWillPop: () async { 
-        navigation.setCurrentRoute(AppRoute.home);
-        return true;
-      },
-      child: Scaffold(
+    return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        customBackOnPressed: () { // TODO: Try to remove this and use dispose
-          navigation.setCurrentRoute(AppRoute.home);
-          Navigator.pop(context);
-        },
         actions: [_buildOptionsActionButton()]
       ).buildAppBar(),
       body: _buildBody(),
       bottomNavigationBar: PageNavigationBar()
-      ),
     );
   }
   
