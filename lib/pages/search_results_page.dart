@@ -47,6 +47,11 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     );
   }
 
+  void _clearSearchDataOnClose() {
+    GetIt.instance<SearchPostsProvider>().clearVents();
+    GetIt.instance<SearchAccountsProvider>().clearAccounts();
+  }
+
   // TODO: Create a separated folder called 'setup' on helper and create 'setup_search' for this one and for the rest 
   Future<void> _setupAccountsSearch() async {
 
@@ -69,6 +74,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     try {
 
       if (tabController.index == 1) {
+        // TODO: Only call when the data is empty (do it on the setup not here, check for home For you/Following too)
         await _setupAccountsSearch();
       }
 
@@ -78,7 +84,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
   }
 
-  void _initializeSearchVentsData() async {
+  void _initializeSearchPosts() async {
     
     try {
 
@@ -90,13 +96,6 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 
-  }
-
-  void _clearDataOnClose() {
-    GetIt.instance<SearchPostsProvider>().clearVents();
-    GetIt.instance<SearchAccountsProvider>().clearAccounts();
-    tabController.dispose();
-    pageIsLoadedNotifier.dispose();
   }
 
   Widget _buildResultsTabs() {
@@ -152,7 +151,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
         ),
         child: InkWellEffect(
           onPressed: () {
-            _clearDataOnClose();
+            _clearSearchDataOnClose();
             Navigator.pop(context);
           },
           child: Stack(
@@ -203,13 +202,15 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   void initState() {
     super.initState();
     _initializeClasses();
-    _initializeSearchVentsData();
+    _initializeSearchPosts();
     GetIt.instance<NavigationProvider>().setCurrentRoute(AppRoute.searchResults);
   }
 
   @override
   void dispose() {
-    _clearDataOnClose();
+    _clearSearchDataOnClose();
+    tabController.dispose();
+    pageIsLoadedNotifier.dispose();
     super.dispose();
   }
 
