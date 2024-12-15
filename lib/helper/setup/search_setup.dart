@@ -19,20 +19,26 @@ class SearchSetup {
 
   }
 
-  // TODO: Only call when the data is empty (do it on the setup not here, check for home For you/Following too)
   Future<void> setupAccounts() async {
 
-    final accountsData = await SearchAccountsGetter().getAccounts(searchText: searchText);
+    final searchAccounts = GetIt.instance<SearchAccountsProvider>();
 
-    final usernames = accountsData['username'] as List<String>;
-    final profilePictures = accountsData['profile_pic'] as List<Uint8List>;
+    if(searchAccounts.accounts.usernames.isEmpty) {
 
-    final setupAccounts = SearchAccountsData(
-      usernames: usernames, 
-      profilePictures: profilePictures
-    );
+      final accountsData = await SearchAccountsGetter().getAccounts(searchText: searchText);
 
-    GetIt.instance<SearchAccountsProvider>().setAccounts(setupAccounts);
+      final usernames = accountsData['username'] as List<String>;
+      final profilePictures = accountsData['profile_pic'] as List<Uint8List>;
+
+      final setupAccounts = SearchAccountsData(
+        usernames: usernames, 
+        profilePictures: profilePictures
+      );
+
+      searchAccounts.setAccounts(setupAccounts);
+
+    }
+
 
   }
 
