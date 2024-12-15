@@ -61,6 +61,11 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
     
   }
 
+  void _initializeTabController() {
+    tabController = TabController(length: homeTabs.length, vsync: this);
+    tabController.addListener(_onTabChanged);
+  }
+
   void _filterOnPressed({required String filter}) {
     
     switch (filter) {
@@ -232,8 +237,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   @override
   void initState() {
     super.initState();
-    tabController = TabController(length: homeTabs.length, vsync: this);
-    tabController.addListener(_onTabChanged);
+    _initializeTabController();
     filterModel.filterHomeToLatest();
   }
 
