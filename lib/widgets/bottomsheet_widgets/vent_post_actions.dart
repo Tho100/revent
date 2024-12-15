@@ -66,7 +66,7 @@ class BottomsheetVentPostActions {
 
         if(removeSavedPostOnPressed != null)
         _buildOptionButton(
-          text: 'Remove from saved',
+          text: 'Unsave',
           icon: CupertinoIcons.bookmark_fill,
           onPressed: removeSavedPostOnPressed
         ),

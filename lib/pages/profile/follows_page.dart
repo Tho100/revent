@@ -4,18 +4,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/follows_getter.dart';
-import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/widgets/account_profile.dart';
 import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/sub_button.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
-import 'package:revent/widgets/inkwell_effect.dart';
-import 'package:revent/widgets/profile_picture.dart';
 
 class _FollowsProfilesData {
   
@@ -64,6 +59,18 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
 
   bool followersTabNotLoaded = true;
   bool followingTabNotLoaded = true;
+
+  void _initializeTabController() {
+    tabController = TabController(
+      length: 2, vsync: this, initialIndex: widget.pageType == 'Followers' ? 0 : 1
+    );
+    tabController.addListener(() async {
+      if (!tabController.indexIsChanging) { 
+        final currentPage = tabController.index == 0 ? 'Followers' : 'Following';
+        await _loadFollowsData(page: currentPage);
+      }
+    });
+  }
 
   Future<List<_FollowsProfilesData>> _fetchFollowsData(String followType) async {
 
@@ -121,51 +128,6 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
 
   }
 
-  Widget _buildListViewItems(String username, Uint8List pfpData) {
-    return InkWellEffect(
-      onPressed: () => NavigatePage.userProfilePage(username: username, pfpData: pfpData),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 16.0),
-        child: Row(
-          children: [
-      
-            ProfilePictureWidget(
-              customWidth: 45,
-              customHeight: 45,
-              pfpData: pfpData
-            ),
-      
-            const SizedBox(width: 10),
-      
-            Text(
-              username,
-              style: GoogleFonts.inter(
-                color: ThemeColor.white,
-                fontWeight: FontWeight.w800,
-                fontSize: 15,
-              ),
-            ),
-      
-            const Spacer(),
-
-            if(username != userData.user.username)
-            ValueListenableBuilder(
-              valueListenable: profileActionTextNotifier,
-              builder: (_, text, __) {
-                return SubButton(
-                  customHeight: 40,
-                  text: text,
-                  onPressed: () => {}
-                );
-              },
-            ),
-      
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _buildEmptyPage() {
     return ValueListenableBuilder(
       valueListenable: emptyPageMessageNotifier,
@@ -193,7 +155,16 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
             itemCount: followsData.length,
             itemBuilder: (_, index) {
               final followsUserData = followsData[index];
-              return _buildListViewItems(followsUserData.username, followsUserData.profilePic);
+              return ValueListenableBuilder(
+                valueListenable: profileActionTextNotifier,
+                builder: (_, text, __) {
+                  return AccountProfileWidget(
+                    customText: text,
+                    username: followsUserData.username,
+                    pfpData: followsUserData.profilePic,
+                  );
+                },
+              );
             },
           );
     
@@ -227,17 +198,7 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
   void initState() {
     super.initState();
     _loadFollowsData(page: widget.pageType);
-    tabController = TabController(
-      length: 2, 
-      vsync: this,
-      initialIndex: widget.pageType == 'Followers' ? 0 : 1
-    );
-    tabController.addListener(() async {
-      if (!tabController.indexIsChanging) { 
-        final currentPage = tabController.index == 0 ? 'Followers' : 'Following';
-        await _loadFollowsData(page: currentPage);
-      }
-    });
+    _initializeTabController();
   }
 
   @override

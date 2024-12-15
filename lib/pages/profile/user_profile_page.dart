@@ -7,7 +7,7 @@ import 'package:revent/data_query/user_actions.dart';
 import 'package:revent/data_query/user_following.dart';
 import 'package:revent/data_query/user_privacy_actions.dart';
 import 'package:revent/data_query/user_profile/profile_data_getter.dart';
-import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
+import 'package:revent/helper/setup/profile_posts_setup.dart';
 import 'package:revent/helper/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/navigation_provider.dart';

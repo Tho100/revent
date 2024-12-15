@@ -1,17 +1,14 @@
-import 'dart:typed_data';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/data_query/search/search_accounts_getter.dart';
 import 'package:revent/helper/app_route.dart';
+import 'package:revent/helper/setup/search_setup.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/search/search_accounts_provider.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/vent_query/vent_data_setup.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
@@ -35,10 +32,12 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
   late TabController tabController;
   late SearchResultsTabBarWidgets resultsTabBarWidgets;
+  late SearchSetup setupSearch;
 
   final pageIsLoadedNotifier = ValueNotifier<bool>(false);
 
   void _initializeClasses() {
+    setupSearch = SearchSetup(searchText: widget.searchText);
     tabController = TabController(length: 3, vsync: this);
     tabController.addListener(_onTabChanged);
     resultsTabBarWidgets = SearchResultsTabBarWidgets(
@@ -52,34 +51,10 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     GetIt.instance<SearchAccountsProvider>().clearAccounts();
   }
 
-  // TODO: Create a separated folder called 'setup' on helper and create 'setup_search' for this one and for the rest 
-  Future<void> _setupAccountsSearch() async {
-
-    final accountsData = await SearchAccountsGetter().getAccounts(searchText: widget.searchText);
-
-    final usernames = accountsData['username'] as List<String>;
-    final profilePictures = accountsData['profile_pic'] as List<Uint8List>;
-
-    final setupAccounts = SearchAccountsData(
-      usernames: usernames, 
-      profilePictures: profilePictures
-    );
-
-    GetIt.instance<SearchAccountsProvider>().setAccounts(setupAccounts);
-
-  }
-
   void _onTabChanged() async {
     
-    try {
-
-      if (tabController.index == 1) {
-        // TODO: Only call when the data is empty (do it on the setup not here, check for home For you/Following too)
-        await _setupAccountsSearch();
-      }
-
-    } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    if (tabController.index == 1) {
+      await setupSearch.setupAccounts();
     }
 
   }
@@ -88,7 +63,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     
     try {
 
-      await VentDataSetup().setupSearch(searchText: widget.searchText).then((_) {
+      await setupSearch.setupPosts().then((_) {
         pageIsLoadedNotifier.value = true;
       });
 
