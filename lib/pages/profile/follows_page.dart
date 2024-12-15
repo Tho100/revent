@@ -60,6 +60,18 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
   bool followersTabNotLoaded = true;
   bool followingTabNotLoaded = true;
 
+  void _initializeTabController() {
+    tabController = TabController(
+      length: 2, vsync: this, initialIndex: widget.pageType == 'Followers' ? 0 : 1
+    );
+    tabController.addListener(() async {
+      if (!tabController.indexIsChanging) { 
+        final currentPage = tabController.index == 0 ? 'Followers' : 'Following';
+        await _loadFollowsData(page: currentPage);
+      }
+    });
+  }
+
   Future<List<_FollowsProfilesData>> _fetchFollowsData(String followType) async {
 
     final getFollowsInfo = await FollowsGetter().getFollows(
@@ -186,17 +198,7 @@ class FollowsPageState extends State<FollowsPage> with SingleTickerProviderState
   void initState() {
     super.initState();
     _loadFollowsData(page: widget.pageType);
-    tabController = TabController(
-      length: 2, 
-      vsync: this,
-      initialIndex: widget.pageType == 'Followers' ? 0 : 1
-    );
-    tabController.addListener(() async {
-      if (!tabController.indexIsChanging) { 
-        final currentPage = tabController.index == 0 ? 'Followers' : 'Following';
-        await _loadFollowsData(page: currentPage);
-      }
-    });
+    _initializeTabController();
   }
 
   @override
