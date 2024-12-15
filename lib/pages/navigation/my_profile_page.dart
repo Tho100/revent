@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/data_query/user_profile/profile_posts_setup.dart';
+import 'package:revent/helper/setup/profile_posts_setup.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';

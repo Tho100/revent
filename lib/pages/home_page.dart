@@ -10,7 +10,7 @@ import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/vent/vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_following_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
-import 'package:revent/vent_query/vent_data_setup.dart';
+import 'package:revent/helper/setup/vent_data_setup.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_filter.dart';
 import 'package:revent/widgets/custom_tab_bar.dart';
 import 'package:revent/widgets/inkwell_effect.dart';
