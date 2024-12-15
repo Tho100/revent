@@ -16,7 +16,6 @@ import 'package:revent/pages/navigation/my_profile_page.dart';
 import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
-import 'package:revent/pages/profile/view_full_bio_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
@@ -157,13 +156,6 @@ class NavigatePage {
     Navigator.push(
       navigatorKey.currentContext!, 
       MaterialPageRoute(builder: (_) => EditVentPage(title: title, body: body, isArchive: isArchive!))
-    );
-  }
-
-  static void fullBioPage({required String bio}) {
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => ViewFullBioPage(bio: bio)),
     );
   }
 
