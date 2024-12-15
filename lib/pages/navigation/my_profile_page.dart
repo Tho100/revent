@@ -8,6 +8,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/widgets/bottomsheet_widgets/view_full_bio.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/profile/profile_posts_provider.dart';
@@ -106,7 +107,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
             : Transform.translate(
               offset: Offset(0, profileData.pronouns.isEmpty ? -5 : -2),
               child: GestureDetector(
-              onTap: () => NavigatePage.fullBioPage(bio: profileData.bio),
+              onTap: () => BottomsheetViewFullBio().buildBottomsheet(context: context, bio: profileData.bio),
                 child: Text(
                   profileData.bio,
                   style: ThemeStyle.profileBioStyle,
