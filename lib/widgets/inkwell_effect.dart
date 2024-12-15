@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class InkWellEffect extends StatelessWidget {
 
   final VoidCallback onPressed;
+  final VoidCallback? onLongPress;
   final Widget child;
 
   const InkWellEffect({
     required this.onPressed,
     required this.child,
+    this.onLongPress,
     super.key
   });
 
@@ -19,6 +21,7 @@ class InkWellEffect extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(16),
         onTap: onPressed,
+        onLongPress: onLongPress,
         child: child,
       )
     );

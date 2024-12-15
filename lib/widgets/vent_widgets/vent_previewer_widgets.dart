@@ -139,6 +139,27 @@ class VentPreviewerWidgets {
   
   }
 
+  void _callVentOptionsBottomsheet() {
+
+    if (copyOnPressed == null && removeSavedOnPressed == null && 
+      deleteOnPressed == null && reportOnPressed == null && blockOnPressed == null) {
+      return;
+    }
+
+    BottomsheetVentPostActions().buildBottomsheet(
+      context: context, 
+      title: title!,
+      creator: creator!,
+      editOnPressed: editOnPressed,
+      copyOnPressed: copyOnPressed,
+      removeSavedPostOnPressed: removeSavedOnPressed,
+      reportOnPressed: reportOnPressed,
+      blockOnPressed: blockOnPressed,
+      deleteOnPressed: deleteOnPressed
+    );
+
+  }
+
   Widget buildVentOptionsButton({Widget? customIconWidget}) {
     return Padding(
       padding: const EdgeInsets.only(right: 2.0),
@@ -146,26 +167,7 @@ class VentPreviewerWidgets {
         width: 25,
         height: 25,
         child: IconButton(
-          onPressed: () {
-
-            if (copyOnPressed == null && removeSavedOnPressed == null && 
-              deleteOnPressed == null && reportOnPressed == null && blockOnPressed == null) {
-              return;
-            }
-
-            BottomsheetVentPostActions().buildBottomsheet(
-              context: context, 
-              title: title!,
-              creator: creator!,
-              editOnPressed: editOnPressed,
-              copyOnPressed: copyOnPressed,
-              removeSavedPostOnPressed: removeSavedOnPressed,
-              reportOnPressed: reportOnPressed,
-              blockOnPressed: blockOnPressed,
-              deleteOnPressed: deleteOnPressed
-            );
-
-          },
+          onPressed: () => _callVentOptionsBottomsheet(),
           icon: customIconWidget ?? Transform.translate(
             offset: const Offset(0, -10),
             child: const Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
@@ -255,6 +257,7 @@ class VentPreviewerWidgets {
 
   Widget buildMainContainer({required List<Widget> children}) {
     return InkWellEffect(
+      onLongPress: () => _callVentOptionsBottomsheet(),
       onPressed: viewVentPostOnPressed!,
       child: Container(
         decoration: BoxDecoration(
