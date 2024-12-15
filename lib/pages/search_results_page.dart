@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/app_route.dart';
-import 'package:revent/helper/setup/setup_search.dart';
+import 'package:revent/helper/setup/search_setup.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/search/search_accounts_provider.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
@@ -32,12 +32,12 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
   late TabController tabController;
   late SearchResultsTabBarWidgets resultsTabBarWidgets;
-  late SetupSearch setupSearch;
+  late SearchSetup setupSearch;
 
   final pageIsLoadedNotifier = ValueNotifier<bool>(false);
 
   void _initializeClasses() {
-    setupSearch = SetupSearch(searchText: widget.searchText);
+    setupSearch = SearchSetup(searchText: widget.searchText);
     tabController = TabController(length: 3, vsync: this);
     tabController.addListener(_onTabChanged);
     resultsTabBarWidgets = SearchResultsTabBarWidgets(
