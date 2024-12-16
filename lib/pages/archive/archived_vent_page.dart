@@ -104,13 +104,15 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
       context: context, 
       title: title, 
       creator: userData.user.username
-    ).deleteArchivePost().then((value) { // TODO: Create separated function for this
-      archivedVentsData.value = archivedVentsData.value
-        .where((vent) => vent.title != title)
-        .toList();
-    });
+    ).deleteArchivePost().then((_) => _removeVentFromList(title));
 
   } 
+
+  void _removeVentFromList(String title) {
+    archivedVentsData.value = archivedVentsData.value
+      .where((vent) => vent.title != title)
+      .toList();
+  }
 
   Widget _buildVentPreview(String title, String postTimestamp) {
 
