@@ -46,15 +46,16 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   void _onTabChanged() async {
 
     if (tabController.index == 1) {
-      await VentDataSetup().setupFollowing().then((_) {
-        followingIsLoadedNotifier.value = true;
-      });
 
-    } else if (tabController.index == 0) {
-      filterModel.filterHomeToLatest();
+      if(ventFollowingData.vents.isEmpty) {
+        await VentDataSetup().setupFollowing().then((_) {
+          followingIsLoadedNotifier.value = true;
+        });
+      }
 
-    }
+    } 
     
+    filterModel.filterHomeToLatest();
     filterTextNotifier.value = 'Latest';
 
     navigation.setHomeTabIndex(tabController.index);
@@ -62,7 +63,9 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   }
 
   void _initializeTabController() {
-    tabController = TabController(length: homeTabs.length, vsync: this);
+    tabController = TabController(
+      length: homeTabs.length, vsync: this
+    );
     tabController.addListener(_onTabChanged);
   }
 
