@@ -70,7 +70,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   }
 
   void _filterOnPressed({required String filter}) {
-    
+    // TODO: Fix filter is buggy don't know why
     switch (filter) {
       case == 'Trending':
       filterModel.filterHomeToTrending();
