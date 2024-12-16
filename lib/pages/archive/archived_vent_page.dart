@@ -49,19 +49,18 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
   
   ValueNotifier<List<_ArchivedVentsData>> archivedVentsData = ValueNotifier([]);
 
-  Future<String> _getBodyText({required String title}) async {
+  Future<String> _getBodyText(String title) async {
 
-    final archiveDataInfo = await archiveDataGetter.getBodyText(
-      title: title, creator: userData.user.username
+    return await archiveDataGetter.getBodyText(
+      title: title, 
+      creator: userData.user.username
     );
-
-    return archiveDataInfo['body_text'];
 
   } 
 
   void _viewVentPostPage(String title) async {
 
-    final bodyText = await _getBodyText(title: title);
+    final bodyText = await _getBodyText(title);
 
     Navigator.push(
       navigatorKey.currentContext!,
@@ -105,7 +104,7 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
       context: context, 
       title: title, 
       creator: userData.user.username
-    ).deleteArchivePost().then((value) {
+    ).deleteArchivePost().then((value) { // TODO: Create separated function for this
       archivedVentsData.value = archivedVentsData.value
         .where((vent) => vent.title != title)
         .toList();
@@ -127,8 +126,11 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
 
         Navigator.pop(navigatorKey.currentContext!);
         
-        final bodyText = await _getBodyText(title: title);
-        NavigatePage.editVentPage(title: title, body: bodyText, isArchive: true);
+        final bodyText = await _getBodyText(title);
+
+        NavigatePage.editVentPage(
+          title: title, body: bodyText, isArchive: true
+        );
 
       },
       deleteOnPressed: () {

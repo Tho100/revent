@@ -35,12 +35,11 @@ class ArchiveVentDataGetter {
 
   }
 
-  Future<Map<String, dynamic>> getBodyText({
+  Future<String> getBodyText({
     required String title,
     required String creator
   }) async {
 
-// TODO: Simplified code
     final conn = await ReventConnect.initializeConnection();
 
     const query = 
@@ -53,13 +52,7 @@ class ArchiveVentDataGetter {
 
     final results = await conn.execute(query, params);
 
-    final extractData = ExtractData(rowsData: results);
-
-    final bodyText = extractData.extractStringColumn('body_text')[0];
-       
-    return {
-      'body_text': bodyText,
-    };
+    return results.rows.last.assoc()['body_text']!;
 
   }
 
