@@ -141,7 +141,7 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
     );
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+      padding: const EdgeInsets.only(bottom: 8.5),
       child: ventPreviewer.buildMainContainer(
         children: [
     
@@ -184,7 +184,7 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
   
   Widget _buildVentList() {
     return Padding(
-      padding: const EdgeInsets.only(top: 15.0),
+      padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 15),
       child: ValueListenableBuilder(
         valueListenable: isPageLoadedNotifier,
         builder: (_, isLoaded, __) {

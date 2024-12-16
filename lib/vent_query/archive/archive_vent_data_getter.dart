@@ -40,6 +40,7 @@ class ArchiveVentDataGetter {
     required String creator
   }) async {
 
+// TODO: Simplified code
     final conn = await ReventConnect.initializeConnection();
 
     const query = 
