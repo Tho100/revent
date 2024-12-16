@@ -113,7 +113,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   }) {
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width - 28,
+        width: MediaQuery.of(context).size.width - 25,
         child: RefreshIndicator(
           color: ThemeColor.black,
           onRefresh: onRefresh,
