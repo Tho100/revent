@@ -90,6 +90,8 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
           ],
         ),
 
+        const SizedBox(height: 8),
+
         ValueListenableBuilder(
           valueListenable: pageIsLoadedNotifier,
           builder: (_, isLoaded, __) {

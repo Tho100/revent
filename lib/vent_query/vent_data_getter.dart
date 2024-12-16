@@ -51,6 +51,21 @@ class VentDataGetter {
 
   }
 
+  Future<Map<String, dynamic>> getLikedVentsData() async {
+
+    const query = '''
+      SELECT vi.title, vi.body_text, vi.creator, vi.created_at, vi.total_likes, vi.total_comments 
+        FROM vent_info vi
+          INNER JOIN liked_vent_info lvi 
+          ON vi.title = lvi.title AND lvi.liked_by = :liked_by;
+    ''';
+
+    final param = {'liked_by': userData.user.username};
+
+    return _fetchVentsData(query, params: param);
+
+  }
+
   Future<Map<String, dynamic>> _fetchVentsData(
     String query, 
     {Map<String, dynamic>? params, bool excludeBodyText = false}
