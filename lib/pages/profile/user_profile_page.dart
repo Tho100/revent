@@ -216,7 +216,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   Widget _buildFollowButton() {
 
     final buttonWidth = MediaQuery.of(context).size.width * 0.87;
-    final buttonHeight = MediaQuery.of(context).size.height * 0.052;
+    const buttonHeight = 45.0;
+    
     const fontSize = 15.5;
 
     return Align(

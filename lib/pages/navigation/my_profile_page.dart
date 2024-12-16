@@ -127,7 +127,7 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
       alignment: Alignment.center,
       child: CustomOutlinedButton(
         customWidth: MediaQuery.of(context).size.width * 0.87,
-        customHeight: MediaQuery.of(context).size.height * 0.052,
+        customHeight: 45.0,
         customFontSize: 15.5,
         text: 'Edit profile',
         onPressed: () {
