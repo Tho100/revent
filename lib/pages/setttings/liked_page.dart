@@ -76,10 +76,7 @@ class LikedPageState extends State<LikedPage> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 12.0, 
-        vertical: 15.0 // TODO: Remove this and set to TOP
-      ),
+      padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 15),
       child: Consumer<LikedVentDataProvider>(
         builder: (_, likedVentData, __) {
           return ValueListenableBuilder(
