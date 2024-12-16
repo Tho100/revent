@@ -10,6 +10,7 @@ import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/archive/archive_vent_data_getter.dart';
@@ -43,6 +44,8 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
   final profileData = GetIt.instance<ProfileDataProvider>();
 
   final archiveDataGetter = ArchiveVentDataGetter();
+
+  final isPageLoadedNotifier = ValueNotifier<bool>(false);
   
   ValueNotifier<List<_ArchivedVentsData>> archivedVentsData = ValueNotifier([]);
 
@@ -87,6 +90,8 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
           postTimestamp: postTimestamp[index],
         );
       });
+
+      isPageLoadedNotifier.value = true;
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Failed to load archives.');
@@ -162,37 +167,51 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
       ),
     );
   }
-
+  
   Widget _buildVentList() {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: ValueListenableBuilder(
-        valueListenable: archivedVentsData,
-        builder: (_, data, __) {
-
-          if(data.isEmpty) {
-            return _buildOnEmpty();
+        valueListenable: isPageLoadedNotifier,
+        builder: (_, isLoaded, __) {
+          
+          if (!isLoaded) {
+            return const Center(
+              child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
+            );
           }
 
-          return DynamicHeightGridView(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics()
-            ),
-            crossAxisCount: 1,
-            itemCount: data.length,
-            builder: (_, index) {
-              final ventsData = data[index];
-              return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
+          return ValueListenableBuilder(
+            valueListenable: archivedVentsData,
+            builder: (_, data, __) { // TODO: Update to archiveData
+        
+              if(data.isEmpty) {
+                return _buildOnEmpty();
+              }
+              // TODO: Create separated function for listview
+              return DynamicHeightGridView(
+                physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics()
+                ),
+                crossAxisCount: 1,
+                itemCount: data.length,
+                builder: (_, index) {
+                  final ventsData = data[index];
+                  return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
+                },
+              );
+              
             },
           );
-          
         },
       ),
     );
   }
 
   Widget _buildOnEmpty() {
-    return EmptyPage().customMessage(message: 'Your archive is empty.');
+    return EmptyPage().customMessage(
+      message: 'Your archive is empty.'
+    );
   }
 
   @override
@@ -204,6 +223,7 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
   @override
   void dispose() {
     archivedVentsData.dispose();
+    isPageLoadedNotifier.dispose();
     super.dispose();
   }
 
