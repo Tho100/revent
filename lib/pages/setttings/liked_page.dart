@@ -1,0 +1,140 @@
+import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
+import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
+import 'package:provider/provider.dart';
+import 'package:revent/helper/app_route.dart';
+import 'package:revent/helper/setup/vent_data_setup.dart';
+import 'package:revent/pages/empty_page.dart';
+import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/themes/theme_color.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
+
+class LikedPage extends StatefulWidget {
+
+  const LikedPage({super.key});
+
+  @override
+  State<LikedPage> createState() => LikedPageState();
+  
+}
+
+class LikedPageState extends State<LikedPage> {
+
+  final userData = GetIt.instance<UserDataProvider>();
+  final navigation = GetIt.instance<NavigationProvider>();
+  final likedVentData = GetIt.instance<LikedVentDataProvider>();
+
+  final isPageLoadedNotifier = ValueNotifier<bool>(false);
+
+  Future<void> _loadLikedVentsData() async {
+
+    try {
+
+      await VentDataSetup().setupLiked().then(
+        (_) => isPageLoadedNotifier.value = true
+      );
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Failed to load vents.');
+    }
+
+  }
+
+  Widget _buildVentPreviewer(LikedVentData vents) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.5),
+      child: DefaultVentPreviewer(
+        title: vents.title, 
+        bodyText: vents.bodyText,
+        creator: vents.creator, 
+        postTimestamp: vents.postTimestamp, 
+        totalLikes: vents.totalLikes, 
+        totalComments: vents.totalComments, 
+        pfpData: vents.profilePic,
+      ),
+    );  
+  }
+
+  Widget _buildListView(List<LikedVentData> likedVentData) {
+    return DynamicHeightGridView(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics()
+      ),
+      crossAxisCount: 1,
+      itemCount: likedVentData.length,
+      builder: (_, index) {
+        final reversedVentIndex = likedVentData.length - 1 - index;
+        final vents = likedVentData[reversedVentIndex];
+        return _buildVentPreviewer(vents);
+      },
+    );
+  }
+
+  Widget _buildBody() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12.0, 
+        vertical: 15.0
+      ),
+      child: Consumer<LikedVentDataProvider>(
+        builder: (_, likedVentData, __) {
+          return ValueListenableBuilder(
+            valueListenable: isPageLoadedNotifier,
+            builder: (_, isLoaded, __) {
+
+              if (!isLoaded) {
+                return const Center(
+                  child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
+                );
+              }
+
+              final ventsData = likedVentData.vents;
+              
+              return ventsData.isEmpty 
+                ? _buildOnEmpty()
+                : _buildListView(ventsData);
+
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildOnEmpty() {
+    return EmptyPage().customMessage(
+      message: 'No liked posts.'
+    );
+  }
+
+  @override
+  void initState() {
+    _loadLikedVentsData();
+    navigation.setCurrentRoute(AppRoute.likedPosts);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    isPageLoadedNotifier.dispose();
+    likedVentData.clearVents();
+    navigation.setCurrentRoute(AppRoute.myProfile);
+    super.dispose();
+  }
+  
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: CustomAppBar(
+        context: context, 
+        title: 'Liked posts'
+      ).buildAppBar(),
+      body: _buildBody(),
+    );
+  }
+
+}

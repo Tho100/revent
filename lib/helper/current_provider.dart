@@ -6,6 +6,7 @@ import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_posts_provider.dart';
 import 'package:revent/provider/profile/profile_saved_provider.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
+import 'package:revent/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_following_data_provider.dart';
 
@@ -63,6 +64,14 @@ class CurrentProvider {
       ? Provider.of<SearchPostsProvider>(context!) : GetIt.instance<SearchPostsProvider>();
   }
 
+  dynamic _returnLikedPostsProvider({
+    required bool realTime, 
+    BuildContext? context
+  }) {
+    return realTime 
+      ? Provider.of<LikedVentDataProvider>(context!) : GetIt.instance<LikedVentDataProvider>();
+  }
+
   dynamic getProviderOnly() {
 
     if(navigation.currentRoute == AppRoute.home) {
@@ -112,6 +121,14 @@ class CurrentProvider {
         (vent) => vent.title == title && vent.creator == creator
       );
 
+    } else if (navigation.currentRoute == AppRoute.likedPosts) {
+
+      ventData = _returnLikedPostsProvider(realTime: false);
+
+      ventIndex = ventData.vents.indexWhere(
+        (vent) => vent.title == title && vent.creator == creator
+      );
+
     }
 
     return {
@@ -149,6 +166,14 @@ class CurrentProvider {
     } else if (navigation.currentRoute == AppRoute.searchResults) {
 
       ventData = _returnSearchProvider(realTime: true, context: context);
+
+      ventIndex = ventData.vents.indexWhere(
+        (vent) => vent.title == title && vent.creator == creator
+      );
+
+    } else if (navigation.currentRoute == AppRoute.likedPosts) {
+
+      ventData = _returnLikedPostsProvider(realTime: true, context: context);
 
       ventIndex = ventData.vents.indexWhere(
         (vent) => vent.title == title && vent.creator == creator

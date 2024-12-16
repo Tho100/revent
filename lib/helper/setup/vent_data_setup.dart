@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_profile/profile_picture_getter.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
+import 'package:revent/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_following_data_provider.dart';
 import 'package:revent/vent_query/vent_data_getter.dart';
 import 'package:revent/provider/vent/vent_data_provider.dart';
@@ -164,5 +165,25 @@ class VentDataSetup {
       ),
     );
   }
+
+  Future<void> setupLiked() async {
+    await _setupVents<LikedVentData>(
+      dataGetter: () => VentDataGetter().getLikedVentsData(),
+      setVents: GetIt.instance<LikedVentDataProvider>().setVents,
+      ventBuilder: (title, bodyText, creator, postTimestamp, 
+          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => LikedVentData(
+        title: title,
+        bodyText: bodyText,
+        creator: creator,
+        postTimestamp: postTimestamp,
+        profilePic: profilePic,
+        totalLikes: totalLikes,
+        totalComments: totalComments,
+        isPostLiked: isPostLiked,
+        isPostSaved: isPostSaved,
+      ),
+    );
+  }
+
 
 }

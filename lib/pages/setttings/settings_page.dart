@@ -6,6 +6,7 @@ import 'package:revent/pages/setttings/account_info_page.dart';
 import 'package:revent/pages/setttings/app_info_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/pages/setttings/security_page.dart';
+import 'package:revent/pages/setttings/liked_page.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/widgets/app_bar.dart';
@@ -82,7 +83,12 @@ class SettingsPage extends StatelessWidget {
           SettingsButton(
             text: 'Liked', 
             icon: CupertinoIcons.heart,
-            onPressed: () {}
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (_) => const LikedPage())
+              );
+            }
           ),
         
           const SizedBox(height: buttonGap),
