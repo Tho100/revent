@@ -89,8 +89,6 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
           ],
         ),
-        // TODO: Remove this
-        const SizedBox(height: 8),
 
         ValueListenableBuilder(
           valueListenable: pageIsLoadedNotifier,
