@@ -167,6 +167,20 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
       ),
     );
   }
+
+  Widget _buildListView(List<_ArchivedVentsData> archiveData) {
+    return DynamicHeightGridView(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics()
+      ),
+      crossAxisCount: 1,
+      itemCount: archiveData.length,
+      builder: (_, index) {
+        final ventsData = archiveData[index];
+        return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
+      },
+    );
+  }
   
   Widget _buildVentList() {
     return Padding(
@@ -183,26 +197,13 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
 
           return ValueListenableBuilder(
             valueListenable: archivedVentsData,
-            builder: (_, data, __) { // TODO: Update to archiveData
-        
-              if(data.isEmpty) {
-                return _buildOnEmpty();
-              }
-              // TODO: Create separated function for listview
-              return DynamicHeightGridView(
-                physics: const AlwaysScrollableScrollPhysics(
-                  parent: BouncingScrollPhysics()
-                ),
-                crossAxisCount: 1,
-                itemCount: data.length,
-                builder: (_, index) {
-                  final ventsData = data[index];
-                  return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
-                },
-              );
-              
+            builder: (_, archiveData, __) { 
+              return archiveData.isEmpty 
+                ? _buildOnEmpty()
+                : _buildListView(archiveData);
             },
           );
+          
         },
       ),
     );
