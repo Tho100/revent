@@ -52,7 +52,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
   Widget _buildProfileInfo() {
     return Padding(
-      padding: EdgeInsets.only(left: 24.0, top: isPrivateAccount! ? 25.0 : 8.0),
+      padding: const EdgeInsets.only(left: 24.0, top: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
