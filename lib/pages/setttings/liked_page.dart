@@ -1,6 +1,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/app_route.dart';
 import 'package:revent/helper/setup/vent_data_setup.dart';
@@ -65,11 +66,35 @@ class LikedPageState extends State<LikedPage> {
         parent: BouncingScrollPhysics()
       ),
       crossAxisCount: 1,
-      itemCount: likedVentData.length,
+      itemCount: likedVentData.length+1,
       builder: (_, index) {
-        final reversedVentIndex = likedVentData.length - 1 - index;
-        final vents = likedVentData[reversedVentIndex];
-        return _buildVentPreviewer(vents);
+
+        if(index < likedVentData.length) {
+          
+          final reversedVentIndex = likedVentData.length - 1 - index;
+          final vents = likedVentData[reversedVentIndex];
+
+          return _buildVentPreviewer(vents);
+
+        } else if (likedVentData.length > 9) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
+            child: Center(
+              child: Text(
+                "You've reached the end.", 
+                style: GoogleFonts.inter(
+                  color: ThemeColor.thirdWhite,
+                  fontWeight: FontWeight.w800,
+                )
+              ),
+            ),
+          );
+
+        } else {
+          return const SizedBox.shrink();
+
+        }
+
       },
     );
   }

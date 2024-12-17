@@ -189,21 +189,21 @@ class VentPreviewerWidgets {
         children: [
     
           ProfilePictureWidget(
-            customWidth: 30,
-            customHeight: 30,
+            customWidth: 31.5,
+            customHeight: 31.5,
             pfpData: pfpData,
           ),
     
           const SizedBox(width: 8),
     
           Padding(
-            padding: const EdgeInsets.only(bottom: 4.0),
+            padding: const EdgeInsets.only(bottom: 1.5),
             child: Text(
               creator!,
               style: GoogleFonts.inter(
                 color: ThemeColor.secondaryWhite,
                 fontWeight: FontWeight.w800,
-                fontSize: 14
+                fontSize: 13.5
               ),
             ),
           ),
@@ -211,13 +211,13 @@ class VentPreviewerWidgets {
           const SizedBox(width: 8),
     
           Padding(
-            padding: const EdgeInsets.only(bottom: 3.0),
+            padding: const EdgeInsets.only(bottom: 0.8),
             child: Text(
               postTimestamp!,
               style: GoogleFonts.inter(
                 color: ThemeColor.thirdWhite,
                 fontWeight: FontWeight.w800,
-                fontSize: 13
+                fontSize: 12.5
               ),
             ),
           ),

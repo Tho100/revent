@@ -1,8 +1,10 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
+import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
 
 class SearchPostsListView extends StatelessWidget {
@@ -37,11 +39,35 @@ class SearchPostsListView extends StatelessWidget {
         parent: BouncingScrollPhysics(),
       ),
       crossAxisCount: 1,
-      itemCount: ventDataList.length,
+      itemCount: ventDataList.length+1,
       builder: (_, index) {
-        final reversedVentIndex = ventDataList.length - 1 - index;
-        final vents = ventDataList[reversedVentIndex];
-        return _buildVentPreview(vents);
+
+        if(index < ventDataList.length) {
+          
+          final reversedVentIndex = ventDataList.length - 1 - index;
+          final vents = ventDataList[reversedVentIndex];
+
+          return _buildVentPreview(vents);
+
+        } else if (ventDataList.length > 9) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 14.0, top: 8.0),
+            child: Center(
+              child: Text(
+                "You've reached the end.", 
+                style: GoogleFonts.inter(
+                  color: ThemeColor.thirdWhite,
+                  fontWeight: FontWeight.w800,
+                )
+              ),
+            ),
+          );
+
+        } else {
+          return const SizedBox.shrink();
+
+        }
+
       },
     );
   }

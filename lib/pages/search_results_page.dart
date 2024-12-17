@@ -115,61 +115,49 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
   }
 
   Widget _buildSearchTextContainer() {
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        width: MediaQuery.of(context).size.width * 0.91,
-        height: 50,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: ThemeColor.thirdWhite)
-        ),
-        child: InkWellEffect(
-          onPressed: () {
-            _clearSearchDataOnClose();
-            Navigator.pop(context);
-          },
-          child: Stack(
-            children: [
-    
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: 18.0),
-                  child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
-                ),
-              ),
-    
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  widget.searchText,
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.white,
-                    fontWeight: FontWeight.w700,
-                    fontSize: 16,
+    return Padding(
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 4.0),
+      child: Center(
+        child: Container(
+          width: MediaQuery.of(context).size.width * 0.84,
+          height: 45,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(color: ThemeColor.thirdWhite)
+          ),
+          child: InkWellEffect(
+            onPressed: () {
+              _clearSearchDataOnClose();
+              Navigator.pop(context);
+            },
+            child: Stack(
+              children: [
+            
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 18.0),
+                    child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
                   ),
                 ),
-              ),
-    
-            ],
-          )
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBody() {
-    return NestedScrollView(
-      headerSliverBuilder: (_, __) => [
-        SliverToBoxAdapter(
-          child: Padding(
-            padding: const EdgeInsets.only(top: 4.0),
-            child: _buildSearchTextContainer(),           
+            
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    widget.searchText,
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+            
+              ],
+            )
           ),
         ),
-      ],
-      body: _buildResultsTabs(),
+      ),
     );
   }
 
@@ -194,8 +182,9 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
     return Scaffold(
       appBar: CustomAppBar(
         context: context,
+        actions: [_buildSearchTextContainer()]
       ).buildAppBar(),    
-      body: _buildBody(),
+      body: _buildResultsTabs(),
       bottomNavigationBar: PageNavigationBar(),
     );
   }
