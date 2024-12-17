@@ -116,12 +116,11 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
   Widget _buildSearchTextContainer() {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0, right: 18.0, top: 4.0),
-      child: Align(
-        alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 4.0),
+      child: Center(
         child: Container(
           width: MediaQuery.of(context).size.width * 0.84,
-          height: 46,
+          height: 45,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
             border: Border.all(color: ThemeColor.thirdWhite)
@@ -133,7 +132,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
             },
             child: Stack(
               children: [
-      
+            
                 const Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
@@ -141,7 +140,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
                     child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
                   ),
                 ),
-      
+            
                 Align(
                   alignment: Alignment.center,
                   child: Text(
@@ -153,7 +152,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
                     ),
                   ),
                 ),
-      
+            
               ],
             )
           ),
