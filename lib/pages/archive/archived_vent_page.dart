@@ -3,6 +3,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -178,10 +179,33 @@ class ArchivedVentPageState extends State<ArchivedVentPage> {
         parent: BouncingScrollPhysics()
       ),
       crossAxisCount: 1,
-      itemCount: archiveData.length,
+      itemCount: archiveData.length+1,
       builder: (_, index) {
-        final ventsData = archiveData[index];
-        return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
+
+        if(index < archiveData.length) {
+          
+          final ventsData = archiveData[index];
+          return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
+
+        } else if (archiveData.length > 9) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
+            child: Center(
+              child: Text(
+                "You've reached the end.", 
+                style: GoogleFonts.inter(
+                  color: ThemeColor.thirdWhite,
+                  fontWeight: FontWeight.w800,
+                )
+              ),
+            ),
+          );
+
+        } else {
+          return const SizedBox.shrink();
+
+        }
+
       },
     );
   }
