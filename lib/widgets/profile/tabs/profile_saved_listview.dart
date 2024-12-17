@@ -5,7 +5,7 @@ import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile/profile_saved_provider.dart';
 import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
 
-class ProfileSavedListView extends StatelessWidget {
+class ProfileSavedListView extends StatefulWidget {
 
   final bool isMyProfile;
 
@@ -14,11 +14,21 @@ class ProfileSavedListView extends StatelessWidget {
     super.key
   });
 
+  @override
+  State<ProfileSavedListView> createState() => _ProfileSavedListViewState();
+
+}
+
+class _ProfileSavedListViewState extends State<ProfileSavedListView> with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
   Widget _buildPreviewer(ProfileSavedData savedData, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
       child: DefaultVentPreviewer(
-        isMyProfile: isMyProfile,
+        isMyProfile: widget.isMyProfile,
         title: savedData.titles[index],
         bodyText: savedData.bodyText[index],
         totalLikes: savedData.totalLikes[index],
@@ -48,10 +58,11 @@ class ProfileSavedListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Consumer<ProfileSavedProvider>(
       builder: (_, savedData, __) {
 
-        final activeProfile = isMyProfile 
+        final activeProfile = widget.isMyProfile 
           ? savedData.myProfile : savedData.userProfile;
 
         final isPostsEmpty = activeProfile.titles.isEmpty;
@@ -65,5 +76,5 @@ class ProfileSavedListView extends StatelessWidget {
       },
     );
   }
-    
+
 }

@@ -8,7 +8,7 @@ import 'package:revent/widgets/profile/tabs/profile_saved_listview.dart';
 class ProfileTabBarWidgets {
 
   final TabController controller;
-
+  
   final bool isMyProfile;
 
   final String username;

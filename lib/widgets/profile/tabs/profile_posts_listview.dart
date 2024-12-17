@@ -7,7 +7,7 @@ import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile/profile_posts_provider.dart';
 import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
 
-class ProfilePostsListView extends StatelessWidget {
+class ProfilePostsListView extends StatefulWidget {
 
   final bool isMyProfile;
 
@@ -21,6 +21,16 @@ class ProfilePostsListView extends StatelessWidget {
     super.key
   });
 
+  @override
+  State<ProfilePostsListView> createState() => _ProfilePostsListViewState();
+
+}
+
+class _ProfilePostsListViewState extends State<ProfilePostsListView> with AutomaticKeepAliveClientMixin {
+
+  @override
+  bool get wantKeepAlive => true;
+
   Widget _buildPreviewer(ProfilePostsData postsData, int index) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
@@ -30,8 +40,8 @@ class ProfilePostsListView extends StatelessWidget {
         totalComments: postsData.totalComments[index],
         bodyText: postsData.bodyText[index],
         postTimestamp: postsData.postTimestamp[index],
-        creator: username,
-        pfpData: pfpData,
+        creator: widget.username,
+        pfpData: widget.pfpData,
       ),
     );
   }
@@ -54,10 +64,11 @@ class ProfilePostsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Consumer<ProfilePostsProvider>(
       builder: (_, postsData, __) {
 
-        final activeProfile = isMyProfile 
+        final activeProfile = widget.isMyProfile 
           ? postsData.myProfile : postsData.userProfile;
 
         final isPostsEmpty = activeProfile.titles.isEmpty;
@@ -71,5 +82,5 @@ class ProfilePostsListView extends StatelessWidget {
       },
     );
   }
-    
+  
 }

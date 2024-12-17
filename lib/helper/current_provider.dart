@@ -77,8 +77,7 @@ class CurrentProvider {
     if(navigation.currentRoute == AppRoute.home) {
       return _returnHomeProvider(realTime: false);
 
-    } else if (navigation.currentRoute == AppRoute.myProfile || 
-              navigation.currentRoute == AppRoute.userProfile) {
+    } else if (AppRoute.isOnProfile) {
       return _returnProfileProvider(realTime: false);
       
     } else if (navigation.currentRoute == AppRoute.searchResults) {

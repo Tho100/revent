@@ -55,6 +55,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   final isFollowingNotifier = ValueNotifier<bool>(false);
 
+  late ProfilePostsSetup callProfilePosts;
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
@@ -62,7 +63,21 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   bool isPrivateAccount = false;
 
   void _initializeClasses() {
+    
+    callProfilePosts = ProfilePostsSetup(
+      userType: 'user_profile',
+      username: widget.username,
+    );
+
     tabController = TabController(length: 2, vsync: this);
+
+    tabController.addListener(() {
+      _onTabChanged();
+      setState(() {
+        navigation.setProfileTabIndex(tabController.index);
+      });
+    });
+
     profileInfoWidgets = ProfileInfoWidgets(
       username: widget.username, 
       pfpData: widget.pfpData
@@ -73,6 +88,15 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       username: widget.username,
       pfpData: widget.pfpData,
     );
+
+  }
+
+  void _onTabChanged() async {
+
+    if(tabController.index == 1) {
+      await callProfilePosts.setupSaved();
+    }
+
   }
 
   Future<void> _isPrivateAccount() async {
@@ -102,7 +126,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
   }
 
-  Future<void> _setProfileData() async {
+  Future<void> _initializeProfileData() async {
 
     try {
 
@@ -126,11 +150,6 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
 
       profilePostsData.userProfile.clear();
       profileSavedData.userProfile.clear();
-
-      final callProfilePosts = ProfilePostsSetup(
-        userType: 'user_profile',
-        username: widget.username
-      );
 
       await callProfilePosts.setupPosts();
       await callProfilePosts.setupSaved();
@@ -274,7 +293,7 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
       valueListenable: pronounsNotifier,
       builder: (_, pronouns, __) {
         return ProfileBodyWidgets(
-          onRefresh: () async => await _setProfileData(),
+          onRefresh: () async => await _initializeProfileData(),
           tabBarWidgets: tabBarWidgets,
           profileInfoWidgets: profileInfoWidgets, 
           pronounsWidget: _buildPronouns(),
@@ -301,13 +320,8 @@ class UserProfilePageState extends State<UserProfilePage> with SingleTickerProvi
   @override
   void initState() {
     super.initState();
-    _setProfileData();
     _initializeClasses();
-    tabController.addListener(() {
-      setState(() {
-        navigation.setProfileTabIndex(tabController.index);
-      });
-    });
+    _initializeProfileData();
   }
 
   @override

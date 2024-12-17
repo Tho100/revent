@@ -241,7 +241,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   void initState() {
     super.initState();
     _initializeTabController();
-    filterModel.filterHomeToLatest();
+    //filterModel.filterHomeToLatest(); // TOOD: Remove this unnecessary
   }
 
   @override

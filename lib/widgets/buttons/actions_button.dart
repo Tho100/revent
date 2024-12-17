@@ -31,7 +31,7 @@ class ActionsButton {
   }
 
   Widget buildLikeButton({
-    required String text,
+    required String text, // TODO: Convert this to int
     required bool isLiked,
     required VoidCallback onPressed,
   }) {

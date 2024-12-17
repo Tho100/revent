@@ -8,6 +8,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/view_full_bio.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
@@ -32,41 +33,67 @@ class MyProfilePage extends StatefulWidget {
 
 class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderStateMixin {
 
+  static final userData = GetIt.instance<UserDataProvider>();
+
   final navigationIndex = GetIt.instance<NavigationProvider>();
-  final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
   final navigation = GetIt.instance<NavigationProvider>();
 
   final profilePostsData = GetIt.instance<ProfilePostsProvider>();
   final profileSavedData = GetIt.instance<ProfileSavedProvider>();
 
+  late ProfilePostsSetup callProfilePosts;
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
   void _initializeClasses() {
+
+    callProfilePosts = ProfilePostsSetup(
+      userType: 'my_profile',
+      username: userData.user.username
+    );
+
     tabController = TabController(length: 2, vsync: this);
+    
+    tabController.addListener(() {
+      _onTabChanged();
+      setState(() {
+        navigation.setProfileTabIndex(tabController.index);
+      });
+    });
+
     profileInfoWidgets = ProfileInfoWidgets(
       username: userData.user.username, 
       pfpData: profileData.profilePicture
     );
+
     tabBarWidgets = ProfileTabBarWidgets(
       controller: tabController, 
       isMyProfile: true, 
       username: userData.user.username, 
       pfpData: profileData.profilePicture
     );
+
+  }
+
+  void _onTabChanged() async {
+
+    if(tabController.index == 1) {
+      await callProfilePosts.setupSaved();
+    }
+
   }
 
   void _initializePostsData() async {
 
-    final callProfilePosts = ProfilePostsSetup(
-      userType: 'my_profile',
-      username: userData.user.username
-    );
+    try {
 
-    await callProfilePosts.setupPosts();
-    await callProfilePosts.setupSaved();
+      await callProfilePosts.setupPosts();
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    }
 
   }
 
@@ -207,13 +234,8 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   @override
   void initState() {
     super.initState();
-    _initializePostsData();
     _initializeClasses();
-    tabController.addListener(() {
-      setState(() {
-        navigation.setProfileTabIndex(tabController.index); 
-      });
-    });
+    _initializePostsData();
   }
 
   @override
