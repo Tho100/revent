@@ -1,3 +1,4 @@
+import 'package:animated_flip_counter/animated_flip_counter.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -50,14 +51,14 @@ class ActionsButton {
 
           const SizedBox(width: 6), 
 
-          Text(
-            text,
-            style: GoogleFonts.inter(
+          AnimatedFlipCounter(
+            value: int.parse(text),
+            textStyle: GoogleFonts.inter(
               color: ThemeColor.white,
               fontWeight: FontWeight.w800,
               fontSize: 13.5,
             ),
-          ),
+          )
           
         ],
       ),
@@ -84,14 +85,14 @@ class ActionsButton {
   
           const SizedBox(width: 6), 
   
-          Text(
-            text,
-            style: GoogleFonts.inter(
+          AnimatedFlipCounter(
+            value: int.parse(text),
+            textStyle: GoogleFonts.inter(
               color: ThemeColor.white,
               fontWeight: FontWeight.w800,
               fontSize: 13.5,
             ),
-          ),
+          )
   
         ],
       ),
