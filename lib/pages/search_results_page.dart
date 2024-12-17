@@ -116,7 +116,7 @@ class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerP
 
   Widget _buildSearchTextContainer() {
     return Padding(
-      padding: const EdgeInsets.only(right: 18.0, top: 4.0),
+      padding: const EdgeInsets.only(left: 8.0, right: 18.0, top: 4.0),
       child: Align(
         alignment: Alignment.centerLeft,
         child: Container(
