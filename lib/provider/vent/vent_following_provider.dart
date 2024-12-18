@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class VentFollowing {
+class VentFollowingData {
 
   String title;
   String bodyText;
@@ -17,7 +17,7 @@ class VentFollowing {
   bool isPostLiked;
   bool isPostSaved;
 
-  VentFollowing({
+  VentFollowingData({
     required this.title,
     required this.bodyText,
     required this.creator,
@@ -31,18 +31,18 @@ class VentFollowing {
 
 }
 
-class VentFollowingDataProvider extends ChangeNotifier {
+class VentFollowingProvider extends ChangeNotifier {
 
-  List<VentFollowing> _vents = [];
+  List<VentFollowingData> _vents = [];
 
-  List<VentFollowing> get vents => _vents;
+  List<VentFollowingData> get vents => _vents;
 
-  void setVents(List<VentFollowing> vents) {
+  void setVents(List<VentFollowingData> vents) {
     _vents = vents;
     notifyListeners();
   }
 
-  void addVent(VentFollowing vent) {
+  void addVent(VentFollowingData vent) {
     _vents.add(vent);
     notifyListeners();
   }

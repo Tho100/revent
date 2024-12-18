@@ -27,7 +27,7 @@ class LikedPageState extends State<LikedPage> {
 
   final userData = GetIt.instance<UserDataProvider>();
   final navigation = GetIt.instance<NavigationProvider>();
-  final likedVentData = GetIt.instance<LikedVentDataProvider>();
+  final likedVentData = GetIt.instance<LikedVentProvider>();
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -102,7 +102,7 @@ class LikedPageState extends State<LikedPage> {
   Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 15),
-      child: Consumer<LikedVentDataProvider>(
+      child: Consumer<LikedVentProvider>(
         builder: (_, likedVentData, __) {
           return ValueListenableBuilder(
             valueListenable: isPageLoadedNotifier,

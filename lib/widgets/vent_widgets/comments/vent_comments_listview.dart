@@ -21,7 +21,7 @@ class VentCommentsListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildCommentPreview(VentComment ventComment) {
+  Widget _buildCommentPreview(VentCommentData ventComment) {
     return VentCommentPreviewer(
       title: title,
       creator: creator,

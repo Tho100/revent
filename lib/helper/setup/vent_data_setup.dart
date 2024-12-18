@@ -4,7 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_profile/profile_picture_getter.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
 import 'package:revent/provider/vent/liked_vent_data_provider.dart';
-import 'package:revent/provider/vent/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_provider.dart';
 import 'package:revent/vent_query/vent_data_getter.dart';
 import 'package:revent/provider/vent/vent_for_you_provider.dart';
 
@@ -128,11 +128,11 @@ class VentDataSetup {
   }
 
   Future<void> setupFollowing() async {
-    await _setupVents<VentFollowing>(
+    await _setupVents<VentFollowingData>(
       dataGetter: () => VentDataGetter().getFollowingVentsData(),
-      setVents: GetIt.instance<VentFollowingDataProvider>().setVents,
+      setVents: GetIt.instance<VentFollowingProvider>().setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentFollowing(
+          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentFollowingData(
         title: title,
         bodyText: bodyText,
         creator: creator,
@@ -169,7 +169,7 @@ class VentDataSetup {
   Future<void> setupLiked() async {
     await _setupVents<LikedVentData>(
       dataGetter: () => VentDataGetter().getLikedVentsData(),
-      setVents: GetIt.instance<LikedVentDataProvider>().setVents,
+      setVents: GetIt.instance<LikedVentProvider>().setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => LikedVentData(
         title: title,

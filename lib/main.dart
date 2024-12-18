@@ -14,7 +14,7 @@ import 'package:revent/provider/vent/active_vent_provider.dart';
 import 'package:revent/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
 import 'package:revent/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/provider/vent/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_provider.dart';
 import 'package:revent/themes/app_theme.dart';
 import 'package:get_it/get_it.dart';
 
@@ -25,7 +25,7 @@ void initializeLocators() {
   getIt.registerLazySingleton<NavigationProvider>(() => NavigationProvider());
   getIt.registerLazySingleton<UserDataProvider>(() => UserDataProvider());
   getIt.registerLazySingleton<VentForYouProvider>(() => VentForYouProvider());
-  getIt.registerLazySingleton<VentFollowingDataProvider>(() => VentFollowingDataProvider());
+  getIt.registerLazySingleton<VentFollowingProvider>(() => VentFollowingProvider());
   getIt.registerLazySingleton<VentCommentProvider>(() => VentCommentProvider());
   getIt.registerLazySingleton<ActiveVentProvider>(() => ActiveVentProvider());
   getIt.registerLazySingleton<ProfileDataProvider>(() => ProfileDataProvider());
@@ -33,7 +33,7 @@ void initializeLocators() {
   getIt.registerLazySingleton<ProfileSavedProvider>(() => ProfileSavedProvider());
   getIt.registerLazySingleton<SearchPostsProvider>(() => SearchPostsProvider());
   getIt.registerLazySingleton<SearchAccountsProvider>(() => SearchAccountsProvider());
-  getIt.registerLazySingleton<LikedVentDataProvider>(() => LikedVentDataProvider());
+  getIt.registerLazySingleton<LikedVentProvider>(() => LikedVentProvider());
 
 }
 
@@ -49,7 +49,7 @@ void main() async {
 
   final providers = [
     ChangeNotifierProvider(create: (_) => getIt<VentForYouProvider>()),
-    ChangeNotifierProvider(create: (_) => getIt<VentFollowingDataProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<VentFollowingProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<NavigationProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<UserDataProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfileDataProvider>()),
@@ -59,7 +59,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => getIt<ActiveVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SearchPostsProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SearchAccountsProvider>()),
-    ChangeNotifierProvider(create: (_) => getIt<LikedVentDataProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<LikedVentProvider>()),
   ];
 
   runApp(

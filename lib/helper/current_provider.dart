@@ -8,7 +8,7 @@ import 'package:revent/provider/profile/profile_saved_provider.dart';
 import 'package:revent/provider/search/search_posts_provider.dart';
 import 'package:revent/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/provider/vent/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_provider.dart';
 
 class CurrentProvider {
 
@@ -33,7 +33,7 @@ class CurrentProvider {
 
     } else if (navigation.homeTabIndex == 1) {
       return realTime 
-        ? Provider.of<VentFollowingDataProvider>(context!) : GetIt.instance<VentFollowingDataProvider>();
+        ? Provider.of<VentFollowingProvider>(context!) : GetIt.instance<VentFollowingProvider>();
 
     }
 
@@ -69,7 +69,7 @@ class CurrentProvider {
     BuildContext? context
   }) {
     return realTime 
-      ? Provider.of<LikedVentDataProvider>(context!) : GetIt.instance<LikedVentDataProvider>();
+      ? Provider.of<LikedVentProvider>(context!) : GetIt.instance<LikedVentProvider>();
   }
 
   dynamic getProviderOnly() {

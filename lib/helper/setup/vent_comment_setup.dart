@@ -30,7 +30,7 @@ class VentCommentSetup {
     final pfpData = commentsGetter['profile_picture']! as List<Uint8List>;
 
     final comments = List.generate(commentedBy.length, (index) {
-      return VentComment(
+      return VentCommentData(
         commentedBy: commentedBy[index],
         comment: comment[index],
         commentTimestamp: commentTimestamp[index],

@@ -9,7 +9,7 @@ import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
 import 'package:revent/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/provider/vent/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_provider.dart';
 
 class VentActions {
 
@@ -24,7 +24,7 @@ class VentActions {
   final navigation = GetIt.instance<NavigationProvider>();
 
   final ventData = GetIt.instance<VentForYouProvider>();
-  final ventFollowingData = GetIt.instance<VentFollowingDataProvider>();
+  final ventFollowingData = GetIt.instance<VentFollowingProvider>();
 
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
@@ -195,7 +195,7 @@ class VentActions {
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
-    final newComment = VentComment(
+    final newComment = VentCommentData(
       commentedBy: userData.user.username, 
       comment: comment,
       commentTimestamp: formattedTimestamp,

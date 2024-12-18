@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class VentComment {
+class VentCommentData {
 
   String commentedBy;
   String comment;
@@ -15,7 +15,7 @@ class VentComment {
 
   Uint8List pfpData;
 
-  VentComment({
+  VentCommentData({
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
@@ -29,16 +29,16 @@ class VentComment {
 
 class VentCommentProvider extends ChangeNotifier {
 
-  List<VentComment> _ventComments = [];
+  List<VentCommentData> _ventComments = [];
 
-  List<VentComment> get ventComments => _ventComments;
+  List<VentCommentData> get ventComments => _ventComments;
 
-  void setComments(List<VentComment> vents) {
+  void setComments(List<VentCommentData> vents) {
     _ventComments = vents;
     notifyListeners();
   }
 
-  void addComment(VentComment vent) {
+  void addComment(VentCommentData vent) {
     _ventComments.add(vent);
     notifyListeners();
   }

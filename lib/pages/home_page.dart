@@ -8,7 +8,7 @@ import 'package:revent/model/filter/home_filter.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/provider/vent/vent_following_data_provider.dart';
+import 'package:revent/provider/vent/vent_following_provider.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/helper/setup/vent_data_setup.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_filter.dart';
@@ -29,7 +29,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
 
   final navigation = GetIt.instance<NavigationProvider>();
   final ventData = GetIt.instance<VentForYouProvider>();
-  final ventFollowingData = GetIt.instance<VentFollowingDataProvider>();
+  final ventFollowingData = GetIt.instance<VentFollowingProvider>();
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final filterTextNotifier = ValueNotifier<String>('Latest');
@@ -146,7 +146,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
         return _buildVentListViewBody(
           onRefresh: () async => await _followingVentsOnRefresh(),
           child: HomeVentListView(
-            provider: Provider.of<VentFollowingDataProvider>(context)
+            provider: Provider.of<VentFollowingProvider>(context)
           ),
         ); 
 

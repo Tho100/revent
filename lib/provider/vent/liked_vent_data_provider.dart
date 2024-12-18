@@ -31,7 +31,7 @@ class LikedVentData {
 
 }
 
-class LikedVentDataProvider extends ChangeNotifier {
+class LikedVentProvider extends ChangeNotifier {
 
   List<LikedVentData> _vents = [];
 
