@@ -43,11 +43,6 @@ class VentCommentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteComments() {
-    _ventComments.clear();
-    notifyListeners();
-  }
-  
   void deleteComment(int index) {
     if (index >= 0 && index < _ventComments.length) {
       _ventComments.removeAt(index);
@@ -79,6 +74,10 @@ class VentCommentProvider extends ChangeNotifier {
 
     notifyListeners();
     
+  }
+
+  void deleteComments() {
+    _ventComments.clear();
   }
 
 }
