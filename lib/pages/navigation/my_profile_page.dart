@@ -1,20 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/get_it_extensions.dart';
 import 'package:revent/helper/setup/profile_posts_setup.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/widgets/bottomsheet_widgets/view_full_bio.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/profile/profile_posts_provider.dart';
-import 'package:revent/provider/profile/profile_saved_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_style.dart';
 import 'package:revent/widgets/app_bar.dart';
 import 'package:revent/widgets/buttons/custom_outlined_button.dart';
@@ -33,14 +31,13 @@ class MyProfilePage extends StatefulWidget {
 
 class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderStateMixin {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final navigation = getIt.navigationProvider;
 
-  final navigationIndex = GetIt.instance<NavigationProvider>();
-  final profileData = GetIt.instance<ProfileDataProvider>();
-  final navigation = GetIt.instance<NavigationProvider>();
+  final userData = getIt.userProvider;
+  final profileData = getIt.profileProvider;
 
-  final profilePostsData = GetIt.instance<ProfilePostsProvider>();
-  final profileSavedData = GetIt.instance<ProfileSavedProvider>();
+  final profilePostsData = getIt.profilePostsProvider;
+  final profileSavedData = getIt.profileSavedProvider;
 
   late ProfilePostsSetup callProfilePosts;
   late ProfileInfoWidgets profileInfoWidgets;

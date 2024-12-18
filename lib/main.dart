@@ -18,9 +18,9 @@ import 'package:revent/provider/vent/vent_following_provider.dart';
 import 'package:revent/themes/app_theme.dart';
 import 'package:get_it/get_it.dart';
 
-void initializeLocators() {
+final getIt = GetIt.I;
 
-  final getIt = GetIt.instance;
+void initializeLocators() {
 
   getIt.registerLazySingleton<NavigationProvider>(() => NavigationProvider());
   getIt.registerLazySingleton<UserDataProvider>(() => UserDataProvider());
