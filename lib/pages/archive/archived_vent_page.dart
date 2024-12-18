@@ -35,11 +35,11 @@ class ArchivedVentPage extends StatefulWidget {
   const ArchivedVentPage({super.key});
 
   @override
-  State<ArchivedVentPage> createState() => ArchivedVentPageState();
+  State<ArchivedVentPage> createState() => _ArchivedVentPageState();
   
 }
 
-class ArchivedVentPageState extends State<ArchivedVentPage> {
+class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();

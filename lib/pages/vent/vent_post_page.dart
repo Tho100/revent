@@ -51,11 +51,11 @@ class VentPostPage extends StatefulWidget {
   });
 
   @override
-  State<VentPostPage> createState() => VentPostPageState();
+  State<VentPostPage> createState() => _VentPostPageState();
 
 }
 
-class VentPostPageState extends State<VentPostPage> {
+class _VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = GetIt.instance<VentCommentProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();

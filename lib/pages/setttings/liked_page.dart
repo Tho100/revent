@@ -19,11 +19,11 @@ class LikedPage extends StatefulWidget {
   const LikedPage({super.key});
 
   @override
-  State<LikedPage> createState() => LikedPageState();
+  State<LikedPage> createState() => _LikedPageState();
   
 }
 
-class LikedPageState extends State<LikedPage> {
+class _LikedPageState extends State<LikedPage> {
 
   final userData = GetIt.instance<UserDataProvider>();
   final navigation = GetIt.instance<NavigationProvider>();

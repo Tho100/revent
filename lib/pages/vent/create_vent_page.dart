@@ -17,11 +17,11 @@ class CreateVentPage extends StatefulWidget {
   const CreateVentPage({super.key});
 
   @override
-  State<CreateVentPage> createState() => CreateVentPageState();
+  State<CreateVentPage> createState() => _CreateVentPageState();
 
 }
 
-class CreateVentPageState extends State<CreateVentPage> {
+class _CreateVentPageState extends State<CreateVentPage> {
 
   final ventTitleController = TextEditingController();
   final ventBodyTextController = TextEditingController();

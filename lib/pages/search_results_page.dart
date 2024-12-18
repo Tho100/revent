@@ -24,11 +24,11 @@ class SearchResultsPage extends StatefulWidget {
   });
 
   @override
-  State<SearchResultsPage> createState() => SearchResultsPageState();
+  State<SearchResultsPage> createState() => _SearchResultsPageState();
 
 }
 
-class SearchResultsPageState extends State<SearchResultsPage> with SingleTickerProviderStateMixin {
+class _SearchResultsPageState extends State<SearchResultsPage> with SingleTickerProviderStateMixin {
 
   late TabController tabController;
   late SearchResultsTabBarWidgets resultsTabBarWidgets;

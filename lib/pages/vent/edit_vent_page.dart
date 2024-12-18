@@ -20,11 +20,11 @@ class EditVentPage extends StatefulWidget {
   });
 
   @override
-  State<EditVentPage> createState() => EditVentPageState();
+  State<EditVentPage> createState() => _EditVentPageState();
   
 }
 
-class EditVentPageState extends State<EditVentPage> {
+class _EditVentPageState extends State<EditVentPage> {
 
   final ventBodyTextController = TextEditingController();
 

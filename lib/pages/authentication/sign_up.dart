@@ -19,11 +19,11 @@ class SignUpPage extends StatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => SignUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 
 }
 
-class SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends State<SignUpPage> {
 
   final authController = AuthController();
 

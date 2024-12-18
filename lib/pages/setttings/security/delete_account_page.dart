@@ -18,11 +18,11 @@ class DeleteAccountPage extends StatefulWidget {
   const DeleteAccountPage({super.key});
 
   @override
-  State<DeleteAccountPage> createState() => DeleteAccountPageState();
+  State<DeleteAccountPage> createState() => _DeleteAccountPageState();
 
 }
 
-class DeleteAccountPageState extends State<DeleteAccountPage> {
+class _DeleteAccountPageState extends State<DeleteAccountPage> {
 
   final authController = SecurityAuthController();
 

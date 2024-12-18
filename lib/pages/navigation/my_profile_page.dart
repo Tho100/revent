@@ -27,12 +27,12 @@ class MyProfilePage extends StatefulWidget {
   const MyProfilePage({super.key});
 
   @override
-  State<MyProfilePage> createState() => MyProfilePageState();
+  State<MyProfilePage> createState() => _MyProfilePageState();
 
 }
 
-class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderStateMixin {
-
+class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderStateMixin {
+  // TODO: Remove this unnecessary static
   static final userData = GetIt.instance<UserDataProvider>();
 
   final navigationIndex = GetIt.instance<NavigationProvider>();

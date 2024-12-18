@@ -17,11 +17,11 @@ class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({super.key});
 
   @override
-  State<ChangePasswordPage> createState() => ChangePasswordPageState();
+  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
 
 }
 
-class ChangePasswordPageState extends State<ChangePasswordPage> {
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   final authController = SecurityAuthController();
 

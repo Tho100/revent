@@ -12,11 +12,11 @@ class PrivacyPage extends StatefulWidget {
   const PrivacyPage({super.key});
 
   @override
-  State<PrivacyPage> createState() => PrivacyPageState();
+  State<PrivacyPage> createState() => _PrivacyPageState();
 
 }
 
-class PrivacyPageState extends State<PrivacyPage> {
+class _PrivacyPageState extends State<PrivacyPage> {
 
   final privateAccountNotifier = ValueNotifier<bool>(false);
   final hideFollowingListNotifier = ValueNotifier<bool>(false);

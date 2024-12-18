@@ -20,11 +20,11 @@ class EditProfilePage extends StatefulWidget {
   const EditProfilePage({super.key});
 
   @override
-  State<EditProfilePage> createState() => EditProfilePageState();
+  State<EditProfilePage> createState() => _EditProfilePageState();
   
 }
 
-class EditProfilePageState extends State<EditProfilePage> {
+class _EditProfilePageState extends State<EditProfilePage> {
 
   final profileData = GetIt.instance<ProfileDataProvider>();
 

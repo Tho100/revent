@@ -29,11 +29,11 @@ class PostCommentPage extends StatefulWidget {
   });
 
   @override
-  State<PostCommentPage> createState() => PostCommentPageState();
+  State<PostCommentPage> createState() => _PostCommentPageState();
 
 }
 
-class PostCommentPageState extends State<PostCommentPage> {
+class _PostCommentPageState extends State<PostCommentPage> {
 
   final commentController = TextEditingController();
 

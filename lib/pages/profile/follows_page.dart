@@ -36,11 +36,11 @@ class FollowsPage extends StatefulWidget {
   });
 
   @override
-  State<FollowsPage> createState() => FollowsPageState();
+  State<FollowsPage> createState() => _FollowsPageState();
 
 }
 
-class FollowsPageState extends State<FollowsPage> with SingleTickerProviderStateMixin {
+class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStateMixin {
 
   final userData = GetIt.instance<UserDataProvider>();
 

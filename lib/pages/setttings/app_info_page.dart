@@ -16,11 +16,11 @@ class AppInfoPage extends StatefulWidget {
   const AppInfoPage({super.key});
 
   @override
-  State<AppInfoPage> createState() => AppInfoPageState();
+  State<AppInfoPage> createState() => _AppInfoPageState();
 
 }
 
-class AppInfoPageState extends State<AppInfoPage> {
+class _AppInfoPageState extends State<AppInfoPage> {
   
   final cacheNotifier = ValueNotifier<String>('');
 

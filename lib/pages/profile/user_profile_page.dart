@@ -37,11 +37,11 @@ class UserProfilePage extends StatefulWidget {
   });
 
   @override
-  State<UserProfilePage> createState() => UserProfilePageState();
+  State<UserProfilePage> createState() => _UserProfilePageState();
 
 }
 
-class UserProfilePageState extends State<UserProfilePage> with SingleTickerProviderStateMixin {
+class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProviderStateMixin {
 
   final profilePostsData = GetIt.instance<ProfilePostsProvider>();
   final profileSavedData = GetIt.instance<ProfileSavedProvider>();

@@ -14,11 +14,11 @@ class AccountInformationPage extends StatefulWidget {
   const AccountInformationPage({super.key});
 
   @override
-  State<AccountInformationPage> createState() => AccountInformationPageState();
+  State<AccountInformationPage> createState() => _AccountInformationPageState();
 
 }
 
-class AccountInformationPageState extends State<AccountInformationPage> {
+class _AccountInformationPageState extends State<AccountInformationPage> {
 
   final userData = GetIt.instance<UserDataProvider>();
 

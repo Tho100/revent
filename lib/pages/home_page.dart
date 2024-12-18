@@ -21,11 +21,11 @@ class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => HomePageState();
+  State<HomePage> createState() => _HomePageState();
   
 }
 
-class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
+class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
   final navigation = GetIt.instance<NavigationProvider>();
   final ventData = GetIt.instance<VentForYouProvider>();
@@ -70,7 +70,7 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   }
 
   void _filterOnPressed({required String filter}) {
-    // TODO: Fix filter is buggy don't know why
+
     switch (filter) {
       case == 'Trending':
       filterModel.filterHomeToTrending();
@@ -241,7 +241,6 @@ class HomePageState extends State<HomePage> with SingleTickerProviderStateMixin 
   void initState() {
     super.initState();
     _initializeTabController();
-    //filterModel.filterHomeToLatest(); // TOOD: Remove this unnecessary
   }
 
   @override
