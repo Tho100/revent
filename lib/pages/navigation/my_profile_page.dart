@@ -32,8 +32,8 @@ class MyProfilePage extends StatefulWidget {
 }
 
 class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderStateMixin {
-  // TODO: Remove this unnecessary static
-  static final userData = GetIt.instance<UserDataProvider>();
+
+  final userData = GetIt.instance<UserDataProvider>();
 
   final navigationIndex = GetIt.instance<NavigationProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
