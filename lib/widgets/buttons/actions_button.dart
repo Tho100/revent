@@ -31,7 +31,7 @@ class ActionsButton {
   }
 
   Widget buildLikeButton({
-    required String text, // TODO: Convert this to int
+    required int value,
     required bool isLiked,
     required VoidCallback onPressed,
   }) {
@@ -52,7 +52,7 @@ class ActionsButton {
           const SizedBox(width: 6), 
 
           AnimatedFlipCounter(
-            value: int.parse(text),
+            value: value,
             textStyle: GoogleFonts.inter(
               color: ThemeColor.white,
               fontWeight: FontWeight.w800,
@@ -66,7 +66,7 @@ class ActionsButton {
   }
 
   Widget buildCommentsButton({
-    required String text,
+    required int value,
     required VoidCallback onPressed,
   }) {
     return _buildActionButton(
@@ -86,7 +86,7 @@ class ActionsButton {
           const SizedBox(width: 6), 
   
           AnimatedFlipCounter(
-            value: int.parse(text),
+            value: value,
             textStyle: GoogleFonts.inter(
               color: ThemeColor.white,
               fontWeight: FontWeight.w800,

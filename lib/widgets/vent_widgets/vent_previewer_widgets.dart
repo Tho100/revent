@@ -77,15 +77,15 @@ class VentPreviewerWidgets {
     }
   
     final totalLikes = AppRoute.isOnProfile
-      ? profileData.totalLikes[safeVentIndex].toString()
-      : ventData.vents[safeVentIndex].totalLikes.toString();
+      ? profileData.totalLikes[safeVentIndex]
+      : ventData.vents[safeVentIndex].totalLikes;
 
     final isLiked = AppRoute.isOnProfile
       ? profileData.isPostLiked[safeVentIndex]
       : ventData.vents[safeVentIndex].isPostLiked;
 
     return ActionsButton().buildLikeButton(
-      text: ventIndex == -1 ? '0' : totalLikes,
+      value: ventIndex == -1 ? 0 : totalLikes,
       isLiked: ventIndex == -1 ? false : isLiked,
       onPressed: () async {
         await CallVentActions(
@@ -100,7 +100,7 @@ class VentPreviewerWidgets {
 
   Widget buildCommentButton() {
     return ActionsButton().buildCommentsButton(
-      text: totalComments.toString(), 
+      value: totalComments!, 
       onPressed: viewVentPostOnPressed!
     );
   }

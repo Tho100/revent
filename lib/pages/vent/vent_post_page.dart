@@ -190,8 +190,8 @@ class VentPostPageState extends State<VentPostPage> {
       final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
 
       totalLikes = isMyProfile
-        ? ventData.myProfile.totalLikes[ventIndex].toString()
-        : ventData.userProfile.totalLikes[ventIndex].toString();
+        ? ventData.myProfile.totalLikes[ventIndex]
+        : ventData.userProfile.totalLikes[ventIndex];
 
       isVentLiked = isMyProfile
         ? ventData.myProfile.isPostLiked[ventIndex]
@@ -199,7 +199,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     } else {
     
-      totalLikes = ventData.vents[ventIndex].totalLikes.toString();
+      totalLikes = ventData.vents[ventIndex];
       isVentLiked = ventData.vents[ventIndex].isPostLiked;
 
     }
@@ -406,7 +406,7 @@ class VentPostPageState extends State<VentPostPage> {
       builder: (context) {
         final likesInfo = _getLikesInfo();
         return ActionsButton().buildLikeButton(
-          text: likesInfo['total_likes'], 
+          value: likesInfo['total_likes'], 
           isLiked: likesInfo['is_liked'],
           onPressed: () async {
             await CallVentActions(
@@ -424,7 +424,7 @@ class VentPostPageState extends State<VentPostPage> {
     return Consumer<VentCommentProvider>(
       builder: (_, commentsData, __) {
         return ActionsButton().buildCommentsButton(
-          text: commentsData.ventComments.length.toString(), 
+          value: commentsData.ventComments.length, 
           onPressed: () {}
         );
       },
