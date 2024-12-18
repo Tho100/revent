@@ -57,7 +57,8 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
       crossAxisCount: 1,
       itemCount: postsData.titles.length,
       builder: (_, index) {
-        return _buildPreviewer(postsData, index);
+        final reversedIndex = postsData.titles.length - 1 - index;
+        return _buildPreviewer(postsData, reversedIndex);
       },
     );
   }
