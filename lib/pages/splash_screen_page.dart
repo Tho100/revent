@@ -1,10 +1,11 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/get_it_extensions.dart';
 import 'package:revent/helper/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -21,7 +22,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   final localModel = LocalStorageModel();
 

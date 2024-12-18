@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/get_it_extensions.dart';
 import 'package:revent/helper/call_refresh.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/filter/home_filter.dart';
 import 'package:revent/widgets/navigation/page_navigation_bar.dart';
-import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/provider/vent/vent_following_provider.dart';
 import 'package:revent/themes/theme_color.dart';
@@ -27,9 +27,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
-  final navigation = GetIt.instance<NavigationProvider>();
-  final ventData = GetIt.instance<VentForYouProvider>();
-  final ventFollowingData = GetIt.instance<VentFollowingProvider>();
+  final navigation = getIt.navigationProvider;
+  final ventData = getIt.ventForYouProvider;
+  final ventFollowingData = getIt.ventFollowingProvider;
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final filterTextNotifier = ValueNotifier<String>('Latest');
