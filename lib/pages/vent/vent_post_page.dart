@@ -187,11 +187,15 @@ class _VentPostPageState extends State<VentPostPage> {
 
     if(AppRoute.isOnProfile) {
 
+      debugPrint('im in');
+
       final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
 
       totalLikes = isMyProfile
         ? ventData.myProfile.totalLikes[ventIndex]
         : ventData.userProfile.totalLikes[ventIndex];
+
+      debugPrint(totalLikes.toString());
 
       isVentLiked = isMyProfile
         ? ventData.myProfile.isPostLiked[ventIndex]
@@ -199,7 +203,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
     } else {
     
-      totalLikes = ventData.vents[ventIndex];
+      totalLikes = ventData.vents[ventIndex].totalLikes;
       isVentLiked = ventData.vents[ventIndex].isPostLiked;
 
     }
