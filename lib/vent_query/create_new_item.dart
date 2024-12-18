@@ -4,11 +4,11 @@ import 'package:revent/connection/revent_connect.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_for_you_provider.dart';
 
 class CreateNewItem {
 
-  final ventData = GetIt.instance<VentDataProvider>();
+  final ventData = GetIt.instance<VentForYouProvider>();
   final userData = GetIt.instance<UserDataProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
 
@@ -77,7 +77,7 @@ class CreateNewItem {
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
-    final newVent = Vent(
+    final newVent = VentForYouData(
       title: ventTitle, 
       bodyText: ventBodyText, 
       creator: userData.user.username, 

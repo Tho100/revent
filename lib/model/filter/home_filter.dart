@@ -1,6 +1,6 @@
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/model/format_date.dart';
-import 'package:revent/provider/vent/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/provider/vent/vent_following_data_provider.dart';
 
 class HomeFilter {
@@ -12,10 +12,10 @@ class HomeFilter {
 
     final ventData = currentProvider.getProviderOnly();
 
-    if (ventData.vents is List<Vent>) {
+    if (ventData.vents is List<VentForYouData>) {
 
-      final filteredVents = <Vent>[];
-      final unfilteredVents = <Vent>[];
+      final filteredVents = <VentForYouData>[];
+      final unfilteredVents = <VentForYouData>[];
 
       for (var vent in ventData.vents) {
         vent.totalLikes >= 5 && vent.totalComments >= 1 

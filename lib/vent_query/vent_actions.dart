@@ -8,7 +8,7 @@ import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
-import 'package:revent/provider/vent/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/provider/vent/vent_following_data_provider.dart';
 
 class VentActions {
@@ -23,7 +23,7 @@ class VentActions {
 
   final navigation = GetIt.instance<NavigationProvider>();
 
-  final ventData = GetIt.instance<VentDataProvider>();
+  final ventData = GetIt.instance<VentForYouProvider>();
   final ventFollowingData = GetIt.instance<VentFollowingDataProvider>();
 
   final userData = GetIt.instance<UserDataProvider>();

@@ -6,7 +6,7 @@ import 'package:revent/provider/search/search_posts_provider.dart';
 import 'package:revent/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_following_data_provider.dart';
 import 'package:revent/vent_query/vent_data_getter.dart';
-import 'package:revent/provider/vent/vent_data_provider.dart';
+import 'package:revent/provider/vent/vent_for_you_provider.dart';
 
 class VentDataSetup {
 
@@ -109,11 +109,11 @@ class VentDataSetup {
   }
 
   Future<void> setupForYou() async {
-    await _setupVents<Vent>(
+    await _setupVents<VentForYouData>(
       dataGetter: () => VentDataGetter().getVentsData(),
-      setVents: GetIt.instance<VentDataProvider>().setVents,
+      setVents: GetIt.instance<VentForYouProvider>().setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => Vent(
+          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentForYouData(
         title: title,
         bodyText: bodyText,
         creator: creator,

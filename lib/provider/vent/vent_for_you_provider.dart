@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class Vent {
+class VentForYouData {
 
   String title;
   String bodyText;
@@ -17,7 +17,7 @@ class Vent {
   bool isPostLiked;
   bool isPostSaved;
 
-  Vent({
+  VentForYouData({
     required this.title,
     required this.bodyText,
     required this.creator,
@@ -31,18 +31,18 @@ class Vent {
 
 }
 
-class VentDataProvider extends ChangeNotifier {
+class VentForYouProvider extends ChangeNotifier {
 
-  List<Vent> _vents = [];
+  List<VentForYouData> _vents = [];
 
-  List<Vent> get vents => _vents;
+  List<VentForYouData> get vents => _vents;
 
-  void setVents(List<Vent> vents) {
+  void setVents(List<VentForYouData> vents) {
     _vents = vents;
     notifyListeners();
   }
 
-  void addVent(Vent vent) {
+  void addVent(VentForYouData vent) {
     _vents.add(vent);
     notifyListeners();
   }
