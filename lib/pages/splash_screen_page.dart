@@ -47,10 +47,10 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _loadStartupData() async {
-    // TODO: Use then
-    await ProfileDataSetup().setup(username: userData.user.username);
 
-    await VentDataSetup().setupForYou();
+    await ProfileDataSetup().setup(username: userData.user.username).then(
+      (_) async => await VentDataSetup().setupForYou()
+    );
 
   }
 
@@ -95,8 +95,8 @@ class _SplashScreenState extends State<SplashScreen> {
 
       userData.setUser(userSetup);
 
-      await _loadStartupData()
-        .then((value) => NavigatePage.homePage()
+      await _loadStartupData().then(
+        (_) => NavigatePage.homePage()
       );
 
     } catch (err) {
