@@ -1,16 +1,14 @@
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
 
-class UserDataRegistration { 
+class UserDataRegistration extends BaseQueryService { 
 
   final userData = getIt.userProvider;
 
   Future<void> insert({required String? hashPassword}) async {
       
-    final conn = await ReventConnection.connect();
-
     const queries = 
     [
       'INSERT INTO user_information (username, email, password, plan) VALUES (:username, :email, :password, :plan)',
@@ -38,9 +36,15 @@ class UserDataRegistration {
       }
     ];
 
-    for(int i=0; i < queries.length; i++) {
-      await conn.execute(queries[i], params[i]);
-    }
+    final conn = await connection();
+
+    await conn.transactional((txn) async {
+
+      for(int i=0; i <queries.length; i++) {
+        await txn.execute(queries[i], params[i]);
+      }
+
+    });
 
     await LocalStorageModel().setupLocalAccountInformation(
       username: userData.user.username, email: userData.user.email, plan: 'Basic'

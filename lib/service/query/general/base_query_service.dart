@@ -11,4 +11,8 @@ abstract class BaseQueryService {
 
   }
 
+  Future<MySQLConnectionPool> connection() async {
+    return await ReventConnection.connect();
+  }
+
 }

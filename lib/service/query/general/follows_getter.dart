@@ -1,16 +1,14 @@
 import 'dart:convert';
 
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 
-class FollowsGetter {
+class FollowsGetter extends BaseQueryService {
 
   Future<Map<String, List<dynamic>>> getFollows({
     required String followType,
     required String username,
   }) async {
-
-    final conn = await ReventConnection.connect();
 
     final columnName = followType == 'Followers' ? 'follower' : 'following';
     final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
@@ -26,7 +24,7 @@ class FollowsGetter {
 
     final params = {'username': username};
 
-    final results = await conn.execute(getFollowsWithProfilePicQuery, params);
+    final results = await executeQuery(getFollowsWithProfilePicQuery, params);
 
     final extractedData = ExtractData(rowsData: results);
 

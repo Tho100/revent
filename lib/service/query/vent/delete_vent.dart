@@ -13,7 +13,7 @@ class DeleteVent {
     required this.title,
     required this.creator,
   });
-
+  // TODO: Use getIt and BaseQueryService
   final userData = GetIt.instance<UserDataProvider>();
 
   Future<void> delete() async {
@@ -76,18 +76,17 @@ class DeleteVent {
       'creator': userData.user.username,
     };
 
-    await conn.transactional((conn) async {
+    await conn.transactional((txn) async {
 
       const deleteCommentsQuery = 
         'DELETE FROM vent_comments_info WHERE title = :title AND creator = :creator'; 
         
-      await conn.execute(deleteCommentsQuery, params);
+      await txn.execute(deleteCommentsQuery, params);
 
       const deleteCommentsLikesInfoQuery = 
         'DELETE FROM vent_comments_likes_info WHERE title = :title AND creator = :creator'; 
-        
 
-      await conn.execute(deleteCommentsLikesInfoQuery, params);
+      await txn.execute(deleteCommentsLikesInfoQuery, params);
 
     });
 

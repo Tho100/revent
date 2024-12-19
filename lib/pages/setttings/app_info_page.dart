@@ -6,7 +6,7 @@ import 'package:revent/app/app_cache.dart';
 import 'package:revent/pages/setttings/app_info/pp_page.dart';
 import 'package:revent/pages/setttings/app_info/tp_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/settings_button.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
