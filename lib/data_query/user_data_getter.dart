@@ -1,5 +1,5 @@
 import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/model/extract_data.dart';
+import 'package:revent/helper/extract_data.dart';
 
 class UserDataGetter {
 

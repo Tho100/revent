@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/widgets/bottomsheet.dart';
 import 'package:revent/widgets/bottomsheet_bar.dart';
 import 'package:revent/widgets/bottomsheet_title.dart';

@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/global/constant.dart';
-import 'package:revent/helper/app_route.dart';
+import 'package:revent/app/app_route.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/vent/create_vent_page.dart';

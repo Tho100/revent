@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/vent_actions.dart';

@@ -5,7 +5,7 @@ import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/create_new_item.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/vent_query/verify_vent.dart';
 import 'package:revent/widgets/app_bar.dart';

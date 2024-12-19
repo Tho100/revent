@@ -11,7 +11,7 @@ import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/archive/archive_vent_data_getter.dart';

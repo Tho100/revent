@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/app_route.dart';
+import 'package:revent/app/app_route.dart';
 import 'package:revent/provider/navigation_provider.dart';
 import 'package:revent/provider/profile/profile_posts_provider.dart';
 import 'package:revent/provider/profile/profile_saved_provider.dart';

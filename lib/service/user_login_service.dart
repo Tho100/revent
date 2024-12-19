@@ -3,7 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/data_query/user_data_getter.dart';
-import 'package:revent/helper/setup/profile_data_setup.dart';
+import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
@@ -11,7 +11,7 @@ import 'package:revent/security/hash_model.dart';
 import 'package:revent/security/user_auth.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/loading/spinner_loading.dart';
-import 'package:revent/helper/setup/vent_data_setup.dart';
+import 'package:revent/model/setup/vent_data_setup.dart';
 
 class UserLoginService {
 

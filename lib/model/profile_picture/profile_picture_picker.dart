@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker_plus/image_picker_plus.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 
 class ProfilePicturePicker {
 

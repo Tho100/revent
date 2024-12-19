@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:revent/model/format_date.dart';
+import 'package:revent/helper/format_date.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
 
 class CommentsFilter {

@@ -6,7 +6,7 @@ import 'package:revent/data_query/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
-import 'package:revent/helper/setup/vent_data_setup.dart';
+import 'package:revent/model/setup/vent_data_setup.dart';
 
 class UserRegistrationService {
 

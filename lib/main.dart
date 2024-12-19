@@ -15,7 +15,7 @@ import 'package:revent/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
 import 'package:revent/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/provider/vent/vent_following_provider.dart';
-import 'package:revent/themes/app_theme.dart';
+import 'package:revent/shared/themes/app_theme.dart';
 import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.I;

@@ -1,6 +1,6 @@
 import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/model/extract_data.dart';
-import 'package:revent/model/format_date.dart';
+import 'package:revent/helper/extract_data.dart';
+import 'package:revent/helper/format_date.dart';
 
 class ArchiveVentDataGetter {
 
