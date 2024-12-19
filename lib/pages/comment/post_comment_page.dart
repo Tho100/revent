@@ -9,7 +9,7 @@ import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent_query/vent_actions.dart';
+import 'package:revent/service/query/vent/vent_actions.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';

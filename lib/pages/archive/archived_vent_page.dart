@@ -14,7 +14,7 @@ import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent_query/archive/archive_vent_data_getter.dart';
+import 'package:revent/service/query/vent/archive/archive_vent_data_getter.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 

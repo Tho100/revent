@@ -21,7 +21,7 @@ import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/model/setup/vent_comment_setup.dart';
-import 'package:revent/service/query/vent_query/comment/vent_comments_settings.dart';
+import 'package:revent/service/query/vent/comment/vent_comments_settings.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet_widgets/comment_filter.dart';
 import 'package:revent/shared/widgets/bottomsheet_widgets/comment_settings.dart';

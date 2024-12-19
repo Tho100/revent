@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/shared/provider/profile/profile_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent_query/comment/save_comment_edit.dart';
+import 'package:revent/service/query/vent/comment/save_comment_edit.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 import 'package:revent/shared/widgets/text_field/comment_textfield.dart';

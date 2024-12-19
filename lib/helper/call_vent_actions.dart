@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent_query/archive/delete_archive_vent.dart';
-import 'package:revent/service/query/vent_query/delete_saved_vent.dart';
-import 'package:revent/service/query/vent_query/delete_vent.dart';
-import 'package:revent/service/query/vent_query/vent_actions.dart';
+import 'package:revent/service/query/vent/archive/delete_archive_vent.dart';
+import 'package:revent/service/query/vent/delete_saved_vent.dart';
+import 'package:revent/service/query/vent/delete_vent.dart';
+import 'package:revent/service/query/vent/vent_actions.dart';
 
 class CallVentActions {
 
