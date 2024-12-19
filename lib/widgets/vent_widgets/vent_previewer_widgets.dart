@@ -53,16 +53,10 @@ class VentPreviewerWidgets {
     this.copyOnPressed
   });
 
+  // TODO: Checkout to refactor and use getit extensions
   final navigation = GetIt.instance<NavigationProvider>();
 
-  Widget buildLikeButton() {
-
-    final getProvider = CurrentProvider(
-      title: title!, creator: creator!
-    ).getRealTimeProvider(context: context);
-
-    final ventIndex = getProvider['vent_index'];
-    final ventData = getProvider['vent_data'];
+  Map<String, dynamic> _getLikesInfo(dynamic ventData, int ventIndex) {
 
     final safeVentIndex = ventIndex == -1 ? 0 : ventIndex;
 
@@ -75,18 +69,65 @@ class VentPreviewerWidgets {
       profileData = ventData.userProfile;
 
     }
-  
-    final totalLikes = AppRoute.isOnProfile
-      ? profileData.totalLikes[safeVentIndex]
-      : ventData.vents[safeVentIndex].totalLikes;
 
-    final isLiked = AppRoute.isOnProfile
-      ? profileData.isPostLiked[safeVentIndex]
-      : ventData.vents[safeVentIndex].isPostLiked;
+    int totalLikes = 0;
+    bool isLiked = false;
+
+    if(AppRoute.isOnProfile) {
+      totalLikes = profileData.totalLikes.length > 0 ? profileData.totalLikes[safeVentIndex] : 0;
+      isLiked = profileData.totalLikes.length > 0 ? profileData.isPostLiked[safeVentIndex] : false;
+
+    } else {
+      totalLikes = profileData.totalLikes.length > 0 ? profileData.totalLikes[safeVentIndex] : 0;
+      isLiked = ventData.vents.length > 0 ? ventData.vents[safeVentIndex].isPostLiked : false;
+      
+    }
+
+    return {
+      'total_likes': totalLikes,
+      'is_liked': isLiked
+    };
+
+  }
+
+  bool _getIsSaved(dynamic ventData, int ventIndex) {
+
+    final safeVentIndex = ventIndex == -1 ? 0 : ventIndex;
+
+    dynamic profileData;
+
+    if(navigation.currentRoute == AppRoute.myProfile) {
+      profileData = ventData.myProfile;
+
+    } else if (navigation.currentRoute == AppRoute.userProfile) {
+      profileData = ventData.userProfile;
+
+    }
+
+    if(AppRoute.isOnProfile) {
+      return profileData.isPostSaved.length > 0 ? profileData.isPostSaved[safeVentIndex] : false;
+
+    } else {
+      return ventData.vents.length > 0 ? ventData.vents[safeVentIndex].isPostSaved : false;
+      
+    }
+
+  }
+
+  Widget buildLikeButton() {
+
+    final getProvider = CurrentProvider(
+      title: title!, creator: creator!
+    ).getRealTimeProvider(context: context);
+
+    final ventIndex = getProvider['vent_index'];
+    final ventData = getProvider['vent_data'];
+
+    final likesInfo = _getLikesInfo(ventData, ventIndex);
 
     return ActionsButton().buildLikeButton(
-      value: ventIndex == -1 ? 0 : totalLikes,
-      isLiked: ventIndex == -1 ? false : isLiked,
+      value: ventIndex == -1 ? 0 : likesInfo['total_likes'],
+      isLiked: ventIndex == -1 ? false : likesInfo['is_liked'],
       onPressed: () async {
         await CallVentActions(
           context: context, 
@@ -114,24 +155,8 @@ class VentPreviewerWidgets {
     final ventIndex = getProvider['vent_index'];
     final ventData = getProvider['vent_data'];
 
-    final safeVentIndex = ventIndex == -1 ? 0 : ventIndex;
-
-    dynamic profileData;
-
-    if(navigation.currentRoute == AppRoute.myProfile) {
-      profileData = ventData.myProfile;
-
-    } else if (navigation.currentRoute == AppRoute.userProfile) {
-      profileData = ventData.userProfile;
-
-    }
-
-    final isSaved = AppRoute.isOnProfile 
-      ? profileData.isPostSaved[safeVentIndex]
-      : ventData.vents[safeVentIndex].isPostSaved;
-
     return ActionsButton().buildSaveButton(
-      isSaved: ventIndex == -1 ? false : isSaved,
+      isSaved: ventIndex == -1 ? false : _getIsSaved(ventData, ventIndex),
       onPressed: () async {
         await CallVentActions(
           context: context, 
