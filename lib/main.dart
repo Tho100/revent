@@ -45,8 +45,6 @@ void main() async {
 
   initializeLocators();
 
-  final getIt = GetIt.instance;
-
   final providers = [
     ChangeNotifierProvider(create: (_) => getIt<VentForYouProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<VentFollowingProvider>()),
