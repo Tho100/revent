@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:get_it/get_it.dart';
-import 'package:revent/service/data_query/user_profile/profile_picture_getter.dart';
+import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';

@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:revent/service/data_query/follows_getter.dart';
+import 'package:revent/service/query/follows_getter.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';

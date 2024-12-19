@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/service/data_query/user_profile/profile_data_update.dart';
+import 'package:revent/service/query/user_profile/profile_data_update.dart';
 import 'package:revent/helper/textinput_formatter.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
 import 'package:revent/shared/provider/profile/profile_data_provider.dart';
