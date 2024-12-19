@@ -1,4 +1,4 @@
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/model/extract_data.dart';
 
 class ProfileDataGetter {
@@ -8,7 +8,7 @@ class ProfileDataGetter {
     required String username
   }) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     final query = isMyProfile 
       ? 'SELECT following, followers, bio, pronouns, profile_picture FROM user_profile_info WHERE username = :username'

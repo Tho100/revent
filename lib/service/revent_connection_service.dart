@@ -1,7 +1,7 @@
 import 'package:mysql_client/mysql_client.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-class ReventConnect {
+class ReventConnection {
 
   static final _dbClusterFsc = MySQLConnectionPool(
     host: dotenv.env['domain']!,
@@ -12,7 +12,7 @@ class ReventConnect {
     maxConnections: 8,
   );
 
-  static Future<MySQLConnectionPool> initializeConnection() async {
+  static Future<MySQLConnectionPool> connect() async {
     return _dbClusterFsc;
   }
 

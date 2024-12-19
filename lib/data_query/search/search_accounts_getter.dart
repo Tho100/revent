@@ -1,13 +1,13 @@
 import 'dart:convert';
 
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/model/extract_data.dart';
 
 class SearchAccountsGetter {
 
   Future<Map<String, List<dynamic>>> getAccounts({required String searchText}) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 'SELECT username, profile_picture FROM user_profile_info WHERE username LIKE :search_text';
 

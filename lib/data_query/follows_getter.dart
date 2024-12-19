@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/model/extract_data.dart';
 
 class FollowsGetter {
@@ -10,7 +10,7 @@ class FollowsGetter {
     required String username,
   }) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     final columnName = followType == 'Followers' ? 'follower' : 'following';
     final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';

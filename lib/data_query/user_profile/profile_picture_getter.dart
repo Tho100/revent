@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:get_it/get_it.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
@@ -12,7 +12,7 @@ class ProfilePictureGetter {
 
   Future<Uint8List> getProfilePictures({String? username}) async {
     
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 'SELECT profile_picture FROM user_profile_info WHERE username = :username';
 

@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/user_data_provider.dart';
@@ -71,7 +71,7 @@ class VentDataGetter {
     {Map<String, dynamic>? params, bool excludeBodyText = false}
   ) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     final results = params != null 
       ? await conn.execute(query, params)

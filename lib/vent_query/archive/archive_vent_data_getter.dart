@@ -1,4 +1,4 @@
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_date.dart';
 
@@ -10,7 +10,7 @@ class ArchiveVentDataGetter {
     required String username
   }) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 'SELECT title, created_at FROM archive_vent_info WHERE creator = :username';
     final param = {
@@ -40,7 +40,7 @@ class ArchiveVentDataGetter {
     required String creator
   }) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 
       'SELECT body_text FROM archive_vent_info WHERE title = :title AND creator = :creator';

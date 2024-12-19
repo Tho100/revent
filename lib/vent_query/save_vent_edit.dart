@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent/active_vent_provider.dart';
 
@@ -17,7 +17,7 @@ class SaveVentEdit {
 
   Future<void> save() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 
       'UPDATE vent_info SET body_text = :new_body WHERE title = :title AND creator = :creator';
@@ -36,7 +36,7 @@ class SaveVentEdit {
 
   Future<void> saveArchive() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 
       'UPDATE archive_vent_info SET body_text = :new_body WHERE title = :title AND creator = :creator';

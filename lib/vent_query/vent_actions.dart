@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/model/format_date.dart';
@@ -42,7 +42,7 @@ class VentActions {
 
   Future<void> likePost() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const likesInfoParameterQuery = 'WHERE title = :title AND creator = :creator AND liked_by = :liked_by';
 
@@ -143,7 +143,7 @@ class VentActions {
     required String comment
   }) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const insertCommentQuery = 
       'INSERT INTO vent_comments_info (title, creator, commented_by, comment, total_likes) VALUES (:title, :creator, :commented_by, :comment, :total_likes)'; 
@@ -208,7 +208,7 @@ class VentActions {
 
   Future<void> savePost() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const savedInfoParamsQuery = 'WHERE title = :title AND creator = :creator AND saved_by = :saved_by';
 

@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
 class UserFollowing {
@@ -8,7 +8,7 @@ class UserFollowing {
 
   Future<bool> isFollowing({required String username}) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 
       'SELECT 1 FROM user_follows_info WHERE following = :following AND follower = :follower LIMIT 1';

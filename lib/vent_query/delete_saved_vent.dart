@@ -1,4 +1,4 @@
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/current_provider.dart';
 
 class DeleteSavedVent {
@@ -13,7 +13,7 @@ class DeleteSavedVent {
 
   Future<void> delete() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 'DELETE FROM saved_vent_info WHERE title = :title AND creator = :creator';
 

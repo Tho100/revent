@@ -1,4 +1,4 @@
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 
 class SearchDataGetter {
 
@@ -12,7 +12,7 @@ class SearchDataGetter {
 
   Future<String> getBodyText() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 'SELECT body_text FROM vent_info WHERE title = :title AND creator = :creator';
 

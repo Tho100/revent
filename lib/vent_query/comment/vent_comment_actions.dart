@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/model/extract_data.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
@@ -24,7 +24,7 @@ class VentCommentActions {
 
   Future<void> delete() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 
       'DELETE FROM vent_comments_info WHERE commented_by = :commented_by AND comment = :comment AND title = :title AND creator = :creator';
@@ -55,7 +55,7 @@ class VentCommentActions {
 
   Future<void> like() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const likesInfoParameterQuery = 
       'WHERE title = :title AND creator = :creator AND liked_by = :liked_by AND commented_by = :commented_by AND comment = :comment';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
@@ -37,7 +37,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
     try {
 
-      final conn = await ReventConnect.initializeConnection();
+      final conn = await ReventConnection.connect();
 
       final currentPasswordHash = await userAuth.getAccountAuthentication(
         conn: conn, 

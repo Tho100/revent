@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/provider/vent/vent_comment_provider.dart';
 
@@ -22,7 +22,7 @@ class SaveCommentEdit {
 
   Future<void> save() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 
       'UPDATE vent_comments_info SET comment = :new_comment WHERE title = :title AND creator = :creator AND commented_by = :commented_by AND comment = :original_comment';
@@ -47,7 +47,7 @@ class SaveCommentEdit {
 
   Future<void> _updateLikesInfo({required Map<String, dynamic> param}) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 
       'UPDATE vent_comments_likes_info SET comment = :new_comment WHERE title = :title AND creator = :creator AND commented_by = :commented_by AND comment = :original_comment';

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:get_it/get_it.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
@@ -13,7 +13,7 @@ class ProfileDataUpdate {
 
   Future<void> updateBio({required String bioText}) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 'UPDATE user_profile_info SET bio = :bio_value WHERE username = :username';
     
@@ -30,7 +30,7 @@ class ProfileDataUpdate {
 
   Future<void> updateProfilePicture({required Uint8List picData}) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     final toBase64EncodedPfp = const Base64Encoder().convert(picData);
 
@@ -49,7 +49,7 @@ class ProfileDataUpdate {
 
   Future<void> updatePronouns({required String pronouns}) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 'UPDATE user_profile_info SET pronouns = :pronouns WHERE username = :username';
 

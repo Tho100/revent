@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/provider/user_data_provider.dart';
 
 class VerifyVent {
@@ -12,7 +12,7 @@ class VerifyVent {
 
   Future<bool> ventIsAlreadyExists() async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const query = 'SELECT * FROM vent_info WHERE creator = :creator AND title = :title';
 

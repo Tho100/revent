@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/model/format_date.dart';
 import 'package:revent/provider/profile/profile_data_provider.dart';
 import 'package:revent/provider/user_data_provider.dart';
@@ -17,7 +17,7 @@ class CreateNewItem {
     required String ventBodyText,
   }) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     await _insertVentInfo(
       conn: conn, 
@@ -94,7 +94,7 @@ class CreateNewItem {
     required String ventBodyText,
   }) async {
 
-    final conn = await ReventConnect.initializeConnection();
+    final conn = await ReventConnection.connect();
 
     const insertVentInfoQuery = 'INSERT INTO archive_vent_info (creator, title, body_text) VALUES (:creator, :title, :body_text)';
 
