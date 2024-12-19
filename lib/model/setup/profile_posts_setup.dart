@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:get_it/get_it.dart';
-import 'package:revent/data_query/user_profile/profile_posts_getter.dart';
-import 'package:revent/data_query/user_profile/profile_saved_getter.dart';
+import 'package:revent/service/data_query/user_profile/profile_posts_getter.dart';
+import 'package:revent/service/data_query/user_profile/profile_saved_getter.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
 import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
 

@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:get_it/get_it.dart';
-import 'package:revent/data_query/user_profile/profile_data_getter.dart';
+import 'package:revent/service/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/shared/provider/profile/profile_data_provider.dart';
 
 class ProfileDataSetup {

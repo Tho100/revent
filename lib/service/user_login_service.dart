@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/data_query/user_data_getter.dart';
+import 'package:revent/service/data_query/user_data_getter.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';

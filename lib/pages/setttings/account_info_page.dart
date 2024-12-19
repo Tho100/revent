@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/data_query/user_data_getter.dart';
+import 'package:revent/service/data_query/user_data_getter.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';

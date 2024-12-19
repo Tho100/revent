@@ -11,7 +11,7 @@ import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
-import 'package:revent/data_query/search/search_data_getter.dart';
+import 'package:revent/service/data_query/search/search_data_getter.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class DefaultVentPreviewer extends StatefulWidget {
