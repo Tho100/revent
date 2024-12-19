@@ -1,15 +1,13 @@
 import 'package:get_it/get_it.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/shared/provider/user_data_provider.dart';
 
-class UserPrivacyActions {
+class UserPrivacyActions extends BaseQueryService {
 
   final userData = GetIt.instance<UserDataProvider>();
 
   Future<void> privateAccount({required int isMakePrivate}) async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 'UPDATE user_privacy_info SET privated_profile = :new_value WHERE username = :username';
 
@@ -18,13 +16,11 @@ class UserPrivacyActions {
       'new_value': isMakePrivate
     };
 
-    await conn.execute(query, param);
+    await executeQuery(query, param);
 
   }
   
   Future<Map<String, int>> getCurrentOptions({required String username}) async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 
       'SELECT privated_profile, privated_following_list, privated_saved_vents FROM user_privacy_info WHERE username = :username';
@@ -33,7 +29,7 @@ class UserPrivacyActions {
       'username': username,
     };
 
-    final results = await conn.execute(query, param);
+    final results = await executeQuery(query, param);
 
     final extractedData = ExtractData(rowsData: results);
 
