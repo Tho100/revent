@@ -2,11 +2,11 @@ import 'dart:typed_data';
 
 import 'package:get_it/get_it.dart';
 import 'package:revent/data_query/user_profile/profile_picture_getter.dart';
-import 'package:revent/provider/search/search_posts_provider.dart';
-import 'package:revent/provider/vent/liked_vent_data_provider.dart';
-import 'package:revent/provider/vent/vent_following_provider.dart';
+import 'package:revent/shared/provider/search/search_posts_provider.dart';
+import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/vent_query/vent_data_getter.dart';
-import 'package:revent/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 
 class VentDataSetup {
 

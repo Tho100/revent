@@ -16,8 +16,8 @@ import 'package:revent/pages/navigation/my_profile_page.dart';
 import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
 
 class _DockBarNavigationPages {
 

@@ -9,14 +9,14 @@ import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/provider/profile/profile_data_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/archive/archive_vent_data_getter.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class _ArchivedVentsData {
   

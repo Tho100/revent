@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:get_it/get_it.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/extract_data.dart';
-import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
 
 class ProfilePictureGetter {
 

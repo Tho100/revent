@@ -4,12 +4,12 @@ import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/profile/profile_data_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent/vent_comment_provider.dart';
-import 'package:revent/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/provider/vent/vent_following_provider.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 
 class VentActions {
 

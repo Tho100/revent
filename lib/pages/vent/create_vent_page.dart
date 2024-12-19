@@ -8,9 +8,9 @@ import 'package:revent/vent_query/create_new_item.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/vent_query/verify_vent.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/custom_outlined_button.dart';
-import 'package:revent/widgets/buttons/sub_button.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
+import 'package:revent/shared/widgets/buttons/sub_button.dart';
 
 class CreateVentPage extends StatefulWidget {
 

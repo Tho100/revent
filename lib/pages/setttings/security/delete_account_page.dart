@@ -3,15 +3,15 @@ import 'package:get_it/get_it.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/model/user_model.dart';
-import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/security/user_auth.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
-import 'package:revent/widgets/header_text.dart';
-import 'package:revent/widgets/text_field/auth_textfield.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/buttons/main_button.dart';
+import 'package:revent/shared/widgets/header_text.dart';
+import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
 
 class DeleteAccountPage extends StatefulWidget {
 

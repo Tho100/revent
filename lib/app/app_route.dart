@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
 
 class AppRoute {
 

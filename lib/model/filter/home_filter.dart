@@ -1,7 +1,7 @@
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/provider/vent/vent_following_provider.dart';
+import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 
 class HomeFilter {
 

@@ -1,5 +1,5 @@
 import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/global/get_it_extensions.dart';
+import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
 

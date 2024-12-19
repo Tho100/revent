@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/current_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
 
 class DeleteVent {
   

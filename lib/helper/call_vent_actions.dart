@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
 import 'package:revent/vent_query/archive/delete_archive_vent.dart';
 import 'package:revent/vent_query/delete_saved_vent.dart';

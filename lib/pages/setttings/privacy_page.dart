@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/data_query/user_privacy_actions.dart';
-import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
 
 class PrivacyPage extends StatefulWidget {
 

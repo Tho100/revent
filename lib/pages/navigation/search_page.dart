@@ -5,9 +5,9 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/widgets/navigation/page_navigation_bar.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/navigation_pages_widgets.dart';
+import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
 
 class SearchPage extends StatefulWidget {
 

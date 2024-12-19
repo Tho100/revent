@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/widgets/buttons/custom_outlined_button.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
+import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
+import 'package:revent/shared/widgets/buttons/main_button.dart';
 
 class MainScreenPage extends StatelessWidget {
 

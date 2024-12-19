@@ -3,7 +3,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:revent/global/constant.dart';
-import 'package:revent/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/profile_picture.dart';
 
 class ProfilePictureDialog {
 

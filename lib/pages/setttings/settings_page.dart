@@ -9,8 +9,8 @@ import 'package:revent/pages/setttings/security_page.dart';
 import 'package:revent/pages/setttings/liked_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/settings_button.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/buttons/settings_button.dart';
 
 class SettingsPage extends StatelessWidget {
 

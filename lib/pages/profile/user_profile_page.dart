@@ -10,20 +10,20 @@ import 'package:revent/data_query/user_profile/profile_data_getter.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/widgets/bottomsheet_widgets/view_full_bio.dart';
-import 'package:revent/widgets/navigation/page_navigation_bar.dart';
-import 'package:revent/provider/profile/profile_posts_provider.dart';
-import 'package:revent/provider/profile/profile_saved_provider.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/shared/widgets/bottomsheet_widgets/view_full_bio.dart';
+import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
+import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
+import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/bottomsheet_widgets/user_actions.dart';
-import 'package:revent/widgets/buttons/custom_outlined_button.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
-import 'package:revent/widgets/profile/profile_body_widgets.dart';
-import 'package:revent/widgets/profile/profile_info_widgets.dart';
-import 'package:revent/widgets/profile/tabbar_widgets.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet_widgets/user_actions.dart';
+import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
+import 'package:revent/shared/widgets/buttons/main_button.dart';
+import 'package:revent/shared/widgets/profile/profile_body_widgets.dart';
+import 'package:revent/shared/widgets/profile/profile_info_widgets.dart';
+import 'package:revent/shared/widgets/profile/tabbar_widgets.dart';
 
 class UserProfilePage extends StatefulWidget {
 

@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/profile/profile_posts_provider.dart';
-import 'package:revent/provider/profile/profile_saved_provider.dart';
-import 'package:revent/provider/search/search_posts_provider.dart';
-import 'package:revent/provider/vent/liked_vent_data_provider.dart';
-import 'package:revent/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/provider/vent/vent_following_provider.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
+import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
+import 'package:revent/shared/provider/search/search_posts_provider.dart';
+import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 
 class CurrentProvider {
 

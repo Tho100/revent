@@ -2,19 +2,19 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/global/get_it_extensions.dart';
+import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/filter/home_filter.dart';
-import 'package:revent/widgets/navigation/page_navigation_bar.dart';
-import 'package:revent/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/provider/vent/vent_following_provider.dart';
+import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
+import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
-import 'package:revent/widgets/bottomsheet_widgets/vent_filter.dart';
-import 'package:revent/widgets/custom_tab_bar.dart';
-import 'package:revent/widgets/inkwell_effect.dart';
-import 'package:revent/widgets/vent_widgets/home_vent_listview.dart';
+import 'package:revent/shared/widgets/bottomsheet_widgets/vent_filter.dart';
+import 'package:revent/shared/widgets/custom_tab_bar.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
+import 'package:revent/shared/widgets/vent_widgets/home_vent_listview.dart';
 
 class HomePage extends StatefulWidget {
 

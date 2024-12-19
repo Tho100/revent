@@ -6,13 +6,13 @@ import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
 
 class LikedPage extends StatefulWidget {
 
