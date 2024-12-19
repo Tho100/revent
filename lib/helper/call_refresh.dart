@@ -1,23 +1,17 @@
-import 'package:get_it/get_it.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
-import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
-import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
-import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/model/setup/vent_comment_setup.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
 class CallRefresh {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<void> refreshVents() async {
 
-    GetIt.instance<VentForYouProvider>().deleteVentsData();
+    getIt.ventForYouProvider.deleteVentsData();
 
     await VentDataSetup().setupForYou();
 
@@ -25,7 +19,7 @@ class CallRefresh {
 
   Future<void> refreshFollowingVents() async {
 
-    GetIt.instance<VentFollowingProvider>().deleteVentsData();
+    getIt.ventFollowingProvider.deleteVentsData();
 
     await VentDataSetup().setupFollowing();
 
@@ -33,9 +27,9 @@ class CallRefresh {
 
   Future<void> refreshMyProfile() async {
 
-    final profileData = GetIt.instance<ProfileDataProvider>();
-    final profilePostsData = GetIt.instance<ProfilePostsProvider>();
-    final profileSavedData = GetIt.instance<ProfileSavedProvider>();
+    final profileData = getIt.profileProvider;
+    final profilePostsData = getIt.profilePostsProvider;
+    final profileSavedData = getIt.profileSavedProvider;
 
     profileData.clearProfileData();
 
@@ -59,7 +53,7 @@ class CallRefresh {
     required String creator
   }) async {
 
-    GetIt.instance<VentCommentProvider>().deleteComments();
+    getIt.ventCommentProvider.deleteComments();
 
     await VentCommentSetup().setup(
       title: title, creator: creator
