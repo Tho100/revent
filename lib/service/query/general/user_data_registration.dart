@@ -36,9 +36,15 @@ class UserDataRegistration extends BaseQueryService {
       }
     ];
 
-    for(int i=0; i < queries.length; i++) {
-      await executeQuery(queries[i], params[i]);
-    }
+    final conn = await connection();
+
+    await conn.transactional((conn) => {
+
+      for(int i=0; i <queries.length; i++) {
+        conn.execute(queries[i], params[i])
+      }
+
+    });
 
     await LocalStorageModel().setupLocalAccountInformation(
       username: userData.user.username, email: userData.user.email, plan: 'Basic'
