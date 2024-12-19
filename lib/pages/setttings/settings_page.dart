@@ -8,7 +8,7 @@ import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/pages/setttings/security_page.dart';
 import 'package:revent/pages/setttings/liked_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/ui_dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/settings_button.dart';
 

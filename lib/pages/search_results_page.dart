@@ -8,7 +8,7 @@ import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';

@@ -7,7 +7,7 @@ import 'package:get_it/get_it.dart';
 import 'package:revent/service/query/general/follows_getter.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/user_data_provider.dart';
-import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/custom_tab_bar.dart';
