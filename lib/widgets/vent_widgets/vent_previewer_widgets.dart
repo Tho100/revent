@@ -2,13 +2,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/get_it_extensions.dart';
 import 'package:revent/helper/app_route.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
+import 'package:revent/main.dart';
 import 'package:revent/themes/theme_color.dart';
 import 'package:revent/widgets/bottomsheet_widgets/vent_post_actions.dart';
 import 'package:revent/widgets/buttons/actions_button.dart';
@@ -53,8 +53,7 @@ class VentPreviewerWidgets {
     this.copyOnPressed
   });
 
-  // TODO: Checkout to refactor and use getit extensions
-  final navigation = GetIt.instance<NavigationProvider>();
+  final navigation = getIt.navigationProvider;
 
   Map<String, dynamic> _getLikesInfo(dynamic ventData, int ventIndex) {
 
@@ -139,13 +138,6 @@ class VentPreviewerWidgets {
     
   }
 
-  Widget buildCommentButton() {
-    return ActionsButton().buildCommentsButton(
-      value: totalComments!, 
-      onPressed: viewVentPostOnPressed!
-    );
-  }
-
   Widget buildSaveButton() {
 
     final getProvider = CurrentProvider(
@@ -166,6 +158,13 @@ class VentPreviewerWidgets {
       }
     );
   
+  }
+
+  Widget buildCommentButton() {
+    return ActionsButton().buildCommentsButton(
+      value: totalComments!, 
+      onPressed: viewVentPostOnPressed!
+    );
   }
 
   void _callVentOptionsBottomsheet() {
@@ -209,7 +208,7 @@ class VentPreviewerWidgets {
   Widget buildHeaders() {
 
     final disableGoToProfile = 
-      AppRoute.isOnProfile && GetIt.instance<NavigationProvider>().profileTabIndex == 0;
+      AppRoute.isOnProfile && navigation.profileTabIndex == 0;
 
     return InkWellEffect(
       onPressed: () => disableGoToProfile
