@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/data_query/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/helper/setup/vent_data_setup.dart';
@@ -39,7 +39,7 @@ class UserRegistrationService {
 
     _setUserProfileData(username: username, email: email);
 
-    await _saveUserData(hashPassword: hashPassword);
+    await UserDataRegistration().insert(hashPassword: hashPassword);
     
     await VentDataSetup().setupForYou()
       .then((value) => NavigatePage.homePage()
@@ -85,46 +85,5 @@ class UserRegistrationService {
     return await conn.execute(query, param);
 
   }
-
-  Future<void> _saveUserData({required String? hashPassword}) async {
-      
-    final conn = await ReventConnect.initializeConnection();
-
-    const queries = 
-    [
-      'INSERT INTO user_information (username, email, password, plan) VALUES (:username, :email, :password, :plan)',
-      'INSERT INTO user_profile_info (bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)',
-      'INSERT INTO user_privacy_info (username) VALUES (:username)'
-    ];
-
-    final params = [
-      {
-        'username': userData.user.username,
-        'email': userData.user.email,
-        'password': hashPassword,
-        'plan': 'Basic'
-      },
-      {
-        'bio': '',
-        'followers': 0,
-        'following': 0,
-        'posts': 0,
-        'profile_pic': '',
-        'username': userData.user.username
-      },
-      {
-        'username': userData.user.username
-      }
-    ];
-
-    for(int i=0; i < queries.length; i++) {
-      await conn.execute(queries[i], params[i]);
-    }
-
-    await LocalStorageModel().setupLocalAccountInformation(
-      username: userData.user.username, email: userData.user.email, plan: 'Basic'
-    );
-
-  }  
 
 }

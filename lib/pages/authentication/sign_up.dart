@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/controllers/auth_controller.dart';
-import 'package:revent/data_query/user_registration_service.dart';
+import 'package:revent/service/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/textinput_formatter.dart';
 import 'package:revent/model/email_validator.dart';
