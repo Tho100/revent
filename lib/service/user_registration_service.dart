@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/base_query_service.dart';
 import 'package:revent/service/query/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
-class UserRegistrationService {
+class UserRegistrationService extends BaseQueryService {
 
   final userData = GetIt.instance<UserDataProvider>();
 
@@ -19,7 +19,7 @@ class UserRegistrationService {
     required BuildContext context,
   }) async {
 
-    final getUsername = await _getDataInfo(
+    final getUsername = await executeQuery(
       'SELECT username FROM user_information WHERE username = :username',
       {'username': username},
     );
@@ -28,7 +28,7 @@ class UserRegistrationService {
       return;
     }
 
-    final getEmail = await _getDataInfo(
+    final getEmail = await executeQuery(
       'SELECT email FROM user_information WHERE email = :email',
       {'email': email},
     );
@@ -75,14 +75,6 @@ class UserRegistrationService {
     );
 
     userData.setUser(userSetup);
-
-  }
-
-  Future<IResultSet> _getDataInfo(String query, Map<String, dynamic> param) async {
-
-    final conn = await ReventConnection.connect();
-
-    return await conn.execute(query, param);
 
   }
 

@@ -1,6 +1,6 @@
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/base_query_service.dart';
 
-class SearchDataGetter {
+class SearchDataGetter extends BaseQueryService {
 
   final String title;
   final String creator;
@@ -12,8 +12,6 @@ class SearchDataGetter {
 
   Future<String> getBodyText() async {
 
-    final conn = await ReventConnection.connect();
-
     const query = 'SELECT body_text FROM vent_info WHERE title = :title AND creator = :creator';
 
     final params = {
@@ -21,7 +19,7 @@ class SearchDataGetter {
       'creator': creator
     };
 
-    final results = await conn.execute(query, params);
+    final results = await executeQuery(query, params);
 
     return results.rows.last.assoc()['body_text']!;
     
