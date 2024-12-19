@@ -1,31 +1,25 @@
-import 'package:get_it/get_it.dart';
-import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/service/query/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 
-class CreateNewItem {
+class CreateNewItem extends BaseQueryService {
 
-  final ventData = GetIt.instance<VentForYouProvider>();
-  final userData = GetIt.instance<UserDataProvider>();
-  final profileData = GetIt.instance<ProfileDataProvider>();
+  final ventData = getIt.ventForYouProvider;
+  final userData = getIt.userProvider;
+  final profileData = getIt.profileProvider;
 
   Future<void> newVent({
     required String ventTitle,
     required String ventBodyText,
   }) async {
 
-    final conn = await ReventConnection.connect();
-
     await _insertVentInfo(
-      conn: conn, 
-      ventTitle: ventTitle, 
-      ventBodyText: ventBodyText
+      ventTitle: ventTitle, ventBodyText: ventBodyText
+    ).then(
+      (_) async => await _updateTotalPosts()
     );
-
-    await _updateTotalPosts(conn: conn);
     
     _addVent(
       ventTitle: ventTitle, 
@@ -35,7 +29,6 @@ class CreateNewItem {
   }
 
   Future<void> _insertVentInfo({
-    required MySQLConnectionPool conn,
     required String ventTitle,
     required String ventBodyText
   }) async {
@@ -50,13 +43,11 @@ class CreateNewItem {
       'total_comments': 0,
     };
 
-    await conn.execute(insertVentInfoQuery, params);
+    await executeQuery(insertVentInfoQuery, params);
 
   }
 
-  Future<void> _updateTotalPosts({
-    required MySQLConnectionPool conn,
-  }) async {
+  Future<void> _updateTotalPosts() async {
 
     const updateTotalPostsQuery = 
       'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username';
@@ -65,7 +56,7 @@ class CreateNewItem {
       'username': userData.user.username
     };
 
-    await conn.execute(updateTotalPostsQuery, param);
+    await executeQuery(updateTotalPostsQuery, param);
 
   }
 
@@ -94,8 +85,6 @@ class CreateNewItem {
     required String ventBodyText,
   }) async {
 
-    final conn = await ReventConnection.connect();
-
     const insertVentInfoQuery = 'INSERT INTO archive_vent_info (creator, title, body_text) VALUES (:creator, :title, :body_text)';
 
     final params = {
@@ -104,7 +93,7 @@ class CreateNewItem {
       'body_text': ventBodyText,
     };
 
-    await conn.execute(insertVentInfoQuery, params);
+    await executeQuery(insertVentInfoQuery, params);
 
   }
 
