@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/service/query/base_query_service.dart';
-import 'package:revent/service/query/user_data_registration.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/service/query/general/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';

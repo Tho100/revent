@@ -1,4 +1,4 @@
-import 'package:revent/service/query/base_query_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 
 class DeleteAccountData extends BaseQueryService {
 
