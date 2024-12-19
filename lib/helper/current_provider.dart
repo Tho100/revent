@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/app_route.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/profile/profile_posts_provider.dart';
-import 'package:revent/provider/profile/profile_saved_provider.dart';
-import 'package:revent/provider/search/search_posts_provider.dart';
-import 'package:revent/provider/vent/liked_vent_data_provider.dart';
-import 'package:revent/provider/vent/vent_data_provider.dart';
-import 'package:revent/provider/vent/vent_following_data_provider.dart';
+import 'package:revent/app/app_route.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
+import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
+import 'package:revent/shared/provider/search/search_posts_provider.dart';
+import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 
 class CurrentProvider {
 
@@ -29,11 +29,11 @@ class CurrentProvider {
 
     if(navigation.homeTabIndex == 0) {
       return realTime 
-        ? Provider.of<VentDataProvider>(context!) : GetIt.instance<VentDataProvider>();
+        ? Provider.of<VentForYouProvider>(context!) : GetIt.instance<VentForYouProvider>();
 
     } else if (navigation.homeTabIndex == 1) {
       return realTime 
-        ? Provider.of<VentFollowingDataProvider>(context!) : GetIt.instance<VentFollowingDataProvider>();
+        ? Provider.of<VentFollowingProvider>(context!) : GetIt.instance<VentFollowingProvider>();
 
     }
 
@@ -69,7 +69,7 @@ class CurrentProvider {
     BuildContext? context
   }) {
     return realTime 
-      ? Provider.of<LikedVentDataProvider>(context!) : GetIt.instance<LikedVentDataProvider>();
+      ? Provider.of<LikedVentProvider>(context!) : GetIt.instance<LikedVentProvider>();
   }
 
   dynamic getProviderOnly() {
@@ -77,8 +77,7 @@ class CurrentProvider {
     if(navigation.currentRoute == AppRoute.home) {
       return _returnHomeProvider(realTime: false);
 
-    } else if (navigation.currentRoute == AppRoute.myProfile || 
-              navigation.currentRoute == AppRoute.userProfile) {
+    } else if (AppRoute.isOnProfile) {
       return _returnProfileProvider(realTime: false);
       
     } else if (navigation.currentRoute == AppRoute.searchResults) {

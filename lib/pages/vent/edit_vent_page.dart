@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/vent_query/save_vent_edit.dart';
-import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/service/query/vent/save_vent_edit.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
 
 class EditVentPage extends StatefulWidget {
 
@@ -20,11 +20,11 @@ class EditVentPage extends StatefulWidget {
   });
 
   @override
-  State<EditVentPage> createState() => EditVentPageState();
+  State<EditVentPage> createState() => _EditVentPageState();
   
 }
 
-class EditVentPageState extends State<EditVentPage> {
+class _EditVentPageState extends State<EditVentPage> {
 
   final ventBodyTextController = TextEditingController();
 

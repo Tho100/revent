@@ -1,27 +1,28 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/helper/setup/profile_data_setup.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/themes/theme_color.dart';
-import 'package:revent/helper/setup/vent_data_setup.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/model/setup/vent_data_setup.dart';
 
 class SplashScreen extends StatefulWidget {
 
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 
 }
 
-class SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   final localModel = LocalStorageModel();
 
@@ -47,10 +48,10 @@ class SplashScreenState extends State<SplashScreen> {
   }
 
   Future<void> _loadStartupData() async {
-    
-    await ProfileDataSetup().setup(username: userData.user.username);
 
-    await VentDataSetup().setupForYou();
+    await ProfileDataSetup().setup(username: userData.user.username).then(
+      (_) async => await VentDataSetup().setupForYou()
+    );
 
   }
 
@@ -95,8 +96,8 @@ class SplashScreenState extends State<SplashScreen> {
 
       userData.setUser(userSetup);
 
-      await _loadStartupData()
-        .then((value) => NavigatePage.homePage()
+      await _loadStartupData().then(
+        (_) => NavigatePage.homePage()
       );
 
     } catch (err) {

@@ -4,24 +4,24 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/vent_query/create_new_item.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/service/query/vent/create_new_item.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
-import 'package:revent/vent_query/verify_vent.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/custom_outlined_button.dart';
-import 'package:revent/widgets/buttons/sub_button.dart';
+import 'package:revent/service/query/vent/verify_vent.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
+import 'package:revent/shared/widgets/buttons/sub_button.dart';
 
 class CreateVentPage extends StatefulWidget {
 
   const CreateVentPage({super.key});
 
   @override
-  State<CreateVentPage> createState() => CreateVentPageState();
+  State<CreateVentPage> createState() => _CreateVentPageState();
 
 }
 
-class CreateVentPageState extends State<CreateVentPage> {
+class _CreateVentPageState extends State<CreateVentPage> {
 
   final ventTitleController = TextEditingController();
   final ventBodyTextController = TextEditingController();

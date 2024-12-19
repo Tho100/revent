@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:revent/connection/revent_connect.dart';
+import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
-import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/security/user_auth.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
-import 'package:revent/widgets/header_text.dart';
-import 'package:revent/widgets/text_field/auth_textfield.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/buttons/main_button.dart';
+import 'package:revent/shared/widgets/header_text.dart';
+import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
 
 class ChangePasswordPage extends StatefulWidget {
 
   const ChangePasswordPage({super.key});
 
   @override
-  State<ChangePasswordPage> createState() => ChangePasswordPageState();
+  State<ChangePasswordPage> createState() => _ChangePasswordPageState();
 
 }
 
-class ChangePasswordPageState extends State<ChangePasswordPage> {
+class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
   final authController = SecurityAuthController();
 
@@ -37,7 +37,7 @@ class ChangePasswordPageState extends State<ChangePasswordPage> {
 
     try {
 
-      final conn = await ReventConnect.initializeConnection();
+      final conn = await ReventConnection.connect();
 
       final currentPasswordHash = await userAuth.getAccountAuthentication(
         conn: conn, 

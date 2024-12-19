@@ -3,29 +3,29 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/pages/splash_screen_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/profile/profile_posts_provider.dart';
-import 'package:revent/provider/profile/profile_saved_provider.dart';
-import 'package:revent/provider/search/search_accounts_provider.dart';
-import 'package:revent/provider/search/search_posts_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/profile/profile_data_provider.dart';
-import 'package:revent/provider/vent/active_vent_provider.dart';
-import 'package:revent/provider/vent/liked_vent_data_provider.dart';
-import 'package:revent/provider/vent/vent_comment_provider.dart';
-import 'package:revent/provider/vent/vent_data_provider.dart';
-import 'package:revent/provider/vent/vent_following_data_provider.dart';
-import 'package:revent/themes/app_theme.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
+import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
+import 'package:revent/shared/provider/search/search_accounts_provider.dart';
+import 'package:revent/shared/provider/search/search_posts_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/vent/active_vent_provider.dart';
+import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_following_provider.dart';
+import 'package:revent/shared/themes/app_theme.dart';
 import 'package:get_it/get_it.dart';
+
+final getIt = GetIt.I;
 
 void initializeLocators() {
 
-  final getIt = GetIt.instance;
-
   getIt.registerLazySingleton<NavigationProvider>(() => NavigationProvider());
   getIt.registerLazySingleton<UserDataProvider>(() => UserDataProvider());
-  getIt.registerLazySingleton<VentDataProvider>(() => VentDataProvider());
-  getIt.registerLazySingleton<VentFollowingDataProvider>(() => VentFollowingDataProvider());
+  getIt.registerLazySingleton<VentForYouProvider>(() => VentForYouProvider());
+  getIt.registerLazySingleton<VentFollowingProvider>(() => VentFollowingProvider());
   getIt.registerLazySingleton<VentCommentProvider>(() => VentCommentProvider());
   getIt.registerLazySingleton<ActiveVentProvider>(() => ActiveVentProvider());
   getIt.registerLazySingleton<ProfileDataProvider>(() => ProfileDataProvider());
@@ -33,7 +33,7 @@ void initializeLocators() {
   getIt.registerLazySingleton<ProfileSavedProvider>(() => ProfileSavedProvider());
   getIt.registerLazySingleton<SearchPostsProvider>(() => SearchPostsProvider());
   getIt.registerLazySingleton<SearchAccountsProvider>(() => SearchAccountsProvider());
-  getIt.registerLazySingleton<LikedVentDataProvider>(() => LikedVentDataProvider());
+  getIt.registerLazySingleton<LikedVentProvider>(() => LikedVentProvider());
 
 }
 
@@ -48,8 +48,8 @@ void main() async {
   final getIt = GetIt.instance;
 
   final providers = [
-    ChangeNotifierProvider(create: (_) => getIt<VentDataProvider>()),
-    ChangeNotifierProvider(create: (_) => getIt<VentFollowingDataProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<VentForYouProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<VentFollowingProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<NavigationProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<UserDataProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfileDataProvider>()),
@@ -59,7 +59,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => getIt<ActiveVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SearchPostsProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SearchAccountsProvider>()),
-    ChangeNotifierProvider(create: (_) => getIt<LikedVentDataProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<LikedVentProvider>()),
   ];
 
   runApp(

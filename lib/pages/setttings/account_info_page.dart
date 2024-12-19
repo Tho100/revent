@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/connection/revent_connect.dart';
-import 'package:revent/data_query/user_data_getter.dart';
-import 'package:revent/model/format_date.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/themes/theme_color.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/sub_button.dart';
+import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/user_data_getter.dart';
+import 'package:revent/helper/format_date.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/buttons/sub_button.dart';
 
 class AccountInformationPage extends StatefulWidget {
 
   const AccountInformationPage({super.key});
 
   @override
-  State<AccountInformationPage> createState() => AccountInformationPageState();
+  State<AccountInformationPage> createState() => _AccountInformationPageState();
 
 }
 
-class AccountInformationPageState extends State<AccountInformationPage> {
+class _AccountInformationPageState extends State<AccountInformationPage> {
 
   final userData = GetIt.instance<UserDataProvider>();
 
@@ -26,7 +26,7 @@ class AccountInformationPageState extends State<AccountInformationPage> {
 
     if(userData.user.joinedDate == null) {
 
-      final conn = await ReventConnect.initializeConnection();
+      final conn = await ReventConnection.connect();
 
       final getJoinedDate = await UserDataGetter()
         .getJoinedDate(conn: conn, username: userData.user.username);

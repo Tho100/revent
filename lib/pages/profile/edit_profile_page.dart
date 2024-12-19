@@ -3,28 +3,28 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/data_query/user_profile/profile_data_update.dart';
-import 'package:revent/model/textinput_formatter.dart';
+import 'package:revent/service/query/user_profile/profile_data_update.dart';
+import 'package:revent/helper/textinput_formatter.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
-import 'package:revent/provider/profile/profile_data_provider.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/inkwell_effect.dart';
-import 'package:revent/widgets/profile_picture.dart';
-import 'package:revent/widgets/text_field/main_textfield.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
+import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 
 class EditProfilePage extends StatefulWidget {
 
   const EditProfilePage({super.key});
 
   @override
-  State<EditProfilePage> createState() => EditProfilePageState();
+  State<EditProfilePage> createState() => _EditProfilePageState();
   
 }
 
-class EditProfilePageState extends State<EditProfilePage> {
+class _EditProfilePageState extends State<EditProfilePage> {
 
   final profileData = GetIt.instance<ProfileDataProvider>();
 

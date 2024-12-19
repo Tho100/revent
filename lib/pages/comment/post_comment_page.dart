@@ -3,17 +3,17 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/provider/profile/profile_data_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent/vent_comment_provider.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/vent_query/vent_actions.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/sub_button.dart';
-import 'package:revent/widgets/profile_picture.dart';
-import 'package:revent/widgets/text_field/comment_textfield.dart';
+import 'package:revent/service/query/vent/vent_actions.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/buttons/sub_button.dart';
+import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/text_field/comment_textfield.dart';
 
 class PostCommentPage extends StatefulWidget {
 
@@ -29,11 +29,11 @@ class PostCommentPage extends StatefulWidget {
   });
 
   @override
-  State<PostCommentPage> createState() => PostCommentPageState();
+  State<PostCommentPage> createState() => _PostCommentPageState();
 
 }
 
-class PostCommentPageState extends State<PostCommentPage> {
+class _PostCommentPageState extends State<PostCommentPage> {
 
   final commentController = TextEditingController();
 

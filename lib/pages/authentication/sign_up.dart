@@ -1,29 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:revent/controllers/auth_controller.dart';
-import 'package:revent/data_query/user_registration_service.dart';
+import 'package:revent/service/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/model/textinput_formatter.dart';
-import 'package:revent/model/email_validator.dart';
+import 'package:revent/helper/textinput_formatter.dart';
+import 'package:revent/helper/email_validator.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/loading/single_text_loading.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/widgets/buttons/underlined_button.dart';
-import 'package:revent/widgets/header_text.dart';
-import 'package:revent/widgets/buttons/main_button.dart';
-import 'package:revent/widgets/text_field/auth_textfield.dart';
-import 'package:revent/widgets/text_field/main_textfield.dart';
+import 'package:revent/shared/widgets/buttons/underlined_button.dart';
+import 'package:revent/shared/widgets/header_text.dart';
+import 'package:revent/shared/widgets/buttons/main_button.dart';
+import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
+import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 
 class SignUpPage extends StatefulWidget {
 
   const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => SignUpPageState();
+  State<SignUpPage> createState() => _SignUpPageState();
 
 }
 
-class SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends State<SignUpPage> {
 
   final authController = AuthController();
 

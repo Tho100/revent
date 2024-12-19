@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/widgets/navigation/page_navigation_bar.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/navigation_pages_widgets.dart';
+import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
 
 class NotificationsPage extends StatelessWidget {
 

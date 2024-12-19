@@ -1,15 +1,15 @@
 import 'package:get_it/get_it.dart';
-import 'package:revent/helper/setup/profile_data_setup.dart';
-import 'package:revent/helper/setup/profile_posts_setup.dart';
-import 'package:revent/provider/profile/profile_data_provider.dart';
-import 'package:revent/provider/profile/profile_posts_provider.dart';
-import 'package:revent/provider/profile/profile_saved_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent/vent_comment_provider.dart';
-import 'package:revent/provider/vent/vent_data_provider.dart';
-import 'package:revent/provider/vent/vent_following_data_provider.dart';
-import 'package:revent/helper/setup/vent_comment_setup.dart';
-import 'package:revent/helper/setup/vent_data_setup.dart';
+import 'package:revent/model/setup/profile_data_setup.dart';
+import 'package:revent/model/setup/profile_posts_setup.dart';
+import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
+import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_following_provider.dart';
+import 'package:revent/model/setup/vent_comment_setup.dart';
+import 'package:revent/model/setup/vent_data_setup.dart';
 
 class CallRefresh {
 
@@ -17,7 +17,7 @@ class CallRefresh {
 
   Future<void> refreshVents() async {
 
-    GetIt.instance<VentDataProvider>().deleteVentsData();
+    GetIt.instance<VentForYouProvider>().deleteVentsData();
 
     await VentDataSetup().setupForYou();
 
@@ -25,7 +25,7 @@ class CallRefresh {
 
   Future<void> refreshFollowingVents() async {
 
-    GetIt.instance<VentFollowingDataProvider>().deleteVentsData();
+    GetIt.instance<VentFollowingProvider>().deleteVentsData();
 
     await VentDataSetup().setupFollowing();
 

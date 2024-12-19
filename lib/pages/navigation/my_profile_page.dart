@@ -1,72 +1,96 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/setup/profile_posts_setup.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/widgets/bottomsheet_widgets/view_full_bio.dart';
-import 'package:revent/widgets/navigation/page_navigation_bar.dart';
-import 'package:revent/provider/profile/profile_data_provider.dart';
-import 'package:revent/provider/profile/profile_posts_provider.dart';
-import 'package:revent/provider/profile/profile_saved_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/themes/theme_style.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/buttons/custom_outlined_button.dart';
-import 'package:revent/widgets/profile/profile_body_widgets.dart';
-import 'package:revent/widgets/profile/profile_info_widgets.dart';
-import 'package:revent/widgets/profile/tabbar_widgets.dart';
+import 'package:revent/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet_widgets/view_full_bio.dart';
+import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
+import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
+import 'package:revent/shared/themes/theme_style.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
+import 'package:revent/shared/widgets/profile/profile_body_widgets.dart';
+import 'package:revent/shared/widgets/profile/profile_info_widgets.dart';
+import 'package:revent/shared/widgets/profile/tabbar_widgets.dart';
 
 class MyProfilePage extends StatefulWidget {
 
   const MyProfilePage({super.key});
 
   @override
-  State<MyProfilePage> createState() => MyProfilePageState();
+  State<MyProfilePage> createState() => _MyProfilePageState();
 
 }
 
-class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderStateMixin {
+class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderStateMixin {
 
-  final navigationIndex = GetIt.instance<NavigationProvider>();
-  final userData = GetIt.instance<UserDataProvider>();
-  final profileData = GetIt.instance<ProfileDataProvider>();
-  final navigation = GetIt.instance<NavigationProvider>();
+  final navigation = getIt.navigationProvider;
 
-  final profilePostsData = GetIt.instance<ProfilePostsProvider>();
-  final profileSavedData = GetIt.instance<ProfileSavedProvider>();
+  final userData = getIt.userProvider;
+  final profileData = getIt.profileProvider;
 
+  final profilePostsData = getIt.profilePostsProvider;
+  final profileSavedData = getIt.profileSavedProvider;
+
+  late ProfilePostsSetup callProfilePosts;
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
   void _initializeClasses() {
+
+    callProfilePosts = ProfilePostsSetup(
+      userType: 'my_profile',
+      username: userData.user.username
+    );
+
     tabController = TabController(length: 2, vsync: this);
+    
+    tabController.addListener(() {
+      _onTabChanged();
+      setState(() {
+        navigation.setProfileTabIndex(tabController.index);
+      });
+    });
+
     profileInfoWidgets = ProfileInfoWidgets(
       username: userData.user.username, 
       pfpData: profileData.profilePicture
     );
+
     tabBarWidgets = ProfileTabBarWidgets(
       controller: tabController, 
       isMyProfile: true, 
       username: userData.user.username, 
       pfpData: profileData.profilePicture
     );
+
+  }
+
+  void _onTabChanged() async {
+
+    if(tabController.index == 1) {
+      await callProfilePosts.setupSaved();
+    }
+
   }
 
   void _initializePostsData() async {
 
-    final callProfilePosts = ProfilePostsSetup(
-      userType: 'my_profile',
-      username: userData.user.username
-    );
+    try {
 
-    await callProfilePosts.setupPosts();
-    await callProfilePosts.setupSaved();
+      await callProfilePosts.setupPosts();
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    }
 
   }
 
@@ -207,13 +231,8 @@ class MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderS
   @override
   void initState() {
     super.initState();
-    _initializePostsData();
     _initializeClasses();
-    tabController.addListener(() {
-      setState(() {
-        navigation.setProfileTabIndex(tabController.index); 
-      });
-    });
+    _initializePostsData();
   }
 
   @override

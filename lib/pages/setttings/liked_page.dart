@@ -3,31 +3,31 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/app_route.dart';
-import 'package:revent/helper/setup/vent_data_setup.dart';
+import 'package:revent/app/app_route.dart';
+import 'package:revent/model/setup/vent_data_setup.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent/liked_vent_data_provider.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/vent_widgets/default_vent_previewer.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
 
 class LikedPage extends StatefulWidget {
 
   const LikedPage({super.key});
 
   @override
-  State<LikedPage> createState() => LikedPageState();
+  State<LikedPage> createState() => _LikedPageState();
   
 }
 
-class LikedPageState extends State<LikedPage> {
+class _LikedPageState extends State<LikedPage> {
 
   final userData = GetIt.instance<UserDataProvider>();
   final navigation = GetIt.instance<NavigationProvider>();
-  final likedVentData = GetIt.instance<LikedVentDataProvider>();
+  final likedVentData = GetIt.instance<LikedVentProvider>();
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -102,7 +102,7 @@ class LikedPageState extends State<LikedPage> {
   Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 15),
-      child: Consumer<LikedVentDataProvider>(
+      child: Consumer<LikedVentProvider>(
         builder: (_, likedVentData, __) {
           return ValueListenableBuilder(
             valueListenable: isPageLoadedNotifier,

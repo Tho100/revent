@@ -5,31 +5,31 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
-import 'package:revent/helper/app_route.dart';
+import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/helper/call_vent_actions.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/filter/comments_filter.dart';
 import 'package:revent/pages/comment/post_comment_page.dart';
-import 'package:revent/provider/navigation_provider.dart';
-import 'package:revent/provider/profile/profile_data_provider.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/provider/vent/active_vent_provider.dart';
-import 'package:revent/provider/vent/vent_comment_provider.dart';
-import 'package:revent/themes/theme_color.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/vent/active_vent_provider.dart';
+import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/ui_dialog/alert_dialog.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/helper/setup/vent_comment_setup.dart';
-import 'package:revent/vent_query/comment/vent_comments_settings.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/bottomsheet_widgets/comment_filter.dart';
-import 'package:revent/widgets/bottomsheet_widgets/comment_settings.dart';
-import 'package:revent/widgets/buttons/actions_button.dart';
-import 'package:revent/widgets/inkwell_effect.dart';
-import 'package:revent/widgets/profile_picture.dart';
-import 'package:revent/widgets/vent_widgets/comments/vent_comments_listview.dart';
-import 'package:revent/widgets/vent_widgets/vent_previewer_widgets.dart';
+import 'package:revent/model/setup/vent_comment_setup.dart';
+import 'package:revent/service/query/vent/comment/vent_comments_settings.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet_widgets/comment_filter.dart';
+import 'package:revent/shared/widgets/bottomsheet_widgets/comment_settings.dart';
+import 'package:revent/shared/widgets/buttons/actions_button.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
+import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/vent_widgets/comments/vent_comments_listview.dart';
+import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class VentPostPage extends StatefulWidget {
 
@@ -51,11 +51,11 @@ class VentPostPage extends StatefulWidget {
   });
 
   @override
-  State<VentPostPage> createState() => VentPostPageState();
+  State<VentPostPage> createState() => _VentPostPageState();
 
 }
 
-class VentPostPageState extends State<VentPostPage> {
+class _VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = GetIt.instance<VentCommentProvider>();
   final profileData = GetIt.instance<ProfileDataProvider>();
@@ -187,11 +187,15 @@ class VentPostPageState extends State<VentPostPage> {
 
     if(AppRoute.isOnProfile) {
 
+      debugPrint('im in');
+
       final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
 
       totalLikes = isMyProfile
-        ? ventData.myProfile.totalLikes[ventIndex].toString()
-        : ventData.userProfile.totalLikes[ventIndex].toString();
+        ? ventData.myProfile.totalLikes[ventIndex]
+        : ventData.userProfile.totalLikes[ventIndex];
+
+      debugPrint(totalLikes.toString());
 
       isVentLiked = isMyProfile
         ? ventData.myProfile.isPostLiked[ventIndex]
@@ -199,7 +203,7 @@ class VentPostPageState extends State<VentPostPage> {
 
     } else {
     
-      totalLikes = ventData.vents[ventIndex].totalLikes.toString();
+      totalLikes = ventData.vents[ventIndex].totalLikes;
       isVentLiked = ventData.vents[ventIndex].isPostLiked;
 
     }
@@ -406,7 +410,7 @@ class VentPostPageState extends State<VentPostPage> {
       builder: (context) {
         final likesInfo = _getLikesInfo();
         return ActionsButton().buildLikeButton(
-          text: likesInfo['total_likes'], 
+          value: likesInfo['total_likes'], 
           isLiked: likesInfo['is_liked'],
           onPressed: () async {
             await CallVentActions(
@@ -424,7 +428,7 @@ class VentPostPageState extends State<VentPostPage> {
     return Consumer<VentCommentProvider>(
       builder: (_, commentsData, __) {
         return ActionsButton().buildCommentsButton(
-          text: commentsData.ventComments.length.toString(), 
+          value: commentsData.ventComments.length, 
           onPressed: () {}
         );
       },

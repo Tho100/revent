@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:revent/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/profile/profile_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/vent_query/comment/save_comment_edit.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/profile_picture.dart';
-import 'package:revent/widgets/text_field/comment_textfield.dart';
+import 'package:revent/service/query/vent/comment/save_comment_edit.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/text_field/comment_textfield.dart';
 
 class EditCommentPage extends StatefulWidget {
 
@@ -21,11 +21,11 @@ class EditCommentPage extends StatefulWidget {
   });
 
   @override
-  State<EditCommentPage> createState() => EditCommentPageState();
+  State<EditCommentPage> createState() => _EditCommentPageState();
   
 }
 
-class EditCommentPageState extends State<EditCommentPage> {
+class _EditCommentPageState extends State<EditCommentPage> {
 
   final commentController = TextEditingController();
 

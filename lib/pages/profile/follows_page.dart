@@ -4,13 +4,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
-import 'package:revent/data_query/follows_getter.dart';
+import 'package:revent/service/query/general/follows_getter.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/ui_dialog/snack_bar.dart';
-import 'package:revent/widgets/account_profile.dart';
-import 'package:revent/widgets/app_bar.dart';
-import 'package:revent/widgets/custom_tab_bar.dart';
+import 'package:revent/shared/widgets/account_profile.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/custom_tab_bar.dart';
 
 class _FollowsProfilesData {
   
@@ -36,11 +36,11 @@ class FollowsPage extends StatefulWidget {
   });
 
   @override
-  State<FollowsPage> createState() => FollowsPageState();
+  State<FollowsPage> createState() => _FollowsPageState();
 
 }
 
-class FollowsPageState extends State<FollowsPage> with SingleTickerProviderStateMixin {
+class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStateMixin {
 
   final userData = GetIt.instance<UserDataProvider>();
 

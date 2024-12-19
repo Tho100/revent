@@ -2,21 +2,21 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/data_query/user_privacy_actions.dart';
-import 'package:revent/provider/user_data_provider.dart';
-import 'package:revent/themes/theme_color.dart';
-import 'package:revent/widgets/app_bar.dart';
+import 'package:revent/service/query/general/user_privacy_actions.dart';
+import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/app_bar.dart';
 
 class PrivacyPage extends StatefulWidget {
 
   const PrivacyPage({super.key});
 
   @override
-  State<PrivacyPage> createState() => PrivacyPageState();
+  State<PrivacyPage> createState() => _PrivacyPageState();
 
 }
 
-class PrivacyPageState extends State<PrivacyPage> {
+class _PrivacyPageState extends State<PrivacyPage> {
 
   final privateAccountNotifier = ValueNotifier<bool>(false);
   final hideFollowingListNotifier = ValueNotifier<bool>(false);
