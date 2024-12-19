@@ -1,19 +1,17 @@
 import 'dart:convert';
 
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 
-class SearchAccountsGetter {
+class SearchAccountsGetter extends BaseQueryService {
 
   Future<Map<String, List<dynamic>>> getAccounts({required String searchText}) async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 'SELECT username, profile_picture FROM user_profile_info WHERE username LIKE :search_text';
 
     final param = {'search_text': '%$searchText%'};
 
-    final results = await conn.execute(query, param);
+    final results = await executeQuery(query, param);
 
     final extractedData = ExtractData(rowsData: results);
 
