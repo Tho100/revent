@@ -77,7 +77,7 @@ class VentPreviewerWidgets {
       isLiked = profileData.totalLikes.length > 0 ? profileData.isPostLiked[safeVentIndex] : false;
 
     } else {
-      totalLikes = profileData.totalLikes.length > 0 ? profileData.totalLikes[safeVentIndex] : 0;
+      totalLikes = ventData.vents.length > 0 ? ventData.vents[safeVentIndex].totalLikes : 0;
       isLiked = ventData.vents.length > 0 ? ventData.vents[safeVentIndex].isPostLiked : false;
       
     }
