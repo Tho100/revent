@@ -16,9 +16,6 @@ class VentActions extends BaseQueryService {
     required this.creator,
   });
 
-  // TODO: Remove this
-  final navigation = getIt.navigationProvider;
-
   final ventData = getIt.ventForYouProvider;
   final ventFollowingData = getIt.ventFollowingProvider;
 
