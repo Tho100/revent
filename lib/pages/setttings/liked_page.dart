@@ -152,7 +152,7 @@ class _LikedPageState extends State<LikedPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: 'Liked posts'
+        title: 'Liked'
       ).buildAppBar(),
       body: _buildBody(),
     );
