@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/pages/search_results_page.dart';
+import 'package:revent/pages/main_search_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/themes/theme_style.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
@@ -48,31 +48,47 @@ class _SearchPageState extends State<SearchPage> {
   Widget _buildSearchBar() {
     return Align(
       alignment: Alignment.center,
-      child: SizedBox(
+      child: Container(
         width: MediaQuery.of(context).size.width * 0.91,
-        child: TextFormField(
-          maxLines: 1,
-          controller: searchController,
-          style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
-            fontWeight: FontWeight.w700,
-          ),
-          decoration: ThemeStyle.txtFieldStye(
-            customBottomPadding: 18,
-            customTopPadding: 18,
-            hintText: 'Search for anything...',
-            customPrefix: const Padding(
-              padding: EdgeInsets.only(left: 8.0), 
-              child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
-            ),
-          ),
-          textInputAction: TextInputAction.done,
-          onFieldSubmitted: (searchText) {
+        height: 52,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: ThemeColor.thirdWhite)
+        ),
+        child: InkWellEffect(
+          onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => SearchResultsPage(searchText: searchText))
+              MaterialPageRoute(builder: (_) => const MainSearchPage())
             );
           },
+          child: Row(
+            children: [
+
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 18.0),
+                  child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
+                ),
+              ),
+
+              const SizedBox(width: 10),
+      
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Search for anything...',
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.thirdWhite,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16,
+                  ),
+                ),
+              ),
+              
+            ],
+          ),
         ),
       ),
     );
