@@ -11,6 +11,7 @@ class UserModel {
     getIt.userProvider.clearUserData();
     getIt.profileProvider.clearProfileData();
     getIt.profilePostsProvider.clearPostsData();
+    getIt.profileSavedProvider.clearPostsData();
 
     await LocalStorageModel().deleteLocalData();
 
