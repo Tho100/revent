@@ -2,14 +2,15 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:get_it/get_it.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/shared/provider/profile/profile_data_provider.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 
 class ProfileDataUpdate {
 
   final profileData = GetIt.instance<ProfileDataProvider>();
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<void> updateBio({required String bioText}) async {
 

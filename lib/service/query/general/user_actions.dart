@@ -1,6 +1,6 @@
-import 'package:get_it/get_it.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 
 class UserActions {
 
@@ -8,7 +8,7 @@ class UserActions {
 
   UserActions({required this.username});
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<void> userFollowAction({required bool follow}) async {
     

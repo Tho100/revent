@@ -4,10 +4,11 @@ import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -25,7 +26,7 @@ class LikedPage extends StatefulWidget {
 
 class _LikedPageState extends State<LikedPage> {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
   final navigation = GetIt.instance<NavigationProvider>();
   final likedVentData = GetIt.instance<LikedVentProvider>();
 

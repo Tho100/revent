@@ -1,10 +1,10 @@
-import 'package:get_it/get_it.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 
 class UserFollowing extends BaseQueryService {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<bool> isFollowing({required String username}) async {
 

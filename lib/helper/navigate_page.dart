@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/get_it_extensions.dart';
@@ -18,7 +17,6 @@ import 'package:revent/pages/navigation/my_profile_page.dart';
 import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 
 class _DockBarNavigationPages {
 

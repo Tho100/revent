@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet_bar.dart';
@@ -9,7 +9,7 @@ import 'package:revent/shared/widgets/bottomsheet_title.dart';
 
 class BottomsheetCommentActions {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Widget _buildOptionButton({
     required String text, 

@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
-import 'package:get_it/get_it.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
@@ -111,7 +112,7 @@ class VentDataSetup {
   Future<void> setupForYou() async {
     await _setupVents<VentForYouData>(
       dataGetter: () => VentDataGetter().getVentsData(),
-      setVents: GetIt.instance<VentForYouProvider>().setVents,
+      setVents: getIt.ventForYouProvider.setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentForYouData(
         title: title,
@@ -130,7 +131,7 @@ class VentDataSetup {
   Future<void> setupFollowing() async {
     await _setupVents<VentFollowingData>(
       dataGetter: () => VentDataGetter().getFollowingVentsData(),
-      setVents: GetIt.instance<VentFollowingProvider>().setVents,
+      setVents: getIt.ventFollowingProvider.setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentFollowingData(
         title: title,
@@ -151,7 +152,7 @@ class VentDataSetup {
       dataGetter: () => VentDataGetter().getSearchVentsData(
         searchTitleText: searchText,
       ),
-      setVents: GetIt.instance<SearchPostsProvider>().setVents,
+      setVents: getIt.searchPostsProvider.setVents,
       ventBuilder: (title, _, creator, postTimestamp, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SearchVents(
         title: title,
@@ -169,7 +170,7 @@ class VentDataSetup {
   Future<void> setupLiked() async {
     await _setupVents<LikedVentData>(
       dataGetter: () => VentDataGetter().getLikedVentsData(),
-      setVents: GetIt.instance<LikedVentProvider>().setVents,
+      setVents: getIt.likedVentProvider.setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => LikedVentData(
         title: title,
