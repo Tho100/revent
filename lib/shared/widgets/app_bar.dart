@@ -50,4 +50,26 @@ class CustomAppBar {
     );
   }
 
+  PreferredSizeWidget? buildNavigationAppBar() {
+    return AppBar(
+      leadingWidth: 250,
+      automaticallyImplyLeading: false,
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 20.0, top: 10.0),
+        child: Text(
+          title ?? '',
+          style: GoogleFonts.inter(
+            color: ThemeColor.white,
+            fontWeight: FontWeight.w800,
+            fontSize: 26,
+          ),
+        ),
+      ),
+      backgroundColor: backgroundColor ?? ThemeColor.black,
+      elevation: 0,
+      actions: actions,
+      bottom: bottom,
+    );
+  }
+
 }

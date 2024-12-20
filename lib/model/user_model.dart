@@ -1,18 +1,17 @@
-import 'package:get_it/get_it.dart';
+import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/query/general/delete_account_data.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
-import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 
 class UserModel {
 
   void signOutUser() async {
 
-    GetIt.instance<UserDataProvider>().clearUserData();
-    GetIt.instance<ProfileDataProvider>().clearProfileData();
-    GetIt.instance<ProfilePostsProvider>().clearPostsData();
+    getIt.userProvider.clearUserData();
+    getIt.profileProvider.clearProfileData();
+    getIt.profilePostsProvider.clearPostsData();
+    getIt.profileSavedProvider.clearPostsData();
 
     await LocalStorageModel().deleteLocalData();
 

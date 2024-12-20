@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/general/user_privacy_actions.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 
@@ -26,7 +26,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   void _loadCurrentOptions() async {
 
-    final userData = GetIt.instance<UserDataProvider>();
+    final userData = getIt.userProvider;
 
     final currentOptions = await userPrivacyActions.getCurrentOptions(
       username: userData.user.username

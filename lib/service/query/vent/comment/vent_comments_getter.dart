@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:get_it/get_it.dart';
-import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 
-class VentCommentsGetter {
+class VentCommentsGetter extends BaseQueryService {
 
   final String title;
   final String creator;
@@ -19,11 +18,9 @@ class VentCommentsGetter {
 
   final formatTimestamp = FormatDate();
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<Map<String, List<dynamic>>> getComments() async {
-
-    final conn = await ReventConnection.connect();
 
     const getCommentsQuery = 
     '''
@@ -44,7 +41,7 @@ class VentCommentsGetter {
       'creator': creator,
     };
 
-    final results = await conn.execute(getCommentsQuery, params);
+    final results = await executeQuery(getCommentsQuery, params);
 
     final extractedData = ExtractData(rowsData: results);
 
@@ -62,11 +59,13 @@ class VentCommentsGetter {
       .toList();
 
     final isLikedState = await _commentLikedState(
-      conn: conn, commentedBy: commentedBy, comments: comment
+      commentedBy: commentedBy, 
+      comments: comment
     );
 
     final isLikedByCreatorState = await _commentLikedByCreatorState(
-      conn: conn, commentedBy: commentedBy, comments: comment
+      commentedBy: commentedBy, 
+      comments: comment
     );
 
     return {
@@ -82,7 +81,6 @@ class VentCommentsGetter {
   }
 
   Future<List<bool>> _commentLikedState({
-    required MySQLConnectionPool conn,
     required List<String> commentedBy,
     required List<String> comments,
   }) async {
@@ -96,7 +94,7 @@ class VentCommentsGetter {
       'title': title,
     };
 
-    final results = await conn.execute(readLikesQuery, params);
+    final results = await executeQuery(readLikesQuery, params);
 
     final likedPairs = results.rows.map((row) {
       return '${row.assoc()['commented_by']}|${row.assoc()['comment']}';
@@ -110,7 +108,6 @@ class VentCommentsGetter {
   }
 
   Future<List<bool>> _commentLikedByCreatorState({
-    required MySQLConnectionPool conn,
     required List<String> commentedBy,
     required List<String> comments,
   }) async {
@@ -124,7 +121,7 @@ class VentCommentsGetter {
       'title': title,
     };
 
-    final results = await conn.execute(readLikesQuery, params);
+    final results = await executeQuery(readLikesQuery, params);
 
     final likedPairs = results.rows.map((row) {
       return '${row.assoc()['commented_by']}|${row.assoc()['comment']}';

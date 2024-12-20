@@ -1,10 +1,10 @@
 import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
@@ -24,7 +24,7 @@ class AccountProfileWidget extends StatelessWidget {
     super.key
   });
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   @override
   Widget build(BuildContext context) {

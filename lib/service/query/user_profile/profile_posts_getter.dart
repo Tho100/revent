@@ -1,21 +1,18 @@
-import 'package:get_it/get_it.dart';
-import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 
-class ProfilePostsDataGetter {
+class ProfilePostsDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<Map<String, List<dynamic>>> getPosts({
     required String username
   }) async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 
       'SELECT title, body_text, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
@@ -24,7 +21,7 @@ class ProfilePostsDataGetter {
       'username': username
     };
 
-    final retrievedInfo = await conn.execute(query, param);
+    final retrievedInfo = await executeQuery(query, param);
 
     final extractData = ExtractData(rowsData: retrievedInfo);
     
@@ -39,13 +36,11 @@ class ProfilePostsDataGetter {
       .toList();
 
     final isLikedState = await _ventPostState(
-      conn: conn,
       title: title,
       stateType: 'liked'
     );
 
     final isSavedState = await _ventPostState(
-      conn: conn,
       title: title,
       stateType: 'saved'
     );
@@ -63,7 +58,6 @@ class ProfilePostsDataGetter {
   }
 
   Future<List<bool>> _ventPostState({
-    required MySQLConnectionPool conn,
     required List<String> title,
     required String stateType,
   }) async {
@@ -78,8 +72,8 @@ class ProfilePostsDataGetter {
       'saved': {'saved_by': userData.user.username},
     };
 
-    final retrievedTitles = await conn.execute(
-      queryBasedOnType[stateType]!, paramBasedOnType[stateType]
+    final retrievedTitles = await executeQuery(
+      queryBasedOnType[stateType]!, paramBasedOnType[stateType]!
     );
 
     final extractTitlesData = ExtractData(rowsData: retrievedTitles);

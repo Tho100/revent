@@ -1,11 +1,9 @@
-import 'package:get_it/get_it.dart';
-import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 
-class VentCommentActions {
+class VentCommentActions extends BaseQueryService {
 
   final String username;
   final String commentText;
@@ -19,12 +17,10 @@ class VentCommentActions {
     required this.ventTitle
   });
 
-  final ventCommentProvider = GetIt.instance<VentCommentProvider>();
-  final userData = GetIt.instance<UserDataProvider>();
+  final ventCommentProvider = getIt.ventCommentProvider;
+  final userData = getIt.userProvider;
 
   Future<void> delete() async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 
       'DELETE FROM vent_comments_info WHERE commented_by = :commented_by AND comment = :comment AND title = :title AND creator = :creator';
@@ -36,7 +32,7 @@ class VentCommentActions {
       'creator': ventCreator
     };
 
-    await conn.execute(query, params);
+    await executeQuery(query, params);
 
     _removeComment();
 
@@ -55,8 +51,6 @@ class VentCommentActions {
 
   Future<void> like() async {
 
-    final conn = await ReventConnection.connect();
-
     const likesInfoParameterQuery = 
       'WHERE title = :title AND creator = :creator AND liked_by = :liked_by AND commented_by = :commented_by AND comment = :comment';
 
@@ -69,18 +63,13 @@ class VentCommentActions {
     };
 
     final isUserLikedComment = await _isUserLikedComment(
-      conn: conn,
       likesInfoParams: likesInfoParams,
       likesInfoParameterQuery: likesInfoParameterQuery
     );
 
-    await _updateCommentLikes(
-      conn: conn, 
-      isUserLikedPost: isUserLikedComment
-    );
+    await _updateCommentLikes(isUserLikedPost: isUserLikedComment);
 
     await _updateLikesInfo(
-      conn: conn,
       isUserLikedPost: isUserLikedComment,
       likesInfoParams: likesInfoParams,
       likesInfoParameterQuery: likesInfoParameterQuery
@@ -98,7 +87,6 @@ class VentCommentActions {
   }
 
   Future<void> _updateCommentLikes({
-    required MySQLConnectionPool conn,
     required bool isUserLikedPost 
   }) async {
 
@@ -114,12 +102,11 @@ class VentCommentActions {
       'comment': commentText
     };
 
-    await conn.execute(updateLikeValueQuery, ventInfoParams);
+    await executeQuery(updateLikeValueQuery, ventInfoParams);
 
   }
 
   Future<bool> _isUserLikedComment({
-    required MySQLConnectionPool conn,
     required Map<String, String> likesInfoParams,
     required String likesInfoParameterQuery  
   }) async {
@@ -127,7 +114,7 @@ class VentCommentActions {
     final readLikesInfoQuery = 
       'SELECT * FROM vent_comments_likes_info $likesInfoParameterQuery';
 
-    final likesInfoResults = await conn.execute(readLikesInfoQuery, likesInfoParams);
+    final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
     return ExtractData(rowsData: likesInfoResults)
       .extractStringColumn('liked_by').isNotEmpty;
@@ -135,7 +122,6 @@ class VentCommentActions {
   }
 
   Future<void> _updateLikesInfo({
-    required MySQLConnectionPool conn, 
     required bool isUserLikedPost,
     required Map<String, String> likesInfoParams,
     required String likesInfoParameterQuery,
@@ -145,7 +131,7 @@ class VentCommentActions {
       ? 'DELETE FROM vent_comments_likes_info $likesInfoParameterQuery'
       : 'INSERT INTO vent_comments_likes_info (title, creator, liked_by, commented_by, comment) VALUES (:title, :creator, :liked_by, :commented_by, :comment)';
 
-    await conn.execute(query, likesInfoParams);
+    await executeQuery(query, likesInfoParams);
 
   }
 

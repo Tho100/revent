@@ -1,7 +1,7 @@
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/current_provider.dart';
 
-class DeleteSavedVent {
+class DeleteSavedVent extends BaseQueryService {
   
   final String title;
   final String creator;
@@ -13,8 +13,6 @@ class DeleteSavedVent {
 
   Future<void> delete() async {
 
-    final conn = await ReventConnection.connect();
-
     const query = 'DELETE FROM saved_vent_info WHERE title = :title AND creator = :creator';
 
     final params = {
@@ -22,7 +20,7 @@ class DeleteSavedVent {
       'creator': creator,
     };
 
-    await conn.execute(query, params);
+    await executeQuery(query, params);
 
     _removeVent();
 

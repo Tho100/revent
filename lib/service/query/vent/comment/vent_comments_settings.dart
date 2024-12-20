@@ -1,18 +1,16 @@
-import 'package:get_it/get_it.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 
-class VentCommentsSettings {
+class VentCommentsSettings extends BaseQueryService {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<void> toggleComment({
     required String title,
     required int isEnableComment,
   }) async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 
       'UPDATE vent_info SET comment_enabled = :new_value WHERE creator = :creator AND title = :title';
@@ -23,7 +21,7 @@ class VentCommentsSettings {
       'new_value': isEnableComment
     };
 
-    await conn.execute(query, param);
+    await executeQuery(query, param);
 
   }
   
@@ -31,8 +29,6 @@ class VentCommentsSettings {
     required String title, 
     required String creator
   }) async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 
       'SELECT comment_enabled FROM vent_info WHERE creator = :creator AND title = :title';
@@ -42,7 +38,7 @@ class VentCommentsSettings {
       'creator': creator
     };
 
-    final results = await conn.execute(query, param);
+    final results = await executeQuery(query, param);
 
     final extractedData = ExtractData(rowsData: results);
 

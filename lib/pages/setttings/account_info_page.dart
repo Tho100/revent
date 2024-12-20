@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/general/user_data_getter.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
@@ -20,16 +19,15 @@ class AccountInformationPage extends StatefulWidget {
 
 class _AccountInformationPageState extends State<AccountInformationPage> {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<String> _loadJoinedDate() async {
 
     if(userData.user.joinedDate == null) {
 
-      final conn = await ReventConnection.connect();
-
-      final getJoinedDate = await UserDataGetter()
-        .getJoinedDate(conn: conn, username: userData.user.username);
+      final getJoinedDate = await UserDataGetter().getJoinedDate(
+        username: userData.user.username
+      );
 
       final formattedJoinedDate = FormatDate().formatLongDate(getJoinedDate);
 

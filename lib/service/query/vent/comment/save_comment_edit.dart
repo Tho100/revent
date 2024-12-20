@@ -1,9 +1,8 @@
-import 'package:get_it/get_it.dart';
-import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 
-class SaveCommentEdit {
+class SaveCommentEdit extends BaseQueryService {
 
   final String title;
   final String creator;
@@ -17,12 +16,10 @@ class SaveCommentEdit {
     required this.newComment,
   });
 
-  final userData = GetIt.instance<UserDataProvider>();
-  final ventCommentProvider = GetIt.instance<VentCommentProvider>();
+  final userData = getIt.userProvider;
+  final ventCommentProvider = getIt.ventCommentProvider;
 
   Future<void> save() async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 
       'UPDATE vent_comments_info SET comment = :new_comment WHERE title = :title AND creator = :creator AND commented_by = :commented_by AND comment = :original_comment';
@@ -35,7 +32,7 @@ class SaveCommentEdit {
       'commented_by': userData.user.username
     };
 
-    await conn.execute(query, params);
+    await executeQuery(query, params);
 
     await _updateLikesInfo(param: params);
 
@@ -47,12 +44,10 @@ class SaveCommentEdit {
 
   Future<void> _updateLikesInfo({required Map<String, dynamic> param}) async {
 
-    final conn = await ReventConnection.connect();
-
     const query = 
       'UPDATE vent_comments_likes_info SET comment = :new_comment WHERE title = :title AND creator = :creator AND commented_by = :commented_by AND comment = :original_comment';
 
-    await conn.execute(query, param);
+    await executeQuery(query, param);
 
   }
 

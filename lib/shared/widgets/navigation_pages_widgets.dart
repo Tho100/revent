@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/main.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
 class NavigationPagesWidgets {
@@ -16,12 +16,12 @@ class NavigationPagesWidgets {
 
   static Widget profilePictureLeading() {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0),
+      padding: const EdgeInsets.only(right: 16.0),
       child: GestureDetector(
         onTap: () => NavigatePage.myProfilePage(),
         child: Center(
           child: ProfilePictureWidget(
-            pfpData: GetIt.instance<ProfileDataProvider>().profilePicture,
+            pfpData: getIt.profileProvider.profilePicture,
             customWidth: 34,
             customHeight: 34,
           ),

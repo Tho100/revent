@@ -1,9 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 
 class ProfileSavedData {
 
@@ -119,7 +119,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   void likeVent(int index, bool isUserLikedPost) {
 
-    final navigation = GetIt.instance<NavigationProvider>();
+    final navigation = getIt.navigationProvider;
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
       ? 'my_profile'
@@ -145,7 +145,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   void saveVent(int index, bool isUserSavedPost) {
 
-    final navigation = GetIt.instance<NavigationProvider>();
+    final navigation = getIt.navigationProvider;
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
       ? 'my_profile'

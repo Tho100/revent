@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/security/user_auth.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -31,7 +31,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final userAuth = UserAuth();
   final hashingModel = HashingModel();
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<void> _updatePasswordOnPressed() async {
 

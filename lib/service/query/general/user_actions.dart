@@ -1,18 +1,18 @@
-import 'package:get_it/get_it.dart';
-import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 
-class UserActions {
+class UserActions extends BaseQueryService {
 
   final String username;
 
   UserActions({required this.username});
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<void> userFollowAction({required bool follow}) async {
     
-    final conn = await ReventConnection.connect();
+    final conn = await connection();
 
     await conn.transactional((txn) async {
 

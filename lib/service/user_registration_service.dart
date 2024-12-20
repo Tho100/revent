@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -10,7 +11,7 @@ import 'package:revent/model/setup/vent_data_setup.dart';
 
 class UserRegistrationService extends BaseQueryService {
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<void> register({
     required String username,

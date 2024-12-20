@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:get_it/get_it.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/user_profile/profile_data_getter.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
 
 class ProfileDataSetup {
-
-  final profileData = GetIt.instance<ProfileDataProvider>();
 
   void _setUserProfileInfo({
     required int followers,
@@ -16,6 +14,8 @@ class ProfileDataSetup {
     required String pronouns,
     required String profilePicBase64,
   }) {
+
+    final profileData = getIt.profileProvider;
 
     profileData.setFollowers(followers);
     profileData.setFollowing(following);

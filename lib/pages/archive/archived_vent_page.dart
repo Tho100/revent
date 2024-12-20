@@ -2,15 +2,14 @@
 
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/call_vent_actions.dart';
+import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -41,8 +40,8 @@ class ArchivedVentPage extends StatefulWidget {
 
 class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
-  final userData = GetIt.instance<UserDataProvider>();
-  final profileData = GetIt.instance<ProfileDataProvider>();
+  final userData = getIt.userProvider;
+  final profileData = getIt.profileProvider; 
 
   final archiveDataGetter = ArchiveVentDataGetter();
 

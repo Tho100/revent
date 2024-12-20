@@ -20,9 +20,8 @@ class NotificationsPage extends StatelessWidget {
           title: 'Notifications',
           customBackOnPressed: () => NavigatePage.homePage(),
           context: context,
-          customLeading: NavigationPagesWidgets.profilePictureLeading(),
-          actions: [NavigationPagesWidgets.settingsActionButton()]
-        ).buildAppBar(),
+          actions: [NavigationPagesWidgets.profilePictureLeading()]
+        ).buildNavigationAppBar(),
         bottomNavigationBar: PageNavigationBar()
       ),
     );

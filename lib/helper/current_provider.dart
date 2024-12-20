@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
 import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
@@ -20,7 +21,7 @@ class CurrentProvider {
     this.creator,
   });
 
-  final navigation = GetIt.instance<NavigationProvider>();
+  final navigation = getIt.navigationProvider;
 
   dynamic _returnHomeProvider({
     required bool realTime, 

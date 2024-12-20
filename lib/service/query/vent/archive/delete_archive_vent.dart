@@ -1,8 +1,8 @@
-import 'package:get_it/get_it.dart';
-import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 
-class DeleteArchiveVent {
+class DeleteArchiveVent extends BaseQueryService {
   
   final String title;
 
@@ -10,11 +10,9 @@ class DeleteArchiveVent {
     required this.title,
   });
 
-  final userData = GetIt.instance<UserDataProvider>();
+  final userData = getIt.userProvider;
 
   Future<void> delete() async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 'DELETE FROM archive_vent_info WHERE title = :title AND creator = :creator';
 
@@ -23,7 +21,7 @@ class DeleteArchiveVent {
       'creator': userData.user.username,
     };
 
-    await conn.execute(query, params);
+    await executeQuery(query, params);
 
   }
 
