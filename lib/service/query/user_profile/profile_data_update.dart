@@ -3,16 +3,14 @@ import 'dart:typed_data';
 
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 
-class ProfileDataUpdate {
+class ProfileDataUpdate extends BaseQueryService {
 
   final profileData = getIt.profileProvider;
   final userData = getIt.userProvider;
 
   Future<void> updateBio({required String bioText}) async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 'UPDATE user_profile_info SET bio = :bio_value WHERE username = :username';
     
@@ -23,17 +21,16 @@ class ProfileDataUpdate {
 
     profileData.setBio(bioText);
 
-    await conn.execute(query, params);
+    await executeQuery(query, params);
 
   }
 
   Future<void> updateProfilePicture({required Uint8List picData}) async {
 
-    final conn = await ReventConnection.connect();
-
     final toBase64EncodedPfp = const Base64Encoder().convert(picData);
 
-    const query = 'UPDATE user_profile_info SET profile_picture = :profile_pic_data WHERE username = :username';
+    const query = 
+      'UPDATE user_profile_info SET profile_picture = :profile_pic_data WHERE username = :username';
 
     final params = {
       'profile_pic_data': toBase64EncodedPfp,
@@ -42,13 +39,11 @@ class ProfileDataUpdate {
 
     profileData.setProfilePicture(picData);
 
-    await conn.execute(query, params);
+    await executeQuery(query, params);
 
   }
 
   Future<void> updatePronouns({required String pronouns}) async {
-
-    final conn = await ReventConnection.connect();
 
     const query = 'UPDATE user_profile_info SET pronouns = :pronouns WHERE username = :username';
 
@@ -59,7 +54,7 @@ class ProfileDataUpdate {
 
     profileData.setPronouns(pronouns);
 
-    await conn.execute(query, params);
+    await executeQuery(query, params);
 
   }
 

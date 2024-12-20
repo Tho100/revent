@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
-class ProfileSavedDataGetter {
+class ProfileSavedDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
@@ -16,8 +15,6 @@ class ProfileSavedDataGetter {
   Future<Map<String, List<dynamic>>> getSaved({
     required String username,
   }) async {
-
-    final conn = await ReventConnection.connect();
 
     const query = '''
       SELECT 
@@ -44,7 +41,7 @@ class ProfileSavedDataGetter {
       'saved_by': username,
     };
 
-    final retrievedInfo = await conn.execute(query, param);
+    final retrievedInfo = await executeQuery(query, param);
 
     final extractData = ExtractData(rowsData: retrievedInfo);
     
@@ -67,7 +64,6 @@ class ProfileSavedDataGetter {
       .toList();
 
     final isLikedState = await _ventPostLikeState(
-      conn: conn,
       title: titles,
       stateType: 'liked'
     );
@@ -89,7 +85,6 @@ class ProfileSavedDataGetter {
   }
 
   Future<List<bool>> _ventPostLikeState({
-    required MySQLConnectionPool conn,
     required List<String> title,
     required String stateType,
   }) async {
@@ -100,7 +95,7 @@ class ProfileSavedDataGetter {
       'liked_by': userData.user.username,
     };
 
-    final retrievedTitles = await conn.execute(query, param);
+    final retrievedTitles = await executeQuery(query, param);
 
     final extractTitlesData = ExtractData(rowsData: retrievedTitles);
 

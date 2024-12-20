@@ -1,8 +1,8 @@
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 
-class VerifyVent {
+class VerifyVent extends BaseQueryService {
   
   final String title;
 
@@ -12,8 +12,6 @@ class VerifyVent {
 
   Future<bool> ventIsAlreadyExists() async {
 
-    final conn = await ReventConnection.connect();
-
     const query = 'SELECT * FROM vent_info WHERE creator = :creator AND title = :title';
 
     final param = {
@@ -21,7 +19,7 @@ class VerifyVent {
       'creator': userData.user.username
     };
 
-    final results = await conn.execute(query, param);
+    final results = await executeQuery(query, param);
 
     return results.rows.isNotEmpty;
 

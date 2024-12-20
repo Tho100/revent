@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/revent_connection_service.dart';
@@ -53,7 +52,7 @@ class UserLoginService {
       SpinnerLoading().startLoading(context: context);
     }
       
-    await _setUserProfileData(conn: conn, email: email);
+    await _setUserProfileData(email: email);
     await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
 
     await VentDataSetup().setupForYou()
@@ -75,11 +74,10 @@ class UserLoginService {
   }
 
   Future<void> _setUserProfileData({
-    required MySQLConnectionPool conn, 
     required String email
   }) async {
 
-    final accountInfo = await userDataGetter.getUserStartupInfo(email: email, conn: conn);
+    final accountInfo = await userDataGetter.getUserStartupInfo(email: email);
       
     final username = accountInfo['username'];
     final accountPlan = accountInfo['plan'];

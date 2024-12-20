@@ -1,13 +1,12 @@
-import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 
-class VentActions {
+class VentActions extends BaseQueryService {
 
   final String title;
   final String creator;
@@ -17,6 +16,7 @@ class VentActions {
     required this.creator,
   });
 
+  // TODO: Remove this
   final navigation = getIt.navigationProvider;
 
   final ventData = getIt.ventForYouProvider;
@@ -38,9 +38,8 @@ class VentActions {
 
   Future<void> likePost() async {
 
-    final conn = await ReventConnection.connect();
-
-    const likesInfoParameterQuery = 'WHERE title = :title AND creator = :creator AND liked_by = :liked_by';
+    const likesInfoParameterQuery = 
+      'WHERE title = :title AND creator = :creator AND liked_by = :liked_by';
 
     final likesInfoParams = {
       'title': title,
@@ -49,33 +48,23 @@ class VentActions {
     };
 
     final isUserLikedPost = await _isUserLikedPost(
-      conn: conn,
       likesInfoParams: likesInfoParams,
       likesInfoParameterQuery: likesInfoParameterQuery
     );
 
-    await _updateVentLikes(
-      conn: conn, 
-      isUserLikedPost: isUserLikedPost
-    );
+    await _updateVentLikes(isUserLikedPost: isUserLikedPost);
 
     await _updateLikesInfo(
-      conn: conn,
       isUserLikedPost: isUserLikedPost,
       likesInfoParams: likesInfoParams,
       likesInfoParameterQuery: likesInfoParameterQuery
     );
 
-    _updatePostLikeValue(
-      isUserLikedPost: isUserLikedPost,
-    );
+    _updatePostLikeValue(isUserLikedPost: isUserLikedPost);
 
   }
 
-  Future<void> _updateVentLikes({
-    required MySQLConnectionPool conn,
-    required bool isUserLikedPost 
-  }) async {
+  Future<void> _updateVentLikes({required bool isUserLikedPost}) async {
 
     final operationSymbol = isUserLikedPost ? '-' : '+';
 
@@ -87,12 +76,11 @@ class VentActions {
       'title': title
     };
 
-    await conn.execute(updateLikeValueQuery, ventInfoParams);
+    await executeQuery(updateLikeValueQuery, ventInfoParams);
 
   }
 
   Future<bool> _isUserLikedPost({
-    required MySQLConnectionPool conn,
     required Map<String, String> likesInfoParams,
     required String likesInfoParameterQuery  
   }) async {
@@ -100,7 +88,7 @@ class VentActions {
     final readLikesInfoQuery = 
       'SELECT * FROM liked_vent_info $likesInfoParameterQuery';
 
-    final likesInfoResults = await conn.execute(readLikesInfoQuery, likesInfoParams);
+    final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
     return ExtractData(rowsData: likesInfoResults)
       .extractStringColumn('liked_by').isNotEmpty;
@@ -108,7 +96,6 @@ class VentActions {
   }
 
   Future<void> _updateLikesInfo({
-    required MySQLConnectionPool conn, 
     required bool isUserLikedPost,
     required Map<String, String> likesInfoParams,
     required String likesInfoParameterQuery,
@@ -118,13 +105,11 @@ class VentActions {
       ? 'DELETE FROM liked_vent_info $likesInfoParameterQuery'
       : 'INSERT INTO liked_vent_info (title, creator, liked_by) VALUES (:title, :creator, :liked_by)';
 
-    await conn.execute(query, likesInfoParams);
+    await executeQuery(query, likesInfoParams);
 
   }
 
-  void _updatePostLikeValue({
-    required bool isUserLikedPost,
-  }) {
+  void _updatePostLikeValue({required bool isUserLikedPost}) {
 
     final currentProvider = _getVentProvider();
 
@@ -135,11 +120,7 @@ class VentActions {
 
   }
 
-  Future<void> sendComment({
-    required String comment
-  }) async {
-
-    final conn = await ReventConnection.connect();
+  Future<void> sendComment({required String comment}) async {
 
     const insertCommentQuery = 
       'INSERT INTO vent_comments_info (title, creator, commented_by, comment, total_likes) VALUES (:title, :creator, :commented_by, :comment, :total_likes)'; 
@@ -152,10 +133,9 @@ class VentActions {
       'total_likes': 0
     };
 
-    await conn.execute(insertCommentQuery, commentsParams);
+    await executeQuery(insertCommentQuery, commentsParams);
 
     await _updateTotalComments(
-      conn: conn, 
       title: title, 
       creator: creator
     );
@@ -165,7 +145,6 @@ class VentActions {
   }
 
   Future<void> _updateTotalComments({
-    required MySQLConnectionPool conn,
     required String title,
     required String creator 
   }) async {
@@ -178,13 +157,11 @@ class VentActions {
       'creator': creator,
     };
 
-    await conn.execute(updateTotalCommentsQuery, params);
+    await executeQuery(updateTotalCommentsQuery, params);
 
   }
 
-  void _addComment({
-    required String comment
-  }) {
+  void _addComment({required String comment}) {
 
     final ventCommentProvider = getIt.ventCommentProvider;
 
@@ -204,8 +181,6 @@ class VentActions {
 
   Future<void> savePost() async {
 
-    final conn = await ReventConnection.connect();
-
     const savedInfoParamsQuery = 'WHERE title = :title AND creator = :creator AND saved_by = :saved_by';
 
     final savedInfoParams = {
@@ -215,26 +190,21 @@ class VentActions {
     };
 
     final isUserSavedPost = await _isUserSavedPost(
-      conn: conn, 
       savedInfoParamsQuery: savedInfoParamsQuery, 
       savedInfoParams: savedInfoParams
     );
 
     await _updateSavedInfo(
-      conn: conn, 
       isUserSavedPost: isUserSavedPost, 
       savedInfoParamsQuery: savedInfoParamsQuery, 
       savedInfoParams: savedInfoParams
     );
 
-    _updatePostSavedValue(
-      isUserSavedPost: isUserSavedPost
-    );
+    _updatePostSavedValue(isUserSavedPost: isUserSavedPost);
 
   }
 
   Future<bool> _isUserSavedPost({
-    required MySQLConnectionPool conn,
     required String savedInfoParamsQuery,
     required Map<String, String> savedInfoParams,
   }) async {
@@ -242,7 +212,7 @@ class VentActions {
     final readSavedInfoQuery = 
       'SELECT * FROM saved_vent_info $savedInfoParamsQuery';
 
-    final savedInfoResults = await conn.execute(readSavedInfoQuery, savedInfoParams);
+    final savedInfoResults = await executeQuery(readSavedInfoQuery, savedInfoParams);
 
     return ExtractData(rowsData: savedInfoResults)
       .extractStringColumn('saved_by').isNotEmpty;
@@ -250,7 +220,6 @@ class VentActions {
   }
 
   Future<void> _updateSavedInfo({
-    required MySQLConnectionPool conn, 
     required bool isUserSavedPost,
     required String savedInfoParamsQuery,
     required Map<String, String> savedInfoParams,
@@ -260,13 +229,11 @@ class VentActions {
       ? 'DELETE FROM saved_vent_info $savedInfoParamsQuery'
       : 'INSERT INTO saved_vent_info (title, creator, saved_by) VALUES (:title, :creator, :saved_by)';
 
-    await conn.execute(query, savedInfoParams);
+    await executeQuery(query, savedInfoParams);
 
   }
 
-  void _updatePostSavedValue({
-    required bool isUserSavedPost,
-  }) {
+  void _updatePostSavedValue({required bool isUserSavedPost}) {
 
     final currentProvider = _getVentProvider();
 

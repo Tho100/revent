@@ -1,8 +1,8 @@
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 
-class UserActions {
+class UserActions extends BaseQueryService {
 
   final String username;
 
@@ -12,7 +12,7 @@ class UserActions {
 
   Future<void> userFollowAction({required bool follow}) async {
     
-    final conn = await ReventConnection.connect();
+    final conn = await connection();
 
     await conn.transactional((txn) async {
 

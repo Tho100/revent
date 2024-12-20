@@ -1,8 +1,8 @@
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
-class ArchiveVentDataGetter {
+class ArchiveVentDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
@@ -10,14 +10,12 @@ class ArchiveVentDataGetter {
     required String username
   }) async {
 
-    final conn = await ReventConnection.connect();
-
     const query = 'SELECT title, created_at FROM archive_vent_info WHERE creator = :username';
     final param = {
       'username': username
     };
 
-    final retrievedInfo = await conn.execute(query, param);
+    final retrievedInfo = await executeQuery(query, param);
 
     final extractData = ExtractData(rowsData: retrievedInfo);
     
@@ -40,8 +38,6 @@ class ArchiveVentDataGetter {
     required String creator
   }) async {
 
-    final conn = await ReventConnection.connect();
-
     const query = 
       'SELECT body_text FROM archive_vent_info WHERE title = :title AND creator = :creator';
       
@@ -50,7 +46,7 @@ class ArchiveVentDataGetter {
       'creator': creator
     };
 
-    final results = await conn.execute(query, params);
+    final results = await executeQuery(query, params);
 
     return results.rows.last.assoc()['body_text']!;
 

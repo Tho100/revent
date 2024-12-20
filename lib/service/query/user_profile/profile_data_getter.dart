@@ -1,14 +1,12 @@
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 
-class ProfileDataGetter {
+class ProfileDataGetter extends BaseQueryService {
 
   Future<Map<String, dynamic>> getProfileData({
     required bool isMyProfile,
     required String username
   }) async {
-
-    final conn = await ReventConnection.connect();
 
     final query = isMyProfile 
       ? 'SELECT following, followers, bio, pronouns, profile_picture FROM user_profile_info WHERE username = :username'
@@ -18,7 +16,7 @@ class ProfileDataGetter {
       'username': username
     };
 
-    final retrievedInfo = await conn.execute(query, param);
+    final retrievedInfo = await executeQuery(query, param);
 
     final extractData = ExtractData(rowsData: retrievedInfo);
 
