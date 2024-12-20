@@ -1,9 +1,9 @@
-import 'package:get_it/get_it.dart';
-import 'package:revent/shared/provider/navigation_provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 
 class AppRoute {
 
-  static final _navigation = GetIt.instance<NavigationProvider>();
+  static final _navigation = getIt.navigationProvider;
 
   static const home = '/home/';
   static const myProfile = '/profile/my_profile/';

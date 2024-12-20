@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/vent/create_vent_page.dart';
@@ -16,7 +18,6 @@ import 'package:revent/pages/navigation/my_profile_page.dart';
 import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
-import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/provider/user_data_provider.dart';
 
 class _DockBarNavigationPages {
@@ -52,7 +53,7 @@ class _DockBarNavigationPages {
 
 class NavigatePage {
 
-  static final _navigation = GetIt.instance<NavigationProvider>();
+  static final _navigation = getIt.navigationProvider;
 
   static void mainScreenPage() {
     Navigator.pushReplacement(
@@ -132,7 +133,7 @@ class NavigatePage {
     required Uint8List pfpData
   }) {
 
-    final userData = GetIt.instance<UserDataProvider>();
+    final userData = getIt.userProvider;
 
     if(username == userData.user.username) {
       myProfilePage();

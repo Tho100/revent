@@ -1,10 +1,9 @@
-import 'package:get_it/get_it.dart';
-import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/service/revent_connection_service.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/current_provider.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
 
-class DeleteVent {
+class DeleteVent extends BaseQueryService {
   
   final String title;
   final String creator;
@@ -13,33 +12,21 @@ class DeleteVent {
     required this.title,
     required this.creator,
   });
-  // TODO: Use getIt and BaseQueryService
-  final userData = GetIt.instance<UserDataProvider>();
+
+  final userData = getIt.userProvider;
 
   Future<void> delete() async {
 
-    final conn = await ReventConnection.connect();
-
-    await _deleteVentInfo(
-      conn: conn, 
-      ventTitle: title
-    );
-
-    await _updateTotalPosts(conn: conn);
-
-    await _deleteComments(
-      conn: conn, 
-      title: title, 
-    );
+    await _deleteVentInfo(ventTitle: title).then((_) async {
+      await _updateTotalPosts();
+      await _deleteComments(title: title);
+    });
 
     _removeVent();
 
   }
 
-  Future<void> _deleteVentInfo({
-    required MySQLConnectionPool conn,
-    required String ventTitle
-  }) async {
+  Future<void> _deleteVentInfo({required String ventTitle}) async {
 
     const query = 'DELETE FROM vent_info WHERE title = :title AND creator = :creator';
     final params = {
@@ -47,13 +34,11 @@ class DeleteVent {
       'creator': userData.user.username,
     };
 
-    await conn.execute(query, params);
+    await executeQuery(query, params);
 
   }
  
-  Future<void> _updateTotalPosts({
-    required MySQLConnectionPool conn,
-  }) async {
+  Future<void> _updateTotalPosts() async {
 
     const updateTotalPostsQuery = 
       'UPDATE user_profile_info SET posts = posts - 1 WHERE username = :username';
@@ -62,19 +47,18 @@ class DeleteVent {
       'username': userData.user.username
     };
 
-    await conn.execute(updateTotalPostsQuery, param);
+    await executeQuery(updateTotalPostsQuery, param);
 
   }
 
-  Future<void> _deleteComments({
-    required MySQLConnectionPool conn,
-    required String title,
-  }) async {
+  Future<void> _deleteComments({required String title}) async {
 
     final params = {
       'title': title,
       'creator': userData.user.username,
     };
+
+    final conn = await connection();
 
     await conn.transactional((txn) async {
 
