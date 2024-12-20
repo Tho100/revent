@@ -175,9 +175,8 @@ class _SearchPageState extends State<SearchPage> {
         appBar: CustomAppBar(
           title: 'Search',
           context: context,
-          customLeading: NavigationPagesWidgets.profilePictureLeading(),
-          actions: [NavigationPagesWidgets.settingsActionButton()]
-        ).buildAppBar(),
+          actions: [NavigationPagesWidgets.profilePictureLeading()]
+        ).buildNavigationAppBar(),
         body: _buildBody(),
         bottomNavigationBar: PageNavigationBar()
       ),
