@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/setup/search_setup.dart';
-import 'package:revent/shared/provider/navigation_provider.dart';
-import 'package:revent/shared/provider/search/search_accounts_provider.dart';
-import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -47,8 +45,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> with SingleTicker
   }
 
   void _clearSearchDataOnClose() {
-    GetIt.instance<SearchPostsProvider>().clearVents();
-    GetIt.instance<SearchAccountsProvider>().clearAccounts();
+    getIt.searchPostsProvider.clearVents();
+    getIt.searchAccountsProvider.clearAccounts();
   }
 
   void _onTabChanged() async {
@@ -166,7 +164,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with SingleTicker
     super.initState();
     _initializeClasses();
     _initializeSearchPosts();
-    GetIt.instance<NavigationProvider>().setCurrentRoute(AppRoute.searchResults);
+    getIt.navigationProvider.setCurrentRoute(AppRoute.searchResults);
   }
 
   @override

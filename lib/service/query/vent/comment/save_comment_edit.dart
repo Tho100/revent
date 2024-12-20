@@ -1,8 +1,6 @@
-import 'package:get_it/get_it.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 
 class SaveCommentEdit {
 
@@ -19,7 +17,7 @@ class SaveCommentEdit {
   });
 
   final userData = getIt.userProvider;
-  final ventCommentProvider = GetIt.instance<VentCommentProvider>();
+  final ventCommentProvider = getIt.ventCommentProvider;
 
   Future<void> save() async {
 

@@ -2,13 +2,13 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/call_vent_actions.dart';
+import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
-import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/service/query/search/search_data_getter.dart';
@@ -95,7 +95,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
 
   void _initializeBodyText() async {
 
-    final navigation = GetIt.instance<NavigationProvider>();
+    final navigation = getIt.navigationProvider;
 
     final customBodyTextPage = [AppRoute.searchResults];
 

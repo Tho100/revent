@@ -1,4 +1,3 @@
-import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
@@ -6,11 +5,7 @@ import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/shared/provider/navigation_provider.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
-import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
-import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 
 class VentActions {
 
@@ -22,13 +17,13 @@ class VentActions {
     required this.creator,
   });
 
-  final navigation = GetIt.instance<NavigationProvider>();
+  final navigation = getIt.navigationProvider;
 
-  final ventData = GetIt.instance<VentForYouProvider>();
-  final ventFollowingData = GetIt.instance<VentFollowingProvider>();
+  final ventData = getIt.ventForYouProvider;
+  final ventFollowingData = getIt.ventFollowingProvider;
 
   final userData = getIt.userProvider;
-  final profileData = GetIt.instance<ProfileDataProvider>();
+  final profileData = getIt.profileProvider;
 
   Map<String, dynamic> _getVentProvider() {
 
@@ -191,7 +186,7 @@ class VentActions {
     required String comment
   }) {
 
-    final ventCommentProvider = GetIt.instance<VentCommentProvider>();
+    final ventCommentProvider = getIt.ventCommentProvider;
 
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);

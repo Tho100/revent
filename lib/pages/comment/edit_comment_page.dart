@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/comment/save_comment_edit.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -64,7 +64,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
               customHeight: 35,
               customWidth: 35,
               customEmptyPfpSize: 20,
-              pfpData: GetIt.instance<ProfileDataProvider>().profilePicture
+              pfpData: getIt.profileProvider.profilePicture
             ),
           ),
 

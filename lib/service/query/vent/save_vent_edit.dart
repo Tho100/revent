@@ -1,8 +1,6 @@
-import 'package:get_it/get_it.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/revent_connection_service.dart';
-import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 
 class SaveVentEdit {
 
@@ -31,7 +29,7 @@ class SaveVentEdit {
 
     await conn.execute(query, param);
 
-    GetIt.instance<ActiveVentProvider>().setBody(newBody);
+    getIt.activeVentProvider.setBody(newBody);
 
   }
 

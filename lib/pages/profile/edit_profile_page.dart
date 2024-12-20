@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/user_profile/profile_data_update.dart';
 import 'package:revent/helper/textinput_formatter.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -26,7 +26,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> {
 
-  final profileData = GetIt.instance<ProfileDataProvider>();
+  final profileData = getIt.profileProvider;
 
   final bioController = TextEditingController();
   final pronounOneController = TextEditingController();

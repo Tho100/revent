@@ -1,10 +1,8 @@
-import 'package:get_it/get_it.dart';
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/extract_data.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 
 class VentCommentActions {
 
@@ -20,7 +18,7 @@ class VentCommentActions {
     required this.ventTitle
   });
 
-  final ventCommentProvider = GetIt.instance<VentCommentProvider>();
+  final ventCommentProvider = getIt.ventCommentProvider;
   final userData = getIt.userProvider;
   // TODO: Use basequeryservice
   Future<void> delete() async {

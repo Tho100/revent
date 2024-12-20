@@ -1,12 +1,9 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -42,7 +39,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
 
     try {
 
-      final commentProvider = GetIt.instance<VentCommentProvider>();
+      final commentProvider = getIt.ventCommentProvider;
       final userData = getIt.userProvider;
 
       final commentText = commentController.text;
@@ -127,7 +124,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
             customHeight: 35,
             customWidth: 35,
             customEmptyPfpSize: 20,
-            pfpData: GetIt.instance<ProfileDataProvider>().profilePicture
+            pfpData: getIt.profileProvider.profilePicture
           ),
         ),
 

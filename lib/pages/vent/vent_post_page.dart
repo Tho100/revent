@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:get_it/get_it.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
@@ -14,8 +13,6 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/filter/comments_filter.dart';
 import 'package:revent/pages/comment/post_comment_page.dart';
-import 'package:revent/shared/provider/navigation_provider.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -58,11 +55,11 @@ class VentPostPage extends StatefulWidget {
 
 class _VentPostPageState extends State<VentPostPage> {
 
-  final ventCommentProvider = GetIt.instance<VentCommentProvider>();
-  final profileData = GetIt.instance<ProfileDataProvider>();
+  final ventCommentProvider = getIt.ventCommentProvider;
+  final profileData = getIt.profileProvider;
   final userData = getIt.userProvider;
-  final navigation = GetIt.instance<NavigationProvider>();
-  final activeVent = GetIt.instance<ActiveVentProvider>();
+  final navigation = getIt.navigationProvider;
+  final activeVent = getIt.activeVentProvider;
   
   final enableCommentNotifier = ValueNotifier<bool>(true);
   final filterTextNotifier = ValueNotifier<String>('Best');
@@ -373,7 +370,7 @@ class _VentPostPageState extends State<VentPostPage> {
         Navigator.pop(context);
         NavigatePage.editVentPage(
           title: widget.title, 
-          body: GetIt.instance<ActiveVentProvider>().body
+          body: getIt.activeVentProvider.body
         );
       },
       copyOnPressed: () {
