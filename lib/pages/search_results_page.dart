@@ -5,6 +5,7 @@ import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/setup/search_setup.dart';
+import 'package:revent/pages/main_search_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -126,7 +127,10 @@ class _SearchResultsPageState extends State<SearchResultsPage> with SingleTicker
           child: InkWellEffect(
             onPressed: () {
               _clearSearchDataOnClose();
-              Navigator.pop(context);
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => const MainSearchPage())
+              );
             },
             child: Stack(
               children: [
