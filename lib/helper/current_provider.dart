@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:get_it/get_it.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/get_it_extensions.dart';
@@ -30,11 +29,11 @@ class CurrentProvider {
 
     if(navigation.homeTabIndex == 0) {
       return realTime 
-        ? Provider.of<VentForYouProvider>(context!) : GetIt.instance<VentForYouProvider>();
+        ? Provider.of<VentForYouProvider>(context!) : getIt.ventForYouProvider;
 
     } else if (navigation.homeTabIndex == 1) {
       return realTime 
-        ? Provider.of<VentFollowingProvider>(context!) : GetIt.instance<VentFollowingProvider>();
+        ? Provider.of<VentFollowingProvider>(context!) : getIt.ventFollowingProvider;
 
     }
 
@@ -47,11 +46,11 @@ class CurrentProvider {
 
     if(navigation.profileTabIndex == 0) {
       return realTime 
-        ? Provider.of<ProfilePostsProvider>(context!) : GetIt.instance<ProfilePostsProvider>();
+        ? Provider.of<ProfilePostsProvider>(context!) : getIt.profilePostsProvider;
 
     } else if (navigation.profileTabIndex == 1) {
       return realTime 
-        ? Provider.of<ProfileSavedProvider>(context!) : GetIt.instance<ProfileSavedProvider>();
+        ? Provider.of<ProfileSavedProvider>(context!) : getIt.profileSavedProvider;
 
     }
 
@@ -62,7 +61,7 @@ class CurrentProvider {
     BuildContext? context
   }) {
     return realTime 
-      ? Provider.of<SearchPostsProvider>(context!) : GetIt.instance<SearchPostsProvider>();
+      ? Provider.of<SearchPostsProvider>(context!) : getIt.searchPostsProvider;
   }
 
   dynamic _returnLikedPostsProvider({
@@ -70,7 +69,7 @@ class CurrentProvider {
     BuildContext? context
   }) {
     return realTime 
-      ? Provider.of<LikedVentProvider>(context!) : GetIt.instance<LikedVentProvider>();
+      ? Provider.of<LikedVentProvider>(context!) : getIt.likedVentProvider;
   }
 
   dynamic getProviderOnly() {

@@ -36,12 +36,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   final homeTabs = const [
     Tab(text: 'For you'),
-    Tab(text: 'Following'),
+    Tab(text: 'Trending'),
+    Tab(text: 'Following')
   ];
 
   void _onTabChanged() async {
 
-    if (tabController.index == 1) {
+    if (tabController.index == 2) {
 
       if(ventFollowingData.vents.isEmpty) {
         await VentDataSetup().setupFollowing().then((_) {
@@ -135,6 +136,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       controller: tabController,
       children: [
         _buildForYouListView(), 
+        Container(),
         _buildFollowingListView(),           
       ],
     );
