@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return SliverAppBar(
       floating: true,
       snap: true,
-      centerTitle: false,
+      centerTitle: true,
       title: Padding(
         padding: const EdgeInsets.only(top: 10, left: 5),
         child: Text(
