@@ -40,8 +40,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   void _onTabChanged() async {
 
     if (tabController.index == 2) {
-
-      if(ventFollowingData.vents.isEmpty) {
+      
+      if(followingIsLoadedNotifier.value == false) {
         await VentDataSetup().setupFollowing().then((_) {
           followingIsLoadedNotifier.value = true;
         });
