@@ -148,7 +148,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       snap: true,
       centerTitle: true,
       title: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 5),
+        padding: const EdgeInsets.only(top: 8, right: 10.5),
         child: Text(
           'Revent',
           style: GoogleFonts.inter(
