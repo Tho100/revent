@@ -8,6 +8,7 @@ import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/provider/user_data_provider.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
@@ -30,5 +31,6 @@ extension GetItExtensions on GetIt {
   SearchAccountsProvider get searchAccountsProvider => get<SearchAccountsProvider>();
 
   LikedVentProvider get likedVentProvider => get<LikedVentProvider>();
+  SavedVentProvider get savedVentProvider => get<SavedVentProvider>();
 
 }

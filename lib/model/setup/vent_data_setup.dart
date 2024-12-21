@@ -5,6 +5,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/service/query/vent/vent_data_getter.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
@@ -186,5 +187,23 @@ class VentDataSetup {
     );
   }
 
+  Future<void> setupSaved() async {
+    await _setupVents<SavedVentData>(
+      dataGetter: () => VentDataGetter().getSavedVentsData(),
+      setVents: getIt.savedVentProvider.setVents,
+      ventBuilder: (title, bodyText, creator, postTimestamp, 
+          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SavedVentData(
+        title: title,
+        bodyText: bodyText,
+        creator: creator,
+        postTimestamp: postTimestamp,
+        profilePic: profilePic,
+        totalLikes: totalLikes,
+        totalComments: totalComments,
+        isPostLiked: isPostLiked,
+        isPostSaved: isPostSaved,
+      ),
+    );
+  }
 
 }
