@@ -31,6 +31,9 @@ class CurrentProvider {
       return realTime 
         ? Provider.of<VentForYouProvider>(context!) : getIt.ventForYouProvider;
 
+    } else if (navigation.homeTabIndex == 1) {
+      return null;
+      
     } else if (navigation.homeTabIndex == 2) {
       return realTime 
         ? Provider.of<VentFollowingProvider>(context!) : getIt.ventFollowingProvider;
