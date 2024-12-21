@@ -1,19 +1,15 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/main.dart';
-import 'package:revent/model/filter/home_filter.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
-import 'package:revent/shared/widgets/bottomsheet_widgets/vent_filter.dart';
 import 'package:revent/shared/widgets/custom_tab_bar.dart';
-import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/vent_widgets/home_vent_listview.dart';
 
 class HomePage extends StatefulWidget {
@@ -32,22 +28,20 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final ventFollowingData = getIt.ventFollowingProvider;
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
-  final filterTextNotifier = ValueNotifier<String>('Latest');
-
-  final filterModel = HomeFilter();
 
   late TabController tabController;
 
   final homeTabs = const [
     Tab(text: 'For you'),
-    Tab(text: 'Following'),
+    Tab(text: 'Trending'),
+    Tab(text: 'Following')
   ];
 
   void _onTabChanged() async {
 
-    if (tabController.index == 1) {
-
-      if(ventFollowingData.vents.isEmpty) {
+    if (tabController.index == 2) {
+      
+      if(followingIsLoadedNotifier.value == false) {
         await VentDataSetup().setupFollowing().then((_) {
           followingIsLoadedNotifier.value = true;
         });
@@ -55,9 +49,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     } 
     
-    filterModel.filterHomeToLatest();
-    filterTextNotifier.value = 'Latest';
-
     navigation.setHomeTabIndex(tabController.index);
     
   }
@@ -69,41 +60,19 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     tabController.addListener(_onTabChanged);
   }
 
-  void _filterOnPressed({required String filter}) {
-
-    switch (filter) {
-      case == 'Trending':
-      filterModel.filterHomeToTrending();
-      break;
-    case == 'Latest':
-      filterModel.filterHomeToLatest();
-      break;
-    }
-
-    filterTextNotifier.value = filter;
-
-    Navigator.pop(context);
-
-  }
-
   Future<void> _followingVentsOnRefresh() async {
 
     followingIsLoadedNotifier.value = false;
 
     await CallRefresh().refreshFollowingVents().then((_) {
       followingIsLoadedNotifier.value = true;
-      filterTextNotifier.value = 'Latest';
-      filterModel.filterHomeToLatest();
     });
 
   }
 
   Future<void> _forYouVentsOnRefresh() async {
 
-    await CallRefresh().refreshVents().then((_) {
-      filterTextNotifier.value = 'Latest';
-      filterModel.filterHomeToLatest();
-    });
+    await CallRefresh().refreshVents();
 
   }
 
@@ -159,6 +128,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       controller: tabController,
       children: [
         _buildForYouListView(), 
+        Container(),
         _buildFollowingListView(),           
       ],
     );
@@ -172,57 +142,13 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     ).buildTabBar();
   }
 
-  Widget _buildActionButton() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 10, right: 8),
-      child: InkWellEffect(
-        onPressed: () {
-          BottomsheetVentFilter().buildBottomsheet(
-            context: context, 
-            currentFilter: filterTextNotifier.value,
-            tabName: homeTabs[tabController.index].text!,
-            trendingOnPressed: () => _filterOnPressed(filter: 'Trending'), 
-            latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
-          );
-        },
-        child: Row(
-          children: [
-    
-            const SizedBox(width: 10),
-
-            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
-    
-            const SizedBox(width: 8),
-    
-            ValueListenableBuilder(
-              valueListenable: filterTextNotifier,
-              builder: (_, filterText, __) {
-                return Text(
-                  filterText,
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 15
-                  )
-                );
-              }
-            ),
-
-            const SizedBox(width: 10),
-    
-          ],
-        ),
-      )
-    );
-  }
-
   SliverAppBar _buildCustomAppBar() {
     return SliverAppBar(
       floating: true,
       snap: true,
-      centerTitle: false,
+      centerTitle: true,
       title: Padding(
-        padding: const EdgeInsets.only(top: 10, left: 5),
+        padding: const EdgeInsets.only(top: 8, right: 10.5),
         child: Text(
           'Revent',
           style: GoogleFonts.inter(
@@ -232,7 +158,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
           ),
         ),
       ),
-      actions: [_buildActionButton()],
       bottom: _buildTabBar()
     );
   }
@@ -247,7 +172,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   void dispose() {
     tabController.dispose();
     followingIsLoadedNotifier.dispose();
-    filterTextNotifier.dispose();
     super.dispose();
   }
 
