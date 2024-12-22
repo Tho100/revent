@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/user_model.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/pages/setttings/account_info_page.dart';
@@ -23,6 +25,11 @@ class SettingsPage extends StatelessWidget {
       buttonMessage: 'Sign out', 
       onPressedEvent: () => UserModel().signOutUser()
     );
+  }
+
+  void _clearLikedAndSavedData() {
+    getIt.likedVentProvider.clearVents();
+    getIt.savedVentProvider.clearVents();
   }
 
   Widget _buildBody(BuildContext context) {
@@ -153,12 +160,22 @@ class SettingsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CustomAppBar(
-        title: 'Settings and activity',
-        context: context
-      ).buildAppBar(),
-      body: _buildBody(context),
+    return WillPopScope(
+      onWillPop: () async {
+        _clearLikedAndSavedData();
+        return true;
+      },
+      child: Scaffold(
+        appBar: CustomAppBar(
+          title: 'Settings and activity',
+          context: context,
+          customBackOnPressed: () {
+            _clearLikedAndSavedData();
+            Navigator.pop(context);
+          }
+        ).buildAppBar(),
+        body: _buildBody(context),
+      ),
     );
   }
 

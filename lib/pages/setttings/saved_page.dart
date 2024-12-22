@@ -142,7 +142,6 @@ class _SavedPageState extends State<SavedPage> {
   @override
   void dispose() {
     isPageLoadedNotifier.dispose();
-    savedVentData.clearVents();
     navigation.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
