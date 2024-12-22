@@ -142,7 +142,6 @@ class _LikedPageState extends State<LikedPage> {
   @override
   void dispose() {
     isPageLoadedNotifier.dispose();
-    likedVentData.clearVents();
     navigation.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
