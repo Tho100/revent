@@ -82,15 +82,15 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         break;
       case 'Trending':
         trendingIsLoadedNotifier.value = false;
-        await callRefresh.refreshTrendingVents().then((_) {
-          trendingIsLoadedNotifier.value = true;
-        });
+        await callRefresh.refreshTrendingVents().then(
+          (_) => trendingIsLoadedNotifier.value = true
+        );
         break;
       case 'Following':
         followingIsLoadedNotifier.value = false;
-        await callRefresh.refreshFollowingVents().then((_) {
-          followingIsLoadedNotifier.value = true;
-        });
+        await callRefresh.refreshFollowingVents().then(
+          (_) => followingIsLoadedNotifier.value = true
+        );
         break;
     }
 
