@@ -43,22 +43,20 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   void _onTabChanged() async {
 
-    // TODO: Use => notation instead of bracket
-
     if (tabController.index == 1) {
 
       if(trendingIsLoadedNotifier.value == false) {
-        await ventDataSetup.setupTrending().then((_) {
-          trendingIsLoadedNotifier.value = true;
-        });
+        await ventDataSetup.setupTrending().then(
+          (_) => trendingIsLoadedNotifier.value = true
+        );
       }
 
     } else if (tabController.index == 2) {
 
       if(followingIsLoadedNotifier.value == false) {
-        await ventDataSetup.setupFollowing().then((_) {
-          followingIsLoadedNotifier.value = true;
-        });
+        await ventDataSetup.setupFollowing().then(
+          (_) => followingIsLoadedNotifier.value = true
+        );
       }
 
     }
