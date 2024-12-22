@@ -22,6 +22,18 @@ class VentDataGetter {
 
   }
 
+  Future<Map<String, dynamic>> getTrendingVentsData() async {
+
+    const query = '''
+      SELECT title, body_text, creator, created_at, total_likes, total_comments 
+        FROM vent_info 
+          ORDER BY (total_likes >= 5 AND total_comments >= 1) ASC, total_likes ASC;
+    ''';
+
+    return _fetchVentsData(query);
+
+  }
+
   Future<Map<String, dynamic>> getFollowingVentsData() async {
 
     const query = '''
@@ -61,6 +73,21 @@ class VentDataGetter {
     ''';
 
     final param = {'liked_by': userData.user.username};
+
+    return _fetchVentsData(query, params: param);
+
+  }
+
+  Future<Map<String, dynamic>> getSavedVentsData() async {
+
+    const query = '''
+      SELECT vi.title, vi.body_text, vi.creator, vi.created_at, vi.total_likes, vi.total_comments 
+        FROM vent_info vi
+          INNER JOIN saved_vent_info svi 
+          ON vi.title = svi.title AND svi.saved_by = :saved_by;
+    ''';
+
+    final param = {'saved_by': userData.user.username};
 
     return _fetchVentsData(query, params: param);
 

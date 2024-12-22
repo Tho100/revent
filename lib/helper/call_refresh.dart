@@ -17,6 +17,14 @@ class CallRefresh {
 
   }
 
+  Future<void> refreshTrendingVents() async {
+
+    getIt.ventTrendingProvider.deleteVentsData();
+
+    await VentDataSetup().setupTrending();
+
+  }
+
   Future<void> refreshFollowingVents() async {
 
     getIt.ventFollowingProvider.deleteVentsData();

@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class LikedVentData {
+class VentTrendingData {
 
   String title;
   String bodyText;
@@ -17,7 +17,7 @@ class LikedVentData {
   bool isPostLiked;
   bool isPostSaved;
 
-  LikedVentData({
+  VentTrendingData({
     required this.title,
     required this.bodyText,
     required this.creator,
@@ -30,16 +30,33 @@ class LikedVentData {
   });
 
 }
-// TODO: Rename file to liked_vent_provider
-class LikedVentProvider extends ChangeNotifier {
 
-  List<LikedVentData> _vents = [];
+class VentTrendingProvider extends ChangeNotifier {
 
-  List<LikedVentData> get vents => _vents;
+  List<VentTrendingData> _vents = [];
 
-  void setVents(List<LikedVentData> vents) {
+  List<VentTrendingData> get vents => _vents;
+
+  void setVents(List<VentTrendingData> vents) {
     _vents = vents;
     notifyListeners();
+  }
+
+  void addVent(VentTrendingData vent) {
+    _vents.add(vent);
+    notifyListeners();
+  }
+
+  void deleteVentsData() {
+    _vents.clear();
+    notifyListeners();
+  }
+
+  void deleteVent(int index) {
+    if (index >= 0 && index < _vents.length) {
+      _vents.removeAt(index);
+      notifyListeners();
+    }
   }
 
   void likeVent(int index, bool isUserLikedPost) {
@@ -64,10 +81,6 @@ class LikedVentProvider extends ChangeNotifier {
 
     notifyListeners();
     
-  }
-
-  void clearVents() {
-    _vents.clear();
   }
 
 }

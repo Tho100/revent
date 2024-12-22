@@ -5,9 +5,11 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
+import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/service/query/vent/vent_data_getter.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
 class VentDataSetup {
 
@@ -128,6 +130,25 @@ class VentDataSetup {
     );
   }
 
+  Future<void> setupTrending() async {
+    await _setupVents<VentTrendingData>(
+      dataGetter: () => VentDataGetter().getTrendingVentsData(),
+      setVents: getIt.ventTrendingProvider.setVents,
+      ventBuilder: (title, bodyText, creator, postTimestamp, 
+          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentTrendingData(
+        title: title,
+        bodyText: bodyText,
+        creator: creator,
+        postTimestamp: postTimestamp,
+        profilePic: profilePic,
+        totalLikes: totalLikes,
+        totalComments: totalComments,
+        isPostLiked: isPostLiked,
+        isPostSaved: isPostSaved,
+      ),
+    );
+  }
+
   Future<void> setupFollowing() async {
     await _setupVents<VentFollowingData>(
       dataGetter: () => VentDataGetter().getFollowingVentsData(),
@@ -186,5 +207,23 @@ class VentDataSetup {
     );
   }
 
+  Future<void> setupSaved() async {
+    await _setupVents<SavedVentData>(
+      dataGetter: () => VentDataGetter().getSavedVentsData(),
+      setVents: getIt.savedVentProvider.setVents,
+      ventBuilder: (title, bodyText, creator, postTimestamp, 
+          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SavedVentData(
+        title: title,
+        bodyText: bodyText,
+        creator: creator,
+        postTimestamp: postTimestamp,
+        profilePic: profilePic,
+        totalLikes: totalLikes,
+        totalComments: totalComments,
+        isPostLiked: isPostLiked,
+        isPostSaved: isPostSaved,
+      ),
+    );
+  }
 
 }

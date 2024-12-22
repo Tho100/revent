@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/main.dart';
+import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
@@ -28,6 +29,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final ventFollowingData = getIt.ventFollowingProvider;
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
+  final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
 
   late TabController tabController;
 
@@ -39,15 +41,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   void _onTabChanged() async {
 
-    if (tabController.index == 2) {
-      
+    // TODO: Create variabel for ventdatasetup class
+    // TODO: Use => notation instead of bracket
+
+    if (tabController.index == 1) {
+
+      if(trendingIsLoadedNotifier.value == false) {
+        await VentDataSetup().setupTrending().then((_) {
+          trendingIsLoadedNotifier.value = true;
+        });
+      }
+
+    } else if (tabController.index == 2) {
+
       if(followingIsLoadedNotifier.value == false) {
         await VentDataSetup().setupFollowing().then((_) {
           followingIsLoadedNotifier.value = true;
         });
       }
 
-    } 
+    }
     
     navigation.setHomeTabIndex(tabController.index);
     
@@ -60,6 +73,23 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     tabController.addListener(_onTabChanged);
   }
 
+  // TODO: Create separated single function for refresh
+  Future<void> _forYouVentsOnRefresh() async {
+
+    await CallRefresh().refreshVents();
+
+  }
+
+  Future<void> _trendingVentsOnRefresh() async {
+
+    trendingIsLoadedNotifier.value = false;
+
+    await CallRefresh().refreshTrendingVents().then((_) {
+      trendingIsLoadedNotifier.value = true;
+    });
+
+  }
+
   Future<void> _followingVentsOnRefresh() async {
 
     followingIsLoadedNotifier.value = false;
@@ -67,12 +97,6 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     await CallRefresh().refreshFollowingVents().then((_) {
       followingIsLoadedNotifier.value = true;
     });
-
-  }
-
-  Future<void> _forYouVentsOnRefresh() async {
-
-    await CallRefresh().refreshVents();
 
   }
 
@@ -98,6 +122,28 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       child: HomeVentListView(
         provider: Provider.of<VentForYouProvider>(context)
       ),
+    );
+  }
+
+  Widget _buildTrendingListView() {
+    return ValueListenableBuilder(
+      valueListenable: trendingIsLoadedNotifier,
+      builder: (_, isLoaded, __) {
+
+        if(!isLoaded) {
+          return const Center(
+            child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
+          );
+        }
+
+        return _buildVentListViewBody(
+          onRefresh: () async => await _trendingVentsOnRefresh(),
+          child: HomeVentListView(
+            provider: Provider.of<VentTrendingProvider>(context)
+          ),
+        ); 
+
+      },
     );
   }
 
@@ -128,7 +174,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
       controller: tabController,
       children: [
         _buildForYouListView(), 
-        Container(),
+        _buildTrendingListView(),
         _buildFollowingListView(),           
       ],
     );

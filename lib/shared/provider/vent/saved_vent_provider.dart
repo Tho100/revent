@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class LikedVentData {
+class SavedVentData {
 
   String title;
   String bodyText;
@@ -17,7 +17,7 @@ class LikedVentData {
   bool isPostLiked;
   bool isPostSaved;
 
-  LikedVentData({
+  SavedVentData({
     required this.title,
     required this.bodyText,
     required this.creator,
@@ -30,14 +30,14 @@ class LikedVentData {
   });
 
 }
-// TODO: Rename file to liked_vent_provider
-class LikedVentProvider extends ChangeNotifier {
 
-  List<LikedVentData> _vents = [];
+class SavedVentProvider extends ChangeNotifier {
 
-  List<LikedVentData> get vents => _vents;
+  List<SavedVentData> _vents = [];
 
-  void setVents(List<LikedVentData> vents) {
+  List<SavedVentData> get vents => _vents;
+
+  void setVents(List<SavedVentData> vents) {
     _vents = vents;
     notifyListeners();
   }

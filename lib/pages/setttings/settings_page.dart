@@ -5,6 +5,7 @@ import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/pages/setttings/account_info_page.dart';
 import 'package:revent/pages/setttings/app_info_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
+import 'package:revent/pages/setttings/saved_page.dart';
 import 'package:revent/pages/setttings/security_page.dart';
 import 'package:revent/pages/setttings/liked_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -96,7 +97,12 @@ class SettingsPage extends StatelessWidget {
           SettingsButton(
             text: 'Saved', 
             icon: CupertinoIcons.bookmark,
-            onPressed: () {}
+            onPressed: () {
+              Navigator.push(
+                context, 
+                MaterialPageRoute(builder: (_) => const SavedPage())
+              );
+            }
           ),
 
           const SizedBox(height: buttonGap),
