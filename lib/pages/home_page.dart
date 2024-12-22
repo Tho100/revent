@@ -31,6 +31,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
 
+  final ventDataSetup = VentDataSetup();
+
   late TabController tabController;
 
   final homeTabs = const [
@@ -41,13 +43,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   void _onTabChanged() async {
 
-    // TODO: Create variabel for ventdatasetup class
     // TODO: Use => notation instead of bracket
 
     if (tabController.index == 1) {
 
       if(trendingIsLoadedNotifier.value == false) {
-        await VentDataSetup().setupTrending().then((_) {
+        await ventDataSetup.setupTrending().then((_) {
           trendingIsLoadedNotifier.value = true;
         });
       }
@@ -55,7 +56,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     } else if (tabController.index == 2) {
 
       if(followingIsLoadedNotifier.value == false) {
-        await VentDataSetup().setupFollowing().then((_) {
+        await ventDataSetup.setupFollowing().then((_) {
           followingIsLoadedNotifier.value = true;
         });
       }
