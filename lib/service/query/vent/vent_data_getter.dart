@@ -22,6 +22,18 @@ class VentDataGetter {
 
   }
 
+  Future<Map<String, dynamic>> getTrendingVentsData() async {
+
+    const query = '''
+      SELECT title, body_text, creator, created_at, total_likes, total_comments 
+        FROM vent_info 
+          ORDER BY (total_likes >= 5 AND total_comments >= 1) ASC, total_likes ASC;
+    ''';
+
+    return _fetchVentsData(query);
+
+  }
+
   Future<Map<String, dynamic>> getFollowingVentsData() async {
 
     const query = '''

@@ -10,6 +10,7 @@ import 'package:revent/shared/provider/vent/liked_vent_data_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
+import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
 class CurrentProvider {
 
@@ -33,7 +34,8 @@ class CurrentProvider {
         ? Provider.of<VentForYouProvider>(context!) : getIt.ventForYouProvider;
 
     } else if (navigation.homeTabIndex == 1) {
-      return null;
+      return realTime 
+        ? Provider.of<VentTrendingProvider>(context!) : getIt.ventTrendingProvider;
       
     } else if (navigation.homeTabIndex == 2) {
       return realTime 

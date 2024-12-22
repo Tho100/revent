@@ -12,6 +12,7 @@ import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
 extension GetItExtensions on GetIt {
   
@@ -20,6 +21,7 @@ extension GetItExtensions on GetIt {
   ProfileDataProvider get profileProvider => get<ProfileDataProvider>();
 
   VentForYouProvider get ventForYouProvider => get<VentForYouProvider>();
+  VentTrendingProvider get ventTrendingProvider => get<VentTrendingProvider>();
   VentFollowingProvider get ventFollowingProvider => get<VentFollowingProvider>();
   VentCommentProvider get ventCommentProvider => get<VentCommentProvider>();
   ActiveVentProvider get activeVentProvider => get<ActiveVentProvider>();
