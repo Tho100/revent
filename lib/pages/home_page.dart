@@ -31,6 +31,9 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
 
+  final ventDataSetup = VentDataSetup();
+  final callRefresh = CallRefresh();
+
   late TabController tabController;
 
   final homeTabs = const [
@@ -41,23 +44,20 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   void _onTabChanged() async {
 
-    // TODO: Create variabel for ventdatasetup class
-    // TODO: Use => notation instead of bracket
-
     if (tabController.index == 1) {
 
       if(trendingIsLoadedNotifier.value == false) {
-        await VentDataSetup().setupTrending().then((_) {
-          trendingIsLoadedNotifier.value = true;
-        });
+        await ventDataSetup.setupTrending().then(
+          (_) => trendingIsLoadedNotifier.value = true
+        );
       }
 
     } else if (tabController.index == 2) {
 
       if(followingIsLoadedNotifier.value == false) {
-        await VentDataSetup().setupFollowing().then((_) {
-          followingIsLoadedNotifier.value = true;
-        });
+        await ventDataSetup.setupFollowing().then(
+          (_) => followingIsLoadedNotifier.value = true
+        );
       }
 
     }
@@ -73,30 +73,26 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     tabController.addListener(_onTabChanged);
   }
 
-  // TODO: Create separated single function for refresh
-  Future<void> _forYouVentsOnRefresh() async {
 
-    await CallRefresh().refreshVents();
+  Future<void> _onTabRefresh() async {
 
-  }
-
-  Future<void> _trendingVentsOnRefresh() async {
-
-    trendingIsLoadedNotifier.value = false;
-
-    await CallRefresh().refreshTrendingVents().then((_) {
-      trendingIsLoadedNotifier.value = true;
-    });
-
-  }
-
-  Future<void> _followingVentsOnRefresh() async {
-
-    followingIsLoadedNotifier.value = false;
-
-    await CallRefresh().refreshFollowingVents().then((_) {
-      followingIsLoadedNotifier.value = true;
-    });
+    switch (homeTabs[tabController.index].text) {
+      case 'For you':
+        await callRefresh.refreshVents();
+        break;
+      case 'Trending':
+        trendingIsLoadedNotifier.value = false;
+        await callRefresh.refreshTrendingVents().then(
+          (_) => trendingIsLoadedNotifier.value = true
+        );
+        break;
+      case 'Following':
+        followingIsLoadedNotifier.value = false;
+        await callRefresh.refreshFollowingVents().then(
+          (_) => followingIsLoadedNotifier.value = true
+        );
+        break;
+    }
 
   }
 
@@ -118,7 +114,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   Widget _buildForYouListView() {
     return _buildVentListViewBody(
-      onRefresh: () async => await _forYouVentsOnRefresh(),
+      onRefresh: () async => await _onTabRefresh(),
       child: HomeVentListView(
         provider: Provider.of<VentForYouProvider>(context)
       ),
@@ -137,7 +133,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         }
 
         return _buildVentListViewBody(
-          onRefresh: () async => await _trendingVentsOnRefresh(),
+          onRefresh: () async => await _onTabRefresh(),
           child: HomeVentListView(
             provider: Provider.of<VentTrendingProvider>(context)
           ),
@@ -159,7 +155,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         }
 
         return _buildVentListViewBody(
-          onRefresh: () async => await _followingVentsOnRefresh(),
+          onRefresh: () async => await _onTabRefresh(),
           child: HomeVentListView(
             provider: Provider.of<VentFollowingProvider>(context)
           ),
