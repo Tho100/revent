@@ -214,6 +214,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   void dispose() {
     tabController.dispose();
     followingIsLoadedNotifier.dispose();
+    trendingIsLoadedNotifier.dispose();
     super.dispose();
   }
 
