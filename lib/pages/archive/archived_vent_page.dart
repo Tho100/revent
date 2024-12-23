@@ -10,6 +10,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
+import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -58,15 +59,26 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
   } 
 
+  Future<String> _getLastEdit(String title) async {
+
+    return await LastEditGetter(
+      title: title, 
+      creator: userData.user.username
+    ).getLastEditArchive();
+
+  }
+
   void _viewVentPostPage(String title) async {
 
     final bodyText = await _getBodyText(title);
+    final lastEdit = await _getLastEdit(title);
 
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => ViewArchiveVentPage(
         title: title, 
         bodyText: bodyText, 
+        lastEdit: lastEdit,
       )),
     );
 
