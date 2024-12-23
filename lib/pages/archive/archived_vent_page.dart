@@ -10,6 +10,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
+import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -58,15 +59,27 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
   } 
 
-  void _viewVentPostPage(String title) async {
+  Future<String> _getLastEdit(String title) async {
+
+    return await LastEditGetter(
+      title: title, 
+      creator: userData.user.username
+    ).getLastEditArchive();
+
+  }
+
+  void _viewVentPostPage(String title, String postTimestamp) async {
 
     final bodyText = await _getBodyText(title);
+    final lastEdit = await _getLastEdit(title);
 
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => ViewArchiveVentPage(
         title: title, 
         bodyText: bodyText, 
+        lastEdit: lastEdit,
+        postTimestamp: postTimestamp
       )),
     );
 
@@ -123,7 +136,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
       creator: userData.user.username,
       pfpData: profileData.profilePicture,
       postTimestamp: postTimestamp,
-      viewVentPostOnPressed: () => _viewVentPostPage(title),
+      viewVentPostOnPressed: () => _viewVentPostPage(title, postTimestamp),
       editOnPressed: () async {
 
         Navigator.pop(navigatorKey.currentContext!);
@@ -183,7 +196,9 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
         if(index < archiveData.length) {
           
-          final ventsData = archiveData[index];
+          final reversedVentIndex = archiveData.length - 1 - index;
+          final ventsData = archiveData[reversedVentIndex];
+
           return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
 
         } else if (archiveData.length > 9) {

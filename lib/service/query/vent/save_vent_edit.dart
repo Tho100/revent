@@ -27,7 +27,7 @@ class SaveVentEdit extends BaseQueryService {
     };
 
     await executeQuery(query, params).then(
-      (_) async => await _updateLastEdit()
+      (_) async => await _updateLastEdit(isFromArchive: false)
     );
 
     getIt.activeVentProvider.setBody(newBody);
@@ -45,16 +45,21 @@ class SaveVentEdit extends BaseQueryService {
       'new_body': newBody
     };
 
-    await executeQuery(query, params);
+    await executeQuery(query, params).then(
+      (_) async => await _updateLastEdit(isFromArchive: true)
+    );
+
+    getIt.activeVentProvider.setBody(newBody);
 
   }
 
-  Future<void> _updateLastEdit() async {
+  Future<void> _updateLastEdit({required bool isFromArchive}) async {
 
     final dateTimeNow = DateTime.now();
 
-    const query = 
-      'UPDATE vent_info SET last_edit = :last_edit WHERE title = :title AND creator = :creator';
+    final query = isFromArchive 
+      ? 'UPDATE archive_vent_info SET last_edit = :last_edit WHERE title = :title AND creator = :creator'
+      : 'UPDATE vent_info SET last_edit = :last_edit WHERE title = :title AND creator = :creator';
 
     final params = {
       'title': title,
@@ -66,7 +71,9 @@ class SaveVentEdit extends BaseQueryService {
 
     final formatTimeStamp = FormatDate().formatPostTimestamp(dateTimeNow);
 
-    getIt.activeVentProvider.setLastEdit(formatTimeStamp);
+    if(!isFromArchive) {
+      getIt.activeVentProvider.setLastEdit(formatTimeStamp);
+    }
 
   }
 
