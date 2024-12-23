@@ -13,6 +13,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/filter/comments_filter.dart';
 import 'package:revent/pages/comment/post_comment_page.dart';
+import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -66,6 +67,17 @@ class _VentPostPageState extends State<VentPostPage> {
 
   final commentSettings = VentCommentsSettings();
   final commentsFilter = CommentsFilter();
+
+  void _loadLastEdit() async {
+
+    final lastEdit = await LastEditGetter(
+      title: widget.title, 
+      creator: widget.creator
+    ).getLastEdit();
+
+    activeVent.setLastEdit(lastEdit);
+
+  }
 
   Future<void> _loadCommentsSettings() async {
 
@@ -316,6 +328,33 @@ class _VentPostPageState extends State<VentPostPage> {
               fontSize: 14
             ),
           ),
+
+          const Spacer(),
+
+          Consumer<ActiveVentProvider>(
+            builder: (_, data, __) {
+              return data.lastEdit != '' 
+                ? Row(
+                  children: [
+
+                    const Icon(CupertinoIcons.pencil, size: 15.5, color: ThemeColor.thirdWhite),
+                    
+                    const SizedBox(width: 6),
+
+                    Text(
+                      '${data.lastEdit == 'Just now' ? 'Last edit just now' : 'Last edit ${data.lastEdit} ago'} ',
+                      style: GoogleFonts.inter(
+                        color: ThemeColor.thirdWhite,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 12.2
+                      )
+                    ),
+
+                  ],
+                ) 
+              : const SizedBox.shrink();
+            },
+          )
 
         ],
       ),
@@ -668,6 +707,7 @@ class _VentPostPageState extends State<VentPostPage> {
       _initializeComments();
       activeVent.setBody(widget.bodyText);
     });
+    _loadLastEdit();
     super.initState();
   }
 
