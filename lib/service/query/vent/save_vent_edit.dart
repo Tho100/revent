@@ -19,14 +19,14 @@ class SaveVentEdit extends BaseQueryService {
 
     const query = 
       'UPDATE vent_info SET body_text = :new_body WHERE title = :title AND creator = :creator';
-    // TODO: Update to params
-    final param = {
+
+    final params = {
       'title': title,
       'creator': userData.user.username,
       'new_body': newBody
     };
 
-    await executeQuery(query, param).then(
+    await executeQuery(query, params).then(
       (_) async => await _updateLastEdit()
     );
 
@@ -39,13 +39,13 @@ class SaveVentEdit extends BaseQueryService {
     const query = 
       'UPDATE archive_vent_info SET body_text = :new_body WHERE title = :title AND creator = :creator';
 
-    final param = {
+    final params = {
       'title': title,
       'creator': userData.user.username,
       'new_body': newBody
     };
 
-    await executeQuery(query, param);
+    await executeQuery(query, params);
 
   }
 
