@@ -68,7 +68,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
   }
 
-  void _viewVentPostPage(String title) async {
+  void _viewVentPostPage(String title, String postTimestamp) async {
 
     final bodyText = await _getBodyText(title);
     final lastEdit = await _getLastEdit(title);
@@ -79,6 +79,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
         title: title, 
         bodyText: bodyText, 
         lastEdit: lastEdit,
+        postTimestamp: postTimestamp
       )),
     );
 
@@ -135,7 +136,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
       creator: userData.user.username,
       pfpData: profileData.profilePicture,
       postTimestamp: postTimestamp,
-      viewVentPostOnPressed: () => _viewVentPostPage(title),
+      viewVentPostOnPressed: () => _viewVentPostPage(title, postTimestamp),
       editOnPressed: () async {
 
         Navigator.pop(navigatorKey.currentContext!);
