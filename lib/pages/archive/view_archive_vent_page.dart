@@ -15,7 +15,6 @@ class ViewArchiveVentPage extends StatelessWidget {
   final String bodyText;
   final String postTimestamp;
   final String lastEdit;
-  // TODO: reverse archive list
 
   ViewArchiveVentPage({
     required this.title,

@@ -196,7 +196,9 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
         if(index < archiveData.length) {
           
-          final ventsData = archiveData[index];
+          final reversedVentIndex = archiveData.length - 1 - index;
+          final ventsData = archiveData[reversedVentIndex];
+
           return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
 
         } else if (archiveData.length > 9) {
