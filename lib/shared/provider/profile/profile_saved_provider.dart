@@ -22,9 +22,10 @@ class ProfileSavedData {
   List<bool> isPostSaved = [];
 
   void clear() {
+    titles.clear();
+    bodyText.clear();
     creator.clear();
     pfpData.clear();
-    titles.clear();
     totalLikes.clear();
     totalComments.clear();
     postTimestamp.clear();
@@ -105,11 +106,14 @@ class ProfileSavedProvider extends ChangeNotifier {
 
       if (index >= 0 && index < profile.titles.length) {
         profile.titles.removeAt(index);
+        profile.bodyText.removeAt(index);
         profile.totalLikes.removeAt(index);
         profile.totalComments.removeAt(index);
         profile.postTimestamp.removeAt(index);
         profile.pfpData.removeAt(index);
         profile.creator.removeAt(index);
+        profile.isPostLiked.removeAt(index);
+        profile.isPostSaved.removeAt(index);
         notifyListeners();
       }
       

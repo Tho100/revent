@@ -53,7 +53,10 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
       crossAxisCount: 1,
       itemCount: savedData.titles.length,
       builder: (_, index) {
-        return _buildPreviewer(savedData, index);
+        return KeyedSubtree(
+          key: ValueKey('${savedData.titles[index]}/${savedData.creator[index]}'),
+          child: _buildPreviewer(savedData, index),
+        );
       },
     );
   }
