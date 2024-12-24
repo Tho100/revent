@@ -57,18 +57,18 @@ class BottomsheetVentPostActions {
 
         const BottomsheetTitle(title: 'Post Action'),
 
-        if(userData.user.username == creator && editOnPressed != null)
-        _buildOptionButton(
-          text: 'Edit post',
-          icon: CupertinoIcons.square_pencil,
-          onPressed: editOnPressed
-        ),
-        // TODO: Move this the top
         if(removeSavedPostOnPressed != null)
         _buildOptionButton(
           text: 'Unsave',
           icon: CupertinoIcons.bookmark_fill,
           onPressed: removeSavedPostOnPressed
+        ),
+
+        if(userData.user.username == creator && editOnPressed != null)
+        _buildOptionButton(
+          text: 'Edit post',
+          icon: CupertinoIcons.square_pencil,
+          onPressed: editOnPressed
         ),
 
         if(copyOnPressed != null)
