@@ -62,7 +62,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   bool isFollowingListHidden = false;
   bool isSavedPostsHidden = false;
 
-  void _initializeClasses() {
+  void _initializeClasses() async {
     
     callProfilePosts = ProfilePostsSetup(
       userType: 'user_profile',
@@ -72,8 +72,8 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     tabController = TabController(length: 2, vsync: this);
 
     tabController.addListener(() {
-      _onTabChanged();
-      setState(() {
+      _onTabChanged(); 
+      setState(() { // TODO: Move this to onTabChanged
         navigation.setProfileTabIndex(tabController.index);
       });
     });
@@ -82,12 +82,13 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       username: widget.username, 
       pfpData: widget.pfpData
     );
-    
+        
     tabBarWidgets = ProfileTabBarWidgets(
       controller: tabController, 
       isMyProfile: false,
       username: widget.username,
       pfpData: widget.pfpData,
+      isSavedHidden: isSavedPostsHidden
     );
 
   }
@@ -95,7 +96,15 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   void _onTabChanged() async {
 
     if(tabController.index == 1) {
-      await callProfilePosts.setupSaved();
+
+      if(isSavedPostsHidden) {
+        SnackBarDialog.temporarySnack(message: 'Saved posts is hidden.');
+      }
+
+      if(!isSavedPostsHidden) {
+        await callProfilePosts.setupSaved();
+      }
+
     }
 
   }
@@ -108,6 +117,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
     isPrivateAccount = getCurrentOptions['account'] != 0;
     isFollowingListHidden = getCurrentOptions['following'] != 0;
+    isSavedPostsHidden = getCurrentOptions['saved'] != 0;
 
   }
 
@@ -154,7 +164,6 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       profileSavedData.userProfile.clear();
 
       await callProfilePosts.setupPosts();
-      await callProfilePosts.setupSaved();
       
       postsNotifier.value = profilePostsData.userProfile.titles.length;
 

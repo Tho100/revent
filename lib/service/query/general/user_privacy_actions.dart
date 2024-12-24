@@ -35,6 +35,12 @@ class UserPrivacyActions extends BaseQueryService {
     );
   }
 
+  Future<void> hideSavedPosts({required int isHideSavedPosts}) async {
+    await _updatePrivacyData(
+      value: isHideSavedPosts, column: 'privated_saved_vents'
+    );
+  }
+
   Future<Map<String, int>> getCurrentOptions({required String username}) async {
 
     const query = 

@@ -54,6 +54,14 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   }
 
+  Future<void> _hideSavedPostsOnPressed() async {
+
+    hideSavedPostNotifier.value 
+      ? userPrivacyActions.hideSavedPosts(isHideSavedPosts: 1)
+      : userPrivacyActions.hideSavedPosts(isHideSavedPosts: 0);
+
+  }
+
   Widget _buildSwitch(ValueNotifier notifier, VoidCallback onToggled, String text, String description) {
     return Padding(
       padding: const EdgeInsets.only(left: 18.0, right: 8.0),
@@ -135,7 +143,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
           _buildSwitch(
             hideSavedPostNotifier,
-            () => {},
+            () async => await _hideSavedPostsOnPressed(),
             'Hide saved post',
             'Only you can see your saved vent post when this option is enabled.'
           ),

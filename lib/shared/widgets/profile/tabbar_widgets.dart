@@ -10,6 +10,7 @@ class ProfileTabBarWidgets {
   final TabController controller;
   
   final bool isMyProfile;
+  final bool? isSavedHidden;
 
   final String username;
   final Uint8List pfpData;
@@ -19,6 +20,7 @@ class ProfileTabBarWidgets {
     required this.isMyProfile,
     required this.username,
     required this.pfpData,
+    this.isSavedHidden = false
   });
 
   Widget buildTabBarTabs() {
@@ -36,6 +38,7 @@ class ProfileTabBarWidgets {
 
           ProfileSavedListView(
             isMyProfile: isMyProfile,
+            isSavedHidden: isSavedHidden!,
           ),
 
         ],
