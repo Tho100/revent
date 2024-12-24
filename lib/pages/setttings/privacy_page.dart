@@ -46,6 +46,14 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   }
 
+  Future<void> _hideFollowingListOnPressed() async {
+
+    hideFollowingListNotifier.value 
+      ? userPrivacyActions.hideFollowingList(isHideFollowingList: 1)
+      : userPrivacyActions.hideFollowingList(isHideFollowingList: 0);
+
+  }
+
   Widget _buildSwitch(ValueNotifier notifier, VoidCallback onToggled, String text, String description) {
     return Padding(
       padding: const EdgeInsets.only(left: 18.0, right: 8.0),
@@ -136,7 +144,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
           _buildSwitch(
             hideFollowingListNotifier,
-            () => {},
+            () async => await _hideFollowingListOnPressed(),
             'Hide following list',
             'Only you can see your following list when this option is enabled.'
           ),

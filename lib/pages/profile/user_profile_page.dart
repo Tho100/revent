@@ -59,6 +59,8 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   late TabController tabController;
 
   bool isPrivateAccount = false;
+  bool isFollowingListHidden = false;
+  bool isSavedPostsHidden = false;
 
   void _initializeClasses() {
     
@@ -98,13 +100,14 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
   }
 
-  Future<void> _isPrivateAccount() async {
+  Future<void> _loadPrivacySettings() async {
 
     final getCurrentOptions = await UserPrivacyActions().getCurrentOptions(
       username: widget.username
     );
 
     isPrivateAccount = getCurrentOptions['account'] != 0;
+    isFollowingListHidden = getCurrentOptions['following'] != 0;
 
   }
 
@@ -129,7 +132,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
     try {
 
-      await _isPrivateAccount();
+      await _loadPrivacySettings();
 
       if(isPrivateAccount) {
         await _setPrivateAccountData();
@@ -273,13 +276,13 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
         GestureDetector(
           onTap: () => isPrivateAccount 
-            ? null : NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
+            ? null : NavigatePage.followsPage(pageType: 'Followers', username: widget.username, isFollowingListHidden: isFollowingListHidden),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
         ),
 
         GestureDetector(
-          onTap: () => isPrivateAccount 
-            ? null : NavigatePage.followsPage(pageType: 'Following', username: widget.username),
+          onTap: () => isPrivateAccount || isFollowingListHidden
+            ? null : NavigatePage.followsPage(pageType: 'Following', username: widget.username, isFollowingListHidden: isFollowingListHidden),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
         ),
   

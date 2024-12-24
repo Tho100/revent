@@ -104,11 +104,14 @@ class NavigatePage {
 
   static void followsPage({
     required String pageType, 
-    required String username
+    required String username,
+    bool? isFollowingListHidden = false          
   }) {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => FollowsPage(pageType: pageType, username: username)),
+      MaterialPageRoute(builder: (_) => FollowsPage(
+        pageType: pageType, username: username, isFollowingListHidden: isFollowingListHidden!
+      )),
     );
   }
 
