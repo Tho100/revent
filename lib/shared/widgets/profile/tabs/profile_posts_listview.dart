@@ -59,7 +59,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
       builder: (_, index) {
         final reversedIndex = postsData.titles.length - 1 - index;
         return KeyedSubtree(
-          key: ValueKey('${postsData.titles[index]}/${widget.username}'),
+          key: ValueKey('${postsData.titles[reversedIndex]}/${widget.username}'),
           child: _buildPreviewer(postsData, reversedIndex)
         );
       },
