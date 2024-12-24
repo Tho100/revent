@@ -53,12 +53,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
 
     tabController = TabController(length: 2, vsync: this);
     
-    tabController.addListener(() {
-      _onTabChanged();
-      setState(() {
-        navigation.setProfileTabIndex(tabController.index);
-      });
-    });
+    tabController.addListener(() =>_onTabChanged());
 
     profileInfoWidgets = ProfileInfoWidgets(
       username: userData.user.username, 
@@ -79,6 +74,10 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
     if(tabController.index == 1) {
       await callProfilePosts.setupSaved();
     }
+
+    setState(() {
+      navigation.setProfileTabIndex(tabController.index);
+    });
 
   }
 
