@@ -53,8 +53,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
       crossAxisCount: 1,
       itemCount: savedData.titles.length,
       builder: (_, index) {
-        final reversedIndex = savedData.titles.length - 1 - index; // TODO: Remove this
-        return _buildPreviewer(savedData, reversedIndex);
+        return _buildPreviewer(savedData, index);
       },
     );
   }

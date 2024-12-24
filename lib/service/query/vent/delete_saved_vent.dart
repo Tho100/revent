@@ -27,7 +27,7 @@ class DeleteSavedVent extends BaseQueryService {
   }
 
   void _removeVent() {
-
+    // TODO: Fix for some reason its buggy
     final currentProvider = CurrentProvider(
       title: title, 
       creator: creator
