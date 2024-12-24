@@ -53,7 +53,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
 
     tabController = TabController(length: 2, vsync: this);
     
-    tabController.addListener(() =>_onTabChanged());
+    tabController.addListener(() => _onTabChanged());
 
     profileInfoWidgets = ProfileInfoWidgets(
       username: userData.user.username, 
