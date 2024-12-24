@@ -7,19 +7,40 @@ class UserPrivacyActions extends BaseQueryService {
 
   final userData = getIt.userProvider;
 
-  Future<void> privateAccount({required int isMakePrivate}) async {
+  Future<void> _updatePrivacyData({
+    required int value, 
+    required String column
+  }) async {
 
-    const query = 'UPDATE user_privacy_info SET privated_profile = :new_value WHERE username = :username';
+    final query = 'UPDATE user_privacy_info SET $column = :new_value WHERE username = :username';
 
     final param = {
       'username': userData.user.username,
-      'new_value': isMakePrivate
+      'new_value': value
     };
 
     await executeQuery(query, param);
 
   }
+
+  Future<void> privateAccount({required int isMakePrivate}) async {
+    await _updatePrivacyData(
+      value: isMakePrivate, column: 'privated_profile'
+    );
+  }
   
+  Future<void> hideFollowingList({required int isHideFollowingList}) async {
+    await _updatePrivacyData(
+      value: isHideFollowingList, column: 'privated_following_list'
+    );
+  }
+
+  Future<void> hideSavedPosts({required int isHideSavedPosts}) async {
+    await _updatePrivacyData(
+      value: isHideSavedPosts, column: 'privated_saved_vents'
+    );
+  }
+
   Future<Map<String, int>> getCurrentOptions({required String username}) async {
 
     const query = 

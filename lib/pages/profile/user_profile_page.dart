@@ -59,8 +59,10 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   late TabController tabController;
 
   bool isPrivateAccount = false;
+  bool isFollowingListHidden = false;
+  bool isSavedPostsHidden = false;
 
-  void _initializeClasses() {
+  void _initializeClasses() async {
     
     callProfilePosts = ProfilePostsSetup(
       userType: 'user_profile',
@@ -70,8 +72,8 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     tabController = TabController(length: 2, vsync: this);
 
     tabController.addListener(() {
-      _onTabChanged();
-      setState(() {
+      _onTabChanged(); 
+      setState(() { // TODO: Move this to onTabChanged
         navigation.setProfileTabIndex(tabController.index);
       });
     });
@@ -80,11 +82,13 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       username: widget.username, 
       pfpData: widget.pfpData
     );
+        
     tabBarWidgets = ProfileTabBarWidgets(
       controller: tabController, 
       isMyProfile: false,
       username: widget.username,
       pfpData: widget.pfpData,
+      isSavedHidden: isSavedPostsHidden
     );
 
   }
@@ -92,18 +96,28 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   void _onTabChanged() async {
 
     if(tabController.index == 1) {
-      await callProfilePosts.setupSaved();
+
+      if(isSavedPostsHidden) {
+        SnackBarDialog.temporarySnack(message: 'Saved posts is hidden.');
+      }
+
+      if(!isSavedPostsHidden) {
+        await callProfilePosts.setupSaved();
+      }
+
     }
 
   }
 
-  Future<void> _isPrivateAccount() async {
+  Future<void> _loadPrivacySettings() async {
 
     final getCurrentOptions = await UserPrivacyActions().getCurrentOptions(
       username: widget.username
     );
 
     isPrivateAccount = getCurrentOptions['account'] != 0;
+    isFollowingListHidden = getCurrentOptions['following'] != 0;
+    isSavedPostsHidden = getCurrentOptions['saved'] != 0;
 
   }
 
@@ -128,7 +142,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
     try {
 
-      await _isPrivateAccount();
+      await _loadPrivacySettings();
 
       if(isPrivateAccount) {
         await _setPrivateAccountData();
@@ -150,7 +164,6 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       profileSavedData.userProfile.clear();
 
       await callProfilePosts.setupPosts();
-      await callProfilePosts.setupSaved();
       
       postsNotifier.value = profilePostsData.userProfile.titles.length;
 
@@ -272,13 +285,13 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
         GestureDetector(
           onTap: () => isPrivateAccount 
-            ? null : NavigatePage.followsPage(pageType: 'Followers', username: widget.username),
+            ? null : NavigatePage.followsPage(pageType: 'Followers', username: widget.username, isFollowingListHidden: isFollowingListHidden),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
         ),
 
         GestureDetector(
-          onTap: () => isPrivateAccount 
-            ? null : NavigatePage.followsPage(pageType: 'Following', username: widget.username),
+          onTap: () => isPrivateAccount || isFollowingListHidden
+            ? null : NavigatePage.followsPage(pageType: 'Following', username: widget.username, isFollowingListHidden: isFollowingListHidden),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
         ),
   

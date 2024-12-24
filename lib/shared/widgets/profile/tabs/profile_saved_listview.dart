@@ -8,9 +8,11 @@ import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
 class ProfileSavedListView extends StatefulWidget {
 
   final bool isMyProfile;
+  final bool isSavedHidden;
 
   const ProfileSavedListView({
     required this.isMyProfile,
+    required this.isSavedHidden,
     super.key
   });
 
@@ -51,7 +53,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
       crossAxisCount: 1,
       itemCount: savedData.titles.length,
       builder: (_, index) {
-        final reversedIndex = savedData.titles.length - 1 - index;
+        final reversedIndex = savedData.titles.length - 1 - index; // TODO: Remove this
         return _buildPreviewer(savedData, reversedIndex);
       },
     );

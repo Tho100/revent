@@ -28,10 +28,12 @@ class FollowsPage extends StatefulWidget {
 
   final String pageType;
   final String username;
+  final bool isFollowingListHidden;
 
   const FollowsPage({
     required this.pageType,
     required this.username, 
+    required this.isFollowingListHidden,
     super.key
   });
 
@@ -61,15 +63,18 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
   bool followingTabNotLoaded = true;
 
   void _initializeTabController() {
+
     tabController = TabController(
       length: 2, vsync: this, initialIndex: widget.pageType == 'Followers' ? 0 : 1
     );
+
     tabController.addListener(() async {
       if (!tabController.indexIsChanging) { 
         final currentPage = tabController.index == 0 ? 'Followers' : 'Following';
         await _loadFollowsData(page: currentPage);
       }
     });
+
   }
 
   Future<List<_FollowsProfilesData>> _fetchFollowsData(String followType) async {
@@ -94,6 +99,12 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
   Future<void> _loadFollowsData({required String page}) async {
 
     try {
+
+      if(page == 'Following' && widget.isFollowingListHidden) {
+        followersTabNotLoaded = false;
+        emptyPageMessageNotifier.value = 'Following list is hidden.';
+        return;
+      }
 
       if (page == 'Followers') {
 
