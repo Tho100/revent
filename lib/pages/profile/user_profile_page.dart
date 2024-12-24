@@ -98,7 +98,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     if(tabController.index == 1) {
 
       if(isSavedPostsHidden) {
-        SnackBarDialog.temporarySnack(message: 'Saved posts is hidden.');
+        SnackBarDialog.temporarySnack(message: 'Saved posts are hidden.');
       }
 
       if(!isSavedPostsHidden) {
