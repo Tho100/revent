@@ -50,7 +50,10 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
       builder: (_, index) {
         final reversedVentIndex = ventDataList.length - 1 - index;
         final vents = ventDataList[reversedVentIndex];
-        return _buildVentPreview(vents);
+        return KeyedSubtree(
+          key: ValueKey('${vents.title}/${vents.creator}'),
+          child: _buildVentPreview(vents),
+        );
       },
     );
 

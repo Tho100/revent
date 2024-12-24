@@ -58,7 +58,10 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
       itemCount: postsData.titles.length,
       builder: (_, index) {
         final reversedIndex = postsData.titles.length - 1 - index;
-        return _buildPreviewer(postsData, reversedIndex);
+        return KeyedSubtree(
+          key: ValueKey('${postsData.titles[reversedIndex]}/${widget.username}'),
+          child: _buildPreviewer(postsData, reversedIndex)
+        );
       },
     );
   }

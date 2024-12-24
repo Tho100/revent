@@ -89,9 +89,12 @@ class ProfilePostsProvider extends ChangeNotifier {
 
       if (index >= 0 && index < profile.titles.length) {
         profile.titles.removeAt(index);
+        profile.bodyText.removeAt(index);
         profile.totalLikes.removeAt(index);
         profile.totalComments.removeAt(index);
         profile.postTimestamp.removeAt(index);
+        profile.isPostLiked.removeAt(index);
+        profile.isPostSaved.removeAt(index);
         notifyListeners();
       }
       
