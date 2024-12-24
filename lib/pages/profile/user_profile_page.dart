@@ -80,6 +80,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       username: widget.username, 
       pfpData: widget.pfpData
     );
+    
     tabBarWidgets = ProfileTabBarWidgets(
       controller: tabController, 
       isMyProfile: false,
