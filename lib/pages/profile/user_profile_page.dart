@@ -71,12 +71,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
     tabController = TabController(length: 2, vsync: this);
 
-    tabController.addListener(() {
-      _onTabChanged(); 
-      setState(() { // TODO: Move this to onTabChanged
-        navigation.setProfileTabIndex(tabController.index);
-      });
-    });
+    tabController.addListener(() => _onTabChanged());
 
     profileInfoWidgets = ProfileInfoWidgets(
       username: widget.username, 
@@ -98,7 +93,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     if(tabController.index == 1) {
 
       if(isSavedPostsHidden) {
-        SnackBarDialog.temporarySnack(message: 'Saved posts is hidden.');
+        SnackBarDialog.temporarySnack(message: 'Saved posts are hidden.');
       }
 
       if(!isSavedPostsHidden) {
@@ -106,6 +101,10 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       }
 
     }
+
+    setState(() { 
+      navigation.setProfileTabIndex(tabController.index);
+    });
 
   }
 
