@@ -25,7 +25,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
   final navigation = getIt.navigationProvider;
-  final ventData = getIt.ventForYouProvider; // TODO: Remove this
   final ventFollowingData = getIt.ventFollowingProvider;
   final ventTrendingData = getIt.ventTrendingProvider;
 
@@ -77,11 +76,14 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     
   }
 
-  void _initializeTabController() { // TODO: Add some spacing
+  void _initializeTabController() {
+
     tabController = TabController(
       length: homeTabs.length, vsync: this
     );
+
     tabController.addListener(_onTabChanged);
+
   }
 
 
