@@ -57,14 +57,14 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
 
     profileInfoWidgets = ProfileInfoWidgets(
       username: userData.user.username, 
-      pfpData: profileData.profilePicture
+      pfpData: profileData.profile.profilePicture
     );
 
     tabBarWidgets = ProfileTabBarWidgets(
       controller: tabController, 
       isMyProfile: true, 
       username: userData.user.username, 
-      pfpData: profileData.profilePicture
+      pfpData: profileData.profile.profilePicture
     );
 
   }
@@ -96,14 +96,14 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
   Widget _buildPronouns() {
     return Consumer<ProfileDataProvider>(
       builder: (_, profileData, __) {
-        final bottomPadding = profileData.pronouns.isNotEmpty ? 11.0 : 0.0;
-        final topPadding = profileData.pronouns.isNotEmpty ? 5.0 : 0.0;
+        final bottomPadding = profileData.profile.pronouns.isNotEmpty ? 11.0 : 0.0;
+        final topPadding = profileData.profile.pronouns.isNotEmpty ? 5.0 : 0.0;
         return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.65,
             child: Text(
-              profileData.pronouns,
+              profileData.profile.pronouns,
               style: ThemeStyle.profilePronounsStyle,
               textAlign: TextAlign.start,
             ),
@@ -118,9 +118,9 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
       width: MediaQuery.of(context).size.width * 0.68,
       child: Consumer<ProfileDataProvider>(
         builder: (_, profileData, __) {
-          return profileData.bio.isEmpty
+          return profileData.profile.bio.isEmpty
             ? Transform.translate(
-              offset: Offset(0, profileData.pronouns.isEmpty ? -5 : -2),
+              offset: Offset(0, profileData.profile.pronouns.isEmpty ? -5 : -2),
               child: const Text(
                 'No bio yet...',
                 style: ThemeStyle.profileEmptyBioStyle,
@@ -128,11 +128,11 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
               ),
             )
             : Transform.translate(
-              offset: Offset(0, profileData.pronouns.isEmpty ? -5 : -2),
+              offset: Offset(0, profileData.profile.pronouns.isEmpty ? -5 : -2),
               child: GestureDetector(
-              onTap: () => BottomsheetViewFullBio().buildBottomsheet(context: context, bio: profileData.bio),
+              onTap: () => BottomsheetViewFullBio().buildBottomsheet(context: context, bio: profileData.profile.bio),
                 child: Text(
-                  profileData.bio,
+                  profileData.profile.bio,
                   style: ThemeStyle.profileBioStyle,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.ellipsis,
@@ -176,12 +176,12 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
 
                 GestureDetector(
                   onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userData.user.username),
-                  child: profileInfoWidgets.buildPopularityHeader('followers', profileData.followers)
+                  child: profileInfoWidgets.buildPopularityHeader('followers', profileData.profile.followers)
                 ),
           
                 GestureDetector(
                   onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userData.user.username),
-                  child: profileInfoWidgets.buildPopularityHeader('following', profileData.following)
+                  child: profileInfoWidgets.buildPopularityHeader('following', profileData.profile.following)
                 ),
           
               ],

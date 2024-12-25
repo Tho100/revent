@@ -32,14 +32,14 @@ class ViewArchiveVentPage extends StatelessWidget {
       customHeight: 35,
       customWidth: 35,
       customEmptyPfpSize: 20,
-      pfpData: profileData.profilePicture,
+      pfpData: profileData.profile.profilePicture,
     );
   }
 
   Widget _buildProfileHeader() {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(
-        username: userData.user.username, pfpData: profileData.profilePicture
+        username: userData.user.username, pfpData: profileData.profile.profilePicture
       ),
       child: Row(
         children: [

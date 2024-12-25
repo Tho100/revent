@@ -666,7 +666,7 @@ class _VentPostPageState extends State<VentPostPage> {
                         ProfilePictureWidget(
                           customHeight: 26,
                           customWidth: 26,
-                          pfpData: profileData.profilePicture,
+                          pfpData: profileData.profile.profilePicture,
                         ),
           
                         const SizedBox(width: 10),

@@ -70,7 +70,7 @@ class CreateNewItem extends BaseQueryService {
       bodyText: ventBodyText, 
       creator: userData.user.username, 
       postTimestamp: formattedTimestamp, 
-      profilePic: getIt.profileProvider.profilePicture
+      profilePic: getIt.profileProvider.profile.profilePicture
     );
     
     getIt.ventForYouProvider.addVent(newVent);

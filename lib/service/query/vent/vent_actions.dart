@@ -165,7 +165,7 @@ class VentActions extends BaseQueryService {
       commentedBy: userData.user.username, 
       comment: comment,
       commentTimestamp: formattedTimestamp,
-      pfpData: getIt.profileProvider.profilePicture
+      pfpData: getIt.profileProvider.profile.profilePicture
     );
 
     ventCommentProvider.addComment(newComment);

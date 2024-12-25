@@ -124,7 +124,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
             customHeight: 35,
             customWidth: 35,
             customEmptyPfpSize: 20,
-            pfpData: getIt.profileProvider.profilePicture
+            pfpData: getIt.profileProvider.profile.profilePicture
           ),
         ),
 
