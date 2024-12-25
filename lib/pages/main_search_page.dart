@@ -30,7 +30,21 @@ class _MainSearchPageState extends State<MainSearchPage> {
   }
 
   void _addSearchHistory({required String text}) async {
-    await localStorageModel.addSearchHistory(text: text);
+    
+    if(!searchHistoryNotifier.value.contains(text)) {
+      await localStorageModel.addSearchHistory(text: text);
+    }
+
+  }
+
+  void _deleteSearchHistory({required String text}) async {
+
+    await localStorageModel.deleteSearchHistory(textToDelete: text);
+
+    searchHistoryNotifier.value = searchHistoryNotifier.value
+      .where((searchText) => searchText != text)
+      .toList();
+
   }
 
   void _goToSearchResults({required String searchText}) {
@@ -101,9 +115,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
               const Spacer(),
     
               IconButton(
-                onPressed: () {
-                  // TODO: Delete history
-                },
+                onPressed: () => _deleteSearchHistory(text: searchText),
                 icon: const Icon(CupertinoIcons.clear, color: ThemeColor.secondaryWhite, size: 18)
               ),
     

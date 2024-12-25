@@ -134,7 +134,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
       title: title,
       bodyText: '',
       creator: userData.user.username,
-      pfpData: profileData.profilePicture,
+      pfpData: profileData.profile.profilePicture,
       postTimestamp: postTimestamp,
       viewVentPostOnPressed: () => _viewVentPostPage(title, postTimestamp),
       editOnPressed: () async {

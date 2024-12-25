@@ -64,7 +64,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
               customHeight: 35,
               customWidth: 35,
               customEmptyPfpSize: 20,
-              pfpData: getIt.profileProvider.profilePicture
+              pfpData: getIt.profileProvider.profile.profilePicture
             ),
           ),
 

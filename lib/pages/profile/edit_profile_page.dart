@@ -73,21 +73,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
 
   }
-
+  // Convert them into one function
   void _setProfilePic() {
-    profilePicNotifier.value = profileData.profilePicture;
+    profilePicNotifier.value = profileData.profile.profilePicture;
   }
 
   void _setBioText() {
-    bioController.text = profileData.bio;
+    bioController.text = profileData.profile.bio;
     bioController.addListener(_enforceMaxLines);
   }
 
   void _setPronouns() {
 
-    if(profileData.pronouns.isNotEmpty) {
+    if(profileData.profile.pronouns.isNotEmpty) {
       
-      final splittedPronouns = profileData.pronouns.split('/');
+      final splittedPronouns = profileData.profile.pronouns.split('/');
 
       pronounOneController.text = splittedPronouns[0];
       pronounTwoController.text = splittedPronouns[1];

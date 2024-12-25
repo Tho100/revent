@@ -21,7 +21,7 @@ class NavigationPagesWidgets {
         onTap: () => NavigatePage.myProfilePage(),
         child: Center(
           child: ProfilePictureWidget(
-            pfpData: getIt.profileProvider.profilePicture,
+            pfpData: getIt.profileProvider.profile.profilePicture,
             customWidth: 34,
             customHeight: 34,
           ),

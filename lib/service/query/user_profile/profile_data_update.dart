@@ -19,7 +19,7 @@ class ProfileDataUpdate extends BaseQueryService {
       'username': userData.user.username
     };
 
-    profileData.setBio(bioText);
+    profileData.profile.bio = bioText;
 
     await executeQuery(query, params);
 
@@ -37,7 +37,7 @@ class ProfileDataUpdate extends BaseQueryService {
       'username': userData.user.username
     };
 
-    profileData.setProfilePicture(picData);
+    profileData.profile.profilePicture = picData;
 
     await executeQuery(query, params);
 
@@ -52,7 +52,7 @@ class ProfileDataUpdate extends BaseQueryService {
       'username': userData.user.username
     };
 
-    profileData.setPronouns(pronouns);
+    profileData.profile.pronouns = pronouns;
 
     await executeQuery(query, params);
 

@@ -24,7 +24,7 @@ class LocalStorageModel {
       await setupFile.writeAsString('$text\n', mode: FileMode.append);
 
     } catch (err) {
-      print(err.toString());
+      return;
     }
 
   }
@@ -50,8 +50,35 @@ class LocalStorageModel {
       return content.split('\n').where((line) => line.isNotEmpty).toList();
 
     } catch (err) {
-      print(err.toString());
       return [];
+    }
+
+  }
+
+  Future<void> deleteSearchHistory({required String textToDelete}) async {
+
+    final localDir = await _readLocalDirectory();
+
+    if (!localDir.existsSync()) {
+      return; 
+    }
+
+    final setupFile = File('${localDir.path}/$_searchHistoryFile');
+
+    if (!setupFile.existsSync()) {
+      return; 
+    }
+
+    try {
+
+      final lines = await setupFile.readAsLines();
+
+      final updatedLines = lines.where((line) => line.trim() != textToDelete).toList();
+
+      await setupFile.writeAsString('${updatedLines.join('\n')}\n');
+
+    } catch (err) {
+      return;
     }
 
   }

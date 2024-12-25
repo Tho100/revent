@@ -40,23 +40,11 @@ class SearchPostsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addVent(SearchVents vent) {
-    _vents.add(vent);
-    notifyListeners();
-  }
-
   void deleteVentsData() {
     _vents.clear();
     notifyListeners();
   }
-
-  void deleteVent(int index) {
-    if (index >= 0 && index < _vents.length) {
-      _vents.removeAt(index);
-      notifyListeners();
-    }
-  }
-
+  
   void likeVent(int index, bool isUserLikedPost) {
 
     _vents[index].isPostLiked = isUserLikedPost 

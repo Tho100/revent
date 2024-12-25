@@ -16,11 +16,7 @@ class VentActions extends BaseQueryService {
     required this.creator,
   });
 
-  final ventData = getIt.ventForYouProvider;
-  final ventFollowingData = getIt.ventFollowingProvider;
-
   final userData = getIt.userProvider;
-  final profileData = getIt.profileProvider;
 
   Map<String, dynamic> _getVentProvider() {
 
@@ -169,7 +165,7 @@ class VentActions extends BaseQueryService {
       commentedBy: userData.user.username, 
       comment: comment,
       commentTimestamp: formattedTimestamp,
-      pfpData: profileData.profilePicture
+      pfpData: getIt.profileProvider.profile.profilePicture
     );
 
     ventCommentProvider.addComment(newComment);

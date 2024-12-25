@@ -6,9 +6,7 @@ import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 
 class CreateNewItem extends BaseQueryService {
 
-  final ventData = getIt.ventForYouProvider;
   final userData = getIt.userProvider;
-  final profileData = getIt.profileProvider;
 
   Future<void> newVent({
     required String ventTitle,
@@ -65,18 +63,17 @@ class CreateNewItem extends BaseQueryService {
     required String ventBodyText
   }) {
 
-    final now = DateTime.now();
-    final formattedTimestamp = FormatDate().formatPostTimestamp(now);
+    final formattedTimestamp = FormatDate().formatPostTimestamp(DateTime.now());
 
     final newVent = VentForYouData(
       title: ventTitle, 
       bodyText: ventBodyText, 
       creator: userData.user.username, 
       postTimestamp: formattedTimestamp, 
-      profilePic: profileData.profilePicture
+      profilePic: getIt.profileProvider.profile.profilePicture
     );
     
-    ventData.addVent(newVent);
+    getIt.ventForYouProvider.addVent(newVent);
 
   }
 
