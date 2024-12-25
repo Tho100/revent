@@ -50,7 +50,6 @@ class ProfileDataProvider extends ChangeNotifier {
     _following = 0;
     _bio = '';
     _profilePicture = Uint8List(0);
-    notifyListeners();
   }
 
 }
