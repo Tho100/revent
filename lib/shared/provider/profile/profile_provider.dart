@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class ProfileMainData {
+class ProfileData {
 
   String bio;
   String pronouns;
@@ -12,7 +12,7 @@ class ProfileMainData {
   int followers;
   int following;
 
-  ProfileMainData({
+  ProfileData({
     required this.bio,
     required this.pronouns,
     required this.profilePicture,
@@ -22,9 +22,9 @@ class ProfileMainData {
 
 }
 
-class ProfileDataProvider extends ChangeNotifier {
+class ProfileProvider extends ChangeNotifier {
 
-  ProfileMainData _profile = ProfileMainData(
+  ProfileData _profile = ProfileData(
     bio: '', 
     pronouns: '', 
     profilePicture: Uint8List(0), 
@@ -32,9 +32,9 @@ class ProfileDataProvider extends ChangeNotifier {
     following: 0
   ); 
 
-  ProfileMainData get profile => _profile;
+  ProfileData get profile => _profile;
 
-  void setProfile(ProfileMainData profile) {
+  void setProfile(ProfileData profile) {
     _profile = profile;
     notifyListeners();
   }

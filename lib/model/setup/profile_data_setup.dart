@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/user_profile/profile_data_getter.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/profile/profile_provider.dart';
 
 class ProfileDataSetup {
 
@@ -22,7 +22,7 @@ class ProfileDataSetup {
       ? Uint8List(0)
       : base64Decode(profilePicBase64);
 
-    final profileData1 = ProfileMainData(
+    final profileData1 = ProfileData(
       bio: bio, 
       pronouns: pronouns, 
       profilePicture: profilePicture, 
@@ -31,17 +31,6 @@ class ProfileDataSetup {
     );
 
     profileData.setProfile(profileData1);
-
-    /*profileData.setFollowers(followers);
-    profileData.setFollowing(following);
-    profileData.setBio(bio);
-    profileData.setPronouns(pronouns);
-    
-    final profilePicData = profilePicBase64.toString().isEmpty 
-      ? Uint8List(0)
-      : base64Decode(profilePicBase64);
-
-    profileData.setProfilePicture(profilePicData);*/
 
   }
 

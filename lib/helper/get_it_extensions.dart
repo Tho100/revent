@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/profile/profile_provider.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
 import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
@@ -18,7 +18,7 @@ extension GetItExtensions on GetIt {
   
   NavigationProvider get navigationProvider => get<NavigationProvider>();
   UserDataProvider get userProvider => get<UserDataProvider>();
-  ProfileDataProvider get profileProvider => get<ProfileDataProvider>();
+  ProfileProvider get profileProvider => get<ProfileProvider>();
 
   VentForYouProvider get ventForYouProvider => get<VentForYouProvider>();
   VentTrendingProvider get ventTrendingProvider => get<VentTrendingProvider>();

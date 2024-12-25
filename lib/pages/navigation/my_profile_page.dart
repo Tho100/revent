@@ -11,7 +11,7 @@ import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet_widgets/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
-import 'package:revent/shared/provider/profile/profile_data_provider.dart';
+import 'package:revent/shared/provider/profile/profile_provider.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -94,7 +94,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
   }
 
   Widget _buildPronouns() {
-    return Consumer<ProfileDataProvider>(
+    return Consumer<ProfileProvider>(
       builder: (_, profileData, __) {
         final bottomPadding = profileData.profile.pronouns.isNotEmpty ? 11.0 : 0.0;
         final topPadding = profileData.profile.pronouns.isNotEmpty ? 5.0 : 0.0;
@@ -116,7 +116,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
   Widget _buildBio() {
     return SizedBox(
       width: MediaQuery.of(context).size.width * 0.68,
-      child: Consumer<ProfileDataProvider>(
+      child: Consumer<ProfileProvider>(
         builder: (_, profileData, __) {
           return profileData.profile.bio.isEmpty
             ? Transform.translate(
@@ -164,7 +164,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
   }
 
   Widget _popularityWidgets() {
-    return Consumer<ProfileDataProvider>(
+    return Consumer<ProfileProvider>(
       builder: (_, profileData, __) {
         return Consumer<ProfilePostsProvider>(
           builder: (_, postsData, __) {
@@ -193,7 +193,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
   }
 
   Widget _buildBody() {
-    return Consumer<ProfileDataProvider>(
+    return Consumer<ProfileProvider>(
       builder: (_, profileData, __) {
         return ProfileBodyWidgets(
           onRefresh: () async => await CallRefresh().refreshMyProfile(),
