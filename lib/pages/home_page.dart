@@ -25,8 +25,9 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
 
   final navigation = getIt.navigationProvider;
-  final ventData = getIt.ventForYouProvider;
+  final ventData = getIt.ventForYouProvider; // TODO: Remove this
   final ventFollowingData = getIt.ventFollowingProvider;
+  final ventTrendingData = getIt.ventTrendingProvider;
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
@@ -46,7 +47,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     if (tabController.index == 1) {
 
-      if(trendingIsLoadedNotifier.value == false) {
+      if(ventTrendingData.vents.isNotEmpty) {
+        trendingIsLoadedNotifier.value = true;
+        return;
+      }
+
+      if(trendingIsLoadedNotifier.value == false && ventTrendingData.vents.isEmpty) {
         await ventDataSetup.setupTrending().then(
           (_) => trendingIsLoadedNotifier.value = true
         );
@@ -54,7 +60,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     } else if (tabController.index == 2) {
 
-      if(followingIsLoadedNotifier.value == false) {
+      if(ventFollowingData.vents.isNotEmpty) {
+        followingIsLoadedNotifier.value = true;
+        return;
+      }
+
+      if(followingIsLoadedNotifier.value == false && ventFollowingData.vents.isEmpty) {
         await ventDataSetup.setupFollowing().then(
           (_) => followingIsLoadedNotifier.value = true
         );
@@ -66,7 +77,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     
   }
 
-  void _initializeTabController() {
+  void _initializeTabController() { // TODO: Add some spacing
     tabController = TabController(
       length: homeTabs.length, vsync: this
     );
