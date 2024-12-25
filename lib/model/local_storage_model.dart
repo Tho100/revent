@@ -5,7 +5,56 @@ import 'package:path_provider/path_provider.dart';
 class LocalStorageModel {
 
   final _fileName = 'info.txt';
+  final _searchHistoryFile = 'search_history.txt';
+
   final _folderName = 'ReventInfos';
+
+  Future<void> addSearchHistory({required String text}) async {
+
+    final localDir = await _readLocalDirectory();
+    
+    if (!localDir.existsSync()) {
+      localDir.createSync(recursive: true);
+    }
+
+    final setupFile = File('${localDir.path}/$_searchHistoryFile');
+
+    try {
+
+      await setupFile.writeAsString('$text\n', mode: FileMode.append);
+
+    } catch (err) {
+      print(err.toString());
+    }
+
+  }
+
+  Future<List<String>> readSearchHistory() async {
+
+    final localDir = await _readLocalDirectory();
+
+    if (!localDir.existsSync()) {
+      return []; 
+    }
+
+    final setupFile = File('${localDir.path}/$_searchHistoryFile');
+
+    if (!setupFile.existsSync()) {
+      return []; 
+    }
+
+    try {
+
+      final content = await setupFile.readAsString();
+
+      return content.split('\n').where((line) => line.isNotEmpty).toList();
+
+    } catch (err) {
+      print(err.toString());
+      return [];
+    }
+
+  }
 
   Future<Map<String, String>> readLocalAccountInformation() async {
 
