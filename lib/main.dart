@@ -25,7 +25,7 @@ final getIt = GetIt.I;
 void initializeLocators() {
 
   getIt.registerLazySingleton<NavigationProvider>(() => NavigationProvider());
-  getIt.registerLazySingleton<UserDataProvider>(() => UserDataProvider());
+  getIt.registerLazySingleton<UserProvider>(() => UserProvider());
   getIt.registerLazySingleton<VentForYouProvider>(() => VentForYouProvider());
   getIt.registerLazySingleton<VentFollowingProvider>(() => VentFollowingProvider());
   getIt.registerLazySingleton<VentTrendingProvider>(() => VentTrendingProvider());
@@ -54,7 +54,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => getIt<VentFollowingProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<VentTrendingProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<NavigationProvider>()),
-    ChangeNotifierProvider(create: (_) => getIt<UserDataProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<UserProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfileProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfilePostsProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfileSavedProvider>()),

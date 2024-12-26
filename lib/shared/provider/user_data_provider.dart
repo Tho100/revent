@@ -16,7 +16,7 @@ class User {
 
 }
 
-class UserDataProvider extends ChangeNotifier {
+class UserProvider extends ChangeNotifier {
   
   User _user = User(username: '', email: '', plan: '', joinedDate: '');
 
