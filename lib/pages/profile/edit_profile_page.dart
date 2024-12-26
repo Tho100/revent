@@ -73,17 +73,13 @@ class _EditProfilePageState extends State<EditProfilePage> {
     });
 
   }
-  // Convert them into one function
-  void _setProfilePic() {
-    profilePicNotifier.value = profileData.profile.profilePicture;
-  }
 
-  void _setBioText() {
+  void _initializeProfileData() {
+
+    profilePicNotifier.value = profileData.profile.profilePicture;
+
     bioController.text = profileData.profile.bio;
     bioController.addListener(_enforceMaxLines);
-  }
-
-  void _setPronouns() {
 
     if(profileData.profile.pronouns.isNotEmpty) {
       
@@ -120,11 +116,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   void _changeProfilePicOnPressed() async {
     
-    final isProfileSelected = await ProfilePictureModel()
-      .createProfilePicture(context);
+    final isProfileSelected = await ProfilePictureModel().createProfilePicture(context);
 
     if(isProfileSelected) {
-      _setProfilePic();
+      profilePicNotifier.value = profileData.profile.profilePicture;
       SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
     }
 
@@ -348,9 +343,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
   @override
   void initState() {
     super.initState();
-    _setProfilePic();
-    _setBioText();
-    _setPronouns();
+    _initializeProfileData();
     _setTextFieldsListeners();
   }
 
