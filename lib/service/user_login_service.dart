@@ -82,7 +82,7 @@ class UserLoginService {
     final username = accountInfo['username'];
     final accountPlan = accountInfo['plan'];
 
-    final userSetup = User(
+    final userSetup = UserData(
       username: username, 
       email: email, 
       plan: accountPlan, 

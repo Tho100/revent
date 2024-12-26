@@ -69,7 +69,7 @@ class UserRegistrationService extends BaseQueryService {
     required String email
   }) {
 
-    final userSetup = User(
+    final userSetup = UserData(
       username: username, 
       email: email, 
       plan: 'Basic', 

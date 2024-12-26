@@ -88,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
         return;
       }
 
-      final userSetup = User(
+      final userSetup = UserData(
         username: username, 
         email: email, 
         plan: accountPlan, 
