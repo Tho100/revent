@@ -6,7 +6,7 @@ import 'package:revent/service/query/general/user_data_getter.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/security/user_auth.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
