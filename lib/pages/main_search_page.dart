@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 
@@ -57,7 +56,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
   Widget _buildSearchBar() {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 4.0),
+      padding: const EdgeInsets.only(right: 12, top: 4.0),
       child: Center(
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.84,
@@ -69,13 +68,22 @@ class _MainSearchPageState extends State<MainSearchPage> {
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w700,
             ),
-            decoration: ThemeStyle.txtFieldStye(
-              customBottomPadding: 18,
-              customTopPadding: 18,
+            decoration: InputDecoration(
+              suffixIcon: Transform.translate(
+                offset: const Offset(4, 0),
+                child: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(CupertinoIcons.slider_horizontal_3), 
+                  color: ThemeColor.thirdWhite, 
+                  iconSize: 23
+                ),
+              ),
               hintText: 'Search for anything...',
-              customPrefix: const Padding(
-                padding: EdgeInsets.only(left: 8.0), 
-                child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
+              counterText: '',
+              border: InputBorder.none,
+              hintStyle: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite, 
+                fontWeight: FontWeight.w700
               ),
             ),
             textInputAction: TextInputAction.done,
@@ -128,7 +136,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
   Widget _buildRecentSearches() {
     return Padding(
-      padding: const EdgeInsets.only(left: 25.0, right: 12.0, top: 25.0),
+      padding: const EdgeInsets.only(left: 25.0, right: 10.0, top: 20.0),
       child: ValueListenableBuilder(
         valueListenable: searchHistoryNotifier,
         builder: (_, searchHistoryText, __) {

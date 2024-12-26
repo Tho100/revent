@@ -8,7 +8,7 @@ import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
 import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/provider/profile/profile_provider.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
@@ -25,7 +25,7 @@ final getIt = GetIt.I;
 void initializeLocators() {
 
   getIt.registerLazySingleton<NavigationProvider>(() => NavigationProvider());
-  getIt.registerLazySingleton<UserDataProvider>(() => UserDataProvider());
+  getIt.registerLazySingleton<UserProvider>(() => UserProvider());
   getIt.registerLazySingleton<VentForYouProvider>(() => VentForYouProvider());
   getIt.registerLazySingleton<VentFollowingProvider>(() => VentFollowingProvider());
   getIt.registerLazySingleton<VentTrendingProvider>(() => VentTrendingProvider());
@@ -54,7 +54,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => getIt<VentFollowingProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<VentTrendingProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<NavigationProvider>()),
-    ChangeNotifierProvider(create: (_) => getIt<UserDataProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<UserProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfileProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfilePostsProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfileSavedProvider>()),

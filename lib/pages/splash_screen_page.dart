@@ -7,7 +7,7 @@ import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
-import 'package:revent/shared/provider/user_data_provider.dart';
+import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
@@ -88,7 +88,7 @@ class _SplashScreenState extends State<SplashScreen> {
         return;
       }
 
-      final userSetup = User(
+      final userSetup = UserData(
         username: username, 
         email: email, 
         plan: accountPlan, 
