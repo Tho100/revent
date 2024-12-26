@@ -138,7 +138,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
   Widget _buildLikedByCreator() {
     return Transform.translate(
-      offset: const Offset(0, 3),
+      offset: const Offset(0, 4),
       child: SizedBox(
         height: 25,
         width: 28,
@@ -178,7 +178,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
   Widget _buildLikeAndReplyButtons() {
     return Transform.translate(
-      offset: const Offset(-2, 0),
+      offset: const Offset(-2, -2),
       child: Row(
         children: [
       
