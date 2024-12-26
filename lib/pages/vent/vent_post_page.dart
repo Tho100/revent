@@ -68,6 +68,22 @@ class _VentPostPageState extends State<VentPostPage> {
   final commentSettings = VentCommentsSettings();
   final commentsFilter = CommentsFilter();
 
+  void _addCommentOnPressed() {
+
+    if(enableCommentNotifier.value == false) {
+      SnackBarDialog.temporarySnack(message: 'Comment is disabled.');
+      return;
+    }
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => PostCommentPage(
+        title: widget.title, creator: widget.creator, creatorPfp: widget.pfpData
+      ))
+    );
+
+  }
+
   void _loadLastEdit() async {
 
     final lastEdit = await LastEditGetter(
@@ -642,14 +658,7 @@ class _VentPostPageState extends State<VentPostPage> {
         children: [
           Expanded(
             child: InkWellEffect(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (_) => PostCommentPage(
-                    title: widget.title, creator: widget.creator, creatorPfp: widget.pfpData
-                  ))
-                );
-              },              
+              onPressed: () => _addCommentOnPressed(),
               child: Container(
                 height: 50,
                 decoration: BoxDecoration(

@@ -138,23 +138,36 @@ class VentCommentPreviewer extends StatelessWidget {
 
   Widget _buildLikedByCreator() {
     return Transform.translate(
-      offset: const Offset(0, 3),
+      offset: const Offset(0, 4),
       child: SizedBox(
         height: 25,
-        width: 25,
+        width: 28,
         child: Stack(
           children: [
-      
+
             ProfilePictureWidget(
               pfpData: creatorPfpData,
-              customEmptyPfpSize: 16,
-              customWidth: 21,
-              customHeight: 21,
+              customEmptyPfpSize: 15,
+              customWidth: 20,
+              customHeight: 20,
             ),
       
-            const Align(
+            Align(
               alignment: Alignment.bottomRight,
-              child: Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 17)
+              child: SizedBox(
+                width: 16,
+                height: 17,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: ThemeColor.black,
+                    borderRadius: BorderRadius.circular(360)
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.only(left: 4, top: 2),
+                    child: Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 12.2),
+                  ),
+                ),
+              ),
             ),
       
           ]
@@ -165,7 +178,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
   Widget _buildLikeAndReplyButtons() {
     return Transform.translate(
-      offset: const Offset(-2, 0),
+      offset: const Offset(-2, -2),
       child: Row(
         children: [
       
