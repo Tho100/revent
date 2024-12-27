@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/call_refresh.dart';
 import 'package:revent/main.dart';
+import 'package:revent/service/query/general/follow_suggestion_getter.dart';
+import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
@@ -86,6 +88,27 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
   }
 
+  void _initializeFollowSuggestion() async {
+
+    if(getIt.followSuggestionProvider.suggestions.isEmpty) {
+
+      final followSuggestions = await FollowSuggestionGetter().getSuggestion();
+
+      final usernames = followSuggestions['usernames'];
+      final profilePic = followSuggestions['profile_pic'];
+
+      final suggestions = List.generate(usernames.length, (index) {
+        return FollowSuggestionData(
+          username: usernames[index], 
+          profilePic: profilePic[index]
+        );
+      });
+
+      getIt.followSuggestionProvider.setSuggestions(suggestions);
+
+    }
+
+  }
 
   Future<void> _onTabRefresh() async {
 
@@ -129,7 +152,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
     return _buildVentListViewBody(
       onRefresh: () async => await _onTabRefresh(),
       child: HomeVentListView(
-        provider: Provider.of<VentForYouProvider>(context)
+        provider: Provider.of<VentForYouProvider>(context),
+        showFollowSuggestion: true
       ),
     );
   }
@@ -148,7 +172,8 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         return _buildVentListViewBody(
           onRefresh: () async => await _onTabRefresh(),
           child: HomeVentListView(
-            provider: Provider.of<VentTrendingProvider>(context)
+            provider: Provider.of<VentTrendingProvider>(context),
+            showFollowSuggestion: true
           ),
         ); 
 
@@ -221,6 +246,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   void initState() {
     super.initState();
     _initializeTabController();
+    _initializeFollowSuggestion();
   }
 
   @override

@@ -3,6 +3,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/pages/splash_screen_page.dart';
+import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
 import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
@@ -38,6 +39,7 @@ void initializeLocators() {
   getIt.registerLazySingleton<SearchAccountsProvider>(() => SearchAccountsProvider());
   getIt.registerLazySingleton<LikedVentProvider>(() => LikedVentProvider());
   getIt.registerLazySingleton<SavedVentProvider>(() => SavedVentProvider());
+  getIt.registerLazySingleton<FollowSuggestionProvider>(() => FollowSuggestionProvider());
 
 }
 
@@ -64,6 +66,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => getIt<SearchAccountsProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<LikedVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SavedVentProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<FollowSuggestionProvider>()),
   ];
 
   runApp(
