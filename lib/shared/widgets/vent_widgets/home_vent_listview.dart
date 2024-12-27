@@ -1,14 +1,19 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/follow_suggestion_listview.dart';
 import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
 
 class HomeVentListView extends StatefulWidget {
 
   final dynamic provider;
+  final bool? showFollowSuggestion;
 
   const HomeVentListView({
     required this.provider,
+    this.showFollowSuggestion = false,
     super.key
   });
 
@@ -36,6 +41,37 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
       ),
     );
   }
+  
+  Widget _buildFollowSuggestion() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+
+          const Divider(height: 1, color: ThemeColor.lightGrey),
+
+          Text(
+            'Follow suggestion',
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 12
+            ),
+          ),
+
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 4.0),
+            child: Expanded(
+              child: FollowSuggestionListView()
+            ),
+          ),
+
+          const Divider(height: 1, color: ThemeColor.lightGrey),
+
+        ],
+      ),
+    );
+  }
 
   Widget _buildVentList() {
     
@@ -46,14 +82,25 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
         parent: BouncingScrollPhysics(),
       ),
       crossAxisCount: 1,
-      itemCount: ventDataList.length,
+      itemCount: ventDataList.length+1,
       builder: (_, index) {
+
         final reversedVentIndex = ventDataList.length - 1 - index;
         final vents = ventDataList[reversedVentIndex];
-        return KeyedSubtree(
-          key: ValueKey('${vents.title}/${vents.creator}'),
-          child: _buildVentPreview(vents),
-        );
+
+        if(reversedVentIndex < ventDataList.length) {
+          return KeyedSubtree(
+            key: ValueKey('${vents.title}/${vents.creator}'),
+            child: _buildVentPreview(vents),
+          );
+        } else if (reversedVentIndex == 5 && widget.showFollowSuggestion!) {
+          return _buildFollowSuggestion();
+
+        } else {
+          return const SizedBox.shrink();
+
+        }
+
       },
     );
 
