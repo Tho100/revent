@@ -2,8 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/constant.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/ui_dialog/profile_picture_dialog.dart';
+import 'package:revent/pages/profile_picture_viewer_page.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
@@ -30,7 +31,12 @@ class ProfileInfoWidgets {
 
   Widget buildProfilePicture() {
     return InkWellEffect(
-      onPressed: () => ProfilePictureDialog().showPfpDialog(pfpData),
+      onPressed: () {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(builder: (_) => ProfilePictureViewer(pfpData: pfpData))
+        );
+      },
       child: ProfilePictureWidget(
         customHeight: 70,
         customWidth: 70,
