@@ -16,13 +16,11 @@ class ProfileDataSetup {
     required String profilePicBase64,
   }) {
 
-    final profileData = getIt.profileProvider;
-
     final profilePicture = profilePicBase64.toString().isEmpty 
       ? Uint8List(0)
       : base64Decode(profilePicBase64);
 
-    final profileData1 = ProfileData(
+    final profileData = ProfileData(
       bio: bio, 
       pronouns: pronouns, 
       profilePicture: profilePicture, 
@@ -30,7 +28,7 @@ class ProfileDataSetup {
       following: following
     );
 
-    profileData.setProfile(profileData1);
+    getIt.profileProvider.setProfile(profileData);
 
   }
 
