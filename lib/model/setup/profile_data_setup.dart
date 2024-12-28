@@ -34,9 +34,7 @@ class ProfileDataSetup {
 
   }
 
-  Future<void> setup({
-    required String username
-  }) async {
+  Future<void> setup({required String username}) async {
 
     final getProfileData = await ProfileDataGetter().getProfileData(
       isMyProfile: true, username: username

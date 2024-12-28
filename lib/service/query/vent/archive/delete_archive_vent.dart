@@ -6,9 +6,7 @@ class DeleteArchiveVent extends BaseQueryService {
   
   final String title;
 
-  DeleteArchiveVent({
-    required this.title // TODO: Remove unnecessary spacing
-  });
+  DeleteArchiveVent({required this.title});
 
   Future<void> delete() async {
 
