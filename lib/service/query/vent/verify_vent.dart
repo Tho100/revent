@@ -8,15 +8,13 @@ class VerifyVent extends BaseQueryService {
 
   VerifyVent({required this.title});
 
-  final userData = getIt.userProvider;
-
   Future<bool> ventIsAlreadyExists() async {
 
     const query = 'SELECT * FROM vent_info WHERE creator = :creator AND title = :title';
 
     final param = {
       'title': title,
-      'creator': userData.user.username
+      'creator': getIt.userProvider.user.username
     };
 
     final results = await executeQuery(query, param);

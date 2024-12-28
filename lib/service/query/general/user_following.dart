@@ -4,8 +4,6 @@ import 'package:revent/service/query/general/base_query_service.dart';
 
 class UserFollowing extends BaseQueryService {
 
-  final userData = getIt.userProvider;
-
   Future<bool> isFollowing({required String username}) async {
 
     const query = 
@@ -13,7 +11,7 @@ class UserFollowing extends BaseQueryService {
       
     final param = {
       'following': username,
-      'follower': userData.user.username
+      'follower': getIt.userProvider.user.username
     };
 
     final results = await executeQuery(query, param);

@@ -7,10 +7,8 @@ class DeleteArchiveVent extends BaseQueryService {
   final String title;
 
   DeleteArchiveVent({
-    required this.title,
+    required this.title // TODO: Remove unnecessary spacing
   });
-
-  final userData = getIt.userProvider;
 
   Future<void> delete() async {
 
@@ -18,7 +16,7 @@ class DeleteArchiveVent extends BaseQueryService {
 
     final params = {
       'title': title,
-      'creator': userData.user.username,
+      'creator': getIt.userProvider.user.username,
     };
 
     await executeQuery(query, params);

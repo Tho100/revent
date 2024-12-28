@@ -20,7 +20,7 @@ class DeleteSavedVent extends BaseQueryService {
       'creator': creator,
     };
 
-    await executeQuery(query, params);
+    await executeQuery(query, params); // TODO: Use then
 
     _removeVent();
 

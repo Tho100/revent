@@ -19,7 +19,7 @@ class ProfileDataUpdate extends BaseQueryService {
       'username': userData.user.username
     };
 
-    profileData.profile.bio = bioText;
+    profileData.profile.bio = bioText; // TODO: Move this to then executequery
 
     await executeQuery(query, params);
 

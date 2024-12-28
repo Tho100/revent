@@ -18,7 +18,6 @@ class VentCommentActions extends BaseQueryService {
   });
 
   final ventCommentProvider = getIt.ventCommentProvider;
-  final userData = getIt.userProvider;
 
   Future<void> delete() async {
 
@@ -57,7 +56,7 @@ class VentCommentActions extends BaseQueryService {
     final likesInfoParams = {
       'title': ventTitle,
       'creator': ventCreator,
-      'liked_by': userData.user.username,
+      'liked_by': getIt.userProvider.user.username,
       'commented_by': username,
       'comment': commentText
     };

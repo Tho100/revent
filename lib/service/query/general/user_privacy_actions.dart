@@ -5,8 +5,6 @@ import 'package:revent/helper/extract_data.dart';
 
 class UserPrivacyActions extends BaseQueryService {
 
-  final userData = getIt.userProvider;
-
   Future<void> _updatePrivacyData({
     required int value, 
     required String column
@@ -15,7 +13,7 @@ class UserPrivacyActions extends BaseQueryService {
     final query = 'UPDATE user_privacy_info SET $column = :new_value WHERE username = :username';
 
     final param = {
-      'username': userData.user.username,
+      'username': getIt.userProvider.user.username,
       'new_value': value
     };
 

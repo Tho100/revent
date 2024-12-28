@@ -10,8 +10,6 @@ class ProfileSavedDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
-  final userData = getIt.userProvider;
-
   Future<Map<String, List<dynamic>>> getSaved({
     required String username,
   }) async {
@@ -92,7 +90,7 @@ class ProfileSavedDataGetter extends BaseQueryService {
     const query = 'SELECT title FROM liked_vent_info WHERE liked_by = :liked_by';
 
     final param = {
-      'liked_by': userData.user.username,
+      'liked_by': getIt.userProvider.user.username,
     };
 
     final retrievedTitles = await executeQuery(query, param);

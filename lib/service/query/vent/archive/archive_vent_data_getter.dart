@@ -7,7 +7,7 @@ class ArchiveVentDataGetter extends BaseQueryService {
   final formatPostTimestamp = FormatDate();
 
   Future<Map<String, List<dynamic>>> getPosts({
-    required String username
+    required String username // TODO: Remove unnecessary spacing
   }) async {
 
     const query = 'SELECT title, created_at FROM archive_vent_info WHERE creator = :username';

@@ -11,8 +11,6 @@ import 'package:revent/model/setup/vent_data_setup.dart';
 
 class UserRegistrationService extends BaseQueryService {
 
-  final userData = getIt.userProvider;
-
   Future<void> register({
     required String username,
     required String email,
@@ -75,7 +73,7 @@ class UserRegistrationService extends BaseQueryService {
       plan: 'Basic', 
     );
 
-    userData.setUser(userSetup);
+    getIt.userProvider.setUser(userSetup);
 
   }
 

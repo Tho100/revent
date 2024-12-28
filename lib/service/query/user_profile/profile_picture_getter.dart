@@ -8,14 +8,12 @@ import 'package:revent/helper/extract_data.dart';
 
 class ProfilePictureGetter extends BaseQueryService {
 
-  final userData = getIt.userProvider;
-
   Future<Uint8List> getProfilePictures({String? username}) async {
     
     const query = 'SELECT profile_picture FROM user_profile_info WHERE username = :username';
 
     final params = {
-      'username': username!.isNotEmpty ? username : userData.user.username
+      'username': username!.isNotEmpty ? username : getIt.userProvider.user.username
     };
 
     final result = await executeQuery(query, params);
