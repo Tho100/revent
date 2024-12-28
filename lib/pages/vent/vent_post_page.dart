@@ -358,7 +358,7 @@ class _VentPostPageState extends State<VentPostPage> {
                     const SizedBox(width: 6),
 
                     Text(
-                      '${data.lastEdit == 'Just now' ? 'Last edit just now' : 'Last edit ${data.lastEdit} ago'} ',
+                      '${data.lastEdit == 'Just now' ? 'Edit just now' : 'Edit ${data.lastEdit} ago'} ',
                       style: GoogleFonts.inter(
                         color: ThemeColor.thirdWhite,
                         fontWeight: FontWeight.w700,

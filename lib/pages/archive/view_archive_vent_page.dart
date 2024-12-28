@@ -88,7 +88,7 @@ class ViewArchiveVentPage extends StatelessWidget {
         const SizedBox(width: 6),
   
         Text(
-          '${lastEdit == 'Just now' ? 'Last edit just now' : 'Last edit $lastEdit ago'} ',
+          '${lastEdit == 'Just now' ? 'Edit just now' : 'Edit $lastEdit ago'} ',
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w700,
