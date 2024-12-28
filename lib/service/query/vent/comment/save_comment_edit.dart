@@ -31,9 +31,9 @@ class SaveCommentEdit extends BaseQueryService {
       'commented_by': userData.user.username
     };
 
-    await executeQuery(query, params);
-
-    await _updateLikesInfo(param: params);
+    await executeQuery(query, params).then(
+      (_) async => await _updateLikesInfo(param: params)
+    );
 
     getIt.ventCommentProvider.editComment(
       userData.user.username, newComment, originalComment

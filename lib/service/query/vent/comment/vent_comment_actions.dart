@@ -31,9 +31,9 @@ class VentCommentActions extends BaseQueryService {
       'creator': ventCreator
     };
 
-    await executeQuery(query, params);
-
-    _removeComment();
+    await executeQuery(query, params).then(
+      (_) => _removeComment()
+    );
 
   }
 
