@@ -126,12 +126,12 @@ class VentActions extends BaseQueryService {
       'total_likes': 0
     };
 
-    await executeQuery(insertCommentQuery, commentsParams);
-
-    await _updateTotalComments(
-      title: title, 
-      creator: creator
-    );
+    await executeQuery(insertCommentQuery, commentsParams).then((_) async {
+      await _updateTotalComments(
+        title: title, 
+        creator: creator
+      );
+    });
 
     _addComment(comment: comment);
 

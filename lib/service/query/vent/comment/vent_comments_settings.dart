@@ -5,8 +5,6 @@ import 'package:revent/helper/extract_data.dart';
 
 class VentCommentsSettings extends BaseQueryService {
 
-  final userData = getIt.userProvider;
-
   Future<void> toggleComment({
     required String title,
     required int isEnableComment,
@@ -16,7 +14,7 @@ class VentCommentsSettings extends BaseQueryService {
       'UPDATE vent_info SET comment_enabled = :new_value WHERE creator = :creator AND title = :title';
 
     final param = {
-      'creator': userData.user.username,
+      'creator': getIt.userProvider.user.username,
       'title': title,
       'new_value': isEnableComment
     };

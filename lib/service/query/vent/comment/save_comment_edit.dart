@@ -17,7 +17,6 @@ class SaveCommentEdit extends BaseQueryService {
   });
 
   final userData = getIt.userProvider;
-  final ventCommentProvider = getIt.ventCommentProvider;
 
   Future<void> save() async {
 
@@ -32,11 +31,11 @@ class SaveCommentEdit extends BaseQueryService {
       'commented_by': userData.user.username
     };
 
-    await executeQuery(query, params);
+    await executeQuery(query, params).then(
+      (_) async => await _updateLikesInfo(param: params)
+    );
 
-    await _updateLikesInfo(param: params);
-
-    ventCommentProvider.editComment(
+    getIt.ventCommentProvider.editComment(
       userData.user.username, newComment, originalComment
     );
 

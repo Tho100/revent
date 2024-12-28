@@ -6,11 +6,7 @@ class DeleteArchiveVent extends BaseQueryService {
   
   final String title;
 
-  DeleteArchiveVent({
-    required this.title,
-  });
-
-  final userData = getIt.userProvider;
+  DeleteArchiveVent({required this.title});
 
   Future<void> delete() async {
 
@@ -18,7 +14,7 @@ class DeleteArchiveVent extends BaseQueryService {
 
     final params = {
       'title': title,
-      'creator': userData.user.username,
+      'creator': getIt.userProvider.user.username,
     };
 
     await executeQuery(query, params);
