@@ -114,7 +114,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     switch (homeTabs[tabController.index].text) {
       case 'For you':
-        await callRefresh.refreshVents();
+        await callRefresh.refreshForYouVents();
         break;
       case 'Trending':
         trendingIsLoadedNotifier.value = false;
