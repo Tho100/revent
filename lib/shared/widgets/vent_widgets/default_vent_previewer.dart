@@ -69,7 +69,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
           context: context, 
           title: widget.title, 
           creator: widget.creator
-        ).removeSavedPost();
+        ).unsavePost();
       } : null,
       editOnPressed: () {
         Navigator.pop(context);

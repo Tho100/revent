@@ -117,7 +117,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
       context: context, 
       title: title, 
       creator: userData.user.username
-    ).deleteArchivePost().then((_) => _removeVentFromList(title));
+    ).deleteArchivedPost().then((_) => _removeVentFromList(title));
 
   } 
 

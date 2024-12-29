@@ -19,6 +19,16 @@ class VentActionsHandler {
     required this.creator
   });
 
+  void _showTemporarySnack(String message) {
+    SnackBarDialog.temporarySnack(message: message);
+  }
+
+  void _closeScreens(int count) {
+    for (int i = 0; i < count; i++) {
+      Navigator.pop(context);
+    }
+  }
+
   Future<void> likePost() async {
 
     try {
@@ -26,14 +36,14 @@ class VentActionsHandler {
       final userData = getIt.userProvider;
 
       if(creator == userData.user.username) {
-        SnackBarDialog.temporarySnack(message: "Can't like your own post.");
+        _showTemporarySnack("Can't like your own post.");
         return;
       }
 
       await VentActions(title: title, creator: creator).likePost();
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to like this post.');
+      _showTemporarySnack('Failed to like this post.');
     }
 
   }
@@ -42,60 +52,49 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteVent(title: title, creator: creator).delete()
-        .then((value) {
-          
-          SnackBarDialog.temporarySnack(message: 'Post has been deleted.');
-
-          Navigator.pop(context);
-          Navigator.pop(context);
-
+      await DeleteVent(title: title, creator: creator).delete().then(
+        (_) {
+          _showTemporarySnack('Post has been deleted.');
+          _closeScreens(2);
         }
       );
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to delete this post.');
+      _showTemporarySnack('Failed to delete this post.');
     }
 
   }
 
-  Future<void> deleteArchivePost() async {
+  Future<void> deleteArchivedPost() async {
 
     try {
 
-      await DeleteArchiveVent(title: title).delete()
-        .then((value) {
-          
-          SnackBarDialog.temporarySnack(message: 'Archive has been deleted.');
-
-          Navigator.pop(context);
-          Navigator.pop(context);
-
+      await DeleteArchiveVent(title: title).delete().then(
+        (_) {
+          _showTemporarySnack('Archive has been deleted.');
+          _closeScreens(2);
         }
       );
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to delete this archive.');
+      _showTemporarySnack('Failed to delete this archive.');
     }
 
   }
 
-  Future<void> removeSavedPost() async {
+  Future<void> unsavePost() async {
 
     try {
 
-      await DeleteSavedVent(title: title, creator: creator).delete()
-        .then((value) {
-          
-          SnackBarDialog.temporarySnack(message: 'Removed post from Saved.');
-
-          Navigator.pop(context);
-
+      await DeleteSavedVent(title: title, creator: creator).delete().then(
+        (_) {
+          _showTemporarySnack('Removed post from Saved.');
+          _closeScreens(1);
         }
       );
 
     } catch (err) {
-      SnackBarDialog.temporarySnack(message: 'Failed to delete this saved post.');
+      _showTemporarySnack('Failed to delete this saved post.');
     }
 
   }
@@ -107,7 +106,7 @@ class VentActionsHandler {
       await VentActions(title: title, creator: creator).savePost();
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to save this post.');
+      _showTemporarySnack('Failed to save this post.');
     }
 
   }
