@@ -1,7 +1,7 @@
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/helper/current_provider.dart';
+import 'package:revent/helper/current_provider_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
@@ -20,7 +20,7 @@ class VentActions extends BaseQueryService {
 
   Map<String, dynamic> _getVentProvider() {
 
-    final currentProvider = CurrentProvider(
+    final currentProvider = CurrentProviderService(
       title: title, 
       creator: creator
     ).getProvider();

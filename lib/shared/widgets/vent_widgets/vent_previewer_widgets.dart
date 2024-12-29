@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/service/vent_actions_handler.dart';
-import 'package:revent/helper/current_provider.dart';
+import 'package:revent/helper/current_provider_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -115,7 +115,7 @@ class VentPreviewerWidgets {
 
   Widget buildLikeButton() {
 
-    final getProvider = CurrentProvider(
+    final getProvider = CurrentProviderService(
       title: title!, creator: creator!
     ).getRealTimeProvider(context: context);
 
@@ -140,7 +140,7 @@ class VentPreviewerWidgets {
 
   Widget buildSaveButton() {
 
-    final getProvider = CurrentProvider(
+    final getProvider = CurrentProviderService(
       title: title!, creator: creator!
     ).getRealTimeProvider(context: context);
 

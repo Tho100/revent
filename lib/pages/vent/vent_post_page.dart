@@ -7,7 +7,7 @@ import 'package:revent/global/constant.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
-import 'package:revent/helper/current_provider.dart';
+import 'package:revent/helper/current_provider_service.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
@@ -194,7 +194,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
   Map<String, dynamic> _getVentProvider() {
 
-    final currentProvider = CurrentProvider(
+    final currentProvider = CurrentProviderService(
       title: widget.title, creator: widget.creator
     ).getRealTimeProvider(context: context);
 
