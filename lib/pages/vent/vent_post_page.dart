@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/service/call_refresh.dart';
+import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/current_provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
@@ -178,7 +178,7 @@ class _VentPostPageState extends State<VentPostPage> {
         return;
       }
 
-      await CallRefresh().refreshVentPost(
+      await RefreshService().refreshVentPost(
         title: widget.title, 
         creator: widget.creator, 
       ).then((_) {

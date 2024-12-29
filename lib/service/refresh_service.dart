@@ -5,7 +5,7 @@ import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/model/setup/vent_comment_setup.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
-class CallRefresh {
+class RefreshService {
 
   final userData = getIt.userProvider;
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/service/call_refresh.dart';
+import 'package:revent/service/refresh_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/follow_suggestion_getter.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
 
   final ventDataSetup = VentDataSetup();
-  final callRefresh = CallRefresh();
+  final callRefresh = RefreshService();
 
   late TabController tabController;
 
