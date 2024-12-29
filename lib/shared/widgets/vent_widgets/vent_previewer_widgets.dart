@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/helper/call_vent_actions.dart';
-import 'package:revent/helper/current_provider.dart';
+import 'package:revent/service/vent_actions_handler.dart';
+import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -115,7 +115,7 @@ class VentPreviewerWidgets {
 
   Widget buildLikeButton() {
 
-    final getProvider = CurrentProvider(
+    final getProvider = CurrentProviderService(
       title: title!, creator: creator!
     ).getRealTimeProvider(context: context);
 
@@ -128,7 +128,7 @@ class VentPreviewerWidgets {
       value: ventIndex == -1 ? 0 : likesInfo['total_likes'],
       isLiked: ventIndex == -1 ? false : likesInfo['is_liked'],
       onPressed: () async {
-        await CallVentActions(
+        await VentActionsHandler(
           context: context, 
           title: title!, 
           creator: creator!
@@ -140,7 +140,7 @@ class VentPreviewerWidgets {
 
   Widget buildSaveButton() {
 
-    final getProvider = CurrentProvider(
+    final getProvider = CurrentProviderService(
       title: title!, creator: creator!
     ).getRealTimeProvider(context: context);
 
@@ -150,7 +150,7 @@ class VentPreviewerWidgets {
     return ActionsButton().buildSaveButton(
       isSaved: ventIndex == -1 ? false : _getIsSaved(ventData, ventIndex),
       onPressed: () async {
-        await CallVentActions(
+        await VentActionsHandler(
           context: context, 
           title: title!, 
           creator: creator!

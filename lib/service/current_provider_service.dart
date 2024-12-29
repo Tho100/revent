@@ -12,17 +12,49 @@ import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
-class CurrentProvider {
+class CurrentProviderService {
 
   final String? title;
   final String? creator;
 
-  CurrentProvider({
+  CurrentProviderService({
     this.title,
     this.creator,
   });
 
   final navigation = getIt.navigationProvider;
+
+  Map<String, dynamic> _resolveVentData({
+    required dynamic ventData,
+    required bool isProfileRoute,
+  }) {
+
+    int ventIndex = 0;
+
+    if (isProfileRoute) {
+
+      final profileData = navigation.currentRoute == AppRoute.myProfile
+        ? ventData.myProfile
+        : ventData.userProfile;
+
+      ventIndex = profileData.titles.indexWhere(
+        (ventTitle) => ventTitle == title,
+      );
+
+    } else {
+
+      ventIndex = ventData.vents.indexWhere(
+        (vent) => vent.title == title && vent.creator == creator,
+      );
+
+    }
+
+    return {
+      'vent_index': ventIndex,
+      'vent_data': ventData,
+    };
+
+  }
 
   dynamic _returnProvider({
     required String type,
@@ -78,8 +110,6 @@ class CurrentProvider {
 
     dynamic ventData;
 
-    int ventIndex = 0;
-
     if(navigation.currentRoute == AppRoute.home) {
       ventData = _returnProvider(type: 'home', realTime: false);
 
@@ -97,35 +127,17 @@ class CurrentProvider {
 
     }
 
-    if(AppRoute.isOnProfile) {
+    final isProfileRoute = AppRoute.isOnProfile;
 
-      final profileData = navigation.currentRoute == AppRoute.myProfile
-        ? ventData.myProfile : ventData.userProfile;
-
-      ventIndex = profileData.titles.indexWhere(
-        (ventTitle) => ventTitle == title
-      );
-
-    } else {
-
-      ventIndex = ventData.vents.indexWhere(
-        (vent) => vent.title == title && vent.creator == creator
-      );
-
-    }
-
-    return {
-      'vent_index': ventIndex,
-      'vent_data': ventData
-    };
+    return _resolveVentData(
+      ventData: ventData, isProfileRoute: isProfileRoute
+    );
 
   }
 
   Map<String, dynamic> getRealTimeProvider({required BuildContext context}) {
 
     dynamic ventData;
-
-    int ventIndex = 0;
 
     if(navigation.currentRoute == AppRoute.home) {
       ventData = _returnProvider(type: 'home', realTime: true, context: context);
@@ -144,27 +156,11 @@ class CurrentProvider {
 
     }
 
-    if(AppRoute.isOnProfile) {
+    final isProfileRoute = AppRoute.isOnProfile;
 
-      final profileData = navigation.currentRoute == AppRoute.myProfile
-        ? ventData.myProfile : ventData.userProfile;
-
-      ventIndex = profileData.titles.indexWhere(
-        (ventTitle) => ventTitle == title
-      );
-
-    } else {
-
-      ventIndex = ventData.vents.indexWhere(
-        (vent) => vent.title == title && vent.creator == creator
-      );
-
-    }
-
-    return {
-      'vent_index': ventIndex,
-      'vent_data': ventData
-    };
+    return _resolveVentData(
+      ventData: ventData, isProfileRoute: isProfileRoute
+    );
 
   }
 

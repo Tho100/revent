@@ -4,7 +4,7 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
-import 'package:revent/helper/call_vent_actions.dart';
+import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
@@ -113,11 +113,11 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
   void _deleteVentArchive(String title) async {
 
-    await CallVentActions(
+    await VentActionsHandler(
       context: context, 
       title: title, 
       creator: userData.user.username
-    ).deleteArchivePost().then((_) => _removeVentFromList(title));
+    ).deleteArchivedPost().then((_) => _removeVentFromList(title));
 
   } 
 

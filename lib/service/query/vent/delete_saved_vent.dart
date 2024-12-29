@@ -1,5 +1,5 @@
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/helper/current_provider.dart';
+import 'package:revent/service/current_provider_service.dart';
 
 class DeleteSavedVent extends BaseQueryService {
   
@@ -28,7 +28,7 @@ class DeleteSavedVent extends BaseQueryService {
 
   void _removeVent() {
 
-    final currentProvider = CurrentProvider(
+    final currentProvider = CurrentProviderService(
       title: title, 
       creator: creator
     ).getProvider();

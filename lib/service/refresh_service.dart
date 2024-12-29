@@ -5,32 +5,37 @@ import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/model/setup/vent_comment_setup.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
-class CallRefresh {
+class RefreshService {
 
   final userData = getIt.userProvider;
 
-  Future<void> refreshVents() async {
+  Future<void> _refreshVentsData({
+    required dynamic ventProvider,
+    required Future<void> Function() setupMethod,
+  }) async {
+    ventProvider.deleteVentsData();
+    await setupMethod();
+  }
 
-    getIt.ventForYouProvider.deleteVentsData();
-
-    await VentDataSetup().setupForYou();
-
+  Future<void> refreshForYouVents() async {
+    await _refreshVentsData(
+      ventProvider: getIt.ventForYouProvider,
+      setupMethod: () => VentDataSetup().setupForYou(),
+    );
   }
 
   Future<void> refreshTrendingVents() async {
-
-    getIt.ventTrendingProvider.deleteVentsData();
-
-    await VentDataSetup().setupTrending();
-
+    await _refreshVentsData(
+      ventProvider: getIt.ventTrendingProvider,
+      setupMethod: () => VentDataSetup().setupTrending(),
+    );
   }
 
   Future<void> refreshFollowingVents() async {
-
-    getIt.ventFollowingProvider.deleteVentsData();
-
-    await VentDataSetup().setupFollowing();
-
+    await _refreshVentsData(
+      ventProvider: getIt.ventFollowingProvider,
+      setupMethod: () => VentDataSetup().setupFollowing(),
+    );
   }
 
   Future<void> refreshMyProfile() async {

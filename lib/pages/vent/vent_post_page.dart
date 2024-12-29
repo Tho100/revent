@@ -5,9 +5,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/helper/call_refresh.dart';
-import 'package:revent/helper/call_vent_actions.dart';
-import 'package:revent/helper/current_provider.dart';
+import 'package:revent/service/refresh_service.dart';
+import 'package:revent/service/vent_actions_handler.dart';
+import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
@@ -178,7 +178,7 @@ class _VentPostPageState extends State<VentPostPage> {
         return;
       }
 
-      await CallRefresh().refreshVentPost(
+      await RefreshService().refreshVentPost(
         title: widget.title, 
         creator: widget.creator, 
       ).then((_) {
@@ -194,7 +194,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
   Map<String, dynamic> _getVentProvider() {
 
-    final currentProvider = CurrentProvider(
+    final currentProvider = CurrentProviderService(
       title: widget.title, creator: widget.creator
     ).getRealTimeProvider(context: context);
 
@@ -433,7 +433,7 @@ class _VentPostPageState extends State<VentPostPage> {
           message: 'Delete this post?', 
           buttonMessage: 'Delete',
           onPressedEvent: () async {
-            await CallVentActions(
+            await VentActionsHandler(
               context: context, 
               title: widget.title, 
               creator: widget.creator
@@ -462,7 +462,7 @@ class _VentPostPageState extends State<VentPostPage> {
           value: likesInfo['total_likes'], 
           isLiked: likesInfo['is_liked'],
           onPressed: () async {
-            await CallVentActions(
+            await VentActionsHandler(
               context: context, 
               title: widget.title, 
               creator: widget.creator
@@ -490,7 +490,7 @@ class _VentPostPageState extends State<VentPostPage> {
         return ActionsButton().buildSaveButton(
           isSaved: _isVentSaved(),
           onPressed: () async {
-            await CallVentActions(
+            await VentActionsHandler(
               context: context, 
               title: widget.title, 
               creator: widget.creator
