@@ -7,13 +7,13 @@ import 'package:revent/service/query/vent/delete_saved_vent.dart';
 import 'package:revent/service/query/vent/delete_vent.dart';
 import 'package:revent/service/query/vent/vent_actions.dart';
 
-class CallVentActions {
+class VentActionsHandler {
 
   final BuildContext context;
   final String title;
   final String creator;
 
-  CallVentActions({
+  VentActionsHandler({
     required this.context,
     required this.title,
     required this.creator

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/service/call_vent_actions.dart';
+import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
@@ -65,7 +65,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
       viewVentPostOnPressed: () => _viewVentPostPage(),
       removeSavedOnPressed: widget.isMyProfile!
         ? () async {
-        await CallVentActions(
+        await VentActionsHandler(
           context: context, 
           title: widget.title, 
           creator: widget.creator
@@ -80,7 +80,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
           message: 'Delete this post?', 
           buttonMessage: 'Delete',
           onPressedEvent: () async {
-            await CallVentActions(
+            await VentActionsHandler(
               context: context, 
               title: widget.title, 
               creator: widget.creator
