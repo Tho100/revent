@@ -44,15 +44,18 @@ class DeleteVent extends BaseQueryService {
     const updateTotalPostsQuery = 
       'UPDATE user_profile_info SET posts = posts - 1 WHERE username = :username';
 
-    final param = {
-      'username': userData.user.username
-    };
+    final param = {'username': userData.user.username};
 
     await executeQuery(updateTotalPostsQuery, param);
 
   }
 
   Future<void> _deleteComments({required String title}) async {
+
+    final queries = [
+      'DELETE FROM vent_comments_info WHERE title = :title AND creator = :creator',
+      'DELETE FROM vent_comments_likes_info WHERE title = :title AND creator = :creator',
+    ];
 
     final params = {
       'title': title,
@@ -62,17 +65,9 @@ class DeleteVent extends BaseQueryService {
     final conn = await connection();
 
     await conn.transactional((txn) async {
-
-      const deleteCommentsQuery = 
-        'DELETE FROM vent_comments_info WHERE title = :title AND creator = :creator'; 
-        
-      await txn.execute(deleteCommentsQuery, params);
-
-      const deleteCommentsLikesInfoQuery = 
-        'DELETE FROM vent_comments_likes_info WHERE title = :title AND creator = :creator'; 
-
-      await txn.execute(deleteCommentsLikesInfoQuery, params);
-
+      for (final query in queries) {
+        await txn.execute(query, params);
+      }
     });
 
   }
