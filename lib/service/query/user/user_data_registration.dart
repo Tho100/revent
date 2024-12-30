@@ -39,11 +39,9 @@ class UserDataRegistration extends BaseQueryService {
     final conn = await connection();
 
     await conn.transactional((txn) async {
-
       for(int i=0; i <queries.length; i++) {
         await txn.execute(queries[i], params[i]);
       }
-
     });
 
     await LocalStorageModel().setupLocalAccountInformation(
