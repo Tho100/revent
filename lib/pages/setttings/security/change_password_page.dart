@@ -4,7 +4,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/security/hash_model.dart';
-import 'package:revent/service/user/user_auth_service.dart';
+import 'package:revent/service/query/user/user_auth_service.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';

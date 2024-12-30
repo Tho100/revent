@@ -3,7 +3,7 @@ import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/service/query/general/user_data_registration.dart';
+import 'package:revent/service/query/user/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
