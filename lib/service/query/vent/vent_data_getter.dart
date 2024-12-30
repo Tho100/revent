@@ -1,11 +1,12 @@
 import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
-class VentDataGetter {
+class VentDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
@@ -101,8 +102,8 @@ class VentDataGetter {
     final conn = await ReventConnection.connect();
 
     final results = params != null 
-      ? await conn.execute(query, params)
-      : await conn.execute(query);
+      ? await executeQuery(query, params)
+      : await executeQuery(query);
 
     final extractedData = ExtractData(rowsData: results);
 
