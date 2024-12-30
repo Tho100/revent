@@ -8,7 +8,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/security/hash_model.dart';
-import 'package:revent/security/user_auth.dart';
+import 'package:revent/security/user_auth_service.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
@@ -36,7 +36,7 @@ class UserLoginService {
       return;
     }
 
-    final authenticationInformation = await UserAuth().getAccountAuthentication(
+    final authenticationInformation = await UserAuthService().getAccountAuthentication(
       conn: conn, 
       username: username
     );

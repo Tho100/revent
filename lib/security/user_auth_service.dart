@@ -1,6 +1,6 @@
 import 'package:mysql_client/mysql_client.dart';
 
-class UserAuth {
+class UserAuthService { // TODO: Use basequeryservice
 
   Future<String> getAccountAuthentication({
     required MySQLConnectionPool conn,
