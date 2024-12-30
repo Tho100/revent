@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
 
   final ventDataSetup = VentDataSetup();
-  final callRefresh = RefreshService();
+  final refreshService = RefreshService();
 
   late TabController tabController;
 
@@ -114,17 +114,17 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     switch (homeTabs[tabController.index].text) {
       case 'For you':
-        await callRefresh.refreshForYouVents();
+        await refreshService.refreshForYouVents();
         break;
       case 'Trending':
         trendingIsLoadedNotifier.value = false;
-        await callRefresh.refreshTrendingVents().then(
+        await refreshService.refreshTrendingVents().then(
           (_) => trendingIsLoadedNotifier.value = true
         );
         break;
       case 'Following':
         followingIsLoadedNotifier.value = false;
-        await callRefresh.refreshFollowingVents().then(
+        await refreshService.refreshFollowingVents().then(
           (_) => followingIsLoadedNotifier.value = true
         );
         break;

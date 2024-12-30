@@ -1,6 +1,7 @@
 import 'package:mysql_client/mysql_client.dart';
+import 'package:revent/service/query/general/base_query_service.dart';
 
-class UserAuth {
+class UserAuthService extends BaseQueryService {
 
   Future<String> getAccountAuthentication({
     required MySQLConnectionPool conn,
@@ -10,7 +11,7 @@ class UserAuth {
     const query = 'SELECT password FROM user_information WHERE username = :username';
     final params = {'username': username};
 
-    final results = await conn.execute(query, params);
+    final results = await executeQuery(query, params);
 
     return results.rows.last.assoc()['password']!;
 
@@ -29,7 +30,7 @@ class UserAuth {
       'new_password': newPasswordHash
     };
 
-    await conn.execute(query, params);
+    await executeQuery(query, params);
 
   }
 
