@@ -30,13 +30,19 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
   final isArchivedVentNotifier = ValueNotifier<bool>(false);
 
-  Future<void> _createVentOnPressed() async {
+  bool hasBeenPosted = false;
+
+  Future<void> _postVentOnPressed() async {
 
     final ventTitle = ventTitleController.text;
     final ventBodyText = ventBodyTextController.text;
 
     if(ventTitle.isEmpty) {
       CustomAlertDialog.alertDialog('Please enter vent title');
+      return;
+    }
+
+    if(hasBeenPosted) {
       return;
     }
 
@@ -49,52 +55,75 @@ class _CreateVentPageState extends State<CreateVentPage> {
         return;
       }
 
-      final loading = SpinnerLoading();
-
-      if(context.mounted) {
-        loading.startLoading(context: context);
-      }
-
       if(isArchivedVentNotifier.value) {
-
-        await CreateNewItem().newArchiveVent(
-          ventTitle: ventTitle, 
-          ventBodyText: ventBodyText
-        ).then((value) {
-
-          loading.stopLoading();
-
-          SnackBarDialog.temporarySnack(message: 'Added vent to archive.');
-
-          Navigator.pop(context);
-
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (_) => const ArchivedVentPage())
-          );
-
-        });
-
+        await _createArchiveVent(title: ventTitle, bodyText: ventBodyText);
         return;
-
       }
 
-      await CreateNewItem().newVent(
-        ventTitle: ventTitle, 
-        ventBodyText: ventBodyText
-      ).then((value) {
+      await _createVent(title: ventTitle, bodyText: ventBodyText);
 
-        loading.stopLoading();
-
-        SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
-
-        Navigator.pop(context);        
-
-      });
+      hasBeenPosted = true;
         
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Failed to post vent.');
     }
+
+  }
+
+  Future<void> _createArchiveVent({
+    required String title,
+    required String bodyText
+  }) async {
+
+    final loading = SpinnerLoading();
+
+    if(context.mounted) {
+      loading.startLoading(context: context);
+    }
+
+    await CreateNewItem().newArchiveVent(
+      ventTitle: title, 
+      ventBodyText: bodyText
+    ).then((_) {
+
+      loading.stopLoading();
+
+      SnackBarDialog.temporarySnack(message: 'Added vent to archive.');
+      
+      Navigator.pop(context);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => const ArchivedVentPage())
+      );
+
+    });
+
+  }
+
+  Future<void> _createVent({
+    required String title,
+    required String bodyText
+  }) async {
+
+    final loading = SpinnerLoading();
+
+    if(context.mounted) {
+      loading.startLoading(context: context);
+    }
+
+    await CreateNewItem().newVent(
+      ventTitle: title, 
+      ventBodyText: bodyText
+    ).then((_) {
+
+      loading.stopLoading();
+
+      SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
+
+      Navigator.pop(context);        
+
+    });
 
   }
 
@@ -179,7 +208,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
       padding: const EdgeInsets.all(8.0),
       child: SubButton(
         text: 'Post', 
-        onPressed: () async => _createVentOnPressed(),
+        onPressed: () async => _postVentOnPressed(),
       ),
     );
   }
