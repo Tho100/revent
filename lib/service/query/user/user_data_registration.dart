@@ -9,8 +9,7 @@ class UserDataRegistration extends BaseQueryService {
 
   Future<void> insert({required String? hashPassword}) async {
       
-    const queries = 
-    [
+    const queries = [
       'INSERT INTO user_information (username, email, password, plan) VALUES (:username, :email, :password, :plan)',
       'INSERT INTO user_profile_info (bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)',
       'INSERT INTO user_privacy_info (username) VALUES (:username)'
