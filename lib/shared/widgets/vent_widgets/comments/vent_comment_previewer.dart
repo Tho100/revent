@@ -202,13 +202,22 @@ class VentCommentPreviewer extends StatelessWidget {
       
           const SizedBox(width: 16),
       
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(CupertinoIcons.chat_bubble, color:ThemeColor.secondaryWhite, size: 18),
+            padding: EdgeInsets.zero,
+            constraints: const BoxConstraints(), 
+          ),
+
+          const SizedBox(width: 4),
+      
           Text(
-            'Reply',
+            '0',
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,
-              fontSize: 13
-            )
+              fontSize: 13,
+            ),
           ),
 
           const SizedBox(width: 25),
