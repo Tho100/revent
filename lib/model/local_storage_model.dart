@@ -136,7 +136,7 @@ class LocalStorageModel {
       await setupFile.writeAsString('$username\n$email\n$plan');
 
     } catch (err) {
-      print(err.toString());
+      return;
     }
 
   }
@@ -152,7 +152,7 @@ class LocalStorageModel {
       await filePath.delete();
 
     } catch (err) {
-      print(err.toString());
+      return;
     }
 
   }

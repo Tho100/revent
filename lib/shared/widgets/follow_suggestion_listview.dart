@@ -14,63 +14,70 @@ class FollowSuggestionListView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<FollowSuggestionProvider>(
       builder: (_, suggestionData, __) {
-        return ListView.builder(
-          itemCount: 5,
-          scrollDirection: Axis.horizontal,
-          shrinkWrap: true,
-          itemBuilder: (_, index) {
-      
-            final username = suggestionData.suggestions[index].username;
-            final profilePic = suggestionData.suggestions[index].profilePic;
-      
-            return Container(
-              width: 30,
-              height: 45,
-              decoration: BoxDecoration(
-                color: ThemeColor.black,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: ThemeColor.lightGrey
-                )
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                  
-                    ProfilePictureWidget(
-                      pfpData: profilePic,
-                      customHeight: 30,
-                      customWidth: 30,
-                    ),
-                    
-                    const SizedBox(height: 4),
+        return SizedBox(
+          height: 180,
+          child: ListView.builder(
+            itemCount: suggestionData.suggestions.length,
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemBuilder: (_, index) {
               
-                    Text(
-                      username,
-                      style: GoogleFonts.inter(
-                        color: ThemeColor.white,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 15
-                      ),
-                    ),
-          
-                    const SizedBox(height: 8),
+              final username = suggestionData.suggestions[index].username;
+              final profilePic = suggestionData.suggestions[index].profilePic;
               
-                    MainButton(
-                      text: 'Follow',
-                      customWidth: 55,
-                      customHeight: 35, 
-                      onPressed: () {}
+              return Padding(
+                padding: const EdgeInsets.only(right: 14.0, left: 2.0),
+                child: Container(
+                  width: 140,
+                  height: 155,
+                  decoration: BoxDecoration(
+                    color: ThemeColor.black,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: ThemeColor.lightGrey
                     )
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                      
+                        ProfilePictureWidget(
+                          pfpData: profilePic,
+                          customHeight: 65,
+                          customWidth: 65,
+                        ),
+                        
+                        const SizedBox(height: 14),
                   
-                  ],
+                        Text(
+                          username,
+                          style: GoogleFonts.inter(
+                            color: ThemeColor.white,
+                            fontWeight: FontWeight.w800,
+                            fontSize: 14
+                          ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                          
+                        const SizedBox(height: 16),
+                  
+                        MainButton(
+                          text: 'Follow',
+                          customWidth: 85,
+                          customHeight: 35, 
+                          onPressed: () {}
+                        )
+                      
+                      ],
+                    ),
+                  ),
                 ),
-              ),
-            );
-            
-          },
+              );
+              
+            },
+          ),
         );
       },
     );

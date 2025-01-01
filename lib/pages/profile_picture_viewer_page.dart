@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
 class ProfilePictureViewer extends StatelessWidget {
-
+  
   final Uint8List pfpData;
 
   const ProfilePictureViewer({
-    required this.pfpData, 
-    super.key
+    required this.pfpData,
+    super.key,
   });
 
   @override
@@ -18,12 +18,16 @@ class ProfilePictureViewer extends StatelessWidget {
       onTap: () => Navigator.pop(context),
       child: Scaffold(
         body: Center(
-          child: ProfilePictureWidget(
-            customWidth: 200,
-            customHeight: 200,
-            pfpData: pfpData,
-          )
-        )
+          child: Hero(
+            tag: 'profile-picture-hero',
+            child: ProfilePictureWidget(
+              customWidth: 200,
+              customHeight: 200,
+              pfpData: pfpData,
+              customEmptyPfpSize: 85,
+            ),
+          ),
+        ),
       ),
     );
   }
