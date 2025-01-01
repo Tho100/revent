@@ -17,7 +17,7 @@ class FollowSuggestionListView extends StatelessWidget {
         return SizedBox(
           height: 180,
           child: ListView.builder(
-            itemCount: 5,
+            itemCount: suggestionData.suggestions.length,
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             itemBuilder: (_, index) {
