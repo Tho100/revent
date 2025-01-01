@@ -37,11 +37,14 @@ class ProfileInfoWidgets {
           MaterialPageRoute(builder: (_) => ProfilePictureViewer(pfpData: pfpData))
         );
       },
-      child: ProfilePictureWidget(
-        customHeight: 70,
-        customWidth: 70,
-        customEmptyPfpSize: 30,
-        pfpData: pfpData,
+      child: Hero(
+        tag: 'profile-picture-hero',
+        child: ProfilePictureWidget(
+          customHeight: 70,
+          customWidth: 70,
+          customEmptyPfpSize: 30,
+          pfpData: pfpData,
+        ),
       ),
     );
   }
