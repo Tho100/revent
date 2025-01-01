@@ -330,7 +330,7 @@ class _VentPostPageState extends State<VentPostPage> {
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,
-              fontSize: 14.5
+              fontSize: 13.5
             ),
           ),
 
@@ -341,7 +341,7 @@ class _VentPostPageState extends State<VentPostPage> {
             style: GoogleFonts.inter(
               color: ThemeColor.thirdWhite,
               fontWeight: FontWeight.w800,
-              fontSize: 14
+              fontSize: 12.5
             ),
           ),
 
