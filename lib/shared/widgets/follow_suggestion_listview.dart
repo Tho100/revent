@@ -58,6 +58,7 @@ class FollowSuggestionListView extends StatelessWidget {
                             fontWeight: FontWeight.w800,
                             fontSize: 14
                           ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                           
                         const SizedBox(height: 16),
