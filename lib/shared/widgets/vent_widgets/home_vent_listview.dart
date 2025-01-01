@@ -43,33 +43,28 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
   }
   
   Widget _buildFollowSuggestion() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
+    return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
 
-          const Divider(height: 1, color: ThemeColor.lightGrey),
-
-          Text(
-            'Follow suggestion',
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w800,
-              fontSize: 12
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0, top: 6.0, bottom: 4.0),
+            child: Text(
+              'Follow suggestion',
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontWeight: FontWeight.w800,
+                fontSize: 13
+              ),
             ),
           ),
 
           const Padding(
-            padding: EdgeInsets.symmetric(vertical: 4.0),
-            child: Expanded(
-              child: FollowSuggestionListView()
-            ),
+            padding: EdgeInsets.symmetric(vertical: 14.0),
+            child: FollowSuggestionListView()
           ),
 
-          const Divider(height: 1, color: ThemeColor.lightGrey),
-
         ],
-      ),
     );
   }
 
@@ -82,28 +77,31 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
         parent: BouncingScrollPhysics(),
       ),
       crossAxisCount: 1,
-      itemCount: ventDataList.length+1,
+      itemCount: ventDataList.length + (widget.showFollowSuggestion! ? 1 : 0),
       builder: (_, index) {
 
-        final reversedVentIndex = ventDataList.length - 1 - index;
-        final vents = ventDataList[reversedVentIndex];
+        if (index == 5 && widget.showFollowSuggestion!) {
+          return _buildFollowSuggestion();
+        }
 
-        if(reversedVentIndex < ventDataList.length) {
+        final adjustedIndex = index > 5 && widget.showFollowSuggestion! ? index - 1 : index;
+
+        if (adjustedIndex >= 0 && adjustedIndex < ventDataList.length) {
+
+          final reversedVentIndex = ventDataList.length - 1 - adjustedIndex;
+          final vents = ventDataList[reversedVentIndex];
+
           return KeyedSubtree(
             key: ValueKey('${vents.title}/${vents.creator}'),
             child: _buildVentPreview(vents),
           );
-        } else if (reversedVentIndex == 5 && widget.showFollowSuggestion!) {
-          return _buildFollowSuggestion();
-
-        } else {
-          return const SizedBox.shrink();
 
         }
 
+        return const SizedBox.shrink();
+
       },
     );
-
   }
 
   Widget _buildOnEmpty() {
