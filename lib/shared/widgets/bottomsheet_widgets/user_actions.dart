@@ -35,7 +35,8 @@ class BottomsheetUserActions {
   Future buildBottomsheet({
     required BuildContext context,
     required VoidCallback reportOnPressed,
-    required VoidCallback blockOnPressed
+    required VoidCallback blockOnPressed,
+    required VoidCallback aboutProfileOnPressed
   }) {
     return Bottomsheet().buildBottomSheet(
       context: context, 
@@ -46,6 +47,12 @@ class BottomsheetUserActions {
         const BottomsheetBar(),
 
         const BottomsheetTitle(title: 'User Action'),
+
+        _buildOptionButton(
+          text: 'About this profile',
+          icon: CupertinoIcons.info_circle,
+          onPressed: aboutProfileOnPressed
+        ),
 
         _buildOptionButton(
           text: 'Report',

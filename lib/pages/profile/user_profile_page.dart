@@ -2,15 +2,18 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/user/user_actions.dart';
+import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/service/query/user/user_following.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
 import 'package:revent/service/query/user_profile/profile_data_getter.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/shared/widgets/bottomsheet_widgets/about_profile.dart';
 import 'package:revent/shared/widgets/bottomsheet_widgets/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/themes/theme_style.dart';
@@ -62,6 +65,8 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   bool isFollowingListHidden = false;
   bool isSavedPostsHidden = false;
 
+  String joinedDate = '';
+
   void _initializeClasses() async {
     
     callProfilePosts = ProfilePostsSetup(
@@ -105,6 +110,27 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     setState(() { 
       navigation.setProfileTabIndex(tabController.index);
     });
+
+  }
+
+  Future<String> _loadJoinedDate() async {
+
+    if(joinedDate.isEmpty) {
+
+      final getJoinedDate = await UserDataGetter().getJoinedDate(
+        username: widget.username
+      );
+
+      final formattedJoinedDate = FormatDate().formatLongDate(getJoinedDate);
+
+      joinedDate = formattedJoinedDate;
+
+      return formattedJoinedDate;
+
+    } else {
+      return joinedDate;
+
+    }
 
   }
 
@@ -321,6 +347,17 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
       onPressed: () => BottomsheetUserActions().buildBottomsheet(
         context: context, 
+        aboutProfileOnPressed: () async {
+          Navigator.pop(context);
+          await _loadJoinedDate().then((joinedDate) {
+            BottomsheetAboutProfile().buildBottomsheet(
+              context: context, 
+              username: widget.username, 
+              pfpData: widget.pfpData,
+              joinedDate: joinedDate 
+            );
+          });
+        },
         reportOnPressed: () {}, 
         blockOnPressed: () {}
       )
