@@ -29,18 +29,18 @@ class FollowSuggestionListView extends StatelessWidget {
               
               return Padding(
                 padding: const EdgeInsets.only(right: 14.0, left: 2.0),
-                child: InkWellEffect(
-                  onPressed: () => NavigatePage.userProfilePage(username: username, pfpData: profilePic),
-                  child: Container(
-                    width: 140,
-                    height: 155,
-                    decoration: BoxDecoration(
-                      color: ThemeColor.black,
-                      borderRadius: BorderRadius.circular(16),
-                      border: Border.all(
-                        color: ThemeColor.lightGrey
-                      )
-                    ),
+                child: Container(
+                  width: 140,
+                  height: 155,
+                  decoration: BoxDecoration(
+                    color: ThemeColor.black,
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: ThemeColor.lightGrey
+                    )
+                  ),
+                  child: InkWellEffect(
+                    onPressed: () => NavigatePage.userProfilePage(username: username, pfpData: profilePic),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
