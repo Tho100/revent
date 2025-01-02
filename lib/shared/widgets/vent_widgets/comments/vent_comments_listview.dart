@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/pages/comment/reply/reply_comment_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_previewer.dart';
@@ -21,18 +22,48 @@ class VentCommentsListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildCommentPreview(VentCommentData ventComment) {
-    return VentCommentPreviewer(
-      title: title,
-      creator: creator,
-      commentedBy: ventComment.commentedBy,
-      comment: ventComment.comment,
-      commentTimestamp: ventComment.commentTimestamp,
-      totalLikes: ventComment.totalLikes,
-      isCommentLiked: ventComment.isCommentLiked,
-      isCommentLikedByCreator: ventComment.isCommentLikedByCreator,
-      pfpData: ventComment.pfpData,
-      creatorPfpData: creatorPfpData
+  Widget _buildCommentPreview(VentCommentData ventComment, BuildContext context) {
+
+    final commentedBy = ventComment.commentedBy;
+    final comment = ventComment.comment;
+    final commentTimestamp = ventComment.commentTimestamp;
+    final totalLikes = ventComment.totalLikes;
+    final isCommentLiked = ventComment.isCommentLiked;
+    final isCommentLikedByCreator = ventComment.isCommentLikedByCreator;
+    final pfpData = ventComment.pfpData;
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => ReplyCommentPage(
+            title: title, 
+            creator: creator, 
+            commentedBy: commentedBy, 
+            comment: comment, 
+            commentTimestamp: commentTimestamp, 
+            totalReplies: 0, 
+            isCommentLikedByCreator: isCommentLikedByCreator, 
+            pfpData: pfpData, 
+            creatorPfpData: creatorPfpData
+          ))
+        );
+      },
+      child: Container(
+        color: Colors.transparent,
+        child: VentCommentPreviewer(
+          title: title,
+          creator: creator,
+          commentedBy: commentedBy,
+          comment: comment,
+          commentTimestamp: commentTimestamp,
+          totalLikes: totalLikes,
+          isCommentLiked: isCommentLiked,
+          isCommentLikedByCreator: isCommentLikedByCreator,
+          pfpData: pfpData,
+          creatorPfpData: creatorPfpData
+        ),
+      ),
     );
   }
 
@@ -51,6 +82,7 @@ class VentCommentsListView extends StatelessWidget {
   Widget _buildListView({
     required VentCommentProvider commentData,
     required int commentsCount,
+    required BuildContext context
   }) {
     return ListView.builder(
       shrinkWrap: true,
@@ -59,7 +91,7 @@ class VentCommentsListView extends StatelessWidget {
       itemBuilder: (_, index) {
         final reversedIndex = commentData.ventComments.length - 1 - index;
         final ventComment = commentData.ventComments[reversedIndex];
-        return _buildCommentPreview(ventComment);
+        return _buildCommentPreview(ventComment, context);
       }
     );
   }
@@ -74,7 +106,7 @@ class VentCommentsListView extends StatelessWidget {
 
         return isCommentsEmpty 
           ? _buildOnEmpty()
-          : _buildListView(commentData: commentData, commentsCount: commentsCount);
+          : _buildListView(commentData: commentData, commentsCount: commentsCount, context: context);
       },
     );
   }
