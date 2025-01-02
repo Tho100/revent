@@ -89,13 +89,13 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
       builder: (_, snapshot) {
 
         if (snapshot.connectionState == ConnectionState.waiting) {
-          return _buildHeaders('Joined date', '...');
+          return _buildHeaders('Joined', '...');
 
         } else if (snapshot.hasError) {
-          return _buildHeaders('Joined date', '0/0/0');
+          return _buildHeaders('Joined', '0/0/0');
 
         } else {
-          return _buildHeaders('Joined date', snapshot.data ?? '0/0/0');
+          return _buildHeaders('Joined', snapshot.data ?? '0/0/0');
 
         }
 
