@@ -42,9 +42,7 @@ class VentCommentsListView extends StatelessWidget {
             commentedBy: commentedBy, 
             comment: comment, 
             commentTimestamp: commentTimestamp, 
-            totalLikes: totalLikes, 
             totalReplies: 0, 
-            isCommentLiked: isCommentLiked, 
             isCommentLikedByCreator: isCommentLikedByCreator, 
             pfpData: pfpData, 
             creatorPfpData: creatorPfpData

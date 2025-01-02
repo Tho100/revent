@@ -2,8 +2,10 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
+import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
@@ -19,10 +21,8 @@ class ReplyCommentPage extends StatefulWidget {
   final String comment;
   final String commentTimestamp;
 
-  final int totalLikes;
   final int totalReplies;
 
-  final bool isCommentLiked;
   final bool isCommentLikedByCreator;
 
   final Uint8List pfpData;
@@ -34,9 +34,7 @@ class ReplyCommentPage extends StatefulWidget {
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
-    required this.totalLikes,
     required this.totalReplies,
-    required this.isCommentLiked,
     required this.isCommentLikedByCreator,
     required this.pfpData,
     required this.creatorPfpData,
@@ -51,17 +49,28 @@ class ReplyCommentPage extends StatefulWidget {
 class _ReplyCommentPageState extends State<ReplyCommentPage> {
 
   Widget _buildMainComment() {
-    return VentCommentPreviewer(
-      title: widget.title, 
-      creator: widget.creator, 
-      commentedBy: widget.commentedBy, 
-      comment: widget.comment, 
-      commentTimestamp: widget.commentTimestamp, 
-      totalLikes: widget.totalLikes, 
-      isCommentLiked: widget.isCommentLiked, 
-      isCommentLikedByCreator: widget.isCommentLikedByCreator, 
-      pfpData: widget.pfpData, 
-      creatorPfpData: widget.creatorPfpData
+    return Consumer<VentCommentProvider>(
+      builder: (_, ventComment, __) {
+        
+        final commenterIndex = ventComment.ventComments.indexWhere(
+          (comment) => comment.comment == widget.comment && comment.commentedBy == widget.commentedBy
+        );
+        final isCommentLiked = ventComment.ventComments[commenterIndex].isCommentLiked;
+        final totalLikes = ventComment.ventComments[commenterIndex].totalLikes;
+
+        return VentCommentPreviewer(
+          title: widget.title, 
+          creator: widget.creator, 
+          commentedBy: widget.commentedBy, 
+          comment: widget.comment, 
+          commentTimestamp: widget.commentTimestamp, 
+          totalLikes: totalLikes, 
+          isCommentLiked: isCommentLiked, 
+          isCommentLikedByCreator: widget.isCommentLikedByCreator, 
+          pfpData: widget.pfpData, 
+          creatorPfpData: widget.creatorPfpData
+        );
+      },
     );
   }
 
