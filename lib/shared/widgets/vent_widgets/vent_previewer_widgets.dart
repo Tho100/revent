@@ -10,7 +10,7 @@ import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/bottomsheet_widgets/vent_post_actions.dart';
+import 'package:revent/shared/widgets/bottomsheet/vent_post_actions.dart';
 import 'package:revent/shared/widgets/buttons/actions_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
