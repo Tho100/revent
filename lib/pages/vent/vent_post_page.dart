@@ -17,6 +17,7 @@ import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/bottom_input_bar.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/model/setup/vent_comment_setup.dart';
@@ -656,45 +657,10 @@ class _VentPostPageState extends State<VentPostPage> {
       padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
       child: Row(
         children: [
-          Expanded(
-            child: InkWellEffect(
-              onPressed: () => _addCommentOnPressed(),
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: ThemeColor.thirdWhite)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-          
-                        ProfilePictureWidget(
-                          customHeight: 26,
-                          customWidth: 26,
-                          pfpData: profileData.profile.profilePicture,
-                        ),
-          
-                        const SizedBox(width: 10),
-          
-                        Text(
-                          'Add a comment...',
-                          style: GoogleFonts.inter(
-                            color: ThemeColor.thirdWhite,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14
-                          ),
-                        ),
-                        
-                      ],
-                    ),
-                  ),
-                )
-              )
-            ),
+
+          BottomInputBar(
+            hintText: 'Add a comment...', 
+            onPressed: () => _addCommentOnPressed(),
           ),
 
           if(userData.user.username == widget.creator) ... [
@@ -738,7 +704,7 @@ class _VentPostPageState extends State<VentPostPage> {
         actions: [_buildVentOptionButton()]
       ).buildAppBar(),
       body: _buildBody(),  
-      bottomNavigationBar: _buildAddComment(),
+      bottomNavigationBar: _buildAddComment()
     );
   }
 
