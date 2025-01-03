@@ -1,15 +1,11 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/bottom_input_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_previewer.dart';
 
 class ReplyCommentPage extends StatefulWidget {
@@ -117,50 +113,10 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
   Widget _buildAddReply() {
     return Padding(
       padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: InkWellEffect(
-              onPressed: () {},
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  border: Border.all(color: ThemeColor.thirdWhite)
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 12.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Row(
-                      children: [
-          
-                        ProfilePictureWidget(
-                          customHeight: 26,
-                          customWidth: 26,
-                          pfpData: getIt.profileProvider.profile.profilePicture,
-                        ),
-          
-                        const SizedBox(width: 10),
-          
-                        Text(
-                          'Reply to @${widget.commentedBy}',
-                          style: GoogleFonts.inter(
-                            color: ThemeColor.thirdWhite,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 14
-                          ),
-                        ),
-                        
-                      ],
-                    ),
-                  ),
-                )
-              )
-            ),
-          ),
-        ],
-      ),
+      child: BottomInputBar(
+        hintText: 'Reply to @${widget.commentedBy}', 
+        onPressed: () {}
+      )
     );
   }
 
@@ -172,7 +128,7 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
         title: 'Reply'
       ).buildAppBar(),
       body: _buildBody(),
-      bottomNavigationBar: _buildAddReply(),
+      bottomNavigationBar: _buildAddReply()
     );
   }
 

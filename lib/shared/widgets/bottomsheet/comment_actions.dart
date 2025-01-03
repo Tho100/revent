@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/shared/widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet_bar.dart';
-import 'package:revent/shared/widgets/bottomsheet_title.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetCommentActions {
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/shared/widgets/bottomsheet_widgets/create.dart';
+import 'package:revent/shared/widgets/bottomsheet/create.dart';
 import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 
 class PageNavigationBar extends StatelessWidget {

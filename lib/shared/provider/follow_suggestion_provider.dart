@@ -25,4 +25,11 @@ class FollowSuggestionProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void removeSuggestion(int index) {
+    if (index >= 0 && index < _suggestions.length) {
+      _suggestions.removeAt(index);
+      notifyListeners();
+    }
+  }
+
 }
