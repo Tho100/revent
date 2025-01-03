@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/shared/widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet_bar.dart';
-import 'package:revent/shared/widgets/bottomsheet_title.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetCommentFilter {
 
