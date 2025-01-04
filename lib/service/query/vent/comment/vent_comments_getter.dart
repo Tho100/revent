@@ -5,6 +5,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 
 class VentCommentsGetter extends BaseQueryService {
 
@@ -22,16 +23,7 @@ class VentCommentsGetter extends BaseQueryService {
 
   Future<Map<String, List<dynamic>>> getComments() async {
 
-    const getPostIdQuery = 'SELECT post_id FROM vent_info WHERE title = :title AND creator = :creator';
-
-    final postParams = {
-      'title': title,
-      'creator': creator
-    };
-
-    final postIdResults = await executeQuery(getPostIdQuery, postParams);
-
-    final postId = ExtractData(rowsData: postIdResults).extractIntColumn('post_id')[0];
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
     const getCommentsQuery = 
     '''

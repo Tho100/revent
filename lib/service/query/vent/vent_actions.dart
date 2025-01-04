@@ -4,6 +4,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 
 class VentActions extends BaseQueryService {
@@ -115,16 +116,7 @@ class VentActions extends BaseQueryService {
 
   Future<void> sendComment({required String comment}) async {
 
-    const getPostIdQuery = 'SELECT post_id FROM vent_info WHERE title = :title AND creator = :creator';
-    // TODO: Create separated class for this
-    final postParams = {
-      'title': title,
-      'creator': creator
-    };
-
-    final results = await executeQuery(getPostIdQuery, postParams);
-
-    final postId = ExtractData(rowsData: results).extractIntColumn('post_id')[0];
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
     const insertCommentQuery = 
       'INSERT INTO vent_comments_info (commented_by, comment, total_likes, post_id) VALUES (:commented_by, :comment, :total_likes, :post_id)'; 
@@ -148,7 +140,7 @@ class VentActions extends BaseQueryService {
   }
 
   Future<void> _updateTotalComments({
-    required String title,
+    required String title, // TODO: Remove this param
     required String creator 
   }) async {
 
