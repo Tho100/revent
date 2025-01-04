@@ -128,21 +128,15 @@ class VentActions extends BaseQueryService {
       'post_id': postId
     };
 
-    await executeQuery(insertCommentQuery, commentsParams).then((_) async {
-      await _updateTotalComments(
-        title: title, 
-        creator: creator
-      );
-    });
+    await executeQuery(insertCommentQuery, commentsParams).then(
+      (_) async => await _updateTotalComments()
+    );
 
     _addComment(comment: comment);
 
   }
 
-  Future<void> _updateTotalComments({
-    required String title, // TODO: Remove this param
-    required String creator 
-  }) async {
+  Future<void> _updateTotalComments() async {
 
     const updateTotalCommentsQuery = 
       'UPDATE vent_info SET total_comments = total_comments + 1 WHERE title = :title AND creator = :creator'; 
