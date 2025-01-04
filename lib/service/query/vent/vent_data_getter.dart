@@ -154,24 +154,12 @@ class VentDataGetter extends BaseQueryService {
   }) async {
 
     final queryBasedOnType = {
-      'liked': 'SELECT post_id FROM liked_vent_info WHERE liked_by = :liked_by',
-      'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :saved_by'
+      'liked': 'SELECT post_id FROM liked_vent_info WHERE liked_by = :username',
+      'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
     };
-    
-    final paramBasedOnType = {
-      'liked': {'liked_by': userData.user.username},
-      'saved': {'saved_by': userData.user.username},
-    };
-
-    /*
-    TODO: Simplify this by using queryBasedOnType[stateType]!,
-    {'username': username},
-    
-     */
 
     final retrievedIds = await executeQuery(
-      queryBasedOnType[stateType]!,
-      paramBasedOnType[stateType],
+      queryBasedOnType[stateType]!, {'username': userData.user.username}
     );
 
     final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
