@@ -115,15 +115,25 @@ class VentActions extends BaseQueryService {
 
   Future<void> sendComment({required String comment}) async {
 
+    const getPostIdQuery = 'SELECT post_id FROM vent_info WHERE title = :title AND creator = :creator';
+    // TODO: Create separated class for this
+    final postParams = {
+      'title': title,
+      'creator': creator
+    };
+
+    final results = await executeQuery(getPostIdQuery, postParams);
+
+    final postId = ExtractData(rowsData: results).extractIntColumn('post_id')[0];
+
     const insertCommentQuery = 
-      'INSERT INTO vent_comments_info (title, creator, commented_by, comment, total_likes) VALUES (:title, :creator, :commented_by, :comment, :total_likes)'; 
+      'INSERT INTO vent_comments_info (commented_by, comment, total_likes, post_id) VALUES (:commented_by, :comment, :total_likes, :post_id)'; 
       
     final commentsParams = {
-      'title': title,
-      'creator': creator,
       'commented_by': userData.user.username,
       'comment': comment,
-      'total_likes': 0
+      'total_likes': 0,
+      'post_id': postId
     };
 
     await executeQuery(insertCommentQuery, commentsParams).then((_) async {

@@ -50,12 +50,35 @@ class VentCommentActions extends BaseQueryService {
 
   Future<void> like() async {
 
+    const getPostIdQuery = 'SELECT post_id FROM vent_info WHERE title = :title AND creator = :creator';
+
+    final postParams = {
+      'title': ventTitle,
+      'creator': ventCreator
+    };
+
+    final postIdResults = await executeQuery(getPostIdQuery, postParams);
+
+    final postId = ExtractData(rowsData: postIdResults).extractIntColumn('post_id')[0];
+
+    const getCommentIdQuery = 
+      'SELECT comment_id FROM vent_comments_info WHERE post_id = :post_id AND commented_by = :commented_by AND comment = :comment';
+
+    final commentParams = {
+      'post_id': postId,
+      'commented_by': username,
+      'comment': commentText
+    };
+
+    final commentIdResults = await executeQuery(getCommentIdQuery, commentParams);
+
+    final commentId = ExtractData(rowsData: commentIdResults).extractIntColumn('comment_id')[0];
+
     const likesInfoParameterQuery = 
-      'WHERE title = :title AND creator = :creator AND liked_by = :liked_by AND commented_by = :commented_by AND comment = :comment';
+      'WHERE comment_id = :comment_id AND liked_by = :liked_by AND commented_by = :commented_by AND comment = :comment';
 
     final likesInfoParams = {
-      'title': ventTitle,
-      'creator': ventCreator,
+      'comment_id': commentId,
       'liked_by': getIt.userProvider.user.username,
       'commented_by': username,
       'comment': commentText
@@ -66,7 +89,10 @@ class VentCommentActions extends BaseQueryService {
       likesInfoParameterQuery: likesInfoParameterQuery
     );
 
-    await _updateCommentLikes(isUserLikedPost: isUserLikedComment);
+    await _updateCommentLikes(
+      postId: postId, 
+      isUserLikedPost: isUserLikedComment
+    );
 
     await _updateLikesInfo(
       isUserLikedPost: isUserLikedComment,
@@ -86,17 +112,17 @@ class VentCommentActions extends BaseQueryService {
   }
 
   Future<void> _updateCommentLikes({
+    required int postId,
     required bool isUserLikedPost 
   }) async {
 
     final operationSymbol = isUserLikedPost ? '-' : '+';
 
     final updateLikeValueQuery = 
-      'UPDATE vent_comments_info SET total_likes = total_likes $operationSymbol 1 WHERE creator = :creator AND title = :title AND commented_by = :commented_by AND comment = :comment';
+      'UPDATE vent_comments_info SET total_likes = total_likes $operationSymbol 1 WHERE post_id = :post_id AND commented_by = :commented_by AND comment = :comment';
 
     final ventInfoParams = {
-      'creator': ventCreator,
-      'title': ventTitle,
+      'post_id': postId,
       'commented_by': username,
       'comment': commentText
     };
@@ -106,7 +132,7 @@ class VentCommentActions extends BaseQueryService {
   }
 
   Future<bool> _isUserLikedComment({
-    required Map<String, String> likesInfoParams,
+    required Map<String, dynamic> likesInfoParams,
     required String likesInfoParameterQuery  
   }) async {
 
@@ -122,13 +148,13 @@ class VentCommentActions extends BaseQueryService {
 
   Future<void> _updateLikesInfo({
     required bool isUserLikedPost,
-    required Map<String, String> likesInfoParams,
+    required Map<String, dynamic> likesInfoParams,
     required String likesInfoParameterQuery,
   }) async {
 
     final query = isUserLikedPost 
       ? 'DELETE FROM vent_comments_likes_info $likesInfoParameterQuery'
-      : 'INSERT INTO vent_comments_likes_info (title, creator, liked_by, commented_by, comment) VALUES (:title, :creator, :liked_by, :commented_by, :comment)';
+      : 'INSERT INTO vent_comments_likes_info (liked_by, commented_by, comment, comment_id) VALUES (:liked_by, :commented_by, :comment, :comment_id)';
 
     await executeQuery(query, likesInfoParams);
 

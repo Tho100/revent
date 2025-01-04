@@ -22,26 +22,33 @@ class VentCommentsGetter extends BaseQueryService {
 
   Future<Map<String, List<dynamic>>> getComments() async {
 
+    const getPostIdQuery = 'SELECT post_id FROM vent_info WHERE title = :title AND creator = :creator';
+
+    final postParams = {
+      'title': title,
+      'creator': creator
+    };
+
+    final postIdResults = await executeQuery(getPostIdQuery, postParams);
+
+    final postId = ExtractData(rowsData: postIdResults).extractIntColumn('post_id')[0];
+
     const getCommentsQuery = 
     '''
       SELECT vent_comments_info.comment, 
-            vent_comments_info.commented_by,
-            vent_comments_info.created_at,
-            vent_comments_info.total_likes, 
-            user_profile_info.profile_picture 
+        vent_comments_info.commented_by,
+        vent_comments_info.created_at,
+        vent_comments_info.total_likes, 
+        user_profile_info.profile_picture 
       FROM vent_comments_info 
       JOIN user_profile_info 
       ON vent_comments_info.commented_by = user_profile_info.username 
-      WHERE vent_comments_info.title = :title 
-        AND vent_comments_info.creator = :creator
+      WHERE vent_comments_info.post_id = :post_id
     ''';
 
-    final params = {
-      'title': title,
-      'creator': creator,
-    };
+    final param = {'post_id': postId};
 
-    final results = await executeQuery(getCommentsQuery, params);
+    final results = await executeQuery(getCommentsQuery, param);
 
     final extractedData = ExtractData(rowsData: results);
 
@@ -59,11 +66,13 @@ class VentCommentsGetter extends BaseQueryService {
       .toList();
 
     final isLikedState = await _commentLikedState(
+      postId: postId,
       commentedBy: commentedBy, 
       comments: comment
     );
 
     final isLikedByCreatorState = await _commentLikedByCreatorState(
+      postId: postId,
       commentedBy: commentedBy, 
       comments: comment
     );
@@ -81,17 +90,26 @@ class VentCommentsGetter extends BaseQueryService {
   }
 
   Future<List<bool>> _commentLikedState({
+    required int postId,
     required List<String> commentedBy,
-    required List<String> comments,
+    required List<String> comments
   }) async {
 
-    const readLikesQuery =
-      'SELECT commented_by, comment FROM vent_comments_likes_info WHERE liked_by = :liked_by AND creator = :creator AND title = :title';
+    const readLikesQuery = 
+    '''
+      SELECT 
+          vcli.commented_by, 
+          vcli.comment
+      FROM vent_comments_likes_info vcli
+      JOIN vent_comments_info vci
+          ON vcli.comment = vci.comment
+          AND vcli.commented_by = vci.commented_by
+      WHERE vcli.liked_by = :liked_by AND vci.post_id = :post_id;
+    ''';
 
     final params = {
       'liked_by': userData.user.username,
-      'creator': creator,
-      'title': title,
+      'post_id': postId
     };
 
     final results = await executeQuery(readLikesQuery, params);
@@ -108,17 +126,26 @@ class VentCommentsGetter extends BaseQueryService {
   }
 
   Future<List<bool>> _commentLikedByCreatorState({
+    required int postId,
     required List<String> commentedBy,
-    required List<String> comments,
+    required List<String> comments
   }) async {
 
-    const readLikesQuery =
-      'SELECT commented_by, comment FROM vent_comments_likes_info WHERE liked_by = :liked_by AND creator = :creator AND title = :title';
-
+    const readLikesQuery = 
+    '''
+      SELECT 
+        vcli.commented_by, 
+        vcli.comment
+      FROM vent_comments_likes_info vcli
+      JOIN vent_comments_info vci
+        ON vcli.comment = vci.comment
+        AND vcli.commented_by = vci.commented_by
+      WHERE vcli.liked_by = :liked_by AND vci.post_id = :post_id;
+    ''';
+      
     final params = {
       'liked_by': creator,
-      'creator': creator,
-      'title': title,
+      'post_id': postId
     };
 
     final results = await executeQuery(readLikesQuery, params);
