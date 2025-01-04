@@ -22,14 +22,15 @@ class VentCommentActions extends BaseQueryService {
 
   Future<void> delete() async {
 
+    final postId = await PostIdGetter(title: ventTitle, creator: ventCreator).getPostId();
+
     const query = 
-      'DELETE FROM vent_comments_info WHERE commented_by = :commented_by AND comment = :comment AND title = :title AND creator = :creator';
+      'DELETE FROM vent_comments_info WHERE commented_by = :commented_by AND comment = :comment AND post_id = :post_id';
 
     final params = {
+      'post_id': postId,
       'commented_by': username,
-      'comment': commentText,
-      'title': ventTitle,
-      'creator': ventCreator
+      'comment': commentText
     };
 
     await executeQuery(query, params).then(
