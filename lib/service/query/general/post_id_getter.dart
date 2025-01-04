@@ -3,12 +3,12 @@ import 'package:revent/service/query/general/base_query_service.dart';
 
 class PostIdGetter extends BaseQueryService {
 
-  final String title;
-  final String creator;
+  final String? title;
+  final String? creator;
 
   PostIdGetter({
-    required this.title,
-    required this.creator
+    this.title,
+    this.creator
   });
 
   Future<int> getPostId() async {
@@ -23,6 +23,16 @@ class PostIdGetter extends BaseQueryService {
     final results = await executeQuery(getPostIdQuery, postParams);
 
     return ExtractData(rowsData: results).extractIntColumn('post_id')[0];
+
+  }
+
+  Future<List<int>> getAllPostsId() async {
+
+    const getPostIdQuery = 'SELECT post_id FROM vent_info';
+
+    final results = await executeQuery(getPostIdQuery);
+
+    return ExtractData(rowsData: results).extractIntColumn('post_id');
 
 
   }

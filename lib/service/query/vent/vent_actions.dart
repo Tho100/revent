@@ -32,12 +32,12 @@ class VentActions extends BaseQueryService {
 
   Future<void> likePost() async {
 
-    const likesInfoParameterQuery = 
-      'WHERE title = :title AND creator = :creator AND liked_by = :liked_by';
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+
+    const likesInfoParameterQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
 
     final likesInfoParams = {
-      'title': title,
-      'creator': creator,
+      'post_id': postId,
       'liked_by': userData.user.username,
     };
 
@@ -75,7 +75,7 @@ class VentActions extends BaseQueryService {
   }
 
   Future<bool> _isUserLikedPost({
-    required Map<String, String> likesInfoParams,
+    required Map<String, dynamic> likesInfoParams,
     required String likesInfoParameterQuery  
   }) async {
 
@@ -91,13 +91,13 @@ class VentActions extends BaseQueryService {
 
   Future<void> _updateLikesInfo({
     required bool isUserLikedPost,
-    required Map<String, String> likesInfoParams,
+    required Map<String, dynamic> likesInfoParams,
     required String likesInfoParameterQuery,
   }) async {
 
     final query = isUserLikedPost 
       ? 'DELETE FROM liked_vent_info $likesInfoParameterQuery'
-      : 'INSERT INTO liked_vent_info (title, creator, liked_by) VALUES (:title, :creator, :liked_by)';
+      : 'INSERT INTO liked_vent_info (post_id, liked_by) VALUES (:post_id, :liked_by)';
 
     await executeQuery(query, likesInfoParams);
 
