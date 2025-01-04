@@ -4,6 +4,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 
 class VentActions extends BaseQueryService {
@@ -31,12 +32,12 @@ class VentActions extends BaseQueryService {
 
   Future<void> likePost() async {
 
-    const likesInfoParameterQuery = 
-      'WHERE title = :title AND creator = :creator AND liked_by = :liked_by';
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+
+    const likesInfoParameterQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
 
     final likesInfoParams = {
-      'title': title,
-      'creator': creator,
+      'post_id': postId,
       'liked_by': userData.user.username,
     };
 
@@ -74,7 +75,7 @@ class VentActions extends BaseQueryService {
   }
 
   Future<bool> _isUserLikedPost({
-    required Map<String, String> likesInfoParams,
+    required Map<String, dynamic> likesInfoParams,
     required String likesInfoParameterQuery  
   }) async {
 
@@ -90,13 +91,13 @@ class VentActions extends BaseQueryService {
 
   Future<void> _updateLikesInfo({
     required bool isUserLikedPost,
-    required Map<String, String> likesInfoParams,
+    required Map<String, dynamic> likesInfoParams,
     required String likesInfoParameterQuery,
   }) async {
 
     final query = isUserLikedPost 
       ? 'DELETE FROM liked_vent_info $likesInfoParameterQuery'
-      : 'INSERT INTO liked_vent_info (title, creator, liked_by) VALUES (:title, :creator, :liked_by)';
+      : 'INSERT INTO liked_vent_info (post_id, liked_by) VALUES (:post_id, :liked_by)';
 
     await executeQuery(query, likesInfoParams);
 
@@ -115,32 +116,27 @@ class VentActions extends BaseQueryService {
 
   Future<void> sendComment({required String comment}) async {
 
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+
     const insertCommentQuery = 
-      'INSERT INTO vent_comments_info (title, creator, commented_by, comment, total_likes) VALUES (:title, :creator, :commented_by, :comment, :total_likes)'; 
+      'INSERT INTO vent_comments_info (commented_by, comment, total_likes, post_id) VALUES (:commented_by, :comment, :total_likes, :post_id)'; 
       
     final commentsParams = {
-      'title': title,
-      'creator': creator,
       'commented_by': userData.user.username,
       'comment': comment,
-      'total_likes': 0
+      'total_likes': 0,
+      'post_id': postId
     };
 
-    await executeQuery(insertCommentQuery, commentsParams).then((_) async {
-      await _updateTotalComments(
-        title: title, 
-        creator: creator
-      );
-    });
+    await executeQuery(insertCommentQuery, commentsParams).then(
+      (_) async => await _updateTotalComments()
+    );
 
     _addComment(comment: comment);
 
   }
 
-  Future<void> _updateTotalComments({
-    required String title,
-    required String creator 
-  }) async {
+  Future<void> _updateTotalComments() async {
 
     const updateTotalCommentsQuery = 
       'UPDATE vent_info SET total_comments = total_comments + 1 WHERE title = :title AND creator = :creator'; 

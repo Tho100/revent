@@ -2,6 +2,7 @@ import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
@@ -70,7 +71,7 @@ class VentDataGetter extends BaseQueryService {
       SELECT vi.title, vi.body_text, vi.creator, vi.created_at, vi.total_likes, vi.total_comments 
         FROM vent_info vi
           INNER JOIN liked_vent_info lvi 
-          ON vi.title = lvi.title AND lvi.liked_by = :liked_by;
+          ON vi.post_id = lvi.post_id AND lvi.liked_by = :liked_by;
     ''';
 
     final param = {'liked_by': userData.user.username};
@@ -99,11 +100,13 @@ class VentDataGetter extends BaseQueryService {
     {Map<String, dynamic>? params, bool excludeBodyText = false}
   ) async {
 
-    final conn = await ReventConnection.connect();
+    final conn = await ReventConnection.connect(); // TODO: Remove this
 
     final results = params != null 
       ? await executeQuery(query, params)
       : await executeQuery(query);
+
+    final postIds = await PostIdGetter().getAllPostsId();
 
     final extractedData = ExtractData(rowsData: results);
 
@@ -124,11 +127,11 @@ class VentDataGetter extends BaseQueryService {
       .toList();
 
     final isLikedState = await _ventPostState(
-      conn: conn, title: title, stateType: 'liked'
+      conn: conn, postIds: postIds, stateType: 'liked'
     );
 
     final isSavedState = await _ventPostState(
-      conn: conn, title: title, stateType: 'saved'
+      conn: conn, postIds: postIds, stateType: 'saved'
     );
 
     return {
@@ -146,31 +149,24 @@ class VentDataGetter extends BaseQueryService {
 
   Future<List<bool>> _ventPostState({
     required MySQLConnectionPool conn,
-    required List<String> title,
+    required List<int> postIds,
     required String stateType,
   }) async {
 
     final queryBasedOnType = {
-      'liked': 'SELECT title FROM liked_vent_info WHERE liked_by = :liked_by',
-      'saved': 'SELECT title FROM saved_vent_info WHERE saved_by = :saved_by'
+      'liked': 'SELECT post_id FROM liked_vent_info WHERE liked_by = :username',
+      'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
     };
 
-    final paramBasedOnType = {
-      'liked': {'liked_by': userData.user.username},
-      'saved': {'saved_by': userData.user.username},
-    };
-
-    final retrievedTitles = await conn.execute(
-      queryBasedOnType[stateType]!, paramBasedOnType[stateType]
+    final retrievedIds = await executeQuery(
+      queryBasedOnType[stateType]!, {'username': userData.user.username}
     );
 
-    final extractTitlesData = ExtractData(rowsData: retrievedTitles);
+    final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
 
-    final postTitles = extractTitlesData.extractStringColumn('title');
-    
-    final titlesSet = Set<String>.from(postTitles);
+    final statePostIds = extractIds.toSet();
 
-    return title.map((t) => titlesSet.contains(t)).toList();
+    return postIds.map((postId) => statePostIds.contains(postId)).toList();
 
   }
 
