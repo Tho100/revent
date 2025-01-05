@@ -11,9 +11,7 @@ class ProfileSavedDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
-  Future<Map<String, List<dynamic>>> getSaved({
-    required String username, // TODO: Update this formatting
-  }) async {
+  Future<Map<String, List<dynamic>>> getSaved({required String username}) async {
 
     const query = '''
       SELECT 
@@ -36,9 +34,7 @@ class ProfileSavedDataGetter extends BaseQueryService {
         svi.saved_by = :saved_by
     ''';
 
-    final param = {
-      'saved_by': username, // And this
-    };
+    final param = {'saved_by': username};
 
     final retrievedInfo = await executeQuery(query, param);
 
@@ -65,8 +61,7 @@ class ProfileSavedDataGetter extends BaseQueryService {
       .toList();
 
     final isLikedState = await _ventPostLikeState(
-      postIds: postIds,
-      stateType: 'liked'
+      postIds: postIds, stateType: 'liked'
     );
 
     final isSavedState = List.generate(titles.length, (_) => true);
