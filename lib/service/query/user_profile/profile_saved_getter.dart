@@ -5,14 +5,13 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 
 class ProfileSavedDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
-  Future<Map<String, List<dynamic>>> getSaved({
-    required String username,
-  }) async {
+  Future<Map<String, List<dynamic>>> getSaved({required String username}) async {
 
     const query = '''
       SELECT 
@@ -27,7 +26,7 @@ class ProfileSavedDataGetter extends BaseQueryService {
         saved_vent_info svi
       JOIN 
         vent_info vi 
-        ON svi.title = vi.title AND svi.creator = vi.creator
+        ON svi.post_id = vi.post_id
       JOIN 
         user_profile_info upi
         ON vi.creator = upi.username
@@ -35,11 +34,11 @@ class ProfileSavedDataGetter extends BaseQueryService {
         svi.saved_by = :saved_by
     ''';
 
-    final param = {
-      'saved_by': username,
-    };
+    final param = {'saved_by': username};
 
     final retrievedInfo = await executeQuery(query, param);
+
+    final postIds = await PostIdGetter().getAllPostsId();
 
     final extractData = ExtractData(rowsData: retrievedInfo);
     
@@ -62,8 +61,7 @@ class ProfileSavedDataGetter extends BaseQueryService {
       .toList();
 
     final isLikedState = await _ventPostLikeState(
-      title: titles,
-      stateType: 'liked'
+      postIds: postIds, stateType: 'liked'
     );
 
     final isSavedState = List.generate(titles.length, (_) => true);
@@ -83,25 +81,21 @@ class ProfileSavedDataGetter extends BaseQueryService {
   }
 
   Future<List<bool>> _ventPostLikeState({
-    required List<String> title,
+    required List<int> postIds,
     required String stateType,
   }) async {
 
-    const query = 'SELECT title FROM liked_vent_info WHERE liked_by = :liked_by';
+    const query = 'SELECT post_id FROM liked_vent_info WHERE liked_by = :liked_by';
 
-    final param = {
-      'liked_by': getIt.userProvider.user.username,
-    };
+    final param = {'liked_by': getIt.userProvider.user.username};
 
-    final retrievedTitles = await executeQuery(query, param);
+    final retrievedIds = await executeQuery(query, param);
 
-    final extractTitlesData = ExtractData(rowsData: retrievedTitles);
+    final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
 
-    final postTitles = extractTitlesData.extractStringColumn('title');
-    
-    final titlesSet = Set<String>.from(postTitles);
+    final statePostIds = extractIds.toSet();
 
-    return title.map((t) => titlesSet.contains(t)).toList();
+    return postIds.map((postId) => statePostIds.contains(postId)).toList();
 
   }
 

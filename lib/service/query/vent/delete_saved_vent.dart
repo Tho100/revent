@@ -1,5 +1,6 @@
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 
 class DeleteSavedVent extends BaseQueryService {
   
@@ -13,12 +14,11 @@ class DeleteSavedVent extends BaseQueryService {
 
   Future<void> delete() async {
 
-    const query = 'DELETE FROM saved_vent_info WHERE title = :title AND creator = :creator';
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
-    final params = {
-      'title': title,
-      'creator': creator,
-    };
+    const query = 'DELETE FROM saved_vent_info WHERE post_id = :post_id';
+
+    final params = {'post_id': postId};
 
     await executeQuery(query, params).then(
       (_) => _removeVent()

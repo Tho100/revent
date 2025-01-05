@@ -1,6 +1,7 @@
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 
 class SaveCommentEdit extends BaseQueryService {
 
@@ -20,12 +21,13 @@ class SaveCommentEdit extends BaseQueryService {
 
   Future<void> save() async {
 
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+
     const query = 
-      'UPDATE vent_comments_info SET comment = :new_comment WHERE title = :title AND creator = :creator AND commented_by = :commented_by AND comment = :original_comment';
+      'UPDATE vent_comments_info SET comment = :new_comment WHERE post_id = :post_id AND commented_by = :commented_by AND comment = :original_comment';
 
     final params = {
-      'title': title,
-      'creator': creator,
+      'post_id': postId,
       'original_comment': originalComment,
       'new_comment': newComment,
       'commented_by': userData.user.username
@@ -44,7 +46,7 @@ class SaveCommentEdit extends BaseQueryService {
   Future<void> _updateLikesInfo({required Map<String, dynamic> param}) async {
 
     const query = 
-      'UPDATE vent_comments_likes_info SET comment = :new_comment WHERE title = :title AND creator = :creator AND commented_by = :commented_by AND comment = :original_comment';
+      'UPDATE vent_comments_likes_info SET comment = :new_comment WHERE post_id = :post_id AND commented_by = :commented_by AND comment = :original_comment';
 
     await executeQuery(query, param);
 

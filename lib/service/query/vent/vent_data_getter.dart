@@ -1,9 +1,7 @@
-import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
-import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
@@ -100,8 +98,6 @@ class VentDataGetter extends BaseQueryService {
     {Map<String, dynamic>? params, bool excludeBodyText = false}
   ) async {
 
-    final conn = await ReventConnection.connect(); // TODO: Remove this
-
     final results = params != null 
       ? await executeQuery(query, params)
       : await executeQuery(query);
@@ -127,11 +123,11 @@ class VentDataGetter extends BaseQueryService {
       .toList();
 
     final isLikedState = await _ventPostState(
-      conn: conn, postIds: postIds, stateType: 'liked'
+      postIds: postIds, stateType: 'liked'
     );
 
     final isSavedState = await _ventPostState(
-      conn: conn, postIds: postIds, stateType: 'saved'
+      postIds: postIds, stateType: 'saved'
     );
 
     return {
@@ -148,7 +144,6 @@ class VentDataGetter extends BaseQueryService {
   }
 
   Future<List<bool>> _ventPostState({
-    required MySQLConnectionPool conn,
     required List<int> postIds,
     required String stateType,
   }) async {
@@ -158,8 +153,10 @@ class VentDataGetter extends BaseQueryService {
       'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
     };
 
+    final param = {'username': userData.user.username};
+
     final retrievedIds = await executeQuery(
-      queryBasedOnType[stateType]!, {'username': userData.user.username}
+      queryBasedOnType[stateType]!, param
     );
 
     final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
