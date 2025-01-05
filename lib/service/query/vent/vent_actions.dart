@@ -140,7 +140,7 @@ class VentActions extends BaseQueryService {
 
     const updateTotalCommentsQuery = 
       'UPDATE vent_info SET total_comments = total_comments + 1 WHERE title = :title AND creator = :creator'; 
-      
+      // TODO: Use post id
     final params = {
       'title': title,
       'creator': creator,
@@ -170,12 +170,13 @@ class VentActions extends BaseQueryService {
 
   Future<void> savePost() async {
 
-    const savedInfoParamsQuery = 'WHERE title = :title AND creator = :creator AND saved_by = :saved_by';
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+
+    const savedInfoParamsQuery = 'WHERE post_id = :post_id AND saved_by = :saved_by';
 
     final savedInfoParams = {
-      'title': title,
-      'creator': creator,
-      'saved_by': userData.user.username,
+      'post_id': postId,
+      'saved_by': userData.user.username
     };
 
     final isUserSavedPost = await _isUserSavedPost(
@@ -195,7 +196,7 @@ class VentActions extends BaseQueryService {
 
   Future<bool> _isUserSavedPost({
     required String savedInfoParamsQuery,
-    required Map<String, String> savedInfoParams,
+    required Map<String, dynamic> savedInfoParams,
   }) async {
 
     final readSavedInfoQuery = 
@@ -211,12 +212,12 @@ class VentActions extends BaseQueryService {
   Future<void> _updateSavedInfo({
     required bool isUserSavedPost,
     required String savedInfoParamsQuery,
-    required Map<String, String> savedInfoParams,
+    required Map<String, dynamic> savedInfoParams,
   }) async {
 
     final query = isUserSavedPost 
       ? 'DELETE FROM saved_vent_info $savedInfoParamsQuery'
-      : 'INSERT INTO saved_vent_info (title, creator, saved_by) VALUES (:title, :creator, :saved_by)';
+      : 'INSERT INTO saved_vent_info (post_id, saved_by) VALUES (:post_id, :saved_by)';
 
     await executeQuery(query, savedInfoParams);
 

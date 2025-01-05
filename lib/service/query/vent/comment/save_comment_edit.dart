@@ -19,7 +19,7 @@ class SaveCommentEdit extends BaseQueryService {
   final userData = getIt.userProvider;
 
   Future<void> save() async {
-
+    // TODO: Use post id
     const query = 
       'UPDATE vent_comments_info SET comment = :new_comment WHERE title = :title AND creator = :creator AND commented_by = :commented_by AND comment = :original_comment';
 
