@@ -153,8 +153,10 @@ class VentDataGetter extends BaseQueryService {
       'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
     };
 
+    final param = {'username': userData.user.username};
+
     final retrievedIds = await executeQuery(
-      queryBasedOnType[stateType]!, {'username': userData.user.username}
+      queryBasedOnType[stateType]!, param
     );
 
     final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
