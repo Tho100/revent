@@ -3,6 +3,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 
 class ProfilePostsDataGetter extends BaseQueryService {
 
@@ -23,6 +24,8 @@ class ProfilePostsDataGetter extends BaseQueryService {
 
     final retrievedInfo = await executeQuery(query, param);
 
+    final postIds = await PostIdGetter().getAllPostsId();
+
     final extractData = ExtractData(rowsData: retrievedInfo);
     
     final title = extractData.extractStringColumn('title');
@@ -36,12 +39,12 @@ class ProfilePostsDataGetter extends BaseQueryService {
       .toList();
 
     final isLikedState = await _ventPostState(
-      title: title,
+      postIds: postIds,
       stateType: 'liked'
     );
 
     final isSavedState = await _ventPostState(
-      title: title,
+      postIds: postIds,
       stateType: 'saved'
     );
 
@@ -58,31 +61,26 @@ class ProfilePostsDataGetter extends BaseQueryService {
   }
 
   Future<List<bool>> _ventPostState({
-    required List<String> title,
+    required List<int> postIds,
     required String stateType,
   }) async {
 
     final queryBasedOnType = {
-      'liked': 'SELECT title FROM liked_vent_info WHERE liked_by = :liked_by',
-      'saved': 'SELECT title FROM saved_vent_info WHERE saved_by = :saved_by'
+      'liked': 'SELECT post_id FROM liked_vent_info WHERE liked_by = :username',
+      'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
     };
 
-    final paramBasedOnType = {
-      'liked': {'liked_by': userData.user.username},
-      'saved': {'saved_by': userData.user.username},
-    };
+    final param = {'username': userData.user.username};
 
-    final retrievedTitles = await executeQuery(
-      queryBasedOnType[stateType]!, paramBasedOnType[stateType]!
+    final retrievedIds = await executeQuery(
+      queryBasedOnType[stateType]!, param
     );
 
-    final extractTitlesData = ExtractData(rowsData: retrievedTitles);
+    final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
 
-    final postTitles = extractTitlesData.extractStringColumn('title');
-    
-    final titlesSet = Set<String>.from(postTitles);
+    final statePostIds = extractIds.toSet();
 
-    return title.map((t) => titlesSet.contains(t)).toList();
+    return postIds.map((postId) => statePostIds.contains(postId)).toList();
 
   }
 
