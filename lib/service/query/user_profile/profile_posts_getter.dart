@@ -12,14 +12,14 @@ class ProfilePostsDataGetter extends BaseQueryService {
   final userData = getIt.userProvider;
 
   Future<Map<String, List<dynamic>>> getPosts({
-    required String username
+    required String username // TODO: Remove spacing
   }) async {
 
     const query = 
       'SELECT title, body_text, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
       
     final param = {
-      'username': username
+      'username': username// THIS as well
     };
 
     final retrievedInfo = await executeQuery(query, param);
@@ -44,7 +44,7 @@ class ProfilePostsDataGetter extends BaseQueryService {
     );
 
     final isSavedState = await _ventPostState(
-      postIds: postIds,
+      postIds: postIds, // Remove this spacing
       stateType: 'saved'
     );
 
@@ -80,7 +80,7 @@ class ProfilePostsDataGetter extends BaseQueryService {
 
     final statePostIds = extractIds.toSet();
 
-    return postIds.map((postId) => statePostIds.contains(postId)).toList();
+    return postIds.map((postId) => statePostIds.contains(postId)).toList().reversed.toList();
 
   }
 
