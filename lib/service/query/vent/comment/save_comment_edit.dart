@@ -33,22 +33,11 @@ class SaveCommentEdit extends BaseQueryService {
       'commented_by': userData.user.username
     };
 
-    await executeQuery(query, params).then(
-      (_) async => await _updateLikesInfo(param: params)
-    );
-
-    getIt.ventCommentProvider.editComment(
-      userData.user.username, newComment, originalComment
-    );
-
-  }
-
-  Future<void> _updateLikesInfo({required Map<String, dynamic> param}) async {
-
-    const query = 
-      'UPDATE vent_comments_likes_info SET comment = :new_comment WHERE post_id = :post_id AND commented_by = :commented_by AND comment = :original_comment';
-
-    await executeQuery(query, param);
+    await executeQuery(query, params).then((_) {
+      getIt.ventCommentProvider.editComment(
+        userData.user.username, newComment, originalComment
+      );
+    });
 
   }
 

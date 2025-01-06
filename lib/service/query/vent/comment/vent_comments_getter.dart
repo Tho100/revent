@@ -5,6 +5,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
 class VentCommentsGetter extends BaseQueryService {
@@ -24,6 +25,8 @@ class VentCommentsGetter extends BaseQueryService {
   Future<Map<String, List<dynamic>>> getComments() async {
 
     final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+
+    final commentIds = await CommentIdGetter(postId: postId).getAllCommentsId();
 
     const getCommentsQuery = 
     '''
@@ -59,14 +62,16 @@ class VentCommentsGetter extends BaseQueryService {
 
     final isLikedState = await _commentLikedState(
       postId: postId,
-      commentedBy: commentedBy, 
-      comments: comment
+      isLikedByCreator: false,
+      commentIds: commentIds,
+      commentedBy: commentedBy 
     );
 
-    final isLikedByCreatorState = await _commentLikedByCreatorState(
+    final isLikedByCreatorState = await _commentLikedState(
       postId: postId,
-      commentedBy: commentedBy, 
-      comments: comment
+      isLikedByCreator: true,
+      commentIds: commentIds,
+      commentedBy: commentedBy
     );
 
     return {
@@ -83,72 +88,33 @@ class VentCommentsGetter extends BaseQueryService {
 
   Future<List<bool>> _commentLikedState({
     required int postId,
-    required List<String> commentedBy,
-    required List<String> comments
+    required bool isLikedByCreator,
+    required List<int> commentIds,
+    required List<String> commentedBy
   }) async {
 
     const readLikesQuery = 
     '''
       SELECT 
-          vcli.commented_by, 
-          vcli.comment
+        vcli.comment_id
       FROM vent_comments_likes_info vcli
       JOIN vent_comments_info vci
-          ON vcli.comment = vci.comment
-          AND vcli.commented_by = vci.commented_by
+          ON vcli.comment_id = vci.comment_id
       WHERE vcli.liked_by = :liked_by AND vci.post_id = :post_id;
     ''';
 
     final params = {
-      'liked_by': userData.user.username,
+      'liked_by': isLikedByCreator ? creator : userData.user.username,
       'post_id': postId
     };
 
     final results = await executeQuery(readLikesQuery, params);
 
-    final likedPairs = results.rows.map((row) {
-      return '${row.assoc()['commented_by']}|${row.assoc()['comment']}';
-    }).toSet();
+    final extractedIds = ExtractData(rowsData: results).extractIntColumn('comment_id');
 
     return List<bool>.generate(
-      commentedBy.length,
-      (i) => likedPairs.contains('${commentedBy[i]}|${comments[i]}'),
-    );
-    
-  }
-
-  Future<List<bool>> _commentLikedByCreatorState({
-    required int postId,
-    required List<String> commentedBy,
-    required List<String> comments
-  }) async {
-
-    const readLikesQuery = 
-    '''
-      SELECT 
-        vcli.commented_by, 
-        vcli.comment
-      FROM vent_comments_likes_info vcli
-      JOIN vent_comments_info vci
-        ON vcli.comment = vci.comment
-        AND vcli.commented_by = vci.commented_by
-      WHERE vcli.liked_by = :liked_by AND vci.post_id = :post_id;
-    ''';
-      
-    final params = {
-      'liked_by': creator,
-      'post_id': postId
-    };
-
-    final results = await executeQuery(readLikesQuery, params);
-
-    final likedPairs = results.rows.map((row) {
-      return '${row.assoc()['commented_by']}|${row.assoc()['comment']}';
-    }).toSet();
-
-    return List<bool>.generate(
-      commentedBy.length,
-      (i) => likedPairs.contains('${commentedBy[i]}|${comments[i]}'),
+      commentIds.length,
+      (i) => extractedIds.contains(commentIds[i]),
     );
     
   }
