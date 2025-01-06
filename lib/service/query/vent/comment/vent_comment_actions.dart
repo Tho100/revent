@@ -2,6 +2,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
+import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
 class VentCommentActions extends BaseQueryService {
@@ -22,15 +23,19 @@ class VentCommentActions extends BaseQueryService {
 
   Future<void> delete() async {
 
-    final postId = await PostIdGetter(title: ventTitle, creator: ventCreator).getPostId();
+    final postId = await PostIdGetter(title: ventTitle, creator: ventCreator).getPostId(); // TODO: Initialize on variable
+
+    final commentId = await CommentIdGetter(postId: postId).getCommentId(
+      username: username, commentText: commentText
+    );
 
     const query = 
-      'DELETE FROM vent_comments_info WHERE commented_by = :commented_by AND comment = :comment AND post_id = :post_id';
+      'DELETE FROM vent_comments_info WHERE commented_by = :commented_by AND comment_id = :comment_id AND post_id = :post_id';
 
     final params = {
       'post_id': postId,
-      'commented_by': username,
-      'comment': commentText
+      'comment_id': commentId,
+      'commented_by': username
     };
 
     await executeQuery(query, params).then(
@@ -54,27 +59,16 @@ class VentCommentActions extends BaseQueryService {
 
     final postId = await PostIdGetter(title: ventTitle, creator: ventCreator).getPostId();
 
-    const getCommentIdQuery = 
-      'SELECT comment_id FROM vent_comments_info WHERE post_id = :post_id AND commented_by = :commented_by AND comment = :comment';
-
-    final commentParams = {
-      'post_id': postId,
-      'commented_by': username,
-      'comment': commentText
-    };
-
-    final commentIdResults = await executeQuery(getCommentIdQuery, commentParams);
-
-    final commentId = ExtractData(rowsData: commentIdResults).extractIntColumn('comment_id')[0];
-
+    final commentId = await CommentIdGetter(postId: postId).getCommentId(
+      username: username, commentText: commentText
+    );
     const likesInfoParameterQuery = 
-      'WHERE comment_id = :comment_id AND liked_by = :liked_by AND commented_by = :commented_by AND comment = :comment';
+      'WHERE comment_id = :comment_id AND liked_by = :liked_by AND commented_by = :commented_by';
 
     final likesInfoParams = {
       'comment_id': commentId,
       'liked_by': getIt.userProvider.user.username,
       'commented_by': username,
-      'comment': commentText
     };
 
     final isUserLikedComment = await _isUserLikedComment(
@@ -84,6 +78,7 @@ class VentCommentActions extends BaseQueryService {
 
     await _updateCommentLikes(
       postId: postId, 
+      commentId: commentId,
       isUserLikedPost: isUserLikedComment
     );
 
@@ -106,18 +101,19 @@ class VentCommentActions extends BaseQueryService {
 
   Future<void> _updateCommentLikes({
     required int postId,
+    required int commentId,
     required bool isUserLikedPost 
   }) async {
 
     final operationSymbol = isUserLikedPost ? '-' : '+';
 
     final updateLikeValueQuery = 
-      'UPDATE vent_comments_info SET total_likes = total_likes $operationSymbol 1 WHERE post_id = :post_id AND commented_by = :commented_by AND comment = :comment';
+      'UPDATE vent_comments_info SET total_likes = total_likes $operationSymbol 1 WHERE post_id = :post_id AND comment_id = :comment_id AND commented_by = :commented_by';
 
     final ventInfoParams = {
       'post_id': postId,
-      'commented_by': username,
-      'comment': commentText
+      'comment_id': commentId,
+      'commented_by': username
     };
 
     await executeQuery(updateLikeValueQuery, ventInfoParams);
@@ -147,7 +143,7 @@ class VentCommentActions extends BaseQueryService {
 
     final query = isUserLikedPost 
       ? 'DELETE FROM vent_comments_likes_info $likesInfoParameterQuery'
-      : 'INSERT INTO vent_comments_likes_info (liked_by, commented_by, comment, comment_id) VALUES (:liked_by, :commented_by, :comment, :comment_id)';
+      : 'INSERT INTO vent_comments_likes_info (liked_by, commented_by, comment_id) VALUES (:liked_by, :commented_by, :comment_id)';
 
     await executeQuery(query, likesInfoParams);
 
