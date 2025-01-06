@@ -153,7 +153,6 @@ class _VentPostPageState extends State<VentPostPage> {
       commentsFilter.filterCommentToBest();
 
     } catch (err) {
-      print(err.toString());
       SnackBarDialog.errorSnack(message: err.toString());
     }
 

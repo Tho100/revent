@@ -23,7 +23,7 @@ class VentCommentActions extends BaseQueryService {
 
   Future<void> delete() async {
 
-    final postId = await PostIdGetter(title: ventTitle, creator: ventCreator).getPostId(); // TODO: Initialize on variable
+    final postId = await PostIdGetter(title: ventTitle, creator: ventCreator).getPostId();
 
     final commentId = await CommentIdGetter(postId: postId).getCommentId(
       username: username, commentText: commentText
