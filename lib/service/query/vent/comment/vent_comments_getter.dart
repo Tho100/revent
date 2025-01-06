@@ -62,14 +62,16 @@ class VentCommentsGetter extends BaseQueryService {
 
     final isLikedState = await _commentLikedState(
       postId: postId,
+      isLikedByCreator: false,
       commentIds: commentIds,
       commentedBy: commentedBy 
     );
 
-    final isLikedByCreatorState = await _commentLikedByCreatorState(
+    final isLikedByCreatorState = await _commentLikedState(
       postId: postId,
+      isLikedByCreator: true,
       commentIds: commentIds,
-      commentedBy: commentedBy, 
+      commentedBy: commentedBy
     );
 
     return {
@@ -86,6 +88,7 @@ class VentCommentsGetter extends BaseQueryService {
 
   Future<List<bool>> _commentLikedState({
     required int postId,
+    required bool isLikedByCreator,
     required List<int> commentIds,
     required List<String> commentedBy
   }) async {
@@ -101,53 +104,17 @@ class VentCommentsGetter extends BaseQueryService {
     ''';
 
     final params = {
-      'liked_by': userData.user.username,
+      'liked_by': isLikedByCreator ? creator : userData.user.username,
       'post_id': postId
     };
 
     final results = await executeQuery(readLikesQuery, params);
 
-    final likedCommentIds = results.rows
-      .map((row) => int.parse(row.assoc()['comment_id'] as String))
-      .toSet();
+    final extractedIds = ExtractData(rowsData: results).extractIntColumn('comment_id');
 
     return List<bool>.generate(
       commentIds.length,
-      (i) => likedCommentIds.contains(commentIds[i]),
-    );
-    
-  }
-
-  Future<List<bool>> _commentLikedByCreatorState({
-    required int postId,
-    required List<int> commentIds,
-    required List<String> commentedBy,
-  }) async {
-
-    const readLikesQuery = 
-    '''
-      SELECT 
-        vcli.comment_id
-      FROM vent_comments_likes_info vcli
-      JOIN vent_comments_info vci
-          ON vcli.comment_id = vci.comment_id
-      WHERE vcli.liked_by = :liked_by AND vci.post_id = :post_id;
-    ''';
-      
-    final params = {
-      'liked_by': creator,
-      'post_id': postId
-    };
-
-    final results = await executeQuery(readLikesQuery, params);
-
-    final likedCommentIds = results.rows
-      .map((row) => int.parse(row.assoc()['comment_id'] as String))
-      .toSet(); // TODO Use extractdata instead
-
-    return List<bool>.generate(
-      commentIds.length,
-      (i) => likedCommentIds.contains(commentIds[i]),
+      (i) => extractedIds.contains(commentIds[i]),
     );
     
   }
