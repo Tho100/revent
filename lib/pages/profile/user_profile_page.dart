@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/query/user/user_actions.dart';
+import 'package:revent/model/user/user_follow_actions.dart';
 import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/service/query/user/user_following.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
@@ -198,15 +198,15 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
   }
 
-  void _followUserOnPressed() async {
+  Future<void> _followUserOnPressed() async {
 
     try {
 
-      isFollowingNotifier.value 
-        ? await UserActions(username: widget.username).userFollowAction(follow: false)
-        : await UserActions(username: widget.username).userFollowAction(follow: true);
-    // TODO: use userfollowaction
-      isFollowingNotifier.value = !isFollowingNotifier.value;
+      final follow = !isFollowingNotifier.value;
+
+      await UserFollowActions(username: widget.username).followUser(follow: follow).then(
+        (_) => isFollowingNotifier.value = !isFollowingNotifier.value
+      );
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
@@ -286,14 +286,14 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
               customHeight: buttonHeight,
               customFontSize: fontSize,
               text: 'Following',
-              onPressed: () => _followUserOnPressed()
+              onPressed: () async => await _followUserOnPressed()
             )
             : MainButton(
               customWidth: buttonWidth,
               customHeight: buttonHeight,
               customFontSize: fontSize,
               text: 'Follow',
-              onPressed: () => _followUserOnPressed()
+              onPressed: () async => await _followUserOnPressed()
             );
         },
       ),
