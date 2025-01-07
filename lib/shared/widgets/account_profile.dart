@@ -16,11 +16,14 @@ class AccountProfileWidget extends StatelessWidget {
 
   final String username; 
   final Uint8List pfpData;
+
+  final VoidCallback? onPressed;
   
   AccountProfileWidget({
     required this.username, 
     required this.pfpData, 
     this.customText,
+    this.onPressed,
     super.key
   });
 
@@ -58,7 +61,7 @@ class AccountProfileWidget extends StatelessWidget {
             SubButton(
               customHeight: 40,
               text: customText ?? 'Follow',
-              onPressed: () => {}
+              onPressed: onPressed ?? () {}
             ),
       
           ],

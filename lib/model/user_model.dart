@@ -12,7 +12,7 @@ class UserModel {
     getIt.profileProvider.clearProfileData();
     getIt.profilePostsProvider.clearPostsData();
     getIt.profileSavedProvider.clearPostsData();
-
+ // TODO: move this to user folder
     await LocalStorageModel().deleteLocalData();
 
     NavigatePage.mainScreenPage();

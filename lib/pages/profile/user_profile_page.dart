@@ -205,7 +205,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       isFollowingNotifier.value 
         ? await UserActions(username: widget.username).userFollowAction(follow: false)
         : await UserActions(username: widget.username).userFollowAction(follow: true);
-
+    // TODO: use userfollowaction
       isFollowingNotifier.value = !isFollowingNotifier.value;
 
     } catch (err) {

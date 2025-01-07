@@ -12,9 +12,9 @@ class FollowsGetter extends BaseQueryService {
 
     final columnName = followType == 'Followers' ? 'follower' : 'following';
     final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
-
+    // TODO: Use distinct to ensure unique usernames
     final getFollowsWithProfilePicQuery = 
-    '''
+    ''' 
       SELECT ufi.$columnName AS username, upi.profile_picture AS profile_picture
       FROM user_follows_info ufi
       JOIN user_profile_info upi
