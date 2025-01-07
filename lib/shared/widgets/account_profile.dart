@@ -24,7 +24,7 @@ class AccountProfileWidget extends StatelessWidget {
     required this.username, 
     required this.pfpData, 
     this.customText,
-    this.hideActionButton,
+    this.hideActionButton = false,
     this.onPressed,
     super.key
   });
@@ -59,7 +59,7 @@ class AccountProfileWidget extends StatelessWidget {
       
             const Spacer(),
 
-            if(username != userData.user.username)
+            if(!hideActionButton! && username != userData.user.username)
             SubButton(
               customHeight: 40,
               text: customText ?? 'Follow',
