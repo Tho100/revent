@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 
 class SpinnerLoading {
 
@@ -32,7 +33,7 @@ class SpinnerLoading {
       title: const SizedBox(
         height: 85,
         width: 85,
-        child: Center(child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)),
+        child: PageLoading()
       ), 
     );
   }

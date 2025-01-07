@@ -9,6 +9,7 @@ import 'package:revent/model/setup/vent_data_setup.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
@@ -108,9 +109,7 @@ class _LikedPageState extends State<LikedPage> {
             builder: (_, isLoaded, __) {
 
               if (!isLoaded) {
-                return const Center(
-                  child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
-                );
+                return const PageLoading();
               }
 
               final ventsData = likedVentData.vents;

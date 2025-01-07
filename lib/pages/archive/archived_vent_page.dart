@@ -13,6 +13,7 @@ import 'package:revent/pages/empty_page.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/archive/archive_vent_data_getter.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -232,9 +233,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
         builder: (_, isLoaded, __) {
           
           if (!isLoaded) {
-            return const Center(
-              child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
-            );
+            return const PageLoading();
           }
 
           return ValueListenableBuilder(
