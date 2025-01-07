@@ -13,6 +13,7 @@ import 'package:revent/shared/widgets/profile_picture.dart';
 class AccountProfileWidget extends StatelessWidget {
 
   final String? customText;
+  final bool? hideActionButton;
 
   final String username; 
   final Uint8List pfpData;
@@ -23,6 +24,7 @@ class AccountProfileWidget extends StatelessWidget {
     required this.username, 
     required this.pfpData, 
     this.customText,
+    this.hideActionButton,
     this.onPressed,
     super.key
   });
