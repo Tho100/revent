@@ -33,42 +33,46 @@ class AccountProfileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWellEffect(
-      onPressed: () => NavigatePage.userProfilePage(username: username, pfpData: pfpData),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 16.0),
-        child: Row(
-          children: [
-      
-            ProfilePictureWidget(
-              customWidth: 45,
-              customHeight: 45,
-              pfpData: pfpData
-            ),
-      
-            const SizedBox(width: 10),
-      
-            Text(
-              username,
-              style: GoogleFonts.inter(
-                color: ThemeColor.white,
-                fontWeight: FontWeight.w800,
-                fontSize: 15,
-              ),
-            ),
-      
-            const Spacer(),
+    return Column(
+      children: [
+        InkWellEffect(
+          onPressed: () => NavigatePage.userProfilePage(username: username, pfpData: pfpData),
+          child: Row(
+              children: [
+          
+                ProfilePictureWidget(
+                  customWidth: 48,
+                  customHeight: 48,
+                  pfpData: pfpData
+                ),
+          
+                const SizedBox(width: 15),
+          
+                Text(
+                  username,
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.white,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 14.5,
+                  ),
+                ),
+          
+                const Spacer(),
 
-            if(!hideActionButton! && username != userData.user.username)
-            SubButton(
-              customHeight: 40,
-              text: customText ?? 'Follow',
-              onPressed: onPressed ?? () {}
+                if(!hideActionButton! && username != userData.user.username)
+                SubButton(
+                  customHeight: 40,
+                  text: customText ?? 'Follow',
+                  onPressed: onPressed ?? () {}
+                ),
+          
+              ],
             ),
-      
-          ],
         ),
-      ),
+
+        const SizedBox(height: 22)
+
+      ],
     );
   }
 
