@@ -4,7 +4,7 @@ import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/query/general/delete_account_data.dart';
 
-class UserModel {
+class UserAccountManager {
 
   void signOutUser() async {
 
@@ -12,7 +12,7 @@ class UserModel {
     getIt.profileProvider.clearProfileData();
     getIt.profilePostsProvider.clearPostsData();
     getIt.profileSavedProvider.clearPostsData();
- // TODO: move this to user folder
+
     await LocalStorageModel().deleteLocalData();
 
     NavigatePage.mainScreenPage();
@@ -23,7 +23,7 @@ class UserModel {
 
     await DeleteAccountData().delete(
       username: username
-    );
+    ).then((_) => signOutUser());
 
   }
 
