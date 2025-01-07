@@ -7,6 +7,7 @@ import 'package:revent/main.dart';
 import 'package:revent/model/setup/search_setup.dart';
 import 'package:revent/pages/main_search_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
@@ -96,9 +97,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with SingleTicker
             if(!isLoaded) {
               return const SizedBox(
                 height: 300,
-                child: Center(
-                  child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
-                ),
+                child: PageLoading(),
               );
             }
 

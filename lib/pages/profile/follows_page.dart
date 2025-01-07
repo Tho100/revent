@@ -8,7 +8,7 @@ import 'package:revent/main.dart';
 import 'package:revent/model/user/user_follow_actions.dart';
 import 'package:revent/service/query/general/follows_getter.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -185,9 +185,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
             builder: (_, text, __) {
 
               if (text.length != followsData.length) {
-                return const Center(
-                  child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
-                );
+                return const PageLoading();
               }
 
               return ListView.builder(
@@ -198,9 +196,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
                 itemBuilder: (_, index) {
 
                   if (index >= text.length) {
-                    return const Center( // TODO: Create separated widget class for this loading
-                      child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
-                    );
+                    return const PageLoading();
                   }
 
                   final followsUserData = followsData[index];
