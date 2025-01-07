@@ -17,10 +17,16 @@ class SearchAccountsListView extends StatelessWidget {
         ),
         itemCount: accountsData.usernames.length,
         itemBuilder: (_, index) {
+
+          final username = accountsData.usernames[index];
+          final pfpData = accountsData.profilePictures[index];
+
           return AccountProfileWidget(
-            username: accountsData.usernames[index], 
-            pfpData: accountsData.profilePictures[index]
+            username: username,
+            pfpData: pfpData,
+            hideActionButton: true,
           );
+
         },
       ),
     );

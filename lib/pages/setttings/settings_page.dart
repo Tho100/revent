@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/model/user_model.dart';
+import 'package:revent/model/user/user_account_manager.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/pages/setttings/account_info_page.dart';
 import 'package:revent/pages/setttings/app_info_page.dart';
@@ -23,7 +23,7 @@ class SettingsPage extends StatelessWidget {
     CustomAlertDialog.alertDialogCustomOnPress(
       message: 'Sign out of your account?', 
       buttonMessage: 'Sign out', 
-      onPressedEvent: () => UserModel().signOutUser()
+      onPressedEvent: () => UserAccountManager().signOutUser()
     );
   }
 

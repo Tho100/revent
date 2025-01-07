@@ -3,7 +3,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
-import 'package:revent/model/user_model.dart';
+import 'package:revent/model/user/user_account_manager.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -31,20 +31,14 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
   final userData = getIt.userProvider;
 
   void _deleteAccountConfirmation() {
-
-    final userModel = UserModel();
-
     CustomAlertDialog.alertDialogCustomOnPress(
       message: 'Delete your account?', 
       buttonMessage: 'Delete', 
       onPressedEvent: () async {
         Navigator.pop(context);
-        await userModel.deleteAccountData(username: userData.user.username)
-          .then((value) => userModel.signOutUser()
-        );
+        await UserAccountManager().deleteAccountData(username: userData.user.username);
       } 
     );
-
   }
 
   Future<void> _deleteOnPressed() async {

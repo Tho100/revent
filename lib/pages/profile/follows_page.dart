@@ -5,8 +5,10 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
+import 'package:revent/model/user/user_follow_actions.dart';
 import 'package:revent/service/query/general/follows_getter.dart';
 import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -50,7 +52,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
   final ValueNotifier<List<_FollowsProfilesData>> followingData = ValueNotifier([]);
 
   final emptyPageMessageNotifier = ValueNotifier<String>('');
-  final profileActionTextNotifier = ValueNotifier<String>('');
+  final profileActionTextNotifier = ValueNotifier<List<String>>([]);
 
   final emptyMessages = {
     'Followers': 'No followers yet.',
@@ -69,10 +71,25 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
     );
 
     tabController.addListener(() async {
+
       if (!tabController.indexIsChanging) { 
         final currentPage = tabController.index == 0 ? 'Followers' : 'Following';
         await _loadFollowsData(page: currentPage);
       }
+
+    });
+
+  }
+
+  Future<void> _followOnPressed(int index, String username, bool follow) async {
+
+    await UserFollowActions(username: username).followUser(follow: follow).then((_) {
+
+      final updatedList = List<String>.from(profileActionTextNotifier.value);
+
+      updatedList[index] = follow ? 'Unfollow' : 'Follow';
+      profileActionTextNotifier.value = updatedList;
+
     });
 
   }
@@ -111,9 +128,11 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
         if (followersTabNotLoaded) {
           followersData.value = await _fetchFollowsData('Followers');
           followersTabNotLoaded = false;
-        }
+        } 
 
-        profileActionTextNotifier.value = 'Follow';
+        profileActionTextNotifier.value = List.generate(
+          followersData.value.length, (_) => 'Follow'
+        );
 
         emptyPageMessageNotifier.value = followersData.value.isEmpty
           ? emptyMessages['Followers']! : '';
@@ -123,11 +142,13 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
         if (followingTabNotLoaded) {
           followingData.value = await _fetchFollowsData('Following');
           followingTabNotLoaded = false;
-        }
+        } 
 
         final isMyProfile = userData.user.username == widget.username;
 
-        profileActionTextNotifier.value = isMyProfile ? 'Unfollow' : 'Follow';
+        profileActionTextNotifier.value = List.generate(
+          followingData.value.length, (_) => isMyProfile ? 'Unfollow' : 'Follow'
+        );
 
         emptyPageMessageNotifier.value = followingData.value.isEmpty
           ? emptyMessages['Following']! : '';
@@ -154,33 +175,54 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
       child: ValueListenableBuilder(
         valueListenable: data,
         builder: (_, followsData, __) {
-      
-          if(followsData.isEmpty) {
+          
+          if (followsData.isEmpty) {
             return _buildEmptyPage();
           }
-    
-          return ListView.builder(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics()
-            ),
-            itemCount: followsData.length,
-            itemBuilder: (_, index) {
-              final followsUserData = followsData[index];
-              return ValueListenableBuilder(
-                valueListenable: profileActionTextNotifier,
-                builder: (_, text, __) {
+
+          return ValueListenableBuilder(
+            valueListenable: profileActionTextNotifier,
+            builder: (_, text, __) {
+
+              if (text.length != followsData.length) {
+                return const Center(
+                  child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
+                );
+              }
+
+              return ListView.builder(
+                physics: const AlwaysScrollableScrollPhysics(
+                  parent: BouncingScrollPhysics(),
+                ),
+                itemCount: followsData.length,
+                itemBuilder: (_, index) {
+
+                  if (index >= text.length) {
+                    return const Center( // TODO: Create separated widget class for this loading
+                      child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
+                    );
+                  }
+
+                  final followsUserData = followsData[index];
+                  final currentText = text[index];
+
                   return AccountProfileWidget(
-                    customText: text,
+                    customText: currentText,
                     username: followsUserData.username,
                     pfpData: followsUserData.profilePic,
+                    onPressed: () async {
+                      currentText == 'Follow' 
+                        ? await _followOnPressed(index, followsUserData.username, true) 
+                        : await _followOnPressed(index, followsUserData.username, false);
+                    },
                   );
                 },
               );
             },
           );
-    
-        }
+        },
       ),
+
     );
   }
 
