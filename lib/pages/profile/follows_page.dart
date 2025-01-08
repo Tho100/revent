@@ -18,10 +18,12 @@ class _FollowsProfilesData {
   
   final String username;
   final Uint8List profilePic;
+  final bool isFollowed;
 
   _FollowsProfilesData({
     required this.username,
     required this.profilePic,
+    required this.isFollowed
   });
 
 }
@@ -103,11 +105,13 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
     final usernames = getFollowsInfo['username']!;
     final profilePics = getFollowsInfo['profile_pic']!;
+    final isFollowed = getFollowsInfo['is_followed']!;
 
     return List.generate(usernames.length, (index) {
       return _FollowsProfilesData(
         username: usernames[index],
         profilePic: profilePics[index],
+        isFollowed: isFollowed[index]
       );
     });
 
@@ -131,7 +135,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
         } 
 
         profileActionTextNotifier.value = List.generate(
-          followersData.value.length, (_) => 'Follow'
+          followersData.value.length, (index) => followersData.value[index].isFollowed ? 'Unfollow' : 'Follow' 
         );
 
         emptyPageMessageNotifier.value = followersData.value.isEmpty
@@ -144,10 +148,8 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
           followingTabNotLoaded = false;
         } 
 
-        final isMyProfile = userData.user.username == widget.username;
-
         profileActionTextNotifier.value = List.generate(
-          followingData.value.length, (_) => isMyProfile ? 'Unfollow' : 'Follow'
+          followingData.value.length, (index) => followingData.value[index].isFollowed ? 'Unfollow' : 'Follow' 
         );
 
         emptyPageMessageNotifier.value = followingData.value.isEmpty
@@ -265,7 +267,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: userData.user.username,
+        title: userData.user.username, // TODO: Update to current profile user 
         bottom: _buildTabBar()
       ).buildAppBar(),
       body: _buildTabBarTabs(),

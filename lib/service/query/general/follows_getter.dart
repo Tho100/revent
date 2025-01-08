@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 
@@ -9,38 +11,51 @@ class FollowsGetter extends BaseQueryService {
     required String followType,
     required String username,
   }) async {
-
+    // TODO: Simplify code
     final columnName = followType == 'Followers' ? 'follower' : 'following';
     final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
 
-    final getFollowsWithProfilePicQuery = 
+    final getFollowProfilesQuery = 
     ''' 
-      SELECT DISTINCT ufi.$columnName AS username, upi.profile_picture AS profile_picture
+      SELECT ufi.$columnName AS username, upi.profile_picture AS profile_picture
       FROM user_follows_info ufi
       JOIN user_profile_info upi
       ON ufi.$columnName = upi.username
       WHERE ufi.$oppositeColumn = :username
     ''';
 
-    final params = {'username': username};
+    final followParam = {'username': username};
 
-    final results = await executeQuery(getFollowsWithProfilePicQuery, params);
+    final followResults = await executeQuery(getFollowProfilesQuery, followParam);
 
-    final extractedData = ExtractData(rowsData: results);
+    final extractedProfiles = ExtractData(rowsData: followResults);
 
-    final usernames = extractedData.extractStringColumn('username');
-    
-    final profilePictures = extractedData
+    const getCurrentUserFollowingListQuery = 
+      'SELECT following FROM user_follows_info WHERE follower = :current_user';
+
+    final currentUserParam = {'current_user': getIt.userProvider.user.username};
+
+    final currentUserFollowingResults = await executeQuery(getCurrentUserFollowingListQuery, currentUserParam);
+
+    final extractedCurrentUserFollowingList = ExtractData(rowsData: currentUserFollowingResults); 
+
+    final followingListSet = extractedCurrentUserFollowingList.extractStringColumn('following').toSet();
+
+    final followProfileUsernames = extractedProfiles.extractStringColumn('username');
+
+    final profilePictures = extractedProfiles
       .extractStringColumn('profile_picture')
       .map((pfp) => base64Decode(pfp))
       .toList();
+    
+    final isFollowed = followProfileUsernames.map((username) => followingListSet.contains(username)).toList();
 
     return {
-      'username': usernames,
+      'username': followProfileUsernames,
       'profile_pic': profilePictures,
+      'is_followed': isFollowed
     };
 
   }
-
 
 }
