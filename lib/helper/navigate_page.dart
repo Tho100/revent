@@ -131,7 +131,7 @@ class NavigatePage {
 
   static void userProfilePage({
     required String username, 
-    required Uint8List pfpData
+    required Uint8List pfpData // TODO: Remove this pfpData param 
   }) {
 
     final userData = getIt.userProvider;
