@@ -16,51 +16,51 @@ class FollowsGetter extends BaseQueryService {
     final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
 
     final getFollowProfilesQuery = 
-    ''' 
-      SELECT ufi.$columnName AS username, upi.profile_picture AS profile_picture
+    '''
+      SELECT 
+        ufi.$columnName AS username,
+        upi.profile_picture AS profile_picture,
+        CASE 
+          WHEN EXISTS (
+            SELECT 1 
+            FROM user_follows_info ufi_inner
+            WHERE ufi_inner.follower = :current_user
+            AND ufi_inner.following = ufi.$columnName
+          )
+          THEN 1
+          ELSE 0
+        END AS is_followed
       FROM user_follows_info ufi
-      JOIN user_profile_info upi
-      ON ufi.$columnName = upi.username
+      JOIN user_profile_info upi ON ufi.$columnName = upi.username
       WHERE ufi.$oppositeColumn = :username
     ''';
 
-    final followParam = {'username': username};
+    final params = {
+      'username': username,
+      'current_user': getIt.userProvider.user.username
+    };
 
-    final followResults = await executeQuery(getFollowProfilesQuery, followParam);
+    final followResults = await executeQuery(getFollowProfilesQuery, params);
 
     final extractedProfiles = ExtractData(rowsData: followResults);
 
     final followProfileUsernames = extractedProfiles.extractStringColumn('username');
-
-    final isFollowed = await _isUserFollowedProfile(profileUsernames: followProfileUsernames); 
 
     final profilePictures = extractedProfiles
       .extractStringColumn('profile_picture')
       .map((pfp) => base64Decode(pfp))
       .toList();
     
+    final isFollowed = extractedProfiles
+      .extractIntColumn('is_followed')
+      .map((value) => value == 1)
+      .toList();
+
     return {
       'username': followProfileUsernames,
       'profile_pic': profilePictures,
       'is_followed': isFollowed
     };
-
-  }
-
-  Future<List<bool>> _isUserFollowedProfile({required List<String> profileUsernames}) async {
-
-    const getCurrentUserFollowingListQuery = 
-      'SELECT following FROM user_follows_info WHERE follower = :current_user';
-
-    final currentUserParam = {'current_user': getIt.userProvider.user.username};
-
-    final currentUserFollowingResults = await executeQuery(getCurrentUserFollowingListQuery, currentUserParam);
-
-    final extractedCurrentUserFollowingList = ExtractData(rowsData: currentUserFollowingResults); 
-
-    final followingListSet = extractedCurrentUserFollowingList.extractStringColumn('following').toSet();
-
-    return profileUsernames.map((username) => followingListSet.contains(username)).toList();
 
   }
 
