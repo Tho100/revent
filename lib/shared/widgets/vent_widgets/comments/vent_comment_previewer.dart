@@ -9,6 +9,7 @@ import 'package:revent/main.dart';
 import 'package:revent/pages/comment/edit_comment_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
+import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/comment/vent_comment_actions.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_actions.dart';
@@ -268,14 +269,7 @@ class VentCommentPreviewer extends StatelessWidget {
   Widget _buildCommentText() {
     return Padding(
       padding: const EdgeInsets.only(right: 25.0),
-      child: Text(
-        comment,
-        style: GoogleFonts.inter(
-          color: ThemeColor.secondaryWhite,
-          fontWeight: FontWeight.w700,
-          fontSize: 14
-        ),
-      ),
+      child: StyledTextWidget(text: comment),
     );
   }
 

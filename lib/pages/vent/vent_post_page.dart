@@ -18,6 +18,7 @@ import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottom_input_bar.dart';
+import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/model/setup/vent_comment_setup.dart';
@@ -396,13 +397,9 @@ class _VentPostPageState extends State<VentPostPage> {
 
         Consumer<ActiveVentProvider>(
           builder: (_, data, __) {
-            return SelectableText(
-            data.body,
-              style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
-                fontWeight: FontWeight.w700,
-                fontSize: 14
-              ),
+            return StyledTextWidget(
+              text: data.body,
+              isSelectable: true,
             );
           },
         ),
