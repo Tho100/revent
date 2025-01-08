@@ -11,7 +11,7 @@ class FollowsGetter extends BaseQueryService {
     required String followType,
     required String username,
   }) async {
-    // TODO: Simplify code
+
     final columnName = followType == 'Followers' ? 'follower' : 'following';
     final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
 
@@ -30,6 +30,25 @@ class FollowsGetter extends BaseQueryService {
 
     final extractedProfiles = ExtractData(rowsData: followResults);
 
+    final followProfileUsernames = extractedProfiles.extractStringColumn('username');
+
+    final isFollowed = await _isUserFollowedProfile(profileUsernames: followProfileUsernames); 
+
+    final profilePictures = extractedProfiles
+      .extractStringColumn('profile_picture')
+      .map((pfp) => base64Decode(pfp))
+      .toList();
+    
+    return {
+      'username': followProfileUsernames,
+      'profile_pic': profilePictures,
+      'is_followed': isFollowed
+    };
+
+  }
+
+  Future<List<bool>> _isUserFollowedProfile({required List<String> profileUsernames}) async {
+
     const getCurrentUserFollowingListQuery = 
       'SELECT following FROM user_follows_info WHERE follower = :current_user';
 
@@ -41,20 +60,7 @@ class FollowsGetter extends BaseQueryService {
 
     final followingListSet = extractedCurrentUserFollowingList.extractStringColumn('following').toSet();
 
-    final followProfileUsernames = extractedProfiles.extractStringColumn('username');
-
-    final profilePictures = extractedProfiles
-      .extractStringColumn('profile_picture')
-      .map((pfp) => base64Decode(pfp))
-      .toList();
-    
-    final isFollowed = followProfileUsernames.map((username) => followingListSet.contains(username)).toList();
-
-    return {
-      'username': followProfileUsernames,
-      'profile_pic': profilePictures,
-      'is_followed': isFollowed
-    };
+    return profileUsernames.map((username) => followingListSet.contains(username)).toList();
 
   }
 
