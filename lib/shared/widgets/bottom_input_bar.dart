@@ -44,7 +44,7 @@ class BottomInputBar extends StatelessWidget {
                   const SizedBox(width: 10),
     
                   Text(
-                    'Add a comment...',
+                    hintText,
                     style: GoogleFonts.inter(
                       color: ThemeColor.thirdWhite,
                       fontWeight: FontWeight.w700,
