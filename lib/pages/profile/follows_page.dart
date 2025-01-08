@@ -267,7 +267,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: userData.user.username, // TODO: Update to current profile user 
+        title: widget.username, 
         bottom: _buildTabBar()
       ).buildAppBar(),
       body: _buildTabBarTabs(),
