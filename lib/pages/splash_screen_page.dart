@@ -60,14 +60,14 @@ class _SplashScreenState extends State<SplashScreen> {
     final localUsername = (await localModel.readLocalAccountInformation())['username']!;
 
     if(localUsername.isNotEmpty) {
-    splashScreenTimer = Timer(const Duration(milliseconds: 0), () {
-        _navigateToNextScreen();
-      });
+      splashScreenTimer = Timer(const Duration(milliseconds: 0), 
+        () => _navigateToNextScreen()
+      );
 
     } else {
-      splashScreenTimer = Timer(const Duration(milliseconds: 1750), () {
-        _navigateToNextScreen();
-      });
+      splashScreenTimer = Timer(const Duration(milliseconds: 1750), 
+        () => _navigateToNextScreen()
+      );
       
     }
     

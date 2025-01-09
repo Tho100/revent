@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -65,7 +63,6 @@ class StyledTextWidget extends StatelessWidget {
           ),
           recognizer: TapGestureRecognizer()..onTap = () => NavigatePage.userProfilePage(
             username: mentioned, 
-            pfpData: Uint8List(0)
           )
         );
 

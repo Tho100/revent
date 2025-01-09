@@ -99,13 +99,9 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
 
     final customBodyTextPage = [AppRoute.searchResults];
 
-    if(customBodyTextPage.contains(navigation.currentRoute)) {
-      ventBodyText = await _getSearchResultsBodyText();
-
-    } else {
-      ventBodyText = widget.bodyText;
-
-    }
+    ventBodyText = customBodyTextPage.contains(navigation.currentRoute)   
+      ? await _getSearchResultsBodyText()
+      : widget.bodyText;
 
   }
 

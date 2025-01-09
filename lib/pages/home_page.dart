@@ -54,7 +54,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         return;
       }
 
-      if(trendingIsLoadedNotifier.value == false && ventTrendingData.vents.isEmpty) {
+      if(!trendingIsLoadedNotifier.value && ventTrendingData.vents.isEmpty) {
         await ventDataSetup.setupTrending().then(
           (_) => trendingIsLoadedNotifier.value = true
         );
@@ -67,7 +67,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
         return;
       }
 
-      if(followingIsLoadedNotifier.value == false && ventFollowingData.vents.isEmpty) {
+      if(!followingIsLoadedNotifier.value && ventFollowingData.vents.isEmpty) {
         await ventDataSetup.setupFollowing().then(
           (_) => followingIsLoadedNotifier.value = true
         );

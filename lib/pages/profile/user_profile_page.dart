@@ -127,10 +127,9 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
       return formattedJoinedDate;
 
-    } else {
-      return joinedDate;
+    } 
 
-    }
+    return joinedDate;
 
   }
 

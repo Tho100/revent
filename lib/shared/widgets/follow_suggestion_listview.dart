@@ -55,7 +55,9 @@ class FollowSuggestionListView extends StatelessWidget {
                     )
                   ),
                   child: InkWellEffect(
-                    onPressed: () => NavigatePage.userProfilePage(username: username, pfpData: profilePic),
+                    onPressed: () => NavigatePage.userProfilePage(
+                      username: username, pfpData: profilePic
+                    ),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -102,4 +104,5 @@ class FollowSuggestionListView extends StatelessWidget {
       },
     );
   }
+
 }

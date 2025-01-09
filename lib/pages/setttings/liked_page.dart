@@ -90,10 +90,9 @@ class _LikedPageState extends State<LikedPage> {
             ),
           );
 
-        } else {
-          return const SizedBox.shrink();
-
-        }
+        } 
+        
+        return const SizedBox.shrink();
 
       },
     );
