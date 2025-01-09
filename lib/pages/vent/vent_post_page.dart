@@ -72,7 +72,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
   void _addCommentOnPressed() {
 
-    if(enableCommentNotifier.value == false) {
+    if(!enableCommentNotifier.value) {
       SnackBarDialog.temporarySnack(message: 'Comment is disabled.');
       return;
     }
@@ -113,7 +113,7 @@ class _VentPostPageState extends State<VentPostPage> {
       ? commentSettings.toggleComment(isEnableComment: 1, title: widget.title)
       : commentSettings.toggleComment(isEnableComment: 0, title: widget.title);
 
-    if(enableCommentNotifier.value == false) {
+    if(!enableCommentNotifier.value) {
       ventCommentProvider.deleteComments();
     }
 
@@ -143,7 +143,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
     try {
 
-      if(enableCommentNotifier.value == false) {
+      if(!enableCommentNotifier.value) {
         return;
       }
 
@@ -176,7 +176,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
     try {
 
-      if(enableCommentNotifier.value == false) {
+      if(!enableCommentNotifier.value) {
         return;
       }
 
