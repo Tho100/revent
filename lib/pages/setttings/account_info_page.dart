@@ -35,10 +35,9 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
 
       return formattedJoinedDate;
 
-    } else {
-      return userData.user.joinedDate!;
-
     }
+
+    return userData.user.joinedDate!;
 
   }
 
@@ -94,10 +93,9 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
         } else if (snapshot.hasError) {
           return _buildHeaders('Joined', '0/0/0');
 
-        } else {
-          return _buildHeaders('Joined', snapshot.data ?? '0/0/0');
+        } 
 
-        }
+        return _buildHeaders('Joined', snapshot.data ?? '0/0/0');
 
       },
     );

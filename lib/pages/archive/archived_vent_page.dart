@@ -216,10 +216,9 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
             ),
           );
 
-        } else {
-          return const SizedBox.shrink();
+        } 
 
-        }
+        return const SizedBox.shrink();
 
       },
     );

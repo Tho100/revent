@@ -105,11 +105,9 @@ class VentPreviewerWidgets {
 
     if(AppRoute.isOnProfile) {
       return profileData.isPostSaved.length > 0 ? profileData.isPostSaved[safeVentIndex] : false;
+    } 
 
-    } else {
-      return ventData.vents.length > 0 ? ventData.vents[safeVentIndex].isPostSaved : false;
-      
-    }
+    return ventData.vents.length > 0 ? ventData.vents[safeVentIndex].isPostSaved : false;
 
   }
 

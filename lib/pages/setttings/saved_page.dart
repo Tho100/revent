@@ -90,10 +90,9 @@ class _SavedPageState extends State<SavedPage> {
             ),
           );
 
-        } else {
-          return const SizedBox.shrink();
-
         }
+        
+        return const SizedBox.shrink();
 
       },
     );
