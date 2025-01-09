@@ -10,6 +10,10 @@ class ProfilePictureGetter extends BaseQueryService {
 
   Future<Uint8List> getProfilePictures({String? username}) async {
     
+    if(username == getIt.userProvider.user.username) {
+      return getIt.profileProvider.profile.profilePicture;
+    }
+
     const query = 'SELECT profile_picture FROM user_profile_info WHERE username = :username';
 
     final params = {

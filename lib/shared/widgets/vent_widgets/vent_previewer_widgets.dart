@@ -212,7 +212,7 @@ class VentPreviewerWidgets {
 
     return InkWellEffect(
       onPressed: () => disableGoToProfile
-        ? null : NavigatePage.userProfilePage(username: creator!, pfpData: pfpData!),
+        ? null : NavigatePage.userProfilePage(username: creator!, pfpData: pfpData),
       child: Row(
         children: [
     

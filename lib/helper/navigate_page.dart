@@ -17,6 +17,7 @@ import 'package:revent/pages/navigation/my_profile_page.dart';
 import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
+import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
 
 class _DockBarNavigationPages {
 
@@ -131,10 +132,10 @@ class NavigatePage {
 
   static void userProfilePage({
     required String username, 
-    required Uint8List pfpData // TODO: Remove this pfpData param 
-  }) {
+    Uint8List? pfpData
+  }) async {
 
-    final userData = getIt.userProvider;
+    final userData = getIt.userProvider; // TODO: Remove this
 
     if(username == userData.user.username) {
       myProfilePage();
@@ -142,10 +143,13 @@ class NavigatePage {
     }
 
     _navigation.setCurrentRoute(AppRoute.userProfile);
-    
+
+    final profilePicture = 
+      pfpData ?? await ProfilePictureGetter().getProfilePictures(username: username);
+
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => UserProfilePage(username: username, pfpData: pfpData))
+      MaterialPageRoute(builder: (_) => UserProfilePage(username: username, pfpData: profilePicture))
     );
 
   }
