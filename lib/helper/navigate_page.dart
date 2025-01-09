@@ -135,9 +135,7 @@ class NavigatePage {
     Uint8List? pfpData
   }) async {
 
-    final userData = getIt.userProvider; // TODO: Remove this
-
-    if(username == userData.user.username) {
+    if(username == getIt.userProvider.user.username) {
       myProfilePage();
       return;
     }
