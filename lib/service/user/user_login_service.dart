@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -27,9 +26,7 @@ class UserLoginService {
     required bool isRememberMeChecked
   }) async {
 
-    final conn = await ReventConnection.connect();
-
-    final username = await userDataGetter.getUsername(email: email, conn: conn);
+    final username = await userDataGetter.getUsername(email: email);
 
     if (username == null) {
       CustomAlertDialog.alertDialog('Account not found');
@@ -37,7 +34,6 @@ class UserLoginService {
     }
 
     final authenticationInformation = await UserAuthService().getAccountAuthentication(
-      conn: conn, 
       username: username
     );
       
@@ -73,9 +69,7 @@ class UserLoginService {
 
   }
 
-  Future<void> _setUserProfileData({
-    required String email
-  }) async {
+  Future<void> _setUserProfileData({required String email}) async {
 
     final accountInfo = await userDataGetter.getUserStartupInfo(email: email);
       
