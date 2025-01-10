@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/model/user/user_account_manager.dart';
 import 'package:revent/security/hash_model.dart';
@@ -45,10 +44,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
 
     try {
 
-      final conn = await ReventConnection.connect();
-
       final currentPasswordHash = await UserAuthService().getAccountAuthentication(
-        conn: conn, 
         username: userData.user.username
       );
 

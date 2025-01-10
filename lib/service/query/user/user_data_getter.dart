@@ -1,13 +1,9 @@
-import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class UserDataGetter extends BaseQueryService {
 
-  Future<String?> getUsername({
-    required MySQLConnectionPool conn,
-    required String email
-  }) async {
+  Future<String?> getUsername({required String email}) async {
 
     const query = 'SELECT username FROM user_information WHERE email = :email';
 
@@ -23,9 +19,7 @@ class UserDataGetter extends BaseQueryService {
 
   }
 
-  Future<String> getJoinedDate({
-    required String username
-  }) async {
+  Future<String> getJoinedDate({required String username}) async {
 
     const query = 'SELECT created_at FROM user_information WHERE username = :username';
 
@@ -37,9 +31,7 @@ class UserDataGetter extends BaseQueryService {
 
   }
 
-  Future<Map<String, dynamic>> getUserStartupInfo({
-    required String email
-  }) async {
+  Future<Map<String, dynamic>> getUserStartupInfo({required String email}) async {
 
     const query = 'SELECT username, plan FROM user_information WHERE email = :email';
 

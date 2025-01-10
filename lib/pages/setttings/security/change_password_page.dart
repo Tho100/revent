@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/revent_connection_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
@@ -37,10 +36,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
     try {
 
-      final conn = await ReventConnection.connect();
-
       final currentPasswordHash = await userAuth.getAccountAuthentication(
-        conn: conn, 
         username: userData.user.username
       );
 
@@ -58,7 +54,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       if(currentPasswordHash == currentPasswordInputHash) {
 
         await userAuth.updateAccountAuth(
-          conn: conn, 
           username: userData.user.username, 
           newPasswordHash: newPasswordInputHash
         ).then((value) => CustomAlertDialog.alertDialogTitle('Password updated', 'Your account password has been updated'));
