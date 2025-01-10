@@ -66,10 +66,24 @@ class VentDataGetter extends BaseQueryService {
   Future<Map<String, dynamic>> getLikedVentsData() async {
 
     const query = '''
-      SELECT vi.title, vi.body_text, vi.creator, vi.created_at, vi.total_likes, vi.total_comments 
-        FROM vent_info vi
-          INNER JOIN liked_vent_info lvi 
-          ON vi.post_id = lvi.post_id AND lvi.liked_by = :liked_by;
+      SELECT 
+        vi.creator,
+        vi.title,
+        vi.body_text,
+        vi.total_likes,
+        vi.total_comments,
+        vi.created_at,
+        upi.profile_picture
+      FROM 
+        liked_vent_info lvi
+      JOIN 
+        vent_info vi 
+        ON lvi.post_id = vi.post_id
+      JOIN 
+        user_profile_info upi
+        ON vi.creator = upi.username
+      WHERE 
+        lvi.liked_by = :liked_by
     ''';
 
     final param = {'liked_by': userData.user.username};
@@ -81,10 +95,24 @@ class VentDataGetter extends BaseQueryService {
   Future<Map<String, dynamic>> getSavedVentsData() async {
 
     const query = '''
-      SELECT vi.title, vi.body_text, vi.creator, vi.created_at, vi.total_likes, vi.total_comments 
-        FROM vent_info vi
-          INNER JOIN saved_vent_info svi 
-          ON vi.title = svi.title AND svi.saved_by = :saved_by;
+      SELECT 
+        vi.creator,
+        vi.title,
+        vi.body_text,
+        vi.total_likes,
+        vi.total_comments,
+        vi.created_at,
+        upi.profile_picture
+      FROM 
+        saved_vent_info svi
+      JOIN 
+        vent_info vi 
+        ON svi.post_id = vi.post_id
+      JOIN 
+        user_profile_info upi
+        ON vi.creator = upi.username
+      WHERE 
+        svi.saved_by = :saved_by
     ''';
 
     final param = {'saved_by': userData.user.username};
