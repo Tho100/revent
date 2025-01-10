@@ -10,9 +10,10 @@ class UserDataGetter extends BaseQueryService {
   }) async {
 
     const query = 'SELECT username FROM user_information WHERE email = :email';
-    final params = {'email': email};
+
+    final param = {'email': email};
     
-    final results = await executeQuery(query, params);
+    final results = await executeQuery(query, param);
 
     if(results.rows.isEmpty) {
       return null;
@@ -27,9 +28,10 @@ class UserDataGetter extends BaseQueryService {
   }) async {
 
     const query = 'SELECT created_at FROM user_information WHERE username = :username';
-    final params = {'username': username};
+
+    final param = {'username': username};
     
-    final results = await executeQuery(query, params);
+    final results = await executeQuery(query, param);
 
     return results.rows.last.assoc()['created_at']!;
 
@@ -40,6 +42,7 @@ class UserDataGetter extends BaseQueryService {
   }) async {
 
     const query = 'SELECT username, plan FROM user_information WHERE email = :email';
+
     final param = {'email': email};
     
     final results = await executeQuery(query, param);
