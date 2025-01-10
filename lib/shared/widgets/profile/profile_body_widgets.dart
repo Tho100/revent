@@ -42,7 +42,7 @@ class ProfileBodyWidgets extends StatelessWidget {
         const SizedBox(height: 18),
 
         EmptyPage().headerCustomMessage(
-          header: 'This is a private account', 
+          header: 'This account is private', 
           subheader: 'Only approved followers can view the content.'
         )
 
