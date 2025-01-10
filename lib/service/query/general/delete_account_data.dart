@@ -5,9 +5,10 @@ class DeleteAccountData extends BaseQueryService {
   Future<void> delete({required String username}) async {
 
     const query = '''
-      DELETE ui, upi, ufi, vi, svi, avi, lvi, vci, vcli
+      DELETE ui, upi, upvi, ufi, vi, svi, avi, lvi, vci, vcli
       FROM user_information ui
       LEFT JOIN user_profile_info upi ON upi.username = ui.username
+      LEFT JOIN user_privacy_info pvi ON upvi.username = ui.username
       LEFT JOIN user_follows_info ufi ON ufi.follower = ui.username
       LEFT JOIN vent_info vi ON vi.creator = ui.username
       LEFT JOIN saved_vent_info svi ON svi.creator = ui.username
