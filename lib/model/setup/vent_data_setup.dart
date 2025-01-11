@@ -193,7 +193,7 @@ class VentDataSetup {
       dataGetter: () => VentDataGetter().getLikedVentsData(),
       setVents: getIt.likedVentProvider.setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => LikedVentData(
+          profilePic, totalLikes, totalComments, _, isPostSaved) => LikedVentData(
         title: title,
         bodyText: bodyText,
         creator: creator,
@@ -201,7 +201,7 @@ class VentDataSetup {
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
-        isPostLiked: isPostLiked,
+        isPostLiked: true,
         isPostSaved: isPostSaved,
       ),
     );
@@ -212,7 +212,7 @@ class VentDataSetup {
       dataGetter: () => VentDataGetter().getSavedVentsData(),
       setVents: getIt.savedVentProvider.setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SavedVentData(
+          profilePic, totalLikes, totalComments, isPostLiked, _) => SavedVentData(
         title: title,
         bodyText: bodyText,
         creator: creator,
@@ -221,7 +221,7 @@ class VentDataSetup {
         totalLikes: totalLikes,
         totalComments: totalComments,
         isPostLiked: isPostLiked,
-        isPostSaved: isPostSaved,
+        isPostSaved: true,
       ),
     );
   }
