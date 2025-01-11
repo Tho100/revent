@@ -9,7 +9,7 @@ class ProfilePostsDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider; // TODO: Remove this
 
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
@@ -20,7 +20,7 @@ class ProfilePostsDataGetter extends BaseQueryService {
 
     final retrievedInfo = await executeQuery(query, param);
 
-    final postIds = await PostIdGetter().getAllPostsId();
+    final postIds = await PostIdGetter(creator: username).getAllProfilePostsId();
 
     final extractData = ExtractData(rowsData: retrievedInfo);
     

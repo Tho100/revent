@@ -34,6 +34,17 @@ class PostIdGetter extends BaseQueryService {
 
     return ExtractData(rowsData: results).extractIntColumn('post_id');
 
+  }
+
+  Future<List<int>> getAllProfilePostsId() async {
+
+    const getPostIdQuery = 'SELECT post_id FROM vent_info WHERE creator = :creator';
+
+    final param = {'creator': creator};
+
+    final results = await executeQuery(getPostIdQuery, param);
+
+    return ExtractData(rowsData: results).extractIntColumn('post_id');
 
   }
 
