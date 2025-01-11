@@ -18,23 +18,24 @@ class DeleteVent extends BaseQueryService {
 
   Future<void> delete() async {
 
-    await _deleteVentInfo(ventTitle: title).then((_) async {
+    final postId = await PostIdGetter(
+      title: title, creator: userData.user.username
+    ).getPostId();
+
+    await _deleteVentInfo(postId: postId).then((_) async {
       await _updateTotalPosts();
-      await _deleteComments(title: title);
+      await _deleteComments(postId: postId);
     });
 
     _removeVent();
 
   }
 
-  Future<void> _deleteVentInfo({required String ventTitle}) async {
+  Future<void> _deleteVentInfo({required int postId}) async {
 
-    const query = 'DELETE FROM vent_info WHERE title = :title AND creator = :creator';
+    const query = 'DELETE FROM vent_info WHERE post_id = :post_id';
 
-    final params = {
-      'title': ventTitle,
-      'creator': userData.user.username,
-    };
+    final params = {'post_id': postId};
 
     await executeQuery(query, params);
 
@@ -51,24 +52,26 @@ class DeleteVent extends BaseQueryService {
 
   }
 
-  Future<void> _deleteComments({required String title}) async {
+  Future<void> _deleteComments({required int postId}) async {
 
     final queries = [
-      'DELETE FROM vent_comments_info WHERE post_id = :post_id',
-      'DELETE FROM vent_comments_likes_info WHERE post_id = :post_id',
+      '''
+        DELETE vent_comments_likes_info
+          FROM vent_comments_likes_info
+        INNER JOIN vent_comments_info
+          ON vent_comments_likes_info.comment_id = vent_comments_info.comment_id
+        WHERE vent_comments_info.post_id = post_id
+      ''',
+      'DELETE FROM vent_comments_info WHERE post_id = :post_id'
     ];
-
-    final postId = await PostIdGetter(
-      title: title, creator: userData.user.username
-    ).getPostId();
 
     final param = {'post_id': postId};
 
     final conn = await connection();
 
     await conn.transactional((txn) async {
-      for (final query in queries) {
-        await txn.execute(query, param);
+      for(int i=0; i<queries.length; i++) {
+        await txn.execute(queries[i], param);
       }
     });
 
