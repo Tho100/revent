@@ -2,6 +2,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 
 class DeleteVent extends BaseQueryService {
   
@@ -53,20 +54,21 @@ class DeleteVent extends BaseQueryService {
   Future<void> _deleteComments({required String title}) async {
 
     final queries = [
-      'DELETE FROM vent_comments_info WHERE title = :title AND creator = :creator',
-      'DELETE FROM vent_comments_likes_info WHERE title = :title AND creator = :creator',
+      'DELETE FROM vent_comments_info WHERE post_id = :post_id',
+      'DELETE FROM vent_comments_likes_info WHERE post_id = :post_id',
     ];
 
-    final params = {
-      'title': title,
-      'creator': userData.user.username,
-    };
+    final postId = await PostIdGetter(
+      title: title, creator: userData.user.username
+    ).getPostId();
+
+    final param = {'post_id': postId};
 
     final conn = await connection();
 
     await conn.transactional((txn) async {
       for (final query in queries) {
-        await txn.execute(query, params);
+        await txn.execute(query, param);
       }
     });
 
