@@ -11,7 +11,11 @@ class ProfilePostsDataGetter extends BaseQueryService {
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
     const query = 
-      'SELECT post_id, title, body_text, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
+    '''
+      SELECT post_id, title, body_text, total_likes, total_comments, created_at 
+      FROM vent_info 
+      WHERE creator = :username
+    ''';
       
     final param = {'username': username};
 

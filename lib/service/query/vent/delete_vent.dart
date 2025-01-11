@@ -37,8 +37,8 @@ class DeleteVent extends BaseQueryService {
     '''
       DELETE vi, lvi, svi
       FROM vent_info vi
-        LEFT JOIN liked_vent_info lvi on lvi.post_id = vi.post_id
-        LEFT JOIN saved_vent_info svi on svi.post_id = vi.post_id
+        LEFT JOIN liked_vent_info lvi ON lvi.post_id = vi.post_id
+        LEFT JOIN saved_vent_info svi ON svi.post_id = vi.post_id
       WHERE vi.post_id = :post_id
     ''';
 

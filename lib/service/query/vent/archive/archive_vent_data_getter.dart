@@ -9,9 +9,8 @@ class ArchiveVentDataGetter extends BaseQueryService {
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
     const query = 'SELECT title, created_at FROM archive_vent_info WHERE creator = :username';
-    final param = {
-      'username': username
-    };
+
+    final param = {'username': username};
 
     final retrievedInfo = await executeQuery(query, param);
 

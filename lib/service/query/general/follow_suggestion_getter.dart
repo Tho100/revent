@@ -12,13 +12,13 @@ class FollowSuggestionGetter extends BaseQueryService {
     const query = 
     '''
       SELECT username, profile_picture
-        FROM user_profile_info
-        WHERE username != :username AND username NOT IN (
-          SELECT following
-          FROM user_follows_info
-          WHERE follower = :username
-        )
-        LIMIT 5;
+      FROM user_profile_info
+      WHERE username != :username AND username NOT IN (
+        SELECT following
+        FROM user_follows_info
+        WHERE follower = :username
+      )
+      LIMIT 5;
     ''';
 
     final param = {'username': getIt.userProvider.user.username};

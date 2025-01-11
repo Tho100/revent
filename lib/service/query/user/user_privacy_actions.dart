@@ -42,11 +42,13 @@ class UserPrivacyActions extends BaseQueryService {
   Future<Map<String, int>> getCurrentOptions({required String username}) async {
 
     const query = 
-      'SELECT privated_profile, privated_following_list, privated_saved_vents FROM user_privacy_info WHERE username = :username';
+    '''
+      SELECT privated_profile, privated_following_list, privated_saved_vents 
+      FROM user_privacy_info 
+      WHERE username = :username
+    ''';
 
-    final param = {
-      'username': username,
-    };
+    final param = {'username': username};
 
     final results = await executeQuery(query, param);
 

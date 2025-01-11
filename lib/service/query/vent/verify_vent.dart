@@ -11,7 +11,7 @@ class VerifyVent extends BaseQueryService {
   Future<bool> ventIsAlreadyExists() async {
 
     const query = 'SELECT * FROM vent_info WHERE creator = :creator AND title = :title';
-
+    // TODO: Return 1 instead
     final param = {
       'title': title,
       'creator': getIt.userProvider.user.username

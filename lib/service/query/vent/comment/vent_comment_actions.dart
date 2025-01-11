@@ -30,7 +30,12 @@ class VentCommentActions extends BaseQueryService {
     );
 
     const query = 
-      'DELETE FROM vent_comments_info WHERE commented_by = :commented_by AND comment_id = :comment_id AND post_id = :post_id';
+    '''
+      DELETE FROM vent_comments_info 
+      WHERE commented_by = :commented_by 
+        AND comment_id = :comment_id 
+        AND post_id = :post_id
+    ''';
 
     final params = {
       'post_id': postId,

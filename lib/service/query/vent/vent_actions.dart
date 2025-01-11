@@ -149,8 +149,6 @@ class VentActions extends BaseQueryService {
 
   void _addComment({required String comment}) {
 
-    final ventCommentProvider = getIt.ventCommentProvider;
-
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
@@ -161,7 +159,7 @@ class VentActions extends BaseQueryService {
       pfpData: getIt.profileProvider.profile.profilePicture
     );
 
-    ventCommentProvider.addComment(newComment);
+    getIt.ventCommentProvider.addComment(newComment);
 
   }
 
@@ -197,12 +195,13 @@ class VentActions extends BaseQueryService {
   }) async {
 
     final readSavedInfoQuery = 
-      'SELECT * FROM saved_vent_info $savedInfoParamsQuery';
-
+      'SELECT * FROM saved_vent_info $savedInfoParamsQuery'; 
+      // TODO: Return 1 instead of * 
+    // Do the same for liked info
     final savedInfoResults = await executeQuery(readSavedInfoQuery, savedInfoParams);
-
+    
     return ExtractData(rowsData: savedInfoResults)
-      .extractStringColumn('saved_by').isNotEmpty;
+      .extractStringColumn('saved_by').isNotEmpty; // And update this to: savedInfoResults.rows.isNotEmpty
 
   }
 
