@@ -5,7 +5,6 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 
 class ProfileSavedDataGetter extends BaseQueryService {
 
@@ -15,8 +14,9 @@ class ProfileSavedDataGetter extends BaseQueryService {
 
     const query = '''
       SELECT 
-        vi.creator,
+        vi.post_id,
         vi.title,
+        vi.creator,
         vi.body_text,
         vi.total_likes,
         vi.total_comments,
@@ -38,13 +38,11 @@ class ProfileSavedDataGetter extends BaseQueryService {
 
     final retrievedInfo = await executeQuery(query, param);
 
-    final postIds = await PostIdGetter().getAllPostsId();
-
     final extractData = ExtractData(rowsData: retrievedInfo);
-    
-    final creator = extractData.extractStringColumn('creator');
 
+    final postIds = extractData.extractIntColumn('post_id');
     final titles = extractData.extractStringColumn('title');
+    final creator = extractData.extractStringColumn('creator');
     final bodyText = extractData.extractStringColumn('body_text');
 
     final totalComments = extractData.extractIntColumn('total_comments');

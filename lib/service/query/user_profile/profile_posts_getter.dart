@@ -3,29 +3,28 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 
 class ProfilePostsDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider; // TODO: Remove this
 
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
     const query = 
-      'SELECT title, body_text, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
+      'SELECT post_id, title, body_text, total_likes, total_comments, created_at FROM vent_info WHERE creator = :username';
       
     final param = {'username': username};
 
     final retrievedInfo = await executeQuery(query, param);
 
-    final postIds = await PostIdGetter().getAllPostsId();
-
     final extractData = ExtractData(rowsData: retrievedInfo);
     
+    final postIds = extractData.extractIntColumn('post_id');
     final title = extractData.extractStringColumn('title');
     final bodyText = extractData.extractStringColumn('body_text');
+
     final totalLikes = extractData.extractIntColumn('total_likes');
     final totalComments = extractData.extractIntColumn('total_comments');
 
