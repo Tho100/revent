@@ -12,9 +12,7 @@ class ProfileDataGetter extends BaseQueryService {
       ? 'SELECT following, followers, bio, pronouns, profile_picture FROM user_profile_info WHERE username = :username'
       : 'SELECT following, followers, bio, pronouns FROM user_profile_info WHERE username = :username';
 
-    final param = {
-      'username': username
-    };
+    final param = {'username': username};
 
     final retrievedInfo = await executeQuery(query, param);
 

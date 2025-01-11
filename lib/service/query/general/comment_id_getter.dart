@@ -13,7 +13,12 @@ class CommentIdGetter extends BaseQueryService {
   }) async {
 
     const getCommentIdQuery = 
-      'SELECT comment_id FROM vent_comments_info WHERE post_id = :post_id AND commented_by = :commented_by AND comment = :comment';
+    '''
+      SELECT comment_id FROM vent_comments_info 
+      WHERE post_id = :post_id 
+        AND commented_by = :commented_by 
+        AND comment = :comment
+    ''';
 
     final commentParams = {
       'post_id': postId,

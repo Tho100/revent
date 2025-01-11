@@ -24,7 +24,13 @@ class SaveCommentEdit extends BaseQueryService {
     final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
     const query = 
-      'UPDATE vent_comments_info SET comment = :new_comment WHERE post_id = :post_id AND commented_by = :commented_by AND comment = :original_comment';
+    '''
+      UPDATE vent_comments_info 
+      SET comment = :new_comment 
+      WHERE post_id = :post_id 
+        AND commented_by = :commented_by 
+        AND comment = :original_comment
+    ''';
 
     final params = {
       'post_id': postId,

@@ -50,9 +50,7 @@ class CreateNewItem extends BaseQueryService {
     const updateTotalPostsQuery = 
       'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username';
 
-    final param = {
-      'username': userData.user.username
-    };
+    final param = {'username': userData.user.username};
 
     await executeQuery(updateTotalPostsQuery, param);
 

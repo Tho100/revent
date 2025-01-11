@@ -13,8 +13,9 @@ class VentDataGetter extends BaseQueryService {
   Future<Map<String, dynamic>> getVentsData() async {
 
     const query = '''
-      SELECT post_id, title, body_text, creator, created_at, total_likes, total_comments 
-        FROM vent_info
+      SELECT 
+        post_id, title, body_text, creator, created_at, total_likes, total_comments 
+      FROM vent_info
     ''';
 
     return _fetchVentsData(query);
@@ -24,9 +25,10 @@ class VentDataGetter extends BaseQueryService {
   Future<Map<String, dynamic>> getTrendingVentsData() async {
 
     const query = '''
-      SELECT post_id, title, body_text, creator, created_at, total_likes, total_comments 
-        FROM vent_info 
-          ORDER BY (total_likes >= 5 AND total_comments >= 1) ASC, total_likes ASC;
+      SELECT 
+        post_id, title, body_text, creator, created_at, total_likes, total_comments 
+      FROM vent_info 
+        ORDER BY (total_likes >= 5 AND total_comments >= 1) ASC, total_likes ASC;
     ''';
 
     return _fetchVentsData(query);
@@ -36,10 +38,11 @@ class VentDataGetter extends BaseQueryService {
   Future<Map<String, dynamic>> getFollowingVentsData() async {
 
     const query = '''
-      SELECT v.post_id, v.title, v.body_text, v.creator, v.created_at, v.total_likes, v.total_comments
-        FROM vent_info v
-          INNER JOIN user_follows_info u ON u.following = v.creator
-          WHERE u.follower = :follower
+      SELECT 
+        v.post_id, v.title, v.body_text, v.creator, v.created_at, v.total_likes, v.total_comments
+      FROM vent_info v
+        INNER JOIN user_follows_info u ON u.following = v.creator
+      WHERE u.follower = :follower
     ''';
 
     final params = {'follower': userData.user.username};
@@ -51,9 +54,10 @@ class VentDataGetter extends BaseQueryService {
   Future<Map<String, dynamic>> getSearchVentsData({required String? searchTitleText}) async {
 
     const query = '''
-      SELECT post_id, title, creator, created_at, total_likes, total_comments 
-        FROM vent_info 
-        WHERE LOWER(title) LIKE LOWER(:search_text) OR LOWER(body_text) LIKE LOWER(:search_text)
+      SELECT 
+        post_id, title, creator, created_at, total_likes, total_comments 
+      FROM vent_info 
+      WHERE LOWER(title) LIKE LOWER(:search_text) OR LOWER(body_text) LIKE LOWER(:search_text)
     ''';
 
     final params = {'search_text': '%$searchTitleText%'};

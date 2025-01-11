@@ -23,8 +23,8 @@ class DeleteVent extends BaseQueryService {
     ).getPostId();
 
     await _deleteVentInfo(postId: postId).then((_) async {
-      await _updateTotalPosts();
       await _deleteComments(postId: postId);
+      await _updateTotalPosts();
     });
 
     _removeVent();
@@ -33,7 +33,14 @@ class DeleteVent extends BaseQueryService {
 
   Future<void> _deleteVentInfo({required int postId}) async {
 
-    const query = 'DELETE FROM vent_info WHERE post_id = :post_id';
+    const query =
+    '''
+      DELETE vi, lvi, svi
+      FROM vent_info vi
+        LEFT JOIN liked_vent_info lvi ON lvi.post_id = vi.post_id
+        LEFT JOIN saved_vent_info svi ON svi.post_id = vi.post_id
+      WHERE vi.post_id = :post_id
+    ''';
 
     final params = {'post_id': postId};
 
