@@ -8,8 +8,6 @@ class ProfilePostsDataGetter extends BaseQueryService {
 
   final formatPostTimestamp = FormatDate();
 
-  final userData = getIt.userProvider; // TODO: Remove this
-
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
     const query = 
@@ -63,7 +61,7 @@ class ProfilePostsDataGetter extends BaseQueryService {
       'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
     };
 
-    final param = {'username': userData.user.username};
+    final param = {'username': getIt.userProvider.user.username};
 
     final retrievedIds = await executeQuery(
       queryBasedOnType[stateType]!, param
