@@ -4,10 +4,12 @@ import 'package:revent/shared/themes/theme_color.dart';
 
 class CommentTextField extends StatelessWidget {
 
+  final String? hintText;
   final TextEditingController controller;
 
   const CommentTextField({
     required this.controller, 
+    this.hintText,
     super.key
   });
 
@@ -33,7 +35,7 @@ class CommentTextField extends StatelessWidget {
             fontWeight: FontWeight.w800, 
             fontSize: 16
           ),
-          hintText: 'Your comment',
+          hintText: hintText!.isNotEmpty ? hintText : 'Your comment', // TODO: Add 3 ellipsis
           border: InputBorder.none,
           contentPadding: EdgeInsets.zero, 
         ),
