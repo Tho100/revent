@@ -1,7 +1,6 @@
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/helper/extract_data.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
@@ -113,7 +112,13 @@ class VentCommentActions extends BaseQueryService {
     final operationSymbol = isUserLikedPost ? '-' : '+';
 
     final updateLikeValueQuery = 
-      'UPDATE vent_comments_info SET total_likes = total_likes $operationSymbol 1 WHERE post_id = :post_id AND comment_id = :comment_id AND commented_by = :commented_by';
+    '''
+      UPDATE vent_comments_info 
+      SET total_likes = total_likes $operationSymbol 1 
+      WHERE post_id = :post_id 
+        AND comment_id = :comment_id 
+        AND commented_by = :commented_by
+    ''';
 
     final ventInfoParams = {
       'post_id': postId,
@@ -131,12 +136,11 @@ class VentCommentActions extends BaseQueryService {
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT * FROM vent_comments_likes_info $likesInfoParameterQuery';
+      'SELECT 1 FROM vent_comments_likes_info $likesInfoParameterQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
-    return ExtractData(rowsData: likesInfoResults)
-      .extractStringColumn('liked_by').isNotEmpty;
+    return likesInfoResults.rows.isNotEmpty;
 
   }
 
