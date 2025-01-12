@@ -62,7 +62,11 @@ class VentActions extends BaseQueryService {
     final operationSymbol = isUserLikedPost ? '-' : '+';
 
     final updateLikeValueQuery = 
-      'UPDATE vent_info SET total_likes = total_likes $operationSymbol 1 WHERE creator = :creator AND title = :title';
+    '''
+      UPDATE vent_info 
+      SET total_likes = total_likes $operationSymbol 1 
+      WHERE creator = :creator AND title = :title
+    ''';
 
     final ventInfoParams = {
       'creator': creator,

@@ -112,7 +112,13 @@ class VentCommentActions extends BaseQueryService {
     final operationSymbol = isUserLikedPost ? '-' : '+';
 
     final updateLikeValueQuery = 
-      'UPDATE vent_comments_info SET total_likes = total_likes $operationSymbol 1 WHERE post_id = :post_id AND comment_id = :comment_id AND commented_by = :commented_by';
+    '''
+      UPDATE vent_comments_info 
+      SET total_likes = total_likes $operationSymbol 1 
+      WHERE post_id = :post_id 
+        AND comment_id = :comment_id 
+        AND commented_by = :commented_by
+    ''';
 
     final ventInfoParams = {
       'post_id': postId,
