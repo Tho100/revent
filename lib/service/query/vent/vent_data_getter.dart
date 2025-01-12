@@ -45,9 +45,9 @@ class VentDataGetter extends BaseQueryService {
       WHERE u.follower = :follower
     ''';
 
-    final params = {'follower': userData.user.username};
+    final param = {'follower': userData.user.username};
 
-    return _fetchVentsData(query, params: params);
+    return _fetchVentsData(query, params: param);
 
   }
 
@@ -60,9 +60,9 @@ class VentDataGetter extends BaseQueryService {
       WHERE LOWER(title) LIKE LOWER(:search_text) OR LOWER(body_text) LIKE LOWER(:search_text)
     ''';
 
-    final params = {'search_text': '%$searchTitleText%'};
+    final param = {'search_text': '%$searchTitleText%'};
 
-    return _fetchVentsData(query, params: params, excludeBodyText: true);
+    return _fetchVentsData(query, params: param, excludeBodyText: true);
 
   }
 

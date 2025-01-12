@@ -18,9 +18,9 @@ class DeleteSavedVent extends BaseQueryService {
 
     const query = 'DELETE FROM saved_vent_info WHERE post_id = :post_id';
 
-    final params = {'post_id': postId};
+    final param = {'post_id': postId};
 
-    await executeQuery(query, params).then(
+    await executeQuery(query, param).then(
       (_) => _removeVent()
     );
 

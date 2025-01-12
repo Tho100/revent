@@ -74,9 +74,9 @@ class VentActions extends BaseQueryService {
       WHERE post_id = :post_id
     ''';
 
-    final ventInfoParams = {'post_id': postId};
+    final param = {'post_id': postId};
 
-    await executeQuery(updateLikeValueQuery, ventInfoParams);
+    await executeQuery(updateLikeValueQuery, param);
 
   }
 

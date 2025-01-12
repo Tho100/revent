@@ -47,7 +47,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
   void _initializeClasses() {
 
     callProfilePosts = ProfilePostsSetup(
-      userType: 'my_profile',
+      profileType: 'my_profile',
       username: userData.user.username
     );
 

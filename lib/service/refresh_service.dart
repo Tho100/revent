@@ -7,8 +7,6 @@ import 'package:revent/model/setup/vent_data_setup.dart';
 
 class RefreshService {
 
-  final userData = getIt.userProvider;
-
   Future<void> _refreshVentsData({
     required dynamic ventProvider,
     required Future<void> Function() setupMethod,
@@ -40,21 +38,19 @@ class RefreshService {
 
   Future<void> refreshMyProfile() async {
 
-    final profileData = getIt.profileProvider;
-    final profilePostsData = getIt.profilePostsProvider;
-    final profileSavedData = getIt.profileSavedProvider;
+    getIt.profileProvider.clearProfileData();
 
-    profileData.clearProfileData();
+    final userData = getIt.userProvider;
 
     await ProfileDataSetup().setup(username: userData.user.username);
 
     final callProfilePosts = ProfilePostsSetup(
-      userType: 'my_profile', 
+      profileType: 'my_profile', 
       username: userData.user.username
     );
 
-    profilePostsData.myProfile.clear();
-    profileSavedData.myProfile.clear();
+    getIt.profilePostsProvider.myProfile.clear();
+    getIt.profileSavedProvider.myProfile.clear();
 
     await callProfilePosts.setupPosts();
     await callProfilePosts.setupSaved();
