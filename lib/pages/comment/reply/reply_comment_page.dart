@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/pages/comment/reply/post_reply_page.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -115,7 +116,19 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
       padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
       child: BottomInputBar(
         hintText: 'Reply to @${widget.commentedBy}', 
-        onPressed: () {}
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => PostReplyPage(
+              title: widget.title, 
+              creator: widget.creator, 
+              comment: widget.comment, 
+              commentedBy: widget.commentedBy, 
+              commenterPfp: widget.pfpData
+              )
+            )
+          );
+        }
       )
     );
   }

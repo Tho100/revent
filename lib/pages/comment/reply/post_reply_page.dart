@@ -4,69 +4,71 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
+import 'package:revent/service/query/vent/comment/comment_reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/vent_actions.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 import 'package:revent/shared/widgets/text_field/comment_textfield.dart';
 
-class PostCommentPage extends StatefulWidget {
+class PostReplyPage extends StatefulWidget {
 
   final String title;
   final String creator;
-  final Uint8List creatorPfp;
+
+  final String comment;
+  final String commentedBy;
+  final Uint8List commenterPfp;
   
-  const PostCommentPage({
+  const PostReplyPage({
     required this.title,
     required this.creator,
-    required this.creatorPfp,
+    required this.comment,
+    required this.commentedBy,
+    required this.commenterPfp,
     super.key
   });
 
   @override
-  State<PostCommentPage> createState() => _PostCommentPageState();
+  State<PostReplyPage> createState() => _PostReplyPageState();
 
 }
 
-class _PostCommentPageState extends State<PostCommentPage> {
+class _PostReplyPageState extends State<PostReplyPage> {
 
-  final commentController = TextEditingController();
+  final replyController = TextEditingController();
 
-  void _createCommentOnPressed() async {
+  void _postReplyOnPressed() async {
 
     try {
 
-      final commentProvider = getIt.ventCommentProvider;
-      final userData = getIt.userProvider;
+      final replyText = replyController.text;
 
-      final commentText = commentController.text;
+      if(replyText.isNotEmpty) {
 
-      if(commentText.isNotEmpty) {
-
-        final commentIndex = commentProvider.ventComments.indexWhere(
-          (comment) => comment.comment == commentText && comment.commentedBy == userData.user.username
+        /*final commentIndex = getIt.ventCommentProvider.ventComments.indexWhere(
+          (reply) => reply.comment == replyText && reply.commentedBy == getIt.userProvider.user.username
         );
 
         if(commentIndex != -1) {
-          CustomAlertDialog.alertDialogTitle("Can't post comment", 'You have already posted similar comment');
+          CustomAlertDialog.alertDialogTitle("Can't post reply", 'You have already posted similar reply');
           return;
-        } 
+        }*/ 
 
-        final ventActions = VentActions(title: widget.title, creator: widget.creator);
+        await CommentReplyActions(title: widget.title, creator: widget.creator).sendReply(
+          reply: replyText, 
+          commentText: widget.comment, 
+          commentedBy: widget.commentedBy
+        ).then((_) => Navigator.pop(context));
 
-        await ventActions.sendComment(comment: commentText)
-          .then((value) => Navigator.pop(context) // TODO: Update value to _
-        );
-
-        SnackBarDialog.temporarySnack(message: 'Comment added.');
+        SnackBarDialog.temporarySnack(message: 'Reply added.');
 
       }
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Failed to send comment.');
+      SnackBarDialog.errorSnack(message: 'Failed to send reply.');
     }
 
   }
@@ -82,14 +84,14 @@ class _PostCommentPageState extends State<PostCommentPage> {
             customHeight: 35,
             customWidth: 35,
             customEmptyPfpSize: 20,
-            pfpData: widget.creatorPfp
+            pfpData: widget.commenterPfp
           ),
         ),
 
         const SizedBox(width: 10),
 
         Text(
-          widget.creator,
+          widget.commentedBy,
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w800,
@@ -101,14 +103,15 @@ class _PostCommentPageState extends State<PostCommentPage> {
     );
   }
 
-  Widget _buildTitle() {
+  Widget _buildOriginalComment() {
     return Text(
-      widget.title,
+      widget.comment,
       style: GoogleFonts.inter(
         color: ThemeColor.white,
         fontWeight: FontWeight.w800,
-        fontSize: 21
-      )
+        fontSize: 17
+      ),
+      maxLines: 6,
     );
   }
 
@@ -131,7 +134,10 @@ class _PostCommentPageState extends State<PostCommentPage> {
         const SizedBox(width: 10),
 
         Expanded(
-          child: CommentTextField(controller: commentController)
+          child: CommentTextField(
+            controller: replyController,
+            hintText: 'Your reply',
+          )
         ),
 
       ],
@@ -152,13 +158,13 @@ class _PostCommentPageState extends State<PostCommentPage> {
 
               const SizedBox(height: 18),
 
-              _buildTitle(),
+              _buildOriginalComment(),
 
               const SizedBox(height: 12),
 
               const Divider(color: ThemeColor.lightGrey),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 25),
         
               _buildTextFieldRow()
         
@@ -174,16 +180,16 @@ class _PostCommentPageState extends State<PostCommentPage> {
       padding: const EdgeInsets.all(8.0),
       child: SubButton(
         text: 'Post', 
-        onPressed: () => _createCommentOnPressed(),
+        onPressed: () => _postReplyOnPressed(),
       ),
     );
   }
 
   Future<bool> _onClosePage() async {
 
-    if(commentController.text.isNotEmpty) {
+    if(replyController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
-        message: 'Discard comment?', 
+        message: 'Discard reply?', 
       );
     }
 
@@ -193,7 +199,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
 
   @override
   void dispose() {
-    commentController.dispose();
+    replyController.dispose();
     super.dispose();
   }
 
@@ -204,7 +210,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
       child: Scaffold(
         appBar: CustomAppBar(
           context: context, 
-          title: 'Add a comment',
+          title: 'Add a reply',
           enableCenter: false,
           actions: [_buildActionButton()],
           customBackOnPressed: () async {
