@@ -2,7 +2,6 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
-import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
@@ -80,12 +79,11 @@ class VentActions extends BaseQueryService {
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT * FROM liked_vent_info $likesInfoParameterQuery';
+      'SELECT 1 FROM liked_vent_info $likesInfoParameterQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
-    return ExtractData(rowsData: likesInfoResults)
-      .extractStringColumn('liked_by').isNotEmpty;
+    return likesInfoResults.rows.isNotEmpty;
 
   }
 
@@ -195,13 +193,11 @@ class VentActions extends BaseQueryService {
   }) async {
 
     final readSavedInfoQuery = 
-      'SELECT * FROM saved_vent_info $savedInfoParamsQuery'; 
-      // TODO: Return 1 instead of * 
-    // Do the same for liked info
+      'SELECT 1 FROM saved_vent_info $savedInfoParamsQuery'; 
+
     final savedInfoResults = await executeQuery(readSavedInfoQuery, savedInfoParams);
     
-    return ExtractData(rowsData: savedInfoResults)
-      .extractStringColumn('saved_by').isNotEmpty; // And update this to: savedInfoResults.rows.isNotEmpty
+    return savedInfoResults.rows.isNotEmpty;
 
   }
 
