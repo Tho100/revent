@@ -45,7 +45,10 @@ class VentActions extends BaseQueryService {
       likesInfoParameterQuery: likesInfoParameterQuery
     );
 
-    await _updateVentLikes(isUserLikedPost: isUserLikedPost);
+    await _updateVentLikes(
+      postId: postId, 
+      isUserLikedPost: isUserLikedPost
+    );
 
     await _updateLikesInfo(
       isUserLikedPost: isUserLikedPost,
@@ -57,7 +60,10 @@ class VentActions extends BaseQueryService {
 
   }
 
-  Future<void> _updateVentLikes({required bool isUserLikedPost}) async {
+  Future<void> _updateVentLikes({
+    required int postId,
+    required bool isUserLikedPost
+  }) async {
 
     final operationSymbol = isUserLikedPost ? '-' : '+';
 
@@ -65,13 +71,10 @@ class VentActions extends BaseQueryService {
     '''
       UPDATE vent_info 
       SET total_likes = total_likes $operationSymbol 1 
-      WHERE creator = :creator AND title = :title
+      WHERE post_id = :post_id
     ''';
 
-    final ventInfoParams = {
-      'creator': creator,
-      'title': title
-    };
+    final ventInfoParams = {'post_id': postId};
 
     await executeQuery(updateLikeValueQuery, ventInfoParams);
 
