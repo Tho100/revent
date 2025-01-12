@@ -70,7 +70,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   void _initializeClasses() async {
     
     callProfilePosts = ProfilePostsSetup(
-      userType: 'user_profile',
+      profileType: 'user_profile',
       username: widget.username,
     );
 

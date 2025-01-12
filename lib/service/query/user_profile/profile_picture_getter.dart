@@ -16,11 +16,11 @@ class ProfilePictureGetter extends BaseQueryService {
 
     const query = 'SELECT profile_picture FROM user_profile_info WHERE username = :username';
 
-    final params = {
+    final param = {
       'username': username!.isNotEmpty ? username : getIt.userProvider.user.username
     };
 
-    final result = await executeQuery(query, params);
+    final result = await executeQuery(query, param);
 
     final pfpData = ExtractData(rowsData: result).extractStringColumn('profile_picture')[0];
 

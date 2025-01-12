@@ -42,9 +42,9 @@ class DeleteVent extends BaseQueryService {
       WHERE vi.post_id = :post_id
     ''';
 
-    final params = {'post_id': postId};
+    final param = {'post_id': postId};
 
-    await executeQuery(query, params);
+    await executeQuery(query, param);
 
   }
  
