@@ -5,7 +5,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
-// TODO: Rename to ReplyActions
+
 class ReplyActions extends BaseQueryService {
 
   final String title;

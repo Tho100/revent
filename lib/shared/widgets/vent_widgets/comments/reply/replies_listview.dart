@@ -6,7 +6,6 @@ import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/reply/reply_previewer.dart';
 
-// TODO: Update to RepliesListView
 class RepliesListView extends StatelessWidget {
 
   final String title;
