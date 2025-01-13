@@ -41,7 +41,7 @@ class UserRegistrationService extends BaseQueryService {
     await UserDataRegistration().insert(hashPassword: hashPassword);
     
     await VentDataSetup().setupForYou()
-      .then((value) => NavigatePage.homePage()
+      .then((_) => NavigatePage.homePage()
     );
 
   }

@@ -52,7 +52,7 @@ class UserLoginService {
     await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
 
     await VentDataSetup().setupForYou()
-      .then((value) => NavigatePage.homePage()
+      .then((_) => NavigatePage.homePage()
     ); 
 
   }

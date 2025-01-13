@@ -58,7 +58,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
         final ventActions = VentActions(title: widget.title, creator: widget.creator);
 
         await ventActions.sendComment(comment: commentText)
-          .then((value) => Navigator.pop(context) // TODO: Update value to _
+          .then((_) => Navigator.pop(context)
         );
 
         SnackBarDialog.temporarySnack(message: 'Comment added.');

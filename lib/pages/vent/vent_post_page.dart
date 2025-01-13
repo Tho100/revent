@@ -435,7 +435,7 @@ class _VentPostPageState extends State<VentPostPage> {
               context: context, 
               title: widget.title, 
               creator: widget.creator
-            ).deletePost().then((value) => Navigator.pop(context));
+            ).deletePost().then((_) => Navigator.pop(context));
           }
         );
       },
