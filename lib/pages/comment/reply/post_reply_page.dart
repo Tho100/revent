@@ -48,7 +48,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
       if(replyText.isNotEmpty) {
 
-        await CommentReplyActions(title: widget.title, creator: widget.creator).sendReply(
+        await ReplyActions(title: widget.title, creator: widget.creator).sendReply(
           reply: replyText, 
           commentText: widget.comment, 
           commentedBy: widget.commentedBy

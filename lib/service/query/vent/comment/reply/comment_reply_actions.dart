@@ -6,12 +6,12 @@ import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
 // TODO: Rename to ReplyActions
-class CommentReplyActions extends BaseQueryService {
+class ReplyActions extends BaseQueryService {
 
   final String title;
   final String creator;
 
-  CommentReplyActions({
+  ReplyActions({
     required this.creator,
     required this.title
   });
