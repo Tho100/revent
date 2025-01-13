@@ -11,7 +11,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
-import 'package:revent/shared/widgets/text_field/comment_textfield.dart';
+import 'package:revent/shared/widgets/text_field/body_textfield.dart';
 
 class PostReplyPage extends StatefulWidget {
 
@@ -125,7 +125,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
         const SizedBox(width: 10),
 
         Expanded(
-          child: CommentTextField(
+          child: BodyTextField(
             controller: replyController,
             hintText: 'Your reply...',
           )
