@@ -2,6 +2,8 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/setup/comment_replies_setup.dart';
 import 'package:revent/pages/comment/reply/post_reply_page.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
@@ -166,7 +168,13 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
     super.initState();
     _initializeReplies();
   }
-  // TODO: Clear replies on dispose
+
+  @override
+  void dispose() {
+    getIt.commentRepliesProvider.deleteReplies();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
