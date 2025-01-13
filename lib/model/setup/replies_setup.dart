@@ -11,9 +11,9 @@ class RepliesSetup {
 
     final repliesInfo = await RepliesGetter(commentId: commentId).getReplies();
 
-    final commentedBy = repliesInfo['replied_by']! as List<String>;
-    final comment = repliesInfo['reply']! as List<String>;
-    final commentTimestamp = repliesInfo['reply_timestamp']! as List<String>;
+    final repliedBy = repliesInfo['replied_by']! as List<String>;
+    final reply = repliesInfo['reply']! as List<String>;
+    final replyTimestamp = repliesInfo['reply_timestamp']! as List<String>;
 
     final totalLikes = repliesInfo['total_likes']! as List<int>;
 
@@ -22,11 +22,11 @@ class RepliesSetup {
 
     final pfpData = repliesInfo['profile_picture']! as List<Uint8List>;
 
-    final replies = List.generate(commentedBy.length, (index) {
+    final replies = List.generate(repliedBy.length, (index) {
       return CommentRepliesData(
-        repliedBy: commentedBy[index],
-        reply: comment[index],
-        replyTimestamp: commentTimestamp[index],
+        repliedBy: repliedBy[index],
+        reply: reply[index],
+        replyTimestamp: replyTimestamp[index],
         totalLikes: totalLikes[index],
         isReplyLiked: isLiked[index],
         isReplyLikedByCreator: isLikedByCreator[index],
