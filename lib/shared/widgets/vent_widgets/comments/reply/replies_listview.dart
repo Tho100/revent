@@ -7,13 +7,13 @@ import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/reply/reply_previewer.dart';
 
 // TODO: Update to RepliesListView
-class ReplyCommentListView extends StatelessWidget {
+class RepliesListView extends StatelessWidget {
 
   final String title;
   final String creator;
   final Uint8List creatorPfpData;
 
-  const ReplyCommentListView({
+  const RepliesListView({
     required this.title,
     required this.creator,
     required this.creatorPfpData,
