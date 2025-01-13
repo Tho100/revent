@@ -7,7 +7,7 @@ import 'package:revent/service/query/vent/comment/vent_comments_getter.dart';
 
 class VentCommentSetup {
 
-  final ventCommentProvider = getIt.ventCommentProvider;
+  final ventCommentProvider = getIt.ventCommentProvider; // TODO: Remove this
 
   Future<void> setup({
     required String title,

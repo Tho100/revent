@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/query/vent/comment/comment_reply_actions.dart';
+import 'package:revent/service/query/vent/comment/reply/comment_reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -47,15 +47,6 @@ class _PostReplyPageState extends State<PostReplyPage> {
       final replyText = replyController.text;
 
       if(replyText.isNotEmpty) {
-
-        /*final commentIndex = getIt.ventCommentProvider.ventComments.indexWhere(
-          (reply) => reply.comment == replyText && reply.commentedBy == getIt.userProvider.user.username
-        );
-
-        if(commentIndex != -1) {
-          CustomAlertDialog.alertDialogTitle("Can't post reply", 'You have already posted similar reply');
-          return;
-        }*/ 
 
         await CommentReplyActions(title: widget.title, creator: widget.creator).sendReply(
           reply: replyText, 

@@ -90,7 +90,7 @@ class VentCommentsGetter extends BaseQueryService {
     required int postId,
     required bool isLikedByCreator,
     required List<int> commentIds,
-    required List<String> commentedBy
+    required List<String> commentedBy // TODO: Remove this
   }) async {
 
     const readLikesQuery = 

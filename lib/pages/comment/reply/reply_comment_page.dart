@@ -2,11 +2,16 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/model/setup/comment_replies_setup.dart';
 import 'package:revent/pages/comment/reply/post_reply_page.dart';
+import 'package:revent/service/query/general/comment_id_getter.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/bottom_input_bar.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/vent_widgets/comments/reply/reply_comment_listview.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_previewer.dart';
 
 class ReplyCommentPage extends StatefulWidget {
@@ -45,6 +50,24 @@ class ReplyCommentPage extends StatefulWidget {
 
 class _ReplyCommentPageState extends State<ReplyCommentPage> {
 
+  void _initializeReplies() async {
+
+    try {
+      
+      final postId = await PostIdGetter(title: widget.title, creator: widget.creator).getPostId();
+
+      final commentId = await CommentIdGetter(postId: postId).getCommentId(
+        username: widget.commentedBy, commentText: widget.comment
+      );
+
+      await CommentRepliesSetup().setup(commentId: commentId);
+
+    } catch (err) {
+      SnackBarDialog.errorSnack(message: 'Failed to load replies.');
+    }
+
+  }
+
   Widget _buildMainComment() {
     return Consumer<VentCommentProvider>(
       builder: (_, ventComment, __) {
@@ -67,6 +90,7 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
           pfpData: widget.pfpData, 
           creatorPfpData: widget.creatorPfpData
         );
+
       },
     );
   }
@@ -99,7 +123,11 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
                 
                 const SizedBox(height: 20),
     
-                // replies listview
+                ReplyCommentListView(
+                  title: widget.title, 
+                  creator: widget.creator, 
+                  creatorPfpData: widget.creatorPfpData
+                ),
     
                 const SizedBox(height: 10),
 
@@ -133,6 +161,12 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
     );
   }
 
+  @override
+  void initState() {
+    super.initState();
+    _initializeReplies();
+  }
+  // TODO: Clear replies on dispose
   @override
   Widget build(BuildContext context) {
     return Scaffold(
