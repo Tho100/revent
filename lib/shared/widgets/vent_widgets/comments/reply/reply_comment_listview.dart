@@ -47,7 +47,7 @@ class ReplyCommentListView extends StatelessWidget {
     required int repliesCount,
   }) {
     return ListView.builder(
-      shrinkWrap: true, // TODO: Try to remove this
+      shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: repliesCount,
       itemBuilder: (_, index) {
