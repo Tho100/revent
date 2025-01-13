@@ -136,7 +136,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
         Expanded(
           child: CommentTextField(
             controller: replyController,
-            hintText: 'Your reply',
+            hintText: 'Your reply...',
           )
         ),
 

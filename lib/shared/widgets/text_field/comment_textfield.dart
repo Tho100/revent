@@ -35,7 +35,7 @@ class CommentTextField extends StatelessWidget {
             fontWeight: FontWeight.w800, 
             fontSize: 16
           ),
-          hintText: hintText!.isNotEmpty ? hintText : 'Your comment', // TODO: Add 3 ellipsis
+          hintText: hintText!.isNotEmpty ? hintText : 'Your comment...',
           border: InputBorder.none,
           contentPadding: EdgeInsets.zero, 
         ),
