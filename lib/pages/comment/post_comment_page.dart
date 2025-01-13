@@ -11,7 +11,7 @@ import 'package:revent/service/query/vent/vent_actions.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
-import 'package:revent/shared/widgets/text_field/comment_textfield.dart';
+import 'package:revent/shared/widgets/text_field/body_textfield.dart';
 
 class PostCommentPage extends StatefulWidget {
 
@@ -58,7 +58,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
         final ventActions = VentActions(title: widget.title, creator: widget.creator);
 
         await ventActions.sendComment(comment: commentText)
-          .then((value) => Navigator.pop(context) // TODO: Update value to _
+          .then((_) => Navigator.pop(context)
         );
 
         SnackBarDialog.temporarySnack(message: 'Comment added.');
@@ -131,7 +131,10 @@ class _PostCommentPageState extends State<PostCommentPage> {
         const SizedBox(width: 10),
 
         Expanded(
-          child: CommentTextField(controller: commentController)
+          child: BodyTextField(
+            controller: commentController,
+            hintText: 'Your comment...',
+          )
         ),
 
       ],

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/query/vent/comment/comment_reply_actions.dart';
+import 'package:revent/service/query/vent/comment/reply/comment_reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
-import 'package:revent/shared/widgets/text_field/comment_textfield.dart';
+import 'package:revent/shared/widgets/text_field/body_textfield.dart';
 
 class PostReplyPage extends StatefulWidget {
 
@@ -48,16 +48,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
       if(replyText.isNotEmpty) {
 
-        /*final commentIndex = getIt.ventCommentProvider.ventComments.indexWhere(
-          (reply) => reply.comment == replyText && reply.commentedBy == getIt.userProvider.user.username
-        );
-
-        if(commentIndex != -1) {
-          CustomAlertDialog.alertDialogTitle("Can't post reply", 'You have already posted similar reply');
-          return;
-        }*/ 
-
-        await CommentReplyActions(title: widget.title, creator: widget.creator).sendReply(
+        await ReplyActions(title: widget.title, creator: widget.creator).sendReply(
           reply: replyText, 
           commentText: widget.comment, 
           commentedBy: widget.commentedBy
@@ -134,9 +125,9 @@ class _PostReplyPageState extends State<PostReplyPage> {
         const SizedBox(width: 10),
 
         Expanded(
-          child: CommentTextField(
+          child: BodyTextField(
             controller: replyController,
-            hintText: 'Your reply',
+            hintText: 'Your reply...',
           )
         ),
 

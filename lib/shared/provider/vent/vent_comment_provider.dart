@@ -38,7 +38,7 @@ class VentCommentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addComment(VentCommentData vent) {
+  void addComment(VentCommentData vent) { // Update vent/vents to comment/comments
     _ventComments.add(vent);
     notifyListeners();
   }

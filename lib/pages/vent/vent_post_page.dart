@@ -154,7 +154,7 @@ class _VentPostPageState extends State<VentPostPage> {
       commentsFilter.filterCommentToBest();
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: err.toString());
+      SnackBarDialog.errorSnack(message: 'Failed to load comments.');
     }
 
   }
@@ -435,7 +435,7 @@ class _VentPostPageState extends State<VentPostPage> {
               context: context, 
               title: widget.title, 
               creator: widget.creator
-            ).deletePost().then((value) => Navigator.pop(context));
+            ).deletePost().then((_) => Navigator.pop(context));
           }
         );
       },

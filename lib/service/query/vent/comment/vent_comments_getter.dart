@@ -64,14 +64,12 @@ class VentCommentsGetter extends BaseQueryService {
       postId: postId,
       isLikedByCreator: false,
       commentIds: commentIds,
-      commentedBy: commentedBy 
     );
 
     final isLikedByCreatorState = await _commentLikedState(
       postId: postId,
       isLikedByCreator: true,
       commentIds: commentIds,
-      commentedBy: commentedBy
     );
 
     return {
@@ -90,7 +88,6 @@ class VentCommentsGetter extends BaseQueryService {
     required int postId,
     required bool isLikedByCreator,
     required List<int> commentIds,
-    required List<String> commentedBy
   }) async {
 
     const readLikesQuery = 

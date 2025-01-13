@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
-class CommentTextField extends StatelessWidget {
+class BodyTextField extends StatelessWidget {
 
-  final String? hintText;
   final TextEditingController controller;
+  final String hintText;
 
-  const CommentTextField({
+  const BodyTextField({
     required this.controller, 
-    this.hintText,
+    required this.hintText,
     super.key
   });
 
@@ -35,7 +35,7 @@ class CommentTextField extends StatelessWidget {
             fontWeight: FontWeight.w800, 
             fontSize: 16
           ),
-          hintText: hintText!.isNotEmpty ? hintText : 'Your comment', // TODO: Add 3 ellipsis
+          hintText: hintText,
           border: InputBorder.none,
           contentPadding: EdgeInsets.zero, 
         ),
