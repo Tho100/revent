@@ -4,8 +4,8 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/vent/comment/reply/replies_getter.dart';
 import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
-// TODO: Rename to RepliesSetup
-class CommentRepliesSetup {
+
+class RepliesSetup {
 
   Future<void> setup({required int commentId}) async {
 
