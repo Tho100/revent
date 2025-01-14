@@ -2,6 +2,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
+import 'package:revent/model/setup/replies_setup.dart';
 import 'package:revent/model/setup/vent_comment_setup.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
@@ -67,6 +68,14 @@ class RefreshService {
     await VentCommentSetup().setup(
       title: title, creator: creator
     );
+
+  }
+
+  Future<void> refreshReplies({required int commentId}) async {
+
+    getIt.commentRepliesProvider.deleteReplies();
+
+    await RepliesSetup().setup(commentId: commentId);
 
   }
 

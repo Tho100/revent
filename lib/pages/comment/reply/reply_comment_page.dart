@@ -8,6 +8,7 @@ import 'package:revent/model/setup/replies_setup.dart';
 import 'package:revent/pages/comment/reply/post_reply_page.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
+import 'package:revent/service/refresh_service.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -49,13 +50,15 @@ class ReplyCommentPage extends StatefulWidget {
 
 class _ReplyCommentPageState extends State<ReplyCommentPage> {
 
+  late int commentId = 0;
+
   void _initializeReplies() async {
 
     try {
       
       final postId = await PostIdGetter(title: widget.title, creator: widget.creator).getPostId();
 
-      final commentId = await CommentIdGetter(postId: postId).getCommentId(
+      commentId = await CommentIdGetter(postId: postId).getCommentId(
         username: widget.commentedBy, commentText: widget.comment
       );
 
@@ -101,7 +104,7 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
   Widget _buildBody() {
     return RefreshIndicator(      
       color: ThemeColor.black,
-      onRefresh: () async {},
+      onRefresh: () async => await RefreshService().refreshReplies(commentId: commentId),
       child: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
         child: ScrollConfiguration(
@@ -124,10 +127,9 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
                   ),
                 ),
                 
-                const SizedBox(height: 20), // TODO: Reduce to 10
+                const SizedBox(height: 10),
     
                 RepliesListView(
-                  title: widget.title, 
                   creator: widget.creator, 
                   creatorPfpData: widget.creatorPfpData
                 ),
