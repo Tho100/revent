@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/service/query/vent/comment/vent_comment_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_actions.dart';
@@ -14,7 +13,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class ReplyPreviewer extends StatelessWidget {
 
-  final String title;
+  final String title; // TODO: Remove this
   final String creator;
 
   final String commentedBy;
@@ -47,14 +46,7 @@ class ReplyPreviewer extends StatelessWidget {
 
     try {
 
-      await VentCommentActions(
-        username: commentedBy, 
-        commentText: comment, 
-        ventCreator: creator, 
-        ventTitle: title
-      ).delete().then(
-        (value) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
-      );
+      //
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
@@ -66,12 +58,7 @@ class ReplyPreviewer extends StatelessWidget {
 
     try {
 
-      await VentCommentActions(
-        username: commentedBy, 
-        commentText: comment, 
-        ventCreator: creator, 
-        ventTitle: title
-      ).like();
+      //
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
@@ -160,7 +147,7 @@ class ReplyPreviewer extends StatelessWidget {
     );
   }
 
-  Widget _buildLikeAndReplyButtons() {
+  Widget _buildLikeAndReplyButtons() { // TODO: Update to _buildLikeButton
     return Transform.translate(
       offset: const Offset(-2, -2),
       child: Row(

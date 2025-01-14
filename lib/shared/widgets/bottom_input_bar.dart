@@ -19,43 +19,41 @@ class BottomInputBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: InkWellEffect(
-        onPressed: onPressed,
-        child: Container(
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(color: ThemeColor.thirdWhite)
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 12.0),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Row(
-                children: [
-    
-                  ProfilePictureWidget(
-                    customHeight: 26,
-                    customWidth: 26,
-                    pfpData: getIt.profileProvider.profile.profilePicture,
+    return InkWellEffect(
+      onPressed: onPressed,
+      child: Container(
+        height: 50,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: ThemeColor.thirdWhite)
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 12.0),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Row(
+              children: [
+  
+                ProfilePictureWidget(
+                  customHeight: 26,
+                  customWidth: 26,
+                  pfpData: getIt.profileProvider.profile.profilePicture,
+                ),
+  
+                const SizedBox(width: 10),
+  
+                Text(
+                  hintText,
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.thirdWhite,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 14
                   ),
-    
-                  const SizedBox(width: 10),
-    
-                  Text(
-                    hintText,
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.thirdWhite,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 14
-                    ),
-                  ),
-                  
-                ],
-              ),
+                ),
+                
+              ],
             ),
-          )
+          ),
         )
       ),
     );

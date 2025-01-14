@@ -655,9 +655,11 @@ class _VentPostPageState extends State<VentPostPage> {
       child: Row(
         children: [
 
-          BottomInputBar(
-            hintText: 'Add a comment...', 
-            onPressed: () => _addCommentOnPressed(),
+          Expanded(
+            child: BottomInputBar(
+              hintText: 'Add a comment...', 
+              onPressed: () => _addCommentOnPressed(),
+            ),
           ),
 
           if(userData.user.username == widget.creator) ... [
