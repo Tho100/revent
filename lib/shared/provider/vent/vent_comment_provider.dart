@@ -9,6 +9,7 @@ class VentCommentData {
   String commentTimestamp;
 
   int totalLikes;
+  int totalReplies;
 
   bool isCommentLiked;
   bool isCommentLikedByCreator;
@@ -21,6 +22,7 @@ class VentCommentData {
     required this.commentTimestamp,
     required this.pfpData,
     this.totalLikes = 0,
+    this.totalReplies = 0,
     this.isCommentLiked = false,
     this.isCommentLikedByCreator = false
   });
@@ -38,7 +40,7 @@ class VentCommentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void addComment(VentCommentData vent) { // Update vent/vents to comment/comments
+  void addComment(VentCommentData vent) { // TODO: Update vent/vents to comment/comments, same for replies
     _ventComments.add(vent);
     notifyListeners();
   }

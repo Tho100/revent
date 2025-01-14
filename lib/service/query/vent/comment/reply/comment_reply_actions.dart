@@ -39,12 +39,29 @@ class ReplyActions extends BaseQueryService {
     };
 
     await executeQuery(query, params).then(
-      (_) => _addComment(reply: reply)
+      (_) async => await _updateRepliesInfo(commentId: commentId)
     );
     
+    _addReply(reply: reply);
+
+  }
+
+  Future<void> _updateRepliesInfo({required int commentId}) async {
+
+    const query = 
+    '''
+      UPDATE vent_comments_info 
+      SET total_replies = total_replies + 1 
+      WHERE comment_id = :comment_id
+    ''';
+
+    final param = {'comment_id': commentId};
+
+    await executeQuery(query, param);
+
   }
   
-  void _addComment({required String reply}) {
+  void _addReply({required String reply}) {
 
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);

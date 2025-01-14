@@ -22,6 +22,7 @@ class VentCommentSetup {
     final commentTimestamp = commentsInfo['comment_timestamp']! as List<String>;
 
     final totalLikes = commentsInfo['total_likes']! as List<int>;
+    final totalReplies = commentsInfo['total_replies']! as List<int>;
 
     final isLiked = commentsInfo['is_liked']! as List<bool>;
     final isLikedByCreator = commentsInfo['is_liked_by_creator']! as List<bool>;
@@ -34,6 +35,7 @@ class VentCommentSetup {
         comment: comment[index],
         commentTimestamp: commentTimestamp[index],
         totalLikes: totalLikes[index],
+        totalReplies: totalReplies[index],
         isCommentLiked: isLiked[index],
         isCommentLikedByCreator: isLikedByCreator[index],
         pfpData: pfpData[index]

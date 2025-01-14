@@ -25,8 +25,6 @@ class ReplyCommentPage extends StatefulWidget {
   final String comment;
   final String commentTimestamp;
 
-  final int totalReplies;
-
   final bool isCommentLikedByCreator;
 
   final Uint8List pfpData;
@@ -38,7 +36,6 @@ class ReplyCommentPage extends StatefulWidget {
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
-    required this.totalReplies,
     required this.isCommentLikedByCreator,
     required this.pfpData,
     required this.creatorPfpData,
@@ -78,7 +75,9 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
           (comment) => comment.comment == widget.comment && comment.commentedBy == widget.commentedBy
         );
         final isCommentLiked = ventComment.ventComments[commenterIndex].isCommentLiked;
+
         final totalLikes = ventComment.ventComments[commenterIndex].totalLikes;
+        final totalReplies = ventComment.ventComments[commenterIndex].totalReplies;
 
         return VentCommentPreviewer(
           title: widget.title, 
@@ -87,6 +86,7 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
           comment: widget.comment, 
           commentTimestamp: widget.commentTimestamp, 
           totalLikes: totalLikes, 
+          totalReplies: totalReplies,
           isCommentLiked: isCommentLiked, 
           isCommentLikedByCreator: widget.isCommentLikedByCreator, 
           pfpData: widget.pfpData, 
