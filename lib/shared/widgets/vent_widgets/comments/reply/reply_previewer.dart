@@ -13,7 +13,6 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class ReplyPreviewer extends StatelessWidget {
 
-  final String title; // TODO: Remove this
   final String creator;
 
   final String commentedBy;
@@ -29,7 +28,6 @@ class ReplyPreviewer extends StatelessWidget {
   final Uint8List creatorPfpData;
 
   const ReplyPreviewer({
-    required this.title,
     required this.creator,
     required this.commentedBy,
     required this.comment,
@@ -147,7 +145,7 @@ class ReplyPreviewer extends StatelessWidget {
     );
   }
 
-  Widget _buildLikeAndReplyButtons() { // TODO: Update to _buildLikeButton
+  Widget _buildLikeButton() {
     return Transform.translate(
       offset: const Offset(-2, -2),
       child: Row(
@@ -240,7 +238,7 @@ class ReplyPreviewer extends StatelessWidget {
       
             const SizedBox(height: 14),
 
-            _buildLikeAndReplyButtons(),
+            _buildLikeButton(),
       
           ],
         ),

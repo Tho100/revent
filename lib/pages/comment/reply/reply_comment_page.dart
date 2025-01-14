@@ -124,10 +124,9 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
                   ),
                 ),
                 
-                const SizedBox(height: 20), // TODO: Reduce to 10
+                const SizedBox(height: 10),
     
                 RepliesListView(
-                  title: widget.title, 
                   creator: widget.creator, 
                   creatorPfpData: widget.creatorPfpData
                 ),

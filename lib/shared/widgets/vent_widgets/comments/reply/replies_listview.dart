@@ -8,12 +8,10 @@ import 'package:revent/shared/widgets/vent_widgets/comments/reply/reply_previewe
 
 class RepliesListView extends StatelessWidget {
 
-  final String title;
   final String creator;
   final Uint8List creatorPfpData;
 
   const RepliesListView({
-    required this.title,
     required this.creator,
     required this.creatorPfpData,
     super.key
@@ -21,7 +19,6 @@ class RepliesListView extends StatelessWidget {
 
   Widget _buildCommentPreview(CommentRepliesData replyData) {
     return ReplyPreviewer(
-      title: title,
       creator: creator,
       commentedBy: replyData.repliedBy,
       comment: replyData.reply,
