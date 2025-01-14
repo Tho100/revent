@@ -35,13 +35,13 @@ class VentCommentProvider extends ChangeNotifier {
 
   List<VentCommentData> get ventComments => _ventComments;
 
-  void setComments(List<VentCommentData> vents) {
-    _ventComments = vents;
+  void setComments(List<VentCommentData> comments) {
+    _ventComments = comments;
     notifyListeners();
   }
 
-  void addComment(VentCommentData vent) { // TODO: Update vent/vents to comment/comments, same for replies
-    _ventComments.add(vent);
+  void addComment(VentCommentData comment) {
+    _ventComments.add(comment);
     notifyListeners();
   }
 

@@ -33,13 +33,13 @@ class CommentRepliesProvider extends ChangeNotifier {
 
   List<CommentRepliesData> get commentReplies => _commentReplies;
 
-  void setReplies(List<CommentRepliesData> vents) {
-    _commentReplies = vents;
+  void setReplies(List<CommentRepliesData> replies) {
+    _commentReplies = replies;
     notifyListeners();
   }
 
-  void addReply(CommentRepliesData vent) {
-    _commentReplies.add(vent);
+  void addReply(CommentRepliesData reply) {
+    _commentReplies.add(reply);
     notifyListeners();
   }
 
