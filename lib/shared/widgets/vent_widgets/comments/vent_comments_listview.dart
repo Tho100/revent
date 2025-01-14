@@ -28,6 +28,7 @@ class VentCommentsListView extends StatelessWidget {
     final comment = ventComment.comment;
     final commentTimestamp = ventComment.commentTimestamp;
     final totalLikes = ventComment.totalLikes;
+    final totalReplies = ventComment.totalReplies;
     final isCommentLiked = ventComment.isCommentLiked;
     final isCommentLikedByCreator = ventComment.isCommentLikedByCreator;
     final pfpData = ventComment.pfpData;
@@ -42,7 +43,6 @@ class VentCommentsListView extends StatelessWidget {
             commentedBy: commentedBy, 
             comment: comment, 
             commentTimestamp: commentTimestamp, 
-            totalReplies: 0, 
             isCommentLikedByCreator: isCommentLikedByCreator, 
             pfpData: pfpData, 
             creatorPfpData: creatorPfpData
@@ -58,6 +58,7 @@ class VentCommentsListView extends StatelessWidget {
           comment: comment,
           commentTimestamp: commentTimestamp,
           totalLikes: totalLikes,
+          totalReplies: totalReplies,
           isCommentLiked: isCommentLiked,
           isCommentLikedByCreator: isCommentLikedByCreator,
           pfpData: pfpData,

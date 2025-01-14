@@ -25,6 +25,7 @@ class VentCommentPreviewer extends StatelessWidget {
   final String commentTimestamp;
 
   final int totalLikes;
+  final int totalReplies;
 
   final bool isCommentLiked;
   final bool isCommentLikedByCreator;
@@ -39,6 +40,7 @@ class VentCommentPreviewer extends StatelessWidget {
     required this.comment,
     required this.commentTimestamp,
     required this.totalLikes,
+    required this.totalReplies,
     required this.isCommentLiked,
     required this.isCommentLikedByCreator,
     required this.pfpData,
@@ -213,7 +215,7 @@ class VentCommentPreviewer extends StatelessWidget {
           const SizedBox(width: 4),
       
           Text(
-            '0',
+            totalReplies.toString(),
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,

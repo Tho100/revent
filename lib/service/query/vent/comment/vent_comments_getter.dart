@@ -33,7 +33,8 @@ class VentCommentsGetter extends BaseQueryService {
       SELECT vent_comments_info.comment, 
         vent_comments_info.commented_by,
         vent_comments_info.created_at,
-        vent_comments_info.total_likes, 
+        vent_comments_info.total_likes,
+        vent_comments_info.total_replies, 
         user_profile_info.profile_picture 
       FROM vent_comments_info 
       JOIN user_profile_info 
@@ -49,7 +50,9 @@ class VentCommentsGetter extends BaseQueryService {
 
     final comment = extractedData.extractStringColumn('comment');
     final commentedBy = extractedData.extractStringColumn('commented_by');
+
     final totalLikes = extractedData.extractIntColumn('total_likes');
+    final totalReplies = extractedData.extractIntColumn('total_replies');
 
     final commentTimestamp = extractedData
       .extractStringColumn('created_at')
@@ -77,6 +80,7 @@ class VentCommentsGetter extends BaseQueryService {
       'comment': comment,
       'comment_timestamp': commentTimestamp,
       'total_likes': totalLikes,
+      'total_replies': totalReplies,
       'is_liked': isLikedState,
       'is_liked_by_creator': isLikedByCreatorState,
       'profile_picture': profilePictures,
