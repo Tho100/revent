@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/pages/comment/reply/reply_comment_page.dart';
+import 'package:revent/pages/comment/reply/replies_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_previewer.dart';
@@ -37,7 +37,7 @@ class VentCommentsListView extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => ReplyCommentPage(
+          MaterialPageRoute(builder: (_) => RepliesPage(
             title: title, 
             creator: creator, 
             commentedBy: commentedBy, 

@@ -17,7 +17,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/reply/replies_listview.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_previewer.dart';
 
-class ReplyCommentPage extends StatefulWidget {
+class RepliesPage extends StatefulWidget {
 
   final String title;
   final String creator;
@@ -31,7 +31,7 @@ class ReplyCommentPage extends StatefulWidget {
   final Uint8List pfpData;
   final Uint8List creatorPfpData;
 
-  const ReplyCommentPage({
+  const RepliesPage({
     required this.title,
     required this.creator,
     required this.commentedBy,
@@ -44,11 +44,11 @@ class ReplyCommentPage extends StatefulWidget {
   });
 
   @override
-  State<ReplyCommentPage> createState() => _ReplyCommentPageState();
+  State<RepliesPage> createState() => _RepliesPageState();
 
 }
 
-class _ReplyCommentPageState extends State<ReplyCommentPage> {
+class _RepliesPageState extends State<RepliesPage> {
 
   late int commentId = 0;
 
