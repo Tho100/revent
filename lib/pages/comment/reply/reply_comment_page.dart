@@ -74,6 +74,7 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
         final commenterIndex = ventComment.ventComments.indexWhere(
           (comment) => comment.comment == widget.comment && comment.commentedBy == widget.commentedBy
         );
+        
         final isCommentLiked = ventComment.ventComments[commenterIndex].isCommentLiked;
 
         final totalLikes = ventComment.ventComments[commenterIndex].totalLikes;
@@ -123,7 +124,7 @@ class _ReplyCommentPageState extends State<ReplyCommentPage> {
                   ),
                 ),
                 
-                const SizedBox(height: 20),
+                const SizedBox(height: 20), // TODO: Reduce to 10
     
                 RepliesListView(
                   title: widget.title, 
