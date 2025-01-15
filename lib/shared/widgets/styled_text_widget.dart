@@ -2,6 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/helper/open_link.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
 class StyledTextWidget extends StatelessWidget {
@@ -48,6 +49,12 @@ class StyledTextWidget extends StatelessWidget {
 
     final words = text.split(' ');
 
+    const blueTextStyle = TextStyle(
+      color: Colors.blueAccent,       
+      fontWeight: FontWeight.w700,
+      fontSize: 14
+    );
+
     return words.map((word) {
 
       if (word.startsWith('@')) {
@@ -56,14 +63,18 @@ class StyledTextWidget extends StatelessWidget {
 
         return TextSpan(
           text: '$word ',
-          style: const TextStyle(
-            color: Colors.blueAccent,       
-            fontWeight: FontWeight.w700,
-            fontSize: 14
-          ),
+          style: blueTextStyle,
           recognizer: TapGestureRecognizer()..onTap = () => NavigatePage.userProfilePage(
             username: mentioned, 
           )
+        );
+
+      } else if (OpenLink(url: word).isValidUrl()) {
+
+        return TextSpan(
+          text: '$word ',
+          style: blueTextStyle,
+          recognizer: TapGestureRecognizer()..onTap = () async => await OpenLink(url: word).open()
         );
 
       } else {
