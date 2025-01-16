@@ -16,7 +16,7 @@ class SearchResultsTabBarWidgets {
 
   Widget buildTabBarTabs() {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0, right: 12.0), // TODO: Use symmetric
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: TabBarView(
         controller: controller,
         children: [
