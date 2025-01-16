@@ -95,26 +95,22 @@ class _SearchResultsPageState extends State<SearchResultsPage> with SingleTicker
           ],
         ),
 
-        MediaQuery.removePadding(
-          context: context,
-          removeTop: true,
-          child: ValueListenableBuilder(
-            valueListenable: pageIsLoadedNotifier,
-            builder: (_, isLoaded, __) {
-        
-              if(!isLoaded) {
-                return const SizedBox(
-                  height: 300,
-                  child: PageLoading(),
-                );
-              }
-        
-              return Expanded(
-                child: resultsTabBarWidgets.buildTabBarTabs()
+        ValueListenableBuilder(
+          valueListenable: pageIsLoadedNotifier,
+          builder: (_, isLoaded, __) {
+      
+            if(!isLoaded) {
+              return const SizedBox(
+                height: 300,
+                child: PageLoading(),
               );
-        
             }
-          ),
+      
+            return Expanded(
+              child: resultsTabBarWidgets.buildTabBarTabs()
+            );
+      
+          }
         ),
 
       ],
