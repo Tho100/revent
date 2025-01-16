@@ -30,19 +30,27 @@ class VentCommentsGetter extends BaseQueryService {
 
     const getCommentsQuery = 
     '''
-      SELECT vent_comments_info.comment, 
-        vent_comments_info.commented_by,
-        vent_comments_info.created_at,
-        vent_comments_info.total_likes,
-        vent_comments_info.total_replies, 
-        user_profile_info.profile_picture 
-      FROM vent_comments_info 
-      JOIN user_profile_info 
-      ON vent_comments_info.commented_by = user_profile_info.username 
-      WHERE vent_comments_info.post_id = :post_id
+      SELECT 
+        vci.comment, 
+        vci.commented_by,
+        vci.created_at,
+        vci.total_likes,
+        vci.total_replies, 
+        upi.profile_picture
+      FROM vent_comments_info vci
+      JOIN user_profile_info upi 
+        ON vci.commented_by = upi.username 
+      LEFT JOIN user_blocked_info ubi
+        ON vci.commented_by = ubi.blocked_username 
+        AND ubi.blocked_by = :blocked_by
+      WHERE vci.post_id = :post_id
+        AND ubi.blocked_username IS NULL
     ''';
 
-    final param = {'post_id': postId};
+    final param = {
+      'post_id': postId,
+      'blocked_by': userData.user.username
+    };
 
     final results = await executeQuery(getCommentsQuery, param);
 

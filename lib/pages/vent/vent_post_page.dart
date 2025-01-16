@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/service/current_provider_service.dart';
@@ -439,7 +440,20 @@ class _VentPostPageState extends State<VentPostPage> {
           }
         );
       },
-      blockOnPressed: () => Navigator.pop(context),
+      blockOnPressed: () {
+        Navigator.pop(context);
+        CustomAlertDialog.alertDialogCustomOnPress(
+          message: 'Block @${widget.creator}?', 
+          buttonMessage: 'Block', 
+          onPressedEvent: () async {
+            await UserActions(username: widget.creator).blockUser().then((_) {
+                Navigator.pop(context);
+                Navigator.pop(context);
+              }
+            );
+          }
+        );
+      },
       reportOnPressed: () => Navigator.pop(context),
     );
 

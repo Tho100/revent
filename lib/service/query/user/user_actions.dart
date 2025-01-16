@@ -38,4 +38,18 @@ class UserActions extends BaseQueryService {
     
   }
 
+  Future<void> blockUser() async {
+
+    const query = 
+      'INSERT INTO user_blocked_info (blocked_username, blocked_by) VALUES (:blocked_username, :blocked_by)';
+
+    final params = {
+      'blocked_username': username,
+      'blocked_by': userData.user.username
+    };
+
+    await executeQuery(query, params);
+
+  }
+
 }

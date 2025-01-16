@@ -73,6 +73,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with SingleTicker
       );
 
     } catch (err) {
+      print(err.toString());
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
 

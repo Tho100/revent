@@ -15,10 +15,15 @@ class VentDataGetter extends BaseQueryService {
     const query = '''
       SELECT 
         post_id, title, body_text, creator, created_at, total_likes, total_comments 
-      FROM vent_info
+      FROM vent_info vi
+      LEFT JOIN user_blocked_info ubi
+        ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
+      WHERE ubi.blocked_username IS NULL
     ''';
 
-    return _fetchVentsData(query);
+    final param = {'blocked_by': userData.user.username};
+
+    return _fetchVentsData(query, params: param);
 
   }
 
@@ -27,11 +32,16 @@ class VentDataGetter extends BaseQueryService {
     const query = '''
       SELECT 
         post_id, title, body_text, creator, created_at, total_likes, total_comments 
-      FROM vent_info 
+      FROM vent_info vi
+      LEFT JOIN user_blocked_info ubi
+        ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
+      WHERE ubi.blocked_username IS NULL
         ORDER BY (total_likes >= 5 AND total_comments >= 1) ASC, total_likes ASC;
     ''';
 
-    return _fetchVentsData(query);
+    final param = {'blocked_by': userData.user.username};
+
+    return _fetchVentsData(query, params: param);
 
   }
 
@@ -39,13 +49,16 @@ class VentDataGetter extends BaseQueryService {
 
     const query = '''
       SELECT 
-        v.post_id, v.title, v.body_text, v.creator, v.created_at, v.total_likes, v.total_comments
-      FROM vent_info v
-        INNER JOIN user_follows_info u ON u.following = v.creator
-      WHERE u.follower = :follower
+        vi.post_id, vi.title, vi.body_text, vi.creator, vi.created_at, vi.total_likes, vi.total_comments
+      FROM vent_info vi
+      INNER JOIN user_follows_info ufi 
+          ON ufi.following = vi.creator
+      LEFT JOIN user_blocked_info ubi 
+        ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :username
+      WHERE ufi.follower = :username AND ubi.blocked_username IS NULL
     ''';
 
-    final param = {'follower': userData.user.username};
+    final param = {'username': userData.user.username};
 
     return _fetchVentsData(query, params: param);
 
@@ -56,13 +69,20 @@ class VentDataGetter extends BaseQueryService {
     const query = '''
       SELECT 
         post_id, title, creator, created_at, total_likes, total_comments 
-      FROM vent_info 
-      WHERE LOWER(title) LIKE LOWER(:search_text) OR LOWER(body_text) LIKE LOWER(:search_text)
+      FROM vent_info vi
+      LEFT JOIN user_blocked_info ubi
+        ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
+      WHERE 
+        (LOWER(title) LIKE LOWER(:search_text) OR LOWER(body_text) LIKE LOWER(:search_text))
+        AND ubi.blocked_username IS NULL;
     ''';
 
-    final param = {'search_text': '%$searchTitleText%'};
+    final params = {
+      'search_text': '%$searchTitleText%',
+      'blocked_by': userData.user.username
+    };
 
-    return _fetchVentsData(query, params: param, excludeBodyText: true);
+    return _fetchVentsData(query, params: params, excludeBodyText: true);
 
   }
 
