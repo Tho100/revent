@@ -33,46 +33,45 @@ class SearchPostsListView extends StatelessWidget {
     );
   }
 
-Widget _buildListView(List<SearchVents> ventDataList) {
-  return DynamicHeightGridView(
-    physics: const AlwaysScrollableScrollPhysics(
-      parent: BouncingScrollPhysics(),
-    ),
-    crossAxisCount: 1,
-    itemCount: ventDataList.length + 2,
-    builder: (_, index) {
+  Widget _buildListView(List<SearchVents> ventDataList) {
+    return DynamicHeightGridView(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
+      crossAxisCount: 1,
+      itemCount: ventDataList.length + 2,
+      builder: (_, index) {
 
-      if (index == 0) {
-        return const SizedBox(height: 12);
-      }
+        if (index == 0) {
+          return const SizedBox(height: 12);
+        }
 
-      final reversedVentIndex = ventDataList.length - index;
-      
-      if (reversedVentIndex >= 0) {
-        final vents = ventDataList[reversedVentIndex];
-        return _buildVentPreview(vents);
-      }
+        final reversedVentIndex = ventDataList.length - index;
+        
+        if (reversedVentIndex >= 0) {
+          final vents = ventDataList[reversedVentIndex];
+          return _buildVentPreview(vents);
+        }
 
-      if (ventDataList.length > 9) {
-        return Padding(
-          padding: const EdgeInsets.only(bottom: 14.0, top: 8.0),
-          child: Center(
-            child: Text(
-              "You've reached the end.",
-              style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
-                fontWeight: FontWeight.w800,
+        if (ventDataList.length > 9) {
+          return Padding(
+            padding: const EdgeInsets.only(bottom: 14.0, top: 8.0),
+            child: Center(
+              child: Text(
+                "You've reached the end.",
+                style: GoogleFonts.inter(
+                  color: ThemeColor.thirdWhite,
+                  fontWeight: FontWeight.w800,
+                ),
               ),
             ),
-          ),
-        );
-      }
+          );
+        }
 
-      return const SizedBox.shrink();
-    },
-  );
-}
-
+        return const SizedBox.shrink();
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

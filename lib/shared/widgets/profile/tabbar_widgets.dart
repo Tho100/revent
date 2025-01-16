@@ -25,7 +25,7 @@ class ProfileTabBarWidgets {
 
   Widget buildTabBarTabs() {
     return Padding(
-      padding: const EdgeInsets.only(left: 10.0, right: 10.0, top: 12.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0),
       child: TabBarView(
         controller: controller,
         children: [

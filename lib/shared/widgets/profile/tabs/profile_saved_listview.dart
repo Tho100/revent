@@ -28,7 +28,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
 
   Widget _buildPreviewer(ProfileSavedData savedData, int index) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+      padding: const EdgeInsets.only(bottom: 8.5, left: 6, right: 6),
       child: DefaultVentPreviewer(
         isMyProfile: widget.isMyProfile,
         title: savedData.titles[index],
@@ -53,11 +53,24 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
       crossAxisCount: 1,
       itemCount: savedData.titles.length,
       builder: (_, index) {
-        final reversedIndex = savedData.titles.length - 1 - index;
-        return KeyedSubtree(
-          key: ValueKey('${savedData.titles[reversedIndex]}/${savedData.creator[reversedIndex]}'),
-          child: _buildPreviewer(savedData, reversedIndex),
-        );
+
+        if(index == 0) {
+          return const SizedBox(height: 10);
+        }
+
+        final adjustedIndex = index - 1;
+
+        final reversedIndex = savedData.titles.length - 1 - adjustedIndex;
+
+        if(index >= 0) {
+          return KeyedSubtree(
+            key: ValueKey('${savedData.titles[reversedIndex]}/${savedData.creator[reversedIndex]}'),
+            child: _buildPreviewer(savedData, reversedIndex),
+          );
+        }
+
+        return const SizedBox.shrink();
+
       },
     );
   }
