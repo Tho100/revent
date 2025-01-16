@@ -63,7 +63,6 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
         }
 
         final adjustedIndex = index - 1;
-
         final reversedIndex = postsData.titles.length - 1 - adjustedIndex;
 
         if(index >= 0) {
