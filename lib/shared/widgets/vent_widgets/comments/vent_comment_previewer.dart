@@ -60,7 +60,7 @@ class VentCommentPreviewer extends StatelessWidget {
         ventCreator: creator, 
         ventTitle: title
       ).delete().then(
-        (value) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
+        (_) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
       );
 
     } catch (_) {

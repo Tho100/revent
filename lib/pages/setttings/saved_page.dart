@@ -66,17 +66,22 @@ class _SavedPageState extends State<SavedPage> {
         parent: BouncingScrollPhysics()
       ),
       crossAxisCount: 1,
-      itemCount: savedVentData.length+1,
+      itemCount: savedVentData.length + 1,
       builder: (_, index) {
 
-        if(index < savedVentData.length) {
-          
-          final reversedVentIndex = savedVentData.length - 1 - index;
+        if(index == 0) {
+          return const SizedBox(height: 10);
+        }
+
+        final adjustedIndex = index - 1;
+        final reversedVentIndex = savedVentData.length - 1 - adjustedIndex;
+
+        if(index >= 0) {
           final vents = savedVentData[reversedVentIndex];
-
           return _buildVentPreviewer(vents);
-
-        } else if (savedVentData.length > 9) {
+        } 
+        
+        if (savedVentData.length > 9) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
             child: Center(
@@ -100,7 +105,7 @@ class _SavedPageState extends State<SavedPage> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Consumer<SavedVentProvider>(
         builder: (_, savedVentData, __) {
           return ValueListenableBuilder(

@@ -66,17 +66,22 @@ class _LikedPageState extends State<LikedPage> {
         parent: BouncingScrollPhysics()
       ),
       crossAxisCount: 1,
-      itemCount: likedVentData.length+1,
+      itemCount: likedVentData.length + 1,
       builder: (_, index) {
 
-        if(index < likedVentData.length) {
-          
-          final reversedVentIndex = likedVentData.length - 1 - index;
-          final vents = likedVentData[reversedVentIndex];
+        if(index == 0) {
+          return const SizedBox(height: 10);
+        }
 
+        final adjustedIndex = index - 1;
+        final reversedIndex = likedVentData.length - 1 - adjustedIndex;
+
+        if(index >= 0) {
+          final vents = likedVentData[reversedIndex];
           return _buildVentPreviewer(vents);
-
-        } else if (likedVentData.length > 9) {
+        } 
+        
+        if (likedVentData.length > 9) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
             child: Center(
@@ -100,7 +105,7 @@ class _LikedPageState extends State<LikedPage> {
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: Consumer<LikedVentProvider>(
         builder: (_, likedVentData, __) {
           return ValueListenableBuilder(

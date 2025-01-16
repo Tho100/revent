@@ -50,9 +50,9 @@ class UserRegistrationService extends BaseQueryService {
 
     if (data.rows.isNotEmpty) {
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        CustomAlertDialog.alertDialogTitle('Sign up failed', errorMessage);
-      });
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) => CustomAlertDialog.alertDialogTitle('Sign up failed', errorMessage)
+      );
 
       return true;
 

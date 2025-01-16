@@ -33,7 +33,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
 
   Widget _buildPreviewer(ProfilePostsData postsData, int index) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 6),
+      padding: const EdgeInsets.only(bottom: 8.5, left: 6, right: 6),
       child: DefaultVentPreviewer(
         title: postsData.titles[index],
         totalLikes: postsData.totalLikes[index],
@@ -55,13 +55,25 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
   Widget _buildListView(ProfilePostsData postsData) {
     return DynamicHeightGridView(
       crossAxisCount: 1,
-      itemCount: postsData.titles.length,
+      itemCount: postsData.titles.length + 1,
       builder: (_, index) {
-        final reversedIndex = postsData.titles.length - 1 - index;
-        return KeyedSubtree(
-          key: ValueKey('${postsData.titles[reversedIndex]}/${widget.username}'),
-          child: _buildPreviewer(postsData, reversedIndex)
-        );
+
+        if(index == 0) {
+          return const SizedBox(height: 10);
+        }
+
+        final adjustedIndex = index - 1;
+        final reversedIndex = postsData.titles.length - 1 - adjustedIndex;
+
+        if(index >= 0) {
+          return KeyedSubtree(
+            key: ValueKey('${postsData.titles[reversedIndex]}/${widget.username}'),
+            child: _buildPreviewer(postsData, reversedIndex)
+          );
+        }
+
+        return const SizedBox.shrink();
+
       },
     );
   }
