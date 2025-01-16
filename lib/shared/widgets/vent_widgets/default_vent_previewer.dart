@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -89,7 +90,18 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
         );
       },
       reportOnPressed: () {},
-      blockOnPressed: () {},
+      blockOnPressed: () {
+        Navigator.pop(context);
+        CustomAlertDialog.alertDialogCustomOnPress(
+          message: 'Block @${widget.creator}?', 
+          buttonMessage: 'Block', 
+          onPressedEvent: () async {
+            await UserActions(username: widget.creator).blockUser().then(
+              (_) => Navigator.pop(context)
+            );
+          }
+        );
+      },
     );
   }
 

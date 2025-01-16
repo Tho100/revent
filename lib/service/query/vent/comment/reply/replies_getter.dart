@@ -23,18 +23,24 @@ class RepliesGetter extends BaseQueryService {
 
     const getRepliesQuery = 
     '''
-      SELECT comment_replies_info.reply, 
-        comment_replies_info.replied_by,
-        comment_replies_info.created_at,
-        comment_replies_info.total_likes, 
-        user_profile_info.profile_picture 
-      FROM comment_replies_info 
-      JOIN user_profile_info 
-      ON comment_replies_info.replied_by = user_profile_info.username 
-      WHERE comment_replies_info.comment_id = :comment_id
+      SELECT 
+        cri.reply, 
+        cri.replied_by,
+        cri.created_at,
+        cri.total_likes, 
+        upi.profile_picture 
+      FROM comment_replies_info cri 
+      JOIN user_profile_info upi
+        ON cri.replied_by = upi.username 
+      LEFT JOIN user_blocked_info ubi
+        ON cri.replied_by = ubi.blocked_username AND ubi.blocked_by = :blocked_by
+      WHERE cri.comment_id = :comment_id AND ubi.blocked_username IS NULL
     ''';
 
-    final param = {'comment_id': commentId};
+    final param = {
+      'comment_id': commentId,
+      'blocked_by': userData.user.username
+    };
 
     final results = await executeQuery(getRepliesQuery, param);
 
