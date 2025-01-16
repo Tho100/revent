@@ -10,22 +10,32 @@ class SearchAccountsListView extends StatelessWidget {
 
   Widget _buildListView(SearchAccountsData accountsData) {
     return Padding(
-      padding: const EdgeInsets.only(left: 7.5, right: 10, top: 10),
+      padding: const EdgeInsets.only(left: 7.5, right: 10),
       child: ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics()
         ),
-        itemCount: accountsData.usernames.length,
+        itemCount: accountsData.usernames.length + 1,
         itemBuilder: (_, index) {
 
-          final username = accountsData.usernames[index];
-          final pfpData = accountsData.profilePictures[index];
+          if(index == 0) {
+            return const SizedBox(height: 20);
+          }
 
-          return AccountProfileWidget(
-            username: username,
-            pfpData: pfpData,
-            hideActionButton: true,
-          );
+          final adjustedIndex = index - 1;
+
+          final username = accountsData.usernames[adjustedIndex];
+          final pfpData = accountsData.profilePictures[adjustedIndex];
+
+          if(index >= 0) {
+            return AccountProfileWidget(
+              username: username,
+              pfpData: pfpData,
+              hideActionButton: true,
+            );
+          }
+
+          return const SizedBox.shrink();
 
         },
       ),
