@@ -84,16 +84,9 @@ class _SearchResultsPageState extends State<SearchResultsPage> with SingleTicker
 
         const SizedBox(height: 15),
 
-        Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
+        resultsTabBarWidgets.buildTabBar(),
 
-            resultsTabBarWidgets.buildTabBar(),
-
-            const Divider(color: ThemeColor.lightGrey, height: 1),
-
-          ],
-        ),
+        const Divider(color: ThemeColor.lightGrey, height: 1),
 
         ValueListenableBuilder(
           valueListenable: pageIsLoadedNotifier,
