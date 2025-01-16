@@ -51,7 +51,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
   Widget _buildListView(ProfileSavedData savedData) {
     return DynamicHeightGridView(
       crossAxisCount: 1,
-      itemCount: savedData.titles.length,
+      itemCount: savedData.titles.length + 1,
       builder: (_, index) {
 
         if(index == 0) {
@@ -59,7 +59,6 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
         }
 
         final adjustedIndex = index - 1;
-
         final reversedIndex = savedData.titles.length - 1 - adjustedIndex;
 
         if(index >= 0) {
