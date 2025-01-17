@@ -104,7 +104,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
     );
 
     final usernames = getFollowsInfo['username']!;
-    final profilePics = getFollowsInfo['profile_pic']!;
+    final profilePics = getFollowsInfo['profile_pic']!; // TODO: Specify type casting
     final isFollowed = getFollowsInfo['is_followed']!;
 
     return List.generate(usernames.length, (index) {
