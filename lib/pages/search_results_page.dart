@@ -44,10 +44,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with SingleTicker
 
     tabController.addListener(_onTabChanged);
 
-    resultsTabBarWidgets = SearchResultsTabBarWidgets(
-      controller: tabController, 
-      searchText: widget.searchText
-    );
+    resultsTabBarWidgets = SearchResultsTabBarWidgets(controller: tabController);
 
   }
 

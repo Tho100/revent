@@ -7,12 +7,7 @@ class SearchResultsTabBarWidgets {
 
   final TabController controller;
 
-  final String searchText;
-
-  SearchResultsTabBarWidgets({
-    required this.controller,
-    required this.searchText,
-  });
+  SearchResultsTabBarWidgets({required this.controller});
 
   Widget buildTabBarTabs() {
     return Padding(
