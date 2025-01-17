@@ -7,6 +7,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/user/user_follow_actions.dart';
 import 'package:revent/service/query/user/user_actions.dart';
+import 'package:revent/service/query/user/user_block_getter.dart';
 import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/service/query/user/user_following.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
@@ -14,14 +15,14 @@ import 'package:revent/service/query/user_profile/profile_data_getter.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/shared/widgets/bottomsheet/about_profile.dart';
-import 'package:revent/shared/widgets/bottomsheet/view_full_bio.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/about_profile.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/bottomsheet/user_actions.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/user_actions.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/profile/profile_body_widgets.dart';
@@ -63,6 +64,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
+  bool isBlockedAccount = false;
   bool isPrivateAccount = false;
   bool isFollowingListHidden = false;
   bool isSavedPostsHidden = false;
@@ -145,9 +147,11 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     isFollowingListHidden = getCurrentOptions['following'] != 0;
     isSavedPostsHidden = getCurrentOptions['saved'] != 0;
 
+    isBlockedAccount = await UserBlockGetter(username: widget.username).getIsAccountBlocked();
+
   }
 
-  Future<void> _setPrivateAccountData() async {
+  Future<void> _setPlaceholderAccountData() async {
 
     final getProfileData = await ProfileDataGetter().getProfileData(
       isMyProfile: false, username: widget.username
@@ -170,8 +174,8 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
       await _loadPrivacySettings();
 
-      if(isPrivateAccount) {
-        await _setPrivateAccountData();
+      if(isPrivateAccount || isBlockedAccount) {
+        await _setPlaceholderAccountData();
         return;
       }
 
@@ -310,13 +314,13 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
         profileInfoWidgets.buildPopularityHeaderNotifier('vents', postsNotifier),
 
         GestureDetector(
-          onTap: () => isPrivateAccount 
+          onTap: () => isPrivateAccount || isBlockedAccount 
             ? null : NavigatePage.followsPage(pageType: 'Followers', username: widget.username, isFollowingListHidden: isFollowingListHidden),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
         ),
 
         GestureDetector(
-          onTap: () => isPrivateAccount || isFollowingListHidden
+          onTap: () => isPrivateAccount || isBlockedAccount || isFollowingListHidden
             ? null : NavigatePage.followsPage(pageType: 'Following', username: widget.username, isFollowingListHidden: isFollowingListHidden),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
         ),
@@ -338,6 +342,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
           userActionButtonWidget: _buildFollowButton(), 
           popularityWidget: _popularityWidgets(),
           isPrivateAccount: isPrivateAccount,
+          isBlockedAccount: isBlockedAccount,
         );      
       }
     );
