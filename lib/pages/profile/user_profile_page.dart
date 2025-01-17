@@ -147,8 +147,6 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     isFollowingListHidden = getCurrentOptions['following'] != 0;
     isSavedPostsHidden = getCurrentOptions['saved'] != 0;
 
-    isBlockedAccount = await UserBlockGetter(username: widget.username).getIsAccountBlocked();
-
   }
 
   Future<void> _setPlaceholderAccountData() async {
@@ -159,8 +157,8 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
         
     followersNotifier.value = getProfileData['followers']; 
     followingNotifier.value = getProfileData['following'];
-    bioNotifier.value =  getProfileData['bio'];
-    pronounsNotifier.value =  getProfileData['pronouns'];
+    bioNotifier.value = isBlockedAccount ? '' : getProfileData['bio'];
+    pronounsNotifier.value =  isBlockedAccount ? '' : getProfileData['pronouns'];
 
     isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
     
@@ -172,9 +170,17 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
     try {
 
+      isBlockedAccount = await UserBlockGetter(username: widget.username).getIsAccountBlocked();
+
+      if(isBlockedAccount) {
+        setState(() {});
+        await _setPlaceholderAccountData();
+        return;
+      }
+
       await _loadPrivacySettings();
 
-      if(isPrivateAccount || isBlockedAccount) {
+      if(isPrivateAccount) {
         await _setPlaceholderAccountData();
         return;
       }
