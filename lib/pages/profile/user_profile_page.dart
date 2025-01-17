@@ -7,6 +7,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/user/user_follow_actions.dart';
 import 'package:revent/service/query/user/user_actions.dart';
+import 'package:revent/service/query/user/user_block_getter.dart';
 import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/service/query/user/user_following.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
@@ -63,6 +64,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
+  bool isBlockedAccount = false;
   bool isPrivateAccount = false;
   bool isFollowingListHidden = false;
   bool isSavedPostsHidden = false;
@@ -145,9 +147,11 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     isFollowingListHidden = getCurrentOptions['following'] != 0;
     isSavedPostsHidden = getCurrentOptions['saved'] != 0;
 
+    isBlockedAccount = await UserBlockGetter(username: widget.username).getIsAccountBlocked();
+
   }
 
-  Future<void> _setPrivateAccountData() async {
+  Future<void> _setPlaceholderAccountData() async {
 
     final getProfileData = await ProfileDataGetter().getProfileData(
       isMyProfile: false, username: widget.username
@@ -170,8 +174,8 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
       await _loadPrivacySettings();
 
-      if(isPrivateAccount) {
-        await _setPrivateAccountData();
+      if(isPrivateAccount || isBlockedAccount) {
+        await _setPlaceholderAccountData();
         return;
       }
 
@@ -310,13 +314,13 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
         profileInfoWidgets.buildPopularityHeaderNotifier('vents', postsNotifier),
 
         GestureDetector(
-          onTap: () => isPrivateAccount 
+          onTap: () => isPrivateAccount || isBlockedAccount 
             ? null : NavigatePage.followsPage(pageType: 'Followers', username: widget.username, isFollowingListHidden: isFollowingListHidden),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
         ),
 
         GestureDetector(
-          onTap: () => isPrivateAccount || isFollowingListHidden
+          onTap: () => isPrivateAccount || isBlockedAccount || isFollowingListHidden
             ? null : NavigatePage.followsPage(pageType: 'Following', username: widget.username, isFollowingListHidden: isFollowingListHidden),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
         ),
@@ -338,6 +342,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
           userActionButtonWidget: _buildFollowButton(), 
           popularityWidget: _popularityWidgets(),
           isPrivateAccount: isPrivateAccount,
+          isBlockedAccount: isBlockedAccount,
         );      
       }
     );

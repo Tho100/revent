@@ -18,6 +18,7 @@ class ProfileBodyWidgets extends StatelessWidget {
   final Widget popularityWidget;
 
   final bool? isPrivateAccount;
+  final bool? isBlockedAccount;
 
   const ProfileBodyWidgets({
     required this.onRefresh,
@@ -28,6 +29,7 @@ class ProfileBodyWidgets extends StatelessWidget {
     required this.userActionButtonWidget,
     required this.popularityWidget,
     this.isPrivateAccount = false,
+    this.isBlockedAccount = false,
     super.key
   });
 
@@ -44,6 +46,25 @@ class ProfileBodyWidgets extends StatelessWidget {
         EmptyPage().headerCustomMessage(
           header: 'This account is private', 
           subheader: 'Only approved followers can view the content.'
+        )
+
+      ],
+    );
+  }
+
+  Widget _buildBlockedAccountMessage() {
+    return Column(
+      children: [
+
+        const SizedBox(height: 35),
+
+        const Icon(CupertinoIcons.clear_circled, color: ThemeColor.secondaryWhite, size: 32),
+
+        const SizedBox(height: 18),
+
+        EmptyPage().headerCustomMessage(
+          header: 'Blocked account', 
+          subheader: "Can't view this account at the moment."
         )
 
       ],
@@ -94,6 +115,21 @@ class ProfileBodyWidgets extends StatelessWidget {
     );
   }
 
+  Widget _buildBodyOnCondition() {
+
+    if(isBlockedAccount!) {
+      return _buildBlockedAccountMessage();
+
+    } else if (isPrivateAccount!) {
+      return _buildPrivateAccountMessage();
+
+    } else {
+      return _buildPostsAndSavedTabs();
+
+    }
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
@@ -123,9 +159,7 @@ class ProfileBodyWidgets extends StatelessWidget {
             ),
           ),
         ],
-        body: isPrivateAccount! 
-          ? _buildPrivateAccountMessage()
-          : _buildPostsAndSavedTabs()
+        body: _buildBodyOnCondition()
       ),
     );
 
