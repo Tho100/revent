@@ -66,5 +66,6 @@ class UserBlockGetter extends BaseQueryService {
     return results.rows.isNotEmpty;
 
   }
+  
 
 }

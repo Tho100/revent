@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/empty_page.dart';
+import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -51,6 +52,16 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
 
   }
 
+  Future<void> _unBlockOnPressed({required String username}) async {
+
+    await UserActions(username: username).blockUser(block: false).then((_) {
+      blockedAccountsData.value = List.from(blockedAccountsData.value)..removeWhere(
+        (data) => data.username == username
+      );
+    });
+
+  }
+
   Widget _buildEmptyPage() {
     return EmptyPage().customMessage(
       message: 'No blocked accounts.'
@@ -81,7 +92,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
                 customText: 'Unblock',
                 username: blockedUserData.username,
                 pfpData: blockedUserData.profilePic,
-                onPressed: () async => {}
+                onPressed: () async => await _unBlockOnPressed(username: blockedUserData.username)
               );
 
             },

@@ -38,10 +38,11 @@ class UserActions extends BaseQueryService {
     
   }
 
-  Future<void> blockUser() async {
+  Future<void> blockUser({bool? block = true}) async {
 
-    const query = 
-      'INSERT INTO user_blocked_info (blocked_username, blocked_by) VALUES (:blocked_username, :blocked_by)';
+    final query = block!
+      ? 'INSERT INTO user_blocked_info (blocked_username, blocked_by) VALUES (:blocked_username, :blocked_by)'
+      : 'DELETE FROM user_blocked_info WHERE blocked_by = :blocked_by AND blocked_username = :blocked_username';
 
     final params = {
       'blocked_username': username,
