@@ -39,6 +39,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
   );
 
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
+  final pronounsSelectedNotifier = ValueNotifier<List<bool>>([]);
+
+  List<String> pronounsChips = [];
 
   bool isBioChanges = false;
   bool isPronounsChanges = false;
@@ -71,6 +74,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
     pronounTwoController.addListener(() {
       isPronounsChanges = true;
     });
+
+  }
+
+  void _initializePronounsChips() {
+    
+    pronounsChips = [
+      'he/him', 
+      'she/her',
+      'they/them',
+    ];
+
+    final currentPronouns = '${pronounOneController.text}/${pronounTwoController.text}';
+
+    pronounsSelectedNotifier.value = List<bool>.generate(pronounsChips.length, 
+      (index) => pronounsChips[index] == currentPronouns ? true : false
+    );
 
   }
 
@@ -168,6 +187,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   }
 
+  void _pronounsChipsOnSelected(String pronouns) {
+
+    if(pronouns.isEmpty) {
+      pronounOneController.text = '';
+      pronounTwoController.text = '';
+      return;
+    }
+
+    final splittedPronouns = pronouns.split('/'); 
+
+    pronounOneController.text = splittedPronouns[0];
+    pronounTwoController.text = splittedPronouns[1];
+
+  }
+
   Widget _buildProfilePicture() {
     return Padding(
       padding: const EdgeInsets.only(left: 4.0),
@@ -213,8 +247,67 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildBio() {
+  Widget _buildPronounsChip(String pronouns, int index) {
+    return ValueListenableBuilder(
+      valueListenable: pronounsSelectedNotifier,
+      builder: (_, chipSelected, __) {
+        return ChoiceChip(
+          label: Text(
+            pronouns,
+            style: GoogleFonts.inter(
+              color: chipSelected[index] ?ThemeColor.mediumBlack : ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w700,
+              fontSize: 14
+            )
+          ),
+          selected: chipSelected[index],
+          onSelected: (bool selected) {
+
+            if (selected) {
+              pronounsSelectedNotifier.value = List.generate(chipSelected.length, (i) => i == index);
+              _pronounsChipsOnSelected(pronouns);
+
+            } else {
+              pronounsSelectedNotifier.value[index] = false;
+              pronounsSelectedNotifier.value = List.from(chipSelected);
+              _pronounsChipsOnSelected('');
+
+            }
+
+          },
+          selectedColor: ThemeColor.white,
+          backgroundColor: ThemeColor.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+            side: BorderSide(
+              color: chipSelected[index] ? ThemeColor.black : ThemeColor.thirdWhite, 
+              width: 1,
+            ),
+          ),
+        );
+      },
+    );
+  }
+  
+  Widget _buildPronounsChoiceChips() {
     return Padding(
+      padding: const EdgeInsets.only(left: 4.0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.88,
+        child: Wrap(
+          spacing: 10.0, 
+          children: [
+            for(int i=0; i<pronounsSelectedNotifier.value.length; i++) ... [
+              _buildPronounsChip(pronounsChips[i], i),
+            ]
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBio() {
+    return Padding( // TODO: Create separate function for this
       padding: const EdgeInsets.only(left: 8.0),
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.85,
@@ -299,6 +392,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
               ],
             ),
 
+            const SizedBox(height: 14),
+
+            _buildPronounsChoiceChips(),
+
             const SizedBox(height: 12),
         
           ],
@@ -324,11 +421,11 @@ class _EditProfilePageState extends State<EditProfilePage> {
             
             _buildProfilePicture(),
       
-            const SizedBox(height: 45),
+            const SizedBox(height: 40),
                 
             _buildPronouns(),
               
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
       
             _buildBio(),
       
@@ -345,6 +442,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.initState();
     _initializeProfileData();
     _setTextFieldsListeners();
+    _initializePronounsChips();
   }
 
   @override
