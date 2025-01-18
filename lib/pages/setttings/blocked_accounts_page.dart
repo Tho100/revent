@@ -8,7 +8,7 @@ import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-// TODO: move this to settings subfolder
+
 class _BlockedAccountsData {
   
   final String username;
