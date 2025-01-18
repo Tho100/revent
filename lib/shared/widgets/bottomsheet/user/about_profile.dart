@@ -47,8 +47,9 @@ class BottomsheetAboutProfile {
   Future buildBottomsheet({
     required BuildContext context,
     required String username,
+    required String pronouns,
     required String joinedDate,
-    required Uint8List pfpData,
+    required Uint8List pfpData
   }) {
     return Bottomsheet().buildBottomSheet(
       context: context, 
@@ -80,6 +81,10 @@ class BottomsheetAboutProfile {
                 children: [
                   
                   _buildHeaders('Name', username),
+                  
+                  if(pronouns.isNotEmpty)
+                  _buildHeaders('Pronouns', pronouns),
+
                   _buildHeaders('Joined', joinedDate)
         
                 ],

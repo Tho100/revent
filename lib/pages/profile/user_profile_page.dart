@@ -365,6 +365,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
             BottomsheetAboutProfile().buildBottomsheet(
               context: context, 
               username: widget.username, 
+              pronouns: pronounsNotifier.value,
               pfpData: widget.pfpData,
               joinedDate: joinedDate 
             );
