@@ -25,15 +25,15 @@ class BodyTextField extends StatelessWidget {
         maxLines: null,
         style: GoogleFonts.inter(
           color: ThemeColor.secondaryWhite,
-          fontWeight: FontWeight.w800,
-          fontSize: 16
+          fontWeight: FontWeight.w700,
+          fontSize: 14,
         ),
         decoration: InputDecoration(
           counterText: '',
           hintStyle: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
-            fontWeight: FontWeight.w800, 
-            fontSize: 16
+            fontWeight: FontWeight.w700, 
+            fontSize: 14
           ),
           hintText: hintText,
           border: InputBorder.none,
