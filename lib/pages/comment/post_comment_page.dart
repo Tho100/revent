@@ -140,7 +140,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
                     ),
                   ),
 
-                  const SizedBox(height: 14),
+                  const SizedBox(height: 10),
 
                   Consumer<ActiveVentProvider>(
                     builder: (_, data, __) {
