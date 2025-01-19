@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -122,6 +125,10 @@ class _CreateVentPageState extends State<CreateVentPage> {
       SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
 
       Navigator.pop(context);        
+
+      if(getIt.navigationProvider.currentPageIndex != 0) {
+        NavigatePage.homePage();
+      }
 
     });
 
