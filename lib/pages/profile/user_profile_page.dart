@@ -292,20 +292,20 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
         valueListenable: isFollowingNotifier,
         builder: (_, isFollowing, __) {
           return isFollowing 
-            ? CustomOutlinedButton(
-              customWidth: buttonWidth,
-              customHeight: buttonHeight,
-              customFontSize: fontSize,
-              text: 'Following',
-              onPressed: () async => await _followUserOnPressed()
-            )
-            : MainButton(
-              customWidth: buttonWidth,
-              customHeight: buttonHeight,
-              customFontSize: fontSize,
-              text: 'Follow',
-              onPressed: () async => await _followUserOnPressed()
-            );
+          ? CustomOutlinedButton(
+            customWidth: buttonWidth,
+            customHeight: buttonHeight,
+            customFontSize: fontSize,
+            text: 'Following',
+            onPressed: () async => await _followUserOnPressed()
+          )
+          : MainButton(
+            customWidth: buttonWidth,
+            customHeight: buttonHeight,
+            customFontSize: fontSize,
+            text: 'Follow',
+            onPressed: () async => await _followUserOnPressed()
+          );
         },
       ),
     );

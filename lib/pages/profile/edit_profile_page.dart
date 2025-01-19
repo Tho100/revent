@@ -32,12 +32,6 @@ class _EditProfilePageState extends State<EditProfilePage> {
   final pronounOneController = TextEditingController();
   final pronounTwoController = TextEditingController();
 
-  final headerTextDefaultStyle = GoogleFonts.inter(
-    color: ThemeColor.thirdWhite,
-    fontSize: 15,
-    fontWeight: FontWeight.w700,
-  );
-
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
   final pronounsSelectedNotifier = ValueNotifier<List<bool>>([]);
 
@@ -63,17 +57,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   void _setTextFieldsListeners() {
 
-    bioController.addListener(() {
-      isBioChanges = true;
-    });
+    bioController.addListener(
+      () => isBioChanges = true
+    );
 
-    pronounOneController.addListener(() {
-      isPronounsChanges = true;
-    });
+    pronounOneController.addListener(
+      () => isPronounsChanges = true
+    );
 
-    pronounTwoController.addListener(() {
-      isPronounsChanges = true;
-    });
+    pronounTwoController.addListener(
+      () => isPronounsChanges = true
+    );
 
   }
 
@@ -148,8 +142,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     try {
 
-      await ProfileDataUpdate()
-        .updateBio(bioText: bioController.text);
+      await ProfileDataUpdate().updateBio(
+        bioText: bioController.text
+      );
 
       return true;
 
@@ -306,38 +301,10 @@ class _EditProfilePageState extends State<EditProfilePage> {
     );
   }
 
-  Widget _buildBio() {
-    return Padding( // TODO: Create separate function for this
-      padding: const EdgeInsets.only(left: 8.0),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.85,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-        
-            Text(
-              'Bio',
-              style: headerTextDefaultStyle,
-            ),
-        
-            const SizedBox(height: 16),
-        
-            MainTextField(
-              controller: bioController, 
-              hintText: 'Enter your bio here...',
-              maxLines: 6,
-              maxLength: 245,
-            ),
-            
-            const SizedBox(height: 8),
-        
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildPronouns() {
+  Widget _buildProfileEditingWidget({
+    required String header, 
+    required List<Widget> children
+  }) {
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: SizedBox(
@@ -345,62 +312,95 @@ class _EditProfilePageState extends State<EditProfilePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-        
+
             Text(
-              'My pronouns',
-              style: headerTextDefaultStyle,
-            ),
-        
+              header,
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontSize: 15,
+                fontWeight: FontWeight.w700,
+              ),
+            ), 
+
             const SizedBox(height: 16),
+
+            ...children
+
+          ],
+        )
+      )
+    );
+  }
+
+  Widget _buildPronouns() {
+    return _buildProfileEditingWidget(
+      header: 'My pronouns', 
+      children: [
         
-            Row(
-              children: [
+        Row(
+          children: [
 
-                Flexible(
-                  child: MainTextField(
-                    controller: pronounOneController, 
-                    hintText: '',
-                    maxLines: 1,
-                    maxLength: 10,
-                    inputFormatters: TextInputFormatterModel().disableWhitespacesAndSymbols()
-                  ),
-                ),
-
-                const SizedBox(width: 8),
-
-                Text(
-                  '/',
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.secondaryWhite,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 18
-                  ),
-                ),
-                
-                const SizedBox(width: 8),
-              
-                Flexible(
-                  child: MainTextField(
-                    controller: pronounTwoController, 
-                    hintText: '',
-                    maxLines: 1,
-                    maxLength: 10,
-                    inputFormatters: TextInputFormatterModel().disableWhitespacesAndSymbols()
-                  ),
-                ),
-
-              ],
+            Flexible(
+              child: MainTextField(
+                controller: pronounOneController, 
+                hintText: '',
+                maxLines: 1,
+                maxLength: 10,
+                inputFormatters: TextInputFormatterModel().disableWhitespacesAndSymbols()
+              ),
             ),
 
-            const SizedBox(height: 14),
+            const SizedBox(width: 8),
 
-            _buildPronounsChoiceChips(),
+            Text(
+              '/',
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontWeight: FontWeight.w800,
+                fontSize: 18
+              ),
+            ),
+            
+            const SizedBox(width: 8),
+          
+            Flexible(
+              child: MainTextField(
+                controller: pronounTwoController, 
+                hintText: '',
+                maxLines: 1,
+                maxLength: 10,
+                inputFormatters: TextInputFormatterModel().disableWhitespacesAndSymbols()
+              ),
+            ),
 
-            const SizedBox(height: 12),
-        
           ],
         ),
-      ),
+
+        const SizedBox(height: 14),
+
+        _buildPronounsChoiceChips(),
+
+        const SizedBox(height: 12),
+
+      ]
+    );
+  }
+
+  Widget _buildBio() {
+    return _buildProfileEditingWidget(
+      header: 'Bio',
+      children: [
+        
+        MainTextField(
+          controller: bioController, 
+          hintText: 'Enter your bio here...',
+          maxLines: 6,
+          maxLength: 245,
+        ),
+        
+        const SizedBox(height: 8),
+
+      ]
     );
   }
 
