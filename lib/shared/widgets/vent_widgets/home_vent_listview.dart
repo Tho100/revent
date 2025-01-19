@@ -44,27 +44,27 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
   
   Widget _buildFollowSuggestion() {
     return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
 
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0, top: 6.0, bottom: 4.0),
-            child: Text(
-              'Follow suggestion',
-              style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
-                fontWeight: FontWeight.w800,
-                fontSize: 13
-              ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, top: 6.0, bottom: 4.0),
+          child: Text(
+            'Follow suggestion',
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 13
             ),
           ),
+        ),
 
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 14.0),
-            child: FollowSuggestionListView()
-          ),
+        const Padding(
+          padding: EdgeInsets.symmetric(vertical: 14.0),
+          child: FollowSuggestionListView()
+        ),
 
-        ],
+      ],
     );
   }
 
