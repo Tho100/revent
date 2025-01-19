@@ -16,7 +16,7 @@ class BodyTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Transform.translate(
-      offset: const Offset(0, -8),
+      offset: const Offset(0, 8),
       child: TextFormField(
         controller: controller,
         autofocus: true,
@@ -29,6 +29,7 @@ class BodyTextField extends StatelessWidget {
           fontSize: 14,
         ),
         decoration: InputDecoration(
+          isCollapsed: true, 
           counterText: '',
           hintStyle: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
