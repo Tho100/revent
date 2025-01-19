@@ -206,7 +206,9 @@ class _PostCommentPageState extends State<PostCommentPage> {
 
               _buildHeader(),
         
-              _buildTextFieldRow()
+              _buildTextFieldRow(),
+
+              const SizedBox(height: 25)
         
             ],
           ),
