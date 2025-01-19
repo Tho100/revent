@@ -57,17 +57,17 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   void _setTextFieldsListeners() {
 
-    bioController.addListener(() {
-      isBioChanges = true;
-    });
+    bioController.addListener(
+      () => isBioChanges = true
+    );
 
-    pronounOneController.addListener(() {
-      isPronounsChanges = true;
-    });
+    pronounOneController.addListener(
+      () => isPronounsChanges = true
+    );
 
-    pronounTwoController.addListener(() {
-      isPronounsChanges = true;
-    });
+    pronounTwoController.addListener(
+      () => isPronounsChanges = true
+    );
 
   }
 
@@ -142,8 +142,9 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     try {
 
-      await ProfileDataUpdate()
-        .updateBio(bioText: bioController.text);
+      await ProfileDataUpdate().updateBio(
+        bioText: bioController.text
+      );
 
       return true;
 
