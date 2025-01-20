@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -123,6 +126,10 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
       Navigator.pop(context);        
 
+      if(getIt.navigationProvider.currentPageIndex != 0) {
+        NavigatePage.homePage();
+      }
+
     });
 
   }
@@ -153,29 +160,27 @@ class _CreateVentPageState extends State<CreateVentPage> {
   }  
 
   Widget _buildBodyTextField() { 
-    return Transform.translate(
-      offset: const Offset(0, -5),
-      child: TextFormField(
-        controller: ventBodyTextController,
-        keyboardType: TextInputType.multiline,
-        maxLength: 2850,
-        maxLines: null,
-        style: GoogleFonts.inter(
-          color: ThemeColor.secondaryWhite,
-          fontWeight: FontWeight.w700,
+    return TextFormField(
+      controller: ventBodyTextController,
+      keyboardType: TextInputType.multiline,
+      maxLength: 2850,
+      maxLines: null,
+      style: GoogleFonts.inter(
+        color: ThemeColor.secondaryWhite,
+        fontWeight: FontWeight.w700,
+        fontSize: 16
+      ),
+      decoration: InputDecoration(
+        isCollapsed: true,
+        counterText: '',
+        hintStyle: GoogleFonts.inter(
+          color: hintTextColor,
+          fontWeight: FontWeight.w700, 
           fontSize: 16
         ),
-        decoration: InputDecoration(
-          counterText: '',
-          hintStyle: GoogleFonts.inter(
-            color: hintTextColor,
-            fontWeight: FontWeight.w700, 
-            fontSize: 16
-          ),
-          hintText: 'Body text (optional)',
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.zero, 
-        ),
+        hintText: 'Body text (optional)',
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.zero, 
       ),
     );
   }  

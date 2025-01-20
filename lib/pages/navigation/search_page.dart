@@ -102,7 +102,7 @@ class _SearchPageState extends State<SearchPage> {
         label: Text(
           '#$label',
             style: GoogleFonts.inter(
-              color: ThemeColor.mediumBlack,
+              color: chipSelected[index] ?ThemeColor.mediumBlack : ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w700,
               fontSize: 14
             )
@@ -112,8 +112,15 @@ class _SearchPageState extends State<SearchPage> {
             chipsSelectedNotifier.value[index] = selected;
             chipsSelectedNotifier.value = List.from(chipSelected);
           },
-          selectedColor: ThemeColor.thirdWhite,
-          backgroundColor: ThemeColor.white,
+          selectedColor: ThemeColor.white,
+          backgroundColor: ThemeColor.black,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+            side: BorderSide(
+              color: chipSelected[index] ? ThemeColor.black : ThemeColor.thirdWhite, 
+              width: 1,
+            ),
+          ),
         );
       },
     );

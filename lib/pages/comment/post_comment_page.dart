@@ -2,9 +2,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
+import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/vent_actions.dart';
@@ -82,7 +85,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
             customHeight: 35,
             customWidth: 35,
             customEmptyPfpSize: 20,
-            pfpData: widget.creatorPfp
+            pfpData: widget.creatorPfp,
           ),
         ),
 
@@ -97,18 +100,66 @@ class _PostCommentPageState extends State<PostCommentPage> {
           ),
         ),
 
-      ]
+      ],
     );
   }
 
-  Widget _buildTitle() {
-    return Text(
-      widget.title,
-      style: GoogleFonts.inter(
-        color: ThemeColor.white,
-        fontWeight: FontWeight.w800,
-        fontSize: 21
-      )
+  Widget _buildHeader() {
+    return Stack(
+      children: [
+    
+        Positioned(
+          left: 35 / 2,
+          top: 0,
+          bottom: 0,
+          child: Container(
+            width: 1,
+            color: ThemeColor.lightGrey,
+          ),
+        ),
+
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            const SizedBox(width: 40),
+          
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  const SizedBox(height: 10),
+
+                  SelectableText(
+                    widget.title,
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 21,
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Consumer<ActiveVentProvider>(
+                    builder: (_, data, __) {
+                      return StyledTextWidget(
+                        text: data.body,
+                        isSelectable: true,
+                      );
+                    },
+                  ),
+                  
+                  const SizedBox(height: 30),
+
+                ],
+              ),
+            ),
+          ],
+        ),
+
+      ],
     );
   }
 
@@ -153,17 +204,11 @@ class _PostCommentPageState extends State<PostCommentPage> {
         
               _buildCreatorInfo(),
 
-              const SizedBox(height: 18),
-
-              _buildTitle(),
-
-              const SizedBox(height: 12),
-
-              const Divider(color: ThemeColor.lightGrey),
-
-              const SizedBox(height: 30),
+              _buildHeader(),
         
-              _buildTextFieldRow()
+              _buildTextFieldRow(),
+
+              const SizedBox(height: 25)
         
             ],
           ),

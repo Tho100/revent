@@ -130,6 +130,7 @@ class VentActions extends BaseQueryService {
       'commented_by': userData.user.username,
       'comment': comment,
       'total_likes': 0,
+      'total_replies': 0,
       'post_id': postId
     };
 

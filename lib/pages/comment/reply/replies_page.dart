@@ -118,24 +118,12 @@ class _RepliesPageState extends State<RepliesPage> {
               children: [
 
                 _buildMainComment(),
-
-                Transform.translate(
-                  offset: const Offset(0, -10),
-                  child: const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 5),
-                    child: Divider(color: ThemeColor.lightGrey),
-                  ),
-                ),
-                
-                const SizedBox(height: 10),
     
                 RepliesListView(
                   creator: widget.creator, 
                   creatorPfpData: widget.creatorPfpData
                 ),
     
-                const SizedBox(height: 10),
-
               ],
             ),
           ),
