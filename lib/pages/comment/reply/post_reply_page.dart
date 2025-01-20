@@ -6,6 +6,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/vent/comment/reply/reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -95,14 +96,34 @@ class _PostReplyPageState extends State<PostReplyPage> {
   }
 
   Widget _buildOriginalComment() {
-    return Text(
-      widget.comment,
-      style: GoogleFonts.inter(
-        color: ThemeColor.white,
-        fontWeight: FontWeight.w800,
-        fontSize: 17
-      ),
-      maxLines: 6,
+    return Stack(
+      children: [
+
+        Positioned(
+          left: 35 / 2,
+          top: 0,
+          bottom: 0,
+          child: Container(
+            width: 1,
+            color: ThemeColor.lightGrey,
+          ),
+        ),
+
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            const SizedBox(width: 45),
+
+            Padding(
+              padding: const EdgeInsets.only(bottom: 25.0),
+              child: StyledTextWidget(text: widget.comment),
+            ),
+
+          ]
+        )
+
+      ]
     );
   }
 
@@ -147,18 +168,12 @@ class _PostReplyPageState extends State<PostReplyPage> {
         
               _buildCreatorInfo(),
 
-              const SizedBox(height: 18),
-
               _buildOriginalComment(),
 
-              const SizedBox(height: 12),
-
-              const Divider(color: ThemeColor.lightGrey),
-
-              const SizedBox(height: 25),
+              _buildTextFieldRow(),
         
-              _buildTextFieldRow()
-        
+              const SizedBox(height: 25)
+
             ],
           ),
         ),
