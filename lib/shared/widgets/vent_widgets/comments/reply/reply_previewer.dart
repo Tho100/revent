@@ -109,9 +109,9 @@ class ReplyPreviewer extends StatelessWidget {
 
   Widget _buildProfilePicture() {
     return ProfilePictureWidget(
-      customHeight: 35,
-      customWidth: 35,
-      customEmptyPfpSize: 20,
+      customHeight: 32,
+      customWidth: 32,
+      customEmptyPfpSize: 18,
       pfpData: pfpData
     );
   }
@@ -205,9 +205,9 @@ class ReplyPreviewer extends StatelessWidget {
             )
           ),
         ),
-
+  
         const SizedBox(width: 8),
-
+  
         Text(
           '$commentTimestamp ${commentedBy == creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
           style: GoogleFonts.inter(
@@ -216,10 +216,10 @@ class ReplyPreviewer extends StatelessWidget {
             fontSize: 12,
           ),
         ),
-
+       
         const Spacer(),
 
-        _buildCommentActionButton()
+        _buildCommentActionButton(),
 
       ],
     );
@@ -234,21 +234,21 @@ class ReplyPreviewer extends StatelessWidget {
 
   Widget _buildReplyBody(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 84,
+      width: MediaQuery.of(context).size.width - 110,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 25.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
+  
             _buildReplyHeader(),
-
+  
             const SizedBox(height: 2),
             
             _buildReplyText(),
       
             const SizedBox(height: 14),
-
+  
             _buildLikeButton(),
       
           ],
@@ -264,7 +264,7 @@ class ReplyPreviewer extends StatelessWidget {
       children: [
 
         Padding(
-          padding: const EdgeInsets.only(top: 4.0),
+          padding: const EdgeInsets.only(left: 30, top: 4.0),
           child: _buildProfilePicture(),
         ),
 
