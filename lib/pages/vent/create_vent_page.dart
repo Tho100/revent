@@ -198,10 +198,14 @@ class _CreateVentPageState extends State<CreateVentPage> {
             child: _buildTitleField(),
           ),   
         
+          const SizedBox(height: 4),
+
           Padding(
             padding: const EdgeInsets.only(left: 17.0, right: 14.0),
             child: _buildBodyTextField(),
           ),
+
+          const SizedBox(height: 18)
             
         ],
       ),
