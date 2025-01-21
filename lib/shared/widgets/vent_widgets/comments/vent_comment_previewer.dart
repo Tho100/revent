@@ -19,9 +19,6 @@ import 'package:revent/shared/widgets/profile_picture.dart';
 
 class VentCommentPreviewer extends StatelessWidget {
 
-  final String title;
-  final String creator;
-
   final String commentedBy;
   final String comment;
   final String commentTimestamp;
@@ -35,8 +32,6 @@ class VentCommentPreviewer extends StatelessWidget {
   final Uint8List pfpData;
 
   VentCommentPreviewer({
-    required this.title,
-    required this.creator,
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
@@ -48,7 +43,7 @@ class VentCommentPreviewer extends StatelessWidget {
     super.key
   });
 
-  final userData = getIt.userProvider;
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<void> _deleteOnPressed() async {
 
@@ -57,8 +52,8 @@ class VentCommentPreviewer extends StatelessWidget {
       await VentCommentActions(
         username: commentedBy, 
         commentText: comment, 
-        ventCreator: creator, 
-        ventTitle: title
+        ventCreator: activeVent.creator, 
+        ventTitle: activeVent.title
       ).delete().then(
         (_) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
       );
@@ -76,8 +71,8 @@ class VentCommentPreviewer extends StatelessWidget {
       await VentCommentActions(
         username: commentedBy, 
         commentText: comment, 
-        ventCreator: creator, 
-        ventTitle: title
+        ventCreator: activeVent.creator, 
+        ventTitle: activeVent.title
       ).like();
 
     } catch (_) {
@@ -99,7 +94,7 @@ class VentCommentPreviewer extends StatelessWidget {
             Navigator.push(
               navigatorKey.currentContext!, 
               MaterialPageRoute(builder: (_) => EditCommentPage(
-                title: title, creator: creator, originalComment: comment
+                title: activeVent.title, creator: activeVent.creator, originalComment: comment
                 )
               )
             );
@@ -261,7 +256,7 @@ class VentCommentPreviewer extends StatelessWidget {
         const SizedBox(width: 8),
 
         Text(
-          '$commentTimestamp ${commentedBy == creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
+          '$commentTimestamp ${commentedBy == activeVent.creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,

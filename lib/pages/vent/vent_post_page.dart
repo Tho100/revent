@@ -61,9 +61,9 @@ class _VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = getIt.ventCommentProvider;
   final profileData = getIt.profileProvider;
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider; // TODO: add .user
   final navigation = getIt.navigationProvider;
-  final activeVent = getIt.activeVentProvider;
+  final activeVent = getIt.activeVentProvider; // TODO: Add .ventData
   
   final enableCommentNotifier = ValueNotifier<bool>(true);
   final filterTextNotifier = ValueNotifier<String>('Best');
@@ -614,9 +614,6 @@ class _VentPostPageState extends State<VentPostPage> {
                       valueListenable: enableCommentNotifier,
                       builder: (_, isEnabled, __) {
                         return VentCommentsListView(
-                          title: widget.title, 
-                          creator: widget.creator,
-                          bodyText: widget.bodyText,
                           isCommentEnabled: enableCommentNotifier.value,
                         );
                       },
@@ -692,16 +689,16 @@ class _VentPostPageState extends State<VentPostPage> {
 
   @override
   void initState() {
+    activeVent.setVentData(
+      ActiveVentData(
+        title: widget.title, 
+        creator: widget.creator, 
+        body: widget.bodyText,
+        creatorPfp: widget.pfpData
+      )
+    );
     _loadCommentsSettings().then((_) {
       _initializeComments();
-      activeVent.setVentData(
-        ActiveVentData(
-          title: widget.title, 
-          creator: widget.creator, 
-          body: widget.bodyText,
-          creatorPfp: widget.pfpData
-        )
-      );
       _loadLastEdit();
     });
     super.initState();
