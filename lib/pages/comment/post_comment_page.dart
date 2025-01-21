@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -20,12 +18,10 @@ class PostCommentPage extends StatefulWidget {
 
   final String title;
   final String creator;
-  final Uint8List creatorPfp;
   
   const PostCommentPage({
     required this.title,
     required this.creator,
-    required this.creatorPfp,
     super.key
   });
 
@@ -85,7 +81,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
             customHeight: 35,
             customWidth: 35,
             customEmptyPfpSize: 20,
-            pfpData: widget.creatorPfp,
+            pfpData: getIt.activeVentProvider.ventData.creatorPfp,
           ),
         ),
 

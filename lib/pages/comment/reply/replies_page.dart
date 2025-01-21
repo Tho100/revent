@@ -34,7 +34,6 @@ class RepliesPage extends StatefulWidget {
   final bool isCommentLikedByCreator;
 
   final Uint8List pfpData;
-  final Uint8List creatorPfpData;
 
   const RepliesPage({
     required this.title,
@@ -45,7 +44,6 @@ class RepliesPage extends StatefulWidget {
     required this.commentTimestamp,
     required this.isCommentLikedByCreator,
     required this.pfpData,
-    required this.creatorPfpData, // TODO: Remove this later
     super.key
   });
 
@@ -87,7 +85,7 @@ class _RepliesPageState extends State<RepliesPage> {
             customHeight: 35,
             customWidth: 35,
             customEmptyPfpSize: 20,
-            pfpData: widget.creatorPfpData,
+            pfpData: getIt.activeVentProvider.ventData.creatorPfp,
           ),
         ),
 
@@ -189,7 +187,6 @@ class _RepliesPageState extends State<RepliesPage> {
           isCommentLiked: isCommentLiked, 
           isCommentLikedByCreator: widget.isCommentLikedByCreator, 
           pfpData: widget.pfpData, 
-          creatorPfpData: widget.creatorPfpData
         );
 
       },
@@ -220,7 +217,7 @@ class _RepliesPageState extends State<RepliesPage> {
     
                 RepliesListView(
                   creator: widget.creator, 
-                  creatorPfpData: widget.creatorPfpData
+                  creatorPfpData: getIt.activeVentProvider.ventData.creatorPfp
                 ),
     
               ],

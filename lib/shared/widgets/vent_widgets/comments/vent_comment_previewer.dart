@@ -33,7 +33,6 @@ class VentCommentPreviewer extends StatelessWidget {
   final bool isCommentLikedByCreator;
 
   final Uint8List pfpData;
-  final Uint8List creatorPfpData;
 
   VentCommentPreviewer({
     required this.title,
@@ -46,7 +45,6 @@ class VentCommentPreviewer extends StatelessWidget {
     required this.isCommentLiked,
     required this.isCommentLikedByCreator,
     required this.pfpData,
-    required this.creatorPfpData,
     super.key
   });
 
@@ -160,7 +158,7 @@ class VentCommentPreviewer extends StatelessWidget {
           children: [
 
             ProfilePictureWidget(
-              pfpData: creatorPfpData,
+              pfpData: getIt.activeVentProvider.ventData.creatorPfp,
               customEmptyPfpSize: 15,
               customWidth: 20,
               customHeight: 20,

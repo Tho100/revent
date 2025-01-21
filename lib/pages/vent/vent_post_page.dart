@@ -81,7 +81,7 @@ class _VentPostPageState extends State<VentPostPage> {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => PostCommentPage(
-        title: widget.title, creator: widget.creator, creatorPfp: widget.pfpData
+        title: widget.title, creator: widget.creator
       ))
     );
 
@@ -617,7 +617,6 @@ class _VentPostPageState extends State<VentPostPage> {
                           title: widget.title, 
                           creator: widget.creator,
                           bodyText: widget.bodyText,
-                          creatorPfpData: widget.pfpData,
                           isCommentEnabled: enableCommentNotifier.value,
                         );
                       },
@@ -699,7 +698,8 @@ class _VentPostPageState extends State<VentPostPage> {
         ActiveVentData(
           title: widget.title, 
           creator: widget.creator, 
-          body: widget.bodyText
+          body: widget.bodyText,
+          creatorPfp: widget.pfpData
         )
       );
       _loadLastEdit();
