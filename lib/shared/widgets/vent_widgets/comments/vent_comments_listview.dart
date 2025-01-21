@@ -11,12 +11,14 @@ class VentCommentsListView extends StatelessWidget {
 
   final String title;
   final String creator;
+  final String bodyText;
   final Uint8List creatorPfpData;
   final bool isCommentEnabled;
 
   const VentCommentsListView({
     required this.title,
     required this.creator,
+    required this.bodyText,
     required this.creatorPfpData,
     required this.isCommentEnabled,
     super.key
@@ -40,6 +42,7 @@ class VentCommentsListView extends StatelessWidget {
           MaterialPageRoute(builder: (_) => RepliesPage(
             title: title, 
             creator: creator, 
+            bodyText: bodyText,
             commentedBy: commentedBy, 
             comment: comment, 
             commentTimestamp: commentTimestamp, 

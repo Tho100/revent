@@ -615,6 +615,7 @@ class _VentPostPageState extends State<VentPostPage> {
                         return VentCommentsListView(
                           title: widget.title, 
                           creator: widget.creator,
+                          bodyText: widget.bodyText,
                           creatorPfpData: widget.pfpData,
                           isCommentEnabled: enableCommentNotifier.value,
                         );

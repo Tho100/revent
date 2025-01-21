@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 
 class ActiveVentProvider extends ChangeNotifier {
 
-  String _body = '';
+  String _body = ''; // TODO: Try to use store title, bodyText, creator pfp instead of passing param
   String _lastEdit = '';
 
   String get body => _body;
