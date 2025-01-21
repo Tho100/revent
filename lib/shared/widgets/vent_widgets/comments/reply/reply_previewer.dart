@@ -127,9 +127,9 @@ class ReplyPreviewer extends StatelessWidget {
 
             ProfilePictureWidget(
               pfpData: creatorPfpData,
-              customEmptyPfpSize: 15,
-              customWidth: 20,
-              customHeight: 20,
+              customEmptyPfpSize: 14,
+              customWidth: 18.5,
+              customHeight: 18.5,
             ),
       
             Align(

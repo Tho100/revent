@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
@@ -9,10 +10,13 @@ import 'package:revent/pages/comment/reply/post_reply_page.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/refresh_service.dart';
+import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/bottom_input_bar.dart';
+import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/reply/replies_listview.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_previewer.dart';
@@ -20,6 +24,7 @@ import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_preview
 class RepliesPage extends StatefulWidget {
 
   final String title;
+  final String bodyText;
   final String creator;
 
   final String commentedBy;
@@ -29,17 +34,16 @@ class RepliesPage extends StatefulWidget {
   final bool isCommentLikedByCreator;
 
   final Uint8List pfpData;
-  final Uint8List creatorPfpData;
 
   const RepliesPage({
     required this.title,
+    required this.bodyText,
     required this.creator,
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
     required this.isCommentLikedByCreator,
     required this.pfpData,
-    required this.creatorPfpData,
     super.key
   });
 
@@ -70,6 +74,95 @@ class _RepliesPageState extends State<RepliesPage> {
 
   }
 
+  Widget _buildCreatorInfo() {
+    return Row(
+      children: [
+
+        SizedBox(
+          width: 35,
+          height: 35,
+          child: ProfilePictureWidget(
+            customHeight: 35,
+            customWidth: 35,
+            customEmptyPfpSize: 20,
+            pfpData: getIt.activeVentProvider.ventData.creatorPfp,
+          ),
+        ),
+
+        const SizedBox(width: 10),
+
+        Text(
+          widget.creator,
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontWeight: FontWeight.w800,
+            fontSize: 14.5
+          ),
+        ),
+
+      ],
+    );
+  }
+
+  Widget _buildHeader() {
+    return Stack(
+      children: [
+    
+        Positioned(
+          left: 35 / 2,
+          top: 0,
+          bottom: 0,
+          child: Container(
+            width: 1,
+            color: ThemeColor.lightGrey,
+          ),
+        ),
+
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+
+            const SizedBox(width: 40),
+          
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+
+                  const SizedBox(height: 10),
+
+                  SelectableText(
+                    widget.title,
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.white,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 21,
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
+
+                  Consumer<ActiveVentProvider>(
+                    builder: (_, data, __) {
+                      return StyledTextWidget(
+                        text: data.ventData.body,
+                        isSelectable: true,
+                      );
+                    },
+                  ),
+                  
+                  const SizedBox(height: 30),
+
+                ],
+              ),
+            ),
+          ],
+        ),
+
+      ],
+    );
+  }
+
   Widget _buildMainComment() {
     return Consumer<VentCommentProvider>(
       builder: (_, ventComment, __) {
@@ -94,7 +187,6 @@ class _RepliesPageState extends State<RepliesPage> {
           isCommentLiked: isCommentLiked, 
           isCommentLikedByCreator: widget.isCommentLikedByCreator, 
           pfpData: widget.pfpData, 
-          creatorPfpData: widget.creatorPfpData
         );
 
       },
@@ -117,11 +209,15 @@ class _RepliesPageState extends State<RepliesPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
 
+                _buildCreatorInfo(),
+
+                _buildHeader(),
+
                 _buildMainComment(),
     
                 RepliesListView(
                   creator: widget.creator, 
-                  creatorPfpData: widget.creatorPfpData
+                  creatorPfpData: getIt.activeVentProvider.ventData.creatorPfp
                 ),
     
               ],

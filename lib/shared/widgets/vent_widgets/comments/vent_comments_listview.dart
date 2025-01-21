@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/comment/reply/replies_page.dart';
@@ -11,13 +9,13 @@ class VentCommentsListView extends StatelessWidget {
 
   final String title;
   final String creator;
-  final Uint8List creatorPfpData;
+  final String bodyText;
   final bool isCommentEnabled;
 
   const VentCommentsListView({
     required this.title,
     required this.creator,
-    required this.creatorPfpData,
+    required this.bodyText,
     required this.isCommentEnabled,
     super.key
   });
@@ -40,12 +38,12 @@ class VentCommentsListView extends StatelessWidget {
           MaterialPageRoute(builder: (_) => RepliesPage(
             title: title, 
             creator: creator, 
+            bodyText: bodyText,
             commentedBy: commentedBy, 
             comment: comment, 
             commentTimestamp: commentTimestamp, 
             isCommentLikedByCreator: isCommentLikedByCreator, 
             pfpData: pfpData, 
-            creatorPfpData: creatorPfpData
           ))
         );
       },
@@ -62,7 +60,6 @@ class VentCommentsListView extends StatelessWidget {
           isCommentLiked: isCommentLiked,
           isCommentLikedByCreator: isCommentLikedByCreator,
           pfpData: pfpData,
-          creatorPfpData: creatorPfpData
         ),
       ),
     );
