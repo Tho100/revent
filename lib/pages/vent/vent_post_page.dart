@@ -61,9 +61,9 @@ class _VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = getIt.ventCommentProvider;
   final profileData = getIt.profileProvider;
-  final userData = getIt.userProvider; // TODO: add .user
+  final userData = getIt.userProvider;
   final navigation = getIt.navigationProvider;
-  final activeVent = getIt.activeVentProvider; // TODO: Add .ventData
+  final activeVent = getIt.activeVentProvider;
   
   final enableCommentNotifier = ValueNotifier<bool>(true);
   final filterTextNotifier = ValueNotifier<String>('Best');
