@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -8,13 +10,9 @@ import 'package:revent/shared/widgets/app_bar.dart';
 
 class EditVentPage extends StatefulWidget {
 
-  final String title;
-  final String body;
   final bool isArchive;
 
   const EditVentPage({
-    required this.title,
-    required this.body,
     required this.isArchive,
     super.key
   });
@@ -28,6 +26,8 @@ class _EditVentPageState extends State<EditVentPage> {
 
   final ventBodyTextController = TextEditingController();
 
+  final activeVent = getIt.activeVentProvider.ventData;
+
   Future<void> _saveOnPressed() async {
 
     try {
@@ -37,14 +37,14 @@ class _EditVentPageState extends State<EditVentPage> {
       if(widget.isArchive) {
 
         await SaveVentEdit(
-          title: widget.title, 
+          title: activeVent.title, 
           newBody: newBodyText, 
         ).saveArchive();
 
       } else {
 
         await SaveVentEdit(
-          title: widget.title, 
+          title: activeVent.title, 
           newBody: newBodyText, 
         ).save();
 
@@ -64,7 +64,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
   Widget _buildTitle() {
     return Text(
-      widget.title,
+      activeVent.title,
       style: GoogleFonts.inter(
         color: ThemeColor.white,
         fontWeight: FontWeight.w800,
@@ -74,30 +74,28 @@ class _EditVentPageState extends State<EditVentPage> {
   }
 
   Widget _buildBodyTextField() { 
-    return Transform.translate(
-      offset: const Offset(0, -5),
-      child: TextFormField(
-        controller: ventBodyTextController,
-        autofocus: true,
-        keyboardType: TextInputType.multiline,
-        maxLength: 2850,
-        maxLines: null,
-        style: GoogleFonts.inter(
-          color: ThemeColor.secondaryWhite,
-          fontWeight: FontWeight.w700,
+    return TextFormField(
+      controller: ventBodyTextController,
+      autofocus: true,
+      keyboardType: TextInputType.multiline,
+      maxLength: 2850,
+      maxLines: null,
+      style: GoogleFonts.inter(
+        color: ThemeColor.secondaryWhite,
+        fontWeight: FontWeight.w700,
+        fontSize: 16
+      ),
+      decoration: InputDecoration(
+        isCollapsed: true,
+        counterText: '',
+        hintStyle: GoogleFonts.inter(
+          color: ThemeColor.thirdWhite,
+          fontWeight: FontWeight.w700, 
           fontSize: 16
         ),
-        decoration: InputDecoration( // TODO: Use isCollapsed
-          counterText: '',
-          hintStyle: GoogleFonts.inter(
-            color: ThemeColor.thirdWhite,
-            fontWeight: FontWeight.w700, 
-            fontSize: 16
-          ),
-          hintText: 'Body text (optional)',
-          border: InputBorder.none,
-          contentPadding: EdgeInsets.zero, 
-        ),
+        hintText: 'Body text (optional)',
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.zero, 
       ),
     );
   }
@@ -138,7 +136,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
   Future<bool> _onClosePage() async {
 
-    if(ventBodyTextController.text != widget.body) {
+    if(ventBodyTextController.text != activeVent.body) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: 'Discard edit?',
       );
@@ -151,7 +149,7 @@ class _EditVentPageState extends State<EditVentPage> {
   @override
   void initState() {
     super.initState();
-    ventBodyTextController.text = widget.body;
+    ventBodyTextController.text = activeVent.body;
   }
 
   @override

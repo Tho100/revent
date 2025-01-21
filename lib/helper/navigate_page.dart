@@ -159,7 +159,7 @@ class NavigatePage {
   }) {
     Navigator.push(
       navigatorKey.currentContext!, 
-      MaterialPageRoute(builder: (_) => EditVentPage(title: title, body: body, isArchive: isArchive!))
+      MaterialPageRoute(builder: (_) => EditVentPage(isArchive: isArchive!))
     );
   }
 

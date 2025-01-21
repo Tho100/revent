@@ -23,10 +23,6 @@ import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_preview
 
 class RepliesPage extends StatefulWidget {
 
-  final String title;
-  final String bodyText;
-  final String creator;
-
   final String commentedBy;
   final String comment;
   final String commentTimestamp;
@@ -36,9 +32,6 @@ class RepliesPage extends StatefulWidget {
   final Uint8List pfpData;
 
   const RepliesPage({
-    required this.title,
-    required this.bodyText,
-    required this.creator,
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
@@ -54,13 +47,17 @@ class RepliesPage extends StatefulWidget {
 
 class _RepliesPageState extends State<RepliesPage> {
 
+  final activeVent = getIt.activeVentProvider.ventData;
+
   late int commentId = 0;
 
   void _initializeReplies() async {
 
     try {
       
-      final postId = await PostIdGetter(title: widget.title, creator: widget.creator).getPostId();
+      final postId = await PostIdGetter(
+        title: activeVent.title, creator: activeVent.creator
+      ).getPostId();
 
       commentId = await CommentIdGetter(postId: postId).getCommentId(
         username: widget.commentedBy, commentText: widget.comment
@@ -92,7 +89,7 @@ class _RepliesPageState extends State<RepliesPage> {
         const SizedBox(width: 10),
 
         Text(
-          widget.creator,
+          activeVent.creator,
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w800,
@@ -132,7 +129,7 @@ class _RepliesPageState extends State<RepliesPage> {
                   const SizedBox(height: 10),
 
                   SelectableText(
-                    widget.title,
+                    activeVent.title,
                     style: GoogleFonts.inter(
                       color: ThemeColor.white,
                       fontWeight: FontWeight.w800,
@@ -177,8 +174,6 @@ class _RepliesPageState extends State<RepliesPage> {
         final totalReplies = ventComment.ventComments[commenterIndex].totalReplies;
 
         return VentCommentPreviewer(
-          title: widget.title, 
-          creator: widget.creator, 
           commentedBy: widget.commentedBy, 
           comment: widget.comment, 
           commentTimestamp: widget.commentTimestamp, 
@@ -216,8 +211,8 @@ class _RepliesPageState extends State<RepliesPage> {
                 _buildMainComment(),
     
                 RepliesListView(
-                  creator: widget.creator, 
-                  creatorPfpData: getIt.activeVentProvider.ventData.creatorPfp
+                  creator: activeVent.creator, 
+                  creatorPfpData: activeVent.creatorPfp
                 ),
     
               ],
@@ -237,8 +232,8 @@ class _RepliesPageState extends State<RepliesPage> {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => PostReplyPage(
-              title: widget.title, 
-              creator: widget.creator, 
+              title: activeVent.title, 
+              creator: activeVent.creator, 
               comment: widget.comment, 
               commentedBy: widget.commentedBy, 
               commenterPfp: widget.pfpData

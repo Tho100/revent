@@ -6,16 +6,10 @@ import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_previewer.dart';
 
 class VentCommentsListView extends StatelessWidget {
-
-  final String title;
-  final String creator;
-  final String bodyText;
+  
   final bool isCommentEnabled;
 
   const VentCommentsListView({
-    required this.title,
-    required this.creator,
-    required this.bodyText,
     required this.isCommentEnabled,
     super.key
   });
@@ -36,9 +30,6 @@ class VentCommentsListView extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(builder: (_) => RepliesPage(
-            title: title, 
-            creator: creator, 
-            bodyText: bodyText,
             commentedBy: commentedBy, 
             comment: comment, 
             commentTimestamp: commentTimestamp, 
@@ -50,8 +41,6 @@ class VentCommentsListView extends StatelessWidget {
       child: Container(
         color: Colors.transparent,
         child: VentCommentPreviewer(
-          title: title,
-          creator: creator,
           commentedBy: commentedBy,
           comment: comment,
           commentTimestamp: commentTimestamp,
