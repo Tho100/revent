@@ -147,7 +147,7 @@ class _RepliesPageState extends State<RepliesPage> {
                   Consumer<ActiveVentProvider>(
                     builder: (_, data, __) {
                       return StyledTextWidget(
-                        text: data.body,
+                        text: data.ventData.body,
                         isSelectable: true,
                       );
                     },

@@ -352,7 +352,8 @@ class _VentPostPageState extends State<VentPostPage> {
 
           Consumer<ActiveVentProvider>(
             builder: (_, data, __) {
-              return data.lastEdit != '' 
+              final lastEdit = data.ventData.lastEdit;
+              return lastEdit != '' 
                 ? Row(
                   children: [
 
@@ -361,7 +362,7 @@ class _VentPostPageState extends State<VentPostPage> {
                     const SizedBox(width: 6),
 
                     Text(
-                      '${data.lastEdit == 'Just now' ? 'Edit just now' : 'Edit ${data.lastEdit} ago'} ',
+                      '${lastEdit == 'Just now' ? 'Edit just now' : 'Edit $lastEdit ago'} ',
                       style: GoogleFonts.inter(
                         color: ThemeColor.thirdWhite,
                         fontWeight: FontWeight.w700,
@@ -399,7 +400,7 @@ class _VentPostPageState extends State<VentPostPage> {
         Consumer<ActiveVentProvider>(
           builder: (_, data, __) {
             return StyledTextWidget(
-              text: data.body,
+              text: data.ventData.body,
               isSelectable: true,
             );
           },
@@ -420,7 +421,7 @@ class _VentPostPageState extends State<VentPostPage> {
         Navigator.pop(context);
         NavigatePage.editVentPage(
           title: widget.title, 
-          body: getIt.activeVentProvider.body
+          body: getIt.activeVentProvider.ventData.body
         );
       },
       copyOnPressed: () {
@@ -694,9 +695,15 @@ class _VentPostPageState extends State<VentPostPage> {
   void initState() {
     _loadCommentsSettings().then((_) {
       _initializeComments();
-      activeVent.setBody(widget.bodyText);
+      activeVent.setVentData(
+        ActiveVentData(
+          title: widget.title, 
+          creator: widget.creator, 
+          body: widget.bodyText
+        )
+      );
+      _loadLastEdit();
     });
-    _loadLastEdit();
     super.initState();
   }
 

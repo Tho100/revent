@@ -145,7 +145,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
                   Consumer<ActiveVentProvider>(
                     builder: (_, data, __) {
                       return StyledTextWidget(
-                        text: data.body,
+                        text: data.ventData.body,
                         isSelectable: true,
                       );
                     },

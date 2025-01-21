@@ -1,26 +1,57 @@
 import 'package:flutter/cupertino.dart';
 
+class ActiveVentData {
+
+  String title;
+  String creator;
+  String body;
+  String? lastEdit;
+
+  ActiveVentData({
+    required this.title,
+    required this.creator,
+    required this.body,
+    this.lastEdit = ''
+  });
+
+}
+
 class ActiveVentProvider extends ChangeNotifier {
 
-  String _body = ''; // TODO: Try to use store title, bodyText, creator pfp instead of passing param
-  String _lastEdit = '';
+  ActiveVentData _ventData = ActiveVentData(title: '', creator: '', body: '', lastEdit: '');
 
-  String get body => _body;
-  String get lastEdit => _lastEdit;
+  ActiveVentData get ventData => _ventData;
 
-  void setBody(String body) {
-    _body = body;
+  void setVentData(ActiveVentData ventData) {
+    _ventData = ventData;
     notifyListeners();
   }
-  
+
+  void setBody(String body) {
+    _ventData = ActiveVentData(
+      title: _ventData.title,
+      creator: _ventData.creator,
+      body: body,
+      lastEdit: _ventData.lastEdit,
+    );
+    notifyListeners();
+  }
+
   void setLastEdit(String lastEdit) {
-    _lastEdit = lastEdit;
+    _ventData = ActiveVentData(
+      title: _ventData.title,
+      creator: _ventData.creator,
+      body: _ventData.body,
+      lastEdit: lastEdit,
+    );
     notifyListeners();
   }
 
   void clearData() {
-    _body = ''; 
-    _lastEdit = '';
+    _ventData.title = '';
+    _ventData.creator = '';
+    _ventData.body = '';
+    _ventData.lastEdit = '';
   }
 
 }

@@ -87,7 +87,7 @@ class _EditVentPageState extends State<EditVentPage> {
           fontWeight: FontWeight.w700,
           fontSize: 16
         ),
-        decoration: InputDecoration(
+        decoration: InputDecoration( // TODO: Use isCollapsed
           counterText: '',
           hintStyle: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
