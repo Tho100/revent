@@ -3,8 +3,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
 import 'package:revent/model/user/user_follow_actions.dart';
 import 'package:revent/service/query/general/follows_getter.dart';
 import 'package:revent/pages/empty_page.dart';
@@ -47,8 +45,6 @@ class FollowsPage extends StatefulWidget {
 }
 
 class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStateMixin {
-
-  final userData = getIt.userProvider;
 
   final ValueNotifier<List<_FollowsProfilesData>> followersData = ValueNotifier([]);
   final ValueNotifier<List<_FollowsProfilesData>> followingData = ValueNotifier([]);

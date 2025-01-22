@@ -5,23 +5,20 @@ import 'package:revent/service/query/general/post_id_getter.dart';
 
 class SaveCommentEdit extends BaseQueryService {
 
-  final String title;
-  final String creator;
   final String originalComment;
   final String newComment;
 
   SaveCommentEdit({
-    required this.title,
-    required this.creator,
     required this.originalComment,
     required this.newComment,
   });
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<void> save() async {
 
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
 
     const query = 
     '''
@@ -36,12 +33,12 @@ class SaveCommentEdit extends BaseQueryService {
       'post_id': postId,
       'original_comment': originalComment,
       'new_comment': newComment,
-      'commented_by': userData.user.username
+      'commented_by': userData.username
     };
 
     await executeQuery(query, params).then((_) {
       getIt.ventCommentProvider.editComment(
-        userData.user.username, newComment, originalComment
+        userData.username, newComment, originalComment
       );
     });
 

@@ -15,7 +15,7 @@ class RepliesGetter extends BaseQueryService {
 
   final formatTimestamp = FormatDate();
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Future<Map<String, List<dynamic>>> getReplies() async {
 
@@ -39,7 +39,7 @@ class RepliesGetter extends BaseQueryService {
 
     final param = {
       'comment_id': commentId,
-      'blocked_by': userData.user.username
+      'blocked_by': userData.username
     };
 
     final results = await executeQuery(getRepliesQuery, param);

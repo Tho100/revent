@@ -9,7 +9,7 @@ import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomshee
 
 class BottomsheetVentPostActions {
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Widget _buildOptionButton({
     required String text, 
@@ -64,7 +64,7 @@ class BottomsheetVentPostActions {
           onPressed: removeSavedPostOnPressed
         ),
 
-        if(userData.user.username == creator && editOnPressed != null)
+        if(userData.username == creator && editOnPressed != null)
         _buildOptionButton(
           text: 'Edit post',
           icon: CupertinoIcons.square_pencil,
@@ -78,21 +78,21 @@ class BottomsheetVentPostActions {
           onPressed: copyOnPressed
         ),
 
-        if(userData.user.username != creator && reportOnPressed != null)
+        if(userData.username != creator && reportOnPressed != null)
         _buildOptionButton(
           text: 'Report post',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
-        if(userData.user.username != creator && blockOnPressed != null)
+        if(userData.username != creator && blockOnPressed != null)
         _buildOptionButton(
           text: 'Block @$creator',
           icon: CupertinoIcons.clear_circled,
           onPressed: blockOnPressed
         ),
 
-        if(userData.user.username == creator && deleteOnPressed != null)
+        if(userData.username == creator && deleteOnPressed != null)
         _buildOptionButton(
           text: 'Delete post',
           icon: CupertinoIcons.trash,

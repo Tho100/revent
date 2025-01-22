@@ -25,7 +25,6 @@ class LikedPage extends StatefulWidget {
 
 class _LikedPageState extends State<LikedPage> {
 
-  final userData = getIt.userProvider;
   final navigation = getIt.navigationProvider;
   final likedVentData = getIt.likedVentProvider;
 

@@ -52,8 +52,6 @@ class VentCommentPreviewer extends StatelessWidget {
       await VentCommentActions(
         username: commentedBy, 
         commentText: comment, 
-        ventCreator: activeVent.creator, 
-        ventTitle: activeVent.title
       ).delete().then(
         (_) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
       );
@@ -71,8 +69,6 @@ class VentCommentPreviewer extends StatelessWidget {
       await VentCommentActions(
         username: commentedBy, 
         commentText: comment, 
-        ventCreator: activeVent.creator, 
-        ventTitle: activeVent.title
       ).like();
 
     } catch (_) {
@@ -93,9 +89,7 @@ class VentCommentPreviewer extends StatelessWidget {
             Navigator.pop(navigatorKey.currentContext!);
             Navigator.push(
               navigatorKey.currentContext!, 
-              MaterialPageRoute(builder: (_) => EditCommentPage(
-                title: activeVent.title, creator: activeVent.creator, originalComment: comment
-                )
+              MaterialPageRoute(builder: (_) => EditCommentPage(originalComment: comment)
               )
             );
           },

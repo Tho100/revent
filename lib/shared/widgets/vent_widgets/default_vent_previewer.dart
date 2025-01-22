@@ -66,12 +66,13 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
       viewVentPostOnPressed: () => _viewVentPostPage(),
       removeSavedOnPressed: widget.isMyProfile!
         ? () async {
-        await VentActionsHandler(
-          context: context, 
-          title: widget.title, 
-          creator: widget.creator
-        ).unsavePost();
-      } : null,
+          await VentActionsHandler(
+            title: widget.title, 
+            creator: widget.creator, 
+            context: context
+          ).unsavePost();
+        }
+        : null,
       editOnPressed: () {
         Navigator.pop(context);
         NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
@@ -82,9 +83,9 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
           buttonMessage: 'Delete',
           onPressedEvent: () async {
             await VentActionsHandler(
-              context: context, 
               title: widget.title, 
-              creator: widget.creator
+              creator: widget.creator, 
+              context: context
             ).deletePost();
           }
         );

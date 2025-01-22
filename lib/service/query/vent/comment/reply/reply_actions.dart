@@ -8,13 +8,8 @@ import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
 
 class ReplyActions extends BaseQueryService {
 
-  final String title;
-  final String creator;
-
-  ReplyActions({
-    required this.creator,
-    required this.title
-  });
+  final userData = getIt.userProvider.user;
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<void> sendReply({
     required String reply, 
@@ -22,7 +17,7 @@ class ReplyActions extends BaseQueryService {
     required String commentedBy
   }) async {
 
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
 
     final commentId = await CommentIdGetter(postId: postId).getCommentId(
       username: commentedBy, commentText: commentText
@@ -34,7 +29,7 @@ class ReplyActions extends BaseQueryService {
     final params = {
       'reply': reply,
       'comment_id': commentId,
-      'replied_by': getIt.userProvider.user.username,
+      'replied_by': userData.username,
       'total_likes': 0
     };
 
@@ -68,7 +63,7 @@ class ReplyActions extends BaseQueryService {
 
     final newReply = CommentRepliesData(
       reply: reply,
-      repliedBy: getIt.userProvider.user.username, 
+      repliedBy: userData.username, 
       replyTimestamp: formattedTimestamp,
       pfpData: getIt.profileProvider.profile.profilePicture
     );

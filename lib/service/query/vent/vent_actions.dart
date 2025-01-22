@@ -12,11 +12,11 @@ class VentActions extends BaseQueryService {
   final String creator;
 
   VentActions({
-    required this.title,
-    required this.creator,
+    required this.title, 
+    required this.creator
   });
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Map<String, dynamic> _getVentProvider() {
 
@@ -37,7 +37,7 @@ class VentActions extends BaseQueryService {
 
     final likesInfoParams = {
       'post_id': postId,
-      'liked_by': userData.user.username,
+      'liked_by': userData.username,
     };
 
     final isUserLikedPost = await _isUserLikedPost(
@@ -127,7 +127,7 @@ class VentActions extends BaseQueryService {
       'INSERT INTO vent_comments_info (commented_by, comment, total_likes, total_replies, post_id) VALUES (:commented_by, :comment, :total_likes, :total_replies, :post_id)'; 
       
     final commentsParams = {
-      'commented_by': userData.user.username,
+      'commented_by': userData.username,
       'comment': comment,
       'total_likes': 0,
       'total_replies': 0,
@@ -159,7 +159,7 @@ class VentActions extends BaseQueryService {
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
     final newComment = VentCommentData(
-      commentedBy: userData.user.username, 
+      commentedBy: userData.username, 
       comment: comment,
       commentTimestamp: formattedTimestamp,
       pfpData: getIt.profileProvider.profile.profilePicture
@@ -177,7 +177,7 @@ class VentActions extends BaseQueryService {
 
     final savedInfoParams = {
       'post_id': postId,
-      'saved_by': userData.user.username
+      'saved_by': userData.username
     };
 
     final isUserSavedPost = await _isUserSavedPost(

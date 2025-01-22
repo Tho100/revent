@@ -33,9 +33,7 @@ class VentActionsHandler {
 
     try {
 
-      final userData = getIt.userProvider;
-
-      if(creator == userData.user.username) {
+      if(creator == getIt.userProvider.user.username) {
         _showTemporarySnack("Can't like your own post.");
         return;
       }

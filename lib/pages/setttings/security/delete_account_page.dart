@@ -27,7 +27,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
 
   final currentPasswordNotifier = ValueNotifier<bool>(false);
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   void _deleteAccountConfirmation() {
     CustomAlertDialog.alertDialogCustomOnPress(
@@ -35,7 +35,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
       buttonMessage: 'Delete', 
       onPressedEvent: () async {
         Navigator.pop(context);
-        await UserAccountManager().deleteAccountData(username: userData.user.username);
+        await UserAccountManager().deleteAccountData(username: userData.username);
       } 
     );
   }
@@ -45,7 +45,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
     try {
 
       final currentPasswordHash = await UserAuthService().getAccountAuthentication(
-        username: userData.user.username
+        username: userData.username
       );
 
       final currentPasswordInput = authController.currentPasswordController.text;

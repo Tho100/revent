@@ -8,21 +8,18 @@ class VentCommentActions extends BaseQueryService {
 
   final String username;
   final String commentText;
-  final String ventCreator;
-  final String ventTitle;
 
   VentCommentActions({
     required this.username,
     required this.commentText,
-    required this.ventCreator,
-    required this.ventTitle
   });
 
   final ventCommentProvider = getIt.ventCommentProvider;
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<void> delete() async {
 
-    final postId = await PostIdGetter(title: ventTitle, creator: ventCreator).getPostId();
+    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
 
     final commentId = await CommentIdGetter(postId: postId).getCommentId(
       username: username, commentText: commentText
@@ -61,7 +58,7 @@ class VentCommentActions extends BaseQueryService {
 
   Future<void> like() async {
 
-    final postId = await PostIdGetter(title: ventTitle, creator: ventCreator).getPostId();
+    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
 
     final commentId = await CommentIdGetter(postId: postId).getCommentId(
       username: username, commentText: commentText

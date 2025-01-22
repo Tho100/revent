@@ -13,7 +13,7 @@ class SaveVentEdit extends BaseQueryService {
     required this.newBody,
   });
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Future<void> save() async {
 
@@ -22,7 +22,7 @@ class SaveVentEdit extends BaseQueryService {
 
     final params = {
       'title': title,
-      'creator': userData.user.username,
+      'creator': userData.username,
       'new_body': newBody
     };
 
@@ -41,7 +41,7 @@ class SaveVentEdit extends BaseQueryService {
 
     final params = {
       'title': title,
-      'creator': userData.user.username,
+      'creator': userData.username,
       'new_body': newBody
     };
 
@@ -63,7 +63,7 @@ class SaveVentEdit extends BaseQueryService {
 
     final params = {
       'title': title,
-      'creator': userData.user.username,
+      'creator': userData.username,
       'last_edit': dateTimeNow
     };
 

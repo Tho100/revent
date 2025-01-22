@@ -42,8 +42,8 @@ class ArchivedVentPage extends StatefulWidget {
 
 class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
-  final userData = getIt.userProvider;
-  final profileData = getIt.profileProvider; 
+  final userData = getIt.userProvider.user;
+  final profileData = getIt.profileProvider.profile; 
 
   final archiveDataGetter = ArchiveVentDataGetter();
 
@@ -55,7 +55,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
     return await archiveDataGetter.getBodyText(
       title: title, 
-      creator: userData.user.username
+      creator: userData.username
     );
 
   } 
@@ -64,7 +64,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
     return await LastEditGetter(
       title: title, 
-      creator: userData.user.username
+      creator: userData.username
     ).getLastEditArchive();
 
   }
@@ -91,7 +91,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
     try {
 
       final archiveVentsInfo = await archiveDataGetter.getPosts(
-        username: userData.user.username
+        username: userData.username
       );
 
       final titles = archiveVentsInfo['title'] as List<String>;
@@ -115,10 +115,12 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
   void _deleteVentArchive(String title) async {
 
     await VentActionsHandler(
-      context: context, 
       title: title, 
-      creator: userData.user.username
-    ).deleteArchivedPost().then((_) => _removeVentFromList(title));
+      creator: userData.username, 
+      context: context
+    ).deleteArchivedPost().then(
+      (_) => _removeVentFromList(title)
+    );
 
   } 
 
@@ -134,8 +136,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
       context: context,
       title: title,
       bodyText: '',
-      creator: userData.user.username,
-      pfpData: profileData.profile.profilePicture,
+      creator: userData.username,
+      pfpData: profileData.profilePicture,
       postTimestamp: postTimestamp,
       viewVentPostOnPressed: () => _viewVentPostPage(title, postTimestamp),
       editOnPressed: () async {

@@ -20,7 +20,7 @@ class VentCommentsGetter extends BaseQueryService {
 
   final formatTimestamp = FormatDate();
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Future<Map<String, List<dynamic>>> getComments() async {
 
@@ -49,7 +49,7 @@ class VentCommentsGetter extends BaseQueryService {
 
     final param = {
       'post_id': postId,
-      'blocked_by': userData.user.username
+      'blocked_by': userData.username
     };
 
     final results = await executeQuery(getCommentsQuery, param);
@@ -112,7 +112,7 @@ class VentCommentsGetter extends BaseQueryService {
     ''';
 
     final params = {
-      'liked_by': isLikedByCreator ? creator : userData.user.username,
+      'liked_by': isLikedByCreator ? creator : userData.username,
       'post_id': postId
     };
 

@@ -33,8 +33,8 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
 
   final navigation = getIt.navigationProvider;
 
-  final userData = getIt.userProvider;
-  final profileData = getIt.profileProvider;
+  final userData = getIt.userProvider.user;
+  final profileData = getIt.profileProvider.profile;
 
   final profilePostsData = getIt.profilePostsProvider;
   final profileSavedData = getIt.profileSavedProvider;
@@ -48,7 +48,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
 
     callProfilePosts = ProfilePostsSetup(
       profileType: 'my_profile',
-      username: userData.user.username
+      username: userData.username
     );
 
     tabController = TabController(length: 2, vsync: this);
@@ -56,15 +56,15 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
     tabController.addListener(() => _onTabChanged());
 
     profileInfoWidgets = ProfileInfoWidgets(
-      username: userData.user.username, 
-      pfpData: profileData.profile.profilePicture
+      username: userData.username, 
+      pfpData: profileData.profilePicture
     );
 
     tabBarWidgets = ProfileTabBarWidgets(
       controller: tabController, 
       isMyProfile: true, 
-      username: userData.user.username, 
-      pfpData: profileData.profile.profilePicture
+      username: userData.username, 
+      pfpData: profileData.profilePicture
     );
 
   }
@@ -175,12 +175,12 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
                 profileInfoWidgets.buildPopularityHeader('vents', postsData.myProfile.titles.length),
 
                 GestureDetector(
-                  onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userData.user.username),
+                  onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userData.username),
                   child: profileInfoWidgets.buildPopularityHeader('followers', profileData.profile.followers)
                 ),
           
                 GestureDetector(
-                  onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userData.user.username),
+                  onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userData.username),
                   child: profileInfoWidgets.buildPopularityHeader('following', profileData.profile.following)
                 ),
           

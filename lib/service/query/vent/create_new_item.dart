@@ -6,7 +6,7 @@ import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 
 class CreateNewItem extends BaseQueryService {
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Future<void> newVent({
     required String ventTitle,
@@ -34,7 +34,7 @@ class CreateNewItem extends BaseQueryService {
     const insertVentInfoQuery = 'INSERT INTO vent_info (creator, title, body_text, total_likes, total_comments) VALUES (:creator, :title, :body_text, :total_likes, :total_comments)';
 
     final params = {
-      'creator': userData.user.username,
+      'creator': userData.username,
       'title': ventTitle,
       'body_text': ventBodyText,
       'total_likes': 0,
@@ -50,7 +50,7 @@ class CreateNewItem extends BaseQueryService {
     const updateTotalPostsQuery = 
       'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username';
 
-    final param = {'username': userData.user.username};
+    final param = {'username': userData.username};
 
     await executeQuery(updateTotalPostsQuery, param);
 
@@ -66,7 +66,7 @@ class CreateNewItem extends BaseQueryService {
     final newVent = VentForYouData(
       title: ventTitle, 
       bodyText: ventBodyText, 
-      creator: userData.user.username, 
+      creator: userData.username, 
       postTimestamp: formattedTimestamp, 
       profilePic: getIt.profileProvider.profile.profilePicture
     );
@@ -83,9 +83,9 @@ class CreateNewItem extends BaseQueryService {
     const insertVentInfoQuery = 'INSERT INTO archive_vent_info (creator, title, body_text) VALUES (:creator, :title, :body_text)';
 
     final params = {
-      'creator': userData.user.username,
+      'creator': userData.username,
       'title': ventTitle,
-      'body_text': ventBodyText,
+      'body_text': ventBodyText
     };
 
     await executeQuery(insertVentInfoQuery, params);

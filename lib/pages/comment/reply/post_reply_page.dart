@@ -16,16 +16,11 @@ import 'package:revent/shared/widgets/text_field/body_textfield.dart';
 
 class PostReplyPage extends StatefulWidget {
 
-  final String title;
-  final String creator;
-
   final String comment;
   final String commentedBy;
   final Uint8List commenterPfp;
   
   const PostReplyPage({
-    required this.title,
-    required this.creator,
     required this.comment,
     required this.commentedBy,
     required this.commenterPfp,
@@ -49,11 +44,13 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
       if(replyText.isNotEmpty) {
 
-        await ReplyActions(title: widget.title, creator: widget.creator).sendReply(
+        await ReplyActions().sendReply(
           reply: replyText, 
           commentText: widget.comment, 
           commentedBy: widget.commentedBy
-        ).then((_) => Navigator.pop(context));
+        ).then(
+          (_) => Navigator.pop(context)
+        );
 
         SnackBarDialog.temporarySnack(message: 'Reply added.');
 

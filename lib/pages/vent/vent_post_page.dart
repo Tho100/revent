@@ -60,8 +60,6 @@ class VentPostPage extends StatefulWidget {
 class _VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = getIt.ventCommentProvider;
-  final profileData = getIt.profileProvider;
-  final userData = getIt.userProvider;
   final navigation = getIt.navigationProvider;
   final activeVent = getIt.activeVentProvider;
   
@@ -80,9 +78,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => PostCommentPage(
-        title: widget.title, creator: widget.creator
-      ))
+      MaterialPageRoute(builder: (_) => const PostCommentPage())
     );
 
   }
@@ -434,10 +430,12 @@ class _VentPostPageState extends State<VentPostPage> {
           buttonMessage: 'Delete',
           onPressedEvent: () async {
             await VentActionsHandler(
-              context: context, 
               title: widget.title, 
-              creator: widget.creator
-            ).deletePost().then((_) => Navigator.pop(context));
+              creator: widget.creator, 
+              context: context
+            ).deletePost().then(
+              (_) => Navigator.pop(context)
+            );
           }
         );
       },
@@ -476,9 +474,9 @@ class _VentPostPageState extends State<VentPostPage> {
           isLiked: likesInfo['is_liked'],
           onPressed: () async {
             await VentActionsHandler(
-              context: context, 
               title: widget.title, 
-              creator: widget.creator
+              creator: widget.creator, 
+              context: context
             ).likePost();
           }
         );
@@ -503,10 +501,10 @@ class _VentPostPageState extends State<VentPostPage> {
         return ActionsButton().buildSaveButton(
           isSaved: _isVentSaved(),
           onPressed: () async {
-            await VentActionsHandler(
-              context: context, 
+            await VentActionsHandler(              
               title: widget.title, 
-              creator: widget.creator
+              creator: widget.creator, 
+              context: context
             ).savePost();
           }
         );
@@ -674,7 +672,7 @@ class _VentPostPageState extends State<VentPostPage> {
             ),
           ),
 
-          if(userData.user.username == widget.creator) ... [
+          if(getIt.userProvider.user.username == widget.creator) ... [
 
             const SizedBox(width: 12),
 
