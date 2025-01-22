@@ -10,14 +10,10 @@ import 'package:revent/service/query/vent/vent_actions.dart';
 class VentActionsHandler {
 
   final BuildContext context;
-  final String title;
-  final String creator;
 
-  VentActionsHandler({
-    required this.context,
-    required this.title,
-    required this.creator
-  });
+  VentActionsHandler({required this.context});
+
+  final activeVent = getIt.activeVentProvider.ventData;
 
   void _showTemporarySnack(String message) {
     SnackBarDialog.temporarySnack(message: message);
@@ -35,12 +31,12 @@ class VentActionsHandler {
 
       final userData = getIt.userProvider;
 
-      if(creator == userData.user.username) {
+      if(activeVent.creator == userData.user.username) {
         _showTemporarySnack("Can't like your own post.");
         return;
       }
 
-      await VentActions(title: title, creator: creator).likePost();
+      await VentActions(title: activeVent.title, creator: activeVent.creator).likePost();
 
     } catch (err) {
       _showTemporarySnack('Failed to like this post.');
@@ -52,7 +48,7 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteVent(title: title, creator: creator).delete().then(
+      await DeleteVent(title: activeVent.title, creator: activeVent.creator).delete().then(
         (_) {
           _showTemporarySnack('Post has been deleted.');
           _closeScreens(2);
@@ -69,7 +65,7 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteArchiveVent(title: title).delete().then(
+      await DeleteArchiveVent(title: activeVent.title).delete().then(
         (_) {
           _showTemporarySnack('Archive has been deleted.');
           _closeScreens(2);
@@ -86,7 +82,7 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteSavedVent(title: title, creator: creator).delete().then(
+      await DeleteSavedVent(title: activeVent.title, creator: activeVent.creator).delete().then(
         (_) {
           _showTemporarySnack('Removed post from Saved.');
           _closeScreens(1);
@@ -103,7 +99,7 @@ class VentActionsHandler {
 
     try {
 
-      await VentActions(title: title, creator: creator).savePost();
+      await VentActions(title: activeVent.title, creator: activeVent.creator).savePost();
 
     } catch (err) {
       _showTemporarySnack('Failed to save this post.');

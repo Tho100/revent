@@ -232,8 +232,6 @@ class _RepliesPageState extends State<RepliesPage> {
           Navigator.push(
             context,
             MaterialPageRoute(builder: (_) => PostReplyPage(
-              title: activeVent.title, 
-              creator: activeVent.creator, 
               comment: widget.comment, 
               commentedBy: widget.commentedBy, 
               commenterPfp: widget.pfpData

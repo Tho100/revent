@@ -125,13 +125,7 @@ class VentPreviewerWidgets {
     return ActionsButton().buildLikeButton(
       value: ventIndex == -1 ? 0 : likesInfo['total_likes'],
       isLiked: ventIndex == -1 ? false : likesInfo['is_liked'],
-      onPressed: () async {
-        await VentActionsHandler(
-          context: context, 
-          title: title!, 
-          creator: creator!
-        ).likePost();
-      }
+      onPressed: () async => await VentActionsHandler(context: context).likePost()
     );
     
   }
@@ -147,13 +141,7 @@ class VentPreviewerWidgets {
 
     return ActionsButton().buildSaveButton(
       isSaved: ventIndex == -1 ? false : _getIsSaved(ventData, ventIndex),
-      onPressed: () async {
-        await VentActionsHandler(
-          context: context, 
-          title: title!, 
-          creator: creator!
-        ).savePost();
-      }
+      onPressed: () async => await VentActionsHandler(context: context).savePost()
     );
   
   }

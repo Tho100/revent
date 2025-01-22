@@ -16,14 +16,7 @@ import 'package:revent/shared/widgets/text_field/body_textfield.dart';
 
 class PostCommentPage extends StatefulWidget {
 
-  final String title;
-  final String creator;
-  
-  const PostCommentPage({
-    required this.title,
-    required this.creator,
-    super.key
-  });
+  const PostCommentPage({super.key});
 
   @override
   State<PostCommentPage> createState() => _PostCommentPageState();
@@ -34,19 +27,20 @@ class _PostCommentPageState extends State<PostCommentPage> {
 
   final commentController = TextEditingController();
 
+  final activeVent = getIt.activeVentProvider.ventData;
+
   void _createCommentOnPressed() async {
 
     try {
 
       final commentProvider = getIt.ventCommentProvider;
-      final userData = getIt.userProvider;
 
       final commentText = commentController.text;
 
       if(commentText.isNotEmpty) {
 
         final commentIndex = commentProvider.ventComments.indexWhere(
-          (comment) => comment.comment == commentText && comment.commentedBy == userData.user.username
+          (comment) => comment.comment == commentText && comment.commentedBy == getIt.userProvider.user.username
         );
 
         if(commentIndex != -1) {
@@ -54,10 +48,10 @@ class _PostCommentPageState extends State<PostCommentPage> {
           return;
         } 
 
-        final ventActions = VentActions(title: widget.title, creator: widget.creator);
+        final ventActions = VentActions(title: activeVent.title, creator: activeVent.creator);
 
-        await ventActions.sendComment(comment: commentText)
-          .then((_) => Navigator.pop(context)
+        await ventActions.sendComment(comment: commentText).then(
+          (_) => Navigator.pop(context)
         );
 
         SnackBarDialog.temporarySnack(message: 'Comment added.');
@@ -88,7 +82,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
         const SizedBox(width: 10),
 
         Text(
-          widget.creator,
+          activeVent.creator,
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w800,
@@ -128,7 +122,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
                   const SizedBox(height: 10),
 
                   SelectableText(
-                    widget.title,
+                    activeVent.title,
                     style: GoogleFonts.inter(
                       color: ThemeColor.white,
                       fontWeight: FontWeight.w800,

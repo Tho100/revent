@@ -93,9 +93,7 @@ class VentCommentPreviewer extends StatelessWidget {
             Navigator.pop(navigatorKey.currentContext!);
             Navigator.push(
               navigatorKey.currentContext!, 
-              MaterialPageRoute(builder: (_) => EditCommentPage(
-                title: activeVent.title, creator: activeVent.creator, originalComment: comment
-                )
+              MaterialPageRoute(builder: (_) => EditCommentPage(originalComment: comment)
               )
             );
           },

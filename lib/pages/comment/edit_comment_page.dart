@@ -9,13 +9,9 @@ import 'package:revent/shared/widgets/text_field/body_textfield.dart';
 
 class EditCommentPage extends StatefulWidget {
 
-  final String title;
-  final String creator;
   final String originalComment;
 
   const EditCommentPage({
-    required this.title,
-    required this.creator,
     required this.originalComment,
     super.key
   });
@@ -35,14 +31,21 @@ class _EditCommentPageState extends State<EditCommentPage> {
 
       final newCommentText = commentController.text;
 
-      await SaveCommentEdit(
-        title: widget.title,
-        creator: widget.creator,
-        originalComment: widget.originalComment, 
-        newComment: newCommentText, 
-      ).save();
+      if(newCommentText.isNotEmpty) {
 
-      SnackBarDialog.temporarySnack(message: 'Saved changes.');
+        final title = getIt.activeVentProvider.ventData.title;
+        final creator = getIt.activeVentProvider.ventData.creator;
+
+        await SaveCommentEdit(
+          title: title,
+          creator: creator,
+          originalComment: widget.originalComment, 
+          newComment: newCommentText, 
+        ).save().then(
+          (_) => SnackBarDialog.temporarySnack(message: 'Saved changes.')
+        );
+        
+      }
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Failed to save changes.');

@@ -65,13 +65,8 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
       totalComments: widget.totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
       removeSavedOnPressed: widget.isMyProfile!
-        ? () async {
-        await VentActionsHandler(
-          context: context, 
-          title: widget.title, 
-          creator: widget.creator
-        ).unsavePost();
-      } : null,
+        ? () async => await VentActionsHandler(context: context).unsavePost()
+        : null,
       editOnPressed: () {
         Navigator.pop(context);
         NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
@@ -80,13 +75,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> {
         CustomAlertDialog.alertDialogCustomOnPress(
           message: 'Delete this post?', 
           buttonMessage: 'Delete',
-          onPressedEvent: () async {
-            await VentActionsHandler(
-              context: context, 
-              title: widget.title, 
-              creator: widget.creator
-            ).deletePost();
-          }
+          onPressedEvent: () async => await VentActionsHandler(context: context).deletePost()
         );
       },
       reportOnPressed: () {},
