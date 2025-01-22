@@ -8,21 +8,14 @@ import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 
 class VentActions extends BaseQueryService {
 
-  final String title;
-  final String creator;
-
-  VentActions({
-    required this.title,
-    required this.creator,
-  });
-
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Map<String, dynamic> _getVentProvider() {
 
     final currentProvider = CurrentProviderService(
-      title: title, 
-      creator: creator
+      title: activeVent.title, 
+      creator: activeVent.creator
     ).getProvider();
 
     return currentProvider;
@@ -31,13 +24,13 @@ class VentActions extends BaseQueryService {
 
   Future<void> likePost() async {
 
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
 
     const likesInfoParameterQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
 
     final likesInfoParams = {
       'post_id': postId,
-      'liked_by': userData.user.username,
+      'liked_by': userData.username,
     };
 
     final isUserLikedPost = await _isUserLikedPost(
@@ -121,13 +114,13 @@ class VentActions extends BaseQueryService {
 
   Future<void> sendComment({required String comment}) async {
 
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
 
     const insertCommentQuery = 
       'INSERT INTO vent_comments_info (commented_by, comment, total_likes, total_replies, post_id) VALUES (:commented_by, :comment, :total_likes, :total_replies, :post_id)'; 
       
     final commentsParams = {
-      'commented_by': userData.user.username,
+      'commented_by': userData.username,
       'comment': comment,
       'total_likes': 0,
       'total_replies': 0,
@@ -159,7 +152,7 @@ class VentActions extends BaseQueryService {
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
     final newComment = VentCommentData(
-      commentedBy: userData.user.username, 
+      commentedBy: userData.username, 
       comment: comment,
       commentTimestamp: formattedTimestamp,
       pfpData: getIt.profileProvider.profile.profilePicture
@@ -171,13 +164,13 @@ class VentActions extends BaseQueryService {
 
   Future<void> savePost() async {
 
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
 
     const savedInfoParamsQuery = 'WHERE post_id = :post_id AND saved_by = :saved_by';
 
     final savedInfoParams = {
       'post_id': postId,
-      'saved_by': userData.user.username
+      'saved_by': userData.username
     };
 
     final isUserSavedPost = await _isUserSavedPost(

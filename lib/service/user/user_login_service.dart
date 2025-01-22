@@ -17,8 +17,6 @@ class UserLoginService {
   final userDataGetter = UserDataGetter();
   final localStorage = LocalStorageModel();
 
-  final userData = getIt.userProvider;
-
   Future<void> login({
     required BuildContext context,
     required String email, 
@@ -62,9 +60,13 @@ class UserLoginService {
     final localUserInfo = (await localStorage.readLocalAccountInformation())['username']!;
 
     if(localUserInfo.isEmpty && isRememberMeChecked) {
+
+      final userData = getIt.userProvider.user;
+
       await localStorage.setupLocalAccountInformation(
-        username: userData.user.username, email: userData.user.email, plan: userData.user.plan
+        username: userData.username, email: userData.email, plan: userData.plan
       );
+
     }
 
   }
@@ -82,7 +84,7 @@ class UserLoginService {
       plan: accountPlan, 
     );
 
-    userData.setUser(userSetup);
+    getIt.userProvider.setUser(userSetup);
 
     await ProfileDataSetup().setup(username: username);
 

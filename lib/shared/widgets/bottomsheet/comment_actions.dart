@@ -9,7 +9,7 @@ import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomshee
 
 class BottomsheetCommentActions {
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Widget _buildOptionButton({
     required String text, 
@@ -55,7 +55,7 @@ class BottomsheetCommentActions {
 
         const BottomsheetTitle(title: 'Comment Action'),
 
-        if(userData.user.username == commenter)
+        if(userData.username == commenter)
         _buildOptionButton(
           text: 'Edit comment',
           icon: CupertinoIcons.square_pencil,
@@ -68,21 +68,21 @@ class BottomsheetCommentActions {
           onPressed: copyOnPressed
         ),
 
-        if(userData.user.username != commenter)
+        if(userData.username != commenter)
         _buildOptionButton(
           text: 'Report comment',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
-        if(userData.user.username == commenter)
+        if(userData.username == commenter)
         _buildOptionButton(
           text: 'Delete comment',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),
 
-        if(userData.user.username != commenter)
+        if(userData.username != commenter)
         _buildOptionButton(
           text: 'Block @$commenter',
           icon: CupertinoIcons.clear_circled,

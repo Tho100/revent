@@ -41,13 +41,13 @@ class RefreshService {
 
     getIt.profileProvider.clearProfileData();
 
-    final userData = getIt.userProvider;
+    final userData = getIt.userProvider.user;
 
-    await ProfileDataSetup().setup(username: userData.user.username);
+    await ProfileDataSetup().setup(username: userData.username);
 
     final callProfilePosts = ProfilePostsSetup(
       profileType: 'my_profile', 
-      username: userData.user.username
+      username: userData.username
     );
 
     getIt.profilePostsProvider.myProfile.clear();

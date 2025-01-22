@@ -60,8 +60,6 @@ class VentPostPage extends StatefulWidget {
 class _VentPostPageState extends State<VentPostPage> {
 
   final ventCommentProvider = getIt.ventCommentProvider;
-  final profileData = getIt.profileProvider;
-  final userData = getIt.userProvider;
   final navigation = getIt.navigationProvider;
   final activeVent = getIt.activeVentProvider;
   
@@ -658,7 +656,7 @@ class _VentPostPageState extends State<VentPostPage> {
             ),
           ),
 
-          if(userData.user.username == widget.creator) ... [
+          if(getIt.userProvider.user.username == widget.creator) ... [
 
             const SizedBox(width: 12),
 

@@ -30,14 +30,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final userAuth = UserAuthService();
   final hashingModel = HashingModel();
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Future<void> _updatePasswordOnPressed() async {
 
     try {
 
       final currentPasswordHash = await userAuth.getAccountAuthentication(
-        username: userData.user.username
+        username: userData.username
       );
 
       final currentPasswordInput = authController.currentPasswordController.text;
@@ -54,7 +54,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       if(currentPasswordHash == currentPasswordInputHash) {
 
         await userAuth.updateAccountAuth(
-          username: userData.user.username, 
+          username: userData.username, 
           newPasswordHash: newPasswordInputHash
         ).then((_) => CustomAlertDialog.alertDialogTitle('Password updated', 'Your account password has been updated'));
 

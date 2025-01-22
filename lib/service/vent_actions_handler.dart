@@ -29,14 +29,12 @@ class VentActionsHandler {
 
     try {
 
-      final userData = getIt.userProvider;
-
-      if(activeVent.creator == userData.user.username) {
+      if(activeVent.creator == getIt.userProvider.user.username) {
         _showTemporarySnack("Can't like your own post.");
         return;
       }
 
-      await VentActions(title: activeVent.title, creator: activeVent.creator).likePost();
+      await VentActions().likePost();
 
     } catch (err) {
       _showTemporarySnack('Failed to like this post.');
@@ -48,7 +46,7 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteVent(title: activeVent.title, creator: activeVent.creator).delete().then(
+      await DeleteVent().delete().then(
         (_) {
           _showTemporarySnack('Post has been deleted.');
           _closeScreens(2);
@@ -99,7 +97,7 @@ class VentActionsHandler {
 
     try {
 
-      await VentActions(title: activeVent.title, creator: activeVent.creator).savePost();
+      await VentActions().savePost();
 
     } catch (err) {
       _showTemporarySnack('Failed to save this post.');

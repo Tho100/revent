@@ -26,10 +26,8 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   void _loadCurrentOptions() async {
 
-    final userData = getIt.userProvider;
-
     final currentOptions = await userPrivacyActions.getCurrentOptions(
-      username: userData.user.username
+      username: getIt.userProvider.user.username
     );
 
     privateAccountNotifier.value = currentOptions['account'] != 0;

@@ -20,7 +20,7 @@ class AccountProfileWidget extends StatelessWidget {
 
   final VoidCallback? onPressed;
   
-  AccountProfileWidget({
+  const AccountProfileWidget({
     required this.username, 
     required this.pfpData, 
     this.customText,
@@ -28,8 +28,6 @@ class AccountProfileWidget extends StatelessWidget {
     this.onPressed,
     super.key
   });
-
-  final userData = getIt.userProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +57,7 @@ class AccountProfileWidget extends StatelessWidget {
           
                 const Spacer(),
 
-                if(!hideActionButton! && username != userData.user.username)
+                if(!hideActionButton! && username != getIt.userProvider.user.username)
                 SubButton(
                   customHeight: 40,
                   text: customText ?? 'Follow',

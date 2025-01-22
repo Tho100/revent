@@ -5,21 +5,14 @@ import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
 class DeleteVent extends BaseQueryService {
-  
-  final String title;
-  final String creator;
 
-  DeleteVent({
-    required this.title,
-    required this.creator,
-  });
-
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<void> delete() async {
 
     final postId = await PostIdGetter(
-      title: title, creator: userData.user.username
+      title: activeVent.title, creator: userData.username
     ).getPostId();
 
     await _deleteVentInfo(postId: postId).then((_) async {
@@ -53,7 +46,7 @@ class DeleteVent extends BaseQueryService {
     const updateTotalPostsQuery = 
       'UPDATE user_profile_info SET posts = posts - 1 WHERE username = :username';
 
-    final param = {'username': userData.user.username};
+    final param = {'username': userData.username};
 
     await executeQuery(updateTotalPostsQuery, param);
 
@@ -87,8 +80,8 @@ class DeleteVent extends BaseQueryService {
   void _removeVent() {
 
     final currentProvider = CurrentProviderService(
-      title: title, 
-      creator: creator
+      title: activeVent.title, 
+      creator: activeVent.creator
     ).getProvider();
 
     final ventIndex = currentProvider['vent_index'];    

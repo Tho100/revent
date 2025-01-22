@@ -25,7 +25,6 @@ class SavedPage extends StatefulWidget {
 
 class _SavedPageState extends State<SavedPage> {
 
-  final userData = getIt.userProvider;
   final navigation = getIt.navigationProvider;
   final savedVentData = getIt.savedVentProvider;
 

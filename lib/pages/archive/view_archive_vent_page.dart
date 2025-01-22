@@ -24,22 +24,22 @@ class ViewArchiveVentPage extends StatelessWidget {
     super.key
   });
 
-  final userData = getIt.userProvider;
-  final profileData = getIt.profileProvider;
+  final userData = getIt.userProvider.user;
+  final profileData = getIt.profileProvider.profile;
 
   Widget _buildProfilePicture() {
     return ProfilePictureWidget(
       customHeight: 35,
       customWidth: 35,
       customEmptyPfpSize: 20,
-      pfpData: profileData.profile.profilePicture,
+      pfpData: profileData.profilePicture,
     );
   }
 
   Widget _buildProfileHeader() {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(
-        username: userData.user.username, pfpData: profileData.profile.profilePicture
+        username: userData.username, pfpData: profileData.profilePicture
       ),
       child: Row(
         children: [
@@ -49,7 +49,7 @@ class ViewArchiveVentPage extends StatelessWidget {
           const SizedBox(width: 10),
     
           Text(
-            userData.user.username,
+            userData.username,
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,

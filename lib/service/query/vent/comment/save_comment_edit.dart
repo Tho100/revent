@@ -17,7 +17,7 @@ class SaveCommentEdit extends BaseQueryService {
     required this.newComment,
   });
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Future<void> save() async {
 
@@ -36,12 +36,12 @@ class SaveCommentEdit extends BaseQueryService {
       'post_id': postId,
       'original_comment': originalComment,
       'new_comment': newComment,
-      'commented_by': userData.user.username
+      'commented_by': userData.username
     };
 
     await executeQuery(query, params).then((_) {
       getIt.ventCommentProvider.editComment(
-        userData.user.username, newComment, originalComment
+        userData.username, newComment, originalComment
       );
     });
 

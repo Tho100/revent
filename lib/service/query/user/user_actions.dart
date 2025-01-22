@@ -8,7 +8,7 @@ class UserActions extends BaseQueryService {
 
   UserActions({required this.username});
 
-  final userData = getIt.userProvider;
+  final userData = getIt.userProvider.user;
 
   Future<void> userFollowAction({required bool follow}) async {
     
@@ -23,9 +23,9 @@ class UserActions extends BaseQueryService {
     ];
 
     final params = [
-      {'username': userData.user.username},
+      {'username': userData.username},
       {'username': username},
-      {'follower': userData.user.username, 'following': username}
+      {'follower': userData.username, 'following': username}
     ];
 
     final conn = await connection();
@@ -46,7 +46,7 @@ class UserActions extends BaseQueryService {
 
     final params = {
       'blocked_username': username,
-      'blocked_by': userData.user.username
+      'blocked_by': userData.username
     };
 
     await executeQuery(query, params);
