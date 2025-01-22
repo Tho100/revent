@@ -11,6 +11,7 @@ import 'package:revent/main.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
+import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
@@ -44,6 +45,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
   final userData = getIt.userProvider.user;
   final profileData = getIt.profileProvider.profile; 
+  final activeVent = getIt.activeVentProvider;
 
   final archiveDataGetter = ArchiveVentDataGetter();
 
@@ -62,10 +64,16 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
   Future<String> _getLastEdit(String title) async {
 
-    return await LastEditGetter(
-      title: title, 
-      creator: userData.username
-    ).getLastEditArchive();
+    activeVent.setVentData(
+      ActiveVentData(
+        title: title, 
+        creator: userData.username, 
+        body: '',
+        creatorPfp: profileData.profilePicture
+      )
+    );
+
+    return await LastEditGetter().getLastEditArchive();
 
   }
 
@@ -267,6 +275,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
   void dispose() {
     archivedVentsData.dispose();
     isPageLoadedNotifier.dispose();
+    activeVent.clearData();
     super.dispose();
   }
 

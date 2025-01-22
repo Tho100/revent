@@ -7,15 +7,9 @@ import 'package:revent/service/query/vent/comment/vent_comments_getter.dart';
 
 class VentCommentSetup {
 
-  Future<void> setup({
-    required String title,
-    required String creator
-  }) async {
+  Future<void> setup() async {
 
-    final commentsInfo = await VentCommentsGetter(
-      title: title, 
-      creator: creator
-    ).getComments();
+    final commentsInfo = await VentCommentsGetter().getComments();
 
     final commentedBy = commentsInfo['commented_by']! as List<String>;
     final comment = commentsInfo['comment']! as List<String>;

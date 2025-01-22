@@ -58,16 +58,11 @@ class RefreshService {
 
   }
 
-  Future<void> refreshVentPost({
-    required String title, 
-    required String creator
-  }) async {
+  Future<void> refreshVentPost() async {
 
     getIt.ventCommentProvider.deleteComments();
 
-    await VentCommentSetup().setup(
-      title: title, creator: creator
-    );
+    await VentCommentSetup().setup();
 
   }
 
