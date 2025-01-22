@@ -10,21 +10,14 @@ import 'package:revent/service/query/general/post_id_getter.dart';
 
 class VentCommentsGetter extends BaseQueryService {
 
-  final String title;
-  final String creator;
-
-  VentCommentsGetter({
-    required this.title,
-    required this.creator
-  });
-
   final formatTimestamp = FormatDate();
 
   final userData = getIt.userProvider.user;
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<Map<String, List<dynamic>>> getComments() async {
 
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
 
     final commentIds = await CommentIdGetter(postId: postId).getAllCommentsId();
 
@@ -112,7 +105,7 @@ class VentCommentsGetter extends BaseQueryService {
     ''';
 
     final params = {
-      'liked_by': isLikedByCreator ? creator : userData.username,
+      'liked_by': isLikedByCreator ? activeVent.creator : userData.username,
       'post_id': postId
     };
 

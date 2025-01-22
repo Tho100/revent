@@ -85,10 +85,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
   void _loadLastEdit() async {
 
-    final lastEdit = await LastEditGetter(
-      title: widget.title, 
-      creator: widget.creator
-    ).getLastEdit();
+    final lastEdit = await LastEditGetter().getLastEdit();
 
     activeVent.setLastEdit(lastEdit);
 
@@ -144,11 +141,9 @@ class _VentPostPageState extends State<VentPostPage> {
         return;
       }
 
-      await VentCommentSetup().setup(
-        title: widget.title, creator: widget.creator
+      await VentCommentSetup().setup().then(
+        (_) => commentsFilter.filterCommentToBest()
       );
-
-      commentsFilter.filterCommentToBest();
 
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Failed to load comments.');
@@ -177,10 +172,8 @@ class _VentPostPageState extends State<VentPostPage> {
         return;
       }
 
-      await RefreshService().refreshVentPost(
-        title: widget.title, 
-        creator: widget.creator, 
-      ).then((_) {
+      await RefreshService().refreshVentPost().then(
+      (_) {
         commentsFilter.filterCommentToBest();
         filterTextNotifier.value = 'Best';
       });
