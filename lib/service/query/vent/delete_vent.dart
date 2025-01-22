@@ -15,12 +15,11 @@ class DeleteVent extends BaseQueryService {
   });
 
   final userData = getIt.userProvider.user;
-  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<void> delete() async {
 
     final postId = await PostIdGetter(
-      title: activeVent.title, creator: userData.username
+      title: title, creator: userData.username
     ).getPostId();
 
     await _deleteVentInfo(postId: postId).then((_) async {
@@ -88,8 +87,8 @@ class DeleteVent extends BaseQueryService {
   void _removeVent() {
 
     final currentProvider = CurrentProviderService(
-      title: activeVent.title, 
-      creator: activeVent.creator
+      title: title, 
+      creator: creator
     ).getProvider();
 
     final ventIndex = currentProvider['vent_index'];    
