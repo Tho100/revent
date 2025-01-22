@@ -44,10 +44,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
       if(replyText.isNotEmpty) {
 
-        final title = getIt.activeVentProvider.ventData.title;
-        final creator = getIt.activeVentProvider.ventData.creator;
-
-        await ReplyActions(title: title, creator: creator).sendReply(
+        await ReplyActions().sendReply(
           reply: replyText, 
           commentText: widget.comment, 
           commentedBy: widget.commentedBy

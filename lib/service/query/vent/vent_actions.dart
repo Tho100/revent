@@ -8,14 +8,21 @@ import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
 
 class VentActions extends BaseQueryService {
 
+  final String title;
+  final String creator;
+
+  VentActions({
+    required this.title, 
+    required this.creator
+  });
+
   final userData = getIt.userProvider.user;
-  final activeVent = getIt.activeVentProvider.ventData;
 
   Map<String, dynamic> _getVentProvider() {
 
     final currentProvider = CurrentProviderService(
-      title: activeVent.title, 
-      creator: activeVent.creator
+      title: title, 
+      creator: creator
     ).getProvider();
 
     return currentProvider;
@@ -24,7 +31,7 @@ class VentActions extends BaseQueryService {
 
   Future<void> likePost() async {
 
-    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
     const likesInfoParameterQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
 
@@ -114,7 +121,7 @@ class VentActions extends BaseQueryService {
 
   Future<void> sendComment({required String comment}) async {
 
-    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
     const insertCommentQuery = 
       'INSERT INTO vent_comments_info (commented_by, comment, total_likes, total_replies, post_id) VALUES (:commented_by, :comment, :total_likes, :total_replies, :post_id)'; 
@@ -164,7 +171,7 @@ class VentActions extends BaseQueryService {
 
   Future<void> savePost() async {
 
-    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
+    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
     const savedInfoParamsQuery = 'WHERE post_id = :post_id AND saved_by = :saved_by';
 

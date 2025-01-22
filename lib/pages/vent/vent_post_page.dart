@@ -429,7 +429,11 @@ class _VentPostPageState extends State<VentPostPage> {
           message: 'Delete this post?', 
           buttonMessage: 'Delete',
           onPressedEvent: () async {
-            await VentActionsHandler(context: context).deletePost().then(
+            await VentActionsHandler(
+              title: widget.title, 
+              creator: widget.creator, 
+              context: context
+            ).deletePost().then(
               (_) => Navigator.pop(context)
             );
           }
@@ -468,7 +472,13 @@ class _VentPostPageState extends State<VentPostPage> {
         return ActionsButton().buildLikeButton(
           value: likesInfo['total_likes'], 
           isLiked: likesInfo['is_liked'],
-          onPressed: () async => await VentActionsHandler(context: context).likePost()
+          onPressed: () async {
+            await VentActionsHandler(
+              title: widget.title, 
+              creator: widget.creator, 
+              context: context
+            ).likePost();
+          }
         );
       },
     );
@@ -490,7 +500,13 @@ class _VentPostPageState extends State<VentPostPage> {
       builder: (context) {
         return ActionsButton().buildSaveButton(
           isSaved: _isVentSaved(),
-          onPressed: () async => await VentActionsHandler(context: context).savePost()
+          onPressed: () async {
+            await VentActionsHandler(              
+              title: widget.title, 
+              creator: widget.creator, 
+              context: context
+            ).savePost();
+          }
         );
       },
     );

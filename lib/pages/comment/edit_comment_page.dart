@@ -33,18 +33,13 @@ class _EditCommentPageState extends State<EditCommentPage> {
 
       if(newCommentText.isNotEmpty) {
 
-        final title = getIt.activeVentProvider.ventData.title;
-        final creator = getIt.activeVentProvider.ventData.creator;
-
         await SaveCommentEdit(
-          title: title,
-          creator: creator,
           originalComment: widget.originalComment, 
           newComment: newCommentText, 
         ).save().then(
           (_) => SnackBarDialog.temporarySnack(message: 'Saved changes.')
         );
-        
+
       }
 
     } catch (err) {

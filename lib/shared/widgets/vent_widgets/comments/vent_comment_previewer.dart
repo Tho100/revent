@@ -52,8 +52,6 @@ class VentCommentPreviewer extends StatelessWidget {
       await VentCommentActions(
         username: commentedBy, 
         commentText: comment, 
-        ventCreator: activeVent.creator, 
-        ventTitle: activeVent.title
       ).delete().then(
         (_) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
       );
@@ -71,8 +69,6 @@ class VentCommentPreviewer extends StatelessWidget {
       await VentCommentActions(
         username: commentedBy, 
         commentText: comment, 
-        ventCreator: activeVent.creator, 
-        ventTitle: activeVent.title
       ).like();
 
     } catch (_) {

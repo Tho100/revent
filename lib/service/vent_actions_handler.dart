@@ -10,8 +10,14 @@ import 'package:revent/service/query/vent/vent_actions.dart';
 class VentActionsHandler {
 
   final BuildContext context;
+  final String title;
+  final String creator;
 
-  VentActionsHandler({required this.context});
+  VentActionsHandler({
+    required this.context,
+    required this.title,
+    required this.creator
+  });
 
   final activeVent = getIt.activeVentProvider.ventData;
 
@@ -29,12 +35,14 @@ class VentActionsHandler {
 
     try {
 
-      if(activeVent.creator == getIt.userProvider.user.username) {
+      final userData = getIt.userProvider;
+
+      if(creator == userData.user.username) {
         _showTemporarySnack("Can't like your own post.");
         return;
       }
 
-      await VentActions().likePost();
+      await VentActions(title: title, creator: creator).likePost();
 
     } catch (err) {
       _showTemporarySnack('Failed to like this post.');
@@ -46,7 +54,7 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteVent().delete().then(
+      await DeleteVent(title: title, creator: creator).delete().then(
         (_) {
           _showTemporarySnack('Post has been deleted.');
           _closeScreens(2);
@@ -63,7 +71,7 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteArchiveVent(title: activeVent.title).delete().then(
+      await DeleteArchiveVent(title: title).delete().then(
         (_) {
           _showTemporarySnack('Archive has been deleted.');
           _closeScreens(2);
@@ -80,7 +88,7 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteSavedVent(title: activeVent.title, creator: activeVent.creator).delete().then(
+      await DeleteSavedVent(title: title, creator: creator).delete().then(
         (_) {
           _showTemporarySnack('Removed post from Saved.');
           _closeScreens(1);
@@ -97,7 +105,7 @@ class VentActionsHandler {
 
     try {
 
-      await VentActions().savePost();
+      await VentActions(title: title, creator: creator).savePost();
 
     } catch (err) {
       _showTemporarySnack('Failed to save this post.');

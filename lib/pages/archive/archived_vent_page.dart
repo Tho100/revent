@@ -125,7 +125,11 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
       )
     );
 
-    await VentActionsHandler(context: context, ).deleteArchivedPost().then(
+    await VentActionsHandler(
+      title: title, 
+      creator: userData.username, 
+      context: context
+    ).deleteArchivedPost().then(
       (_) => _removeVentFromList(title)
     );
 

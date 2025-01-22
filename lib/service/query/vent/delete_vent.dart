@@ -6,6 +6,14 @@ import 'package:revent/service/query/general/post_id_getter.dart';
 
 class DeleteVent extends BaseQueryService {
 
+  final String title;
+  final String creator;
+
+  DeleteVent({
+    required this.title, 
+    required this.creator
+  });
+
   final userData = getIt.userProvider.user;
   final activeVent = getIt.activeVentProvider.ventData;
 
