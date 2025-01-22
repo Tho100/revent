@@ -19,8 +19,6 @@ class VentActionsHandler {
     required this.creator
   });
 
-  final activeVent = getIt.activeVentProvider.ventData;
-
   void _showTemporarySnack(String message) {
     SnackBarDialog.temporarySnack(message: message);
   }
@@ -35,9 +33,7 @@ class VentActionsHandler {
 
     try {
 
-      final userData = getIt.userProvider;
-
-      if(creator == userData.user.username) {
+      if(creator == getIt.userProvider.user.username) {
         _showTemporarySnack("Can't like your own post.");
         return;
       }
