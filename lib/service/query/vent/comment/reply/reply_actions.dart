@@ -35,12 +35,8 @@ class ReplyActions extends BaseQueryService {
   }
 
   Future<void> sendReply() async {
-    // TODO: use getCommentId
-    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
-
-    final commentId = await CommentIdGetter(postId: postId).getCommentId(
-      username: commentedBy, commentText: commentText
-    );
+   
+    final commentId = await _getCommentId();
 
     const query = 
       'INSERT INTO comment_replies_info (reply, comment_id, replied_by, total_likes) VALUES (:reply, :comment_id, :replied_by, :total_likes)';
