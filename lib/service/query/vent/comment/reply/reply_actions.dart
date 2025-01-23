@@ -52,7 +52,7 @@ class ReplyActions extends BaseQueryService {
       (_) async => await _updateRepliesInfo(commentId: commentId)
     );
     
-    _addReply(reply: replyText);
+    _addReply();
 
   }
 
@@ -71,13 +71,13 @@ class ReplyActions extends BaseQueryService {
 
   }
   
-  void _addReply({required String reply}) { // TODO: Remove unnecessary param
+  void _addReply() {
 
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
     final newReply = CommentRepliesData(
-      reply: reply,
+      reply: replyText,
       repliedBy: repliedBy, 
       replyTimestamp: formattedTimestamp,
       pfpData: getIt.profileProvider.profile.profilePicture
