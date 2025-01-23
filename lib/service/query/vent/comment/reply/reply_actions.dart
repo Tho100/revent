@@ -94,7 +94,7 @@ class ReplyActions extends BaseQueryService {
     final replyId = await ReplyIdGetter(
       commentId: commentId
     ).getReplyId(username: repliedBy, replyText: replyText);
-    // TODO: maybe replied_by & comented_by (from vent_comments_info) can be remove
+
     const likesInfoParameterQuery = 
       'WHERE reply_id = :reply_id AND liked_by = :liked_by';
 
