@@ -134,7 +134,7 @@ class CommentActions extends BaseQueryService {
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 FROM vent_comments_likes_info $likesInfoParameterQuery';
+      'SELECT 1 FROM comments_likes_info $likesInfoParameterQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
@@ -149,8 +149,8 @@ class CommentActions extends BaseQueryService {
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE FROM vent_comments_likes_info $likesInfoParameterQuery'
-      : 'INSERT INTO vent_comments_likes_info (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
+      ? 'DELETE FROM comments_likes_info $likesInfoParameterQuery'
+      : 'INSERT INTO comments_likes_info (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
 
     await executeQuery(query, likesInfoParams);
 

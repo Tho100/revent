@@ -63,10 +63,10 @@ class DeleteVent extends BaseQueryService {
 
     final queries = [
       '''
-        DELETE vent_comments_likes_info
-          FROM vent_comments_likes_info
+        DELETE comments_likes_info
+          FROM comments_likes_info
         INNER JOIN comments_info
-          ON vent_comments_likes_info.comment_id = comments_info.comment_id
+          ON comments_likes_info.comment_id = comments_info.comment_id
         WHERE comments_info.post_id = post_id
       ''',
       'DELETE FROM comments_info WHERE post_id = :post_id'

@@ -98,7 +98,7 @@ class CommentsGetter extends BaseQueryService {
     const readLikesQuery = 
     '''
       SELECT vcli.comment_id
-      FROM vent_comments_likes_info vcli
+      FROM comments_likes_info vcli
       JOIN comments_info vci
         ON vcli.comment_id = vci.comment_id
       WHERE vcli.liked_by = :liked_by AND vci.post_id = :post_id;
