@@ -30,7 +30,7 @@ class CommentsGetter extends BaseQueryService {
         vci.total_likes,
         vci.total_replies, 
         upi.profile_picture
-      FROM vent_comments_info vci
+      FROM comments_info vci
       JOIN user_profile_info upi 
         ON vci.commented_by = upi.username 
       LEFT JOIN user_blocked_info ubi
@@ -99,7 +99,7 @@ class CommentsGetter extends BaseQueryService {
     '''
       SELECT vcli.comment_id
       FROM vent_comments_likes_info vcli
-      JOIN vent_comments_info vci
+      JOIN comments_info vci
         ON vcli.comment_id = vci.comment_id
       WHERE vcli.liked_by = :liked_by AND vci.post_id = :post_id;
     ''';

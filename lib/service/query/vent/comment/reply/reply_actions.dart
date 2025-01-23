@@ -60,7 +60,7 @@ class ReplyActions extends BaseQueryService {
 
     const query = 
     '''
-      UPDATE vent_comments_info 
+      UPDATE comments_info 
       SET total_replies = total_replies + 1 
       WHERE comment_id = :comment_id
     ''';

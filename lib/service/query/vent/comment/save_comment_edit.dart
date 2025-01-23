@@ -22,7 +22,7 @@ class SaveCommentEdit extends BaseQueryService {
 
     const query = 
     '''
-      UPDATE vent_comments_info 
+      UPDATE comments_info 
       SET comment = :new_comment 
       WHERE post_id = :post_id 
         AND commented_by = :commented_by 

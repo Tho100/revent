@@ -14,7 +14,7 @@ class DeleteAccountData extends BaseQueryService {
         LEFT JOIN saved_vent_info svi ON svi.creator = ui.username
         LEFT JOIN archive_vent_info avi ON avi.creator = ui.username
         LEFT JOIN liked_vent_info lvi ON lvi.liked_by = ui.username
-        LEFT JOIN vent_comments_info vci ON vci.commented_by = ui.username
+        LEFT JOIN comments_info vci ON vci.commented_by = ui.username
         LEFT JOIN vent_comments_likes_info vcli ON vcli.liked_by = ui.username
       WHERE ui.username = :username;
     ''';

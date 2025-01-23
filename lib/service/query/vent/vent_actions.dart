@@ -124,7 +124,7 @@ class VentActions extends BaseQueryService {
     final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
     const insertCommentQuery = 
-      'INSERT INTO vent_comments_info (commented_by, comment, total_likes, total_replies, post_id) VALUES (:commented_by, :comment, :total_likes, :total_replies, :post_id)'; 
+      'INSERT INTO comments_info (commented_by, comment, total_likes, total_replies, post_id) VALUES (:commented_by, :comment, :total_likes, :total_replies, :post_id)'; 
       
     final commentsParams = {
       'commented_by': userData.username,

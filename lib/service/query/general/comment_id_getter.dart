@@ -14,7 +14,7 @@ class CommentIdGetter extends BaseQueryService {
 
     const getCommentIdQuery = 
     '''
-      SELECT comment_id FROM vent_comments_info 
+      SELECT comment_id FROM comments_info 
       WHERE post_id = :post_id 
         AND commented_by = :commented_by 
         AND comment = :comment
@@ -34,7 +34,7 @@ class CommentIdGetter extends BaseQueryService {
 
   Future<List<int>> getAllCommentsId() async {
 
-    const getPostIdQuery = 'SELECT comment_id FROM vent_comments_info WHERE post_id = :post_id';
+    const getPostIdQuery = 'SELECT comment_id FROM comments_info WHERE post_id = :post_id';
 
     final param = {'post_id': postId};
 

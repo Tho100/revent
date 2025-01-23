@@ -38,7 +38,7 @@ class CommentActions extends BaseQueryService {
 
     const query = 
     '''
-      DELETE FROM vent_comments_info 
+      DELETE FROM comments_info 
       WHERE comment_id = :comment_id AND post_id = :post_id
     ''';
 
@@ -114,7 +114,7 @@ class CommentActions extends BaseQueryService {
 
     final updateLikeValueQuery = 
     '''
-      UPDATE vent_comments_info 
+      UPDATE comments_info 
       SET total_likes = total_likes $operationSymbol 1 
       WHERE post_id = :post_id AND comment_id = :comment_id 
     ''';
