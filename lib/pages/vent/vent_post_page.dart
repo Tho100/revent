@@ -30,7 +30,7 @@ import 'package:revent/shared/widgets/bottomsheet/comment_settings.dart';
 import 'package:revent/shared/widgets/buttons/actions_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
-import 'package:revent/shared/widgets/vent_widgets/comments/vent_comments_listview.dart';
+import 'package:revent/shared/widgets/vent_widgets/comments/comments_listview.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class VentPostPage extends StatefulWidget {
@@ -604,7 +604,7 @@ class _VentPostPageState extends State<VentPostPage> {
                     ValueListenableBuilder(
                       valueListenable: enableCommentNotifier,
                       builder: (_, isEnabled, __) {
-                        return VentCommentsListView(
+                        return CommentsListView(
                           isCommentEnabled: enableCommentNotifier.value,
                         );
                       },

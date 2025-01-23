@@ -17,7 +17,7 @@ import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_actions.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
-class VentCommentPreviewer extends StatelessWidget {
+class CommentPreviewer extends StatelessWidget {
 
   final String commentedBy;
   final String comment;
@@ -31,7 +31,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
   final Uint8List pfpData;
 
-  VentCommentPreviewer({
+  CommentPreviewer({
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,

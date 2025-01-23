@@ -19,7 +19,7 @@ import 'package:revent/shared/widgets/profile_picture.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/reply/replies_listview.dart';
-import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_previewer.dart';
+import 'package:revent/shared/widgets/vent_widgets/comments/comment_previewer.dart';
 
 class RepliesPage extends StatefulWidget {
 
@@ -173,7 +173,7 @@ class _RepliesPageState extends State<RepliesPage> {
         final totalLikes = ventComment.ventComments[commenterIndex].totalLikes;
         final totalReplies = ventComment.ventComments[commenterIndex].totalReplies;
 
-        return VentCommentPreviewer(
+        return CommentPreviewer(
           commentedBy: widget.commentedBy, 
           comment: widget.comment, 
           commentTimestamp: widget.commentTimestamp, 

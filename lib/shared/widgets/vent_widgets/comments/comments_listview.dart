@@ -3,13 +3,13 @@ import 'package:provider/provider.dart';
 import 'package:revent/pages/comment/reply/replies_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
-import 'package:revent/shared/widgets/vent_widgets/comments/vent_comment_previewer.dart';
+import 'package:revent/shared/widgets/vent_widgets/comments/comment_previewer.dart';
 
-class VentCommentsListView extends StatelessWidget {
+class CommentsListView extends StatelessWidget {
   
   final bool isCommentEnabled;
 
-  const VentCommentsListView({
+  const CommentsListView({
     required this.isCommentEnabled,
     super.key
   });
@@ -40,7 +40,7 @@ class VentCommentsListView extends StatelessWidget {
       },
       child: Container(
         color: Colors.transparent,
-        child: VentCommentPreviewer(
+        child: CommentPreviewer(
           commentedBy: commentedBy,
           comment: comment,
           commentTimestamp: commentTimestamp,
