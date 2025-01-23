@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/vent/comment/reply/reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -16,37 +18,34 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class ReplyPreviewer extends StatelessWidget {
 
-  final String originalComment;
-  final String originalCommentedBy;
+  final String comment;
+  final String commentedBy;
 
-  final String creator; // TODO: Remove this as well and use activevent
-
-  final String commentedBy; // TOOD: Rename to repliedBy
-  final String comment; // TODO: Rename to reply
-  final String commentTimestamp;
+  final String repliedBy;
+  final String reply;
+  final String replyTimestamp;
 
   final int totalLikes;
 
-  final bool isCommentLiked;
-  final bool isCommentLikedByCreator;
+  final bool isReplyLiked;
+  final bool isReplyLikedByCreator;
 
   final Uint8List pfpData;
-  final Uint8List creatorPfpData; // TODO: Remove this
 
-  const ReplyPreviewer({
-    required this.originalComment,
-    required this.originalCommentedBy,
-    required this.creator,
-    required this.commentedBy,
+  ReplyPreviewer({
     required this.comment,
-    required this.commentTimestamp,
+    required this.commentedBy,
+    required this.repliedBy,
+    required this.reply,
+    required this.replyTimestamp,
     required this.totalLikes,
-    required this.isCommentLiked,
-    required this.isCommentLikedByCreator,
+    required this.isReplyLiked,
+    required this.isReplyLikedByCreator,
     required this.pfpData,
-    required this.creatorPfpData,
     super.key
   });
+
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<void> _deleteOnPressed() async {
 
@@ -64,21 +63,15 @@ class ReplyPreviewer extends StatelessWidget {
 
     try {
 
-      print('commenter: $commentedBy');
-
-      //SnackBarDialog.errorSnack(message: "$commentedBy | $comment");
-
       await ReplyActions(
-        repliedBy: commentedBy,
-        replyText: comment, 
-        commentText: originalComment, 
-        commentedBy: originalCommentedBy
+        repliedBy: repliedBy,
+        replyText: reply, 
+        commentText: comment, 
+        commentedBy: commentedBy
       ).like();
 
     } catch (_) {
-      print(_.toString());
-      SnackBarDialog.errorSnack(message: _.toString());
-      //SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
     
   }
@@ -143,7 +136,7 @@ class ReplyPreviewer extends StatelessWidget {
           children: [
 
             ProfilePictureWidget(
-              pfpData: creatorPfpData,
+              pfpData: activeVent.creatorPfp,
               customEmptyPfpSize: 14,
               customWidth: 18.5,
               customHeight: 18.5,
@@ -181,7 +174,7 @@ class ReplyPreviewer extends StatelessWidget {
       
           IconButton(
             onPressed: () async => await _likeOnPressed(),
-            icon: Icon(isCommentLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isCommentLiked ? ThemeColor.likedColor : ThemeColor.secondaryWhite, size: 18),
+            icon: Icon(isReplyLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isReplyLiked ? ThemeColor.likedColor : ThemeColor.secondaryWhite, size: 18),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(), 
           ),
@@ -199,7 +192,7 @@ class ReplyPreviewer extends StatelessWidget {
       
           const SizedBox(width: 25),
 
-          if(isCommentLikedByCreator)
+          if(isReplyLikedByCreator)
           _buildLikedByCreator()
       
         ],
@@ -226,7 +219,7 @@ class ReplyPreviewer extends StatelessWidget {
         const SizedBox(width: 8),
   
         Text(
-          '$commentTimestamp ${commentedBy == creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
+          '$replyTimestamp ${commentedBy == activeVent.creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,

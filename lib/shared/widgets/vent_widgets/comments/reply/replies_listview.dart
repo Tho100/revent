@@ -1,5 +1,3 @@
-import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
@@ -11,30 +9,23 @@ class RepliesListView extends StatelessWidget {
   final String comment;
   final String commentedBy;
 
-  final String creator;
-  final Uint8List creatorPfpData;
-
   const RepliesListView({
     required this.comment,
     required this.commentedBy,
-    required this.creator,
-    required this.creatorPfpData,
     super.key
   });
 
   Widget _buildCommentPreview(CommentRepliesData replyData) {
     return ReplyPreviewer(
-      originalComment: comment,
-      originalCommentedBy: commentedBy,
-      creator: creator,
-      commentedBy: replyData.repliedBy, // TODO: Renamed to repliedBy
-      comment: replyData.reply, // TODO: Rename to reply
-      commentTimestamp: replyData.replyTimestamp,
+      comment: comment,
+      commentedBy: commentedBy,
+      repliedBy: replyData.repliedBy,
+      reply: replyData.reply,
+      replyTimestamp: replyData.replyTimestamp,
       totalLikes: replyData.totalLikes,
-      isCommentLiked: replyData.isReplyLiked,
-      isCommentLikedByCreator: replyData.isReplyLikedByCreator,
+      isReplyLiked: replyData.isReplyLiked,
+      isReplyLikedByCreator: replyData.isReplyLikedByCreator,
       pfpData: replyData.pfpData,
-      creatorPfpData: creatorPfpData
     );
   }
 

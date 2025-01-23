@@ -35,12 +35,8 @@ class ReplyActions extends BaseQueryService {
   }
 
   Future<void> sendReply() async {
-    // TODO: use getCommentId
-    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
-
-    final commentId = await CommentIdGetter(postId: postId).getCommentId(
-      username: commentedBy, commentText: commentText
-    );
+   
+    final commentId = await _getCommentId();
 
     const query = 
       'INSERT INTO comment_replies_info (reply, comment_id, replied_by, total_likes) VALUES (:reply, :comment_id, :replied_by, :total_likes)';
@@ -56,7 +52,7 @@ class ReplyActions extends BaseQueryService {
       (_) async => await _updateRepliesInfo(commentId: commentId)
     );
     
-    _addReply(reply: replyText);
+    _addReply();
 
   }
 
@@ -75,13 +71,13 @@ class ReplyActions extends BaseQueryService {
 
   }
   
-  void _addReply({required String reply}) { // TODO: Remove unnecessary param
+  void _addReply() {
 
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
     final newReply = CommentRepliesData(
-      reply: reply,
+      reply: replyText,
       repliedBy: repliedBy, 
       replyTimestamp: formattedTimestamp,
       pfpData: getIt.profileProvider.profile.profilePicture
@@ -98,7 +94,7 @@ class ReplyActions extends BaseQueryService {
     final replyId = await ReplyIdGetter(
       commentId: commentId
     ).getReplyId(username: repliedBy, replyText: replyText);
-    // TODO: maybe replied_by & comented_by (from vent_comments_info) can be remove
+
     const likesInfoParameterQuery = 
       'WHERE reply_id = :reply_id AND liked_by = :liked_by';
 
