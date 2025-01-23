@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/main.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/vent/comment/reply/reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -19,8 +21,6 @@ class ReplyPreviewer extends StatelessWidget {
   final String comment;
   final String commentedBy;
 
-  final String creator;
-
   final String repliedBy;
   final String reply;
   final String replyTimestamp;
@@ -31,12 +31,10 @@ class ReplyPreviewer extends StatelessWidget {
   final bool isReplyLikedByCreator;
 
   final Uint8List pfpData;
-  final Uint8List creatorPfpData;
 
-  const ReplyPreviewer({
+  ReplyPreviewer({
     required this.comment,
     required this.commentedBy,
-    required this.creator,
     required this.repliedBy,
     required this.reply,
     required this.replyTimestamp,
@@ -44,9 +42,10 @@ class ReplyPreviewer extends StatelessWidget {
     required this.isReplyLiked,
     required this.isReplyLikedByCreator,
     required this.pfpData,
-    required this.creatorPfpData,
     super.key
   });
+
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<void> _deleteOnPressed() async {
 
@@ -137,7 +136,7 @@ class ReplyPreviewer extends StatelessWidget {
           children: [
 
             ProfilePictureWidget(
-              pfpData: creatorPfpData,
+              pfpData: activeVent.creatorPfp,
               customEmptyPfpSize: 14,
               customWidth: 18.5,
               customHeight: 18.5,
@@ -220,7 +219,7 @@ class ReplyPreviewer extends StatelessWidget {
         const SizedBox(width: 8),
   
         Text(
-          '$replyTimestamp ${commentedBy == creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
+          '$replyTimestamp ${commentedBy == activeVent.creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,
