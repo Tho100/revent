@@ -13,11 +13,11 @@ import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/comment/vent_comment_actions.dart';
+import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_actions.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
-class VentCommentPreviewer extends StatelessWidget {
+class CommentPreviewer extends StatelessWidget {
 
   final String commentedBy;
   final String comment;
@@ -31,7 +31,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
   final Uint8List pfpData;
 
-  VentCommentPreviewer({
+  CommentPreviewer({
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
@@ -49,7 +49,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
     try {
 
-      await VentCommentActions(
+      await CommentActions(
         username: commentedBy, 
         commentText: comment, 
       ).delete().then(
@@ -66,7 +66,7 @@ class VentCommentPreviewer extends StatelessWidget {
 
     try {
 
-      await VentCommentActions(
+      await CommentActions(
         username: commentedBy, 
         commentText: comment, 
       ).like();

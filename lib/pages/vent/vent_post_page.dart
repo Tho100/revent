@@ -22,15 +22,15 @@ import 'package:revent/shared/widgets/bottom_input_bar.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/model/setup/vent_comment_setup.dart';
-import 'package:revent/service/query/vent/comment/vent_comments_settings.dart';
+import 'package:revent/model/setup/comments_setup.dart';
+import 'package:revent/service/query/vent/comment/comment_settings.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_filter.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_settings.dart';
 import 'package:revent/shared/widgets/buttons/actions_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
-import 'package:revent/shared/widgets/vent_widgets/comments/vent_comments_listview.dart';
+import 'package:revent/shared/widgets/vent_widgets/comments/comments_listview.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class VentPostPage extends StatefulWidget {
@@ -66,7 +66,7 @@ class _VentPostPageState extends State<VentPostPage> {
   final enableCommentNotifier = ValueNotifier<bool>(true);
   final filterTextNotifier = ValueNotifier<String>('Best');
 
-  final commentSettings = VentCommentsSettings();
+  final commentSettings = CommentSettings();
   final commentsFilter = CommentsFilter();
 
   void _addCommentOnPressed() {
@@ -141,7 +141,7 @@ class _VentPostPageState extends State<VentPostPage> {
         return;
       }
 
-      await VentCommentSetup().setup().then(
+      await CommentsSetup().setup().then(
         (_) => commentsFilter.filterCommentToBest()
       );
 
@@ -604,7 +604,7 @@ class _VentPostPageState extends State<VentPostPage> {
                     ValueListenableBuilder(
                       valueListenable: enableCommentNotifier,
                       builder: (_, isEnabled, __) {
-                        return VentCommentsListView(
+                        return CommentsListView(
                           isCommentEnabled: enableCommentNotifier.value,
                         );
                       },

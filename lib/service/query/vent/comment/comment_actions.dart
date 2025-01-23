@@ -4,12 +4,12 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class VentCommentActions extends BaseQueryService {
+class CommentActions extends BaseQueryService {
 
   final String username;
   final String commentText;
 
-  VentCommentActions({
+  CommentActions({
     required this.username,
     required this.commentText,
   });
@@ -38,7 +38,7 @@ class VentCommentActions extends BaseQueryService {
 
     const query = 
     '''
-      DELETE FROM vent_comments_info 
+      DELETE FROM comments_info 
       WHERE comment_id = :comment_id AND post_id = :post_id
     ''';
 
@@ -55,8 +55,9 @@ class VentCommentActions extends BaseQueryService {
 
   void _removeComment() {
 
-    final index = ventCommentProvider.ventComments
-      .indexWhere((comment) => comment.commentedBy == username && comment.comment == commentText);
+    final index = ventCommentProvider.ventComments.indexWhere(
+      (comment) => comment.commentedBy == username && comment.comment == commentText
+    );
 
     if(index != -1) {
       ventCommentProvider.deleteComment(index);
@@ -114,7 +115,7 @@ class VentCommentActions extends BaseQueryService {
 
     final updateLikeValueQuery = 
     '''
-      UPDATE vent_comments_info 
+      UPDATE comments_info 
       SET total_likes = total_likes $operationSymbol 1 
       WHERE post_id = :post_id AND comment_id = :comment_id 
     ''';
@@ -134,7 +135,7 @@ class VentCommentActions extends BaseQueryService {
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 FROM vent_comments_likes_info $likesInfoParameterQuery';
+      'SELECT 1 FROM comments_likes_info $likesInfoParameterQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
@@ -149,8 +150,8 @@ class VentCommentActions extends BaseQueryService {
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE FROM vent_comments_likes_info $likesInfoParameterQuery'
-      : 'INSERT INTO vent_comments_likes_info (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
+      ? 'DELETE FROM comments_likes_info $likesInfoParameterQuery'
+      : 'INSERT INTO comments_likes_info (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
 
     await executeQuery(query, likesInfoParams);
 

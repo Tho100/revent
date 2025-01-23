@@ -8,7 +8,7 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class VentCommentsGetter extends BaseQueryService {
+class CommentsGetter extends BaseQueryService {
 
   final formatTimestamp = FormatDate();
 
@@ -24,19 +24,19 @@ class VentCommentsGetter extends BaseQueryService {
     const getCommentsQuery = 
     '''
       SELECT 
-        vci.comment, 
-        vci.commented_by,
-        vci.created_at,
-        vci.total_likes,
-        vci.total_replies, 
+        ci.comment, 
+        ci.commented_by,
+        ci.created_at,
+        ci.total_likes,
+        ci.total_replies, 
         upi.profile_picture
-      FROM vent_comments_info vci
+      FROM comments_info ci
       JOIN user_profile_info upi 
-        ON vci.commented_by = upi.username 
+        ON ci.commented_by = upi.username 
       LEFT JOIN user_blocked_info ubi
-        ON vci.commented_by = ubi.blocked_username 
+        ON ci.commented_by = ubi.blocked_username 
         AND ubi.blocked_by = :blocked_by
-      WHERE vci.post_id = :post_id
+      WHERE ci.post_id = :post_id
         AND ubi.blocked_username IS NULL
     ''';
 
@@ -97,11 +97,11 @@ class VentCommentsGetter extends BaseQueryService {
 
     const readLikesQuery = 
     '''
-      SELECT vcli.comment_id
-      FROM vent_comments_likes_info vcli
-      JOIN vent_comments_info vci
-        ON vcli.comment_id = vci.comment_id
-      WHERE vcli.liked_by = :liked_by AND vci.post_id = :post_id;
+      SELECT cli.comment_id
+      FROM comments_likes_info cli
+      JOIN comments_info ci
+        ON cli.comment_id = ci.comment_id
+      WHERE cli.liked_by = :liked_by AND ci.post_id = :post_id;
     ''';
 
     final params = {
