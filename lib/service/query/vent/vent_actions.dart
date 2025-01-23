@@ -12,7 +12,7 @@ class VentActions extends BaseQueryService {
   final String creator;
 
   VentActions({
-    required this.title, 
+    required this.title,
     required this.creator
   });
 

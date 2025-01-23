@@ -211,6 +211,8 @@ class _RepliesPageState extends State<RepliesPage> {
                 _buildMainComment(),
     
                 RepliesListView(
+                  comment: widget.comment,
+                  commentedBy: widget.commentedBy,
                   creator: activeVent.creator, 
                   creatorPfpData: activeVent.creatorPfp
                 ),
