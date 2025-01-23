@@ -55,8 +55,9 @@ class CommentActions extends BaseQueryService {
 
   void _removeComment() {
 
-    final index = ventCommentProvider.ventComments
-      .indexWhere((comment) => comment.commentedBy == username && comment.comment == commentText);
+    final index = ventCommentProvider.ventComments.indexWhere(
+      (comment) => comment.commentedBy == username && comment.comment == commentText
+    );
 
     if(index != -1) {
       ventCommentProvider.deleteComment(index);

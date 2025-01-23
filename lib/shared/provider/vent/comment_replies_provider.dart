@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-
+// TODO: Rename to ReplyData
 class CommentRepliesData {
 
   String repliedBy;
@@ -26,7 +26,7 @@ class CommentRepliesData {
   });
 
 }
-
+// TODO: Rename to RepliesProvider
 class CommentRepliesProvider extends ChangeNotifier {
 
   List<CommentRepliesData> _commentReplies = [];

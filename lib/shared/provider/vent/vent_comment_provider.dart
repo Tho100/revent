@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-
+// TODO: Rename to CommentData
 class VentCommentData {
 
   String commentedBy;
@@ -28,7 +28,7 @@ class VentCommentData {
   });
 
 }
-
+// TODO: Rename to CommentsProvider
 class VentCommentProvider extends ChangeNotifier {
 
   List<VentCommentData> _ventComments = [];
