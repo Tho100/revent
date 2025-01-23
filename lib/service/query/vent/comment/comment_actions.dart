@@ -4,12 +4,12 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class VentCommentActions extends BaseQueryService {
+class CommentActions extends BaseQueryService {
 
   final String username;
   final String commentText;
 
-  VentCommentActions({
+  CommentActions({
     required this.username,
     required this.commentText,
   });

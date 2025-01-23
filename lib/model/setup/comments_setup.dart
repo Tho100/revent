@@ -3,13 +3,13 @@ import 'dart:typed_data';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
-import 'package:revent/service/query/vent/comment/vent_comments_getter.dart';
+import 'package:revent/service/query/vent/comment/comments_getter.dart';
 
-class VentCommentSetup {
+class CommentsSetup {
 
   Future<void> setup() async {
 
-    final commentsInfo = await VentCommentsGetter().getComments();
+    final commentsInfo = await CommentsGetter().getComments();
 
     final commentedBy = commentsInfo['commented_by']! as List<String>;
     final comment = commentsInfo['comment']! as List<String>;

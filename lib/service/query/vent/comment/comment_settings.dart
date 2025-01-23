@@ -3,7 +3,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 
-class VentCommentsSettings extends BaseQueryService {
+class CommentSettings extends BaseQueryService {
 
   Future<void> toggleComment({
     required String title,

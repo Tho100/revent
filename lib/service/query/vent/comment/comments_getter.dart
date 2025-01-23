@@ -8,7 +8,7 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class VentCommentsGetter extends BaseQueryService {
+class CommentsGetter extends BaseQueryService {
 
   final formatTimestamp = FormatDate();
 

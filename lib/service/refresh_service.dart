@@ -3,7 +3,7 @@ import 'package:revent/main.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/model/setup/replies_setup.dart';
-import 'package:revent/model/setup/vent_comment_setup.dart';
+import 'package:revent/model/setup/comments_setup.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
 class RefreshService {
@@ -62,7 +62,7 @@ class RefreshService {
 
     getIt.ventCommentProvider.deleteComments();
 
-    await VentCommentSetup().setup();
+    await CommentsSetup().setup();
 
   }
 
