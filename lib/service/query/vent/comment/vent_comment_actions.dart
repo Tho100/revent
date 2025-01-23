@@ -64,12 +64,11 @@ class VentCommentActions extends BaseQueryService {
       username: username, commentText: commentText
     );
     const likesInfoParameterQuery = 
-      'WHERE comment_id = :comment_id AND liked_by = :liked_by AND commented_by = :commented_by';
+      'WHERE comment_id = :comment_id AND liked_by = :liked_by';
 
     final likesInfoParams = {
       'comment_id': commentId,
       'liked_by': getIt.userProvider.user.username,
-      'commented_by': username,
     };
 
     final isUserLikedComment = await _isUserLikedComment(
@@ -112,15 +111,12 @@ class VentCommentActions extends BaseQueryService {
     '''
       UPDATE vent_comments_info 
       SET total_likes = total_likes $operationSymbol 1 
-      WHERE post_id = :post_id 
-        AND comment_id = :comment_id 
-        AND commented_by = :commented_by
+      WHERE post_id = :post_id AND comment_id = :comment_id 
     ''';
-    // TODO: Remove 'commented_by'
+
     final ventInfoParams = {
       'post_id': postId,
-      'comment_id': commentId,
-      'commented_by': username
+      'comment_id': commentId
     };
 
     await executeQuery(updateLikeValueQuery, ventInfoParams);
@@ -149,7 +145,7 @@ class VentCommentActions extends BaseQueryService {
 
     final query = isUserLikedPost 
       ? 'DELETE FROM vent_comments_likes_info $likesInfoParameterQuery'
-      : 'INSERT INTO vent_comments_likes_info (liked_by, commented_by, comment_id) VALUES (:liked_by, :commented_by, :comment_id)';
+      : 'INSERT INTO vent_comments_likes_info (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
 
     await executeQuery(query, likesInfoParams);
 
