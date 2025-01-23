@@ -410,7 +410,7 @@ class _VentPostPageState extends State<VentPostPage> {
         Navigator.pop(context);
         NavigatePage.editVentPage(
           title: widget.title, 
-          body: getIt.activeVentProvider.ventData.body
+          body: activeVent.ventData.body
         );
       },
       copyOnPressed: () {
