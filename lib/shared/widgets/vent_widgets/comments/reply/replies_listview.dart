@@ -24,15 +24,15 @@ class RepliesListView extends StatelessWidget {
 
   Widget _buildCommentPreview(CommentRepliesData replyData) {
     return ReplyPreviewer(
-      originalComment: comment,
-      originalCommentedBy: commentedBy,
+      comment: comment,
+      commentedBy: commentedBy,
       creator: creator,
-      commentedBy: replyData.repliedBy, // TODO: Renamed to repliedBy
-      comment: replyData.reply, // TODO: Rename to reply
-      commentTimestamp: replyData.replyTimestamp,
+      repliedBy: replyData.repliedBy,
+      reply: replyData.reply,
+      replyTimestamp: replyData.replyTimestamp,
       totalLikes: replyData.totalLikes,
-      isCommentLiked: replyData.isReplyLiked,
-      isCommentLikedByCreator: replyData.isReplyLikedByCreator,
+      isReplyLiked: replyData.isReplyLiked,
+      isReplyLikedByCreator: replyData.isReplyLikedByCreator,
       pfpData: replyData.pfpData,
       creatorPfpData: creatorPfpData
     );
