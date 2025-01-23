@@ -116,7 +116,7 @@ class VentCommentActions extends BaseQueryService {
         AND comment_id = :comment_id 
         AND commented_by = :commented_by
     ''';
-
+    // TODO: Remove 'commented_by'
     final ventInfoParams = {
       'post_id': postId,
       'comment_id': commentId,

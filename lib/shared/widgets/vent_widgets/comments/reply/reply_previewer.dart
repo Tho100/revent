@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/service/query/user/user_actions.dart';
+import 'package:revent/service/query/vent/comment/reply/reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_actions.dart';
@@ -15,10 +16,13 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class ReplyPreviewer extends StatelessWidget {
 
-  final String creator;
+  final String originalComment;
+  final String originalCommentedBy;
 
-  final String commentedBy;
-  final String comment;
+  final String creator; // TODO: Remove this as well and use activevent
+
+  final String commentedBy; // TOOD: Rename to repliedBy
+  final String comment; // TODO: Rename to reply
   final String commentTimestamp;
 
   final int totalLikes;
@@ -27,9 +31,11 @@ class ReplyPreviewer extends StatelessWidget {
   final bool isCommentLikedByCreator;
 
   final Uint8List pfpData;
-  final Uint8List creatorPfpData;
+  final Uint8List creatorPfpData; // TODO: Remove this
 
   const ReplyPreviewer({
+    required this.originalComment,
+    required this.originalCommentedBy,
     required this.creator,
     required this.commentedBy,
     required this.comment,
@@ -58,10 +64,21 @@ class ReplyPreviewer extends StatelessWidget {
 
     try {
 
-      //
+      print('commenter: $commentedBy');
+
+      //SnackBarDialog.errorSnack(message: "$commentedBy | $comment");
+
+      await ReplyActions(
+        repliedBy: commentedBy,
+        replyText: comment, 
+        commentText: originalComment, 
+        commentedBy: originalCommentedBy
+      ).like();
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      print(_.toString());
+      SnackBarDialog.errorSnack(message: _.toString());
+      //SnackBarDialog.errorSnack(message: 'Something went wrong.');
     }
     
   }

@@ -16,6 +16,7 @@ class RepliesGetter extends BaseQueryService {
   final formatTimestamp = FormatDate();
 
   final userData = getIt.userProvider.user;
+  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<Map<String, List<dynamic>>> getReplies() async {
 
@@ -89,31 +90,29 @@ class RepliesGetter extends BaseQueryService {
     required List<int> repliesIds,
   }) async {
 
-    return List<bool>.generate(repliesIds.length, (index) => false);
-
-    /*const readLikesQuery = 
+    const readLikesQuery = 
     '''
-      SELECT vcli.comment_id
-      FROM vent_comments_likes_info vcli
-      JOIN vent_comments_info vci
-        ON vcli.comment_id = vci.comment_id
-      WHERE vcli.liked_by = :liked_by AND vci.post_id = :post_id;
+      SELECT rli.reply_id
+      FROM replies_likes_info rli
+      JOIN comment_replies_info cpi
+        ON rli.reply_id = cpi.reply_id
+      WHERE rli.liked_by = :liked_by AND cpi.comment_id = :comment_id
     ''';
 
     final params = {
-      'liked_by': isLikedByCreator ? creator : userData.user.username,
+      'liked_by': isLikedByCreator ? activeVent.creator : userData.username,
       'comment_id': commentId
     };
 
     final results = await executeQuery(readLikesQuery, params);
 
-    final extractedIds = ExtractData(rowsData: results).extractIntColumn('comment_id');
+    final extractedIds = ExtractData(rowsData: results).extractIntColumn('reply_id');
 
     return List<bool>.generate(
       repliesIds.length,
       (i) => extractedIds.contains(repliesIds[i]),
-    );*/
-    
+    );
+
   }
 
 }

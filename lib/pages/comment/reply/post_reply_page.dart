@@ -44,11 +44,12 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
       if(replyText.isNotEmpty) {
 
-        await ReplyActions().sendReply(
-          reply: replyText, 
+        await ReplyActions(
+          repliedBy: getIt.userProvider.user.username,
+          replyText: replyText, 
           commentText: widget.comment, 
           commentedBy: widget.commentedBy
-        ).then(
+        ).sendReply().then(
           (_) => Navigator.pop(context)
         );
 
