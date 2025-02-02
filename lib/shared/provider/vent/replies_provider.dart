@@ -29,55 +29,55 @@ class ReplyData {
 
 class RepliesProvider extends ChangeNotifier {
 
-  List<ReplyData> _commentReplies = [];
+  List<ReplyData> _replies = [];
 
-  List<ReplyData> get commentReplies => _commentReplies;
+  List<ReplyData> get replies => _replies;
 
   void setReplies(List<ReplyData> replies) {
-    _commentReplies = replies;
+    _replies = replies;
     notifyListeners();
   }
 
   void addReply(ReplyData reply) {
-    _commentReplies.add(reply);
+    _replies.add(reply);
     notifyListeners();
   }
 
   void deleteReply(int index) {
-    if (index >= 0 && index < _commentReplies.length) {
-      _commentReplies.removeAt(index);
+    if (index >= 0 && index < _replies.length) {
+      _replies.removeAt(index);
       notifyListeners();
     }
   }
 
-  void editReply(String username, String newComment, String originalComment) {
+  void editReply(String username, String newReply, String originalReply) {
     
-    final index = _commentReplies.indexWhere(
-      (comment) => comment.repliedBy == username && comment.reply == originalComment
+    final index = _replies.indexWhere(
+      (comment) => comment.repliedBy == username && comment.reply == originalReply
     );
 
-    _commentReplies[index].reply = newComment;
+    _replies[index].reply = newReply;
 
     notifyListeners();
 
   }
 
-  void likeReply(int index, bool isUserLikedComment) {
+  void likeReply(int index, bool isUserLikedReply) {
 
-    _commentReplies[index].isReplyLiked = isUserLikedComment 
+    _replies[index].isReplyLiked = isUserLikedReply 
       ? false
       : true;
 
-    _commentReplies[index].isReplyLiked 
-      ? _commentReplies[index].totalLikes += 1
-      : _commentReplies[index].totalLikes -= 1;
+    _replies[index].isReplyLiked 
+      ? _replies[index].totalLikes += 1
+      : _replies[index].totalLikes -= 1;
 
     notifyListeners();
     
   }
 
   void deleteReplies() {
-    _commentReplies.clear();
+    _replies.clear();
   }
 
 }

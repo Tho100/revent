@@ -45,8 +45,8 @@ class RepliesListView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: repliesCount,
       itemBuilder: (_, index) {
-        final reversedIndex = repliesData.commentReplies.length - 1 - index;
-        final ventComment = repliesData.commentReplies[reversedIndex];
+        final reversedIndex = repliesData.replies.length - 1 - index;
+        final ventComment = repliesData.replies[reversedIndex];
         return _buildCommentPreview(ventComment);
       }
     );
@@ -57,8 +57,8 @@ class RepliesListView extends StatelessWidget {
     return Consumer<RepliesProvider>(
       builder: (_, repliesData, __) {
 
-        final isCommentsEmpty = repliesData.commentReplies.isEmpty;
-        final repliesCount = repliesData.commentReplies.length;
+        final isCommentsEmpty = repliesData.replies.isEmpty;
+        final repliesCount = repliesData.replies.length;
 
         return isCommentsEmpty 
           ? _buildOnEmpty()

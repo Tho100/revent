@@ -119,7 +119,7 @@ class ReplyActions extends BaseQueryService {
       likesInfoParameterQuery: likesInfoParameterQuery
     );
 
-    final index = repliesProvider.commentReplies.indexWhere(
+    final index = repliesProvider.replies.indexWhere(
       (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
     );
 
