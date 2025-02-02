@@ -23,7 +23,7 @@ class RepliesSetup {
     final pfpData = repliesInfo['profile_picture']! as List<Uint8List>;
 
     final replies = List.generate(repliedBy.length, (index) {
-      return CommentRepliesData(
+      return ReplyData(
         repliedBy: repliedBy[index],
         reply: reply[index],
         replyTimestamp: replyTimestamp[index],

@@ -15,7 +15,7 @@ class RepliesListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildCommentPreview(CommentRepliesData replyData) {
+  Widget _buildCommentPreview(ReplyData replyData) {
     return ReplyPreviewer(
       comment: comment,
       commentedBy: commentedBy,

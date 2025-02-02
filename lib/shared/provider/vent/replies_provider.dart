@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-// TODO: Rename to ReplyData
-class CommentRepliesData {
+
+class ReplyData {
 
   String repliedBy;
   String reply;
@@ -15,7 +15,7 @@ class CommentRepliesData {
 
   Uint8List pfpData;
 
-  CommentRepliesData({
+  ReplyData({
     required this.repliedBy,
     required this.reply,
     required this.replyTimestamp,
@@ -29,16 +29,16 @@ class CommentRepliesData {
 
 class RepliesProvider extends ChangeNotifier {
 
-  List<CommentRepliesData> _commentReplies = [];
+  List<ReplyData> _commentReplies = [];
 
-  List<CommentRepliesData> get commentReplies => _commentReplies;
+  List<ReplyData> get commentReplies => _commentReplies;
 
-  void setReplies(List<CommentRepliesData> replies) {
+  void setReplies(List<ReplyData> replies) {
     _commentReplies = replies;
     notifyListeners();
   }
 
-  void addReply(CommentRepliesData reply) {
+  void addReply(ReplyData reply) {
     _commentReplies.add(reply);
     notifyListeners();
   }

@@ -76,7 +76,7 @@ class ReplyActions extends BaseQueryService {
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
-    final newReply = CommentRepliesData(
+    final newReply = ReplyData(
       reply: replyText,
       repliedBy: repliedBy, 
       replyTimestamp: formattedTimestamp,
