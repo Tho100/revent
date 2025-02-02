@@ -15,7 +15,7 @@ import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
@@ -31,7 +31,7 @@ void initializeLocators() {
   getIt.registerLazySingleton<VentForYouProvider>(() => VentForYouProvider());
   getIt.registerLazySingleton<VentFollowingProvider>(() => VentFollowingProvider());
   getIt.registerLazySingleton<VentTrendingProvider>(() => VentTrendingProvider());
-  getIt.registerLazySingleton<VentCommentProvider>(() => VentCommentProvider());
+  getIt.registerLazySingleton<CommentsProvider>(() => CommentsProvider());
   getIt.registerLazySingleton<CommentRepliesProvider>(() => CommentRepliesProvider());
   getIt.registerLazySingleton<ActiveVentProvider>(() => ActiveVentProvider());
   getIt.registerLazySingleton<ProfileProvider>(() => ProfileProvider());
@@ -62,7 +62,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => getIt<ProfileProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfilePostsProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ProfileSavedProvider>()),
-    ChangeNotifierProvider(create: (_) => getIt<VentCommentProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<CommentsProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<CommentRepliesProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ActiveVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SearchPostsProvider>()),

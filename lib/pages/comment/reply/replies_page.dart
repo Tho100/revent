@@ -11,7 +11,7 @@ import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/bottom_input_bar.dart';
@@ -161,7 +161,7 @@ class _RepliesPageState extends State<RepliesPage> {
   }
 
   Widget _buildMainComment() {
-    return Consumer<VentCommentProvider>(
+    return Consumer<CommentsProvider>(
       builder: (_, ventComment, __) {
         
         final commenterIndex = ventComment.ventComments.indexWhere(

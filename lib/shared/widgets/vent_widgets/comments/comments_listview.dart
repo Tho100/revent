@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/comment/reply/replies_page.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/comment_previewer.dart';
 
 class CommentsListView extends StatelessWidget {
@@ -67,7 +67,7 @@ class CommentsListView extends StatelessWidget {
   }
 
   Widget _buildListView({
-    required VentCommentProvider commentData,
+    required CommentsProvider commentData,
     required int commentsCount,
     required BuildContext context
   }) {
@@ -85,7 +85,7 @@ class CommentsListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<VentCommentProvider>(
+    return Consumer<CommentsProvider>(
       builder: (_, commentData, __) {
 
         final isCommentsEmpty = commentData.ventComments.isEmpty;

@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/service/query/vent/comment/comments_getter.dart';
 
 class CommentsSetup {

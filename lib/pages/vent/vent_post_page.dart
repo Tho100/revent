@@ -16,7 +16,7 @@ import 'package:revent/model/filter/comments_filter.dart';
 import 'package:revent/pages/comment/post_comment_page.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottom_input_bar.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
@@ -478,7 +478,7 @@ class _VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildCommentButton() {
-    return Consumer<VentCommentProvider>(
+    return Consumer<CommentsProvider>(
       builder: (_, commentsData, __) {
         return ActionsButton().buildCommentsButton(
           value: commentsData.ventComments.length, 
@@ -569,7 +569,7 @@ class _VentPostPageState extends State<VentPostPage> {
   }
 
   Widget _buildBody() {
-    return Consumer<VentCommentProvider>(
+    return Consumer<CommentsProvider>(
       builder: (_, commentData, __) {
         return RefreshIndicator(      
           color: ThemeColor.black,
