@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
-import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
+import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/reply/reply_previewer.dart';
 
 class RepliesListView extends StatelessWidget {
@@ -15,7 +15,7 @@ class RepliesListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildCommentPreview(CommentRepliesData replyData) {
+  Widget _buildCommentPreview(ReplyData replyData) {
     return ReplyPreviewer(
       comment: comment,
       commentedBy: commentedBy,
@@ -37,7 +37,7 @@ class RepliesListView extends StatelessWidget {
   }
 
   Widget _buildListView({
-    required CommentRepliesProvider repliesData,
+    required RepliesProvider repliesData,
     required int repliesCount,
   }) {
     return ListView.builder(
@@ -45,8 +45,8 @@ class RepliesListView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: repliesCount,
       itemBuilder: (_, index) {
-        final reversedIndex = repliesData.commentReplies.length - 1 - index;
-        final ventComment = repliesData.commentReplies[reversedIndex];
+        final reversedIndex = repliesData.replies.length - 1 - index;
+        final ventComment = repliesData.replies[reversedIndex];
         return _buildCommentPreview(ventComment);
       }
     );
@@ -54,11 +54,11 @@ class RepliesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<CommentRepliesProvider>(
+    return Consumer<RepliesProvider>(
       builder: (_, repliesData, __) {
 
-        final isCommentsEmpty = repliesData.commentReplies.isEmpty;
-        final repliesCount = repliesData.commentReplies.length;
+        final isCommentsEmpty = repliesData.replies.isEmpty;
+        final repliesCount = repliesData.replies.length;
 
         return isCommentsEmpty 
           ? _buildOnEmpty()

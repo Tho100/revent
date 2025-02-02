@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/vent/comment/reply/replies_getter.dart';
-import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
+import 'package:revent/shared/provider/vent/replies_provider.dart';
 
 class RepliesSetup {
 
@@ -23,7 +23,7 @@ class RepliesSetup {
     final pfpData = repliesInfo['profile_picture']! as List<Uint8List>;
 
     final replies = List.generate(repliedBy.length, (index) {
-      return CommentRepliesData(
+      return ReplyData(
         repliedBy: repliedBy[index],
         reply: reply[index],
         replyTimestamp: replyTimestamp[index],

@@ -11,7 +11,7 @@ import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/bottom_input_bar.dart';
@@ -161,17 +161,17 @@ class _RepliesPageState extends State<RepliesPage> {
   }
 
   Widget _buildMainComment() {
-    return Consumer<VentCommentProvider>(
+    return Consumer<CommentsProvider>(
       builder: (_, ventComment, __) {
         
-        final commenterIndex = ventComment.ventComments.indexWhere(
+        final commenterIndex = ventComment.comments.indexWhere(
           (comment) => comment.comment == widget.comment && comment.commentedBy == widget.commentedBy
         );
         
-        final isCommentLiked = ventComment.ventComments[commenterIndex].isCommentLiked;
+        final isCommentLiked = ventComment.comments[commenterIndex].isCommentLiked;
 
-        final totalLikes = ventComment.ventComments[commenterIndex].totalLikes;
-        final totalReplies = ventComment.ventComments[commenterIndex].totalReplies;
+        final totalLikes = ventComment.comments[commenterIndex].totalLikes;
+        final totalReplies = ventComment.comments[commenterIndex].totalReplies;
 
         return CommentPreviewer(
           commentedBy: widget.commentedBy, 

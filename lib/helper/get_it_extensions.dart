@@ -8,10 +8,10 @@ import 'package:revent/shared/provider/search/search_accounts_provider.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
-import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
+import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
-import 'package:revent/shared/provider/vent/vent_comment_provider.dart';
+import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
@@ -25,7 +25,7 @@ extension GetItExtensions on GetIt {
   VentForYouProvider get ventForYouProvider => get<VentForYouProvider>();
   VentTrendingProvider get ventTrendingProvider => get<VentTrendingProvider>();
   VentFollowingProvider get ventFollowingProvider => get<VentFollowingProvider>();
-  VentCommentProvider get ventCommentProvider => get<VentCommentProvider>();
+  CommentsProvider get ventCommentProvider => get<CommentsProvider>();
   ActiveVentProvider get activeVentProvider => get<ActiveVentProvider>();
 
   ProfilePostsProvider get profilePostsProvider => get<ProfilePostsProvider>();
@@ -38,6 +38,6 @@ extension GetItExtensions on GetIt {
   SavedVentProvider get savedVentProvider => get<SavedVentProvider>();
 
   FollowSuggestionProvider get followSuggestionProvider => get<FollowSuggestionProvider>();
-  CommentRepliesProvider get commentRepliesProvider => get<CommentRepliesProvider>();
+  RepliesProvider get commentRepliesProvider => get<RepliesProvider>();
   
 }

@@ -5,7 +5,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/query/general/replies_id_getter.dart';
-import 'package:revent/shared/provider/vent/comment_replies_provider.dart';
+import 'package:revent/shared/provider/vent/replies_provider.dart';
 
 class ReplyActions extends BaseQueryService {
 
@@ -76,7 +76,7 @@ class ReplyActions extends BaseQueryService {
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
-    final newReply = CommentRepliesData(
+    final newReply = ReplyData(
       reply: replyText,
       repliedBy: repliedBy, 
       replyTimestamp: formattedTimestamp,
@@ -119,7 +119,7 @@ class ReplyActions extends BaseQueryService {
       likesInfoParameterQuery: likesInfoParameterQuery
     );
 
-    final index = repliesProvider.commentReplies.indexWhere(
+    final index = repliesProvider.replies.indexWhere(
       (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
     );
 
