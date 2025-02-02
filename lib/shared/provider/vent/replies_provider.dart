@@ -26,8 +26,8 @@ class CommentRepliesData {
   });
 
 }
-// TODO: Rename to RepliesProvider
-class CommentRepliesProvider extends ChangeNotifier {
+
+class RepliesProvider extends ChangeNotifier {
 
   List<CommentRepliesData> _commentReplies = [];
 
