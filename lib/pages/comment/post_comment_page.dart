@@ -39,7 +39,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
 
       if(commentText.isNotEmpty) {
 
-        final commentIndex = commentProvider.ventComments.indexWhere(
+        final commentIndex = commentProvider.comments.indexWhere(
           (comment) => comment.comment == commentText && comment.commentedBy == getIt.userProvider.user.username
         );
 

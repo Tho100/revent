@@ -481,7 +481,7 @@ class _VentPostPageState extends State<VentPostPage> {
     return Consumer<CommentsProvider>(
       builder: (_, commentsData, __) {
         return ActionsButton().buildCommentsButton(
-          value: commentsData.ventComments.length, 
+          value: commentsData.comments.length, 
           onPressed: () {}
         );
       },
@@ -580,7 +580,7 @@ class _VentPostPageState extends State<VentPostPage> {
               behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
               child: SingleChildScrollView(
                 physics: AlwaysScrollableScrollPhysics(
-                  parent: commentData.ventComments.isEmpty 
+                  parent: commentData.comments.isEmpty 
                     ? const ClampingScrollPhysics() : const BouncingScrollPhysics()
                 ),
                 child: Column(

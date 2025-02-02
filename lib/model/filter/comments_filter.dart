@@ -10,7 +10,7 @@ class CommentsFilter {
 
   void filterCommentToBest() {
 
-    final sortedComments = ventCommentProvider.ventComments
+    final sortedComments = ventCommentProvider.comments
       .toList()
       ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
 
@@ -20,7 +20,7 @@ class CommentsFilter {
 
   void filterCommentToLatest() {
 
-    final sortedComments = ventCommentProvider.ventComments
+    final sortedComments = ventCommentProvider.comments
       .toList()
       ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.commentTimestamp)
         .compareTo(formatTimestamp.parseFormattedTimestamp(a.commentTimestamp)));
@@ -31,7 +31,7 @@ class CommentsFilter {
 
   void filterCommentToOldest() {
 
-    final sortedComments = ventCommentProvider.ventComments
+    final sortedComments = ventCommentProvider.comments
       .toList()
       ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.commentTimestamp)
         .compareTo(formatTimestamp.parseFormattedTimestamp(b.commentTimestamp)));

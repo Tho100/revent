@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class VentCommentData {
+class CommentsData {
 
   String commentedBy;
   String comment;
@@ -16,7 +16,7 @@ class VentCommentData {
 
   Uint8List pfpData;
 
-  VentCommentData({
+  CommentsData({
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
@@ -31,34 +31,34 @@ class VentCommentData {
 
 class CommentsProvider extends ChangeNotifier {
 
-  List<VentCommentData> _ventComments = [];
+  List<CommentsData> _comments = [];
 
-  List<VentCommentData> get ventComments => _ventComments;
+  List<CommentsData> get comments => _comments;
 
-  void setComments(List<VentCommentData> comments) {
-    _ventComments = comments;
+  void setComments(List<CommentsData> comments) {
+    _comments = comments;
     notifyListeners();
   }
 
-  void addComment(VentCommentData comment) {
-    _ventComments.add(comment);
+  void addComment(CommentsData comment) {
+    _comments.add(comment);
     notifyListeners();
   }
 
   void deleteComment(int index) {
-    if (index >= 0 && index < _ventComments.length) {
-      _ventComments.removeAt(index);
+    if (index >= 0 && index < _comments.length) {
+      _comments.removeAt(index);
       notifyListeners();
     }
   }
 
   void editComment(String username, String newComment, String originalComment) {
     
-    final index = ventComments.indexWhere(
+    final index = comments.indexWhere(
       (comment) => comment.commentedBy == username && comment.comment == originalComment
     );
 
-    ventComments[index].comment = newComment;
+    comments[index].comment = newComment;
 
     notifyListeners();
 
@@ -66,20 +66,20 @@ class CommentsProvider extends ChangeNotifier {
 
   void likeComment(int index, bool isUserLikedComment) {
 
-    _ventComments[index].isCommentLiked = isUserLikedComment 
+    _comments[index].isCommentLiked = isUserLikedComment 
       ? false
       : true;
 
-    _ventComments[index].isCommentLiked 
-      ? _ventComments[index].totalLikes += 1
-      : _ventComments[index].totalLikes -= 1;
+    _comments[index].isCommentLiked 
+      ? _comments[index].totalLikes += 1
+      : _comments[index].totalLikes -= 1;
 
     notifyListeners();
     
   }
 
   void deleteComments() {
-    _ventComments.clear();
+    _comments.clear();
   }
 
 }

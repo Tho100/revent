@@ -14,16 +14,16 @@ class CommentsListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildCommentPreview(VentCommentData ventComment, BuildContext context) {
+  Widget _buildCommentPreview(CommentsData comments, BuildContext context) {
 
-    final commentedBy = ventComment.commentedBy;
-    final comment = ventComment.comment;
-    final commentTimestamp = ventComment.commentTimestamp;
-    final totalLikes = ventComment.totalLikes;
-    final totalReplies = ventComment.totalReplies;
-    final isCommentLiked = ventComment.isCommentLiked;
-    final isCommentLikedByCreator = ventComment.isCommentLikedByCreator;
-    final pfpData = ventComment.pfpData;
+    final commentedBy = comments.commentedBy;
+    final comment = comments.comment;
+    final commentTimestamp = comments.commentTimestamp;
+    final totalLikes = comments.totalLikes;
+    final totalReplies = comments.totalReplies;
+    final isCommentLiked = comments.isCommentLiked;
+    final isCommentLikedByCreator = comments.isCommentLikedByCreator;
+    final pfpData = comments.pfpData;
 
     return GestureDetector(
       onTap: () {
@@ -76,8 +76,8 @@ class CommentsListView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: commentsCount,
       itemBuilder: (_, index) {
-        final reversedIndex = commentData.ventComments.length - 1 - index;
-        final ventComment = commentData.ventComments[reversedIndex];
+        final reversedIndex = commentData.comments.length - 1 - index;
+        final ventComment = commentData.comments[reversedIndex];
         return _buildCommentPreview(ventComment, context);
       }
     );
@@ -88,8 +88,8 @@ class CommentsListView extends StatelessWidget {
     return Consumer<CommentsProvider>(
       builder: (_, commentData, __) {
 
-        final isCommentsEmpty = commentData.ventComments.isEmpty;
-        final commentsCount = commentData.ventComments.length;
+        final isCommentsEmpty = commentData.comments.isEmpty;
+        final commentsCount = commentData.comments.length;
 
         return isCommentsEmpty 
           ? _buildOnEmpty()

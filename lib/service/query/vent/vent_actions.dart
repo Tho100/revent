@@ -158,7 +158,7 @@ class VentActions extends BaseQueryService {
     final now = DateTime.now();
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
-    final newComment = VentCommentData(
+    final newComment = CommentsData(
       commentedBy: userData.username, 
       comment: comment,
       commentTimestamp: formattedTimestamp,

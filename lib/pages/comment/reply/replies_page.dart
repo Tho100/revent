@@ -164,14 +164,14 @@ class _RepliesPageState extends State<RepliesPage> {
     return Consumer<CommentsProvider>(
       builder: (_, ventComment, __) {
         
-        final commenterIndex = ventComment.ventComments.indexWhere(
+        final commenterIndex = ventComment.comments.indexWhere(
           (comment) => comment.comment == widget.comment && comment.commentedBy == widget.commentedBy
         );
         
-        final isCommentLiked = ventComment.ventComments[commenterIndex].isCommentLiked;
+        final isCommentLiked = ventComment.comments[commenterIndex].isCommentLiked;
 
-        final totalLikes = ventComment.ventComments[commenterIndex].totalLikes;
-        final totalReplies = ventComment.ventComments[commenterIndex].totalReplies;
+        final totalLikes = ventComment.comments[commenterIndex].totalLikes;
+        final totalReplies = ventComment.comments[commenterIndex].totalReplies;
 
         return CommentPreviewer(
           commentedBy: widget.commentedBy, 

@@ -24,7 +24,7 @@ class CommentsSetup {
     final pfpData = commentsInfo['profile_picture']! as List<Uint8List>;
 
     final comments = List.generate(commentedBy.length, (index) {
-      return VentCommentData(
+      return CommentsData(
         commentedBy: commentedBy[index],
         comment: comment[index],
         commentTimestamp: commentTimestamp[index],
