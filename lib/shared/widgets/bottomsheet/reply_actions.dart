@@ -69,7 +69,7 @@ class BottomsheetReplyActions {
 
         if(userData.username == repliedBy)
         _buildOptionButton(
-          text: 'Delete comment',
+          text: 'Delete reply',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),

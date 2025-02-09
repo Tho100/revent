@@ -81,7 +81,7 @@ class ReplyPreviewer extends StatelessWidget {
     
   }
 
-  Widget _buildCommentActionButton() {
+  Widget _buildReplyActionButton() {
     return SizedBox(
       width: 25,
       height: 25,
@@ -209,9 +209,9 @@ class ReplyPreviewer extends StatelessWidget {
       children: [
 
         GestureDetector(
-          onTap: () => NavigatePage.userProfilePage(username: commentedBy, pfpData: pfpData),
+          onTap: () => NavigatePage.userProfilePage(username: repliedBy, pfpData: pfpData),
           child: Text(
-            commentedBy,
+            repliedBy,
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,
@@ -223,7 +223,7 @@ class ReplyPreviewer extends StatelessWidget {
         const SizedBox(width: 8),
   
         Text(
-          '$replyTimestamp ${commentedBy == activeVent.creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
+          '$replyTimestamp ${repliedBy == activeVent.creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,
@@ -233,7 +233,7 @@ class ReplyPreviewer extends StatelessWidget {
        
         const Spacer(),
 
-        _buildCommentActionButton(),
+        _buildReplyActionButton(),
 
       ],
     );
@@ -242,7 +242,7 @@ class ReplyPreviewer extends StatelessWidget {
   Widget _buildReplyText() {
     return Padding(
       padding: const EdgeInsets.only(right: 25.0),
-      child: StyledTextWidget(text: comment),
+      child: StyledTextWidget(text: reply),
     );
   }
 
