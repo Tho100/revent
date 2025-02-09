@@ -189,4 +189,34 @@ class ReplyActions extends BaseQueryService {
 
   }
 
+  Future<void> delete() async {
+
+    final commentId = await _getCommentId();
+
+    final replyId = await ReplyIdGetter(
+      commentId: commentId
+    ).getReplyId(username: repliedBy, replyText: replyText);
+
+    const query = 'DELETE FROM comment_replies_info WHERE reply_id = :reply_id';
+
+    final params = {'reply_id': replyId};
+
+    await executeQuery(query, params).then(
+      (_) => _removeComment()
+    );
+
+  }
+
+  void _removeComment() {
+
+    final index = repliesProvider.replies.indexWhere(
+      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
+    );
+
+    if(index != -1) {
+      repliesProvider.deleteReply(index);
+    }
+
+  }
+
 }

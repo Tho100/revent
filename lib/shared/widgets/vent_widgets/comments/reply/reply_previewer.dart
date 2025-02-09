@@ -10,7 +10,7 @@ import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/vent/comment/reply/reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/shared/widgets/bottomsheet/comment_actions.dart';
+import 'package:revent/shared/widgets/bottomsheet/reply_actions.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -51,7 +51,12 @@ class ReplyPreviewer extends StatelessWidget {
 
     try {
 
-      //
+      await ReplyActions(
+        replyText: reply, 
+        repliedBy: repliedBy, 
+        commentText: comment, 
+        commentedBy: commentedBy
+      ).delete();
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
@@ -64,8 +69,8 @@ class ReplyPreviewer extends StatelessWidget {
     try {
 
       await ReplyActions(
-        repliedBy: repliedBy,
         replyText: reply, 
+        repliedBy: repliedBy,
         commentText: comment, 
         commentedBy: commentedBy
       ).like();
@@ -81,12 +86,11 @@ class ReplyPreviewer extends StatelessWidget {
       width: 25,
       height: 25,
       child: IconButton(
-        onPressed: () => BottomsheetCommentActions().buildBottomsheet(
+        onPressed: () => BottomsheetReplyActions().buildBottomsheet(
           context: navigatorKey.currentContext!, 
-          commenter: commentedBy, 
-          editOnPressed: () {},
+          repliedBy: repliedBy, 
           copyOnPressed: () {
-            Clipboard.setData(ClipboardData(text: comment));
+            Clipboard.setData(ClipboardData(text: reply));
             Navigator.pop(navigatorKey.currentContext!);
           }, 
           reportOnPressed: () {
@@ -95,10 +99,10 @@ class ReplyPreviewer extends StatelessWidget {
           blockOnPressed: () {
             Navigator.pop(navigatorKey.currentContext!);
             CustomAlertDialog.alertDialogCustomOnPress(
-              message: 'Block @$commentedBy?', 
+              message: 'Block @$repliedBy?', 
               buttonMessage: 'Block', 
               onPressedEvent: () async {
-                await UserActions(username: commentedBy).blockUser().then(
+                await UserActions(username: repliedBy).blockUser().then(
                   (_) => Navigator.pop(navigatorKey.currentContext!)
                 );
               }
