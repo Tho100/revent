@@ -7,6 +7,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/comment/edit_comment_page.dart';
+import 'package:revent/pages/comment/reply/replies_page.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
@@ -204,7 +205,18 @@ class CommentPreviewer extends StatelessWidget {
           const SizedBox(width: 16),
       
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                navigatorKey.currentContext!,
+                MaterialPageRoute(builder: (_) => RepliesPage(
+                  commentedBy: commentedBy, 
+                  comment: comment, 
+                  commentTimestamp: commentTimestamp, 
+                  isCommentLikedByCreator: isCommentLikedByCreator, 
+                  pfpData: pfpData, 
+                ))
+              );
+            },
             icon: const Icon(CupertinoIcons.chat_bubble, color:ThemeColor.secondaryWhite, size: 18),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(), 
