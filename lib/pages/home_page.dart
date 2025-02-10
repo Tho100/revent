@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/follow_suggestion_getter.dart';
@@ -25,11 +26,10 @@ class HomePage extends StatefulWidget {
   
 }
 
-class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin {
-
-  final navigation = getIt.navigationProvider;
-  final ventFollowingData = getIt.ventFollowingProvider;
-  final ventTrendingData = getIt.ventTrendingProvider;
+class _HomePageState extends State<HomePage> with 
+  SingleTickerProviderStateMixin, 
+  VentProviderService, 
+  NavigationProviderService {
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
@@ -49,12 +49,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     if (tabController.index == 1) {
 
-      if(ventTrendingData.vents.isNotEmpty) {
+      if(trendingVentProvider.vents.isNotEmpty) {
         trendingIsLoadedNotifier.value = true;
         return;
       }
 
-      if(!trendingIsLoadedNotifier.value && ventTrendingData.vents.isEmpty) {
+      if(!trendingIsLoadedNotifier.value && trendingVentProvider.vents.isEmpty) {
         await ventDataSetup.setupTrending().then(
           (_) => trendingIsLoadedNotifier.value = true
         );
@@ -62,12 +62,12 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     } else if (tabController.index == 2) {
 
-      if(ventFollowingData.vents.isNotEmpty) {
+      if(followingVentProvider.vents.isNotEmpty) {
         followingIsLoadedNotifier.value = true;
         return;
       }
 
-      if(!followingIsLoadedNotifier.value && ventFollowingData.vents.isEmpty) {
+      if(!followingIsLoadedNotifier.value && followingVentProvider.vents.isEmpty) {
         await ventDataSetup.setupFollowing().then(
           (_) => followingIsLoadedNotifier.value = true
         );
@@ -75,7 +75,7 @@ class _HomePageState extends State<HomePage> with SingleTickerProviderStateMixin
 
     }
     
-    navigation.setHomeTabIndex(tabController.index);
+    navigationProvider.setHomeTabIndex(tabController.index);
     
   }
 

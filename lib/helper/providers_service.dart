@@ -1,4 +1,5 @@
 import 'package:revent/main.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/provider/profile/profile_provider.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
@@ -20,4 +21,8 @@ mixin VentProviderService {
   VentFollowingProvider get followingVentProvider => getIt<VentFollowingProvider>();
   ActiveVentProvider get activeVentProvider => getIt<ActiveVentProvider>();
 
+}
+
+mixin NavigationProviderService {
+  NavigationProvider get navigationProvider => getIt<NavigationProvider>();
 }
