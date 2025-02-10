@@ -4,10 +4,9 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/main.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
@@ -41,11 +40,9 @@ class ArchivedVentPage extends StatefulWidget {
   
 }
 
-class _ArchivedVentPageState extends State<ArchivedVentPage> {
-
-  final userData = getIt.userProvider.user;
-  final profileData = getIt.profileProvider.profile; 
-  final activeVent = getIt.activeVentProvider;
+class _ArchivedVentPageState extends State<ArchivedVentPage> with 
+  UserProfileProviderService, 
+  VentProviderService {
 
   final archiveDataGetter = ArchiveVentDataGetter();
 
@@ -57,19 +54,19 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
     return await archiveDataGetter.getBodyText(
       title: title, 
-      creator: userData.username
+      creator: userProvider.user.username
     );
 
   } 
 
   Future<String> _getLastEdit(String title) async {
 
-    activeVent.setVentData(
+    activeVentProvider.setVentData(
       ActiveVentData(
         title: title, 
-        creator: userData.username, 
+        creator: userProvider.user.username, 
         body: '',
-        creatorPfp: profileData.profilePicture
+        creatorPfp: profileProvider.profile.profilePicture
       )
     );
 
@@ -99,7 +96,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
     try {
 
       final archiveVentsInfo = await archiveDataGetter.getPosts(
-        username: userData.username
+        username: userProvider.user.username
       );
 
       final titles = archiveVentsInfo['title'] as List<String>;
@@ -124,7 +121,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
 
     await VentActionsHandler(
       title: title, 
-      creator: userData.username, 
+      creator: userProvider.user.username, 
       context: context
     ).deleteArchivedPost().then(
       (_) => _removeVentFromList(title)
@@ -144,8 +141,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
       context: context,
       title: title,
       bodyText: '',
-      creator: userData.username,
-      pfpData: profileData.profilePicture,
+      creator: userProvider.user.username,
+      pfpData: profileProvider.profile.profilePicture,
       postTimestamp: postTimestamp,
       viewVentPostOnPressed: () => _viewVentPostPage(title, postTimestamp),
       editOnPressed: () async {
@@ -275,7 +272,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> {
   void dispose() {
     archivedVentsData.dispose();
     isPageLoadedNotifier.dispose();
-    activeVent.clearData();
+    activeVentProvider.clearData();
     super.dispose();
   }
 

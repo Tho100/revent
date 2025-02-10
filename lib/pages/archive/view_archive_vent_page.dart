@@ -1,22 +1,21 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
-class ViewArchiveVentPage extends StatelessWidget {
+class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderService {
 
   final String title;
   final String bodyText;
   final String postTimestamp;
   final String lastEdit;
 
-  ViewArchiveVentPage({
+  const ViewArchiveVentPage({
     required this.title,
     required this.bodyText,
     required this.postTimestamp,
@@ -24,22 +23,19 @@ class ViewArchiveVentPage extends StatelessWidget {
     super.key
   });
 
-  final userData = getIt.userProvider.user;
-  final profileData = getIt.profileProvider.profile;
-
   Widget _buildProfilePicture() {
     return ProfilePictureWidget(
       customHeight: 35,
       customWidth: 35,
       customEmptyPfpSize: 20,
-      pfpData: profileData.profilePicture,
+      pfpData: profileProvider.profile.profilePicture,
     );
   }
 
   Widget _buildProfileHeader() {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(
-        username: userData.username, pfpData: profileData.profilePicture
+        username: userProvider.user.username, pfpData: profileProvider.profile.profilePicture
       ),
       child: Row(
         children: [
@@ -49,7 +45,7 @@ class ViewArchiveVentPage extends StatelessWidget {
           const SizedBox(width: 10),
     
           Text(
-            userData.username,
+            userProvider.user.username,
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,

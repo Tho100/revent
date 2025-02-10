@@ -2,10 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -20,9 +19,7 @@ class SplashScreen extends StatefulWidget {
 
 }
 
-class _SplashScreenState extends State<SplashScreen> {
-
-  final userData = getIt.userProvider;
+class _SplashScreenState extends State<SplashScreen> with UserProfileProviderService {
 
   final localModel = LocalStorageModel();
 
@@ -49,7 +46,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<void> _loadStartupData() async {
 
-    await ProfileDataSetup().setup(username: userData.user.username).then(
+    await ProfileDataSetup().setup(username: userProvider.user.username).then(
       (_) async => await VentDataSetup().setupForYou()
     );
 
@@ -94,7 +91,7 @@ class _SplashScreenState extends State<SplashScreen> {
         plan: accountPlan, 
       );
 
-      userData.setUser(userSetup);
+      userProvider.setUser(userSetup);
 
       await _loadStartupData().then(
         (_) => NavigatePage.homePage()

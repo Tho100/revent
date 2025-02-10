@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
-class BottomsheetVentPostActions {
-
-  final userData = getIt.userProvider.user;
+class BottomsheetVentPostActions with UserProfileProviderService {
 
   Widget _buildOptionButton({
     required String text, 
@@ -64,7 +61,7 @@ class BottomsheetVentPostActions {
           onPressed: removeSavedPostOnPressed
         ),
 
-        if(userData.username == creator && editOnPressed != null)
+        if(userProvider.user.username == creator && editOnPressed != null)
         _buildOptionButton(
           text: 'Edit post',
           icon: CupertinoIcons.square_pencil,
@@ -78,21 +75,21 @@ class BottomsheetVentPostActions {
           onPressed: copyOnPressed
         ),
 
-        if(userData.username != creator && reportOnPressed != null)
+        if(userProvider.user.username != creator && reportOnPressed != null)
         _buildOptionButton(
           text: 'Report post',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
-        if(userData.username != creator && blockOnPressed != null)
+        if(userProvider.user.username != creator && blockOnPressed != null)
         _buildOptionButton(
           text: 'Block @$creator',
           icon: CupertinoIcons.clear_circled,
           onPressed: blockOnPressed
         ),
 
-        if(userData.username == creator && deleteOnPressed != null)
+        if(userProvider.user.username == creator && deleteOnPressed != null)
         _buildOptionButton(
           text: 'Delete post',
           icon: CupertinoIcons.trash,

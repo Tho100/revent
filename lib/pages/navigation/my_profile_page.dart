@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -29,14 +30,12 @@ class MyProfilePage extends StatefulWidget {
 
 }
 
-class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProviderStateMixin {
+class _MyProfilePageState extends State<MyProfilePage> with 
+  SingleTickerProviderStateMixin, 
+  UserProfileProviderService,
+  NavigationProviderService {
 
-  final navigation = getIt.navigationProvider;
-
-  final userData = getIt.userProvider.user;
-  final profileData = getIt.profileProvider.profile;
-
-  final profilePostsData = getIt.profilePostsProvider;
+  final profilePostsData = getIt.profilePostsProvider; // TODO: Add profile-posts provider to providers-service
   final profileSavedData = getIt.profileSavedProvider;
 
   late ProfilePostsSetup callProfilePosts;
@@ -48,7 +47,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
 
     callProfilePosts = ProfilePostsSetup(
       profileType: 'my_profile',
-      username: userData.username
+      username: userProvider.user.username
     );
 
     tabController = TabController(length: 2, vsync: this);
@@ -56,15 +55,15 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
     tabController.addListener(() => _onTabChanged());
 
     profileInfoWidgets = ProfileInfoWidgets(
-      username: userData.username, 
-      pfpData: profileData.profilePicture
+      username: userProvider.user.username, 
+      pfpData: profileProvider.profile.profilePicture
     );
 
     tabBarWidgets = ProfileTabBarWidgets(
       controller: tabController, 
       isMyProfile: true, 
-      username: userData.username, 
-      pfpData: profileData.profilePicture
+      username: userProvider.user.username, 
+      pfpData: profileProvider.profile.profilePicture
     );
 
   }
@@ -76,7 +75,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
     }
 
     setState(() {
-      navigation.setProfileTabIndex(tabController.index);
+      navigationProvider.setProfileTabIndex(tabController.index);
     });
 
   }
@@ -175,12 +174,12 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
                 profileInfoWidgets.buildPopularityHeader('vents', postsData.myProfile.titles.length),
 
                 GestureDetector(
-                  onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userData.username),
+                  onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userProvider.user.username),
                   child: profileInfoWidgets.buildPopularityHeader('followers', profileData.profile.followers)
                 ),
           
                 GestureDetector(
-                  onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userData.username),
+                  onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userProvider.user.username),
                   child: profileInfoWidgets.buildPopularityHeader('following', profileData.profile.following)
                 ),
           
@@ -236,7 +235,7 @@ class _MyProfilePageState extends State<MyProfilePage> with SingleTickerProvider
 
   @override
   void dispose() {
-    navigation.setProfileTabIndex(0);
+    navigationProvider.setProfileTabIndex(0);
     tabController.dispose();
     super.dispose();
   }
