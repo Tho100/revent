@@ -1,15 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
-class BottomsheetCommentActions {
-
-  final userData = getIt.userProvider.user;
+class BottomsheetCommentActions with UserProfileProviderService {
 
   Widget _buildOptionButton({
     required String text, 
@@ -55,7 +52,7 @@ class BottomsheetCommentActions {
 
         const BottomsheetTitle(title: 'Comment Action'),
 
-        if(userData.username == commenter)
+        if(userProvider.user.username == commenter)
         _buildOptionButton(
           text: 'Edit comment',
           icon: CupertinoIcons.square_pencil,
@@ -68,21 +65,21 @@ class BottomsheetCommentActions {
           onPressed: copyOnPressed
         ),
 
-        if(userData.username != commenter)
+        if(userProvider.user.username != commenter)
         _buildOptionButton(
           text: 'Report comment',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
-        if(userData.username == commenter)
+        if(userProvider.user.username == commenter)
         _buildOptionButton(
           text: 'Delete comment',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),
 
-        if(userData.username != commenter)
+        if(userProvider.user.username != commenter)
         _buildOptionButton(
           text: 'Block @$commenter',
           icon: CupertinoIcons.clear_circled,
