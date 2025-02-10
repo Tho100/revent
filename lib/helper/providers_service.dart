@@ -33,5 +33,7 @@ mixin SearchProviderService {
 }
 
 mixin NavigationProviderService {
+  
   NavigationProvider get navigationProvider => getIt<NavigationProvider>();
+
 }
