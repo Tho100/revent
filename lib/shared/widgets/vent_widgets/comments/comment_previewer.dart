@@ -3,9 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/constant.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/pages/comment/edit_comment_page.dart';
 import 'package:revent/pages/comment/reply/replies_page.dart';
 import 'package:revent/service/query/user/user_actions.dart';
@@ -18,7 +17,7 @@ import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_actions.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
-class CommentPreviewer extends StatelessWidget {
+class CommentPreviewer extends StatelessWidget with VentProviderService {
 
   final String commentedBy;
   final String comment;
@@ -43,8 +42,6 @@ class CommentPreviewer extends StatelessWidget {
     required this.pfpData,
     super.key
   });
-
-  final activeVent = getIt.activeVentProvider.ventData;
 
   Future<void> _deleteOnPressed() async {
 
@@ -148,7 +145,7 @@ class CommentPreviewer extends StatelessWidget {
           children: [
 
             ProfilePictureWidget(
-              pfpData: getIt.activeVentProvider.ventData.creatorPfp,
+              pfpData: activeVentProvider.ventData.creatorPfp,
               customEmptyPfpSize: 15,
               customWidth: 20,
               customHeight: 20,
@@ -262,7 +259,7 @@ class CommentPreviewer extends StatelessWidget {
         const SizedBox(width: 8),
 
         Text(
-          '$commentTimestamp ${commentedBy == activeVent.creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
+          '$commentTimestamp ${commentedBy == activeVentProvider.ventData.creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w800,

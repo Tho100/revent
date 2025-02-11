@@ -1,11 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/user_profile/profile_posts_getter.dart';
 import 'package:revent/service/query/user_profile/profile_saved_getter.dart';
 
-class ProfilePostsSetup {
+class ProfilePostsSetup with ProfilePostsProviderService {
 
   final String profileType;
   final String username;
@@ -17,11 +16,9 @@ class ProfilePostsSetup {
 
   Future<void> setupPosts() async {
 
-    final profilePostsData = getIt.profilePostsProvider;
-
     final isDataEmpty = profileType == 'my_profile' 
-      ? profilePostsData.myProfile.titles.isEmpty 
-      : profilePostsData.userProfile.titles.isEmpty;
+      ? profilePostsProvider.myProfile.titles.isEmpty 
+      : profilePostsProvider.userProfile.titles.isEmpty;
 
     if(isDataEmpty) {
 
@@ -40,14 +37,14 @@ class ProfilePostsSetup {
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
       final isPostSaved = getPostsData['is_saved'] as List<bool>;
 
-      profilePostsData.setTitles(profileType, title);
-      profilePostsData.setBodyText(profileType, bodyText);
-      profilePostsData.setTotalLikes(profileType, totalLikes);
-      profilePostsData.setTotalComments(profileType, totalComments);
-      profilePostsData.setPostTimestamp(profileType, postTimestamp);
+      profilePostsProvider.setTitles(profileType, title);
+      profilePostsProvider.setBodyText(profileType, bodyText);
+      profilePostsProvider.setTotalLikes(profileType, totalLikes);
+      profilePostsProvider.setTotalComments(profileType, totalComments);
+      profilePostsProvider.setPostTimestamp(profileType, postTimestamp);
       
-      profilePostsData.setIsPostLiked(profileType, isPostLiked);
-      profilePostsData.setIsPostSaved(profileType, isPostSaved);
+      profilePostsProvider.setIsPostLiked(profileType, isPostLiked);
+      profilePostsProvider.setIsPostSaved(profileType, isPostSaved);
 
     }
 
@@ -55,11 +52,9 @@ class ProfilePostsSetup {
 
   Future<void> setupSaved() async {
 
-    final profileSavedData = getIt.profileSavedProvider;
-
     final isDataEmpty = profileType == 'my_profile' 
-      ? profileSavedData.myProfile.titles.isEmpty 
-      : profileSavedData.userProfile.titles.isEmpty;
+      ? profileSavedProvider.myProfile.titles.isEmpty 
+      : profileSavedProvider.userProfile.titles.isEmpty;
 
     if(isDataEmpty) {
 
@@ -81,17 +76,17 @@ class ProfilePostsSetup {
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
       final isPostSaved = getPostsData['is_saved'] as List<bool>;
 
-      profileSavedData.setCreator(profileType, creator);
-      profileSavedData.setProfilePicture(profileType, profilePicture);
+      profileSavedProvider.setCreator(profileType, creator);
+      profileSavedProvider.setProfilePicture(profileType, profilePicture);
 
-      profileSavedData.setTitles(profileType, title);
-      profileSavedData.setBodyText(profileType, bodyText);
-      profileSavedData.setTotalLikes(profileType, totalLikes);
-      profileSavedData.setTotalComments(profileType, totalComments);
-      profileSavedData.setPostTimestamp(profileType, postTimestamp);
+      profileSavedProvider.setTitles(profileType, title);
+      profileSavedProvider.setBodyText(profileType, bodyText);
+      profileSavedProvider.setTotalLikes(profileType, totalLikes);
+      profileSavedProvider.setTotalComments(profileType, totalComments);
+      profileSavedProvider.setPostTimestamp(profileType, postTimestamp);
 
-      profileSavedData.setIsPostLiked(profileType, isPostLiked);
-      profileSavedData.setIsPostSaved(profileType, isPostSaved);
+      profileSavedProvider.setIsPostLiked(profileType, isPostLiked);
+      profileSavedProvider.setIsPostSaved(profileType, isPostSaved);
 
     } 
 
