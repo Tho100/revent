@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
@@ -23,24 +22,23 @@ class PostCommentPage extends StatefulWidget {
 
 }
 
-class _PostCommentPageState extends State<PostCommentPage> {
+class _PostCommentPageState extends State<PostCommentPage> with 
+  UserProfileProviderService,
+  VentProviderService,
+  CommentsProviderService {
 
   final commentController = TextEditingController();
-
-  final activeVent = getIt.activeVentProvider.ventData;
 
   void _createCommentOnPressed() async {
 
     try {
 
-      final commentProvider = getIt.ventCommentProvider;
-
       final commentText = commentController.text;
 
       if(commentText.isNotEmpty) {
 
-        final commentIndex = commentProvider.comments.indexWhere(
-          (comment) => comment.comment == commentText && comment.commentedBy == getIt.userProvider.user.username
+        final commentIndex = commentsProvider.comments.indexWhere(
+          (comment) => comment.comment == commentText && comment.commentedBy == userProvider.user.username
         );
 
         if(commentIndex != -1) {
@@ -49,8 +47,8 @@ class _PostCommentPageState extends State<PostCommentPage> {
         } 
 
         await VentActions(
-          title: activeVent.title, 
-          creator: activeVent.creator
+          title: activeVentProvider.ventData.title, 
+          creator: activeVentProvider.ventData.creator
         ).sendComment(comment: commentText).then(
           (_) => Navigator.pop(context)
         );
@@ -76,14 +74,14 @@ class _PostCommentPageState extends State<PostCommentPage> {
             customHeight: 35,
             customWidth: 35,
             customEmptyPfpSize: 20,
-            pfpData: getIt.activeVentProvider.ventData.creatorPfp,
+            pfpData: activeVentProvider.ventData.creatorPfp,
           ),
         ),
 
         const SizedBox(width: 10),
 
         Text(
-          activeVent.creator,
+          activeVentProvider.ventData.creator,
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w800,
@@ -123,7 +121,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
                   const SizedBox(height: 10),
 
                   SelectableText(
-                    activeVent.title,
+                    activeVentProvider.ventData.title,
                     style: GoogleFonts.inter(
                       color: ThemeColor.white,
                       fontWeight: FontWeight.w800,
@@ -166,7 +164,7 @@ class _PostCommentPageState extends State<PostCommentPage> {
             customHeight: 35,
             customWidth: 35,
             customEmptyPfpSize: 20,
-            pfpData: getIt.profileProvider.profile.profilePicture
+            pfpData: profileProvider.profile.profilePicture
           ),
         ),
 

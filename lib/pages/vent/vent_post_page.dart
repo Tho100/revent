@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
@@ -57,9 +58,8 @@ class VentPostPage extends StatefulWidget {
 
 }
 
-class _VentPostPageState extends State<VentPostPage> {
+class _VentPostPageState extends State<VentPostPage> with CommentsProviderService {
 
-  final ventCommentProvider = getIt.ventCommentProvider;
   final navigation = getIt.navigationProvider;
   final activeVent = getIt.activeVentProvider;
   
@@ -108,7 +108,7 @@ class _VentPostPageState extends State<VentPostPage> {
       : commentSettings.toggleComment(isEnableComment: 0, title: widget.title);
 
     if(!enableCommentNotifier.value) {
-      ventCommentProvider.deleteComments();
+      commentsProvider.deleteComments();
     }
 
   }
@@ -697,7 +697,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
   @override
   void dispose() {
-    ventCommentProvider.deleteComments();
+    commentsProvider.deleteComments();
     activeVent.clearData();
     filterTextNotifier.dispose();
     enableCommentNotifier.dispose();

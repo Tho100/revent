@@ -1,10 +1,11 @@
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class CommentActions extends BaseQueryService {
+class CommentActions extends BaseQueryService with CommentsProviderService {
 
   final String username;
   final String commentText;
@@ -14,7 +15,6 @@ class CommentActions extends BaseQueryService {
     required this.commentText,
   });
 
-  final ventCommentProvider = getIt.ventCommentProvider;
   final activeVent = getIt.activeVentProvider.ventData;
 
   Future<Map<String, int>> _getIdInfo() async {
@@ -55,12 +55,12 @@ class CommentActions extends BaseQueryService {
 
   void _removeComment() {
 
-    final index = ventCommentProvider.comments.indexWhere(
+    final index = commentsProvider.comments.indexWhere(
       (comment) => comment.commentedBy == username && comment.comment == commentText
     );
 
     if(index != -1) {
-      ventCommentProvider.deleteComment(index);
+      commentsProvider.deleteComment(index);
     }
 
   }
@@ -94,7 +94,7 @@ class CommentActions extends BaseQueryService {
       likesInfoParameterQuery: likesInfoParameterQuery
     );
 
-    final index = ventCommentProvider.comments.indexWhere(
+    final index = commentsProvider.comments.indexWhere(
       (comment) => comment.commentedBy == username && comment.comment == commentText
     );
 
@@ -163,7 +163,7 @@ class CommentActions extends BaseQueryService {
   }) {
 
     if(index != -1) {
-      ventCommentProvider.likeComment(index, isUserLikedComment);
+      commentsProvider.likeComment(index, isUserLikedComment);
     }
 
   }
