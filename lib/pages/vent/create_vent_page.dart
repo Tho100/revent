@@ -29,11 +29,9 @@ class _CreateVentPageState extends State<CreateVentPage> {
   final ventTitleController = TextEditingController();
   final ventBodyTextController = TextEditingController();
 
-  final hintTextColor = ThemeColor.thirdWhite;
-
   final isArchivedVentNotifier = ValueNotifier<bool>(false);
 
-  bool hasBeenPosted = false;
+  bool isPostPressed = false;
 
   Future<void> _postVentOnPressed() async {
 
@@ -45,7 +43,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
       return;
     }
 
-    if(hasBeenPosted) {
+    if(isPostPressed) {
       return;
     }
 
@@ -65,7 +63,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
       await _createVent(title: ventTitle, bodyText: ventBodyText);
 
-      hasBeenPosted = true;
+      isPostPressed = true;
         
     } catch (err) {
       SnackBarDialog.errorSnack(message: 'Failed to post vent.');
@@ -148,7 +146,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
       decoration: InputDecoration(
         counterText: '',
         hintStyle: GoogleFonts.inter(
-          color: hintTextColor,
+          color: ThemeColor.thirdWhite,
           fontWeight: FontWeight.w800, 
           fontSize: 24
         ),
@@ -174,7 +172,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
         isCollapsed: true,
         counterText: '',
         hintStyle: GoogleFonts.inter(
-          color: hintTextColor,
+          color: ThemeColor.thirdWhite,
           fontWeight: FontWeight.w700, 
           fontSize: 16
         ),
