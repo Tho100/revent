@@ -1,12 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/main.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -34,9 +32,6 @@ class _MyProfilePageState extends State<MyProfilePage> with
   SingleTickerProviderStateMixin, 
   UserProfileProviderService,
   NavigationProviderService {
-
-  final profilePostsData = getIt.profilePostsProvider; // TODO: Add profile-posts provider to providers-service
-  final profileSavedData = getIt.profileSavedProvider;
 
   late ProfilePostsSetup callProfilePosts;
   late ProfileInfoWidgets profileInfoWidgets;
