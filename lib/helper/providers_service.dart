@@ -20,7 +20,7 @@ mixin UserProfileProviderService {
 
 mixin VentProviderService {
 
-  VentForYouProvider get forVentYouProvider => getIt<VentForYouProvider>();
+  VentForYouProvider get forYouVentProvider => getIt<VentForYouProvider>();
   VentTrendingProvider get trendingVentProvider => getIt<VentTrendingProvider>();
   VentFollowingProvider get followingVentProvider => getIt<VentFollowingProvider>();
   ActiveVentProvider get activeVentProvider => getIt<ActiveVentProvider>();
