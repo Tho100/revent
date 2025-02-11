@@ -58,11 +58,11 @@ class VentPostPage extends StatefulWidget {
 
 }
 
-class _VentPostPageState extends State<VentPostPage> with CommentsProviderService {
+class _VentPostPageState extends State<VentPostPage> with 
+  NavigationProviderService, 
+  VentProviderService, 
+  CommentsProviderService {
 
-  final navigation = getIt.navigationProvider;
-  final activeVent = getIt.activeVentProvider;
-  
   final enableCommentNotifier = ValueNotifier<bool>(true);
   final filterTextNotifier = ValueNotifier<String>('Best');
 
@@ -87,7 +87,7 @@ class _VentPostPageState extends State<VentPostPage> with CommentsProviderServic
 
     final lastEdit = await LastEditGetter().getLastEdit();
 
-    activeVent.setLastEdit(lastEdit);
+    activeVentProvider.setLastEdit(lastEdit);
 
   }
 
@@ -205,7 +205,7 @@ class _VentPostPageState extends State<VentPostPage> with CommentsProviderServic
 
     if(AppRoute.isOnProfile) {
 
-      final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
+      final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile;
 
       totalLikes = isMyProfile
         ? ventData.myProfile.totalLikes[ventIndex]
@@ -238,7 +238,7 @@ class _VentPostPageState extends State<VentPostPage> with CommentsProviderServic
 
     if(AppRoute.isOnProfile) {
 
-      final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
+      final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile;
 
       return isMyProfile 
         ? ventData.myProfile.isPostSaved[ventIndex]
@@ -410,7 +410,7 @@ class _VentPostPageState extends State<VentPostPage> with CommentsProviderServic
         Navigator.pop(context);
         NavigatePage.editVentPage(
           title: widget.title, 
-          body: activeVent.ventData.body
+          body: activeVentProvider.ventData.body
         );
       },
       copyOnPressed: () {
@@ -680,7 +680,7 @@ class _VentPostPageState extends State<VentPostPage> with CommentsProviderServic
 
   @override
   void initState() {
-    activeVent.setVentData(
+    activeVentProvider.setVentData(
       ActiveVentData(
         title: widget.title, 
         creator: widget.creator, 
@@ -698,7 +698,7 @@ class _VentPostPageState extends State<VentPostPage> with CommentsProviderServic
   @override
   void dispose() {
     commentsProvider.deleteComments();
-    activeVent.clearData();
+    activeVentProvider.clearData();
     filterTextNotifier.dispose();
     enableCommentNotifier.dispose();
     super.dispose();
