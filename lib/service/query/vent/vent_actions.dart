@@ -7,7 +7,7 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 
-class VentActions extends BaseQueryService with UserProfileProviderService {
+class VentActions extends BaseQueryService with UserProfileProviderService, CommentsProviderService {
 
   final String title;
   final String creator;
@@ -164,7 +164,7 @@ class VentActions extends BaseQueryService with UserProfileProviderService {
       pfpData: getIt.profileProvider.profile.profilePicture
     );
 
-    getIt.ventCommentProvider.addComment(newComment);
+    commentsProvider.addComment(newComment);
 
   }
 

@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
@@ -57,12 +58,11 @@ class VentPostPage extends StatefulWidget {
 
 }
 
-class _VentPostPageState extends State<VentPostPage> {
+class _VentPostPageState extends State<VentPostPage> with 
+  NavigationProviderService, 
+  VentProviderService, 
+  CommentsProviderService {
 
-  final ventCommentProvider = getIt.ventCommentProvider;
-  final navigation = getIt.navigationProvider;
-  final activeVent = getIt.activeVentProvider;
-  
   final enableCommentNotifier = ValueNotifier<bool>(true);
   final filterTextNotifier = ValueNotifier<String>('Best');
 
@@ -87,7 +87,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
     final lastEdit = await LastEditGetter().getLastEdit();
 
-    activeVent.setLastEdit(lastEdit);
+    activeVentProvider.setLastEdit(lastEdit);
 
   }
 
@@ -108,7 +108,7 @@ class _VentPostPageState extends State<VentPostPage> {
       : commentSettings.toggleComment(isEnableComment: 0, title: widget.title);
 
     if(!enableCommentNotifier.value) {
-      ventCommentProvider.deleteComments();
+      commentsProvider.deleteComments();
     }
 
   }
@@ -205,7 +205,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
     if(AppRoute.isOnProfile) {
 
-      final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
+      final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile;
 
       totalLikes = isMyProfile
         ? ventData.myProfile.totalLikes[ventIndex]
@@ -238,7 +238,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
     if(AppRoute.isOnProfile) {
 
-      final isMyProfile = navigation.currentRoute == AppRoute.myProfile;
+      final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile;
 
       return isMyProfile 
         ? ventData.myProfile.isPostSaved[ventIndex]
@@ -410,7 +410,7 @@ class _VentPostPageState extends State<VentPostPage> {
         Navigator.pop(context);
         NavigatePage.editVentPage(
           title: widget.title, 
-          body: activeVent.ventData.body
+          body: activeVentProvider.ventData.body
         );
       },
       copyOnPressed: () {
@@ -680,7 +680,7 @@ class _VentPostPageState extends State<VentPostPage> {
 
   @override
   void initState() {
-    activeVent.setVentData(
+    activeVentProvider.setVentData(
       ActiveVentData(
         title: widget.title, 
         creator: widget.creator, 
@@ -697,8 +697,8 @@ class _VentPostPageState extends State<VentPostPage> {
 
   @override
   void dispose() {
-    ventCommentProvider.deleteComments();
-    activeVent.clearData();
+    commentsProvider.deleteComments();
+    activeVentProvider.clearData();
     filterTextNotifier.dispose();
     enableCommentNotifier.dispose();
     super.dispose();

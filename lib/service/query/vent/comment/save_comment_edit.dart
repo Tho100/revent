@@ -1,10 +1,11 @@
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class SaveCommentEdit extends BaseQueryService with UserProfileProviderService, VentProviderService {
+class SaveCommentEdit extends BaseQueryService with 
+  UserProfileProviderService, 
+  VentProviderService, 
+  CommentsProviderService {
 
   final String originalComment;
   final String newComment;
@@ -37,7 +38,7 @@ class SaveCommentEdit extends BaseQueryService with UserProfileProviderService, 
     };
 
     await executeQuery(query, params).then((_) {
-      getIt.ventCommentProvider.editComment(
+      commentsProvider.editComment(
         userProvider.user.username, newComment, originalComment
       );
     });
