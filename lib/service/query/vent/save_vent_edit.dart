@@ -1,10 +1,8 @@
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
-class SaveVentEdit extends BaseQueryService with UserProfileProviderService {
+class SaveVentEdit extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
   final String title;
   final String newBody;
@@ -28,8 +26,8 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService {
     await executeQuery(query, params).then(
       (_) async => await _updateLastEdit(isFromArchive: false)
     );
-    // TODO: Remove this and use provider-service instead
-    getIt.activeVentProvider.setBody(newBody);
+
+    activeVentProvider.setBody(newBody);
 
   }
 
@@ -48,7 +46,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService {
       (_) async => await _updateLastEdit(isFromArchive: true)
     );
 
-    getIt.activeVentProvider.setBody(newBody);
+    activeVentProvider.setBody(newBody);
 
   }
 
@@ -71,7 +69,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService {
     final formatTimeStamp = FormatDate().formatPostTimestamp(dateTimeNow);
 
     if(!isFromArchive) {
-      getIt.activeVentProvider.setLastEdit(formatTimeStamp);
+      activeVentProvider.setLastEdit(formatTimeStamp);
     }
 
   }
