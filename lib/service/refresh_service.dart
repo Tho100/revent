@@ -1,4 +1,4 @@
-import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/get_it_extensions.dart'; // TODO: Try to reduce this imports
 import 'package:revent/main.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';

@@ -1,14 +1,11 @@
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
-class UserActions extends BaseQueryService {
+class UserActions extends BaseQueryService with UserProfileProviderService {
 
   final String username;
 
   UserActions({required this.username});
-
-  final userData = getIt.userProvider.user;
 
   Future<void> userFollowAction({required bool follow}) async {
     
@@ -23,9 +20,9 @@ class UserActions extends BaseQueryService {
     ];
 
     final params = [
-      {'username': userData.username},
+      {'username': userProvider.user.username},
       {'username': username},
-      {'follower': userData.username, 'following': username}
+      {'follower': userProvider.user.username, 'following': username}
     ];
 
     final conn = await connection();
@@ -46,7 +43,7 @@ class UserActions extends BaseQueryService {
 
     final params = {
       'blocked_username': username,
-      'blocked_by': userData.username
+      'blocked_by': userProvider.user.username
     };
 
     await executeQuery(query, params);

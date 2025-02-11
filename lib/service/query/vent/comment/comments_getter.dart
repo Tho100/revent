@@ -1,23 +1,21 @@
 import 'dart:convert';
 
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class CommentsGetter extends BaseQueryService {
+class CommentsGetter extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
   final formatTimestamp = FormatDate();
 
-  final userData = getIt.userProvider.user;
-  final activeVent = getIt.activeVentProvider.ventData;
-
   Future<Map<String, List<dynamic>>> getComments() async {
 
-    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
+    final postId = await PostIdGetter(
+      title: activeVentProvider.ventData.title, creator: activeVentProvider.ventData.creator
+    ).getPostId();
 
     final commentIds = await CommentIdGetter(postId: postId).getAllCommentsId();
 
@@ -42,7 +40,7 @@ class CommentsGetter extends BaseQueryService {
 
     final param = {
       'post_id': postId,
-      'blocked_by': userData.username
+      'blocked_by': userProvider.user.username
     };
 
     final results = await executeQuery(getCommentsQuery, param);
@@ -105,7 +103,7 @@ class CommentsGetter extends BaseQueryService {
     ''';
 
     final params = {
-      'liked_by': isLikedByCreator ? activeVent.creator : userData.username,
+      'liked_by': isLikedByCreator ? activeVentProvider.ventData.creator : userProvider.user.username,
       'post_id': postId
     };
 

@@ -1,14 +1,11 @@
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
-class VentDataGetter extends BaseQueryService {
+class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
   final formatPostTimestamp = FormatDate();
-
-  final userData = getIt.userProvider.user;
 
   Future<Map<String, dynamic>> getVentsData() async {
 
@@ -21,7 +18,7 @@ class VentDataGetter extends BaseQueryService {
       WHERE ubi.blocked_username IS NULL
     ''';
 
-    final param = {'blocked_by': userData.username};
+    final param = {'blocked_by': userProvider.user.username};
 
     return _fetchVentsData(query, params: param);
 
@@ -39,7 +36,7 @@ class VentDataGetter extends BaseQueryService {
         ORDER BY (total_likes >= 5 AND total_comments >= 1) ASC, total_likes ASC;
     ''';
 
-    final param = {'blocked_by': userData.username};
+    final param = {'blocked_by': userProvider.user.username};
 
     return _fetchVentsData(query, params: param);
 
@@ -58,7 +55,7 @@ class VentDataGetter extends BaseQueryService {
       WHERE ufi.follower = :username AND ubi.blocked_username IS NULL
     ''';
 
-    final param = {'username': userData.username};
+    final param = {'username': userProvider.user.username};
 
     return _fetchVentsData(query, params: param);
 
@@ -79,7 +76,7 @@ class VentDataGetter extends BaseQueryService {
 
     final params = {
       'search_text': '%$searchTitleText%',
-      'blocked_by': userData.username
+      'blocked_by': userProvider.user.username
     };
 
     return _fetchVentsData(query, params: params, excludeBodyText: true);
@@ -110,7 +107,7 @@ class VentDataGetter extends BaseQueryService {
         lvi.liked_by = :liked_by
     ''';
 
-    final param = {'liked_by': userData.username};
+    final param = {'liked_by': userProvider.user.username};
 
     return _fetchVentsData(query, params: param);
 
@@ -140,7 +137,7 @@ class VentDataGetter extends BaseQueryService {
         svi.saved_by = :saved_by
     ''';
 
-    final param = {'saved_by': userData.username};
+    final param = {'saved_by': userProvider.user.username};
 
     return _fetchVentsData(query, params: param);
 
@@ -204,7 +201,7 @@ class VentDataGetter extends BaseQueryService {
       'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
     };
 
-    final param = {'username': userData.username};
+    final param = {'username': userProvider.user.username};
 
     final retrievedIds = await executeQuery(
       queryBasedOnType[stateType]!, param

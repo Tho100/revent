@@ -1,11 +1,8 @@
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
 
-class UserDataRegistration extends BaseQueryService { 
-
-  final userData = getIt.userProvider.user;
+class UserDataRegistration extends BaseQueryService with UserProfileProviderService { 
 
   Future<void> insert({required String? hashPassword}) async {
       
@@ -17,8 +14,8 @@ class UserDataRegistration extends BaseQueryService {
 
     final params = [
       {
-        'username': userData.username,
-        'email': userData.email,
+        'username': userProvider.user.username,
+        'email': userProvider.user.email,
         'password': hashPassword,
         'plan': 'Basic'
       },
@@ -28,10 +25,10 @@ class UserDataRegistration extends BaseQueryService {
         'following': 0,
         'posts': 0,
         'profile_pic': '',
-        'username': userData.username
+        'username': userProvider.user.username
       },
       {
-        'username': userData.username
+        'username': userProvider.user.username
       }
     ];
 
@@ -44,7 +41,7 @@ class UserDataRegistration extends BaseQueryService {
     });
 
     await LocalStorageModel().setupLocalAccountInformation(
-      username: userData.username, email: userData.email, plan: 'Basic'
+      username: userProvider.user.username, email: userProvider.user.email, plan: 'Basic'
     );
 
   }  

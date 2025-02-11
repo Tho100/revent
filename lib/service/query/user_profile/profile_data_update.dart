@@ -1,14 +1,10 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
-class ProfileDataUpdate extends BaseQueryService {
-
-  final profileData = getIt.profileProvider.profile;
-  final userData = getIt.userProvider.user;
+class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService {
 
   Future<void> updateBio({required String bioText}) async {
 
@@ -16,11 +12,11 @@ class ProfileDataUpdate extends BaseQueryService {
     
     final params = {
       'bio_value': bioText,
-      'username': userData.username
+      'username': userProvider.user.username
     };
 
     await executeQuery(query, params).then(
-      (_) => profileData.bio = bioText
+      (_) => profileProvider.profile.bio = bioText
     );
 
   }
@@ -34,13 +30,13 @@ class ProfileDataUpdate extends BaseQueryService {
 
     final params = {
       'profile_pic_data': toBase64EncodedPfp,
-      'username': userData.username
+      'username': userProvider.user.username
     };
 
-    profileData.profilePicture = picData;
+    profileProvider.profile.profilePicture = picData;
 
     await executeQuery(query, params).then(
-      (_) => profileData.profilePicture = picData
+      (_) => profileProvider.profile.profilePicture = picData
     );
 
   }
@@ -51,13 +47,13 @@ class ProfileDataUpdate extends BaseQueryService {
 
     final params = {
       'pronouns': pronouns,
-      'username': userData.username
+      'username': userProvider.user.username
     };
 
-    profileData.pronouns = pronouns;
+    profileProvider.profile.pronouns = pronouns;
 
     await executeQuery(query, params).then(
-      (_) => profileData.pronouns = pronouns
+      (_) => profileProvider.profile.pronouns = pronouns
     );
 
   }
