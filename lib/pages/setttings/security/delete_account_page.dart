@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/main.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/model/user/user_account_manager.dart';
 import 'package:revent/security/hash_model.dart';
