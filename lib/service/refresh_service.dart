@@ -8,7 +8,9 @@ import 'package:revent/model/setup/vent_data_setup.dart';
 class RefreshService with 
   VentProviderService, 
   UserProfileProviderService, 
-  ProfilePostsProviderService {
+  ProfilePostsProviderService,
+  CommentsProviderService,
+  RepliesProviderService {
 
   Future<void> _refreshVentsData({
     required dynamic ventProvider,
@@ -62,7 +64,7 @@ class RefreshService with
 
   Future<void> refreshVentPost() async {
 
-    ventCommentProvider.deleteComments();
+    commentsProvider.deleteComments();
 
     await CommentsSetup().setup();
 
@@ -70,7 +72,7 @@ class RefreshService with
 
   Future<void> refreshReplies({required int commentId}) async {
 
-    commentRepliesProvider.deleteReplies();
+    repliesProvider.deleteReplies();
 
     await RepliesSetup().setup(commentId: commentId);
 
