@@ -1,9 +1,8 @@
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
-class SaveVentEdit extends BaseQueryService {
+class SaveVentEdit extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
   final String title;
   final String newBody;
@@ -13,8 +12,6 @@ class SaveVentEdit extends BaseQueryService {
     required this.newBody,
   });
 
-  final userData = getIt.userProvider.user;
-
   Future<void> save() async {
 
     const query = 
@@ -22,7 +19,7 @@ class SaveVentEdit extends BaseQueryService {
 
     final params = {
       'title': title,
-      'creator': userData.username,
+      'creator': userProvider.user.username,
       'new_body': newBody
     };
 
@@ -30,7 +27,7 @@ class SaveVentEdit extends BaseQueryService {
       (_) async => await _updateLastEdit(isFromArchive: false)
     );
 
-    getIt.activeVentProvider.setBody(newBody);
+    activeVentProvider.setBody(newBody);
 
   }
 
@@ -41,7 +38,7 @@ class SaveVentEdit extends BaseQueryService {
 
     final params = {
       'title': title,
-      'creator': userData.username,
+      'creator': userProvider.user.username,
       'new_body': newBody
     };
 
@@ -49,7 +46,7 @@ class SaveVentEdit extends BaseQueryService {
       (_) async => await _updateLastEdit(isFromArchive: true)
     );
 
-    getIt.activeVentProvider.setBody(newBody);
+    activeVentProvider.setBody(newBody);
 
   }
 
@@ -63,7 +60,7 @@ class SaveVentEdit extends BaseQueryService {
 
     final params = {
       'title': title,
-      'creator': userData.username,
+      'creator': userProvider.user.username,
       'last_edit': dateTimeNow
     };
 
@@ -72,7 +69,7 @@ class SaveVentEdit extends BaseQueryService {
     final formatTimeStamp = FormatDate().formatPostTimestamp(dateTimeNow);
 
     if(!isFromArchive) {
-      getIt.activeVentProvider.setLastEdit(formatTimeStamp);
+      activeVentProvider.setLastEdit(formatTimeStamp);
     }
 
   }

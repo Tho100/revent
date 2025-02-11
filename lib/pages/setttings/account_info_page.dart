@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -17,27 +16,25 @@ class AccountInformationPage extends StatefulWidget {
 
 }
 
-class _AccountInformationPageState extends State<AccountInformationPage> {
-
-  final userData = getIt.userProvider;
+class _AccountInformationPageState extends State<AccountInformationPage> with UserProfileProviderService {
 
   Future<String> _loadJoinedDate() async {
 
-    if(userData.user.joinedDate == null) {
+    if(userProvider.user.joinedDate == null) {
 
       final getJoinedDate = await UserDataGetter().getJoinedDate(
-        username: userData.user.username
+        username: userProvider.user.username
       );
 
       final formattedJoinedDate = FormatDate().formatLongDate(getJoinedDate);
 
-      userData.setJoinedDate(formattedJoinedDate);
+      userProvider.setJoinedDate(formattedJoinedDate);
 
       return formattedJoinedDate;
 
     }
 
-    return userData.user.joinedDate!;
+    return userProvider.user.joinedDate!;
 
   }
 
@@ -109,12 +106,12 @@ class _AccountInformationPageState extends State<AccountInformationPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
                         
-            _buildHeaders('Username', userData.user.username),
-            _buildHeaders('Email', userData.user.email),
+            _buildHeaders('Username', userProvider.user.username),
+            _buildHeaders('Email', userProvider.user.email),
 
             _buildJoinedDate(),
       
-            _buildHeaders('Plan', userData.user.plan),
+            _buildHeaders('Plan', userProvider.user.plan),
             _buildUpgradeButton(), 
                   
           ],

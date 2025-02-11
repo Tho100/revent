@@ -1,12 +1,16 @@
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/model/setup/replies_setup.dart';
 import 'package:revent/model/setup/comments_setup.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
-class RefreshService {
+class RefreshService with 
+  VentProviderService, 
+  UserProfileProviderService, 
+  ProfilePostsProviderService,
+  CommentsProviderService,
+  RepliesProviderService {
 
   Future<void> _refreshVentsData({
     required dynamic ventProvider,
@@ -18,30 +22,30 @@ class RefreshService {
 
   Future<void> refreshForYouVents() async {
     await _refreshVentsData(
-      ventProvider: getIt.ventForYouProvider,
+      ventProvider: forYouVentProvider,
       setupMethod: () => VentDataSetup().setupForYou(),
     );
   }
 
   Future<void> refreshTrendingVents() async {
     await _refreshVentsData(
-      ventProvider: getIt.ventTrendingProvider,
+      ventProvider: trendingVentProvider,
       setupMethod: () => VentDataSetup().setupTrending(),
     );
   }
 
   Future<void> refreshFollowingVents() async {
     await _refreshVentsData(
-      ventProvider: getIt.ventFollowingProvider,
+      ventProvider: followingVentProvider,
       setupMethod: () => VentDataSetup().setupFollowing(),
     );
   }
 
   Future<void> refreshMyProfile() async {
 
-    getIt.profileProvider.clearProfileData();
+    profileProvider.clearProfileData();
 
-    final userData = getIt.userProvider.user;
+    final userData = userProvider.user;
 
     await ProfileDataSetup().setup(username: userData.username);
 
@@ -50,8 +54,8 @@ class RefreshService {
       username: userData.username
     );
 
-    getIt.profilePostsProvider.myProfile.clear();
-    getIt.profileSavedProvider.myProfile.clear();
+    profilePostsProvider.myProfile.clear();
+    profileSavedProvider.myProfile.clear();
 
     await callProfilePosts.setupPosts();
     await callProfilePosts.setupSaved();
@@ -60,7 +64,7 @@ class RefreshService {
 
   Future<void> refreshVentPost() async {
 
-    getIt.ventCommentProvider.deleteComments();
+    commentsProvider.deleteComments();
 
     await CommentsSetup().setup();
 
@@ -68,7 +72,7 @@ class RefreshService {
 
   Future<void> refreshReplies({required int commentId}) async {
 
-    getIt.commentRepliesProvider.deleteReplies();
+    repliesProvider.deleteReplies();
 
     await RepliesSetup().setup(commentId: commentId);
 

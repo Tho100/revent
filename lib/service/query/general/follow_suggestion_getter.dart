@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 import 'package:revent/helper/extract_data.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
-class FollowSuggestionGetter extends BaseQueryService {
+class FollowSuggestionGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getSuggestion() async {
 
@@ -21,7 +20,7 @@ class FollowSuggestionGetter extends BaseQueryService {
       LIMIT 5;
     ''';
 
-    final param = {'username': getIt.userProvider.user.username};
+    final param = {'username': userProvider.user.username};
 
     final results = await executeQuery(query, param);
 

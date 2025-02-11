@@ -1,4 +1,5 @@
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
@@ -6,7 +7,7 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 
-class VentActions extends BaseQueryService {
+class VentActions extends BaseQueryService with UserProfileProviderService {
 
   final String title;
   final String creator;
@@ -15,8 +16,6 @@ class VentActions extends BaseQueryService {
     required this.title,
     required this.creator
   });
-
-  final userData = getIt.userProvider.user;
 
   Map<String, dynamic> _getVentProvider() {
 
@@ -37,7 +36,7 @@ class VentActions extends BaseQueryService {
 
     final likesInfoParams = {
       'post_id': postId,
-      'liked_by': userData.username,
+      'liked_by': userProvider.user.username,
     };
 
     final isUserLikedPost = await _isUserLikedPost(
@@ -127,7 +126,7 @@ class VentActions extends BaseQueryService {
       'INSERT INTO comments_info (commented_by, comment, total_likes, total_replies, post_id) VALUES (:commented_by, :comment, :total_likes, :total_replies, :post_id)'; 
       
     final commentsParams = {
-      'commented_by': userData.username,
+      'commented_by': userProvider.user.username,
       'comment': comment,
       'total_likes': 0,
       'total_replies': 0,
@@ -159,7 +158,7 @@ class VentActions extends BaseQueryService {
     final formattedTimestamp = FormatDate().formatPostTimestamp(now);
 
     final newComment = CommentsData(
-      commentedBy: userData.username, 
+      commentedBy: userProvider.user.username, 
       comment: comment,
       commentTimestamp: formattedTimestamp,
       pfpData: getIt.profileProvider.profile.profilePicture
@@ -177,7 +176,7 @@ class VentActions extends BaseQueryService {
 
     final savedInfoParams = {
       'post_id': postId,
-      'saved_by': userData.username
+      'saved_by': userProvider.user.username
     };
 
     final isUserSavedPost = await _isUserSavedPost(

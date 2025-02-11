@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/model/user/user_account_manager.dart';
 import 'package:revent/security/hash_model.dart';
@@ -21,13 +20,11 @@ class DeleteAccountPage extends StatefulWidget {
 
 }
 
-class _DeleteAccountPageState extends State<DeleteAccountPage> {
+class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileProviderService {
 
   final authController = SecurityAuthController();
 
   final currentPasswordNotifier = ValueNotifier<bool>(false);
-
-  final userData = getIt.userProvider.user;
 
   void _deleteAccountConfirmation() {
     CustomAlertDialog.alertDialogCustomOnPress(
@@ -35,7 +32,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
       buttonMessage: 'Delete', 
       onPressedEvent: () async {
         Navigator.pop(context);
-        await UserAccountManager().deleteAccountData(username: userData.username);
+        await UserAccountManager().deleteAccountData(username: userProvider.user.username);
       } 
     );
   }
@@ -45,7 +42,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> {
     try {
 
       final currentPasswordHash = await UserAuthService().getAccountAuthentication(
-        username: userData.username
+        username: userProvider.user.username
       );
 
       final currentPasswordInput = authController.currentPasswordController.text;

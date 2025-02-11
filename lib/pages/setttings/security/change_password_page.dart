@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
@@ -20,7 +19,7 @@ class ChangePasswordPage extends StatefulWidget {
 
 }
 
-class _ChangePasswordPageState extends State<ChangePasswordPage> {
+class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfileProviderService {
 
   final authController = SecurityAuthController();
 
@@ -30,14 +29,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   final userAuth = UserAuthService();
   final hashingModel = HashingModel();
 
-  final userData = getIt.userProvider.user;
-
   Future<void> _updatePasswordOnPressed() async {
 
     try {
 
       final currentPasswordHash = await userAuth.getAccountAuthentication(
-        username: userData.username
+        username: userProvider.user.username
       );
 
       final currentPasswordInput = authController.currentPasswordController.text;
@@ -54,7 +51,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       if(currentPasswordHash == currentPasswordInputHash) {
 
         await userAuth.updateAccountAuth(
-          username: userData.username, 
+          username: userProvider.user.username, 
           newPasswordHash: newPasswordInputHash
         ).then((_) => CustomAlertDialog.alertDialogTitle('Password updated', 'Your account password has been updated'));
 
