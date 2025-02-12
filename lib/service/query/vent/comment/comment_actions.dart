@@ -36,20 +36,23 @@ class CommentActions extends BaseQueryService with CommentsProviderService {
 
     final idInfo = await _getIdInfo();
 
-    const query = 
-    '''
-      DELETE FROM comments_info 
-      WHERE comment_id = :comment_id AND post_id = :post_id
-    ''';
+    final queries = [
+      'DELETE FROM comments_info WHERE comment_id = :comment_id AND post_id = :post_id',
+      'UPDATE vent_info SET total_comments = total_comments - 1 WHERE post_id = :post_id'
+    ];
 
-    final params = {
-      'post_id': idInfo['post_id'],
-      'comment_id': idInfo['comment_id'],
-    };
+    final params = [
+      {'post_id': idInfo['post_id'], 'comment_id': idInfo['comment_id']},
+      {'post_id': idInfo['post_id']}
+    ];
 
-    await executeQuery(query, params).then(
-      (_) => _removeComment()
-    );
+    final conn = await connection();
+
+    await conn.transactional((txn) async {
+      for(int i=0; i<queries.length; i++) {
+        await txn.execute(queries[i], params[i]);
+      }
+    }).then((_) => _removeComment());
 
   }
 

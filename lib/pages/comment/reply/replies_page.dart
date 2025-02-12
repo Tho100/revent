@@ -174,6 +174,7 @@ class _RepliesPageState extends State<RepliesPage> {
         final totalReplies = ventComment.comments[commenterIndex].totalReplies;
 
         return CommentPreviewer(
+          isOnRepliesPage: true,
           commentedBy: widget.commentedBy, 
           comment: widget.comment, 
           commentTimestamp: widget.commentTimestamp, 

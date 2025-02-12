@@ -19,6 +19,8 @@ import 'package:revent/shared/widgets/profile_picture.dart';
 
 class CommentPreviewer extends StatelessWidget with VentProviderService {
 
+  final bool isOnRepliesPage;
+
   final String commentedBy;
   final String comment;
   final String commentTimestamp;
@@ -32,6 +34,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
   final Uint8List pfpData;
 
   CommentPreviewer({
+    required this.isOnRepliesPage,
     required this.commentedBy,
     required this.comment,
     required this.commentTimestamp,
@@ -53,6 +56,10 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
       ).delete().then(
         (_) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
       );
+
+      if(isOnRepliesPage) {
+        Navigator.pop(navigatorKey.currentContext!);
+      }
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: 'Something went wrong.');
