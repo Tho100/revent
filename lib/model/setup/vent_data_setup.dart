@@ -10,7 +10,7 @@ import 'package:revent/service/query/vent/vent_data_getter.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
-class VentDataSetup with VentProviderService, SearchProviderService {
+class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedProviderService {
 
   Future<dynamic> _ventsData({required Map<String, dynamic> ventsInfo}) async {
 
@@ -190,7 +190,7 @@ class VentDataSetup with VentProviderService, SearchProviderService {
   Future<void> setupLiked() async {
     await _setupVents<LikedVentData>(
       dataGetter: () => VentDataGetter().getLikedVentsData(),
-      setVents: getIt.likedVentProvider.setVents,
+      setVents: likedVentProvider.setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => LikedVentData(
         title: title,
@@ -209,7 +209,7 @@ class VentDataSetup with VentProviderService, SearchProviderService {
   Future<void> setupSaved() async {
     await _setupVents<SavedVentData>(
       dataGetter: () => VentDataGetter().getSavedVentsData(),
-      setVents: getIt.savedVentProvider.setVents,
+      setVents: savedVentProvider.setVents,
       ventBuilder: (title, bodyText, creator, postTimestamp, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SavedVentData(
         title: title,
