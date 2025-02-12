@@ -41,6 +41,7 @@ class CommentsListView extends StatelessWidget {
       child: Container(
         color: Colors.transparent,
         child: CommentPreviewer(
+          isOnRepliesPage: false,
           commentedBy: commentedBy,
           comment: comment,
           commentTimestamp: commentTimestamp,
