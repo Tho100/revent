@@ -1,12 +1,11 @@
 import 'dart:typed_data';
 
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/search/search_accounts_getter.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
-class SearchSetup {
+class SearchSetup with SearchProviderService {
 
   final String searchText;
 
@@ -22,9 +21,7 @@ class SearchSetup {
 
   Future<void> setupAccounts() async {
 
-    final searchAccounts = getIt.searchAccountsProvider;
-
-    if(searchAccounts.accounts.usernames.isEmpty) {
+    if(searchAccountsProvider.accounts.usernames.isEmpty) {
 
       final accountsData = await SearchAccountsGetter().getAccounts(searchText: searchText);
 
@@ -36,7 +33,7 @@ class SearchSetup {
         profilePictures: profilePictures
       );
 
-      searchAccounts.setAccounts(setupAccounts);
+      searchAccountsProvider.setAccounts(setupAccounts);
 
     }
 
