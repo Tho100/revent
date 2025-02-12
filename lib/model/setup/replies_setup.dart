@@ -1,11 +1,10 @@
 import 'dart:typed_data';
 
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/vent/comment/reply/replies_getter.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
-class RepliesSetup {
+class RepliesSetup with RepliesProviderService {
 
   Future<void> setup({required int commentId}) async {
 
@@ -34,7 +33,7 @@ class RepliesSetup {
       );
     });
 
-    getIt.commentRepliesProvider.setReplies(replies);
+    repliesProvider.setReplies(replies);
 
   }
 
