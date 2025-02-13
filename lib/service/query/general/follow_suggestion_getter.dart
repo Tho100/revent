@@ -10,14 +10,26 @@ class FollowSuggestionGetter extends BaseQueryService with UserProfileProviderSe
 
     const query = 
     '''
-      SELECT username, profile_picture
-      FROM user_profile_info
-      WHERE username != :username AND username NOT IN (
-        SELECT following
-        FROM user_follows_info
-        WHERE follower = :username
-      )
-      LIMIT 5;
+    (
+      SELECT DISTINCT uf2.following
+      FROM user_follows_info uf1
+      JOIN user_follows_info uf2 
+          ON uf1.following = uf2.follower
+      WHERE uf1.follower = :username
+        AND uf2.following NOT IN (
+          SELECT following FROM user_follows_info WHERE follower = :username
+          )
+          AND uf2.following != :username
+    ) 
+      UNION
+    (
+      SELECT username 
+      FROM user_profile_info 
+        WHERE username != :username
+          GROUP BY username
+          ORDER BY COUNT(followers)
+    ) 
+      LIMIT 5
     ''';
 
     final param = {'username': userProvider.user.username};
