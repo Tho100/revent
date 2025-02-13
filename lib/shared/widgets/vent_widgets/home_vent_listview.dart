@@ -1,7 +1,10 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/follow_suggestion_listview.dart';
 import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
@@ -22,7 +25,9 @@ class HomeVentListView extends StatefulWidget {
 
 }
 
-class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepAliveClientMixin {
+class _HomeVentListViewState extends State<HomeVentListView> with 
+  AutomaticKeepAliveClientMixin, 
+  FollowSuggestionProviderService {
 
   @override
   bool get wantKeepAlive => true;
@@ -72,34 +77,42 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
     
     final ventDataList = widget.provider.vents;
 
-    return DynamicHeightGridView(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics(),
-      ),
-      crossAxisCount: 1,
-      itemCount: ventDataList.length + (widget.showFollowSuggestion! ? 1 : 0),
-      builder: (_, index) {
-
-        if (index == 5 && widget.showFollowSuggestion!) {
-          return _buildFollowSuggestion();
-        }
-
-        final adjustedIndex = index > 5 && widget.showFollowSuggestion! ? index - 1 : index;
-
-        if (adjustedIndex >= 0 && adjustedIndex < ventDataList.length) {
-
-          final reversedVentIndex = ventDataList.length - 1 - adjustedIndex;
-          final vents = ventDataList[reversedVentIndex];
-
-          return KeyedSubtree(
-            key: ValueKey('${vents.title}/${vents.creator}'),
-            child: _buildVentPreview(vents),
-          );
-
-        }
-
-        return const SizedBox.shrink();
-
+    return Consumer<FollowSuggestionProvider>(
+      builder: (_, suggestionData, __) {
+        return DynamicHeightGridView(
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
+          crossAxisCount: 1,
+          itemCount: ventDataList.length + (widget.showFollowSuggestion! ? 1 : 0),
+          builder: (_, index) {
+      
+            if(suggestionData.suggestions.isNotEmpty) {
+      
+              if (index == 5 && widget.showFollowSuggestion!) {
+                return _buildFollowSuggestion();
+              }
+      
+            }
+      
+            final adjustedIndex = index > 5 && (widget.showFollowSuggestion! && suggestionData.suggestions.isNotEmpty) ? index - 1 : index;
+      
+            if (adjustedIndex >= 0 && adjustedIndex < ventDataList.length) {
+      
+              final reversedVentIndex = ventDataList.length - 1 - adjustedIndex;
+              final vents = ventDataList[reversedVentIndex];
+      
+              return KeyedSubtree(
+                key: ValueKey('${vents.title}/${vents.creator}'),
+                child: _buildVentPreview(vents),
+              );
+      
+            }
+      
+            return const SizedBox.shrink();
+      
+          },
+        );
       },
     );
   }
