@@ -1,4 +1,5 @@
 import 'package:revent/main.dart';
+import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
 import 'package:revent/shared/provider/profile/profile_provider.dart';
@@ -67,5 +68,11 @@ mixin CommentsProviderService {
 mixin RepliesProviderService {
 
   RepliesProvider get repliesProvider => getIt<RepliesProvider>();
+
+}
+
+mixin FollowSuggestionProviderService {
+
+  FollowSuggestionProvider get followSuggestionProvider => getIt<FollowSuggestionProvider>();
 
 }

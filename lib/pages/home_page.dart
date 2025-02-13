@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/refresh_service.dart';
-import 'package:revent/main.dart';
 import 'package:revent/service/query/general/follow_suggestion_getter.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
@@ -29,7 +27,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with 
   SingleTickerProviderStateMixin, 
   VentProviderService, 
-  NavigationProviderService {
+  NavigationProviderService,
+  FollowSuggestionProviderService {
 
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
@@ -91,7 +90,7 @@ class _HomePageState extends State<HomePage> with
 
   void _initializeFollowSuggestion() async {
 
-    if(getIt.followSuggestionProvider.suggestions.isEmpty) {
+    if(followSuggestionProvider.suggestions.isEmpty) {
 
       final followSuggestions = await FollowSuggestionGetter().getSuggestion();
 
@@ -105,7 +104,7 @@ class _HomePageState extends State<HomePage> with
         );
       });
 
-      getIt.followSuggestionProvider.setSuggestions(suggestions);
+      followSuggestionProvider.setSuggestions(suggestions);
 
     }
 
