@@ -2,7 +2,6 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/providers_service.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -25,9 +24,7 @@ class HomeVentListView extends StatefulWidget {
 
 }
 
-class _HomeVentListViewState extends State<HomeVentListView> with 
-  AutomaticKeepAliveClientMixin, 
-  FollowSuggestionProviderService {
+class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepAliveClientMixin {
 
   @override
   bool get wantKeepAlive => true;
