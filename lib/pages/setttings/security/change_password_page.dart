@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/security/hash_model.dart';
@@ -60,8 +61,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
 
       }
 
-    } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     
   }

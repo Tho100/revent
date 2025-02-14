@@ -33,7 +33,7 @@ class ProfilePictureModel {
 
       return fileName.isNotEmpty;
 
-    } catch (err) {
+    } catch (_) {
       return false;
     }
 

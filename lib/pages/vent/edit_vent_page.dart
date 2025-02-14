@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/controllers/vent_text_controller.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -26,13 +28,13 @@ class EditVentPage extends StatefulWidget {
 
 class _EditVentPageState extends State<EditVentPage> {
 
-  final ventBodyTextController = TextEditingController();
+  final textController = VentTextController(); 
 
   Future<void> _saveOnPressed() async {
 
     try {
 
-      final newBodyText = ventBodyTextController.text;
+      final newBodyText = textController.bodyTextController.text;
 
       if(widget.isArchive) {
 
@@ -56,7 +58,7 @@ class _EditVentPageState extends State<EditVentPage> {
         Navigator.pop(context);
       }
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to save changes.');
     }
 
@@ -75,7 +77,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
   Widget _buildBodyTextField() { 
     return TextFormField(
-      controller: ventBodyTextController,
+      controller: textController.bodyTextController,
       autofocus: true,
       keyboardType: TextInputType.multiline,
       maxLength: 2850,
@@ -136,9 +138,9 @@ class _EditVentPageState extends State<EditVentPage> {
 
   Future<bool> _onClosePage() async {
 
-    if(ventBodyTextController.text != widget.body) {
+    if(textController.bodyTextController.text != widget.body) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
-        message: 'Discard edit?',
+        message: AlertMessages.discardEdit,
       );
     }
 
@@ -149,12 +151,12 @@ class _EditVentPageState extends State<EditVentPage> {
   @override
   void initState() {
     super.initState();
-    ventBodyTextController.text = widget.body;
+    textController.bodyTextController.text = widget.body;
   }
 
   @override
   void dispose() {
-    ventBodyTextController.dispose();
+    textController.dispose();
     super.dispose();
   }
 

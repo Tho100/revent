@@ -97,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
         (_) => NavigatePage.homePage()
       );
 
-    } catch (err) {
+    } catch (_) {
       NavigatePage.mainScreenPage();
     }
 

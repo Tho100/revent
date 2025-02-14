@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/controllers/vent_text_controller.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
@@ -26,8 +28,7 @@ class CreateVentPage extends StatefulWidget {
 
 class _CreateVentPageState extends State<CreateVentPage> {
 
-  final ventTitleController = TextEditingController();
-  final ventBodyTextController = TextEditingController();
+  final textController = VentTextController(); 
 
   final isArchivedVentNotifier = ValueNotifier<bool>(false);
 
@@ -35,8 +36,8 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
   Future<void> _postVentOnPressed() async {
 
-    final ventTitle = ventTitleController.text;
-    final ventBodyText = ventBodyTextController.text;
+    final ventTitle = textController.titleController.text;
+    final ventBodyText = textController.bodyTextController.text;
 
     if(ventTitle.isEmpty) {
       CustomAlertDialog.alertDialog('Please enter vent title');
@@ -65,7 +66,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
       isPostPressed = true;
         
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to post vent.');
     }
 
@@ -134,7 +135,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
   Widget _buildTitleField() {
     return TextField(
-      controller: ventTitleController,
+      controller: textController.titleController,
       autofocus: true,
       maxLines: 1,
       maxLength: 85,
@@ -159,7 +160,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
   Widget _buildBodyTextField() { 
     return TextFormField(
-      controller: ventBodyTextController,
+      controller: textController.bodyTextController,
       keyboardType: TextInputType.multiline,
       maxLength: 2850,
       maxLines: null,
@@ -310,9 +311,9 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
   Future<bool> _onClosePage() async {
 
-    if(ventBodyTextController.text.isNotEmpty || ventTitleController.text.isNotEmpty) {
+    if(textController.bodyTextController.text.isNotEmpty || textController.titleController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
-        message: 'Discard post?', 
+        message: AlertMessages.discardPost, 
       );
     }
 
@@ -322,8 +323,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
   @override
   void dispose() {
-    ventTitleController.dispose();
-    ventBodyTextController.dispose();
+    textController.dispose();
     isArchivedVentNotifier.dispose();
     super.dispose();
   }

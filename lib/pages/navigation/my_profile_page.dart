@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/service/refresh_service.dart';
@@ -81,8 +82,8 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
       await callProfilePosts.setupPosts();
 
-    } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 
   }

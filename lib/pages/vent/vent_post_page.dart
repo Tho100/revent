@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/global/constant.dart';
+import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/user/user_actions.dart';
@@ -145,7 +146,7 @@ class _VentPostPageState extends State<VentPostPage> with
         (_) => commentsFilter.filterCommentToBest()
       );
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to load comments.');
     }
 
@@ -178,8 +179,8 @@ class _VentPostPageState extends State<VentPostPage> with
         filterTextNotifier.value = 'Best';
       });
 
-    } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 
   }

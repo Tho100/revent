@@ -23,7 +23,7 @@ class LocalStorageModel {
 
       await setupFile.writeAsString('$text\n', mode: FileMode.append);
 
-    } catch (err) {
+    } catch (_) {
       return;
     }
 
@@ -49,7 +49,7 @@ class LocalStorageModel {
 
       return content.split('\n').where((line) => line.isNotEmpty).toList();
 
-    } catch (err) {
+    } catch (_) {
       return [];
     }
 
@@ -77,7 +77,7 @@ class LocalStorageModel {
 
       await setupFile.writeAsString('${updatedLines.join('\n')}\n');
 
-    } catch (err) {
+    } catch (_) {
       return;
     }
 
@@ -135,7 +135,7 @@ class LocalStorageModel {
 
       await setupFile.writeAsString('$username\n$email\n$plan');
 
-    } catch (err) {
+    } catch (_) {
       return;
     }
 
@@ -151,7 +151,7 @@ class LocalStorageModel {
 
       await filePath.delete();
 
-    } catch (err) {
+    } catch (_) {
       return;
     }
 

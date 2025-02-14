@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/search_setup.dart';
 import 'package:revent/pages/main_search_page.dart';
@@ -10,7 +11,6 @@ import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/widgets/search/results_tabbar_widgets.dart';
 
 class SearchResultsPage extends StatefulWidget {
@@ -71,8 +71,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
         (_) => pageIsLoadedNotifier.value = true
       );
 
-    } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 
   }
@@ -183,7 +183,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
         actions: [_buildSearchTextContainer()]
       ).buildAppBar(),    
       body: _buildResultsTabs(),
-      bottomNavigationBar: PageNavigationBar(),
     );
   }
 

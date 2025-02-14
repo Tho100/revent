@@ -38,7 +38,7 @@ class _SavedPageState extends State<SavedPage> {
         (_) => isPageLoadedNotifier.value = true
       );
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to load vents.');
     }
 

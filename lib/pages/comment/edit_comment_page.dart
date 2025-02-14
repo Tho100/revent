@@ -42,7 +42,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
 
       }
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to save changes.');
     }
 
