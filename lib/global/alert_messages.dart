@@ -2,7 +2,7 @@ class AlertMessages {
 
   static const savedChanges = 'Saved changes.';
 
-  static const wentWrong = 'Something went wrong.';
+  static const defaultError = 'Something went wrong.';
 
   static const deletePost = 'Delete this post?';
   static const deleteArchive = 'Delete this archive post?';
