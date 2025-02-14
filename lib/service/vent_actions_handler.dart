@@ -40,7 +40,7 @@ class VentActionsHandler {
 
       await VentActions(title: title, creator: creator).likePost();
 
-    } catch (err) {
+    } catch (_) {
       _showTemporarySnack('Failed to like this post.');
     }
 
@@ -57,7 +57,7 @@ class VentActionsHandler {
         }
       );
 
-    } catch (err) {
+    } catch (_) {
       _showTemporarySnack('Failed to delete this post.');
     }
 
@@ -74,7 +74,7 @@ class VentActionsHandler {
         }
       );
 
-    } catch (err) {
+    } catch (_) {
       _showTemporarySnack('Failed to delete this archive.');
     }
 
@@ -91,7 +91,7 @@ class VentActionsHandler {
         }
       );
 
-    } catch (err) {
+    } catch (_) {
       _showTemporarySnack('Failed to delete this saved post.');
     }
 
@@ -103,7 +103,7 @@ class VentActionsHandler {
 
       await VentActions(title: title, creator: creator).savePost();
 
-    } catch (err) {
+    } catch (_) {
       _showTemporarySnack('Failed to save this post.');
     }
 

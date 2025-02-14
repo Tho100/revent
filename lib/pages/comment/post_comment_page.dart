@@ -58,7 +58,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
 
       }
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to send comment.');
     }
 

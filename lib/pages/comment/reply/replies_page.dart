@@ -65,7 +65,7 @@ class _RepliesPageState extends State<RepliesPage> {
 
       await RepliesSetup().setup(commentId: commentId);
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to load replies.');
     }
 

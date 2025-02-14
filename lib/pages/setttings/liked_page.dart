@@ -38,7 +38,7 @@ class _LikedPageState extends State<LikedPage> {
         (_) => isPageLoadedNotifier.value = true
       );
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to load vents.');
     }
 

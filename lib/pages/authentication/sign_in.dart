@@ -42,7 +42,7 @@ class _SignInPageState extends State<SignInPage> {
         email: email, auth: auth, isRememberMeChecked: isRememberMeCheckedNotifier.value
       );
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 

@@ -61,7 +61,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
 
       }
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     

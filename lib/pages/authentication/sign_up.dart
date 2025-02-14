@@ -47,7 +47,7 @@ class _SignUpPageState extends State<SignUpPage> {
         context: context
       );
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     

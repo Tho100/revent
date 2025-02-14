@@ -57,7 +57,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
 
       }
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     

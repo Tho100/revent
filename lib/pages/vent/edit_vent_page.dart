@@ -58,7 +58,7 @@ class _EditVentPageState extends State<EditVentPage> {
         Navigator.pop(context);
       }
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to save changes.');
     }
 

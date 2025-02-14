@@ -82,7 +82,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
       await callProfilePosts.setupPosts();
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 

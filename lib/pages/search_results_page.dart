@@ -71,7 +71,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
         (_) => pageIsLoadedNotifier.value = true
       );
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 

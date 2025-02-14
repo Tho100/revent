@@ -58,7 +58,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
       }
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to send reply.');
     }
 

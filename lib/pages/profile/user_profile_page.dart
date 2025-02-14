@@ -204,7 +204,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       
       postsNotifier.value = profilePostsData.userProfile.titles.length;
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 
@@ -220,7 +220,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
         (_) => isFollowingNotifier.value = !isFollowingNotifier.value
       );
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 

@@ -146,7 +146,7 @@ class _VentPostPageState extends State<VentPostPage> with
         (_) => commentsFilter.filterCommentToBest()
       );
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to load comments.');
     }
 
@@ -179,7 +179,7 @@ class _VentPostPageState extends State<VentPostPage> with
         filterTextNotifier.value = 'Best';
       });
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 

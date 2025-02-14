@@ -66,7 +66,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
       isPostPressed = true;
         
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to post vent.');
     }
 

@@ -148,7 +148,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       return true;
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to save changes.');
       return false;
     }
@@ -175,7 +175,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
       return true;
 
-    } catch (err) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: 'Failed to save changes.');
       return false;
     }
