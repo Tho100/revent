@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/controllers/auth_controller.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/service/user/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/textinput_formatter.dart';
@@ -47,7 +48,7 @@ class _SignUpPageState extends State<SignUpPage> {
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     
   }

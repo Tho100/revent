@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
@@ -204,7 +205,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       postsNotifier.value = profilePostsData.userProfile.titles.length;
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 
   }
@@ -220,7 +221,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 
   }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/search_setup.dart';
 import 'package:revent/pages/main_search_page.dart';
@@ -71,7 +72,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
       );
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 
   }

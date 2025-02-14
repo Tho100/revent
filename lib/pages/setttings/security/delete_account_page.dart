@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/model/user/user_account_manager.dart';
@@ -57,7 +58,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
       }
 
     } catch (err) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     
   }

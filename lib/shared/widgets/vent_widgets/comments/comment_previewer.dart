@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/constant.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/providers_service.dart';
@@ -62,7 +63,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
       }
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     
   }
@@ -77,7 +78,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
       ).like();
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Something went wrong.');
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     
   }
