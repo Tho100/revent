@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -220,7 +221,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
 
     if(commentController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
-        message: 'Discard comment?', 
+        message: AlertMessages.discardComment, 
       );
     }
 

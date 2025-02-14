@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
@@ -312,7 +313,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
     if(ventBodyTextController.text.isNotEmpty || ventTitleController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
-        message: 'Discard post?', 
+        message: AlertMessages.discardPost, 
       );
     }
 

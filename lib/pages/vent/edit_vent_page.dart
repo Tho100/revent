@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -138,7 +139,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
     if(ventBodyTextController.text != widget.body) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
-        message: 'Discard edit?',
+        message: AlertMessages.discardEdit,
       );
     }
 
