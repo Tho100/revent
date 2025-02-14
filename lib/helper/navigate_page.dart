@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:revent/global/constant.dart';
+import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';

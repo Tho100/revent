@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/global/constant.dart';
+import 'package:revent/global/app_keys.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
 class SnackBarDialog {
