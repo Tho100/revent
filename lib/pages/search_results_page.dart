@@ -10,7 +10,6 @@ import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/widgets/search/results_tabbar_widgets.dart';
 
 class SearchResultsPage extends StatefulWidget {
@@ -183,7 +182,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
         actions: [_buildSearchTextContainer()]
       ).buildAppBar(),    
       body: _buildResultsTabs(),
-      bottomNavigationBar: PageNavigationBar(),
     );
   }
 
