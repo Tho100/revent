@@ -6,10 +6,9 @@ class TextInputFormatterModel {
     return [FilteringTextInputFormatter.deny(RegExp(r'\s'))];
   }
 
-  List<TextInputFormatter>? disableWhitespacesAndSymbols() {
+  List<TextInputFormatter>? onlyAllowLetters() {
     return [
-      FilteringTextInputFormatter.deny(RegExp(r'\s')), 
-      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))
+      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]')),
     ];
   }
 
