@@ -40,7 +40,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
     final ventBodyText = textController.bodyTextController.text;
 
     if(ventTitle.isEmpty) {
-      CustomAlertDialog.alertDialog('Please enter vent title'); // TODO: Update 'vent' to post
+      CustomAlertDialog.alertDialog('Please enter post title');
       return;
     }
 
@@ -58,7 +58,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
       final isVentAlreadyExists = await VerifyVent(title: ventTitle).ventIsAlreadyExists();
 
       if(isVentAlreadyExists) {
-        CustomAlertDialog.alertDialog('Vent with similar title already exists');
+        CustomAlertDialog.alertDialog('Post with similar title already exists');
         return;
       }
 
