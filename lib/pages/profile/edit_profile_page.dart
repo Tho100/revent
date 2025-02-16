@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/global/alert_messages.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/user_profile/profile_data_update.dart';
 import 'package:revent/helper/textinput_formatter.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
@@ -24,9 +24,7 @@ class EditProfilePage extends StatefulWidget {
   
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
-
-  final profileData = getIt.profileProvider;
+class _EditProfilePageState extends State<EditProfilePage> with UserProfileProviderService {
 
   final bioController = TextEditingController();
   final pronounOneController = TextEditingController();
@@ -89,14 +87,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
   void _initializeProfileData() {
 
-    profilePicNotifier.value = profileData.profile.profilePicture;
+    profilePicNotifier.value = profileProvider.profile.profilePicture;
 
-    bioController.text = profileData.profile.bio;
+    bioController.text = profileProvider.profile.bio;
     bioController.addListener(_enforceMaxLines);
 
-    if(profileData.profile.pronouns.isNotEmpty) {
+    if(profileProvider.profile.pronouns.isNotEmpty) {
       
-      final splittedPronouns = profileData.profile.pronouns.split('/');
+      final splittedPronouns = profileProvider.profile.pronouns.split('/');
 
       pronounOneController.text = splittedPronouns[0];
       pronounTwoController.text = splittedPronouns[1];
@@ -122,7 +120,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
 
     if (isSaved) {
-      SnackBarDialog.temporarySnack(message: 'Saved changes.');
+      SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
     }
 
   }
@@ -132,7 +130,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     final isProfileSelected = await ProfilePictureModel().createProfilePicture(context);
 
     if(isProfileSelected) {
-      profilePicNotifier.value = profileData.profile.profilePicture;
+      profilePicNotifier.value = profileProvider.profile.profilePicture;
       SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
     }
 
@@ -142,14 +140,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     try {
 
-      await ProfileDataUpdate().updateBio(
-        bioText: bioController.text
-      );
+      await ProfileDataUpdate().updateBio(bioText: bioController.text);
 
       return true;
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
       return false;
     }
 
@@ -176,7 +172,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
       return false;
     }
 
