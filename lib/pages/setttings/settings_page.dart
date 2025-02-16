@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/user/user_account_manager.dart';
@@ -22,7 +23,7 @@ class SettingsPage extends StatelessWidget {
 
   void _signOutOnPressed() {
     CustomAlertDialog.alertDialogCustomOnPress(
-      message: 'Sign out of your account?', 
+      message: AlertMessages.signOut, 
       buttonMessage: 'Sign out', 
       onPressedEvent: () => UserAccountManager().signOutUser()
     );

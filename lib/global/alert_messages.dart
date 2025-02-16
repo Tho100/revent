@@ -13,4 +13,6 @@ class AlertMessages {
   static const discardReply = 'Discard reply?';
   static const discardEdit = 'Discard edit?';
 
+  static const signOut = 'Sign out of your account?';
+  
 }

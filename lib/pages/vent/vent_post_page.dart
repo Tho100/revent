@@ -420,7 +420,7 @@ class _VentPostPageState extends State<VentPostPage> with
       },
       deleteOnPressed: () {
         CustomAlertDialog.alertDialogCustomOnPress(
-          message: 'Delete this post?', 
+          message: AlertMessages.deletePost, 
           buttonMessage: 'Delete',
           onPressedEvent: () async {
             await VentActionsHandler(

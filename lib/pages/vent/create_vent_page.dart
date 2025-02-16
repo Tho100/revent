@@ -40,7 +40,12 @@ class _CreateVentPageState extends State<CreateVentPage> {
     final ventBodyText = textController.bodyTextController.text;
 
     if(ventTitle.isEmpty) {
-      CustomAlertDialog.alertDialog('Please enter vent title');
+      CustomAlertDialog.alertDialog('Please enter post title');
+      return;
+    }
+
+    if(ventTitle.length < 5) {
+      CustomAlertDialog.alertDialog('Post title must be at least 5 characters long');
       return;
     }
 
@@ -53,7 +58,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
       final isVentAlreadyExists = await VerifyVent(title: ventTitle).ventIsAlreadyExists();
 
       if(isVentAlreadyExists) {
-        CustomAlertDialog.alertDialog('Vent with similar title already exists');
+        CustomAlertDialog.alertDialog('Post with similar title already exists');
         return;
       }
 

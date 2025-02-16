@@ -346,7 +346,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 hintText: '',
                 maxLines: 1,
                 maxLength: 10,
-                inputFormatters: TextInputFormatterModel().disableWhitespacesAndSymbols()
+                inputFormatters: TextInputFormatterModel().onlyAllowLetters()
               ),
             ),
 
@@ -369,7 +369,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                 hintText: '',
                 maxLines: 1,
                 maxLength: 10,
-                inputFormatters: TextInputFormatterModel().disableWhitespacesAndSymbols()
+                inputFormatters: TextInputFormatterModel().onlyAllowLetters()
               ),
             ),
 

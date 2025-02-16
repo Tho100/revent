@@ -29,7 +29,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
 
   void _deleteAccountConfirmation() {
     CustomAlertDialog.alertDialogCustomOnPress(
-      message: 'Delete your account?', 
+      message: AlertMessages.deleteAccount, 
       buttonMessage: 'Delete', 
       onPressedEvent: () async {
         Navigator.pop(context);

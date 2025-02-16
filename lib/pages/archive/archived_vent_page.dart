@@ -3,6 +3,7 @@
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
@@ -158,7 +159,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       },
       deleteOnPressed: () {
         CustomAlertDialog.alertDialogCustomOnPress(
-          message: 'Delete this archive?', 
+          message: AlertMessages.deleteArchive, 
           buttonMessage: 'Delete',
           onPressedEvent: () => _deleteVentArchive(title)
         );
