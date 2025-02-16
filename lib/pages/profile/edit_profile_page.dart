@@ -59,13 +59,11 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       () => isBioChanges = true
     );
 
-    pronounOneController.addListener(
-      () => isPronounsChanges = true
-    );
-
-    pronounTwoController.addListener(
-      () => isPronounsChanges = true
-    );
+    for (var pronounController in [pronounOneController, pronounTwoController]) {
+      pronounController.addListener(
+        () => isPronounsChanges = true
+      );
+    }
 
   }
 
