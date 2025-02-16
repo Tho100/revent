@@ -60,7 +60,7 @@ class _SignUpPageState extends State<SignUpPage> {
     final authInput = authController.passwordController.text;
 
     if(emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
-      CustomAlertDialog.alertDialog('Please fill all the fields.');
+      CustomAlertDialog.alertDialog('Please fill all the fields');
       return;
     }
 
@@ -70,7 +70,7 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     if (authInput.length <= 5) {
-      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Password must be at least 6 characters long');
+      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Password must be at least 6 characters');
       return;
     }
 
