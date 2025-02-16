@@ -7,7 +7,7 @@ import 'package:revent/shared/provider/profile/profile_provider.dart';
 
 class ProfileDataSetup with UserProfileProviderService {
 
-  void _setUserProfileInfo({
+  void _setupUserProfileInfo({
     required int followers,
     required int following,
     required String bio,
@@ -37,7 +37,7 @@ class ProfileDataSetup with UserProfileProviderService {
       isMyProfile: true, username: username
     );
 
-    _setUserProfileInfo(
+    _setupUserProfileInfo(
       followers: getProfileData['followers'], 
       following: getProfileData['following'], 
       bio: getProfileData['bio'], 
