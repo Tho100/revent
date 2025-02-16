@@ -45,7 +45,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
     }
 
     if(ventTitle.length < 5) {
-      CustomAlertDialog.alertDialog('Post title must be at least 5 characters long');
+      CustomAlertDialog.alertDialog('Title must be at least 5 characters');
       return;
     }
 
