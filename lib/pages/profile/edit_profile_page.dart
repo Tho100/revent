@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/user_profile/profile_data_update.dart';
@@ -122,7 +123,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
     }
 
     if (isSaved) {
-      SnackBarDialog.temporarySnack(message: 'Saved changes.');
+      SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
     }
 
   }
@@ -142,14 +143,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
 
     try {
 
-      await ProfileDataUpdate().updateBio(
-        bioText: bioController.text
-      );
+      await ProfileDataUpdate().updateBio(bioText: bioController.text);
 
       return true;
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
       return false;
     }
 
@@ -176,7 +175,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
       return true;
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
       return false;
     }
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -37,13 +38,13 @@ class _EditCommentPageState extends State<EditCommentPage> {
           originalComment: widget.originalComment, 
           newComment: newCommentText, 
         ).save().then(
-          (_) => SnackBarDialog.temporarySnack(message: 'Saved changes.')
+          (_) => SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges)
         );
 
       }
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
     }
 
   }

@@ -52,14 +52,14 @@ class _EditVentPageState extends State<EditVentPage> {
 
       }
 
-      SnackBarDialog.temporarySnack(message: 'Saved changes.');
+      SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
 
       if(context.mounted) {
         Navigator.pop(context);
       }
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to save changes.');
+      SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
     }
 
   }
