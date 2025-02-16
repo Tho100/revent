@@ -40,7 +40,12 @@ class _CreateVentPageState extends State<CreateVentPage> {
     final ventBodyText = textController.bodyTextController.text;
 
     if(ventTitle.isEmpty) {
-      CustomAlertDialog.alertDialog('Please enter vent title');
+      CustomAlertDialog.alertDialog('Please enter vent title'); // TODO: Update 'vent' to post
+      return;
+    }
+
+    if(ventTitle.length < 5) {
+      CustomAlertDialog.alertDialog('Post title must be at least 5 characters long');
       return;
     }
 
