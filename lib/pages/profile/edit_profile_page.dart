@@ -38,7 +38,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   bool isBioChanges = false;
   bool isPronounsChanges = false;
 
-  void _enforceMaxLines() {
+  void _enforceBioMaxLines() {
 
     final text = bioController.text;
 
@@ -53,19 +53,17 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
-  void _setTextFieldsListeners() {
+  void _initializeTextFieldsListeners() {
 
     bioController.addListener(
       () => isBioChanges = true
     );
 
-    pronounOneController.addListener(
-      () => isPronounsChanges = true
-    );
-
-    pronounTwoController.addListener(
-      () => isPronounsChanges = true
-    );
+    for (var pronounController in [pronounOneController, pronounTwoController]) {
+      pronounController.addListener(
+        () => isPronounsChanges = true
+      );
+    }
 
   }
 
@@ -90,7 +88,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     profilePicNotifier.value = profileProvider.profile.profilePicture;
 
     bioController.text = profileProvider.profile.bio;
-    bioController.addListener(_enforceMaxLines);
+    bioController.addListener(_enforceBioMaxLines);
 
     if(profileProvider.profile.pronouns.isNotEmpty) {
       
@@ -437,7 +435,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void initState() {
     super.initState();
     _initializeProfileData();
-    _setTextFieldsListeners();
+    _initializeTextFieldsListeners();
     _initializePronounsChips();
   }
 

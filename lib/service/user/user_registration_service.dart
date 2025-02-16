@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mysql_client/mysql_client.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/user/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -9,7 +8,7 @@ import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
-class UserRegistrationService extends BaseQueryService {
+class UserRegistrationService extends BaseQueryService with UserProfileProviderService {
 
   Future<void> register({
     required String username,
@@ -36,7 +35,7 @@ class UserRegistrationService extends BaseQueryService {
       return;
     }
 
-    _setUserProfileData(username: username, email: email);
+    _setupUserProfileData(username: username, email: email);
 
     await UserDataRegistration().insert(hashPassword: hashPassword);
     
@@ -62,7 +61,7 @@ class UserRegistrationService extends BaseQueryService {
 
   }
 
-  void _setUserProfileData({
+  void _setupUserProfileData({
     required String username,
     required String email
   }) {
@@ -73,7 +72,7 @@ class UserRegistrationService extends BaseQueryService {
       plan: 'Basic', 
     );
 
-    getIt.userProvider.setUser(userSetup);
+    userProvider.setUser(userSetup);
 
   }
 
