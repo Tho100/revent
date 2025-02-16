@@ -47,7 +47,7 @@ class RepliesPage extends StatefulWidget {
 
 class _RepliesPageState extends State<RepliesPage> {
 
-  final activeVent = getIt.activeVentProvider.ventData;
+  final activeVent = getIt.activeVentProvider.ventData; // TODO: Use provider service
 
   late int commentId = 0;
 
@@ -147,9 +147,11 @@ class _RepliesPageState extends State<RepliesPage> {
                       );
                     },
                   ),
-                  
-                  const SizedBox(height: 30),
 
+                  activeVent.body.isNotEmpty 
+                    ? const SizedBox(height: 30)
+                    : const SizedBox(height: 20)
+                  
                 ],
               ),
             ),
