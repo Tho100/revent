@@ -5,7 +5,7 @@ class DeleteAccountData extends BaseQueryService {
   Future<void> delete({required String username}) async {
 
     const query = '''
-      DELETE ui, upi, upvi, ufi, vi, svi, avi, lvi, ci, cli
+      DELETE ui, upi, upvi, ufi, vi, svi, avi, lvi, ci, cli, cri, rli
       FROM user_information ui
         LEFT JOIN user_profile_info upi ON upi.username = ui.username
         LEFT JOIN user_privacy_info pvi ON upvi.username = ui.username
@@ -16,6 +16,8 @@ class DeleteAccountData extends BaseQueryService {
         LEFT JOIN liked_vent_info lvi ON lvi.liked_by = ui.username
         LEFT JOIN comments_info ci ON ci.commented_by = ui.username
         LEFT JOIN comments_likes_info cli ON cli.liked_by = ui.username
+        LEFT JOIN comment_replies_info cri ON cri.replied_by = ui.username
+        LEFT JOIN replies_likes_info rli ON rli.liked_by = ui.username
       WHERE ui.username = :username;
     ''';
 
