@@ -149,7 +149,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
 
                   activeVentProvider.ventData.body.isNotEmpty 
                     ? const SizedBox(height: 30)
-                    : const SizedBox(height: 20)
+                    : const SizedBox.shrink()
                   
                 ],
               ),

@@ -114,9 +114,12 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
             const SizedBox(width: 45),
 
-            Padding(
-              padding: const EdgeInsets.only(bottom: 25.0, right: 25.0),
-              child: StyledTextWidget(text: widget.comment),
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 85,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 25.0),
+                child: StyledTextWidget(text: widget.comment),
+              ),
             ),
 
           ]
