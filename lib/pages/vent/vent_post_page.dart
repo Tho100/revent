@@ -633,7 +633,7 @@ class _VentPostPageState extends State<VentPostPage> with
             context: context, 
             notifier: enableCommentNotifier, 
             onToggled: () async => await _toggleCommentsOnPressed(), 
-            text: 'Enable comment'
+            text: 'Enable commenting'
           );
         },
         style: ElevatedButton.styleFrom(

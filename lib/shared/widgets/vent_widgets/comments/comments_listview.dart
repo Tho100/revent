@@ -60,9 +60,9 @@ class CommentsListView extends StatelessWidget {
       padding: const EdgeInsets.only(top: 35),
       child: EmptyPage().headerCustomMessage(
         header: isCommentEnabled 
-          ? 'No comment yet' : 'Comment disabled', 
+          ? 'No comment yet' : 'Commenting disabled', 
         subheader: isCommentEnabled 
-          ? 'Be the first to comment!' : 'The author has disabled comment for this post.'
+          ? 'Be the first to comment!' : 'The author has disabled commenting for this post.'
       ),
     );
   }
