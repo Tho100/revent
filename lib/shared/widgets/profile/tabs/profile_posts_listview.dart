@@ -1,10 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
+import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
 
 class ProfilePostsListView extends StatefulWidget {
@@ -47,9 +50,32 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
   }
 
   Widget _buildOnEmpty() {
-    return EmptyPage().customMessage(
-      message: 'No vent posted yet.'
-    );
+    return widget.isMyProfile 
+      ? Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            
+            const Icon(CupertinoIcons.square_pencil, color: ThemeColor.secondaryWhite, size: 32),
+
+            const SizedBox(height: 14),
+      
+            EmptyPage().headerCustomMessage(
+              header: 'Create vent', 
+              subheader: 'Share your thoughts, stories and more!'
+            ),
+              
+            const SizedBox(height: 25),
+      
+            MainButton(
+              text: 'Create',
+              customWidth: 90,
+              customHeight: 40, 
+              onPressed: () => NavigatePage.createVentPage()
+            )
+          
+          ],
+        )
+      : EmptyPage().customMessage(message: 'No vent posted yet.');
   }
 
   Widget _buildListView(ProfilePostsData postsData) {
