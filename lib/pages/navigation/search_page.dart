@@ -132,7 +132,7 @@ class _SearchPageState extends State<SearchPage> {
       children: [
 
         Text(
-          'Tags',
+          'Popular tags',
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w800,
