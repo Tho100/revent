@@ -349,7 +349,7 @@ class _VentPostPageState extends State<VentPostPage> with
                 ? Row(
                   children: [
 
-                    const Icon(CupertinoIcons.pencil, size: 15.5, color: ThemeColor.thirdWhite),
+                    const Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
                     
                     const SizedBox(width: 6),
 
