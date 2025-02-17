@@ -69,15 +69,6 @@ class _MainSearchPageState extends State<MainSearchPage> {
               fontWeight: FontWeight.w700,
             ),
             decoration: InputDecoration(
-              suffixIcon: Transform.translate(
-                offset: const Offset(4, 0),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(CupertinoIcons.slider_horizontal_3), 
-                  color: ThemeColor.thirdWhite, 
-                  iconSize: 23
-                ),
-              ),
               hintText: 'Search for anything...',
               counterText: '',
               border: InputBorder.none,
