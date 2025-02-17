@@ -143,7 +143,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
                   
                   activeVentProvider.ventData.body.isNotEmpty 
                     ? const SizedBox(height: 30)
-                    : const SizedBox(height: 20)
+                    : const SizedBox.shrink()
 
                 ],
               ),
