@@ -6,6 +6,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/helper/text_copy.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/vent/comment/reply/reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -88,7 +89,9 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
           context: navigatorKey.currentContext!, 
           repliedBy: repliedBy, 
           copyOnPressed: () {
-            Clipboard.setData(ClipboardData(text: reply));
+            TextCopy(text: reply).copy().then(
+              (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
+            );          
             Navigator.pop(navigatorKey.currentContext!);
           }, 
           reportOnPressed: () {

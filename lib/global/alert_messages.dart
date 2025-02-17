@@ -16,4 +16,6 @@ class AlertMessages {
 
   static const signOut = 'Sign out of your account?';
   
+  static const textCopied = 'Text copied.';
+
 }

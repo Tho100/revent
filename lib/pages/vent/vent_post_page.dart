@@ -7,6 +7,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/helper/text_copy.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
@@ -152,11 +153,12 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  void _copyBodyText() {
+  void _copyBodyText() async {
 
     if(widget.bodyText.isNotEmpty) {
-      Clipboard.setData(ClipboardData(text: widget.bodyText));
-      SnackBarDialog.temporarySnack(message: 'Copied body text.');
+      TextCopy(text: widget.bodyText).copy().then(
+        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
+      );
 
     } else {
       SnackBarDialog.temporarySnack(message: 'Nothing to copy...');
@@ -633,7 +635,7 @@ class _VentPostPageState extends State<VentPostPage> with
             context: context, 
             notifier: enableCommentNotifier, 
             onToggled: () async => await _toggleCommentsOnPressed(), 
-            text: 'Enable comment'
+            text: 'Enable commenting'
           );
         },
         style: ElevatedButton.styleFrom(
