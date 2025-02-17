@@ -1,5 +1,4 @@
 import 'package:flutter/services.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class TextCopy {
 
@@ -7,14 +6,12 @@ class TextCopy {
 
   TextCopy({required this.text});
 
-  void copy() async {
+  Future<void> copy() async {
 
     await Clipboard.setData(
       ClipboardData(text: text)
     );
     
-    SnackBarDialog.temporarySnack(message: 'Copied text.');
-
   }
 
 }
