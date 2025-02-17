@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/model/local_storage_model.dart';
+import 'package:revent/pages/empty_page.dart';
 import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -125,13 +126,34 @@ class _MainSearchPageState extends State<MainSearchPage> {
     );
   }
 
+  Widget _buildNoRecentSearches() {
+    return Column(
+      children: [
+
+        const SizedBox(height: 45),
+
+        const Icon(CupertinoIcons.search, color: ThemeColor.secondaryWhite, size: 32),
+
+        const SizedBox(height: 18),
+
+        EmptyPage().headerCustomMessage(
+          header: 'No search history', 
+          subheader: 'Your search history will appear here.'
+        )
+
+      ],
+    );
+  }
+
   Widget _buildRecentSearches() {
     return Padding(
       padding: const EdgeInsets.only(left: 25.0, right: 10.0, top: 20.0),
       child: ValueListenableBuilder(
         valueListenable: searchHistoryNotifier,
         builder: (_, searchHistoryText, __) {
-          return ListView.builder(
+          return searchHistoryText.isEmpty 
+            ? _buildNoRecentSearches()
+            : ListView.builder(
             itemCount: searchHistoryText.length,
             itemBuilder: (_, index) {
               final reversedIndex = searchHistoryText.length - 1 - index;
