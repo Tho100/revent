@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/setup/replies_setup.dart';
 import 'package:revent/pages/comment/reply/post_reply_page.dart';
@@ -45,9 +46,7 @@ class RepliesPage extends StatefulWidget {
 
 }
 
-class _RepliesPageState extends State<RepliesPage> {
-
-  final activeVent = getIt.activeVentProvider.ventData; // TODO: Use provider service
+class _RepliesPageState extends State<RepliesPage> with VentProviderService {
 
   late int commentId = 0;
 
@@ -56,7 +55,7 @@ class _RepliesPageState extends State<RepliesPage> {
     try {
       
       final postId = await PostIdGetter(
-        title: activeVent.title, creator: activeVent.creator
+        title: activeVentProvider.ventData.title, creator: activeVentProvider.ventData.creator
       ).getPostId();
 
       commentId = await CommentIdGetter(postId: postId).getCommentId(
@@ -82,14 +81,14 @@ class _RepliesPageState extends State<RepliesPage> {
             customHeight: 35,
             customWidth: 35,
             customEmptyPfpSize: 20,
-            pfpData: getIt.activeVentProvider.ventData.creatorPfp,
+            pfpData: activeVentProvider.ventData.creatorPfp,
           ),
         ),
 
         const SizedBox(width: 10),
 
         Text(
-          activeVent.creator,
+          activeVentProvider.ventData.creator,
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w800,
@@ -129,7 +128,7 @@ class _RepliesPageState extends State<RepliesPage> {
                   const SizedBox(height: 10),
 
                   SelectableText(
-                    activeVent.title,
+                    activeVentProvider.ventData.title,
                     style: GoogleFonts.inter(
                       color: ThemeColor.white,
                       fontWeight: FontWeight.w800,
@@ -148,7 +147,7 @@ class _RepliesPageState extends State<RepliesPage> {
                     },
                   ),
 
-                  activeVent.body.isNotEmpty 
+                  activeVentProvider.ventData.body.isNotEmpty 
                     ? const SizedBox(height: 30)
                     : const SizedBox(height: 20)
                   
