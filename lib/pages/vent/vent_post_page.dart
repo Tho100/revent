@@ -74,7 +74,7 @@ class _VentPostPageState extends State<VentPostPage> with
   void _addCommentOnPressed() {
 
     if(!enableCommentNotifier.value) {
-      SnackBarDialog.temporarySnack(message: 'Comment is disabled.');
+      SnackBarDialog.temporarySnack(message: 'Commenting is disabled.');
       return;
     }
 
@@ -542,31 +542,38 @@ class _VentPostPageState extends State<VentPostPage> with
           padding: EdgeInsets.symmetric(horizontal: 5),
           child: Divider(color: ThemeColor.lightGrey),
         ),
-
+  
         const SizedBox(height: 6),
-
-        Row(
-          children: [
-            
-            Padding(
-              padding: const EdgeInsets.only(left: 6.0),
-              child: Text(
-                'Comments',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 17,
+  
+        ValueListenableBuilder(
+          valueListenable: enableCommentNotifier,
+          builder: (_, isCommentEnabled, __) {
+            return isCommentEnabled
+              ? Row(
+              children: [
+                
+                Padding(
+                  padding: const EdgeInsets.only(left: 6.0),
+                  child: Text(
+                    'Comments',
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.secondaryWhite,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 17,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-      
-            const Spacer(),
-      
-            _buildFilterButton(),
-      
-          ],
-        ),
-
+          
+                const Spacer(),
+          
+                _buildFilterButton(),
+          
+              ],
+            )
+            : const SizedBox.shrink();
+          }
+        )
+  
       ],
     );
   }

@@ -62,7 +62,7 @@ class CommentsListView extends StatelessWidget {
         header: isCommentEnabled 
           ? 'No comment yet' : 'Commenting disabled', 
         subheader: isCommentEnabled 
-          ? 'Be the first to comment!' : 'The author has disabled commenting for this post.'
+          ? 'Be the first to comment!' : 'The author has disabled commenting \nfor this post.'
       ),
     );
   }
