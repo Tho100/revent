@@ -12,7 +12,10 @@ class UserAccountManager with UserProfileProviderService, ProfilePostsProviderSe
     profilePostsProvider.clearPostsData();
     profileSavedProvider.clearPostsData();
 
-    await LocalStorageModel().deleteLocalData();
+    final localModel = LocalStorageModel();
+
+    await localModel.deleteLocalData();
+    await localModel.deleteAllSearchHistory();
 
     NavigatePage.mainScreenPage();
 
