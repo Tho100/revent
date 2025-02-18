@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/reply/reply_previewer.dart';
 
 class RepliesListView extends StatelessWidget {
@@ -31,8 +32,29 @@ class RepliesListView extends StatelessWidget {
 
   Widget _buildOnEmpty() {
     return Padding(
-      padding: const EdgeInsets.only(top: 35),
-      child: EmptyPage().customMessage(message: 'No replies yet.')
+      padding: const EdgeInsets.only(top: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+
+          const Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Divider(color: ThemeColor.lightGrey, height: 1),
+            )
+          ),
+
+          EmptyPage().customMessage(message: 'No replies yet'),
+
+          const Expanded(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 10.0),
+              child: Divider(color: ThemeColor.lightGrey, height: 1),
+            )
+          ),
+
+        ],
+      ),
     );
   }
 
