@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
@@ -23,10 +22,7 @@ class SavedPage extends StatefulWidget {
   
 }
 
-class _SavedPageState extends State<SavedPage> {
-
-  final navigation = getIt.navigationProvider; // TODO: Use provider-service
-  final savedVentData = getIt.savedVentProvider;
+class _SavedPageState extends State<SavedPage> with NavigationProviderService {
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -144,14 +140,14 @@ class _SavedPageState extends State<SavedPage> {
   @override
   void initState() {
     _loadSavedVentsData();
-    navigation.setCurrentRoute(AppRoute.savedPosts);
+    navigationProvider.setCurrentRoute(AppRoute.savedPosts);
     super.initState();
   }
 
   @override
   void dispose() {
     isPageLoadedNotifier.dispose();
-    navigation.setCurrentRoute(AppRoute.myProfile);
+    navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
   
