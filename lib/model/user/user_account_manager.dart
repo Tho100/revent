@@ -14,18 +14,19 @@ class UserAccountManager with UserProfileProviderService, ProfilePostsProviderSe
 
     final localModel = LocalStorageModel();
 
-    await localModel.deleteLocalData();
     await localModel.deleteAllSearchHistory();
 
-    NavigatePage.mainScreenPage();
+    await localModel.deleteLocalData().then(
+      (_) => NavigatePage.mainScreenPage()
+    );
 
   }
 
   Future<void> deleteAccountData({required String username}) async {
 
-    await DeleteAccountData().delete(
-      username: username
-    ).then((_) => signOutUser());
+    await DeleteAccountData().delete(username: username).then(
+      (_) => signOutUser()
+    );
 
   }
 
