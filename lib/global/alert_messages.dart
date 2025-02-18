@@ -4,6 +4,7 @@ class AlertMessages {
 
   static const defaultError = 'Something went wrong.';
   static const changesFailed = 'Failed to save changes.';
+  static const postsFailedToLoad = 'Failed to load posts.';
 
   static const deletePost = 'Delete this post?';
   static const deleteArchive = 'Delete this archive post?';

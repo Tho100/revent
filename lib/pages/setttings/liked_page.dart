@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/global/alert_messages.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
@@ -23,10 +23,7 @@ class LikedPage extends StatefulWidget {
   
 }
 
-class _LikedPageState extends State<LikedPage> {
-
-  final navigation = getIt.navigationProvider;
-  final likedVentData = getIt.likedVentProvider;
+class _LikedPageState extends State<LikedPage> with NavigationProviderService {
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -39,7 +36,7 @@ class _LikedPageState extends State<LikedPage> {
       );
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to load vents.');
+      SnackBarDialog.errorSnack(message: AlertMessages.postsFailedToLoad);
     }
 
   }
@@ -59,6 +56,23 @@ class _LikedPageState extends State<LikedPage> {
     );  
   }
 
+  Widget _buildTotalPost(List<LikedVentData> likedVentData) {
+
+    final postText = likedVentData.length == 1 
+      ? "You liked 1 post." 
+      : "You liked ${likedVentData.length} posts.";
+
+    return Text(
+      postText,
+      style: GoogleFonts.inter(
+        color: ThemeColor.thirdWhite,
+        fontWeight: FontWeight.w800,
+        fontSize: 14
+      )
+    );
+
+  }
+
   Widget _buildListView(List<LikedVentData> likedVentData) {
     return DynamicHeightGridView(
       physics: const AlwaysScrollableScrollPhysics(
@@ -68,36 +82,26 @@ class _LikedPageState extends State<LikedPage> {
       itemCount: likedVentData.length + 1,
       builder: (_, index) {
 
-        if(index == 0) {
-          return const SizedBox(height: 10);
+        if (index == 0) {
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
+              child: _buildTotalPost(likedVentData),
+            ),
+          );
         }
 
         final adjustedIndex = index - 1;
         final reversedIndex = likedVentData.length - 1 - adjustedIndex;
 
-        if(index >= 0) {
+        if (reversedIndex >= 0 && reversedIndex < likedVentData.length) {
           final vents = likedVentData[reversedIndex];
           return _buildVentPreviewer(vents);
-        } 
-        
-        if (likedVentData.length > 9) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
-            child: Center(
-              child: Text(
-                "You've reached the end.", 
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontWeight: FontWeight.w800,
-                )
-              ),
-            ),
-          );
+        }
 
-        } 
-        
         return const SizedBox.shrink();
-
+          
       },
     );
   }
@@ -137,14 +141,14 @@ class _LikedPageState extends State<LikedPage> {
   @override
   void initState() {
     _loadLikedVentsData();
-    navigation.setCurrentRoute(AppRoute.likedPosts);
+    navigationProvider.setCurrentRoute(AppRoute.likedPosts);
     super.initState();
   }
 
   @override
   void dispose() {
     isPageLoadedNotifier.dispose();
-    navigation.setCurrentRoute(AppRoute.myProfile);
+    navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
   

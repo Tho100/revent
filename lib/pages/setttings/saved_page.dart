@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/global/alert_messages.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
@@ -23,10 +23,7 @@ class SavedPage extends StatefulWidget {
   
 }
 
-class _SavedPageState extends State<SavedPage> {
-
-  final navigation = getIt.navigationProvider;
-  final savedVentData = getIt.savedVentProvider;
+class _SavedPageState extends State<SavedPage> with NavigationProviderService {
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -39,7 +36,7 @@ class _SavedPageState extends State<SavedPage> {
       );
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to load vents.');
+      SnackBarDialog.errorSnack(message: AlertMessages.postsFailedToLoad);
     }
 
   }
@@ -59,6 +56,23 @@ class _SavedPageState extends State<SavedPage> {
     );  
   }
 
+  Widget _buildTotalPost(List<SavedVentData> savedVentData) {
+
+    final postText = savedVentData.length == 1 
+      ? "You saved 1 post." 
+      : "You saved ${savedVentData.length} posts.";
+
+    return Text(
+      postText,
+      style: GoogleFonts.inter(
+        color: ThemeColor.thirdWhite,
+        fontWeight: FontWeight.w800,
+        fontSize: 14
+      )
+    );
+
+  }
+
   Widget _buildListView(List<SavedVentData> savedVentData) {
     return DynamicHeightGridView(
       physics: const AlwaysScrollableScrollPhysics(
@@ -68,34 +82,24 @@ class _SavedPageState extends State<SavedPage> {
       itemCount: savedVentData.length + 1,
       builder: (_, index) {
 
-        if(index == 0) {
-          return const SizedBox(height: 10);
+        if (index == 0) {
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
+              child: _buildTotalPost(savedVentData),
+            ),
+          );
         }
 
         final adjustedIndex = index - 1;
-        final reversedVentIndex = savedVentData.length - 1 - adjustedIndex;
+        final reversedIndex = savedVentData.length - 1 - adjustedIndex;
 
-        if(index >= 0) {
-          final vents = savedVentData[reversedVentIndex];
+        if (reversedIndex >= 0 && reversedIndex < savedVentData.length) {
+          final vents = savedVentData[reversedIndex];
           return _buildVentPreviewer(vents);
-        } 
-        
-        if (savedVentData.length > 9) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
-            child: Center(
-              child: Text(
-                "You've reached the end.", 
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontWeight: FontWeight.w800,
-                )
-              ),
-            ),
-          );
-
         }
-        
+
         return const SizedBox.shrink();
 
       },
@@ -137,14 +141,14 @@ class _SavedPageState extends State<SavedPage> {
   @override
   void initState() {
     _loadSavedVentsData();
-    navigation.setCurrentRoute(AppRoute.savedPosts);
+    navigationProvider.setCurrentRoute(AppRoute.savedPosts);
     super.initState();
   }
 
   @override
   void dispose() {
     isPageLoadedNotifier.dispose();
-    navigation.setCurrentRoute(AppRoute.myProfile);
+    navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
   
