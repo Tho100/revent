@@ -25,7 +25,7 @@ class SavedPage extends StatefulWidget {
 
 class _SavedPageState extends State<SavedPage> {
 
-  final navigation = getIt.navigationProvider;
+  final navigation = getIt.navigationProvider; // TODO: Use provider-service
   final savedVentData = getIt.savedVentProvider;
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
@@ -59,6 +59,23 @@ class _SavedPageState extends State<SavedPage> {
     );  
   }
 
+  Widget _buildTotalPost(List<SavedVentData> savedVentData) {
+
+    final postText = savedVentData.length == 1 
+      ? "You saved 1 post." 
+      : "You saved ${savedVentData.length} posts.";
+
+    return Text(
+      postText,
+      style: GoogleFonts.inter(
+        color: ThemeColor.thirdWhite,
+        fontWeight: FontWeight.w800,
+        fontSize: 14
+      )
+    );
+
+  }
+
   Widget _buildListView(List<SavedVentData> savedVentData) {
     return DynamicHeightGridView(
       physics: const AlwaysScrollableScrollPhysics(
@@ -68,34 +85,24 @@ class _SavedPageState extends State<SavedPage> {
       itemCount: savedVentData.length + 1,
       builder: (_, index) {
 
-        if(index == 0) {
-          return const SizedBox(height: 10);
+        if (index == 0) {
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
+              child: _buildTotalPost(savedVentData),
+            ),
+          );
         }
 
         final adjustedIndex = index - 1;
-        final reversedVentIndex = savedVentData.length - 1 - adjustedIndex;
+        final reversedIndex = savedVentData.length - 1 - adjustedIndex;
 
-        if(index >= 0) {
-          final vents = savedVentData[reversedVentIndex];
+        if (reversedIndex >= 0 && reversedIndex < savedVentData.length) {
+          final vents = savedVentData[reversedIndex];
           return _buildVentPreviewer(vents);
-        } 
-        
-        if (savedVentData.length > 9) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
-            child: Center(
-              child: Text(
-                "You've reached the end.", 
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontWeight: FontWeight.w800,
-                )
-              ),
-            ),
-          );
-
         }
-        
+
         return const SizedBox.shrink();
 
       },
