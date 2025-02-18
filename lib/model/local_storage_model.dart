@@ -83,6 +83,30 @@ class LocalStorageModel {
 
   }
 
+  Future<void> deleteAllSearchHistory() async {
+
+    final localDir = await _readLocalDirectory();
+
+    if (!localDir.existsSync()) {
+      return; 
+    }
+
+    final setupFile = File('${localDir.path}/$_searchHistoryFile');
+
+    if (!setupFile.existsSync()) {
+      return; 
+    }
+
+    try {
+
+      await setupFile.delete();
+
+    } catch (_) {
+      return;
+    }
+
+  }
+
   Future<Map<String, String>> readLocalAccountInformation() async {
 
     String username = '';
