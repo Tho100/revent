@@ -26,7 +26,7 @@ class LikedPage extends StatefulWidget {
 class _LikedPageState extends State<LikedPage> {
 
   final navigation = getIt.navigationProvider;
-  final likedVentData = getIt.likedVentProvider;
+  final likedVentData = getIt.likedVentProvider;// TODO: Use provider-service
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -59,6 +59,23 @@ class _LikedPageState extends State<LikedPage> {
     );  
   }
 
+  Widget _buildTotalPost(List<LikedVentData> likedVentData) {
+
+    final postText = likedVentData.length == 1 
+      ? "You liked 1 post." 
+      : "You liked ${likedVentData.length} posts.";
+
+    return Text(
+      postText,
+      style: GoogleFonts.inter(
+        color: ThemeColor.thirdWhite,
+        fontWeight: FontWeight.w800,
+        fontSize: 14
+      )
+    );
+
+  }
+
   Widget _buildListView(List<LikedVentData> likedVentData) {
     return DynamicHeightGridView(
       physics: const AlwaysScrollableScrollPhysics(
@@ -68,36 +85,26 @@ class _LikedPageState extends State<LikedPage> {
       itemCount: likedVentData.length + 1,
       builder: (_, index) {
 
-        if(index == 0) {
-          return const SizedBox(height: 10);
+        if (index == 0) {
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
+              child: _buildTotalPost(likedVentData),
+            ),
+          );
         }
 
         final adjustedIndex = index - 1;
         final reversedIndex = likedVentData.length - 1 - adjustedIndex;
 
-        if(index >= 0) {
+        if (reversedIndex >= 0 && reversedIndex < likedVentData.length) {
           final vents = likedVentData[reversedIndex];
           return _buildVentPreviewer(vents);
-        } 
-        
-        if (likedVentData.length > 9) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
-            child: Center(
-              child: Text(
-                "You've reached the end.", 
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontWeight: FontWeight.w800,
-                )
-              ),
-            ),
-          );
+        }
 
-        } 
-        
         return const SizedBox.shrink();
-
+          
       },
     );
   }
