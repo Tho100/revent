@@ -16,7 +16,7 @@ class RepliesListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildCommentPreview(ReplyData replyData) {
+  Widget _buildReplyPreviewer(ReplyData replyData) {
     return ReplyPreviewer(
       comment: comment,
       commentedBy: commentedBy,
@@ -30,7 +30,7 @@ class RepliesListView extends StatelessWidget {
     );
   }
 
-  Widget _buildOnEmpty() { // TODO: Rename to _buildOnNoReplies 
+  Widget _buildOnNoReplies() {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Row(
@@ -75,8 +75,8 @@ class RepliesListView extends StatelessWidget {
       itemCount: repliesCount,
       itemBuilder: (_, index) {
         final reversedIndex = repliesData.replies.length - 1 - index;
-        final ventComment = repliesData.replies[reversedIndex];
-        return _buildCommentPreview(ventComment);
+        final reply = repliesData.replies[reversedIndex];
+        return _buildReplyPreviewer(reply);
       }
     );
   }
@@ -86,11 +86,11 @@ class RepliesListView extends StatelessWidget {
     return Consumer<RepliesProvider>(
       builder: (_, repliesData, __) {
 
-        final isCommentsEmpty = repliesData.replies.isEmpty; // TODO: Rename variables
+        final isRepliesEmpty = repliesData.replies.isEmpty;
         final repliesCount = repliesData.replies.length;
 
-        return isCommentsEmpty 
-          ? _buildOnEmpty()
+        return isRepliesEmpty 
+          ? _buildOnNoReplies()
           : _buildListView(repliesData: repliesData, repliesCount: repliesCount);
 
       },
