@@ -33,14 +33,16 @@ class MainScreenPage extends StatelessWidget {
   }
 
   Widget _buildLogoText() {
-    return Text(
-      '>:(',
-      style: GoogleFonts.inter(
-        color: ThemeColor.white,
-        fontSize: 22,
-        fontWeight: FontWeight.w900,
+    return Padding(
+      padding: const EdgeInsets.only(right: 6.0),
+      child: Text(
+        '>:(',
+        style: GoogleFonts.inter(
+          color: ThemeColor.white,
+          fontSize: 20,
+          fontWeight: FontWeight.w900,
+        ),
       ),
-      textAlign: TextAlign.left,
     );
   }
 
@@ -52,7 +54,7 @@ class MainScreenPage extends StatelessWidget {
         fontSize: 42,
         fontWeight: FontWeight.w900,
       ),
-      textAlign: TextAlign.left,
+      textAlign: TextAlign.center,
     );
   }
 
@@ -64,7 +66,7 @@ class MainScreenPage extends StatelessWidget {
         fontSize: 16,
         fontWeight: FontWeight.w800,
       ),
-      textAlign: TextAlign.left,
+      textAlign: TextAlign.center,
     );
   }
 
@@ -86,16 +88,15 @@ class MainScreenPage extends StatelessWidget {
 
   Widget _buildBody(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        const SizedBox(height: 85),
+        const SizedBox(height: 72),
         
         _buildPaddedWidget(
           child: _buildLogoText()
         ),
         
-        const SizedBox(height: 18),
+        const SizedBox(height: 30),
 
         _buildPaddedWidget(
           child: _buildHeaderText()
