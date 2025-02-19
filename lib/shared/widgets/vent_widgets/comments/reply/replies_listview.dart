@@ -39,8 +39,8 @@ class RepliesListView extends StatelessWidget {
 
           const Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Divider(color: ThemeColor.lightGrey, height: 1),
+              padding: EdgeInsets.only(left: 4.0, right: 14.0),
+              child: Divider(color: ThemeColor.lightGrey),
             )
           ),
 
@@ -48,8 +48,8 @@ class RepliesListView extends StatelessWidget {
 
           const Expanded(
             child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.0),
-              child: Divider(color: ThemeColor.lightGrey, height: 1),
+              padding: EdgeInsets.only(left: 14.0, right: 4.0),
+              child: Divider(color: ThemeColor.lightGrey),
             )
           ),
 
