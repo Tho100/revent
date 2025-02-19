@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/reply/reply_previewer.dart';
@@ -16,7 +16,7 @@ class RepliesListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildCommentPreview(ReplyData replyData) {
+  Widget _buildReplyPreviewer(ReplyData replyData) {
     return ReplyPreviewer(
       comment: comment,
       commentedBy: commentedBy,
@@ -30,7 +30,7 @@ class RepliesListView extends StatelessWidget {
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildOnNoReplies() {
     return Padding(
       padding: const EdgeInsets.only(top: 16),
       child: Row(
@@ -44,7 +44,14 @@ class RepliesListView extends StatelessWidget {
             )
           ),
 
-          EmptyPage().customMessage(message: 'No replies yet'),
+          Text(
+            'No replies yet',
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w800,
+              fontSize: 13
+            ),
+          ),
 
           const Expanded(
             child: Padding(
@@ -68,8 +75,8 @@ class RepliesListView extends StatelessWidget {
       itemCount: repliesCount,
       itemBuilder: (_, index) {
         final reversedIndex = repliesData.replies.length - 1 - index;
-        final ventComment = repliesData.replies[reversedIndex];
-        return _buildCommentPreview(ventComment);
+        final reply = repliesData.replies[reversedIndex];
+        return _buildReplyPreviewer(reply);
       }
     );
   }
@@ -79,11 +86,11 @@ class RepliesListView extends StatelessWidget {
     return Consumer<RepliesProvider>(
       builder: (_, repliesData, __) {
 
-        final isCommentsEmpty = repliesData.replies.isEmpty;
+        final isRepliesEmpty = repliesData.replies.isEmpty;
         final repliesCount = repliesData.replies.length;
 
-        return isCommentsEmpty 
-          ? _buildOnEmpty()
+        return isRepliesEmpty 
+          ? _buildOnNoReplies()
           : _buildListView(repliesData: repliesData, repliesCount: repliesCount);
 
       },
