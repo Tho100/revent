@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 
@@ -31,11 +32,11 @@ class ProfilePostsData {
 class ProfilePostsProvider extends ChangeNotifier {
 
   final Map<String, ProfilePostsData> _profileData = {
-    'my_profile': ProfilePostsData(),
+    ProfileType.myProfile.value: ProfilePostsData(),
     'user_profile': ProfilePostsData(),
   };
 
-  ProfilePostsData get myProfile => _profileData['my_profile']!;
+  ProfilePostsData get myProfile => _profileData[ProfileType.myProfile.value]!;
   ProfilePostsData get userProfile => _profileData['user_profile']!;
 
   void setTitles(String profileKey, List<String> titles) {
@@ -83,7 +84,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
   void deleteVent(int index) {
 
-    final profile = _profileData['my_profile'];
+    final profile = _profileData[ProfileType.myProfile.value];
 
     if (profile != null) {
 
@@ -107,7 +108,7 @@ class ProfilePostsProvider extends ChangeNotifier {
     final navigation = getIt.navigationProvider;
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
-      ? 'my_profile'
+      ? ProfileType.myProfile.value
       : 'user_profile';
 
     final profile = _profileData[profileKey];
@@ -133,7 +134,7 @@ class ProfilePostsProvider extends ChangeNotifier {
     final navigation = getIt.navigationProvider;
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
-      ? 'my_profile'
+      ? ProfileType.myProfile.value
       : 'user_profile';
 
     final profile = _profileData[profileKey];

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/service/refresh_service.dart';
@@ -42,13 +43,15 @@ class _MyProfilePageState extends State<MyProfilePage> with
   void _initializeClasses() {
 
     callProfilePosts = ProfilePostsSetup(
-      profileType: 'my_profile',
+      profileType: ProfileType.myProfile.value,
       username: userProvider.user.username
     );
 
     tabController = TabController(length: 2, vsync: this);
     
-    tabController.addListener(() => _onTabChanged());
+    tabController.addListener(
+      () => _onTabChanged()
+    );
 
     profileInfoWidgets = ProfileInfoWidgets(
       username: userProvider.user.username, 

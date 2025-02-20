@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/user_profile/profile_posts_getter.dart';
 import 'package:revent/service/query/user_profile/profile_saved_getter.dart';
@@ -16,7 +17,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
   Future<void> setupPosts() async {
 
-    final isDataEmpty = profileType == 'my_profile' 
+    final isDataEmpty = profileType == ProfileType.myProfile.value
       ? profilePostsProvider.myProfile.titles.isEmpty 
       : profilePostsProvider.userProfile.titles.isEmpty;
 
@@ -52,14 +53,14 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
   Future<void> setupSaved() async {
 
-    final isDataEmpty = profileType == 'my_profile' 
+    final isDataEmpty = profileType == ProfileType.myProfile.value 
       ? profileSavedProvider.myProfile.titles.isEmpty 
       : profileSavedProvider.userProfile.titles.isEmpty;
 
     if(isDataEmpty) {
 
       final getPostsData = await ProfileSavedDataGetter().getSaved(
-        username: username, isMyProfile: profileType == 'my_profile'
+        username: username, isMyProfile: profileType == ProfileType.myProfile.value
       );
 
       final creator = getPostsData['creator'] as List<String>;

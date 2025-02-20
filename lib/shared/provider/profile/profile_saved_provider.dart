@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 
@@ -38,11 +39,11 @@ class ProfileSavedData {
 class ProfileSavedProvider extends ChangeNotifier {
 
   final Map<String, ProfileSavedData> _profileData = {
-    'my_profile': ProfileSavedData(),
+    ProfileType.myProfile.value: ProfileSavedData(),
     'user_profile': ProfileSavedData(),
   };
 
-  ProfileSavedData get myProfile => _profileData['my_profile']!;
+  ProfileSavedData get myProfile => _profileData[ProfileType.myProfile.value]!;
   ProfileSavedData get userProfile => _profileData['user_profile']!;
 
   void setCreator(String profileKey, List<String> creator) {
@@ -100,7 +101,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   void deleteVent(int index) {
 
-    final profile = _profileData['my_profile'];
+    final profile = _profileData[ProfileType.myProfile.value];
 
     if (profile != null) {
 
@@ -126,7 +127,7 @@ class ProfileSavedProvider extends ChangeNotifier {
     final navigation = getIt.navigationProvider;
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
-      ? 'my_profile'
+      ? ProfileType.myProfile.value
       : 'user_profile';
 
     final profile = _profileData[profileKey];
@@ -152,7 +153,7 @@ class ProfileSavedProvider extends ChangeNotifier {
     final navigation = getIt.navigationProvider;
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
-      ? 'my_profile'
+      ? ProfileType.myProfile.value
       : 'user_profile';
 
     final profile = _profileData[profileKey];

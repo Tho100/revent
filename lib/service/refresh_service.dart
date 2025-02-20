@@ -1,3 +1,4 @@
+import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
@@ -50,7 +51,7 @@ class RefreshService with
     await ProfileDataSetup().setup(username: userData.username);
 
     final callProfilePosts = ProfilePostsSetup(
-      profileType: 'my_profile', 
+      profileType: ProfileType.myProfile.value,
       username: userData.username
     );
 
