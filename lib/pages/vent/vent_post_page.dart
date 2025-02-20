@@ -257,7 +257,6 @@ class _VentPostPageState extends State<VentPostPage> with
 
   Widget _buildFilterButton() {
     return SizedBox(
-      width: 96,
       height: 35,
       child: InkWellEffect(
         onPressed: () {
@@ -270,10 +269,10 @@ class _VentPostPageState extends State<VentPostPage> with
           );
         },
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
     
-            const SizedBox(width: 10),
+            const SizedBox(width: 8),
   
             const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
     
