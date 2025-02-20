@@ -2,7 +2,6 @@
 
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/helper/providers_service.dart';
@@ -12,7 +11,6 @@ import 'package:revent/pages/archive/view_archive_vent_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
-import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -200,33 +198,13 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
         parent: BouncingScrollPhysics()
       ),
       crossAxisCount: 1,
-      itemCount: archiveData.length+1,
+      itemCount: archiveData.length,
       builder: (_, index) {
-
-        if(index < archiveData.length) {
           
-          final reversedVentIndex = archiveData.length - 1 - index;
-          final ventsData = archiveData[reversedVentIndex];
+        final reversedVentIndex = archiveData.length - 1 - index;
+        final ventsData = archiveData[reversedVentIndex];
 
-          return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
-
-        } else if (archiveData.length > 9) {
-          return Padding(
-            padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
-            child: Center(
-              child: Text( // TODO: Remove this
-                "You've reached the end.", 
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontWeight: FontWeight.w800,
-                )
-              ),
-            ),
-          );
-
-        } 
-
-        return const SizedBox.shrink();
+        return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
 
       },
     );

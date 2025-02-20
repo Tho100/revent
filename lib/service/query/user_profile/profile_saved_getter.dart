@@ -1,16 +1,18 @@
 import 'dart:convert';
 
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
-class ProfileSavedDataGetter extends BaseQueryService {
+class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderService {
 
   final formatPostTimestamp = FormatDate();
 
-  Future<Map<String, List<dynamic>>> getSaved({required String username}) async {
+  Future<Map<String, List<dynamic>>> getSaved({
+    required String username, 
+    required bool isMyProfile
+  }) async {
 
     const query = '''
       SELECT 
@@ -62,7 +64,11 @@ class ProfileSavedDataGetter extends BaseQueryService {
       postIds: postIds, stateType: 'liked'
     );
 
-    final isSavedState = List.generate(titles.length, (_) => true);
+    final isSavedState = isMyProfile 
+      ? List.generate(titles.length, (_) => true) 
+      : await _ventPostLikeState(
+        postIds: postIds, stateType: 'saved'
+      );
 
     return {
       'creator': creator,
@@ -83,11 +89,16 @@ class ProfileSavedDataGetter extends BaseQueryService {
     required String stateType,
   }) async {
 
-    const query = 'SELECT post_id FROM liked_vent_info WHERE liked_by = :liked_by';
+    final queryBasedOnType = {
+      'liked': 'SELECT post_id FROM liked_vent_info WHERE liked_by = :username',
+      'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
+    };
 
-    final param = {'liked_by': getIt.userProvider.user.username};
+    final param = {'username': userProvider.user.username};
 
-    final retrievedIds = await executeQuery(query, param);
+    final retrievedIds = await executeQuery(
+      queryBasedOnType[stateType]!, param
+    );
 
     final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
 
