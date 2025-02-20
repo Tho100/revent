@@ -120,7 +120,7 @@ class _VentPostPageState extends State<VentPostPage> with
     switch (filter) {
       case == 'Best':
       commentsFilter.filterCommentToBest();
-      break;
+      break; // TODO: Fix formatting
     case == 'Latest':
       commentsFilter.filterCommentToLatest();
       break;

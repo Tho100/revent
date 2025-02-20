@@ -214,7 +214,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
           return Padding(
             padding: const EdgeInsets.only(bottom: 35.0, top: 8.0),
             child: Center(
-              child: Text(
+              child: Text( // TODO: Remove this
                 "You've reached the end.", 
                 style: GoogleFonts.inter(
                   color: ThemeColor.thirdWhite,
