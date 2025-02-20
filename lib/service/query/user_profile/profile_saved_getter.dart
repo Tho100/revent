@@ -9,7 +9,10 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
 
   final formatPostTimestamp = FormatDate();
 
-  Future<Map<String, List<dynamic>>> getSaved({required String username}) async {
+  Future<Map<String, List<dynamic>>> getSaved({
+    required String username, 
+    required bool isMyProfile
+  }) async {
 
     const query = '''
       SELECT 
@@ -61,9 +64,11 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
       postIds: postIds, stateType: 'liked'
     );
 
-    final isSavedState = await _ventPostLikeState(
-      postIds: postIds, stateType: 'saved'
-    );
+    final isSavedState = isMyProfile 
+      ? List.generate(titles.length, (_) => true) 
+      : await _ventPostLikeState(
+        postIds: postIds, stateType: 'saved'
+      );
 
     return {
       'creator': creator,

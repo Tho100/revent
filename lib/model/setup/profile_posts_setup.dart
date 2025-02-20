@@ -59,7 +59,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
     if(isDataEmpty) {
 
       final getPostsData = await ProfileSavedDataGetter().getSaved(
-        username: username
+        username: username, isMyProfile: profileType == 'my_profile'
       );
 
       final creator = getPostsData['creator'] as List<String>;
