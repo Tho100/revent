@@ -76,6 +76,8 @@ class ProfilePostsSetup with ProfilePostsProviderService {
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
       final isPostSaved = getPostsData['is_saved'] as List<bool>;
 
+      print(isPostSaved);
+
       profileSavedProvider.setCreator(profileType, creator);
       profileSavedProvider.setProfilePicture(profileType, profilePicture);
 

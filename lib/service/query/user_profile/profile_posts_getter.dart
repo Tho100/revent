@@ -4,7 +4,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
-class ProfilePostsDataGetter extends BaseQueryService {
+class ProfilePostsDataGetter extends BaseQueryService { // TODO: use provider service
 
   final formatPostTimestamp = FormatDate();
 
@@ -75,7 +75,7 @@ class ProfilePostsDataGetter extends BaseQueryService {
 
     final statePostIds = extractIds.toSet();
 
-    return postIds.map((postId) => statePostIds.contains(postId)).toList().reversed.toList();
+    return postIds.map((postId) => statePostIds.contains(postId)).toList();
 
   }
 
