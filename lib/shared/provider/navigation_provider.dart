@@ -7,7 +7,7 @@ class NavigationProvider extends ChangeNotifier {
   int _homeTabIndex = 0;
   int _profileTabIndex = 0;
 
-  String _currentRoute = AppRoute.home;
+  String _currentRoute = AppRoute.home.path;
 
   int get currentPageIndex => _currentPageIndex;
   int get homeTabIndex => _homeTabIndex;

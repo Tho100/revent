@@ -108,7 +108,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   void _initializeBodyText() async {
 
-    final customBodyTextPage = [AppRoute.searchResults];
+    final customBodyTextPage = [AppRoute.searchResults.path];
 
     ventBodyText = customBodyTextPage.contains(navigationProvider.currentRoute)   
       ? await _getSearchResultsBodyText()

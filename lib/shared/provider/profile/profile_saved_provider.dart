@@ -2,6 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 
@@ -38,12 +39,12 @@ class ProfileSavedData {
 class ProfileSavedProvider extends ChangeNotifier {
 
   final Map<String, ProfileSavedData> _profileData = {
-    'my_profile': ProfileSavedData(),
-    'user_profile': ProfileSavedData(),
+    ProfileType.myProfile.value: ProfileSavedData(),
+    ProfileType.userProfile.value: ProfileSavedData(),
   };
 
-  ProfileSavedData get myProfile => _profileData['my_profile']!;
-  ProfileSavedData get userProfile => _profileData['user_profile']!;
+  ProfileSavedData get myProfile => _profileData[ProfileType.myProfile.value]!;
+  ProfileSavedData get userProfile => _profileData[ProfileType.userProfile.value]!;
 
   void setCreator(String profileKey, List<String> creator) {
     _profileData[profileKey]?.creator = creator;
@@ -100,7 +101,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   void deleteVent(int index) {
 
-    final profile = _profileData['my_profile'];
+    final profile = _profileData[ProfileType.myProfile.value];
 
     if (profile != null) {
 
@@ -125,9 +126,9 @@ class ProfileSavedProvider extends ChangeNotifier {
 
     final navigation = getIt.navigationProvider;
 
-    final profileKey = navigation.currentRoute == AppRoute.myProfile
-      ? 'my_profile'
-      : 'user_profile';
+    final profileKey = navigation.currentRoute == AppRoute.myProfile.path
+      ? ProfileType.myProfile.value
+      : ProfileType.userProfile.value;
 
     final profile = _profileData[profileKey];
 
@@ -151,9 +152,9 @@ class ProfileSavedProvider extends ChangeNotifier {
 
     final navigation = getIt.navigationProvider;
 
-    final profileKey = navigation.currentRoute == AppRoute.myProfile
-      ? 'my_profile'
-      : 'user_profile';
+    final profileKey = navigation.currentRoute == AppRoute.myProfile.path
+      ? ProfileType.myProfile.value
+      : ProfileType.userProfile.value;
 
     final profile = _profileData[profileKey];
 

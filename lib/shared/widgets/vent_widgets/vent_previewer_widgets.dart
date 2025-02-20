@@ -61,10 +61,10 @@ class VentPreviewerWidgets {
 
     dynamic profileData;
 
-    if(navigation.currentRoute == AppRoute.myProfile) {
+    if(navigation.currentRoute == AppRoute.myProfile.path) {
       profileData = ventData.myProfile;
 
-    } else if (navigation.currentRoute == AppRoute.userProfile) {
+    } else if (navigation.currentRoute == AppRoute.userProfile.path) {
       profileData = ventData.userProfile;
 
     }
@@ -72,7 +72,7 @@ class VentPreviewerWidgets {
     int totalLikes = 0;
     bool isLiked = false;
 
-    if(AppRoute.isOnProfile) {
+    if(RouteHelper.isOnProfile) {
       totalLikes = profileData.totalLikes.length > 0 ? profileData.totalLikes[safeVentIndex] : 0;
       isLiked = profileData.totalLikes.length > 0 ? profileData.isPostLiked[safeVentIndex] : false;
 
@@ -95,15 +95,15 @@ class VentPreviewerWidgets {
 
     dynamic profileData;
 
-    if(navigation.currentRoute == AppRoute.myProfile) {
+    if(navigation.currentRoute == AppRoute.myProfile.path) {
       profileData = ventData.myProfile;
 
-    } else if (navigation.currentRoute == AppRoute.userProfile) {
+    } else if (navigation.currentRoute == AppRoute.userProfile.path) {
       profileData = ventData.userProfile;
 
     }
 
-    if(AppRoute.isOnProfile) {
+    if(RouteHelper.isOnProfile) {
       return profileData.isPostSaved.length > 0 ? profileData.isPostSaved[safeVentIndex] : false;
     } 
 
@@ -206,7 +206,7 @@ class VentPreviewerWidgets {
   Widget buildHeaders() {
 
     final disableGoToProfile = 
-      AppRoute.isOnProfile && navigation.profileTabIndex == 0;
+      RouteHelper.isOnProfile && navigation.profileTabIndex == 0;
 
     return InkWellEffect(
       onPressed: () => disableGoToProfile
