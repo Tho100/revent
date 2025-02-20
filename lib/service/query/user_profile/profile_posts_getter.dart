@@ -1,10 +1,9 @@
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
-class ProfilePostsDataGetter extends BaseQueryService { // TODO: use provider service
+class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderService {
 
   final formatPostTimestamp = FormatDate();
 
@@ -65,7 +64,7 @@ class ProfilePostsDataGetter extends BaseQueryService { // TODO: use provider se
       'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
     };
 
-    final param = {'username': getIt.userProvider.user.username};
+    final param = {'username': userProvider.user.username};
 
     final retrievedIds = await executeQuery(
       queryBasedOnType[stateType]!, param
