@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
@@ -75,7 +76,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   void _initializeClasses() async {
     
     callProfilePosts = ProfilePostsSetup(
-      profileType: 'user_profile',
+      profileType: ProfileType.userProfile.value,
       username: widget.username,
     );
 

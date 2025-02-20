@@ -33,11 +33,11 @@ class ProfilePostsProvider extends ChangeNotifier {
 
   final Map<String, ProfilePostsData> _profileData = {
     ProfileType.myProfile.value: ProfilePostsData(),
-    'user_profile': ProfilePostsData(),
+    ProfileType.userProfile.value: ProfilePostsData(),
   };
 
   ProfilePostsData get myProfile => _profileData[ProfileType.myProfile.value]!;
-  ProfilePostsData get userProfile => _profileData['user_profile']!;
+  ProfilePostsData get userProfile => _profileData[ProfileType.userProfile.value]!;
 
   void setTitles(String profileKey, List<String> titles) {
     _profileData[profileKey]?.titles = titles;
@@ -109,7 +109,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
       ? ProfileType.myProfile.value
-      : 'user_profile';
+      : ProfileType.userProfile.value;
 
     final profile = _profileData[profileKey];
 
@@ -135,7 +135,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
       ? ProfileType.myProfile.value
-      : 'user_profile';
+      : ProfileType.userProfile.value;
 
     final profile = _profileData[profileKey];
 

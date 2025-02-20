@@ -40,11 +40,11 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   final Map<String, ProfileSavedData> _profileData = {
     ProfileType.myProfile.value: ProfileSavedData(),
-    'user_profile': ProfileSavedData(),
+    ProfileType.userProfile.value: ProfileSavedData(),
   };
 
   ProfileSavedData get myProfile => _profileData[ProfileType.myProfile.value]!;
-  ProfileSavedData get userProfile => _profileData['user_profile']!;
+  ProfileSavedData get userProfile => _profileData[ProfileType.userProfile.value]!;
 
   void setCreator(String profileKey, List<String> creator) {
     _profileData[profileKey]?.creator = creator;
@@ -128,7 +128,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
       ? ProfileType.myProfile.value
-      : 'user_profile';
+      : ProfileType.userProfile.value;
 
     final profile = _profileData[profileKey];
 
@@ -154,7 +154,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
     final profileKey = navigation.currentRoute == AppRoute.myProfile
       ? ProfileType.myProfile.value
-      : 'user_profile';
+      : ProfileType.userProfile.value;
 
     final profile = _profileData[profileKey];
 
