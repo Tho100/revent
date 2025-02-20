@@ -33,7 +33,7 @@ class CurrentProviderService {
 
     if (isProfileRoute) {
 
-      final profileData = navigation.currentRoute == AppRoute.myProfile
+      final profileData = navigation.currentRoute == AppRoute.myProfile.path
         ? ventData.myProfile
         : ventData.userProfile;
 
@@ -110,24 +110,24 @@ class CurrentProviderService {
 
     dynamic ventData;
 
-    if(navigation.currentRoute == AppRoute.home) {
+    if(navigation.currentRoute == AppRoute.home.path) {
       ventData = _returnProvider(type: 'home', realTime: false);
 
-    } else if (AppRoute.isOnProfile) {
+    } else if (RouteHelper.isOnProfile) {
       ventData = _returnProvider(type: 'profile', realTime: false);
 
-    } else if (navigation.currentRoute == AppRoute.searchResults) {
+    } else if (navigation.currentRoute == AppRoute.searchResults.path) {
       ventData = _returnProvider(type: 'search', realTime: false);
 
-    } else if (navigation.currentRoute == AppRoute.likedPosts) {
+    } else if (navigation.currentRoute == AppRoute.likedPosts.path) {
       ventData = _returnProvider(type: 'liked', realTime: false);
 
-    } else if (navigation.currentRoute == AppRoute.savedPosts) {
+    } else if (navigation.currentRoute == AppRoute.savedPosts.path) {
       ventData = _returnProvider(type: 'saved', realTime: false);
 
     }
 
-    final isProfileRoute = AppRoute.isOnProfile;
+    final isProfileRoute = RouteHelper.isOnProfile;
 
     return _resolveVentData(
       ventData: ventData, isProfileRoute: isProfileRoute
@@ -139,24 +139,24 @@ class CurrentProviderService {
 
     dynamic ventData;
 
-    if(navigation.currentRoute == AppRoute.home) {
+    if(navigation.currentRoute == AppRoute.home.path) {
       ventData = _returnProvider(type: 'home', realTime: true, context: context);
 
-    } else if (AppRoute.isOnProfile) {
+    } else if (RouteHelper.isOnProfile) {
       ventData = _returnProvider(type: 'profile', realTime: true, context: context);
 
-    } else if (navigation.currentRoute == AppRoute.searchResults) {
+    } else if (navigation.currentRoute == AppRoute.searchResults.path) {
       ventData = _returnProvider(type: 'search', realTime: true, context: context);
 
-    } else if (navigation.currentRoute == AppRoute.likedPosts) {
+    } else if (navigation.currentRoute == AppRoute.likedPosts.path) {
       ventData = _returnProvider(type: 'liked', realTime: true, context: context);
 
-    } else if (navigation.currentRoute == AppRoute.savedPosts) {
+    } else if (navigation.currentRoute == AppRoute.savedPosts.path) {
       ventData = _returnProvider(type: 'saved', realTime: true, context: context);
 
     }
 
-    final isProfileRoute = AppRoute.isOnProfile;
+    final isProfileRoute = RouteHelper.isOnProfile;
 
     return _resolveVentData(
       ventData: ventData, isProfileRoute: isProfileRoute

@@ -107,7 +107,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     final navigation = getIt.navigationProvider;
 
-    final profileKey = navigation.currentRoute == AppRoute.myProfile
+    final profileKey = navigation.currentRoute == AppRoute.myProfile.path
       ? ProfileType.myProfile.value
       : ProfileType.userProfile.value;
 
@@ -133,7 +133,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     final navigation = getIt.navigationProvider;
 
-    final profileKey = navigation.currentRoute == AppRoute.myProfile
+    final profileKey = navigation.currentRoute == AppRoute.myProfile.path
       ? ProfileType.myProfile.value
       : ProfileType.userProfile.value;
 

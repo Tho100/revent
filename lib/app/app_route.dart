@@ -23,5 +23,5 @@ class RouteHelper {
   static bool get isOnProfile =>
     _navigation.currentRoute == AppRoute.myProfile.path ||
     _navigation.currentRoute == AppRoute.userProfile.path;
-    
+
 }

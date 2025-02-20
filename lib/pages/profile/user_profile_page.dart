@@ -403,7 +403,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   @override
   void dispose() {
     navigation.setProfileTabIndex(0);
-    navigation.setCurrentRoute(AppRoute.home);
+    navigation.setCurrentRoute(AppRoute.home.path);
     followersNotifier.dispose();
     followingNotifier.dispose();
     postsNotifier.dispose();
