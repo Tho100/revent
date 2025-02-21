@@ -3,6 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/main.dart';
+import 'package:revent/model/filter/search_posts_filter.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -23,6 +26,8 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   final sortOptionsNotifier = ValueNotifier<String>('Best');
   final timeFilterNotifier = ValueNotifier<String>('All time');
+
+  final searchPostsFilter = SearchPostsFilter();
 
   Widget _buildVentPreview(SearchVents ventData) {
     return Padding(
@@ -50,14 +55,20 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     
     switch (filter) {
       case == 'Best':
+        searchPostsFilter.filterPostsToBest();
         break;
       case == 'Latest':
+        searchPostsFilter.filterPostsToLatest();
         break;
       case == 'Oldest':
+        searchPostsFilter.filterPostsToOldest();
         break;
       case == 'Controversial':
+        searchPostsFilter.filterToControversial();
         break;
     }
+
+    print(getIt.searchPostsProvider.vents.length.toString());
 
     sortOptionsNotifier.value = filter;
 
@@ -128,6 +139,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   Widget _buildListView(List<SearchVents> ventDataList) {
     return DynamicHeightGridView(
+      key: UniqueKey(),
       physics: const AlwaysScrollableScrollPhysics(
         parent: BouncingScrollPhysics(),
       ),
@@ -136,10 +148,11 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
       builder: (_, index) {
 
         if (index == 0) {
+
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-            
+
               const SizedBox(height: 12),
 
               Row(
@@ -149,29 +162,29 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                     notifier: sortOptionsNotifier,
                     onPressed: () {
                       BottomsheetSearchFilter().buildSortOptionsBottomsheet(
-                        context: context, 
+                        context: context,
                         currentFilter: sortOptionsNotifier.value,
-                        bestOnPressed: () => _sortOptionsOnPressed(filter: 'Best'), 
+                        bestOnPressed: () => _sortOptionsOnPressed(filter: 'Best'),
                         latestOnPressed: () => _sortOptionsOnPressed(filter: 'Latest'),
                         oldestOnPressed: () => _sortOptionsOnPressed(filter: 'Oldest'),
                         controversialOnPressed: () => _sortOptionsOnPressed(filter: 'Controversial'),
                       );
-                    }
+                    },
                   ),
-
+                  
                   _buildFilterButtons(
                     notifier: timeFilterNotifier,
                     onPressed: () {
                       BottomsheetSearchFilter().buildTimeFilterBottomsheet(
-                        context: context, 
+                        context: context,
                         currentFilter: timeFilterNotifier.value,
-                        allTimeOnPressed: () => _timeFilterNotifier(filter: 'All time'), 
+                        allTimeOnPressed: () => _timeFilterNotifier(filter: 'All time'),
                         pastYearOnPressed: () => _timeFilterNotifier(filter: 'Past year'),
                         pastMonthOnPressed: () => _timeFilterNotifier(filter: 'Past month'),
                         pastWeekOnPressed: () => _timeFilterNotifier(filter: 'Past week'),
                         todayOnPressed: () => _timeFilterNotifier(filter: 'Today'),
                       );
-                    }
+                    },
                   ),
 
                 ],
@@ -181,17 +194,20 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
             ],
           );
+
         }
 
         final reversedVentIndex = ventDataList.length - index;
-        
+
         if (reversedVentIndex >= 0) {
           final vents = ventDataList[reversedVentIndex];
-          return _buildVentPreview(vents);
+          return KeyedSubtree(
+            key: ValueKey('${vents.title}/${vents.creator}'),
+            child: _buildVentPreview(vents),
+          );
         }
 
         return const SizedBox.shrink();
-
       },
     );
   }
@@ -201,6 +217,12 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     sortOptionsNotifier.dispose();
     timeFilterNotifier.dispose();
     super.dispose();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    searchPostsFilter.filterPostsToBest();
   }
 
   @override

@@ -87,9 +87,9 @@ class BottomsheetSearchFilter {
 
         _buildOptionButton(
           text: 'Controversial',
-          isCurrentlySelected: currentFilter == 'Oldest',
+          isCurrentlySelected: currentFilter == 'Controversial',
           icon: CupertinoIcons.flame,
-          onPressed: oldestOnPressed
+          onPressed: controversialOnPressed
         ),
 
         const SizedBox(height: 25),
