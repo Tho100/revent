@@ -2,9 +2,10 @@ import 'package:intl/intl.dart';
 
 class FormatDate {
 
+  final now = DateTime.now();
+
   String formatPostTimestamp(DateTime createdAt) {
 
-    final now = DateTime.now(); // TODO: make this top variable
     final difference = now.difference(createdAt);
 
     if (difference.inMinutes < 1) {
@@ -63,8 +64,6 @@ class FormatDate {
   }
 
   DateTime convertRelativeTimestampToDateTime(String timestamp) {
-
-    final now = DateTime.now();
 
     if (timestamp == 'Just now') {
       return now;

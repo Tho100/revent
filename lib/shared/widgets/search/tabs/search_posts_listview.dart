@@ -49,7 +49,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     );
   }
 
-  void _sortOptionsOnPressed({required String filter}) {
+  void _sortOptionsOnPressed(String filter) {
     
     switch (filter) {
       case == 'Best':
@@ -72,7 +72,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   }
 
-  void _timeFilterNotifier({required String filter}) {
+  void _timeFilterNotifier(String filter) {
     
     switch (filter) {
       case == 'All time':
@@ -165,10 +165,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                       BottomsheetSearchFilter().buildSortOptionsBottomsheet(
                         context: context,
                         currentFilter: sortOptionsNotifier.value,
-                        bestOnPressed: () => _sortOptionsOnPressed(filter: 'Best'),
-                        latestOnPressed: () => _sortOptionsOnPressed(filter: 'Latest'),
-                        oldestOnPressed: () => _sortOptionsOnPressed(filter: 'Oldest'),
-                        controversialOnPressed: () => _sortOptionsOnPressed(filter: 'Controversial'),
+                        bestOnPressed: () => _sortOptionsOnPressed('Best'),
+                        latestOnPressed: () => _sortOptionsOnPressed('Latest'),
+                        oldestOnPressed: () => _sortOptionsOnPressed('Oldest'),
+                        controversialOnPressed: () => _sortOptionsOnPressed('Controversial'),
                       );
                     },
                   ),
@@ -179,11 +179,11 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                       BottomsheetSearchFilter().buildTimeFilterBottomsheet(
                         context: context,
                         currentFilter: timeFilterNotifier.value,
-                        allTimeOnPressed: () => _timeFilterNotifier(filter: 'All time'),
-                        pastYearOnPressed: () => _timeFilterNotifier(filter: 'Past year'),
-                        pastMonthOnPressed: () => _timeFilterNotifier(filter: 'Past month'),
-                        pastWeekOnPressed: () => _timeFilterNotifier(filter: 'Past week'),
-                        todayOnPressed: () => _timeFilterNotifier(filter: 'Today'),
+                        allTimeOnPressed: () => _timeFilterNotifier('All time'),
+                        pastYearOnPressed: () => _timeFilterNotifier('Past year'),
+                        pastMonthOnPressed: () => _timeFilterNotifier('Past month'),
+                        pastWeekOnPressed: () => _timeFilterNotifier('Past week'),
+                        todayOnPressed: () => _timeFilterNotifier('Today'),
                       );
                     },
                   ),
@@ -209,6 +209,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
         }
 
         return const SizedBox.shrink();
+        
       },
     );
   }
@@ -231,11 +232,11 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     return Consumer<SearchPostsProvider>(
       builder: (_, ventData, __) {
 
-        final ventDataList = ventData.vents;
+        final vents = ventData.vents;
 
-        return ventDataList.isEmpty 
+        return vents.isEmpty 
           ? _buildOnEmpty() 
-          : _buildListView(ventDataList);
+          : _buildListView(vents);
 
       }
     );

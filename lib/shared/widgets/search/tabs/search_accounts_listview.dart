@@ -53,11 +53,11 @@ class SearchAccountsListView extends StatelessWidget {
     return Consumer<SearchAccountsProvider>(
       builder: (_, accountsData, __) {
 
-        final accountsDataList = accountsData.accounts;
+        final accounts = accountsData.accounts;
 
-        return accountsDataList.usernames.isEmpty 
+        return accounts.usernames.isEmpty 
           ? _buildOnEmpty()
-          : _buildListView(accountsDataList);
+          : _buildListView(accounts);
 
       },
     );
