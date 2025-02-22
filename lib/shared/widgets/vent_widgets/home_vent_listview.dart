@@ -92,7 +92,8 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
       
             }
       
-            final adjustedIndex = index > 5 && (widget.showFollowSuggestion! && suggestionData.suggestions.isNotEmpty) ? index - 1 : index;
+            final adjustedIndex = index > 5 
+              && (widget.showFollowSuggestion! && suggestionData.suggestions.isNotEmpty) ? index - 1 : index;
       
             if (adjustedIndex >= 0 && adjustedIndex < ventDataList.length) {
       

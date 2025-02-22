@@ -80,16 +80,12 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
     return Consumer<ProfileSavedProvider>(
       builder: (_, savedData, __) {
 
-        final activeProfile = widget.isMyProfile 
+        final profileSavedData = widget.isMyProfile 
           ? savedData.myProfile : savedData.userProfile;
 
-        final isPostsEmpty = activeProfile.titles.isEmpty;
-
-        if(isPostsEmpty) {
-          return _buildOnEmpty();
-        }
-
-        return _buildListView(activeProfile);
+        return profileSavedData.titles.isEmpty
+          ? _buildOnEmpty()
+          : _buildListView(profileSavedData);
 
       },
     );

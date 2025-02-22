@@ -65,17 +65,14 @@ class RepliesListView extends StatelessWidget {
     );
   }
 
-  Widget _buildListView({
-    required RepliesProvider repliesData,
-    required int repliesCount,
-  }) {
+  Widget _buildListView(List<ReplyData> replies) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: repliesCount,
+      itemCount: replies.length,
       itemBuilder: (_, index) {
-        final reversedIndex = repliesData.replies.length - 1 - index;
-        final reply = repliesData.replies[reversedIndex];
+        final reversedIndex = replies.length - 1 - index;
+        final reply = replies[reversedIndex];
         return _buildReplyPreviewer(reply);
       }
     );
@@ -86,12 +83,11 @@ class RepliesListView extends StatelessWidget {
     return Consumer<RepliesProvider>(
       builder: (_, repliesData, __) {
 
-        final isRepliesEmpty = repliesData.replies.isEmpty;
-        final repliesCount = repliesData.replies.length;
+        final replies = repliesData.replies;
 
-        return isRepliesEmpty 
+        return replies.isEmpty 
           ? _buildOnNoReplies()
-          : _buildListView(repliesData: repliesData, repliesCount: repliesCount);
+          : _buildListView(replies);
 
       },
     );
