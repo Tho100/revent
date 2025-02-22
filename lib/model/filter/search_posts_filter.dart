@@ -69,8 +69,8 @@ class SearchPostsFilter with SearchProviderService {
       case 'Past month':
         threshold = now.subtract(const Duration(days: 30));
         break;
-      case 'Past day':
-        threshold = now.subtract(const Duration(days: 1));
+      case 'Past week':
+        threshold = now.subtract(const Duration(days: 7));
         break;
       case 'Today':
         threshold = DateTime(now.year, now.month, now.day);
