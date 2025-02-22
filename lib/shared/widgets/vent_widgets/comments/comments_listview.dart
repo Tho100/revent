@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/app_keys.dart';
 import 'package:revent/pages/comment/reply/replies_page.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
@@ -14,21 +15,18 @@ class CommentsListView extends StatelessWidget {
     super.key
   });
 
-  Widget _buildCommentPreview(CommentsData comments, BuildContext context) {
+  Widget _buildCommentPreview(CommentsData commentData) {
 
-    final commentedBy = comments.commentedBy;
-    final comment = comments.comment;
-    final commentTimestamp = comments.commentTimestamp;
-    final totalLikes = comments.totalLikes;
-    final totalReplies = comments.totalReplies;
-    final isCommentLiked = comments.isCommentLiked;
-    final isCommentLikedByCreator = comments.isCommentLikedByCreator;
-    final pfpData = comments.pfpData;
+    final commentedBy = commentData.commentedBy;
+    final comment = commentData.comment;
+    final commentTimestamp = commentData.commentTimestamp;
+    final isCommentLikedByCreator = commentData.isCommentLikedByCreator;
+    final pfpData = commentData.pfpData;
 
     return GestureDetector(
       onTap: () {
         Navigator.push(
-          context,
+          navigatorKey.currentContext!,
           MaterialPageRoute(builder: (_) => RepliesPage(
             commentedBy: commentedBy, 
             comment: comment, 
@@ -45,9 +43,9 @@ class CommentsListView extends StatelessWidget {
           commentedBy: commentedBy,
           comment: comment,
           commentTimestamp: commentTimestamp,
-          totalLikes: totalLikes,
-          totalReplies: totalReplies,
-          isCommentLiked: isCommentLiked,
+          totalLikes: commentData.totalLikes,
+          totalReplies: commentData.totalReplies,
+          isCommentLiked: commentData.isCommentLiked,
           isCommentLikedByCreator: isCommentLikedByCreator,
           pfpData: pfpData,
         ),
@@ -67,19 +65,15 @@ class CommentsListView extends StatelessWidget {
     );
   }
 
-  Widget _buildListView({
-    required CommentsProvider commentData,
-    required int commentsCount,
-    required BuildContext context
-  }) {
+  Widget _buildListView(List<CommentsData> comments) {
     return ListView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
-      itemCount: commentsCount,
+      itemCount: comments.length,
       itemBuilder: (_, index) {
-        final reversedIndex = commentData.comments.length - 1 - index;
-        final ventComment = commentData.comments[reversedIndex];
-        return _buildCommentPreview(ventComment, context);
+        final reversedIndex = comments.length - 1 - index;
+        final comment = comments[reversedIndex];
+        return _buildCommentPreview(comment);
       }
     );
   }
@@ -89,12 +83,12 @@ class CommentsListView extends StatelessWidget {
     return Consumer<CommentsProvider>(
       builder: (_, commentData, __) {
 
-        final isCommentsEmpty = commentData.comments.isEmpty;
-        final commentsCount = commentData.comments.length;
+        final comments = commentData.comments;
 
-        return isCommentsEmpty 
+        return comments.isEmpty 
           ? _buildOnEmpty()
-          : _buildListView(commentData: commentData, commentsCount: commentsCount, context: context);
+          : _buildListView(comments);
+
       },
     );
   }
