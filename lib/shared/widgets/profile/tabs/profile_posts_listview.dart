@@ -110,16 +110,12 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
     return Consumer<ProfilePostsProvider>(
       builder: (_, postsData, __) {
 
-        final activeProfile = widget.isMyProfile 
+        final profilePostsData = widget.isMyProfile 
           ? postsData.myProfile : postsData.userProfile;
-
-        final isPostsEmpty = activeProfile.titles.isEmpty;
-
-        if(isPostsEmpty) {
-          return _buildOnEmpty();
-        }
-
-        return _buildListView(activeProfile);
+          
+        return profilePostsData.titles.isEmpty 
+          ? _buildOnEmpty()
+          : _buildListView(profilePostsData);
 
       },
     );

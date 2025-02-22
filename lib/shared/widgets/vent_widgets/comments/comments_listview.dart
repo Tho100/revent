@@ -81,9 +81,9 @@ class CommentsListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<CommentsProvider>(
-      builder: (_, commentData, __) {
+      builder: (_, commentsData, __) {
 
-        final comments = commentData.comments;
+        final comments = commentsData.comments;
 
         return comments.isEmpty 
           ? _buildOnEmpty()
