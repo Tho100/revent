@@ -3,8 +3,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
 import 'package:revent/model/filter/search_posts_filter.dart';
 import 'package:revent/pages/empty_page.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
@@ -68,8 +66,6 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
         break;
     }
 
-    print(getIt.searchPostsProvider.vents.length.toString());
-
     sortOptionsNotifier.value = filter;
 
     Navigator.pop(context);
@@ -80,14 +76,19 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     
     switch (filter) {
       case == 'All time':
+        searchPostsFilter.filterPostsByTimestamp('All time');
         break;
       case == 'Past year':
+        searchPostsFilter.filterPostsByTimestamp('Past year');
         break;
       case == 'Past month':
+        searchPostsFilter.filterPostsByTimestamp('Past month');
         break;
       case == 'Past week':
+        searchPostsFilter.filterPostsByTimestamp('Past week');
         break;
       case == 'Today':
+        searchPostsFilter.filterPostsByTimestamp('Today');
         break;
     }
 
