@@ -114,16 +114,18 @@ class _SignUpPageState extends State<SignUpPage> {
           MainTextField(
             hintText: 'Enter a username', 
             maxLength: 24,
+            textInputAction: TextInputAction.next,
             inputFormatters: TextInputFormatterModel().disableWhitespaces(),
-            controller: authController.usernameController
+            controller: authController.usernameController,
           ),
 
           const SizedBox(height: 15),
 
           MainTextField(
             hintText: 'Enter your email address', 
+            textInputAction: TextInputAction.next,
             inputFormatters: TextInputFormatterModel().disableWhitespaces(),
-            controller: authController.emailController
+            controller: authController.emailController,
           ),
 
           const SizedBox(height: 15),
@@ -131,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> {
           AuthTextField().passwordTextField(
             hintText: 'Enter a password',
             controller: authController.passwordController, 
-            visibility: visiblePasswordNotifier
+            visibility: visiblePasswordNotifier,
           ),
 
           const SizedBox(height: 30),
