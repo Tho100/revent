@@ -1,6 +1,5 @@
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/shared/provider/search/search_posts_provider.dart';
 
 class SearchPostsFilter with SearchProviderService {
 
@@ -12,7 +11,7 @@ class SearchPostsFilter with SearchProviderService {
       .toList()
       ..sort((a, b) => a.totalLikes.compareTo(b.totalLikes));
 
-    searchPostsProvider.setVents(sortedVents);
+    searchPostsProvider.setFilteredVents(sortedVents);
 
   }
 
@@ -23,7 +22,7 @@ class SearchPostsFilter with SearchProviderService {
       ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
         .compareTo(formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
 
-    searchPostsProvider.setVents(sortedVents);
+    searchPostsProvider.setFilteredVents(sortedVents);
 
   }
 
@@ -34,7 +33,7 @@ class SearchPostsFilter with SearchProviderService {
       ..sort((a, b) => formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
         .compareTo(formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
 
-    searchPostsProvider.setVents(sortedVents);
+    searchPostsProvider.setFilteredVents(sortedVents);
 
   }
 
@@ -44,7 +43,7 @@ class SearchPostsFilter with SearchProviderService {
       .toList()
       ..sort((a, b) => a.totalComments.compareTo(b.totalComments));
 
-    searchPostsProvider.setVents(sortedVents);
+    searchPostsProvider.setFilteredVents(sortedVents);
 
   }
 
@@ -69,29 +68,17 @@ class SearchPostsFilter with SearchProviderService {
         break;
       case 'All time':
       default:
-        searchPostsProvider.setVents(searchPostsProvider.vents);
+        searchPostsProvider.setFilteredVents(searchPostsProvider.vents);
         return;
     }
 
-    final allPosts = searchPostsProvider.vents;
-
-    final recentPosts = <SearchVents>[];
-    final olderPosts = <SearchVents>[];
-
-    for (var post in allPosts) {
-
+    final filteredPosts = searchPostsProvider.vents.where((post) {
       final postDate = formatTimestamp.convertRelativeTimestampToDateTime(post.postTimestamp);
+      return postDate.isAfter(threshold);
+    }).toList();
 
-      postDate.isAfter(threshold) 
-        ? recentPosts.add(post)
-        : olderPosts.add(post);
+    searchPostsProvider.setFilteredVents(filteredPosts);
 
-    }
-
-    final sortedVents = [...olderPosts, ...recentPosts];
-
-    searchPostsProvider.setVents(sortedVents);
-    
   }
 
 }

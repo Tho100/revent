@@ -32,17 +32,26 @@ class SearchVents {
 class SearchPostsProvider extends ChangeNotifier {
 
   List<SearchVents> _vents = [];
+  List<SearchVents> _filteredVents = [];
 
   List<SearchVents> get vents => _vents;
+  List<SearchVents> get filteredVents => _filteredVents;
 
   void setVents(List<SearchVents> vents) {
     _vents = vents;
+    _filteredVents = vents;
     notifyListeners();
   }
 
+  void setFilteredVents(List<SearchVents> vents) {
+    _filteredVents = vents;
+    notifyListeners(); 
+  }
+
+  // TODO: Remove this its unecessary
   void deleteVentsData() {
     _vents.clear();
-    notifyListeners();
+    notifyListeners(); 
   }
   
   void likeVent(int index, bool isUserLikedPost) {
@@ -56,6 +65,7 @@ class SearchPostsProvider extends ChangeNotifier {
       : _vents[index].totalLikes -= 1;
 
     notifyListeners();
+    _updateFilteredVents();
     
   }
 
@@ -66,11 +76,18 @@ class SearchPostsProvider extends ChangeNotifier {
       : true;
 
     notifyListeners();
-    
+    _updateFilteredVents();
+
   }
 
   void clearVents() {
     _vents.clear();
+    _filteredVents.clear();
+  }
+
+  void _updateFilteredVents() {
+    _filteredVents = _vents;
+    notifyListeners();
   }
 
 }

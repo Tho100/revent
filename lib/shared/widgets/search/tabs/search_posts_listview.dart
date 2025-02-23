@@ -232,7 +232,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     return Consumer<SearchPostsProvider>(
       builder: (_, ventData, __) {
 
-        final vents = ventData.vents;
+        final vents = ventData.filteredVents;
 
         return vents.isEmpty 
           ? _buildOnEmpty() 
