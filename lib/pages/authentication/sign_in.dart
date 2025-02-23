@@ -145,8 +145,9 @@ class _SignInPageState extends State<SignInPage> {
 
           MainTextField(
             hintText: 'Enter your email address', 
+            textInputAction: TextInputAction.next,
             inputFormatters: TextInputFormatterModel().disableWhitespaces(),
-            controller: authController.emailController
+            controller: authController.emailController,
           ),
 
           const SizedBox(height: 15),

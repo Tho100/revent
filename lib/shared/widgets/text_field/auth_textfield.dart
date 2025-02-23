@@ -9,7 +9,7 @@ class AuthTextField {
   Widget passwordTextField({
     required TextEditingController controller,
     required ValueNotifier<bool> visibility,
-    required String hintText,    
+    required String hintText
   }) {
     return ValueListenableBuilder(
       valueListenable: visibility,
