@@ -110,7 +110,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
       
-            const SizedBox(width: 8),
+            const SizedBox(width: 12),
 
             const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 15),
     
@@ -232,7 +232,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     return Consumer<SearchPostsProvider>(
       builder: (_, ventData, __) {
 
-        final vents = ventData.vents;
+        final vents = ventData.filteredVents;
 
         return vents.isEmpty 
           ? _buildOnEmpty() 
