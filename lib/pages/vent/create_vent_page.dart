@@ -144,6 +144,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
       autofocus: true,
       maxLines: 1,
       maxLength: 85,
+      textInputAction: TextInputAction.next,
       style: GoogleFonts.inter(
         color: ThemeColor.white,
         fontWeight: FontWeight.w800,
