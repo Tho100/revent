@@ -40,17 +40,9 @@ class SearchPostsFilter with SearchProviderService {
 
   void filterToControversial() {
 
-    final allPosts = searchPostsProvider.vents;
-
-    final controversialPosts = allPosts.where(
-      (post) => post.totalComments >= post.totalLikes
-    ).toList();
-
-    final nonControversialPosts = allPosts.where(
-      (post) => post.totalComments < post.totalLikes
-    ).toList();
-
-    final sortedVents = [...nonControversialPosts, ...controversialPosts];
+    final sortedVents = searchPostsProvider.vents
+      .toList()
+      ..sort((a, b) => a.totalComments.compareTo(b.totalComments));
 
     searchPostsProvider.setVents(sortedVents);
 
