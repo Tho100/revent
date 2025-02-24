@@ -48,40 +48,9 @@ class SearchPostsProvider extends ChangeNotifier {
     notifyListeners(); 
   }
 
-  void likeVent(int index, bool isUserLikedPost) {
-
-    _vents[index].isPostLiked = isUserLikedPost 
-      ? false
-      : true;
-
-    _vents[index].isPostLiked 
-      ? _vents[index].totalLikes += 1
-      : _vents[index].totalLikes -= 1;
-
-    notifyListeners();
-    _updateFilteredVents();
-    
-  }
-
-  void saveVent(int index, bool isUserSavedPost) {
-
-    _vents[index].isPostSaved = isUserSavedPost 
-      ? false
-      : true;
-
-    notifyListeners();
-    _updateFilteredVents();
-
-  }
-
   void clearVents() {
     _vents.clear();
     _filteredVents.clear();
-  }
-
-  void _updateFilteredVents() {
-    _filteredVents = _vents;
-    notifyListeners();
   }
 
 }
