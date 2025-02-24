@@ -75,7 +75,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   void _timeFilterNotifier(String filter) {
     
     switch (filter) {
-      case == 'All time':
+      case == 'All time': // TODO: Also filter to Best
         searchPostsFilter.filterPostsByTimestamp('All time');
         break;
       case == 'Past year':
@@ -151,7 +151,6 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
         if (index == 0) {
 
           return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
 
               const SizedBox(height: 12),
@@ -193,6 +192,14 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
               const SizedBox(height: 4),
 
+              if (ventDataList.isEmpty)
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.7,
+                child: Center(
+                  child: _buildOnEmpty(),
+                ),
+              ),
+
             ],
           );
 
@@ -232,11 +239,12 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     return Consumer<SearchPostsProvider>(
       builder: (_, ventData, __) {
 
-        final vents = ventData.filteredVents;
+        final vents = ventData.vents;
+        final filteredVents = ventData.filteredVents;
 
         return vents.isEmpty 
           ? _buildOnEmpty() 
-          : _buildListView(vents);
+          : _buildListView(filteredVents);
 
       }
     );
