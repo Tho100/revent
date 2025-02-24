@@ -48,12 +48,6 @@ class SearchPostsProvider extends ChangeNotifier {
     notifyListeners(); 
   }
 
-  // TODO: Remove this its unecessary
-  void deleteVentsData() {
-    _vents.clear();
-    notifyListeners(); 
-  }
-  
   void likeVent(int index, bool isUserLikedPost) {
 
     _vents[index].isPostLiked = isUserLikedPost 
