@@ -7,7 +7,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
-import 'package:revent/shared/widgets/text_field/post_textfields.dart'; // TODO: Rename to post_textfield
+import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/create_new_item.dart';
@@ -30,7 +30,7 @@ class CreateVentPage extends StatefulWidget {
 class _CreateVentPageState extends State<CreateVentPage> {
 
   final textController = VentTextController(); 
-  final postTextFields = PostTextFields();
+  final postTextFields = PostTextField();
 
   final isArchivedVentNotifier = ValueNotifier<bool>(false);
 

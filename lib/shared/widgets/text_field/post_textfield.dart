@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
-class PostTextFields {
+class PostTextField {
 
   Widget buildTitleField({required TextEditingController titleController}) {
     return TextField(

@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/controllers/vent_text_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/text_field/post_textfields.dart';
+import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/save_vent_edit.dart';
@@ -94,7 +94,7 @@ class _EditVentPageState extends State<EditVentPage> {
           
             Padding(
               padding: const EdgeInsets.only(left: 17.0, right: 14.0),
-              child: PostTextFields().buildBodyField(
+              child: PostTextField().buildBodyField(
                 bodyController: textController.bodyTextController, autoFocus: true
               ),
             ),
