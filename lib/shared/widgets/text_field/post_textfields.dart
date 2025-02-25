@@ -30,11 +30,15 @@ class PostTextFields {
     );
   }  
 
-  Widget buildBodyField({required TextEditingController bodyController}) { 
+  Widget buildBodyField({
+    required TextEditingController bodyController, 
+    bool? autoFocus
+  }) { 
     return TextFormField(
       controller: bodyController,
       keyboardType: TextInputType.multiline,
       maxLength: 2850,
+      autofocus: autoFocus ?? false,
       maxLines: null,
       style: GoogleFonts.inter(
         color: ThemeColor.secondaryWhite,
