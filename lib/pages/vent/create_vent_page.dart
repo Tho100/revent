@@ -182,7 +182,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
           Padding(
             padding: const EdgeInsets.only(left: 17.0, right: 14.0),
-            child: postTextFields.buildTitleField(titleController: textController.bodyTextController), // TODO: Change to body
+            child: postTextFields.buildBodyField(bodyController: textController.bodyTextController),
           ),
 
           const SizedBox(height: 18)
