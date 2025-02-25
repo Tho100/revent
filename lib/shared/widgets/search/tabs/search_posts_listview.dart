@@ -75,8 +75,9 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   void _timeFilterNotifier(String filter) {
     
     switch (filter) {
-      case == 'All time': // TODO: Also filter to Best
+      case == 'All time':
         searchPostsFilter.filterPostsByTimestamp('All time');
+        searchPostsFilter.filterPostsToBest();
         break;
       case == 'Past year':
         searchPostsFilter.filterPostsByTimestamp('Past year');
