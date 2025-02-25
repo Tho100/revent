@@ -7,6 +7,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
+import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/create_new_item.dart';
@@ -29,6 +30,7 @@ class CreateVentPage extends StatefulWidget {
 class _CreateVentPageState extends State<CreateVentPage> {
 
   final textController = VentTextController(); 
+  final postTextFields = PostTextField();
 
   final isArchivedVentNotifier = ValueNotifier<bool>(false);
 
@@ -136,58 +138,6 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
     });
 
-  }
-
-  Widget _buildTitleField() {
-    return TextField(
-      controller: textController.titleController,
-      autofocus: true,
-      maxLines: 1,
-      maxLength: 85,
-      textInputAction: TextInputAction.next,
-      style: GoogleFonts.inter(
-        color: ThemeColor.white,
-        fontWeight: FontWeight.w800,
-        fontSize: 24
-      ),
-      decoration: InputDecoration(
-        counterText: '',
-        hintStyle: GoogleFonts.inter(
-          color: ThemeColor.thirdWhite,
-          fontWeight: FontWeight.w800, 
-          fontSize: 24
-        ),
-        hintText: 'Title',
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.zero, 
-      ),
-    );
-  }  
-
-  Widget _buildBodyTextField() { 
-    return TextFormField(
-      controller: textController.bodyTextController,
-      keyboardType: TextInputType.multiline,
-      maxLength: 2850,
-      maxLines: null,
-      style: GoogleFonts.inter(
-        color: ThemeColor.secondaryWhite,
-        fontWeight: FontWeight.w700,
-        fontSize: 16
-      ),
-      decoration: InputDecoration(
-        isCollapsed: true,
-        counterText: '',
-        hintStyle: GoogleFonts.inter(
-          color: ThemeColor.thirdWhite,
-          fontWeight: FontWeight.w700, 
-          fontSize: 16
-        ),
-        hintText: 'Body text (optional)',
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.zero, 
-      ),
-    );
   }  
 
   Widget _buildBody() {
@@ -200,14 +150,14 @@ class _CreateVentPageState extends State<CreateVentPage> {
         
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 12.0),
-            child: _buildTitleField(),
+            child: postTextFields.buildTitleField(titleController: textController.titleController),
           ),   
         
           const SizedBox(height: 4),
 
           Padding(
             padding: const EdgeInsets.only(left: 17.0, right: 14.0),
-            child: _buildBodyTextField(),
+            child: postTextFields.buildTitleField(titleController: textController.bodyTextController),
           ),
 
           const SizedBox(height: 18)
