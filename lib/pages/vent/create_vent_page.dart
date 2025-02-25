@@ -7,6 +7,9 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -33,8 +36,30 @@ class _CreateVentPageState extends State<CreateVentPage> {
   final postTextFields = PostTextField();
 
   final isArchivedVentNotifier = ValueNotifier<bool>(false);
+  final chipsSelectedNotifier = ValueNotifier<List<bool>>([]);
+
+  List<String> chipsTags = [];
 
   bool isPostPressed = false;
+
+  void _initializeTags() {
+    
+    chipsTags = [
+      'vent', 
+      'random',
+      'support',
+      'life',
+      'family',
+      'parents',
+      'lgbtq+',
+      'help',
+      'question',
+      'religion',
+    ];
+
+    chipsSelectedNotifier.value = List<bool>.generate(chipsTags.length, (_) => false);
+
+  }
 
   Future<void> _postVentOnPressed() async {
 
@@ -157,7 +182,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
           Padding(
             padding: const EdgeInsets.only(left: 17.0, right: 14.0),
-            child: postTextFields.buildTitleField(titleController: textController.bodyTextController),
+            child: postTextFields.buildTitleField(titleController: textController.bodyTextController), // TODO: Change to body
           ),
 
           const SizedBox(height: 18)
@@ -226,6 +251,87 @@ class _CreateVentPageState extends State<CreateVentPage> {
     );
   }
 
+  Widget _buildChip(String label, int index) {
+    return ValueListenableBuilder(
+      valueListenable: chipsSelectedNotifier,
+      builder: (_, chipSelected, __) {
+        return ChoiceChip(
+        label: Text(
+          '#$label',
+            style: GoogleFonts.inter(
+              color: chipSelected[index] ?ThemeColor.mediumBlack : ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w700,
+              fontSize: 14
+            )
+          ),
+          selected: chipSelected[index],
+          onSelected: (bool selected) {
+            chipsSelectedNotifier.value[index] = selected;
+            chipsSelectedNotifier.value = List.from(chipSelected);
+          },
+          selectedColor: ThemeColor.white,
+          backgroundColor: ThemeColor.mediumBlack,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+            side: BorderSide(
+              color: chipSelected[index] ? ThemeColor.mediumBlack : ThemeColor.thirdWhite, 
+              width: 1,
+            ),
+          ),
+        );
+      },
+    );
+  }
+  // TODO: Put all this to BottomsheetTagsSelection
+  Future _buildTagsBottomsheet() {
+    return Bottomsheet().buildBottomSheet(
+      context: context, 
+      children: [
+
+        const SizedBox(height: 12),
+
+        const BottomsheetBar(),
+
+        const BottomsheetTitle(title: 'Tags'),
+
+        Transform.translate(
+          offset: const Offset(0, -10),
+          child: Align(
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 16),
+              child: Text(
+                'Add up to 3 tags',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.thirdWhite,
+                  fontSize: 14,
+                  fontWeight: FontWeight.w800
+                ),
+              ),
+            ),
+          ),
+        ),
+
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0, bottom: 8.0),
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.88,
+            child: Wrap(
+              spacing: 8.0, 
+              children: [
+                for(int i=0; i<chipsSelectedNotifier.value.length; i++) ... [
+                  _buildChip(chipsTags[i], i),
+                ]
+              ],
+            ),
+          ),
+        ),        
+
+        const SizedBox(height: 35),
+
+      ]
+    );
+  }
+
   Widget _buildBottomOptions() {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
@@ -255,7 +361,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
                 customHeight: 35,
                 customFontSize: 12,
                 text: '#tags', 
-                onPressed: () => print('Pressed')
+                onPressed: () => _buildTagsBottomsheet()
               ),
             )
           
@@ -264,6 +370,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
       ),
     );
   }
+
 
   Future<bool> _onClosePage() async {
 
@@ -282,6 +389,12 @@ class _CreateVentPageState extends State<CreateVentPage> {
     textController.dispose();
     isArchivedVentNotifier.dispose();
     super.dispose();
+  }
+
+  @override 
+  void initState() {
+    super.initState();
+    _initializeTags();
   }
 
   @override
