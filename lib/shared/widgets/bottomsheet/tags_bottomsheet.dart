@@ -79,7 +79,7 @@ class BottomsheetTagsSelection {
 
         Center(
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.90,
+            width: MediaQuery.of(context).size.width * 0.92,
             child: Row(
               children: [
 
@@ -95,9 +95,9 @@ class BottomsheetTagsSelection {
                 const SizedBox(width: 6),
 
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.84,
+                  width: MediaQuery.of(context).size.width * 0.86,
                   child: TextFormField(
-                    autofocus: false,
+                    autofocus: true,
                     maxLines: 1,
                     controller: customTagsController,
                     style: GoogleFonts.inter(
@@ -129,7 +129,7 @@ class BottomsheetTagsSelection {
           padding: const EdgeInsets.only(left: 20.0, bottom: 8.0),
           child: SizedBox(
             height: 40,
-            width: MediaQuery.of(context).size.width * 0.88,
+            width: MediaQuery.of(context).size.width * 0.90,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: chipsTags.length,
