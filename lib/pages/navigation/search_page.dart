@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/main_search_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -22,28 +23,11 @@ class _SearchPageState extends State<SearchPage> {
 
   final searchController = TextEditingController();
 
-  final chipsSelectedNotifier = ValueNotifier<List<bool>>([]);
+  final chipsTags = PostTags.tags;
 
-  List<String> chipsTags = [];
-
-  void _initializeTags() {
-    
-    chipsTags = [
-      'vent', 
-      'random',
-      'support',
-      'life',
-      'family',
-      'parents',
-      'lgbtq+',
-      'help',
-      'question',
-      'religion',
-    ];
-
-    chipsSelectedNotifier.value = List<bool>.generate(chipsTags.length, (_) => false);
-
-  }
+  final chipsSelectedNotifier = ValueNotifier<List<bool>>(
+    List<bool>.filled(PostTags.tags.length, false)
+  );
 
   Widget _buildSearchBar() {
     return Align(
@@ -173,12 +157,6 @@ class _SearchPageState extends State<SearchPage> {
         ]
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeTags();
   }
 
   @override
