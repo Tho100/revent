@@ -45,13 +45,14 @@ class _CreateVentPageState extends State<CreateVentPage> {
     chipsTags = [
       'vent', 
       'random',
+      'question',
+      'opinion'
       'support',
-      'life',
       'family',
       'parents',
-      'lgbtq+',
+      'relationship',
       'help',
-      'question',
+      'lgbtq+',
       'religion',
     ];
 

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/main_search_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -24,23 +25,10 @@ class _SearchPageState extends State<SearchPage> {
 
   final chipsSelectedNotifier = ValueNotifier<List<bool>>([]);
 
-  List<String> chipsTags = [];
+  final chipsTags = PostTags.tags;
 
   void _initializeTags() {
     
-    chipsTags = [
-      'vent', 
-      'random',
-      'support',
-      'life',
-      'family',
-      'parents',
-      'lgbtq+',
-      'help',
-      'question',
-      'religion',
-    ];
-
     chipsSelectedNotifier.value = List<bool>.generate(chipsTags.length, (_) => false);
 
   }
