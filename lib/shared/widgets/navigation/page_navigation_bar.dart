@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 
-class PageNavigationBar extends StatelessWidget {
+class PageNavigationBar extends StatelessWidget with NavigationProviderService {
 
   PageNavigationBar({super.key});
-
-  final navigationIndex = getIt.navigationProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +15,7 @@ class PageNavigationBar extends StatelessWidget {
       createOnPressed: () => NavigatePage.createVentPage(),
       notificationOnPressed: () => NavigatePage.notificationsPage(),
       profileOnPressed: () => NavigatePage.myProfilePage(),
-      currentIndex: navigationIndex.currentPageIndex,
+      currentIndex: navigationProvider.currentPageIndex,
     );
   }
 
