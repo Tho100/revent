@@ -15,6 +15,8 @@ class BottomsheetTagsSelection {
     required this.chipsTags
   });
 
+  final customTagsController = TextEditingController();
+
   Widget _buildChip(String label, int index) {
     return ValueListenableBuilder(
       valueListenable: chipsSelectedNotifier,
@@ -75,20 +77,71 @@ class BottomsheetTagsSelection {
           ),
         ),
 
-        Padding(
-          padding: const EdgeInsets.only(left: 20.0, bottom: 8.0),
+        Center(
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.88,
-            child: Wrap(
-              spacing: 8.0, 
+            width: MediaQuery.of(context).size.width * 0.90,
+            child: Row(
               children: [
-                for(int i=0; i<chipsTags.length; i++) ... [
-                  _buildChip(chipsTags[i], i),
-                ]
+
+                Text(
+                  '#',
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.white,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 21
+                  )
+                ),
+
+                const SizedBox(width: 6),
+
+                SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.84,
+                  child: TextFormField(
+                    autofocus: false,
+                    maxLines: 1,
+                    controller: customTagsController,
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.secondaryWhite,
+                      fontWeight: FontWeight.w700,
+                    ),
+                    decoration: InputDecoration(
+                      hintText: 'Add tags...',
+                      counterText: '',
+                      border: InputBorder.none,
+                      hintStyle: GoogleFonts.inter(
+                        color: ThemeColor.thirdWhite, 
+                        fontWeight: FontWeight.w700
+                      ),
+                    ),
+                    textInputAction: TextInputAction.done,
+                    onFieldSubmitted: (tag) {}
+                  ),
+                ),
+
               ],
             ),
           ),
-        ),        
+        ),
+
+        const SizedBox(height: 12),
+
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0, bottom: 8.0),
+          child: SizedBox(
+            height: 40,
+            width: MediaQuery.of(context).size.width * 0.88,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              itemCount: chipsTags.length,
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: _buildChip(chipsTags[index], index),
+                );
+              },
+            ),
+          ),
+        ),
 
         const SizedBox(height: 35),
 
