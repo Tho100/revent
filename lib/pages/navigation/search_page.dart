@@ -23,15 +23,11 @@ class _SearchPageState extends State<SearchPage> {
 
   final searchController = TextEditingController();
 
-  final chipsSelectedNotifier = ValueNotifier<List<bool>>([]);
-
   final chipsTags = PostTags.tags;
 
-  void _initializeTags() {
-    
-    chipsSelectedNotifier.value = List<bool>.generate(chipsTags.length, (_) => false);
-
-  }
+  final chipsSelectedNotifier = ValueNotifier<List<bool>>(
+    List<bool>.filled(PostTags.tags.length, false)
+  );
 
   Widget _buildSearchBar() {
     return Align(
@@ -161,12 +157,6 @@ class _SearchPageState extends State<SearchPage> {
         ]
       ),
     );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeTags();
   }
 
   @override
