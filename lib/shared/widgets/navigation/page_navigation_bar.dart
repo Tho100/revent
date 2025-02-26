@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/shared/widgets/bottomsheet/create.dart';
 import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 
 class PageNavigationBar extends StatelessWidget {
@@ -16,18 +15,7 @@ class PageNavigationBar extends StatelessWidget {
     return NavigationBarDock(
       homeOnPressed: () => NavigatePage.homePage(),
       searchOnPressed: () => NavigatePage.searchPage(),
-      createOnPressed: () { 
-        BottomsheetCreate().buildBottomsheet(
-          context: context,
-          addVentOnPressed: () {
-            Navigator.pop(context);
-            NavigatePage.createVentPage(); 
-          }, 
-          addForumOnPressed: () {
-            Navigator.pop(context);
-          },
-        );
-      },
+      createOnPressed: () => NavigatePage.createVentPage(),
       notificationOnPressed: () => NavigatePage.notificationsPage(),
       profileOnPressed: () => NavigatePage.myProfilePage(),
       currentIndex: navigationIndex.currentPageIndex,
