@@ -39,7 +39,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
   final chipsTags = PostTags.tags;
 
   final chipsSelectedNotifier = ValueNotifier<List<bool>>(
-    List<bool>.filled(PostTags.tags.length, false),
+    List<bool>.filled(PostTags.tags.length, false)
   );
 
   bool isPostPressed = false;
