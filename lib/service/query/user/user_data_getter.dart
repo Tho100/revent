@@ -30,25 +30,5 @@ class UserDataGetter extends BaseQueryService {
     return ExtractData(rowsData: results).extractStringColumn('created_at')[0];
 
   }
-  // TODO: Remove Plan, and rename this functio to getEmail
-  Future<Map<String, dynamic>> getUserStartupInfo({required String email}) async {
-
-    const query = 'SELECT username, plan FROM user_information WHERE email = :email';
-
-    final param = {'email': email};
-    
-    final results = await executeQuery(query, param);
-
-    final extractedData = ExtractData(rowsData: results);
-
-    final username = extractedData.extractStringColumn('username')[0];
-    final plan = extractedData.extractStringColumn('plan')[0];
-
-    return {
-      'username': username,
-      'plan': plan,
-    };
-
-  }
 
 }

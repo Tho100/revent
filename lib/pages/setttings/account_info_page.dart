@@ -5,7 +5,6 @@ import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/buttons/sub_button.dart';
 
 class AccountInformationPage extends StatefulWidget {
 
@@ -72,13 +71,6 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
     );
   }
 
-  Widget _buildUpgradeButton() {
-    return SubButton(
-      text: 'Upgrade', 
-      onPressed: () => print('Upgrade')
-    );
-  }
-
   Widget _buildJoinedDate() {
     return FutureBuilder<String>(
       future: _loadJoinedDate(),
@@ -110,9 +102,6 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
             _buildHeaders('Email', userProvider.user.email),
 
             _buildJoinedDate(),
-      
-            _buildHeaders('Plan', userProvider.user.plan),
-            _buildUpgradeButton(), 
                   
           ],
         ),

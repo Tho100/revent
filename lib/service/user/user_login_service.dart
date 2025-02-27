@@ -65,7 +65,7 @@ class UserLoginService {
       final userData = getIt.userProvider.user;
 
       await localStorage.setupLocalAccountInformation(
-        username: userData.username, email: userData.email, plan: userData.plan
+        username: userData.username, email: userData.email
       );
 
     }
@@ -74,17 +74,13 @@ class UserLoginService {
 
   Future<void> _setUserProfileData({required String email}) async {
 
-    final accountInfo = await userDataGetter.getUserStartupInfo(email: email);
-      
-    final username = accountInfo['username'];
-    final accountPlan = accountInfo['plan'];
-
+    final username = await userDataGetter.getUsername(email: email) ?? '';
+    
     final socialHandles = await UserSocials().getSocialHandles(username: username);
 
     final userSetup = UserData(
       username: username, 
       email: email, 
-      plan: accountPlan,
       socialHandles: {
         'instagram': socialHandles['instagram'] ?? '',
         'twitter': socialHandles['twitter'] ?? '',

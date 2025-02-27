@@ -69,7 +69,6 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
     final userSetup = UserData(
       username: username, 
       email: email, 
-      plan: 'Basic', 
       socialHandles: {}
     );
 
