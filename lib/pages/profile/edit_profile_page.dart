@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
@@ -445,23 +446,26 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     );
   }
 
-  Widget _buildSocialHeader(String platform, TextEditingController controller) {
+  Widget _buildSocialHeader(String platform, IconData platformIcon, TextEditingController controller) {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
         Container(
-          height: 25,
+          height: 35,
+          width: 132,
           decoration: BoxDecoration(
             color: ThemeColor.black,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(20),
             border: Border.all(
               color: ThemeColor.thirdWhite
             )
           ),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
 
-              Icon(Icons.abc),
+              FaIcon(platformIcon, color: ThemeColor.white, size: 16), 
 
               const SizedBox(width: 6),
 
@@ -470,7 +474,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
                 style: GoogleFonts.inter(
                   color: ThemeColor.secondaryWhite,
                   fontWeight: FontWeight.w800,
-                  fontSize: 12
+                  fontSize: 14
                 ),
               )
 
@@ -478,12 +482,15 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
           ),
         ),
 
+        const SizedBox(height: 12),
+
         MainTextField(
           controller: controller,
-          maxLines: 1,
+          hintText: 'Username',
+          maxLines: 1
         ),
 
-        const SizedBox(height: 8),
+        const SizedBox(height: 30),
 
       ],
     );
@@ -494,20 +501,25 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       header: 'Social Links', 
       children: [
 
-      _buildSocialHeader(
-        'Instagram',
-        instagramController
-      ),
+        const SizedBox(height: 10),
 
-      _buildSocialHeader(
-        'Twitter',
-        twitterController
-      ),
+        _buildSocialHeader(
+          'Instagram',
+          FontAwesomeIcons.instagram,
+          instagramController
+        ),
 
-      _buildSocialHeader(
-        'TikTok',
-        tiktokController
-      ),
+        _buildSocialHeader(
+          'Twitter',
+          FontAwesomeIcons.twitter,
+          twitterController
+        ),
+
+        _buildSocialHeader(
+          'TikTok',
+          FontAwesomeIcons.tiktok,
+          tiktokController
+        ),
 
       ]
     );
@@ -538,7 +550,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       
             _buildBio(),
       
-            const SizedBox(height: 20),
+            const SizedBox(height: 30),
 
             _buildSocialLinks(),
 
