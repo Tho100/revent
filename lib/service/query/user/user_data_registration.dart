@@ -7,7 +7,7 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
   Future<void> insert({required String? hashPassword}) async {
       
     const queries = [
-      'INSERT INTO user_information (username, email, password, plan) VALUES (:username, :email, :password, :plan)',
+      'INSERT INTO user_information (username, email, password) VALUES (:username, :email, :password)',
       'INSERT INTO user_profile_info (bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)',
       'INSERT INTO user_privacy_info (username) VALUES (:username)'
     ];
@@ -17,7 +17,6 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
         'username': userProvider.user.username,
         'email': userProvider.user.email,
         'password': hashPassword,
-        'plan': 'Basic'
       },
       {
         'bio': '',
@@ -41,7 +40,7 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
     });
 
     await LocalStorageModel().setupLocalAccountInformation(
-      username: userProvider.user.username, email: userProvider.user.email, plan: 'Basic'
+      username: userProvider.user.username, email: userProvider.user.email
     );
 
   }  

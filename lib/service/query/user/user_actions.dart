@@ -7,7 +7,7 @@ class UserActions extends BaseQueryService with UserProfileProviderService {
 
   UserActions({required this.username});
 
-  Future<void> userFollowAction({required bool follow}) async {
+  Future<void> toggleFollowUser({required bool follow}) async {
     
     final operationSymbol = follow ? '+' : '-'; 
 

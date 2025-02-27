@@ -112,7 +112,6 @@ class LocalStorageModel {
 
     String username = '';
     String email = '';
-    String accountType = '';
 
     final localDir = await _readLocalDirectory();
 
@@ -124,10 +123,9 @@ class LocalStorageModel {
 
         final lines = await setupFile.readAsLines();
 
-        if (lines.length >= 3) {
+        if (lines.length >= 2) {
           username = lines[0];
           email = lines[1];
-          accountType = lines[2];
         }
 
       }
@@ -137,7 +135,6 @@ class LocalStorageModel {
     return {
       'username': username, 
       'email': email, 
-      'plan': accountType
     };
 
   }
@@ -145,7 +142,6 @@ class LocalStorageModel {
   Future<void> setupLocalAccountInformation({
     required String username, 
     required String email, 
-    required String plan
   }) async {
 
     final localDir = await _readLocalDirectory();
@@ -158,7 +154,7 @@ class LocalStorageModel {
 
     try {
 
-      await setupFile.writeAsString('$username\n$email\n$plan');
+      await setupFile.writeAsString('$username\n$email');
 
     } catch (_) {
       return;
@@ -209,7 +205,11 @@ class LocalStorageModel {
             line.split(' ')[0]: line.split(' ').sublist(1).join(' ')
       };
 
-      return socialHandles;
+      return {
+        'instagram': socialHandles['instagram'] ?? '',
+        'twitter': socialHandles['twitter'] ?? '',
+        'tiktok': socialHandles['tiktok'] ?? '',
+      };
 
     } catch (_) {
       return {};

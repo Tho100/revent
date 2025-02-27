@@ -1,7 +1,8 @@
 import 'package:revent/helper/extract_data.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
-class UserDataGetter extends BaseQueryService {
+class UserDataGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<String?> getUsername({required String email}) async {
 
@@ -15,7 +16,7 @@ class UserDataGetter extends BaseQueryService {
       return null;
     }
 
-    return results.rows.last.assoc()['username'];
+    return ExtractData(rowsData: results).extractStringColumn('username')[0];
 
   }
 
@@ -27,27 +28,36 @@ class UserDataGetter extends BaseQueryService {
     
     final results = await executeQuery(query, param);
 
-    return results.rows.last.assoc()['created_at']!;
+    return ExtractData(rowsData: results).extractStringColumn('created_at')[0];
 
   }
 
-  Future<Map<String, dynamic>> getUserStartupInfo({required String email}) async {
+  Future<Map<String, String>> getSocialHandles({String? username}) async {
 
-    const query = 'SELECT username, plan FROM user_information WHERE email = :email';
+    const query = 'SELECT platform, social_handle FROM user_social_links WHERE username = :username';
 
-    final param = {'email': email};
+    final param = {'username': username};
     
     final results = await executeQuery(query, param);
 
+    if (results.isEmpty) {
+      return {};
+    }
+
     final extractedData = ExtractData(rowsData: results);
 
-    final username = extractedData.extractStringColumn('username')[0];
-    final plan = extractedData.extractStringColumn('plan')[0];
+    final platforms = extractedData.extractStringColumn('platform');
+    final handles = extractedData.extractStringColumn('social_handle');
 
-    return {
-      'username': username,
-      'plan': plan,
-    };
+    Map<String, String> socialHandles = {};
+    
+    for (int i = 0; i < platforms.length; i++) {
+      if (handles[i].isNotEmpty) {
+        socialHandles[platforms[i]] = handles[i];
+      }
+    }
+
+    return socialHandles;
 
   }
 

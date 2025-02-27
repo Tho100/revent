@@ -4,14 +4,14 @@ class UserData {
 
   String username;
   String email;
-  String plan;
+
   Map<String, String> socialHandles;
+
   String? joinedDate;
 
   UserData({
     required this.username,
     required this.email,
-    required this.plan,
     required this.socialHandles,
     this.joinedDate
   });
@@ -20,7 +20,7 @@ class UserData {
 
 class UserProvider extends ChangeNotifier {
   
-  UserData _user = UserData(username: '', email: '', plan: '', joinedDate: '', socialHandles: {});
+  UserData _user = UserData(username: '', email: '', joinedDate: '', socialHandles: {});
 
   UserData get user => _user;
 
@@ -35,7 +35,7 @@ class UserProvider extends ChangeNotifier {
   }
 
   void clearUserData() {
-    _user = UserData(username: '', email: '', plan: '', joinedDate: '', socialHandles: {});
+    _user = UserData(username: '', email: '', joinedDate: '', socialHandles: {});
   }
 
 }
