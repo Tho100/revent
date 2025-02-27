@@ -179,9 +179,9 @@ class LocalStorageModel {
       existingHandles.addAll(socialHandles);
 
       final filteredHandles = existingHandles.entries
-          .where((entry) => entry.value.isNotEmpty)
-          .map((entry) => '${entry.key} ${entry.value}')
-          .join('\n');
+        .where((entry) => entry.value.isNotEmpty)
+        .map((entry) => '${entry.key} ${entry.value}')
+        .join('\n');
 
       await setupFile.writeAsString(filteredHandles);
 
@@ -221,11 +221,16 @@ class LocalStorageModel {
 
     final localDir = await _readLocalDirectory();
 
-    final filePath = File('${localDir.path}/$_fileName');
+    final userInfo = File('${localDir.path}/$_fileName');
+    final userSocialHandles = File('${localDir.path}/$_socialHandlesName');
 
     try {
 
-      await filePath.delete();
+      await userInfo.delete();
+
+      if(await userSocialHandles.exists()) {
+        await userSocialHandles.delete();
+      }
 
     } catch (_) {
       return;

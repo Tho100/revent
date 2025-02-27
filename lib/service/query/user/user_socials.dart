@@ -28,11 +28,42 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
 
   }
 
-  Future<int> _getUserId() async {
+  Future<Map<String, String>> getSocialHandles({required String username}) async {
+
+    final userId = await _getUserId(username: username);
+
+    const query = 'SELECT platform, social_handle FROM user_social_links WHERE user_id = :user_id';
+
+    final param = {'user_id': userId};
+    
+    final results = await executeQuery(query, param);
+
+    if (results.isEmpty) {
+      return {};
+    }
+
+    final extractedData = ExtractData(rowsData: results);
+
+    final platforms = extractedData.extractStringColumn('platform');
+    final handles = extractedData.extractStringColumn('social_handle');
+
+    final Map<String, String> socialHandles = {};
+    
+    for (int i = 0; i < platforms.length; i++) {
+      if (handles[i].isNotEmpty) {
+        socialHandles[platforms[i]] = handles[i];
+      }
+    }
+
+    return socialHandles;
+
+  }
+
+  Future<int> _getUserId({String? username}) async {
 
     const query = 'SELECT user_id FROM user_information WHERE username = :username';
 
-    final param = {'username': userProvider.user.username};
+    final param = {'username': username ?? userProvider.user.username};
 
     final results = await executeQuery(query, param);
 

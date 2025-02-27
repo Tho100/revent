@@ -5,6 +5,7 @@ import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
+import 'package:revent/service/query/user/user_socials.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
@@ -78,14 +79,22 @@ class UserLoginService {
     final username = accountInfo['username'];
     final accountPlan = accountInfo['plan'];
 
+    final socialHandles = await UserSocials().getSocialHandles(username: username);
+
     final userSetup = UserData(
       username: username, 
       email: email, 
       plan: accountPlan,
-      socialHandles: {} 
+      socialHandles: {
+        'instagram': socialHandles['instagram'] ?? '',
+        'twitter': socialHandles['twitter'] ?? '',
+        'tiktok': socialHandles['tiktok'] ?? '',
+      } 
     );
 
-    getIt.userProvider.setUser(userSetup);
+    await localStorage.setupLocalSocialHandles(socialHandles: socialHandles).then(
+      (_) => getIt.userProvider.setUser(userSetup)
+    );
 
     await ProfileDataSetup().setup(username: username);
 
