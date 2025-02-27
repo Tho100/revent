@@ -70,6 +70,7 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
       username: username, 
       email: email, 
       plan: 'Basic', 
+      socialHandles: {}
     );
 
     userProvider.setUser(userSetup);

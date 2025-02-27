@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 class LocalStorageModel {
 
   final _fileName = 'info.txt';
+  final _socialHandlesName = 'socials_info.txt';
   final _searchHistoryFile = 'search_history.txt';
 
   final _folderName = 'ReventInfos';
@@ -165,15 +166,71 @@ class LocalStorageModel {
 
   }
 
+  Future<void> setupLocalSocialHandles({required Map<String, String> socialHandles}) async {
+
+    final localDir = await _readLocalDirectory();
+    
+    final setupFile = File('${localDir.path}/$_socialHandlesName');
+
+    try {
+
+      final existingHandles = await readLocalSocialHandles();
+
+      existingHandles.addAll(socialHandles);
+
+      final filteredHandles = existingHandles.entries
+        .where((entry) => entry.value.isNotEmpty)
+        .map((entry) => '${entry.key} ${entry.value}')
+        .join('\n');
+
+      await setupFile.writeAsString(filteredHandles);
+
+    } catch (_) {
+      return;
+    }
+
+  }
+
+  Future<Map<String, String>> readLocalSocialHandles() async {
+
+    final localDir = await _readLocalDirectory();
+    
+    final setupFile = File('${localDir.path}/$_socialHandlesName');
+
+    if (!await setupFile.exists()) return {};
+    
+    try {
+
+      final content = await setupFile.readAsString();
+      
+      final socialHandles = {
+        for (var line in content.split('\n'))
+          if (line.trim().isNotEmpty)
+            line.split(' ')[0]: line.split(' ').sublist(1).join(' ')
+      };
+
+      return socialHandles;
+
+    } catch (_) {
+      return {};
+    }
+
+  }
+
   Future<void> deleteLocalData() async {
 
     final localDir = await _readLocalDirectory();
 
-    final filePath = File('${localDir.path}/$_fileName');
+    final userInfo = File('${localDir.path}/$_fileName');
+    final userSocialHandles = File('${localDir.path}/$_socialHandlesName');
 
     try {
 
-      await filePath.delete();
+      await userInfo.delete();
+
+      if(await userSocialHandles.exists()) {
+        await userSocialHandles.delete();
+      }
 
     } catch (_) {
       return;

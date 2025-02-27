@@ -1,9 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/model/local_storage_model.dart';
+import 'package:revent/service/query/user/user_socials.dart';
 import 'package:revent/service/query/user_profile/profile_data_update.dart';
 import 'package:revent/helper/textinput_formatter.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
@@ -30,6 +33,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   final pronounOneController = TextEditingController();
   final pronounTwoController = TextEditingController();
 
+  final instagramController = TextEditingController();
+  final twitterController = TextEditingController();
+  final tiktokController = TextEditingController();
+
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
   final pronounsSelectedNotifier = ValueNotifier<List<bool>>([]);
 
@@ -37,6 +44,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   bool isBioChanges = false;
   bool isPronounsChanges = false;
+  bool isSocialChanges = false;
 
   void _enforceBioMaxLines() {
 
@@ -64,6 +72,22 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         () => isPronounsChanges = true
       );
     }
+
+    for (var socialsController in [instagramController, twitterController, tiktokController]) {
+      socialsController.addListener(
+        () => isSocialChanges = true
+      );
+    }
+
+  }
+
+  void _initializeSocialHandles() async {
+
+    final socialHandles = await LocalStorageModel().readLocalSocialHandles();
+
+    instagramController.text = socialHandles['instagram'] ?? '';
+    twitterController.text = socialHandles['twitter'] ?? '';
+    tiktokController.text = socialHandles['tiktok'] ?? '';
 
   }
 
@@ -117,6 +141,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       }
     }
 
+    if (isSocialChanges) {
+      if(!await _saveSocialLinks()) {
+        isSaved = false;
+      }
+    }
+
     if (isSaved) {
       SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
     }
@@ -130,6 +160,35 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     if(isProfileSelected) {
       profilePicNotifier.value = profileProvider.profile.profilePicture;
       SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
+    }
+
+  }
+
+  Future<bool> _saveSocialLinks() async {
+
+    try {
+
+      final socialLinks = {
+        'instagram': instagramController.text,
+        'twitter': twitterController.text,
+        'tiktok': tiktokController.text,
+      };
+
+      for (final entry in socialLinks.entries) {
+
+        final platform = entry.key;
+        final handle = entry.value;
+
+        if (handle.isNotEmpty) {
+          await UserSocials().addSocial(platform: platform, handle: handle);
+        }
+
+      }
+
+      return true;
+
+    } catch (_) {
+      return false;
     }
 
   }
@@ -398,6 +457,85 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     );
   }
 
+  Widget _buildSocialHeader(String platform, IconData platformIcon, TextEditingController controller) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        Container(
+          height: 36,
+          width: 130,
+          decoration: BoxDecoration(
+            color: ThemeColor.black,
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(
+              color: ThemeColor.thirdWhite
+            )
+          ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+
+              FaIcon(platformIcon, color: ThemeColor.white, size: 16), 
+
+              const SizedBox(width: 6),
+
+              Text(
+                platform,
+                style: GoogleFonts.inter(
+                  color: ThemeColor.secondaryWhite,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14
+                ),
+              )
+
+            ],
+          ),
+        ),
+
+        const SizedBox(height: 12),
+
+        MainTextField(
+          controller: controller,
+          hintText: 'Username',
+          maxLines: 1
+        ),
+
+        const SizedBox(height: 30),
+
+      ],
+    );
+  }
+
+  Widget _buildSocialLinks() {
+    return _buildProfileEditingWidget(
+      header: 'Social Links', 
+      children: [
+
+        const SizedBox(height: 10),
+
+        _buildSocialHeader(
+          'Instagram',
+          FontAwesomeIcons.instagram,
+          instagramController
+        ),
+
+        _buildSocialHeader(
+          'Twitter',
+          FontAwesomeIcons.twitter,
+          twitterController
+        ),
+
+        _buildSocialHeader(
+          'TikTok',
+          FontAwesomeIcons.tiktok,
+          tiktokController
+        ),
+
+      ]
+    );
+  }
+
   Widget _buildActionButton() {
     return IconButton(
       icon: const Icon(Icons.check, size: 22),
@@ -423,6 +561,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       
             _buildBio(),
       
+            const SizedBox(height: 30),
+
+            _buildSocialLinks(),
+
             const SizedBox(height: 20),
 
           ],
@@ -437,6 +579,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     _initializeProfileData();
     _initializeTextFieldsListeners();
     _initializePronounsChips();
+    _initializeSocialHandles();
   }
 
   @override
@@ -445,6 +588,9 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     bioController.dispose();
     pronounOneController.dispose();
     pronounTwoController.dispose();
+    instagramController.dispose();
+    twitterController.dispose();
+    tiktokController.dispose();
     super.dispose();
   }
 
