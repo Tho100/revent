@@ -74,7 +74,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     for (var socialsController in [instagramController, twitterController, tiktokController]) {
       socialsController.addListener(
-        () => isPronounsChanges = true
+        () => isSocialChanges = true
       );
     }
 
@@ -452,8 +452,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       children: [
 
         Container(
-          height: 35,
-          width: 132,
+          height: 36,
+          width: 130,
           decoration: BoxDecoration(
             color: ThemeColor.black,
             borderRadius: BorderRadius.circular(20),
@@ -473,7 +473,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
                 platform,
                 style: GoogleFonts.inter(
                   color: ThemeColor.secondaryWhite,
-                  fontWeight: FontWeight.w800,
+                  fontWeight: FontWeight.w700,
                   fontSize: 14
                 ),
               )
