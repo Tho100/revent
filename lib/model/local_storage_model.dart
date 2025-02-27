@@ -174,12 +174,14 @@ class LocalStorageModel {
 
     try {
 
-      final filteredHandles = socialHandles.entries
-        .where((entry) => entry.value.isNotEmpty)
-        .map((entry) => '${entry.key} ${entry.value}')
-        .join('\n');
+      final existingHandles = await readLocalSocialHandles();
 
-      print(filteredHandles);
+      existingHandles.addAll(socialHandles);
+
+      final filteredHandles = existingHandles.entries
+          .where((entry) => entry.value.isNotEmpty)
+          .map((entry) => '${entry.key} ${entry.value}')
+          .join('\n');
 
       await setupFile.writeAsString(filteredHandles);
 
@@ -195,18 +197,12 @@ class LocalStorageModel {
     
     final setupFile = File('${localDir.path}/$_socialHandlesName');
 
-    print("NOT INT YET");
-
     if (!await setupFile.exists()) return {};
     
-    print("TOTALLY IN");
-
     try {
 
       final content = await setupFile.readAsString();
       
-      print("CONTENT: $content");
-
       final socialHandles = {
         for (var line in content.split('\n'))
           if (line.trim().isNotEmpty)

@@ -87,8 +87,6 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
       final readSocialHandles = await localModel.readLocalSocialHandles();
 
-      print(readSocialHandles);
-
       final userSetup = UserData(
         username: username, 
         email: email, 
