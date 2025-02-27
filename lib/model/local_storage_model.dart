@@ -5,6 +5,7 @@ import 'package:path_provider/path_provider.dart';
 class LocalStorageModel {
 
   final _fileName = 'info.txt';
+  final _socialHandlesName = 'socials_info.txt';
   final _searchHistoryFile = 'search_history.txt';
 
   final _folderName = 'ReventInfos';
@@ -161,6 +162,61 @@ class LocalStorageModel {
 
     } catch (_) {
       return;
+    }
+
+  }
+
+  Future<void> setupLocalSocialHandles({required Map<String, String> socialHandles}) async {
+
+    final localDir = await _readLocalDirectory();
+    
+    final setupFile = File('${localDir.path}/$_socialHandlesName');
+
+    try {
+
+      final filteredHandles = socialHandles.entries
+        .where((entry) => entry.value.isNotEmpty)
+        .map((entry) => '${entry.key} ${entry.value}')
+        .join('\n');
+
+      print(filteredHandles);
+
+      await setupFile.writeAsString(filteredHandles);
+
+    } catch (_) {
+      return;
+    }
+
+  }
+
+  Future<Map<String, String>> readLocalSocialHandles() async {
+
+    final localDir = await _readLocalDirectory();
+    
+    final setupFile = File('${localDir.path}/$_socialHandlesName');
+
+    print("NOT INT YET");
+
+    if (!await setupFile.exists()) return {};
+    
+    print("TOTALLY IN");
+
+    try {
+
+      final content = await setupFile.readAsString();
+      
+      print("CONTENT: $content");
+
+      final socialHandles = {
+        for (var line in content.split('\n'))
+          if (line.trim().isNotEmpty)
+            line.split(' ')[0]: line.split(' ').sublist(1).join(' ')
+      };
+
+      return socialHandles;
+
+    } catch (_) {
+      return {};
     }
 
   }

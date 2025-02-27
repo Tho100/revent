@@ -85,10 +85,19 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
         return;
       }
 
+      final readSocialHandles = await localModel.readLocalSocialHandles();
+
+      print(readSocialHandles);
+
       final userSetup = UserData(
         username: username, 
         email: email, 
         plan: accountPlan, 
+        socialHandles: {
+          'instagram': readSocialHandles['instagram'] ?? '',
+          'twitter': readSocialHandles['twitter'] ?? '',
+          'tiktok': readSocialHandles['tiktok'] ?? '',
+        }
       );
 
       userProvider.setUser(userSetup);

@@ -81,7 +81,8 @@ class UserLoginService {
     final userSetup = UserData(
       username: username, 
       email: email, 
-      plan: accountPlan, 
+      plan: accountPlan,
+      socialHandles: {} 
     );
 
     getIt.userProvider.setUser(userSetup);

@@ -1,5 +1,6 @@
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class UserSocials extends BaseQueryService with UserProfileProviderService {
@@ -19,7 +20,11 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
       'platform': platform
     };
 
-    await executeQuery(query, params);
+    await executeQuery(query, params).then((_) {
+      LocalStorageModel().setupLocalSocialHandles(socialHandles: {
+        platform: handle
+      });
+    });
 
   }
 
