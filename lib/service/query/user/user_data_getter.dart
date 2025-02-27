@@ -4,18 +4,6 @@ import 'package:revent/service/query/general/base_query_service.dart';
 
 class UserDataGetter extends BaseQueryService with UserProfileProviderService {
 
-  Future<int> getUserId({String? username}) async {
-
-    const query = 'SELECT user_id FROM user_information WHERE username = :username';
-
-    final param = {'username': username ?? userProvider.user.username};
-
-    final results = await executeQuery(query, param);
-
-    return ExtractData(rowsData: results).extractIntColumn('user_id')[0];
-
-  }
-
   Future<String?> getUsername({required String email}) async {
 
     const query = 'SELECT username FROM user_information WHERE email = :email';
@@ -46,11 +34,9 @@ class UserDataGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, String>> getSocialHandles({String? username}) async {
 
-    final userId = await getUserId(username: username);
+    const query = 'SELECT platform, social_handle FROM user_social_links WHERE username = :username';
 
-    const query = 'SELECT platform, social_handle FROM user_social_links WHERE user_id = :user_id';
-
-    final param = {'user_id': userId};
+    final param = {'username': username};
     
     final results = await executeQuery(query, param);
 

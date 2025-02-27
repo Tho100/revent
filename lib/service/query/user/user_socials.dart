@@ -1,7 +1,6 @@
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/service/query/user/user_data_getter.dart';
 
 class UserSocials extends BaseQueryService with UserProfileProviderService {
 
@@ -10,12 +9,10 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
     required String handle
   }) async {
 
-    final userId = await UserDataGetter().getUserId();
-
-    const query = 'INSERT INTO user_social_links VALUES (:user_id, :social_handle, :platform)';
+    const query = 'INSERT INTO user_social_links VALUES (:username, :social_handle, :platform)';
 
     final params = {
-      'user_id': userId,
+      'username': userProvider.user.username,
       'social_handle': handle,
       'platform': platform
     };
