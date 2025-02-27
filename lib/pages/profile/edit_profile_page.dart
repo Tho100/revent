@@ -544,30 +544,33 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   }
 
   Widget _buildBody() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 15.0, left: 14.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            
-            _buildProfilePicture(),
-      
-            const SizedBox(height: 40),
-                
-            _buildPronouns(),
+    return ScrollConfiguration(
+      behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(top: 15.0, left: 14.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
               
-            const SizedBox(height: 30),
-      
-            _buildBio(),
-      
-            const SizedBox(height: 30),
+              _buildProfilePicture(),
+        
+              const SizedBox(height: 40),
+                  
+              _buildPronouns(),
+                
+              const SizedBox(height: 30),
+        
+              _buildBio(),
+        
+              const SizedBox(height: 30),
 
-            _buildSocialLinks(),
+              _buildSocialLinks(),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 20),
 
-          ],
+            ],
+          ),
         ),
       ),
     );
