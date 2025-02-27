@@ -13,7 +13,7 @@ class UserDataGetter extends BaseQueryService {
 
     if(results.rows.isEmpty) {
       return null;
-    }
+    } // TODO: Use extractadata
 
     return results.rows.last.assoc()['username'];
 
