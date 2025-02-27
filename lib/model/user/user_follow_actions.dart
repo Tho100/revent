@@ -8,8 +8,8 @@ class UserFollowActions {
 
   Future<void> followUser({required bool follow}) async {
     follow 
-      ? await UserActions(username: username).userFollowAction(follow: true)
-      : await UserActions(username: username).userFollowAction(follow: false);
+      ? await UserActions(username: username).toggleFollowUser(follow: true)
+      : await UserActions(username: username).toggleFollowUser(follow: false);
   }
 
 }

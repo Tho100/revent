@@ -85,9 +85,15 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     final socialHandles = await LocalStorageModel().readLocalSocialHandles();
 
-    instagramController.text = socialHandles['instagram'] ?? '';
-    twitterController.text = socialHandles['twitter'] ?? '';
-    tiktokController.text = socialHandles['tiktok'] ?? '';
+    final controllers = {
+      'instagram': instagramController,
+      'twitter': twitterController,
+      'tiktok': tiktokController,
+    };
+
+    controllers.forEach((platform, controller) {
+      controller.text = socialHandles[platform] ?? '';
+    });
 
   }
 

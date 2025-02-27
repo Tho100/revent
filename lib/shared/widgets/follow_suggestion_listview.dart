@@ -19,7 +19,7 @@ class FollowSuggestionListView extends StatelessWidget {
 
   void _followOnPressed(String username, Uint8List pfpData, int index) async {
 
-    await UserActions(username: username).userFollowAction(follow: true).then(
+    await UserActions(username: username).toggleFollowUser(follow: true).then(
       (_) => getIt.followSuggestionProvider.removeSuggestion(index)
     ); 
 

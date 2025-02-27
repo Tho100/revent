@@ -21,9 +21,9 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
     };
 
     await executeQuery(query, params).then((_) {
-      LocalStorageModel().setupLocalSocialHandles(socialHandles: {
-        platform: handle
-      });
+      LocalStorageModel().setupLocalSocialHandles(
+        socialHandles: {platform: handle}
+      );
     });
 
   }
@@ -47,7 +47,7 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
     final platforms = extractedData.extractStringColumn('platform');
     final handles = extractedData.extractStringColumn('social_handle');
 
-    final Map<String, String> socialHandles = {};
+    Map<String, String> socialHandles = {};
     
     for (int i = 0; i < platforms.length; i++) {
       if (handles[i].isNotEmpty) {

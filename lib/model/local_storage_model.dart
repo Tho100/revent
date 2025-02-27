@@ -209,7 +209,11 @@ class LocalStorageModel {
             line.split(' ')[0]: line.split(' ').sublist(1).join(' ')
       };
 
-      return socialHandles;
+      return {
+        'instagram': socialHandles['instagram'] ?? '',
+        'twitter': socialHandles['twitter'] ?? '',
+        'tiktok': socialHandles['tiktok'] ?? '',
+      };
 
     } catch (_) {
       return {};
