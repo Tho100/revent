@@ -9,12 +9,12 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
     required String handle
   }) async {
 
-    const query = 'INSERT INTO user_social_links VALUES (:username, :social_handle, :platform)';
+    const query = 'INSERT INTO user_social_links VALUES (:social_handle, :platform, :username)';
 
     final params = {
-      'username': userProvider.user.username,
       'social_handle': handle,
-      'platform': platform
+      'platform': platform,
+      'username': userProvider.user.username
     };
 
     await executeQuery(query, params).then((_) {
