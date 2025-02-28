@@ -37,7 +37,7 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
 
     const query = 
     '''
-      UPDATE TABLE user_social_links
+      UPDATE user_social_links
       SET social_handle = :social_handle
       WHERE platform = :platform AND username = :username
     ''';
