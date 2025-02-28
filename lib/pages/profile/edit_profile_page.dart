@@ -505,6 +505,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         MainTextField(
           controller: controller,
           hintText: 'Username',
+          textInputAction: TextInputAction.next,
           maxLines: 1
         ),
 
