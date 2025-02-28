@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
@@ -9,6 +10,7 @@ import 'package:revent/service/refresh_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
@@ -225,6 +227,53 @@ class _MyProfilePageState extends State<MyProfilePage> with
     );
   }
 
+  Widget _buildSocialLinksIcon(String platform, String handle, IconData icon, double customSize) {
+
+    final url = {
+      'instagram': 'instagram.com/$handle',
+      'twitter': 'twitter.com/$handle',
+      'tiktok': 'tiktok.com/$handle',
+    };
+
+    return Padding(
+      padding: const EdgeInsets.only(right: 16.0, top: 2.0),
+      child: GestureDetector(
+        onTap: () {},
+        child: FaIcon(icon, color: ThemeColor.white, size: customSize),
+      ),
+    );
+
+  }
+
+  Widget _buildSocialLinks() {
+    return Row(
+      children: [
+
+        if(userProvider.user.socialHandles['tiktok']!.isNotEmpty)
+        _buildSocialLinksIcon(
+          'tiktok', 
+          userProvider.user.socialHandles['tiktok']!,
+          FontAwesomeIcons.tiktok, 19
+        ),
+
+        if(userProvider.user.socialHandles['twitter']!.isNotEmpty)
+        _buildSocialLinksIcon(
+          'twitter', 
+          userProvider.user.socialHandles['twitter']!,
+          FontAwesomeIcons.twitter, 21
+        ),
+
+        if(userProvider.user.socialHandles['instagram']!.isNotEmpty)
+        _buildSocialLinksIcon(
+          'instagram', 
+          userProvider.user.socialHandles['instagram']!, 
+          FontAwesomeIcons.instagram, 22
+        ),
+
+      ],
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -250,7 +299,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
         appBar: CustomAppBar(
           context: context, 
           customLeading: _buildPrivacyLeadingButton(),
-          actions: [_buildSettingsActionButton()]
+          actions: [_buildSocialLinks(), _buildSettingsActionButton()]
         ).buildAppBar(),
         body: _buildBody(),
         bottomNavigationBar: PageNavigationBar()
