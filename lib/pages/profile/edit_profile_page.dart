@@ -5,7 +5,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/query/user/user_socials.dart';
 import 'package:revent/service/query/user_profile/profile_data_update.dart';
 import 'package:revent/helper/textinput_formatter.dart';
@@ -83,7 +82,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _initializeSocialHandles() async {
 
-    final socialHandles = await LocalStorageModel().readLocalSocialHandles();
+    final socialHandles = userProvider.user.socialHandles;
 
     final controllers = {
       'instagram': instagramController,
@@ -190,6 +189,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         }
 
       }
+
+      userProvider.user.socialHandles = socialLinks;
 
       return true;
 
@@ -504,6 +505,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         MainTextField(
           controller: controller,
           hintText: 'Username',
+          textInputAction: TextInputAction.next,
           maxLines: 1
         ),
 
