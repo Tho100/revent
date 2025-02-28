@@ -27,11 +27,9 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
       'username': userProvider.user.username
     };
 
-    await executeQuery(query, params).then((_) {
-      LocalStorageModel().setupLocalSocialHandles(
-        socialHandles: {platform: handle}
-      );
-    });
+    await executeQuery(query, params).then(
+      (_) async => await _updateLocalSocialHandles()
+    );
 
   }
 
@@ -50,12 +48,16 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
       'username': userProvider.user.username
     };
 
-    await executeQuery(query, params).then((_) {
-      LocalStorageModel().setupLocalSocialHandles(
-        socialHandles: {platform: handle}
-      );
-    });
+    await executeQuery(query, params).then(
+      (_) async => await _updateLocalSocialHandles()
+    );
 
+  }
+
+  Future<void> _updateLocalSocialHandles() async {
+    await LocalStorageModel().setupLocalSocialHandles(
+      socialHandles: {platform: handle}
+    );
   }
 
 }
