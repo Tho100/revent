@@ -11,7 +11,6 @@ import 'package:revent/service/refresh_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
-import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
@@ -240,7 +239,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
       padding: const EdgeInsets.only(right: 16.0, top: 2.0),
       child: GestureDetector(
         onTap: () async => await OpenLink(url: socialUrl[platform]!).open(),
-        child: FaIcon(icon, color: ThemeColor.white, size: size), // TODO: Remove the color since the deafult is white
+        child: FaIcon(icon, size: size),
       ),
     );
 
