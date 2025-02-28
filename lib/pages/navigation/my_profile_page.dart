@@ -249,21 +249,24 @@ class _MyProfilePageState extends State<MyProfilePage> with
     return Row(
       children: [
 
-        if(userProvider.user.socialHandles['tiktok']!.isNotEmpty)
+        if(userProvider.user.socialHandles.containsKey('tiktok') &&
+          userProvider.user.socialHandles['tiktok']?.isNotEmpty == true)
         _buildSocialLinksIcon(
           'tiktok', 
           userProvider.user.socialHandles['tiktok']!,
           FontAwesomeIcons.tiktok, 19
         ),
 
-        if(userProvider.user.socialHandles['twitter']!.isNotEmpty)
+        if(userProvider.user.socialHandles.containsKey('twitter') &&
+          userProvider.user.socialHandles['twitter']?.isNotEmpty == true)
         _buildSocialLinksIcon(
           'twitter', 
           userProvider.user.socialHandles['twitter']!,
           FontAwesomeIcons.twitter, 21
         ),
 
-        if(userProvider.user.socialHandles['instagram']!.isNotEmpty)
+        if(userProvider.user.socialHandles.containsKey('instagram') &&
+          userProvider.user.socialHandles['instagram']?.isNotEmpty == true)
         _buildSocialLinksIcon(
           'instagram', 
           userProvider.user.socialHandles['instagram']!, 
