@@ -185,7 +185,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         final handle = entry.value;
 
         if (handle.isNotEmpty) {
-          await UserSocials().addSocial(platform: platform, handle: handle);
+          await UserSocials(platform: platform, handle: handle).addSocial();
         }
 
       }
