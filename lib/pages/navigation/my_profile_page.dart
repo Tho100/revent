@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
+import 'package:revent/helper/open_link.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/service/refresh_service.dart';
@@ -227,19 +228,19 @@ class _MyProfilePageState extends State<MyProfilePage> with
     );
   }
 
-  Widget _buildSocialLinksIcon(String platform, String handle, IconData icon, double customSize) {
+  Widget _buildSocialLinksIcon(String platform, String handle, IconData icon, double size) {
 
-    final url = {
-      'instagram': 'instagram.com/$handle',
-      'twitter': 'twitter.com/$handle',
-      'tiktok': 'tiktok.com/$handle',
+    final socialUrl = {
+      'instagram': 'https://instagram.com/$handle/',
+      'twitter': 'https://twitter.com/$handle',
+      'tiktok': 'https://tiktok.com/@$handle',
     };
 
     return Padding(
       padding: const EdgeInsets.only(right: 16.0, top: 2.0),
       child: GestureDetector(
-        onTap: () {},
-        child: FaIcon(icon, color: ThemeColor.white, size: customSize),
+        onTap: () async => await OpenLink(url: socialUrl[platform]!).open(),
+        child: FaIcon(icon, color: ThemeColor.white, size: size), // TODO: Remove the color since the deafult is white
       ),
     );
 
