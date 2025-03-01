@@ -1,16 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
-import 'package:revent/helper/open_link.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
+import 'package:revent/shared/widgets/profile/social_links_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
@@ -227,56 +226,6 @@ class _MyProfilePageState extends State<MyProfilePage> with
     );
   }
 
-  Widget _buildSocialLinksIcon(String platform, String handle, IconData icon, double size) {
-
-    final socialUrl = {
-      'instagram': 'https://instagram.com/$handle/',
-      'twitter': 'https://twitter.com/$handle',
-      'tiktok': 'https://tiktok.com/@$handle',
-    };
-
-    return Padding(
-      padding: const EdgeInsets.only(right: 16.0, top: 2.0),
-      child: GestureDetector(
-        onTap: () async => await OpenLink(url: socialUrl[platform]!).open(),
-        child: FaIcon(icon, size: size),
-      ),
-    );
-
-  }
-
-  Widget _buildSocialLinks() {
-    return Row(
-      children: [
-
-        if(userProvider.user.socialHandles.containsKey('tiktok') &&
-          userProvider.user.socialHandles['tiktok']?.isNotEmpty == true)
-        _buildSocialLinksIcon(
-          'tiktok', 
-          userProvider.user.socialHandles['tiktok']!,
-          FontAwesomeIcons.tiktok, 19
-        ),
-
-        if(userProvider.user.socialHandles.containsKey('twitter') &&
-          userProvider.user.socialHandles['twitter']?.isNotEmpty == true)
-        _buildSocialLinksIcon(
-          'twitter', 
-          userProvider.user.socialHandles['twitter']!,
-          FontAwesomeIcons.twitter, 21
-        ),
-
-        if(userProvider.user.socialHandles.containsKey('instagram') &&
-          userProvider.user.socialHandles['instagram']?.isNotEmpty == true)
-        _buildSocialLinksIcon(
-          'instagram', 
-          userProvider.user.socialHandles['instagram']!, 
-          FontAwesomeIcons.instagram, 22
-        ),
-
-      ],
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -302,7 +251,12 @@ class _MyProfilePageState extends State<MyProfilePage> with
         appBar: CustomAppBar(
           context: context, 
           customLeading: _buildPrivacyLeadingButton(),
-          actions: [_buildSocialLinks(), _buildSettingsActionButton()]
+          actions: [
+            SocialLinksWidgets(
+              socialHandles: userProvider.user.socialHandles
+            ).buildSocialLinks(), 
+            _buildSettingsActionButton()
+          ]
         ).buildAppBar(),
         body: _buildBody(),
         bottomNavigationBar: PageNavigationBar()

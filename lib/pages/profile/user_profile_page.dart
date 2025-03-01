@@ -21,6 +21,7 @@ import 'package:revent/shared/widgets/bottomsheet/user/about_profile.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/themes/theme_style.dart';
+import 'package:revent/shared/widgets/profile/social_links_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -65,6 +66,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
+  late Map<String, String> socialHandles;
 
   bool isBlockedAccount = false;
   bool isPrivateAccount = false;
@@ -196,14 +198,16 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       bioNotifier.value =  getProfileData['bio'];
       pronounsNotifier.value =  getProfileData['pronouns'];
 
-      isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
-
       profilePostsData.userProfile.clear();
       profileSavedData.userProfile.clear();
 
       await callProfilePosts.setupPosts();
       
       postsNotifier.value = profilePostsData.userProfile.titles.length;
+
+      isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
+      
+      socialHandles = await UserDataGetter().getSocialHandles(username: widget.username);
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
@@ -421,7 +425,12 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        actions: [_buildOptionsActionButton()]
+        actions: [
+          SocialLinksWidgets(
+            socialHandles: socialHandles
+          ).buildSocialLinks(), 
+          _buildOptionsActionButton()
+        ]
       ).buildAppBar(),
       body: _buildBody(),
       bottomNavigationBar: PageNavigationBar()
