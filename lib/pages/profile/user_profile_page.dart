@@ -61,12 +61,12 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
   final pronounsNotifier = ValueNotifier<String>('');
 
   final isFollowingNotifier = ValueNotifier<bool>(false);
+  final socialHandlesNotifier = ValueNotifier<Map<String, String>>({});
 
   late ProfilePostsSetup callProfilePosts;
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
-  late Map<String, String> socialHandles;
 
   bool isBlockedAccount = false;
   bool isPrivateAccount = false;
@@ -207,7 +207,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
       isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
       
-      socialHandles = await UserDataGetter().getSocialHandles(username: widget.username);
+      socialHandlesNotifier.value = await UserDataGetter().getSocialHandles(username: widget.username);
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
@@ -397,6 +397,17 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     );
   }
 
+  Widget _buildSocialLinks() {
+    return ValueListenableBuilder(
+      valueListenable: socialHandlesNotifier,
+      builder: (_, socialHandles, __) {
+        return SocialLinksWidgets(
+          socialHandles: socialHandles
+        ).buildSocialLinks();
+      }
+    );
+  }
+
   @override
   void initState() {
     super.initState();
@@ -414,6 +425,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     bioNotifier.dispose();
     pronounsNotifier.dispose();
     isFollowingNotifier.dispose();
+    socialHandlesNotifier.dispose();
     tabController.dispose();
     profilePostsData.clearPostsData();
     profileSavedData.clearPostsData();
@@ -425,12 +437,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        actions: [
-          SocialLinksWidgets(
-            socialHandles: socialHandles
-          ).buildSocialLinks(), 
-          _buildOptionsActionButton()
-        ]
+        actions: [_buildSocialLinks(), _buildOptionsActionButton()]
       ).buildAppBar(),
       body: _buildBody(),
       bottomNavigationBar: PageNavigationBar()
