@@ -8,7 +8,7 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
-import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -236,7 +236,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
   }
 
   Widget _buildOnEmpty() {
-    return EmptyPage().customMessage(
+    return NoContentMessage().customMessage(
       message: 'Your archive is empty.'
     );
   }

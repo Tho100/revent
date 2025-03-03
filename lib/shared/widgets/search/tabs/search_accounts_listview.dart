@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
 
@@ -43,7 +43,7 @@ class SearchAccountsListView extends StatelessWidget {
   }
 
   Widget _buildOnEmpty() {
-    return EmptyPage().customMessage(
+    return NoContentMessage().customMessage(
       message: 'No results.'
     );
   }

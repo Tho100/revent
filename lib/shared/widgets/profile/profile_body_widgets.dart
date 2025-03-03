@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/profile/profile_info_widgets.dart';
 import 'package:revent/shared/widgets/profile/tabbar_widgets.dart';
-import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 
 class ProfileBodyWidgets extends StatelessWidget {
 
@@ -43,7 +43,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
         const SizedBox(height: 18),
 
-        EmptyPage().headerCustomMessage(
+        NoContentMessage().headerCustomMessage(
           header: 'This account is private', 
           subheader: 'Only approved followers can view the content.'
         )
@@ -62,7 +62,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
         const SizedBox(height: 18),
 
-        EmptyPage().headerCustomMessage(
+        NoContentMessage().headerCustomMessage(
           header: 'Blocked account', 
           subheader: "Can't view this account at the moment."
         )

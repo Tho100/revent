@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:revent/model/user/user_follow_actions.dart';
 import 'package:revent/service/query/general/follows_getter.dart';
-import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
@@ -162,7 +162,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
     return ValueListenableBuilder(
       valueListenable: emptyPageMessageNotifier,
       builder: (_, message, __) {
-        return EmptyPage().customMessage(message: message);
+        return NoContentMessage().customMessage(message: message);
       }
     );
   }

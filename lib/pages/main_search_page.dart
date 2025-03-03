@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/model/local_storage_model.dart';
-import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -136,7 +136,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
         const SizedBox(height: 18),
 
-        EmptyPage().headerCustomMessage(
+        NoContentMessage().headerCustomMessage(
           header: 'No search history', 
           subheader: 'Your search history will appear here.'
         )
