@@ -4,7 +4,7 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
@@ -59,7 +59,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
 
             const SizedBox(height: 14),
       
-            EmptyPage().headerCustomMessage(
+            NoContentMessage().headerCustomMessage(
               header: 'Create vent', 
               subheader: 'Share your thoughts, stories and more!'
             ),
@@ -75,7 +75,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
           
           ],
         )
-      : EmptyPage().customMessage(message: 'No vent posted yet.');
+      : NoContentMessage().customMessage(message: 'No vent posted yet.');
   }
 
   Widget _buildListView(ProfilePostsData postsData) {

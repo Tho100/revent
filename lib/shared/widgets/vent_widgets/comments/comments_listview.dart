@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/pages/comment/reply/replies_page.dart';
-import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/widgets/vent_widgets/comments/comment_previewer.dart';
 
@@ -56,7 +56,7 @@ class CommentsListView extends StatelessWidget {
   Widget _buildOnEmpty() {
     return Padding(
       padding: const EdgeInsets.only(top: 35),
-      child: EmptyPage().headerCustomMessage(
+      child: NoContentMessage().headerCustomMessage(
         header: isCommentEnabled 
           ? 'No comment yet' : 'Commenting disabled', 
         subheader: isCommentEnabled 

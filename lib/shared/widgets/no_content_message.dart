@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
-class EmptyPage {
+class NoContentMessage {
 
   Widget customMessage({required String message}) {
     return Center(

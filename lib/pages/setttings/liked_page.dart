@@ -6,7 +6,7 @@ import 'package:revent/app/app_route.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
-import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
@@ -133,7 +133,7 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
   }
 
   Widget _buildOnEmpty() {
-    return EmptyPage().customMessage(
+    return NoContentMessage().customMessage(
       message: 'No liked posts.'
     );
   }

@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/pages/empty_page.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
@@ -63,7 +63,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
   }
 
   Widget _buildEmptyPage() {
-    return EmptyPage().customMessage(
+    return NoContentMessage().customMessage(
       message: 'No blocked accounts.'
     );
   }
