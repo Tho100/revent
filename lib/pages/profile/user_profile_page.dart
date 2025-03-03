@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/user/user_follow_actions.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
@@ -48,11 +47,10 @@ class UserProfilePage extends StatefulWidget {
 
 }
 
-class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProviderStateMixin {
-
-  final profilePostsData = getIt.profilePostsProvider;
-  final profileSavedData = getIt.profileSavedProvider;
-  final navigation = getIt.navigationProvider;
+class _UserProfilePageState extends State<UserProfilePage> with 
+  SingleTickerProviderStateMixin, 
+  ProfilePostsProviderService,
+  NavigationProviderService {
 
   final followersNotifier = ValueNotifier<int>(0);
   final followingNotifier = ValueNotifier<int>(0);
@@ -84,7 +82,9 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
     tabController = TabController(length: 2, vsync: this);
 
-    tabController.addListener(() => _onTabChanged());
+    tabController.addListener(
+      () => _onTabChanged()
+    );
 
     profileInfoWidgets = ProfileInfoWidgets(
       username: widget.username, 
@@ -116,7 +116,7 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     }
 
     setState(() { 
-      navigation.setProfileTabIndex(tabController.index);
+      navigationProvider.setProfileTabIndex(tabController.index);
     });
 
   }
@@ -198,12 +198,12 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
       bioNotifier.value =  getProfileData['bio'];
       pronounsNotifier.value =  getProfileData['pronouns'];
 
-      profilePostsData.userProfile.clear();
-      profileSavedData.userProfile.clear();
+      profilePostsProvider.userProfile.clear();
+      profileSavedProvider.userProfile.clear();
 
       await callProfilePosts.setupPosts();
       
-      postsNotifier.value = profilePostsData.userProfile.titles.length;
+      postsNotifier.value = profilePostsProvider.userProfile.titles.length;
 
       isFollowingNotifier.value = await UserFollowing().isFollowing(username: widget.username);
       
@@ -417,8 +417,8 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
 
   @override
   void dispose() {
-    navigation.setProfileTabIndex(0);
-    navigation.setCurrentRoute(AppRoute.home.path);
+    navigationProvider.setProfileTabIndex(0);
+    navigationProvider.setCurrentRoute(AppRoute.home.path);
     followersNotifier.dispose();
     followingNotifier.dispose();
     postsNotifier.dispose();
@@ -427,8 +427,8 @@ class _UserProfilePageState extends State<UserProfilePage> with SingleTickerProv
     isFollowingNotifier.dispose();
     socialHandlesNotifier.dispose();
     tabController.dispose();
-    profilePostsData.clearPostsData();
-    profileSavedData.clearPostsData();
+    profilePostsProvider.clearPostsData();
+    profileSavedProvider.clearPostsData();
     super.dispose();
   }
 
