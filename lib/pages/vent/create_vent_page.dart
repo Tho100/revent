@@ -219,12 +219,15 @@ class _CreateVentPageState extends State<CreateVentPage> {
             },
           ),
 
-          Text(
-            'Archive',
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w800,
-              fontSize: 12,
+          Transform.translate(
+            offset: const Offset(-5, 0),
+            child: Text(
+              'Archive post',
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontWeight: FontWeight.w800,
+                fontSize: 12.5,
+              ),
             ),
           ),
 
