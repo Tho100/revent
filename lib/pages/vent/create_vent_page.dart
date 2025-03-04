@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/controllers/vent_text_controller.dart';
@@ -241,17 +240,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
         padding: const EdgeInsets.only(left: 8.0, right: 15.0, bottom: 8.0, top: 4.0),
         child: Row(
           children: [
-          
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(CupertinoIcons.link, color: ThemeColor.thirdWhite, size: 22),
-            ),
-          
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(CupertinoIcons.square_list, color: ThemeColor.thirdWhite, size: 24),
-            ),
-
+            
             _buildArchiveVentCheckBox(),
           
             const Spacer(),

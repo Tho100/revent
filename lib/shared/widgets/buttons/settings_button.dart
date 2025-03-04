@@ -40,7 +40,7 @@ class SettingsButton extends StatelessWidget {
 
                       if(icon != null) ... [
 
-                        Icon(icon, color: ThemeColor.white, size: 21),
+                        Icon(icon, color: makeRed == true ? ThemeColor.darkRed: ThemeColor.white, size: 21),
 
                         const SizedBox(width: 14)
 
