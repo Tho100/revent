@@ -156,6 +156,7 @@ class SettingsPage extends StatelessWidget {
 
           SettingsButton(
             text: 'Sign out', 
+            icon: CupertinoIcons.square_arrow_right,
             makeRed: true,
             onPressed: () => _signOutOnPressed()
           ),
