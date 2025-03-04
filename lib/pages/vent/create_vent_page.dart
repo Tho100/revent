@@ -174,17 +174,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
     );
   }
 
-  Widget _buildPostButton() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: SubButton(
-        text: 'Post', 
-        onPressed: () async => _postVentOnPressed(),
-      ),
-    );
-  }
-
-  Widget _buildArchiveVentCheckBox() {
+  Widget _buildArchivePostCheckBox() {
     return CheckboxTheme(
       data: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith(
@@ -219,16 +209,37 @@ class _CreateVentPageState extends State<CreateVentPage> {
             },
           ),
 
-          Text(
-            'Archive',
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w800,
-              fontSize: 12,
+          Transform.translate(
+            offset: const Offset(-5, 0),
+            child: Text(
+              'Archive post',
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontWeight: FontWeight.w800,
+                fontSize: 12.5,
+              ),
             ),
           ),
 
         ],
+      ),
+    );
+  }
+
+  Widget _buildAddTagsButton() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4.0),
+      child: CustomOutlinedButton(
+        customWidth: 75,
+        customHeight: 35,
+        customFontSize: 12,
+        text: '#tags', 
+        onPressed: () {
+          BottomsheetTagsSelection(
+            chipsSelectedNotifier: chipsSelectedNotifier, 
+            chipsTags: chipsTags
+          ).buildBottomsheet(context: context);
+        }
       ),
     );
   }
@@ -241,25 +252,11 @@ class _CreateVentPageState extends State<CreateVentPage> {
         child: Row(
           children: [
             
-            _buildArchiveVentCheckBox(),
+            _buildArchivePostCheckBox(),
           
             const Spacer(),
           
-            Padding(
-              padding: const EdgeInsets.only(bottom: 4.0),
-              child: CustomOutlinedButton(
-                customWidth: 75,
-                customHeight: 35,
-                customFontSize: 12,
-                text: '#tags', 
-                onPressed: () {
-                  BottomsheetTagsSelection(
-                    chipsSelectedNotifier: chipsSelectedNotifier, 
-                    chipsTags: chipsTags
-                  ).buildBottomsheet(context: context);
-                }
-              ),
-            )
+            _buildAddTagsButton()
           
           ],
         ),
@@ -267,6 +264,15 @@ class _CreateVentPageState extends State<CreateVentPage> {
     );
   }
 
+  Widget _buildPostButton() {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SubButton(
+        text: 'Post', 
+        onPressed: () async => _postVentOnPressed(),
+      ),
+    );
+  }
 
   Future<bool> _onClosePage() async {
 
