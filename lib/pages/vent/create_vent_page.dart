@@ -35,8 +35,6 @@ class _CreateVentPageState extends State<CreateVentPage> {
 
   final isArchivedVentNotifier = ValueNotifier<bool>(false);
 
-  final chipsTags = PostTags.tags;
-
   final chipsSelectedNotifier = ValueNotifier<List<bool>>(
     List<bool>.filled(PostTags.tags.length, false)
   );
@@ -237,7 +235,6 @@ class _CreateVentPageState extends State<CreateVentPage> {
         onPressed: () {
           BottomsheetTagsSelection(
             chipsSelectedNotifier: chipsSelectedNotifier, 
-            chipsTags: chipsTags
           ).buildBottomsheet(context: context);
         }
       ),

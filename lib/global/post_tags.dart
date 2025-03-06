@@ -14,4 +14,6 @@ class PostTags {
     'religion',
   ];
 
+  static List<String> selectedTags = [];
+
 }
