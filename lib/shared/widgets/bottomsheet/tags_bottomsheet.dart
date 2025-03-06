@@ -106,28 +106,38 @@ class BottomsheetTagsSelection {
 
                 const SizedBox(width: 6),
 
-                SizedBox(
-                  width: MediaQuery.of(context).size.width * 0.86,
-                  child: TextFormField(
-                    autofocus: true,
-                    maxLines: 1,
-                    controller: customTagsController,
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.secondaryWhite,
-                      fontWeight: FontWeight.w700,
-                    ),
-                    decoration: InputDecoration(
-                      hintText: 'Add tags...',
-                      counterText: '',
-                      border: InputBorder.none,
-                      hintStyle: GoogleFonts.inter(
-                        color: ThemeColor.thirdWhite, 
-                        fontWeight: FontWeight.w700
+                ValueListenableBuilder(
+                  valueListenable: chipsSelectedNotifier,
+                  builder: (_, chipsSelected, __) {
+
+                    customTagsController.text = List.generate(chipsSelected.length, (index) {
+                      return chipsSelected[index] ? chipsTags[index] : null;
+                    }).where((tag) => tag != null).join(' ');
+
+                    return SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.86,
+                      child: TextFormField(
+                        autofocus: true,
+                        maxLines: 1,
+                        controller: customTagsController,
+                        style: GoogleFonts.inter(
+                          color: ThemeColor.secondaryWhite,
+                          fontWeight: FontWeight.w700,
+                        ),
+                        decoration: InputDecoration(
+                          hintText: 'Add tags...',
+                          counterText: '',
+                          border: InputBorder.none,
+                          hintStyle: GoogleFonts.inter(
+                            color: ThemeColor.thirdWhite, 
+                            fontWeight: FontWeight.w700
+                          ),
+                        ),
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (tag) {}
                       ),
-                    ),
-                    textInputAction: TextInputAction.done,
-                    onFieldSubmitted: (tag) {}
-                  ),
+                    );
+                  },
                 ),
 
               ],
