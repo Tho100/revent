@@ -62,6 +62,11 @@ class BottomsheetTagsSelection {
   }
 
   Future buildBottomsheet({required BuildContext context}) {
+
+    customTagsController.text = List.generate(chipsSelectedNotifier.value.length, (index) {
+      return chipsSelectedNotifier.value[index] ? chipsTags[index] : null;
+    }).where((tag) => tag != null).join(' ');
+
     return Bottomsheet().buildBottomSheet(
       context: context, 
       children: [
@@ -109,11 +114,6 @@ class BottomsheetTagsSelection {
                 ValueListenableBuilder(
                   valueListenable: chipsSelectedNotifier,
                   builder: (_, chipsSelected, __) {
-
-                    customTagsController.text = List.generate(chipsSelected.length, (index) {
-                      return chipsSelected[index] ? chipsTags[index] : null;
-                    }).where((tag) => tag != null).join(' ');
-
                     return SizedBox(
                       width: MediaQuery.of(context).size.width * 0.86,
                       child: TextFormField(
@@ -134,7 +134,18 @@ class BottomsheetTagsSelection {
                           ),
                         ),
                         textInputAction: TextInputAction.done,
-                        onFieldSubmitted: (tag) {}
+                        onFieldSubmitted: (tag) {},
+                        onChanged: (tagText) {
+
+                          final currentTags = tagText.split(' ').where(
+                            (tag) => tag.isNotEmpty
+                          ).toList();
+
+                          chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
+                            return currentTags.contains(chipsTags[index]);
+                          });
+
+                        },
                       ),
                     );
                   },
@@ -169,6 +180,7 @@ class BottomsheetTagsSelection {
 
       ]
     );
+    
   }
 
 }
