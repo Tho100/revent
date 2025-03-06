@@ -31,8 +31,21 @@ class BottomsheetTagsSelection {
           ),
           selected: chipSelected[index],
           onSelected: (bool selected) {
+
             chipsSelectedNotifier.value[index] = selected;
             chipsSelectedNotifier.value = List.from(chipSelected);
+
+            if (selected) {
+              customTagsController.text = '${customTagsController.text} $label'.trim();
+
+            } else {
+              final tags = customTagsController.text.split(' ');
+
+              tags.remove(label);
+              customTagsController.text = tags.join(' ').trim();
+
+            }
+
           },
           selectedColor: ThemeColor.white,
           backgroundColor: ThemeColor.mediumBlack,
