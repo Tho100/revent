@@ -15,6 +15,7 @@ class BottomsheetTagsSelection {
   final customTagsController = TextEditingController();
 
   final chipsTags = PostTags.tags;
+  final selectedTags = PostTags.selectedTags;
 
   Widget _buildChip(String label, int index) {
     return ValueListenableBuilder(
@@ -36,12 +37,17 @@ class BottomsheetTagsSelection {
             chipsSelectedNotifier.value = List.from(chipSelected);
 
             if (selected) {
+
               customTagsController.text = '${customTagsController.text} $label'.trim();
+              selectedTags.add(label);
 
             } else {
+              
               final tags = customTagsController.text.split(' ');
 
               tags.remove(label);
+              selectedTags.remove(label);
+
               customTagsController.text = tags.join(' ').trim();
 
             }
@@ -63,9 +69,7 @@ class BottomsheetTagsSelection {
 
   Future buildBottomsheet({required BuildContext context}) {
 
-    customTagsController.text = List.generate(chipsSelectedNotifier.value.length, (index) {
-      return chipsSelectedNotifier.value[index] ? chipsTags[index] : null;
-    }).where((tag) => tag != null).join(' ');
+    customTagsController.text = selectedTags.join(' ');
 
     return Bottomsheet().buildBottomSheet(
       context: context, 
@@ -137,9 +141,13 @@ class BottomsheetTagsSelection {
                         onFieldSubmitted: (tag) {},
                         onChanged: (tagText) {
 
-                          final currentTags = tagText.split(' ').where(
+                          final currentTags = tagText.trim().split(' ').where(
                             (tag) => tag.isNotEmpty
                           ).toList();
+
+                          selectedTags
+                            ..clear()
+                            ..addAll(currentTags);
 
                           chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
                             return currentTags.contains(chipsTags[index]);
@@ -180,7 +188,7 @@ class BottomsheetTagsSelection {
 
       ]
     );
-    
+
   }
 
 }
