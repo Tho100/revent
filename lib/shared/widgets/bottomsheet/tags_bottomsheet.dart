@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/post_tags.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
@@ -8,14 +9,12 @@ import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomshee
 class BottomsheetTagsSelection {
  
   final ValueNotifier<List<bool>> chipsSelectedNotifier;
-  final List<String> chipsTags;
 
-  BottomsheetTagsSelection({
-    required this.chipsSelectedNotifier,
-    required this.chipsTags
-  });
+  BottomsheetTagsSelection({required this.chipsSelectedNotifier});
 
   final customTagsController = TextEditingController();
+
+  final chipsTags = PostTags.tags;
 
   Widget _buildChip(String label, int index) {
     return ValueListenableBuilder(
