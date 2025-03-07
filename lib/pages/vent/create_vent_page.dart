@@ -89,7 +89,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
     required String bodyText
   }) async {
 
-    final loading = SpinnerLoading();
+    final loading = SpinnerLoading(); // TODO: Put this on top of class
 
     if(context.mounted) {
       loading.startLoading(context: context);
@@ -130,6 +130,8 @@ class _CreateVentPageState extends State<CreateVentPage> {
       ventTitle: title, 
       ventBodyText: bodyText
     ).then((_) {
+
+      PostTags.selectedTags.clear();
 
       loading.stopLoading();
 
