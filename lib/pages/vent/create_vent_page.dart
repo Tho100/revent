@@ -33,6 +33,8 @@ class _CreateVentPageState extends State<CreateVentPage> {
   final textController = VentTextController(); 
   final postTextFields = PostTextField();
 
+  final loading = SpinnerLoading();
+
   final isArchivedVentNotifier = ValueNotifier<bool>(false);
 
   final chipsSelectedNotifier = ValueNotifier<List<bool>>(
@@ -89,8 +91,6 @@ class _CreateVentPageState extends State<CreateVentPage> {
     required String bodyText
   }) async {
 
-    final loading = SpinnerLoading(); // TODO: Put this on top of class
-
     if(context.mounted) {
       loading.startLoading(context: context);
     }
@@ -119,8 +119,6 @@ class _CreateVentPageState extends State<CreateVentPage> {
     required String title,
     required String bodyText
   }) async {
-
-    final loading = SpinnerLoading();
 
     if(context.mounted) {
       loading.startLoading(context: context);
