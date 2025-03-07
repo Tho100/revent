@@ -36,21 +36,27 @@ class BottomsheetTagsSelection {
             chipsSelectedNotifier.value[index] = selected;
             chipsSelectedNotifier.value = List.from(chipSelected);
 
+            final tags = customTagsController.text.split(' ').where((tag) => tag.isNotEmpty).toList();
+
             if (selected) {
 
-              customTagsController.text = '${customTagsController.text} $label'.trim();
-              selectedTags.add(label);
+              if (tags.length >= 3) {
+                chipsSelectedNotifier.value[2] = false;
+                tags.removeAt(2);
+              }
+              
+              tags.add(label);
 
             } else {
-              
-              final tags = customTagsController.text.split(' ');
-
               tags.remove(label);
-              selectedTags.remove(label);
-
-              customTagsController.text = tags.join(' ').trim();
 
             }
+
+            customTagsController.text = tags.join(' ');
+
+            selectedTags
+              ..clear()
+              ..addAll(tags);
 
           },
           selectedColor: ThemeColor.white,
@@ -141,17 +147,32 @@ class BottomsheetTagsSelection {
                         onFieldSubmitted: (tag) {},
                         onChanged: (tagText) {
 
-                          final currentTags = tagText.trim().split(' ').where(
-                            (tag) => tag.isNotEmpty
-                          ).toList();
+                          final spacesCount = tagText.split(' ').length - 1;
 
-                          selectedTags
-                            ..clear()
-                            ..addAll(currentTags);
+                          if (spacesCount > 2) {
 
-                          chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
-                            return currentTags.contains(chipsTags[index]);
-                          });
+                            final validText = tagText.split(' ').take(3).join(' ');
+
+                            customTagsController.value = TextEditingValue(
+                              text: validText,
+                              selection: TextSelection.collapsed(offset: validText.length),
+                            );
+
+                          } else {
+
+                            final currentTags = tagText.trim().split(' ').where(
+                              (tag) => tag.isNotEmpty
+                            ).toList();
+
+                            selectedTags
+                              ..clear()
+                              ..addAll(currentTags);
+
+                            chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
+                              return currentTags.contains(chipsTags[index]);
+                            });
+
+                          }
 
                         },
                       ),
