@@ -19,7 +19,8 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
       return;
     } 
 
-    const query = 'INSERT INTO user_social_links VALUES (:social_handle, :platform, :username)';
+    const query = 
+      'INSERT INTO user_social_links (social_handle, platform, username) VALUES (:social_handle, :platform, :username)';
 
     final params = {
       'social_handle': handle,
