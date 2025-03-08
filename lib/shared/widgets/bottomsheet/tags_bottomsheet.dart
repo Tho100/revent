@@ -54,9 +54,7 @@ class BottomsheetTagsSelection with TagsProviderService {
 
             customTagsController.text = tags.join(' ');
 
-            tagsProvider.selectedTags
-              ..clear()
-              ..addAll(tags);
+            tagsProvider.addTags(tags);
 
           },
           selectedColor: ThemeColor.white,
@@ -164,9 +162,7 @@ class BottomsheetTagsSelection with TagsProviderService {
                               (tag) => tag.isNotEmpty
                             ).toList();
 
-                            tagsProvider.selectedTags
-                              ..clear()
-                              ..addAll(currentTags);
+                            tagsProvider.addTags(currentTags);
 
                             chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
                               return currentTags.contains(chipsTags[index]);

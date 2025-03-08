@@ -6,13 +6,8 @@ class TagsProvider extends ChangeNotifier {
 
   List<String> get selectedTags => _selectedTags;
 
-  void addItem(String item) {
-    _selectedTags.add(item);
-    notifyListeners();
-  }
-
-  void removeItem(int index) {
-    _selectedTags.removeAt(index);
+  void addTags(List<String> tags) {
+    selectedTags..clear()..addAll(tags);
     notifyListeners();
   }
 
