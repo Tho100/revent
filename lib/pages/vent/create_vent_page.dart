@@ -153,8 +153,6 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
-          const SizedBox(height: 4),
         
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 12.0),
@@ -187,14 +185,18 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
         final tags = tagsProvider.selectedTags.map((tag) => "#$tag").join(' ');
         
-        return Padding(
-          padding: const EdgeInsets.only(left: 17.0, top: 3.0, bottom: 8.0),
-          child: Text(
-            tags,
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w700,
-              fontSize: 14
+        return Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 17.0, top: 2.0, bottom: 10.0),
+            child: Text(
+              tags,
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontWeight: FontWeight.w700,
+                fontSize: 14
+              ),
+              textAlign: TextAlign.left
             ),
           ),
         );
