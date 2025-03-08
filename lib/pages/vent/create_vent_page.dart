@@ -5,6 +5,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/shared/widgets/bottomsheet/tags_bottomsheet.dart';
@@ -28,7 +29,7 @@ class CreateVentPage extends StatefulWidget {
 
 }
 
-class _CreateVentPageState extends State<CreateVentPage> {
+class _CreateVentPageState extends State<CreateVentPage> with TagsProviderService {
 
   final textController = VentTextController(); 
   final postTextFields = PostTextField();
@@ -129,7 +130,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
       ventBodyText: bodyText
     ).then((_) {
 
-      PostTags.selectedTags.clear();
+      tagsProvider.selectedTags.clear();
 
       loading.stopLoading();
 
