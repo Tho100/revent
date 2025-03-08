@@ -188,7 +188,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         final tags = tagsProvider.selectedTags.map((tag) => "#$tag").join(' ');
         
         return Padding(
-          padding: const EdgeInsets.only(left: 17.0, top: 4.0, bottom: 8.0),
+          padding: const EdgeInsets.only(left: 17.0, top: 3.0, bottom: 8.0),
           child: Text(
             tags,
             style: GoogleFonts.inter(
