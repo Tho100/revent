@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:revent/controllers/vent_text_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/post_tags.dart';
@@ -8,6 +9,7 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
+import 'package:revent/shared/provider/vent/tags_provider.dart';
 import 'package:revent/shared/widgets/bottomsheet/tags_bottomsheet.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
@@ -158,6 +160,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
             padding: const EdgeInsets.only(left: 16.0, right: 12.0),
             child: postTextFields.buildTitleField(titleController: textController.titleController),
           ),   
+
+          _buildSelectedTags(),
         
           const SizedBox(height: 4),
 
@@ -170,6 +174,32 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
             
         ],
       ),
+    );
+  }
+
+  Widget _buildSelectedTags() {
+    return Consumer<TagsProvider>(
+      builder: (_, tagsProvider, __) {
+
+        if(tagsProvider.selectedTags.isEmpty) {
+          return const SizedBox.shrink();
+        }
+
+        final tags = tagsProvider.selectedTags.map((tag) => "#$tag").join(' ');
+        
+        return Padding(
+          padding: const EdgeInsets.only(left: 17.0, top: 4.0, bottom: 8.0),
+          child: Text(
+            tags,
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w700,
+              fontSize: 14
+            ),
+          ),
+        );
+
+      }
     );
   }
 

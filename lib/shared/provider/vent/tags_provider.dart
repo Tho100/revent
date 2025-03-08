@@ -2,17 +2,17 @@ import 'package:flutter/material.dart';
 
 class TagsProvider extends ChangeNotifier {
   
-  final List<String> _tags = [];
+  final List<String> _selectedTags = [];
 
-  List<String> get selectedTags => _tags;
+  List<String> get selectedTags => _selectedTags;
 
   void addItem(String item) {
-    _tags.add(item);
+    _selectedTags.add(item);
     notifyListeners();
   }
 
   void removeItem(int index) {
-    _tags.removeAt(index);
+    _selectedTags.removeAt(index);
     notifyListeners();
   }
 
