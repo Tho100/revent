@@ -1,4 +1,3 @@
-import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
@@ -6,7 +5,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 
-class CreateNewItem extends BaseQueryService with UserProfileProviderService {
+class CreateNewItem extends BaseQueryService with UserProfileProviderService, TagsProviderService {
 
   Future<void> newVent({
     required String ventTitle,
@@ -34,7 +33,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
     const insertVentInfoQuery = 
       'INSERT INTO vent_info (creator, title, body_text, total_likes, total_comments, tags) VALUES (:creator, :title, :body_text, :total_likes, :total_comments, :tags)';
 
-    final tags = PostTags.selectedTags.isEmpty ? null : PostTags.selectedTags.join(' ');
+    final tags = tagsProvider.selectedTags.isEmpty ? null : tagsProvider.selectedTags.join(' ');
 
     final params = {
       'creator': userProvider.user.username,

@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:revent/controllers/vent_text_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
+import 'package:revent/shared/provider/vent/tags_provider.dart';
 import 'package:revent/shared/widgets/bottomsheet/tags_bottomsheet.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
@@ -28,7 +31,7 @@ class CreateVentPage extends StatefulWidget {
 
 }
 
-class _CreateVentPageState extends State<CreateVentPage> {
+class _CreateVentPageState extends State<CreateVentPage> with TagsProviderService {
 
   final textController = VentTextController(); 
   final postTextFields = PostTextField();
@@ -129,7 +132,7 @@ class _CreateVentPageState extends State<CreateVentPage> {
       ventBodyText: bodyText
     ).then((_) {
 
-      PostTags.selectedTags.clear();
+      tagsProvider.selectedTags.clear();
 
       loading.stopLoading();
 
@@ -150,13 +153,13 @@ class _CreateVentPageState extends State<CreateVentPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-
-          const SizedBox(height: 4),
         
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 12.0),
             child: postTextFields.buildTitleField(titleController: textController.titleController),
           ),   
+
+          _buildSelectedTags(),
         
           const SizedBox(height: 4),
 
@@ -169,6 +172,36 @@ class _CreateVentPageState extends State<CreateVentPage> {
             
         ],
       ),
+    );
+  }
+
+  Widget _buildSelectedTags() {
+    return Consumer<TagsProvider>(
+      builder: (_, tagsProvider, __) {
+
+        if(tagsProvider.selectedTags.isEmpty) {
+          return const SizedBox.shrink();
+        }
+
+        final tags = tagsProvider.selectedTags.map((tag) => "#$tag").join(' ');
+        
+        return Align(
+          alignment: Alignment.centerLeft,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 17.0, top: 2.0, bottom: 10.0),
+            child: Text(
+              tags,
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontWeight: FontWeight.w700,
+                fontSize: 14
+              ),
+              textAlign: TextAlign.left
+            ),
+          ),
+        );
+
+      }
     );
   }
 
