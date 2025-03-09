@@ -132,8 +132,6 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       ventBodyText: bodyText
     ).then((_) {
 
-      tagsProvider.selectedTags.clear();
-
       loading.stopLoading();
 
       SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
@@ -320,6 +318,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
   void dispose() {
     textController.dispose();
     isArchivedVentNotifier.dispose();
+    tagsProvider.selectedTags.clear();
     super.dispose();
   }
 
