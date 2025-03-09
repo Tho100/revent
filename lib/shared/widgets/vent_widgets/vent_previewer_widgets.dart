@@ -279,17 +279,17 @@ class VentPreviewerWidgets {
         fontSize: 13
       ),
       overflow: TextOverflow.ellipsis,
-      maxLines: 4
+      maxLines: 3
     );
   }
 
   Widget buildTags() {
     return Text(
-      tags!,
+      tags!.split(" ").map((tags) => "#$tags").join(" "),
       style: GoogleFonts.inter(
         color: ThemeColor.thirdWhite,
         fontWeight: FontWeight.w700,
-        fontSize: 7
+        fontSize: 13
       ),
     );
   }

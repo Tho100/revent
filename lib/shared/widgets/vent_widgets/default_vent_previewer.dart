@@ -209,15 +209,15 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
         if(widget.tags.isNotEmpty) ... [
 
-          const SizedBox(height: 2),
+          const SizedBox(height: 6),
 
           ventPreviewer.buildTags(),
           
-          const SizedBox(height: 6),
+          const SizedBox(height: 2),
 
         ],
   
-        const SizedBox(height: 12), // TODO: Try to decrease this value if body text is empty
+        const SizedBox(height: 12),
   
         ventPreviewer.buildBodyText(),
   

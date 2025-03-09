@@ -9,8 +9,6 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getVentsData() async {
 
-    print("IN");
-
     const query = '''
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments
@@ -152,15 +150,10 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
     {Map<String, dynamic>? params, bool excludeBodyText = false}
   ) async {
 
-    print("in 2");
-
     final results = params != null 
       ? await executeQuery(query, params)
       : await executeQuery(query);
 
-    print("in 3");
-
-    // Check if tags load or not, TCP has reached its limit
     final extractedData = ExtractData(rowsData: results);
 
     final postIds = extractedData.extractIntColumn('post_id'); 
@@ -172,8 +165,6 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
       : extractedData.extractStringColumn('body_text');
 
     final tags = extractedData.extractStringColumn('tags'); // TODO: Convert to empty string instead of null
-
-    print("LENGHT: ${tags.length}");
 
     final totalLikes = extractedData.extractIntColumn('total_likes');
     final totalComments = extractedData.extractIntColumn('total_comments');
