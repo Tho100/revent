@@ -115,6 +115,7 @@ class ProfileSavedProvider extends ChangeNotifier {
       if (index >= 0 && index < profile.titles.length) {
         profile.titles.removeAt(index);
         profile.bodyText.removeAt(index);
+        profile.tags.removeAt(index);
         profile.totalLikes.removeAt(index);
         profile.totalComments.removeAt(index);
         profile.postTimestamp.removeAt(index);

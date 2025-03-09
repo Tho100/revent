@@ -19,6 +19,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
         vi.post_id,
         vi.title,
         vi.creator,
+        vi.tags,
         vi.body_text,
         vi.total_likes,
         vi.total_comments,
@@ -46,6 +47,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     final titles = extractData.extractStringColumn('title');
     final creator = extractData.extractStringColumn('creator');
     final bodyText = extractData.extractStringColumn('body_text');
+    final tags = extractData.extractStringColumn('tags');
 
     final totalComments = extractData.extractIntColumn('total_comments');
     final totalLikes = extractData.extractIntColumn('total_likes');
@@ -74,12 +76,13 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
       'creator': creator,
       'title': titles,
       'body_text': bodyText,
+      'tags': tags,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'post_timestamp': postTimestamp,
       'profile_picture': profilePicture,
       'is_liked': isLikedState,
-      'is_saved': isSavedState,
+      'is_saved': isSavedState
     };
 
   }

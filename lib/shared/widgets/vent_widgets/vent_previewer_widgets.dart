@@ -285,7 +285,7 @@ class VentPreviewerWidgets {
 
   Widget buildTags() {
     return Text(
-      tags!.split(" ").map((tags) => "#$tags").join(" "),
+      tags!.split(' ').map((tags) => '#$tags').join(' '),
       style: GoogleFonts.inter(
         color: ThemeColor.thirdWhite,
         fontWeight: FontWeight.w700,
