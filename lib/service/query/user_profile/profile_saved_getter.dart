@@ -65,7 +65,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     );
 
     final isSavedState = isMyProfile 
-      ? List.generate(titles.length, (_) => true) 
+      ? List.filled(titles.length, true) 
       : await _ventPostLikeState(
         postIds: postIds, stateType: 'saved'
       );

@@ -161,7 +161,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
     final creator = extractedData.extractStringColumn('creator');
 
     final bodyText = excludeBodyText
-      ? List<String>.generate(title.length, (_) => '') // TODO: Try to optimize the length check
+      ? List.filled(title.length, '') // TODO: Try to optimize the length check
       : extractedData.extractStringColumn('body_text');
 
     final tags = extractedData.extractStringColumn('tags'); // TODO: Convert to empty string instead of null
