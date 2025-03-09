@@ -19,6 +19,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     final creator = ventsInfo['creator']! as List<String>;
     final postTimestamp = ventsInfo['post_timestamp']! as List<String>;
     final totalLikes = ventsInfo['total_likes']! as List<int>;
+    final tags = ventsInfo['tags']! as List<String>;
     final totalComments = ventsInfo['total_comments']! as List<int>;
     final isLiked = ventsInfo['is_liked']! as List<bool>;
     final isSaved = ventsInfo['is_saved']! as List<bool>;
@@ -34,6 +35,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       'body_text': bodyText,
       'creator': creator,
       'post_timestamp': postTimestamp,
+      'tags': tags,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'is_liked': isLiked,
@@ -50,6 +52,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       String bodyText,
       String creator,
       String postTimestamp,
+      String tags,
       Uint8List profilePic,
       int totalLikes,
       int totalComments,
@@ -63,6 +66,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     final bodyText = ventsData['body_text'];
     final creator = ventsData['creator'];
     final postTimestamp = ventsData['post_timestamp'];
+    final tags = ventsData['tags'];
     final profilePic = ventsData['pfp'];
     final totalLikes = ventsData['total_likes'];
     final totalComments = ventsData['total_comments'];
@@ -75,6 +79,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         bodyText[index],
         creator[index],
         postTimestamp[index],
+        tags[index],
         profilePic[index],
         totalLikes[index],
         totalComments[index],
@@ -93,6 +98,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       String bodyText,
       String creator,
       String postTimestamp,
+      String tags,
       Uint8List profilePic,
       int totalLikes,
       int totalComments,
@@ -114,12 +120,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<VentForYouData>(
       dataGetter: () => VentDataGetter().getVentsData(),
       setVents: forYouVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, 
+      ventBuilder: (title, bodyText, creator, postTimestamp, tags, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentForYouData(
         title: title,
         bodyText: bodyText,
         creator: creator,
         postTimestamp: postTimestamp,
+        tags: tags,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -133,12 +140,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<VentTrendingData>(
       dataGetter: () => VentDataGetter().getTrendingVentsData(),
       setVents: trendingVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, 
+      ventBuilder: (title, bodyText, creator, postTimestamp, tags,
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentTrendingData(
         title: title,
         bodyText: bodyText,
         creator: creator,
         postTimestamp: postTimestamp,
+        tags: tags,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -152,12 +160,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<VentFollowingData>(
       dataGetter: () => VentDataGetter().getFollowingVentsData(),
       setVents: followingVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, 
+      ventBuilder: (title, bodyText, creator, postTimestamp, tags,
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentFollowingData(
         title: title,
         bodyText: bodyText,
         creator: creator,
         postTimestamp: postTimestamp,
+        tags: tags,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -173,11 +182,12 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         searchTitleText: searchText,
       ),
       setVents: searchPostsProvider.setVents,
-      ventBuilder: (title, _, creator, postTimestamp, 
+      ventBuilder: (title, _, creator, postTimestamp, tags,
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SearchVents(
         title: title,
         creator: creator,
         postTimestamp: postTimestamp,
+        tags: tags,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -191,12 +201,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<LikedVentData>(
       dataGetter: () => VentDataGetter().getLikedVentsData(),
       setVents: likedVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, 
+      ventBuilder: (title, bodyText, creator, postTimestamp, tags, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => LikedVentData(
         title: title,
         bodyText: bodyText,
         creator: creator,
         postTimestamp: postTimestamp,
+        tags: tags,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -210,12 +221,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<SavedVentData>(
       dataGetter: () => VentDataGetter().getSavedVentsData(),
       setVents: savedVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, 
+      ventBuilder: (title, bodyText, creator, postTimestamp, tags,
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SavedVentData(
         title: title,
         bodyText: bodyText,
         creator: creator,
         postTimestamp: postTimestamp,
+        tags: tags,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,

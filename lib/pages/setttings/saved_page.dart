@@ -49,6 +49,7 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
         bodyText: vents.bodyText,
         creator: vents.creator, 
         postTimestamp: vents.postTimestamp, 
+        tags: vents.tags,
         totalLikes: vents.totalLikes, 
         totalComments: vents.totalComments, 
         pfpData: vents.profilePic,

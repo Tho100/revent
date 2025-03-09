@@ -11,7 +11,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
     const query = 
     '''
-      SELECT post_id, title, body_text, total_likes, total_comments, created_at 
+      SELECT post_id, title, body_text, tags, created_at, total_likes, total_comments 
       FROM vent_info 
       WHERE creator = :username
     ''';
@@ -25,6 +25,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     final postIds = extractData.extractIntColumn('post_id');
     final title = extractData.extractStringColumn('title');
     final bodyText = extractData.extractStringColumn('body_text');
+    final tags = extractData.extractStringColumn('tags');
 
     final totalLikes = extractData.extractIntColumn('total_likes');
     final totalComments = extractData.extractIntColumn('total_comments');
@@ -45,11 +46,12 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     return {
       'title': title,
       'body_text': bodyText,
+      'tags': tags,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'post_timestamp': postTimestamp,
       'is_liked': isLikedState,
-      'is_saved': isSavedState,
+      'is_saved': isSavedState
     };
 
   }

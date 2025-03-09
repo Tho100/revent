@@ -18,6 +18,7 @@ class ProfileSavedData {
   List<int> totalComments = [];
 
   List<String> postTimestamp = [];
+  List<String> tags = [];
 
   List<bool> isPostLiked = [];
   List<bool> isPostSaved = [];
@@ -30,6 +31,7 @@ class ProfileSavedData {
     totalLikes.clear();
     totalComments.clear();
     postTimestamp.clear();
+    tags.clear();
     isPostLiked.clear();
     isPostSaved.clear();
   } 
@@ -81,6 +83,11 @@ class ProfileSavedProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setTags(String profileKey, List<String> tags) {
+    _profileData[profileKey]?.tags = tags;
+    notifyListeners();
+  }
+
   void setIsPostLiked(String profileKey, List<bool> isPostLiked) {
     _profileData[profileKey]?.isPostLiked = isPostLiked;
     notifyListeners(); 
@@ -108,6 +115,7 @@ class ProfileSavedProvider extends ChangeNotifier {
       if (index >= 0 && index < profile.titles.length) {
         profile.titles.removeAt(index);
         profile.bodyText.removeAt(index);
+        profile.tags.removeAt(index);
         profile.totalLikes.removeAt(index);
         profile.totalComments.removeAt(index);
         profile.postTimestamp.removeAt(index);

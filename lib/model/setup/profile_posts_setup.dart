@@ -29,6 +29,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
       final title = getPostsData['title'] as List<String>;
       final bodyText = getPostsData['body_text'] as List<String>;
+      final tags = getPostsData['tags'] as List<String>;
 
       final totalLikes = getPostsData['total_likes'] as List<int>;
       final totalComments = getPostsData['total_comments'] as List<int>;
@@ -40,6 +41,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
       profilePostsProvider.setTitles(profileType, title);
       profilePostsProvider.setBodyText(profileType, bodyText);
+      profilePostsProvider.setTags(profileType, tags);
       profilePostsProvider.setTotalLikes(profileType, totalLikes);
       profilePostsProvider.setTotalComments(profileType, totalComments);
       profilePostsProvider.setPostTimestamp(profileType, postTimestamp);
@@ -68,6 +70,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
       final title = getPostsData['title'] as List<String>;
       final bodyText = getPostsData['body_text'] as List<String>;
+      final tags = getPostsData['tags'] as List<String>;
 
       final totalLikes = getPostsData['total_likes'] as List<int>;
       final totalComments = getPostsData['total_comments'] as List<int>;
@@ -82,6 +85,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
       profileSavedProvider.setTitles(profileType, title);
       profileSavedProvider.setBodyText(profileType, bodyText);
+      profileSavedProvider.setTags(profileType, tags);
       profileSavedProvider.setTotalLikes(profileType, totalLikes);
       profileSavedProvider.setTotalComments(profileType, totalComments);
       profileSavedProvider.setPostTimestamp(profileType, postTimestamp);

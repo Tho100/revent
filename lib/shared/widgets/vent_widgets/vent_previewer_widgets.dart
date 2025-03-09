@@ -23,6 +23,7 @@ class VentPreviewerWidgets {
   final String? bodyText;
   final String? creator;
   final String? postTimestamp;
+  final String? tags;
   final int? totalLikes;
   final int? totalComments;
   final Uint8List? pfpData;
@@ -41,6 +42,7 @@ class VentPreviewerWidgets {
     this.bodyText,
     this.creator,
     this.postTimestamp,
+    this.tags,
     this.totalLikes,
     this.totalComments,
     this.pfpData,
@@ -277,7 +279,18 @@ class VentPreviewerWidgets {
         fontSize: 13
       ),
       overflow: TextOverflow.ellipsis,
-      maxLines: 4
+      maxLines: 3
+    );
+  }
+
+  Widget buildTags() {
+    return Text(
+      tags!.split(' ').map((tags) => '#$tags').join(' '),
+      style: GoogleFonts.inter(
+        color: ThemeColor.thirdWhite,
+        fontWeight: FontWeight.w700,
+        fontSize: 13
+      ),
     );
   }
 
