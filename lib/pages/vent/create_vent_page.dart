@@ -51,6 +51,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     final ventTitle = textController.titleController.text;
     final ventBodyText = textController.bodyTextController.text;
 
+    final tags = tagsProvider.selectedTags.isEmpty ? '' : tagsProvider.selectedTags.join(' ');
+
     if(ventTitle.isEmpty) {
       CustomAlertDialog.alertDialog('Please enter post title');
       return;
@@ -79,7 +81,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         return;
       }
 
-      await _createVent(title: ventTitle, bodyText: ventBodyText);
+      await _createVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
 
       isPostPressed = true;
         
@@ -120,19 +122,18 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<void> _createVent({
     required String title,
-    required String bodyText
+    required String bodyText,
+    required String tags
   }) async {
 
     if(context.mounted) {
       loading.startLoading(context: context);
     }
 
-    final tags = tagsProvider.selectedTags.isEmpty ? null : tagsProvider.selectedTags.join(' ');
-
     await CreateNewItem().newVent(
       ventTitle: title, 
       ventBodyText: bodyText,
-      ventTags: tags!
+      ventTags: tags
     ).then((_) {
 
       loading.stopLoading();
