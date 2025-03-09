@@ -36,6 +36,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
         totalLikes: savedData.totalLikes[index],
         totalComments: savedData.totalComments[index],
         postTimestamp: savedData.postTimestamp[index],
+        tags: savedData.tags[index],
         creator: savedData.creator[index],
         pfpData: savedData.pfpData[index],
       ),

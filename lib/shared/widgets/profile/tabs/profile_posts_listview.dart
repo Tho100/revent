@@ -43,6 +43,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
         totalComments: postsData.totalComments[index],
         bodyText: postsData.bodyText[index],
         postTimestamp: postsData.postTimestamp[index],
+        tags: postsData.tags[index],
         creator: widget.username,
         pfpData: widget.pfpData,
       ),

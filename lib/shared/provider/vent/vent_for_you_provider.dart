@@ -8,6 +8,7 @@ class VentForYouData {
   String bodyText;
   String creator;
   String postTimestamp;
+  String tags;
 
   Uint8List profilePic;
 
@@ -22,6 +23,7 @@ class VentForYouData {
     required this.bodyText,
     required this.creator,
     required this.postTimestamp,
+    required this.tags,
     required this.profilePic,
     this.totalLikes = 0,
     this.totalComments = 0,

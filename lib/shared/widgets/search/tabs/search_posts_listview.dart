@@ -35,6 +35,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
         bodyText: '',
         creator: ventData.creator,
         postTimestamp: ventData.postTimestamp,
+        tags: ventData.tags,
         totalLikes: ventData.totalLikes,
         totalComments: ventData.totalComments,
         pfpData: ventData.profilePic,

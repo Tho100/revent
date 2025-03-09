@@ -127,9 +127,12 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       loading.startLoading(context: context);
     }
 
+    final tags = tagsProvider.selectedTags.isEmpty ? null : tagsProvider.selectedTags.join(' ');
+
     await CreateNewItem().newVent(
       ventTitle: title, 
-      ventBodyText: bodyText
+      ventBodyText: bodyText,
+      ventTags: tags!
     ).then((_) {
 
       loading.stopLoading();

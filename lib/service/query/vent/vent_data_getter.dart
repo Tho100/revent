@@ -9,9 +9,11 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getVentsData() async {
 
+    print("IN");
+
     const query = '''
       SELECT 
-        post_id, title, body_text, creator, created_at, total_likes, total_comments 
+        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments
       FROM vent_info vi
       LEFT JOIN user_blocked_info ubi
         ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
@@ -28,7 +30,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
     const query = '''
       SELECT 
-        post_id, title, body_text, creator, created_at, total_likes, total_comments 
+        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments 
       FROM vent_info vi
       LEFT JOIN user_blocked_info ubi
         ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
@@ -46,7 +48,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
     const query = '''
       SELECT 
-        vi.post_id, vi.title, vi.body_text, vi.creator, vi.created_at, vi.total_likes, vi.total_comments
+        vi.post_id, vi.title, vi.body_text, vi.creator, vi.created_at, vi.tags, vi.total_likes, vi.total_comments
       FROM vent_info vi
       INNER JOIN user_follows_info ufi 
           ON ufi.following = vi.creator
@@ -65,7 +67,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
     const query = '''
       SELECT 
-        post_id, title, creator, created_at, total_likes, total_comments 
+        post_id, title, creator, created_at, tags, total_likes, total_comments 
       FROM vent_info vi
       LEFT JOIN user_blocked_info ubi
         ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
@@ -94,6 +96,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
         vi.total_likes,
         vi.total_comments,
         vi.created_at,
+        vi.tags, 
         upi.profile_picture
       FROM 
         liked_vent_info lvi
@@ -124,6 +127,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
         vi.total_likes,
         vi.total_comments,
         vi.created_at,
+        vi.tags, 
         upi.profile_picture
       FROM 
         saved_vent_info svi
@@ -148,19 +152,28 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
     {Map<String, dynamic>? params, bool excludeBodyText = false}
   ) async {
 
+    print("in 2");
+
     final results = params != null 
       ? await executeQuery(query, params)
       : await executeQuery(query);
 
+    print("in 3");
+
+    // Check if tags load or not, TCP has reached its limit
     final extractedData = ExtractData(rowsData: results);
 
-    final postIds = extractedData.extractIntColumn('post_id');
+    final postIds = extractedData.extractIntColumn('post_id'); 
     final title = extractedData.extractStringColumn('title');
     final creator = extractedData.extractStringColumn('creator');
 
     final bodyText = excludeBodyText
-      ? List<String>.generate(title.length, (_) => '')
+      ? List<String>.generate(title.length, (_) => '') // TODO: Try to optimize the length check
       : extractedData.extractStringColumn('body_text');
+
+    final tags = extractedData.extractStringColumn('tags'); // TODO: Convert to empty string instead of null
+
+    print("LENGHT: ${tags.length}");
 
     final totalLikes = extractedData.extractIntColumn('total_likes');
     final totalComments = extractedData.extractIntColumn('total_comments');
@@ -183,10 +196,11 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
       'body_text': bodyText,
       'creator': creator,
       'post_timestamp': postTimestamp,
+      'tags': tags,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'is_liked': isLikedState,
-      'is_saved': isSavedState,
+      'is_saved': isSavedState
     };
 
   }

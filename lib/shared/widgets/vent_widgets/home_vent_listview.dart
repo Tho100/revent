@@ -37,6 +37,7 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
         bodyText: ventData.bodyText,
         creator: ventData.creator,
         postTimestamp: ventData.postTimestamp,
+        tags: ventData.tags,
         totalLikes: ventData.totalLikes,
         totalComments: ventData.totalComments,
         pfpData: ventData.profilePic,

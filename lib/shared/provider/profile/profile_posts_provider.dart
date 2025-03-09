@@ -13,6 +13,7 @@ class ProfilePostsData {
   List<int> totalComments = [];
 
   List<String> postTimestamp = [];
+  List<String> tags = [];
 
   List<bool> isPostLiked = [];
   List<bool> isPostSaved = [];
@@ -23,6 +24,7 @@ class ProfilePostsData {
     totalLikes.clear();
     totalComments.clear();
     postTimestamp.clear();
+    tags.clear();
     isPostLiked.clear();
     isPostSaved.clear();
   } 
@@ -61,6 +63,11 @@ class ProfilePostsProvider extends ChangeNotifier {
 
   void setPostTimestamp(String profileKey, List<String> postTimestamp) {
     _profileData[profileKey]?.postTimestamp = postTimestamp;
+    notifyListeners();
+  }
+
+  void setTags(String profileKey, List<String> tags) {
+    _profileData[profileKey]?.tags = tags;
     notifyListeners();
   }
 

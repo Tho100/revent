@@ -10,16 +10,18 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
   Future<void> newVent({
     required String ventTitle,
     required String ventBodyText,
+    required String ventTags
   }) async {
 
     await _insertVentInfo(
-      ventTitle: ventTitle, ventBodyText: ventBodyText
+      ventTitle: ventTitle, ventBodyText: ventBodyText, ventTags: ventTags
     ).then(
       (_) async => await _updateTotalPosts()
     );
     
     _addVent(
       ventTitle: ventTitle, 
+      ventTags: ventTags,
       ventBodyText: ventBodyText
     );
 
@@ -27,21 +29,20 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
   Future<void> _insertVentInfo({
     required String ventTitle,
-    required String ventBodyText
+    required String ventBodyText,
+    required String ventTags
   }) async {
 
     const insertVentInfoQuery = 
-      'INSERT INTO vent_info (creator, title, body_text, total_likes, total_comments, tags) VALUES (:creator, :title, :body_text, :total_likes, :total_comments, :tags)';
-
-    final tags = tagsProvider.selectedTags.isEmpty ? null : tagsProvider.selectedTags.join(' ');
+      'INSERT INTO vent_info (creator, title, body_text, tags, total_likes, total_comments) VALUES (:creator, :title, :body_text, :tags, :total_likes, :total_comments)';
 
     final params = {
       'creator': userProvider.user.username,
       'title': ventTitle,
       'body_text': ventBodyText,
+      'tags': ventTags,
       'total_likes': 0,
       'total_comments': 0,
-      'tags': tags
     };
 
     await executeQuery(insertVentInfoQuery, params);
@@ -61,7 +62,8 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
   void _addVent({
     required String ventTitle, 
-    required String ventBodyText
+    required String ventBodyText,
+    required String ventTags
   }) {
 
     final formattedTimestamp = FormatDate().formatPostTimestamp(DateTime.now());
@@ -69,6 +71,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
     final newVent = VentForYouData(
       title: ventTitle, 
       bodyText: ventBodyText, 
+      tags: ventTags,
       creator: userProvider.user.username, 
       postTimestamp: formattedTimestamp, 
       profilePic: getIt.profileProvider.profile.profilePicture

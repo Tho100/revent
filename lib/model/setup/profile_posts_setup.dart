@@ -14,7 +14,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
     required this.profileType,
     required this.username
   });
-
+  // TODO: Load tags on profile posts
   Future<void> setupPosts() async {
 
     final isDataEmpty = profileType == ProfileType.myProfile.value

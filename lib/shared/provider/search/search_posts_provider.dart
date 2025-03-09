@@ -7,6 +7,7 @@ class SearchVents {
   String title;
   String creator;
   String postTimestamp;
+  String tags;
 
   Uint8List profilePic;
 
@@ -20,6 +21,7 @@ class SearchVents {
     required this.title,
     required this.creator,
     required this.postTimestamp,
+    required this.tags,
     required this.profilePic,
     this.totalLikes = 0,
     this.totalComments = 0,

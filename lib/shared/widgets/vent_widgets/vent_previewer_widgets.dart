@@ -23,6 +23,7 @@ class VentPreviewerWidgets {
   final String? bodyText;
   final String? creator;
   final String? postTimestamp;
+  final String? tags;
   final int? totalLikes;
   final int? totalComments;
   final Uint8List? pfpData;
@@ -41,6 +42,7 @@ class VentPreviewerWidgets {
     this.bodyText,
     this.creator,
     this.postTimestamp,
+    this.tags,
     this.totalLikes,
     this.totalComments,
     this.pfpData,
@@ -278,6 +280,17 @@ class VentPreviewerWidgets {
       ),
       overflow: TextOverflow.ellipsis,
       maxLines: 4
+    );
+  }
+
+  Widget buildTags() {
+    return Text(
+      tags!,
+      style: GoogleFonts.inter(
+        color: ThemeColor.thirdWhite,
+        fontWeight: FontWeight.w700,
+        fontSize: 7
+      ),
     );
   }
 

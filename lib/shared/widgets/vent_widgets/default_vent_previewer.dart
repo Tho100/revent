@@ -22,6 +22,8 @@ class DefaultVentPreviewer extends StatefulWidget {
   final String creator;
 
   final String postTimestamp;
+  final String tags;
+
   final int totalLikes;
   final int totalComments;
 
@@ -35,6 +37,7 @@ class DefaultVentPreviewer extends StatefulWidget {
     required this.bodyText,
     required this.creator,
     required this.postTimestamp,
+    required this.tags,
     required this.totalLikes,
     required this.totalComments,
     required this.pfpData,
@@ -61,6 +64,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       creator: widget.creator,
       pfpData: widget.pfpData,
       postTimestamp: widget.postTimestamp,
+      tags: widget.tags,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
@@ -202,8 +206,18 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         const SizedBox(height: 14),
   
         ventPreviewer.buildTitle(),
+
+        if(widget.tags.isNotEmpty) ... [
+
+          const SizedBox(height: 2),
+
+          ventPreviewer.buildTags(),
+          
+          const SizedBox(height: 6),
+
+        ],
   
-        const SizedBox(height: 12),
+        const SizedBox(height: 12), // TODO: Try to decrease this value if body text is empty
   
         ventPreviewer.buildBodyText(),
   
