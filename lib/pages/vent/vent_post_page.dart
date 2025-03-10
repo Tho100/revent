@@ -257,67 +257,18 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  Widget _buildFilterButton() {
-    return SizedBox(
-      height: 35,
-      child: InkWellEffect(
-        onPressed: () {
-          BottomsheetCommentFilter().buildBottomsheet(
-            context: context, 
-            currentFilter: filterTextNotifier.value,
-            bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
-            latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
-            oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
-          );
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-    
-            const SizedBox(width: 8),
-  
-            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
-    
-            const SizedBox(width: 8),
-    
-            ValueListenableBuilder(
-              valueListenable: filterTextNotifier,
-              builder: (_, filterText, __) {
-                return Text(
-                  filterText,
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 15
-                  )
-                );
-              },
-            ),
-  
-            const SizedBox(width: 8),
-    
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProfilePicture() {
-    return ProfilePictureWidget(
-      customHeight: 35,
-      customWidth: 35,
-      customEmptyPfpSize: 20,
-      pfpData: widget.pfpData,
-    );
-  }
-
-  Widget _buildProfileHeader() {
+  Widget _buildPostHeaderInfo() {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(username: widget.creator, pfpData: widget.pfpData),
       child: Row(
         children: [
     
-          _buildProfilePicture(),
+          ProfilePictureWidget(
+            customHeight: 35,
+            customWidth: 35,
+            customEmptyPfpSize: 20,
+            pfpData: widget.pfpData
+          ),
     
           const SizedBox(width: 10),
     
@@ -374,7 +325,7 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildPostContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -497,7 +448,7 @@ class _VentPostPageState extends State<VentPostPage> with
       builder: (_, commentsData, __) {
         return ActionsButton().buildCommentsButton(
           value: commentsData.comments.length, 
-          onPressed: () {}
+          onPressed: () {} // TODO: Remove this make it optionalo
         );
       },
     );
@@ -545,6 +496,51 @@ class _VentPostPageState extends State<VentPostPage> with
     
   }
 
+  Widget _buildCommentFilterButton() {
+    return SizedBox(
+      height: 35,
+      child: InkWellEffect(
+        onPressed: () {
+          BottomsheetCommentFilter().buildBottomsheet(
+            context: context, 
+            currentFilter: filterTextNotifier.value,
+            bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
+            latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
+            oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+    
+            const SizedBox(width: 8),
+  
+            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
+    
+            const SizedBox(width: 8),
+    
+            ValueListenableBuilder(
+              valueListenable: filterTextNotifier,
+              builder: (_, filterText, __) {
+                return Text(
+                  filterText,
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.thirdWhite,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15
+                  )
+                );
+              },
+            ),
+  
+            const SizedBox(width: 8),
+    
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildCommentsHeader() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -578,7 +574,7 @@ class _VentPostPageState extends State<VentPostPage> with
           
                 const Spacer(),
           
-                _buildFilterButton(),
+                _buildCommentFilterButton(),
           
               ],
             )
@@ -609,11 +605,11 @@ class _VentPostPageState extends State<VentPostPage> with
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
 
-                    _buildProfileHeader(),
+                    _buildPostHeaderInfo(),
         
                     const SizedBox(height: 18),
         
-                    _buildHeader(),
+                    _buildPostContent(),
         
                     _buildActionButtons(),
         
