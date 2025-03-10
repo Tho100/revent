@@ -447,8 +447,7 @@ class _VentPostPageState extends State<VentPostPage> with
     return Consumer<CommentsProvider>(
       builder: (_, commentsData, __) {
         return ActionsButton().buildCommentsButton(
-          value: commentsData.comments.length, 
-          onPressed: () {} // TODO: Remove this make it optionalo
+          value: commentsData.comments.length
         );
       },
     );
@@ -586,55 +585,12 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  Widget _buildBody() {
-    return Consumer<CommentsProvider>(
-      builder: (_, commentData, __) {
-        return RefreshIndicator(      
-          color: ThemeColor.black,
-          onRefresh: () async => await _onPageRefresh(),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(
-                  parent: commentData.comments.isEmpty 
-                    ? const ClampingScrollPhysics() : const BouncingScrollPhysics()
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-                    _buildPostHeaderInfo(),
-        
-                    const SizedBox(height: 18),
-        
-                    _buildPostContent(),
-        
-                    _buildActionButtons(),
-        
-                    const SizedBox(height: 12),
-        
-                    _buildCommentsHeader(),
-        
-                    const SizedBox(height: 20),
-        
-                    ValueListenableBuilder(
-                      valueListenable: enableCommentNotifier,
-                      builder: (_, isEnabled, __) {
-                        return CommentsListView(
-                          isCommentEnabled: enableCommentNotifier.value,
-                        );
-                      },
-                    ),
-        
-                    const SizedBox(height: 10),
-
-                  ],
-                ),
-              ),
-            ),
-          ),
+  Widget _buildCommentSectionListView() {
+    return ValueListenableBuilder(
+      valueListenable: enableCommentNotifier,
+      builder: (_, isEnabled, __) {
+        return CommentsListView(
+          isCommentEnabled: enableCommentNotifier.value,
         );
       },
     );
@@ -693,6 +649,53 @@ class _VentPostPageState extends State<VentPostPage> with
 
         ],
       ),
+    );
+  }
+
+  Widget _buildBody() {
+    return Consumer<CommentsProvider>(
+      builder: (_, commentData, __) {
+        return RefreshIndicator(      
+          color: ThemeColor.black,
+          onRefresh: () async => await _onPageRefresh(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(
+                  parent: commentData.comments.isEmpty 
+                    ? const ClampingScrollPhysics() : const BouncingScrollPhysics()
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    _buildPostHeaderInfo(),
+        
+                    const SizedBox(height: 18),
+        
+                    _buildPostContent(),
+        
+                    _buildActionButtons(),
+        
+                    const SizedBox(height: 12),
+        
+                    _buildCommentsHeader(),
+        
+                    const SizedBox(height: 20),
+        
+                    _buildCommentSectionListView(),
+        
+                    const SizedBox(height: 10),
+
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 
