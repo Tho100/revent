@@ -127,6 +127,7 @@ class BottomsheetTagsSelection with TagsProviderService {
                       child: TextFormField(
                         autofocus: true,
                         maxLines: 1,
+                        maxLength: 45,
                         controller: customTagsController,
                         style: GoogleFonts.inter(
                           color: ThemeColor.secondaryWhite,
@@ -162,26 +163,15 @@ class BottomsheetTagsSelection with TagsProviderService {
                               (tag) => tag.isNotEmpty
                             ).toList();
 
-                            if (currentTags.isNotEmpty && currentTags.last.length >= 15) {
-
-                              tagText += ' '; 
-
-                              customTagsController.value = TextEditingValue(
-                                text: tagText,
-                                selection: TextSelection.collapsed(offset: tagText.length),
-                              );
-
-                            }
-
                             tagsProvider.addTags(currentTags);
 
                             chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
                               return currentTags.contains(chipsTags[index]);
                             });
-                            
                           }
 
                         },
+
                       ),
                     );
                   },
