@@ -185,8 +185,8 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   Widget _buildVentPreview() {
     
-    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 15.0;
-    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 15.0;
+    final actionButtonsPadding = widget.bodyText.isEmpty ? 0.0 : 12.0;
+    final actionButtonsHeightGap = widget.bodyText.isEmpty ? 0.0 : 12.0;
 
     return ventPreviewer.buildMainContainer(
       children: [
@@ -209,7 +209,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
         if(widget.tags.isNotEmpty) ... [
 
-          const SizedBox(height: 6),
+          const SizedBox(height: 8),
 
           ventPreviewer.buildTags(),
           

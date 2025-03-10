@@ -127,6 +127,7 @@ class BottomsheetTagsSelection with TagsProviderService {
                       child: TextFormField(
                         autofocus: true,
                         maxLines: 1,
+                        maxLength: 45,
                         controller: customTagsController,
                         style: GoogleFonts.inter(
                           color: ThemeColor.secondaryWhite,
@@ -167,10 +168,10 @@ class BottomsheetTagsSelection with TagsProviderService {
                             chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
                               return currentTags.contains(chipsTags[index]);
                             });
-
                           }
 
                         },
+
                       ),
                     );
                   },
