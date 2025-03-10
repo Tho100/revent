@@ -40,6 +40,7 @@ class VentPostPage extends StatefulWidget {
 
   final String title;
   final String bodyText;
+  final String tags;
   final String postTimestamp;
   final String creator;
   final int totalLikes;
@@ -48,6 +49,7 @@ class VentPostPage extends StatefulWidget {
   const VentPostPage({
     required this.title,
     required this.bodyText,
+    required this.tags,
     required this.postTimestamp,
     required this.creator,
     required this.totalLikes,
@@ -383,6 +385,17 @@ class _VentPostPageState extends State<VentPostPage> with
             color: ThemeColor.white,
             fontWeight: FontWeight.w800,
             fontSize: 21
+          ),
+        ),
+
+        const SizedBox(height: 2),
+
+        Text(
+          widget.tags,
+          style: GoogleFonts.inter(
+            color: ThemeColor.thirdWhite,
+            fontWeight: FontWeight.w700,
+            fontSize: 14
           ),
         ),
         
