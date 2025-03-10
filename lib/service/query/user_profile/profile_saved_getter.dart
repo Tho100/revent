@@ -45,9 +45,9 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
 
     final postIds = extractData.extractIntColumn('post_id');
     final titles = extractData.extractStringColumn('title');
-    final creator = extractData.extractStringColumn('creator');
     final bodyText = extractData.extractStringColumn('body_text');
     final tags = extractData.extractStringColumn('tags');
+    final creator = extractData.extractStringColumn('creator');
 
     final totalComments = extractData.extractIntColumn('total_comments');
     final totalLikes = extractData.extractIntColumn('total_likes');

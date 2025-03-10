@@ -58,7 +58,7 @@ class ActionsButton {
   Widget buildLikeButton({
     required int value,
     required bool isLiked,
-    required VoidCallback onPressed,
+    required VoidCallback onPressed
   }) {
     return _buildActionButton(
       onPressed: onPressed, 
@@ -93,10 +93,10 @@ class ActionsButton {
 
   Widget buildCommentsButton({
     required int value,
-    required VoidCallback onPressed,
+    VoidCallback? onPressed
   }) {
     return _buildActionButton(
-      onPressed: onPressed, 
+      onPressed: onPressed!, 
       child: Row(
         children: [
   
@@ -127,7 +127,7 @@ class ActionsButton {
 
   Widget buildSaveButton({
     required bool isSaved,
-    required VoidCallback onPressed,
+    required VoidCallback onPressed
   }) {
     return SizedBox(
       width: 44,

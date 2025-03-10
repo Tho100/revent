@@ -19,10 +19,9 @@ class DefaultVentPreviewer extends StatefulWidget {
 
   final String title;
   final String bodyText;
-  final String creator;
-
-  final String postTimestamp;
   final String tags;
+  final String postTimestamp;
+  final String creator;
 
   final int totalLikes;
   final int totalComments;
@@ -35,9 +34,9 @@ class DefaultVentPreviewer extends StatefulWidget {
   const DefaultVentPreviewer({
     required this.title,
     required this.bodyText,
-    required this.creator,
-    required this.postTimestamp,
     required this.tags,
+    required this.postTimestamp,
+    required this.creator,
     required this.totalLikes,
     required this.totalComments,
     required this.pfpData,
@@ -135,6 +134,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       MaterialPageRoute(builder: (_) => VentPostPage(
         title: widget.title, 
         bodyText: ventBodyText, 
+        tags: widget.tags,
         postTimestamp: widget.postTimestamp,
         totalLikes: widget.totalLikes,
         creator: widget.creator, 

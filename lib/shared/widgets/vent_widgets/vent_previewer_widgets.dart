@@ -21,11 +21,11 @@ class VentPreviewerWidgets {
 
   final String? title;
   final String? bodyText;
-  final String? creator;
-  final String? postTimestamp;
   final String? tags;
+  final String? postTimestamp;
   final int? totalLikes;
   final int? totalComments;
+  final String? creator;
   final Uint8List? pfpData;
 
   final VoidCallback? viewVentPostOnPressed;
@@ -40,9 +40,9 @@ class VentPreviewerWidgets {
     required this.context,
     this.title,
     this.bodyText,
-    this.creator,
-    this.postTimestamp,
     this.tags,
+    this.postTimestamp,
+    this.creator,
     this.totalLikes,
     this.totalComments,
     this.pfpData,

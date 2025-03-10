@@ -40,6 +40,7 @@ class VentPostPage extends StatefulWidget {
 
   final String title;
   final String bodyText;
+  final String tags;
   final String postTimestamp;
   final String creator;
   final int totalLikes;
@@ -48,6 +49,7 @@ class VentPostPage extends StatefulWidget {
   const VentPostPage({
     required this.title,
     required this.bodyText,
+    required this.tags,
     required this.postTimestamp,
     required this.creator,
     required this.totalLikes,
@@ -255,67 +257,18 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  Widget _buildFilterButton() {
-    return SizedBox(
-      height: 35,
-      child: InkWellEffect(
-        onPressed: () {
-          BottomsheetCommentFilter().buildBottomsheet(
-            context: context, 
-            currentFilter: filterTextNotifier.value,
-            bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
-            latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
-            oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
-          );
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-    
-            const SizedBox(width: 8),
-  
-            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
-    
-            const SizedBox(width: 8),
-    
-            ValueListenableBuilder(
-              valueListenable: filterTextNotifier,
-              builder: (_, filterText, __) {
-                return Text(
-                  filterText,
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
-                    fontWeight: FontWeight.w800,
-                    fontSize: 15
-                  )
-                );
-              },
-            ),
-  
-            const SizedBox(width: 8),
-    
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildProfilePicture() {
-    return ProfilePictureWidget(
-      customHeight: 35,
-      customWidth: 35,
-      customEmptyPfpSize: 20,
-      pfpData: widget.pfpData,
-    );
-  }
-
-  Widget _buildProfileHeader() {
+  Widget _buildPostHeaderInfo() {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(username: widget.creator, pfpData: widget.pfpData),
       child: Row(
         children: [
     
-          _buildProfilePicture(),
+          ProfilePictureWidget(
+            customHeight: 35,
+            customWidth: 35,
+            customEmptyPfpSize: 20,
+            pfpData: widget.pfpData
+          ),
     
           const SizedBox(width: 10),
     
@@ -372,7 +325,7 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildPostContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -383,6 +336,17 @@ class _VentPostPageState extends State<VentPostPage> with
             color: ThemeColor.white,
             fontWeight: FontWeight.w800,
             fontSize: 21
+          ),
+        ),
+
+        const SizedBox(height: 2),
+
+        Text(
+          widget.tags,
+          style: GoogleFonts.inter(
+            color: ThemeColor.thirdWhite,
+            fontWeight: FontWeight.w700,
+            fontSize: 14
           ),
         ),
         
@@ -483,8 +447,7 @@ class _VentPostPageState extends State<VentPostPage> with
     return Consumer<CommentsProvider>(
       builder: (_, commentsData, __) {
         return ActionsButton().buildCommentsButton(
-          value: commentsData.comments.length, 
-          onPressed: () {}
+          value: commentsData.comments.length
         );
       },
     );
@@ -532,6 +495,51 @@ class _VentPostPageState extends State<VentPostPage> with
     
   }
 
+  Widget _buildCommentFilterButton() {
+    return SizedBox(
+      height: 35,
+      child: InkWellEffect(
+        onPressed: () {
+          BottomsheetCommentFilter().buildBottomsheet(
+            context: context, 
+            currentFilter: filterTextNotifier.value,
+            bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
+            latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
+            oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
+          );
+        },
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+    
+            const SizedBox(width: 8),
+  
+            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
+    
+            const SizedBox(width: 8),
+    
+            ValueListenableBuilder(
+              valueListenable: filterTextNotifier,
+              builder: (_, filterText, __) {
+                return Text(
+                  filterText,
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.thirdWhite,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15
+                  )
+                );
+              },
+            ),
+  
+            const SizedBox(width: 8),
+    
+          ],
+        ),
+      ),
+    );
+  }
+
   Widget _buildCommentsHeader() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -565,7 +573,7 @@ class _VentPostPageState extends State<VentPostPage> with
           
                 const Spacer(),
           
-                _buildFilterButton(),
+                _buildCommentFilterButton(),
           
               ],
             )
@@ -577,55 +585,12 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  Widget _buildBody() {
-    return Consumer<CommentsProvider>(
-      builder: (_, commentData, __) {
-        return RefreshIndicator(      
-          color: ThemeColor.black,
-          onRefresh: () async => await _onPageRefresh(),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(
-                  parent: commentData.comments.isEmpty 
-                    ? const ClampingScrollPhysics() : const BouncingScrollPhysics()
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-
-                    _buildProfileHeader(),
-        
-                    const SizedBox(height: 18),
-        
-                    _buildHeader(),
-        
-                    _buildActionButtons(),
-        
-                    const SizedBox(height: 12),
-        
-                    _buildCommentsHeader(),
-        
-                    const SizedBox(height: 20),
-        
-                    ValueListenableBuilder(
-                      valueListenable: enableCommentNotifier,
-                      builder: (_, isEnabled, __) {
-                        return CommentsListView(
-                          isCommentEnabled: enableCommentNotifier.value,
-                        );
-                      },
-                    ),
-        
-                    const SizedBox(height: 10),
-
-                  ],
-                ),
-              ),
-            ),
-          ),
+  Widget _buildCommentSectionListView() {
+    return ValueListenableBuilder(
+      valueListenable: enableCommentNotifier,
+      builder: (_, isEnabled, __) {
+        return CommentsListView(
+          isCommentEnabled: enableCommentNotifier.value,
         );
       },
     );
@@ -684,6 +649,53 @@ class _VentPostPageState extends State<VentPostPage> with
 
         ],
       ),
+    );
+  }
+
+  Widget _buildBody() {
+    return Consumer<CommentsProvider>(
+      builder: (_, commentData, __) {
+        return RefreshIndicator(      
+          color: ThemeColor.black,
+          onRefresh: () async => await _onPageRefresh(),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
+            child: ScrollConfiguration(
+              behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
+              child: SingleChildScrollView(
+                physics: AlwaysScrollableScrollPhysics(
+                  parent: commentData.comments.isEmpty 
+                    ? const ClampingScrollPhysics() : const BouncingScrollPhysics()
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+
+                    _buildPostHeaderInfo(),
+        
+                    const SizedBox(height: 18),
+        
+                    _buildPostContent(),
+        
+                    _buildActionButtons(),
+        
+                    const SizedBox(height: 12),
+        
+                    _buildCommentsHeader(),
+        
+                    const SizedBox(height: 20),
+        
+                    _buildCommentSectionListView(),
+        
+                    const SizedBox(height: 10),
+
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
     );
   }
 

@@ -26,12 +26,12 @@ class ProfileSavedData {
   void clear() {
     titles.clear();
     bodyText.clear();
+    tags.clear();
+    postTimestamp.clear();
     creator.clear();
     pfpData.clear();
     totalLikes.clear();
     totalComments.clear();
-    postTimestamp.clear();
-    tags.clear();
     isPostLiked.clear();
     isPostSaved.clear();
   } 

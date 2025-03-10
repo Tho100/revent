@@ -47,9 +47,9 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
       child: DefaultVentPreviewer(
         title: vents.title, 
         bodyText: vents.bodyText,
-        creator: vents.creator, 
-        postTimestamp: vents.postTimestamp, 
         tags: vents.tags,
+        postTimestamp: vents.postTimestamp, 
+        creator: vents.creator, 
         totalLikes: vents.totalLikes, 
         totalComments: vents.totalComments, 
         pfpData: vents.profilePic,

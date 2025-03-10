@@ -6,9 +6,9 @@ class VentTrendingData {
 
   String title;
   String bodyText;
-  String creator;
-  String postTimestamp;
   String tags;
+  String postTimestamp;
+  String creator;
 
   Uint8List profilePic;
 
@@ -21,9 +21,9 @@ class VentTrendingData {
   VentTrendingData({
     required this.title,
     required this.bodyText,
-    required this.creator,
-    required this.postTimestamp,
     required this.tags,
+    required this.postTimestamp,
+    required this.creator,
     required this.profilePic,
     this.totalLikes = 0,
     this.totalComments = 0,

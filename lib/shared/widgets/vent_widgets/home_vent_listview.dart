@@ -35,11 +35,11 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
       child: DefaultVentPreviewer(
         title: ventData.title,
         bodyText: ventData.bodyText,
-        creator: ventData.creator,
-        postTimestamp: ventData.postTimestamp,
         tags: ventData.tags,
+        postTimestamp: ventData.postTimestamp,
         totalLikes: ventData.totalLikes,
         totalComments: ventData.totalComments,
+        creator: ventData.creator,
         pfpData: ventData.profilePic,
       ),
     );
