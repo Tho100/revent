@@ -9,25 +9,50 @@ class ActionsButton {
   final iconOffset = const Offset(0, -1);
 
   Widget _buildActionButton({
+    bool? isLiked = false,
+    bool? isSaved = false,
     required VoidCallback onPressed,
-    required Widget child, 
+    required Widget child
   }) {
+
+    Color? backgroundColor;
+    Color? borderColor;
+
+    if(isLiked! || isSaved!) {
+      borderColor = ThemeColor.black; 
+    }
+
+    if(isLiked) {
+      backgroundColor = ThemeColor.likedColor;
+    } 
+
+    if(isSaved!) {
+      backgroundColor = ThemeColor.white;
+    }
+
+    if(!isSaved && !isLiked) {
+      backgroundColor = ThemeColor.black;
+      borderColor = ThemeColor.lightGrey;
+    }
+
     return SizedBox(
       height: 34,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           foregroundColor: ThemeColor.thirdWhite,
-          backgroundColor: ThemeColor.black,
-          shape: const StadiumBorder(
+          backgroundColor: backgroundColor!,
+          shape: StadiumBorder(
             side: BorderSide(
-              color: ThemeColor.lightGrey
+              color: borderColor!,
+              width: isLiked || isSaved ? 0 : 1
             )
           ),
         ),
         child: child
       )
     );
+
   }
 
   Widget buildLikeButton({
@@ -37,6 +62,7 @@ class ActionsButton {
   }) {
     return _buildActionButton(
       onPressed: onPressed, 
+      isLiked: isLiked,
       child: Row(
         children: [
 
@@ -44,7 +70,7 @@ class ActionsButton {
             offset: iconOffset,
             child: Icon(
               isLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, 
-              color: isLiked ? ThemeColor.likedColor : ThemeColor.white,
+              color: isLiked ? ThemeColor.white : ThemeColor.white,
               size: 18.5, 
             ),
           ),
@@ -107,11 +133,12 @@ class ActionsButton {
       width: 44,
       child: _buildActionButton(
         onPressed: onPressed, 
+        isSaved: isSaved,
         child: Transform.translate(
           offset: iconOffset,
           child: Icon(
             isSaved ? CupertinoIcons.bookmark_fill : CupertinoIcons.bookmark, 
-            color: ThemeColor.white,
+            color: isSaved ? ThemeColor.black : ThemeColor.white,
             size: 16, 
           ),
         ),          
