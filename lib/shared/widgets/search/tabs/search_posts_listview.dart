@@ -33,11 +33,11 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
       child: DefaultVentPreviewer(
         title: ventData.title,
         bodyText: '',
-        creator: ventData.creator,
-        postTimestamp: ventData.postTimestamp,
         tags: ventData.tags,
+        postTimestamp: ventData.postTimestamp,
         totalLikes: ventData.totalLikes,
         totalComments: ventData.totalComments,
+        creator: ventData.creator,
         pfpData: ventData.profilePic,
         useV2ActionButtons: true,
       ),

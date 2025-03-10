@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 class SearchVents {
 
   String title;
-  String creator;
-  String postTimestamp;
   String tags;
-
+  String postTimestamp;
+  String creator;
+  
   Uint8List profilePic;
 
   int totalLikes;
@@ -19,9 +19,9 @@ class SearchVents {
 
   SearchVents({
     required this.title,
-    required this.creator,
-    required this.postTimestamp,
     required this.tags,
+    required this.postTimestamp,
+    required this.creator,
     required this.profilePic,
     this.totalLikes = 0,
     this.totalComments = 0,

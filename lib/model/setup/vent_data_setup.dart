@@ -16,10 +16,10 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
     final titles = ventsInfo['title']! as List<String>;
     final bodyText = ventsInfo['body_text']! as List<String>;
-    final creator = ventsInfo['creator']! as List<String>;
-    final postTimestamp = ventsInfo['post_timestamp']! as List<String>;
-    final totalLikes = ventsInfo['total_likes']! as List<int>;
     final tags = ventsInfo['tags']! as List<String>;
+    final postTimestamp = ventsInfo['post_timestamp']! as List<String>;
+    final creator = ventsInfo['creator']! as List<String>;
+    final totalLikes = ventsInfo['total_likes']! as List<int>;
     final totalComments = ventsInfo['total_comments']! as List<int>;
     final isLiked = ventsInfo['is_liked']! as List<bool>;
     final isSaved = ventsInfo['is_saved']! as List<bool>;
@@ -33,9 +33,9 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     return {
       'titles': titles,
       'body_text': bodyText,
-      'creator': creator,
-      'post_timestamp': postTimestamp,
       'tags': tags,
+      'post_timestamp': postTimestamp,
+      'creator': creator,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'is_liked': isLiked,
@@ -50,9 +50,9 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     required T Function(
       String title,
       String bodyText,
-      String creator,
-      String postTimestamp,
       String tags,
+      String postTimestamp,
+      String creator,
       Uint8List profilePic,
       int totalLikes,
       int totalComments,
@@ -64,9 +64,9 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
     final titles = ventsData['titles'];
     final bodyText = ventsData['body_text'];
-    final creator = ventsData['creator'];
-    final postTimestamp = ventsData['post_timestamp'];
     final tags = ventsData['tags'];
+    final postTimestamp = ventsData['post_timestamp'];
+    final creator = ventsData['creator'];
     final profilePic = ventsData['pfp'];
     final totalLikes = ventsData['total_likes'];
     final totalComments = ventsData['total_comments'];
@@ -77,9 +77,9 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       return ventBuilder(
         titles[index],
         bodyText[index],
-        creator[index],
-        postTimestamp[index],
         tags[index],
+        postTimestamp[index],
+        creator[index],
         profilePic[index],
         totalLikes[index],
         totalComments[index],
@@ -96,9 +96,9 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     required T Function(
       String title,
       String bodyText,
-      String creator,
-      String postTimestamp,
       String tags,
+      String postTimestamp,
+      String creator,
       Uint8List profilePic,
       int totalLikes,
       int totalComments,
@@ -120,13 +120,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<VentForYouData>(
       dataGetter: () => VentDataGetter().getVentsData(),
       setVents: forYouVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, tags, 
+      ventBuilder: (title, bodyText, tags, postTimestamp, creator, 
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentForYouData(
         title: title,
         bodyText: bodyText,
-        creator: creator,
-        postTimestamp: postTimestamp,
         tags: tags,
+        postTimestamp: postTimestamp,
+        creator: creator,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -140,13 +140,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<VentTrendingData>(
       dataGetter: () => VentDataGetter().getTrendingVentsData(),
       setVents: trendingVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, tags,
+      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentTrendingData(
         title: title,
         bodyText: bodyText,
-        creator: creator,
-        postTimestamp: postTimestamp,
         tags: tags,
+        postTimestamp: postTimestamp,
+        creator: creator,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -160,13 +160,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<VentFollowingData>(
       dataGetter: () => VentDataGetter().getFollowingVentsData(),
       setVents: followingVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, tags,
+      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentFollowingData(
         title: title,
         bodyText: bodyText,
-        creator: creator,
-        postTimestamp: postTimestamp,
         tags: tags,
+        postTimestamp: postTimestamp,
+        creator: creator,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -182,12 +182,12 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         searchTitleText: searchText,
       ),
       setVents: searchPostsProvider.setVents,
-      ventBuilder: (title, _, creator, postTimestamp, tags,
+      ventBuilder: (title, _, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SearchVents(
         title: title,
-        creator: creator,
-        postTimestamp: postTimestamp,
         tags: tags,
+        postTimestamp: postTimestamp,
+        creator: creator,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -201,13 +201,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<LikedVentData>(
       dataGetter: () => VentDataGetter().getLikedVentsData(),
       setVents: likedVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, tags, 
+      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => LikedVentData(
         title: title,
         bodyText: bodyText,
-        creator: creator,
-        postTimestamp: postTimestamp,
         tags: tags,
+        postTimestamp: postTimestamp,
+        creator: creator,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
@@ -221,13 +221,13 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<SavedVentData>(
       dataGetter: () => VentDataGetter().getSavedVentsData(),
       setVents: savedVentProvider.setVents,
-      ventBuilder: (title, bodyText, creator, postTimestamp, tags,
+      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SavedVentData(
         title: title,
         bodyText: bodyText,
-        creator: creator,
-        postTimestamp: postTimestamp,
         tags: tags,
+        postTimestamp: postTimestamp,
+        creator: creator,
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,

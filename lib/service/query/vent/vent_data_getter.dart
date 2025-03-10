@@ -91,10 +91,10 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
         vi.title,
         vi.creator,
         vi.body_text,
+        vi.tags, 
+        vi.created_at,
         vi.total_likes,
         vi.total_comments,
-        vi.created_at,
-        vi.tags, 
         upi.profile_picture
       FROM 
         liked_vent_info lvi
@@ -122,10 +122,10 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
         vi.title,
         vi.creator,
         vi.body_text,
+        vi.tags, 
+        vi.created_at,
         vi.total_likes,
         vi.total_comments,
-        vi.created_at,
-        vi.tags, 
         upi.profile_picture
       FROM 
         saved_vent_info svi
@@ -185,9 +185,9 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
     return {
       'title': title,
       'body_text': bodyText,
-      'creator': creator,
-      'post_timestamp': postTimestamp,
       'tags': tags,
+      'post_timestamp': postTimestamp,
+      'creator': creator,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'is_liked': isLikedState,

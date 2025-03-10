@@ -21,10 +21,10 @@ class ProfilePostsData {
   void clear() {
     titles.clear();
     bodyText.clear();
+    tags.clear();
     totalLikes.clear();
     totalComments.clear();
     postTimestamp.clear();
-    tags.clear();
     isPostLiked.clear();
     isPostSaved.clear();
   } 
