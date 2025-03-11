@@ -341,7 +341,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
         if(widget.tags.isNotEmpty) ... [
 
-          const SizedBox(height: 4), // TODO: Change to 6
+          const SizedBox(height: 6),
 
           Text(
             widget.tags.split(' ').map((tags) => '#$tags').join(' '),
@@ -350,7 +350,7 @@ class _VentPostPageState extends State<VentPostPage> with
               fontWeight: FontWeight.w700,
               fontSize: 14
             ),
-          ),
+          )
 
         ],
         
