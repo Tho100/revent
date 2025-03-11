@@ -339,10 +339,10 @@ class _VentPostPageState extends State<VentPostPage> with
           ),
         ),
 
-        const SizedBox(height: 2),
+        const SizedBox(height: 4),
 
         Text(
-          widget.tags,
+          widget.tags.split(' ').map((tags) => '#$tags').join(' '),
           style: GoogleFonts.inter(
             color: ThemeColor.thirdWhite,
             fontWeight: FontWeight.w700,
