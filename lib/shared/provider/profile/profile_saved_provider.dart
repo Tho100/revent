@@ -18,7 +18,7 @@ class ProfileSavedData {
   List<int> totalComments = [];
 
   List<String> postTimestamp = [];
-  List<String> tags = [];
+  List<String> tags = []; // TODO: Move creator/pfpdata here and pust the tags/timestamp up
 
   List<bool> isPostLiked = [];
   List<bool> isPostSaved = [];

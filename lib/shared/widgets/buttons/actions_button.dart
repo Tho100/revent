@@ -96,7 +96,7 @@ class ActionsButton {
     VoidCallback? onPressed
   }) {
     return _buildActionButton(
-      onPressed: onPressed!, 
+      onPressed: onPressed ?? () {}, 
       child: Row(
         children: [
   
