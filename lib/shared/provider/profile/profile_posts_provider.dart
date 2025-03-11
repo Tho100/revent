@@ -8,12 +8,12 @@ class ProfilePostsData {
 
   List<String> titles = [];
   List<String> bodyText = [];
+  List<String> tags = [];
+  List<String> postTimestamp = [];
 
   List<int> totalLikes = [];
   List<int> totalComments = [];
 
-  List<String> postTimestamp = [];
-  List<String> tags = [];
 
   List<bool> isPostLiked = [];
   List<bool> isPostSaved = [];

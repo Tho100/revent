@@ -8,17 +8,17 @@ import 'package:revent/main.dart';
 
 class ProfileSavedData {
 
-  List<String> creator = [];
-  List<Uint8List> pfpData = [];
 
   List<String> titles = [];
   List<String> bodyText = [];
+  List<String> tags = [];
+  List<String> postTimestamp = [];
 
   List<int> totalLikes = [];
   List<int> totalComments = [];
 
-  List<String> postTimestamp = [];
-  List<String> tags = []; // TODO: Move creator/pfpdata here and pust the tags/timestamp up
+  List<String> creator = [];
+  List<Uint8List> pfpData = [];
 
   List<bool> isPostLiked = [];
   List<bool> isPostSaved = [];
