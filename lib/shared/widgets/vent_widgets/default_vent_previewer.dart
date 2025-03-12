@@ -217,7 +217,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
         ],
   
-        const SizedBox(height: 10),
+        SizedBox(height: widget.bodyText.isEmpty ? 5 : 10),
   
         ventPreviewer.buildBodyText(),
   
