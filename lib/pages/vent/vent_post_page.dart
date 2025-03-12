@@ -341,7 +341,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
         if(widget.tags.isNotEmpty) ... [
 
-          const SizedBox(height: 6),
+          const SizedBox(height: 8),
 
           Text(
             widget.tags.split(' ').map((tags) => '#$tags').join(' '),
@@ -350,11 +350,13 @@ class _VentPostPageState extends State<VentPostPage> with
               fontWeight: FontWeight.w700,
               fontSize: 14
             ),
-          )
+          ),
+
+          const SizedBox(height: 12),
 
         ],
         
-        const SizedBox(height: 14),
+        const SizedBox(height: 10),
 
         Consumer<ActiveVentProvider>(
           builder: (_, data, __) {
@@ -677,7 +679,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
                     _buildPostHeaderInfo(),
         
-                    const SizedBox(height: 18),
+                    const SizedBox(height: 16),
         
                     _buildPostContent(),
         
