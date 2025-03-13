@@ -563,27 +563,27 @@ class _VentPostPageState extends State<VentPostPage> with
           builder: (_, isCommentEnabled, __) {
             return isCommentEnabled
               ? Row(
-              children: [
+                children: [
                 
-                Padding(
-                  padding: const EdgeInsets.only(left: 6.0),
-                  child: Text(
-                    'Comments',
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.secondaryWhite,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 17,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6.0),
+                    child: Text(
+                      'Comments',
+                      style: GoogleFonts.inter(
+                        color: ThemeColor.secondaryWhite,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
-                ),
-          
-                const Spacer(),
-          
-                _buildCommentFilterButton(),
-          
-              ],
-            )
-            : const SizedBox.shrink();
+            
+                  const Spacer(),
+            
+                  _buildCommentFilterButton(),
+            
+                ],
+              )
+              : const SizedBox.shrink();
           }
         )
   
@@ -633,28 +633,35 @@ class _VentPostPageState extends State<VentPostPage> with
   }
 
   Widget _buildAddComment() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
-      child: Row(
-        children: [
-
-          Expanded(
-            child: BottomInputBar(
-              hintText: 'Add a comment...', 
-              onPressed: () => _addCommentOnPressed(),
+    return ValueListenableBuilder(
+      valueListenable: enableCommentNotifier,
+      builder: (_, isCommentEnabled, __) {
+        return isCommentEnabled 
+          ? Padding(
+            padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
+            child: Row(
+              children: [
+        
+                Expanded(
+                  child: BottomInputBar(
+                    hintText: 'Add a comment...', 
+                    onPressed: () => _addCommentOnPressed(),
+                  ),
+                ),
+        
+                if(getIt.userProvider.user.username == widget.creator) ... [
+        
+                  const SizedBox(width: 12),
+        
+                  _buildCommentSettingsButton()
+        
+                ]
+        
+              ],
             ),
-          ),
-
-          if(getIt.userProvider.user.username == widget.creator) ... [
-
-            const SizedBox(width: 12),
-
-            _buildCommentSettingsButton()
-
-          ]
-
-        ],
-      ),
+          )
+          : const SizedBox.shrink();
+      }
     );
   }
 
