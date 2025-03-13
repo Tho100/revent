@@ -563,27 +563,27 @@ class _VentPostPageState extends State<VentPostPage> with
           builder: (_, isCommentEnabled, __) {
             return isCommentEnabled
               ? Row(
-              children: [
+                children: [
                 
-                Padding(
-                  padding: const EdgeInsets.only(left: 6.0),
-                  child: Text(
-                    'Comments',
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.secondaryWhite,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 17,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 6.0),
+                    child: Text(
+                      'Comments',
+                      style: GoogleFonts.inter(
+                        color: ThemeColor.secondaryWhite,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 17,
+                      ),
                     ),
                   ),
-                ),
-          
-                const Spacer(),
-          
-                _buildCommentFilterButton(),
-          
-              ],
-            )
-            : const SizedBox.shrink();
+            
+                  const Spacer(),
+            
+                  _buildCommentFilterButton(),
+            
+                ],
+              )
+              : const SizedBox.shrink();
           }
         )
   
