@@ -55,7 +55,7 @@ class CommentsListView extends StatelessWidget {
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildNoComments() {
 
     final commentDisabledMessage = isUserPost 
       ? 'You have disabled comments for this post.' 
@@ -94,7 +94,7 @@ class CommentsListView extends StatelessWidget {
         final comments = commentsData.comments;
 
         return comments.isEmpty 
-          ? _buildOnEmpty()
+          ? _buildNoComments()
           : _buildListView(comments);
 
       },

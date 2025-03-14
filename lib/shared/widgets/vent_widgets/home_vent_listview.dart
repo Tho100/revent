@@ -116,7 +116,7 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildEmptyState() {
     return NoContentMessage().customMessage(
       message: 'Nothing to see here.'
     );
@@ -126,7 +126,7 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
   Widget build(BuildContext context) {
     super.build(context);
     return widget.provider.vents.isEmpty 
-      ? _buildOnEmpty()
+      ? _buildEmptyState()
       : _buildVentList();
   }
 

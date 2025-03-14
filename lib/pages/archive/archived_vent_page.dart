@@ -225,7 +225,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
             valueListenable: archivedVentsData,
             builder: (_, archiveData, __) { 
               return archiveData.isEmpty 
-                ? _buildOnEmpty()
+                ? _buildNoArchivedPosts()
                 : _buildListView(archiveData);
             },
           );
@@ -235,7 +235,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildNoArchivedPosts() {
     return NoContentMessage().customMessage(
       message: 'Your archive is empty.'
     );
