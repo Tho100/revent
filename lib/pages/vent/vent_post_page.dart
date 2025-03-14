@@ -12,9 +12,7 @@ import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/service/current_provider_service.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/main.dart';
 import 'package:revent/model/filter/comments_filter.dart';
 import 'package:revent/pages/comment/post_comment_page.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
@@ -63,6 +61,7 @@ class VentPostPage extends StatefulWidget {
 }
 
 class _VentPostPageState extends State<VentPostPage> with 
+  UserProfileProviderService,
   NavigationProviderService, 
   VentProviderService, 
   CommentsProviderService {
@@ -618,27 +617,6 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  Widget _buildAdddComment() {
-    return ValueListenableBuilder(
-      valueListenable: enableCommentNotifier,
-      builder: (_, isCommentEnabled, __) {
-        return isCommentEnabled 
-          ? Expanded(
-              child: BottomInputBar(
-                hintText: 'Add a comment...', 
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (_) => const PostCommentPage())
-                  );
-                }
-              ),
-            )
-          : const SizedBox.shrink();
-      }
-    );
-  }
-
   Widget _buildAddComment() {
     return Padding(
       padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
@@ -664,7 +642,7 @@ class _VentPostPageState extends State<VentPostPage> with
             ),
           ),
   
-          if(getIt.userProvider.user.username == widget.creator) ... [
+          if(userProvider.user.username == widget.creator) ... [
   
             const SizedBox(width: 12),
   
