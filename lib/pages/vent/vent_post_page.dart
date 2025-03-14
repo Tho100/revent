@@ -73,15 +73,6 @@ class _VentPostPageState extends State<VentPostPage> with
   final commentSettings = CommentSettings();
   final commentsFilter = CommentsFilter();
 
-  void _addCommentOnPressed() {
-
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const PostCommentPage())
-    );
-
-  }
-
   void _loadLastEdit() async {
 
     final lastEdit = await LastEditGetter().getLastEdit();
@@ -640,7 +631,12 @@ class _VentPostPageState extends State<VentPostPage> with
                 Expanded(
                   child: BottomInputBar(
                     hintText: 'Add a comment...', 
-                    onPressed: () => _addCommentOnPressed(),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const PostCommentPage())
+                      );
+                    }
                   ),
                 ),
         
