@@ -50,7 +50,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildNoPostedVents() {
     return widget.isMyProfile 
       ? Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -115,7 +115,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
           ? postsData.myProfile : postsData.userProfile;
           
         return profilePostsData.titles.isEmpty 
-          ? _buildOnEmpty()
+          ? _buildNoPostedVents()
           : _buildListView(profilePostsData);
 
       },

@@ -44,7 +44,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildNoResults() {
     return NoContentMessage().customMessage(
       message: 'No results.'
     );
@@ -198,7 +198,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.7,
                 child: Center(
-                  child: _buildOnEmpty(),
+                  child: _buildNoResults(),
                 ),
               ),
 
@@ -245,7 +245,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
         final filteredVents = ventData.filteredVents;
 
         return vents.isEmpty 
-          ? _buildOnEmpty() 
+          ? _buildNoResults() 
           : _buildListView(filteredVents);
 
       }

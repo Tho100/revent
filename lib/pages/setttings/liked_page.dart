@@ -123,7 +123,7 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
               final ventsData = likedVentData.vents;
               
               return ventsData.isEmpty 
-                ? _buildOnEmpty()
+                ? _buildNoLikedPosts()
                 : _buildListView(ventsData);
 
             },
@@ -133,7 +133,7 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildNoLikedPosts() {
     return NoContentMessage().customMessage(
       message: 'No liked posts.'
     );

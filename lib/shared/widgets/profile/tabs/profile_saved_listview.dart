@@ -43,7 +43,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildNoSavedVents() {
     return NoContentMessage().customMessage(
       message: 'No saved vent yet.'
     );
@@ -85,7 +85,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
           ? savedData.myProfile : savedData.userProfile;
 
         return profileSavedData.titles.isEmpty
-          ? _buildOnEmpty()
+          ? _buildNoSavedVents()
           : _buildListView(profileSavedData);
 
       },

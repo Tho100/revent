@@ -42,7 +42,7 @@ class SearchAccountsListView extends StatelessWidget {
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildNoResults() {
     return NoContentMessage().customMessage(
       message: 'No results.'
     );
@@ -56,7 +56,7 @@ class SearchAccountsListView extends StatelessWidget {
         final accounts = accountsData.accounts;
 
         return accounts.usernames.isEmpty 
-          ? _buildOnEmpty()
+          ? _buildNoResults()
           : _buildListView(accounts);
 
       },

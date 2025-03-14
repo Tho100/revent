@@ -123,7 +123,7 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
               final ventsData = savedVentData.vents;
               
               return ventsData.isEmpty 
-                ? _buildOnEmpty()
+                ? _buildNoSavedPosts()
                 : _buildListView(ventsData);
 
             },
@@ -133,7 +133,7 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
     );
   }
 
-  Widget _buildOnEmpty() {
+  Widget _buildNoSavedPosts() {
     return NoContentMessage().customMessage(
       message: 'No saved posts.'
     );
