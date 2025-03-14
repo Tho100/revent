@@ -75,11 +75,6 @@ class _VentPostPageState extends State<VentPostPage> with
 
   void _addCommentOnPressed() {
 
-    if(!enableCommentNotifier.value) {
-      SnackBarDialog.temporarySnack(message: 'Commenting is disabled.');
-      return;
-    }
-
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => const PostCommentPage())
