@@ -618,41 +618,62 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  Widget _buildAddComment() {
+  Widget _buildAdddComment() {
     return ValueListenableBuilder(
       valueListenable: enableCommentNotifier,
       builder: (_, isCommentEnabled, __) {
         return isCommentEnabled 
-          ? Padding(
-            padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
-            child: Row(
-              children: [
-        
-                Expanded(
-                  child: BottomInputBar(
-                    hintText: 'Add a comment...', 
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (_) => const PostCommentPage())
-                      );
-                    }
-                  ),
-                ),
-        
-                if(getIt.userProvider.user.username == widget.creator) ... [
-        
-                  const SizedBox(width: 12),
-        
-                  _buildCommentSettingsButton()
-        
-                ]
-        
-              ],
-            ),
-          )
+          ? Expanded(
+              child: BottomInputBar(
+                hintText: 'Add a comment...', 
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const PostCommentPage())
+                  );
+                }
+              ),
+            )
           : const SizedBox.shrink();
       }
+    );
+  }
+
+  Widget _buildAddComment() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
+      child: Row(
+        children: [
+
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable: enableCommentNotifier,
+              builder: (_, isCommentEnabled, __) {
+                return isCommentEnabled 
+                  ? BottomInputBar(
+                      hintText: 'Add a comment...', 
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const PostCommentPage())
+                        );
+                      }
+                    )
+                  : const SizedBox.shrink();
+              }
+            ),
+          ),
+  
+          if(getIt.userProvider.user.username == widget.creator) ... [
+  
+            const SizedBox(width: 12),
+  
+            _buildCommentSettingsButton()
+  
+          ]
+  
+        ],
+      ),
     );
   }
 
