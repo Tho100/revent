@@ -9,9 +9,11 @@ import 'package:revent/shared/widgets/vent_widgets/comments/comment_previewer.da
 class CommentsListView extends StatelessWidget {
   
   final bool isCommentEnabled;
+  final bool isUserPost;
 
   const CommentsListView({
     required this.isCommentEnabled,
+    required this.isUserPost,
     super.key
   });
 
@@ -54,15 +56,21 @@ class CommentsListView extends StatelessWidget {
   }
 
   Widget _buildOnEmpty() {
+
+    final commentDisabledMessage = isUserPost 
+      ? 'You have disabled comments for this post.' 
+      : 'The author has disabled commenting \nfor this post.';
+
     return Padding(
       padding: const EdgeInsets.only(top: 35),
       child: NoContentMessage().headerCustomMessage(
         header: isCommentEnabled 
           ? 'No comment yet' : 'Commenting disabled', 
         subheader: isCommentEnabled 
-          ? 'Be the first to comment!' : 'The author has disabled commenting \nfor this post.'
+          ? 'Be the first to comment!' : commentDisabledMessage
       ),
     );
+
   }
 
   Widget _buildListView(List<CommentsData> comments) {

@@ -582,6 +582,7 @@ class _VentPostPageState extends State<VentPostPage> with
       builder: (_, isEnabled, __) {
         return CommentsListView(
           isCommentEnabled: enableCommentNotifier.value,
+          isUserPost: widget.creator == userProvider.user.username
         );
       },
     );
