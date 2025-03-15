@@ -33,7 +33,7 @@ class CreateVentPage extends StatefulWidget {
 
 class _CreateVentPageState extends State<CreateVentPage> with TagsProviderService {
 
-  final textController = VentPostController(); 
+  final postController = VentPostController(); 
   final postTextFields = PostTextField();
 
   final loading = SpinnerLoading();
@@ -48,8 +48,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<void> _postVentOnPressed() async {
 
-    final ventTitle = textController.titleController.text;
-    final ventBodyText = textController.bodyTextController.text;
+    final ventTitle = postController.titleController.text;
+    final ventBodyText = postController.bodyTextController.text;
 
     final tags = tagsProvider.selectedTags.isEmpty ? '' : tagsProvider.selectedTags.join(' ');
 
@@ -158,7 +158,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 12.0),
-            child: postTextFields.buildTitleField(titleController: textController.titleController),
+            child: postTextFields.buildTitleField(titleController: postController.titleController),
           ),   
 
           _buildSelectedTags(),
@@ -167,7 +167,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
           Padding(
             padding: const EdgeInsets.only(left: 17.0, right: 14.0),
-            child: postTextFields.buildBodyField(bodyController: textController.bodyTextController),
+            child: postTextFields.buildBodyField(bodyController: postController.bodyTextController),
           ),
 
           const SizedBox(height: 18)
@@ -308,7 +308,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<bool> _onClosePage() async {
 
-    if(textController.bodyTextController.text.isNotEmpty || textController.titleController.text.isNotEmpty) {
+    if(postController.bodyTextController.text.isNotEmpty || postController.titleController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardPost, 
       );
@@ -320,7 +320,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   @override
   void dispose() {
-    textController.dispose();
+    postController.dispose();
     isArchivedVentNotifier.dispose();
     tagsProvider.selectedTags.clear();
     super.dispose();
