@@ -2,13 +2,13 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
-class VerifyVent extends BaseQueryService {
+class VentChecker extends BaseQueryService {
   
   final String title;
 
-  VerifyVent({required this.title});
+  VentChecker({required this.title});
 
-  Future<bool> ventIsAlreadyExists() async {
+  Future<bool> isVentExists() async {
 
     const query = 'SELECT 1 FROM vent_info WHERE creator = :creator AND title = :title';
 

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/controllers/vent_text_controller.dart';
+import 'package:revent/controllers/vent_post_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
@@ -29,13 +29,13 @@ class EditVentPage extends StatefulWidget {
 
 class _EditVentPageState extends State<EditVentPage> {
 
-  final textController = VentTextController(); 
+  final postController = VentPostController(); 
 
   Future<void> _saveOnPressed() async {
 
     try {
 
-      final newBodyText = textController.bodyTextController.text;
+      final newBodyText = postController.bodyTextController.text;
 
       if(widget.isArchive) {
 
@@ -95,7 +95,7 @@ class _EditVentPageState extends State<EditVentPage> {
             Padding(
               padding: const EdgeInsets.only(left: 17.0, right: 14.0),
               child: PostTextField().buildBodyField(
-                bodyController: textController.bodyTextController, autoFocus: true
+                bodyController: postController.bodyTextController, autoFocus: true
               ),
             ),
               
@@ -114,7 +114,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
   Future<bool> _onClosePage() async {
 
-    if(textController.bodyTextController.text != widget.body) {
+    if(postController.bodyTextController.text != widget.body) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardEdit,
       );
@@ -127,12 +127,12 @@ class _EditVentPageState extends State<EditVentPage> {
   @override
   void initState() {
     super.initState();
-    textController.bodyTextController.text = widget.body;
+    postController.bodyTextController.text = widget.body;
   }
 
   @override
   void dispose() {
-    textController.dispose();
+    postController.dispose();
     super.dispose();
   }
 

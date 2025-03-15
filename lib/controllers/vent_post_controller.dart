@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class VentTextController {
+class VentPostController {
 
   final titleController = TextEditingController();
   final bodyTextController = TextEditingController();

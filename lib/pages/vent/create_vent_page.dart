@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/controllers/vent_text_controller.dart';
+import 'package:revent/controllers/vent_post_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/get_it_extensions.dart';
@@ -17,7 +17,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/create_new_item.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
-import 'package:revent/service/query/vent/verify_vent.dart';
+import 'package:revent/service/query/vent/vent_checker.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
@@ -33,7 +33,7 @@ class CreateVentPage extends StatefulWidget {
 
 class _CreateVentPageState extends State<CreateVentPage> with TagsProviderService {
 
-  final textController = VentTextController(); 
+  final postController = VentPostController(); 
   final postTextFields = PostTextField();
 
   final loading = SpinnerLoading();
@@ -48,8 +48,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<void> _postVentOnPressed() async {
 
-    final ventTitle = textController.titleController.text;
-    final ventBodyText = textController.bodyTextController.text;
+    final ventTitle = postController.titleController.text;
+    final ventBodyText = postController.bodyTextController.text;
 
     final tags = tagsProvider.selectedTags.isEmpty ? '' : tagsProvider.selectedTags.join(' ');
 
@@ -69,7 +69,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
     try {
 
-      final isVentAlreadyExists = await VerifyVent(title: ventTitle).ventIsAlreadyExists();
+      final isVentAlreadyExists = await VentChecker(title: ventTitle).isVentExists();
 
       if(isVentAlreadyExists) {
         CustomAlertDialog.alertDialog('Post with similar title already exists');
@@ -158,7 +158,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 12.0),
-            child: postTextFields.buildTitleField(titleController: textController.titleController),
+            child: postTextFields.buildTitleField(titleController: postController.titleController),
           ),   
 
           _buildSelectedTags(),
@@ -167,7 +167,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
           Padding(
             padding: const EdgeInsets.only(left: 17.0, right: 14.0),
-            child: postTextFields.buildBodyField(bodyController: textController.bodyTextController),
+            child: postTextFields.buildBodyField(bodyController: postController.bodyTextController),
           ),
 
           const SizedBox(height: 18)
@@ -308,7 +308,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<bool> _onClosePage() async {
 
-    if(textController.bodyTextController.text.isNotEmpty || textController.titleController.text.isNotEmpty) {
+    if(postController.bodyTextController.text.isNotEmpty || postController.titleController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardPost, 
       );
@@ -320,7 +320,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   @override
   void dispose() {
-    textController.dispose();
+    postController.dispose();
     isArchivedVentNotifier.dispose();
     tagsProvider.selectedTags.clear();
     super.dispose();

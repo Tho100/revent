@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class FollowSuggestionProvider extends ChangeNotifier {
   List<FollowSuggestionData> get suggestions => _suggestions; 
 
   void setSuggestions(List<FollowSuggestionData> suggestions) {
+    suggestions.shuffle(Random());
     _suggestions = suggestions;
     notifyListeners();
   }

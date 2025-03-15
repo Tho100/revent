@@ -143,7 +143,10 @@ class BottomsheetTagsSelection with TagsProviderService {
                           ),
                         ),
                         textInputAction: TextInputAction.done,
-                        onFieldSubmitted: (tag) {},
+                        onFieldSubmitted: (_) {
+                          FocusScope.of(context).unfocus();
+                          Navigator.pop(context);
+                        },
                         onChanged: (tagText) {
 
                           final spacesCount = tagText.split(' ').length - 1;
