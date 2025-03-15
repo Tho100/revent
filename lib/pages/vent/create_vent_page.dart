@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/controllers/vent_text_controller.dart';
+import 'package:revent/controllers/vent_post_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/get_it_extensions.dart';
@@ -33,7 +33,7 @@ class CreateVentPage extends StatefulWidget {
 
 class _CreateVentPageState extends State<CreateVentPage> with TagsProviderService {
 
-  final textController = VentTextController(); 
+  final textController = VentPostController(); 
   final postTextFields = PostTextField();
 
   final loading = SpinnerLoading();

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/controllers/vent_text_controller.dart';
+import 'package:revent/controllers/vent_post_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
@@ -29,7 +29,7 @@ class EditVentPage extends StatefulWidget {
 
 class _EditVentPageState extends State<EditVentPage> {
 
-  final textController = VentTextController(); 
+  final textController = VentPostController(); 
 
   Future<void> _saveOnPressed() async {
 
