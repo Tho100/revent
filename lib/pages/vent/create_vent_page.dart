@@ -17,7 +17,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/create_new_item.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
-import 'package:revent/service/query/vent/verify_vent.dart';
+import 'package:revent/service/query/vent/vent_checker.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
@@ -69,7 +69,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
     try {
 
-      final isVentAlreadyExists = await VerifyVent(title: ventTitle).ventIsAlreadyExists();
+      final isVentAlreadyExists = await VentChecker(title: ventTitle).isVentExists();
 
       if(isVentAlreadyExists) {
         CustomAlertDialog.alertDialog('Post with similar title already exists');
