@@ -99,7 +99,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
           child: Row(
             children: [
     
-              const Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
+              const Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 18),
     
               const SizedBox(width: 15),
     
@@ -116,7 +116,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
     
               IconButton(
                 onPressed: () => _deleteSearchHistory(text: searchText),
-                icon: const Icon(CupertinoIcons.clear, color: ThemeColor.secondaryWhite, size: 18)
+                icon: const Icon(CupertinoIcons.clear, color: ThemeColor.secondaryWhite, size: 16)
               ),
     
             ],
@@ -188,7 +188,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
           return Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.only(right: 12, top: 2, bottom: 16),
+              padding: const EdgeInsets.only(right: 12, bottom: 20),
               child: _buildClearRecentSearches(),
             ),
           );
@@ -197,7 +197,10 @@ class _MainSearchPageState extends State<MainSearchPage> {
         final adjustedIndex = index - 1;
         final reversedIndex = searchesHistory.length - 1 - adjustedIndex;
 
-        return _buildSearchItem(searchesHistory[reversedIndex]);
+        return Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 6.0),
+          child: _buildSearchItem(searchesHistory[reversedIndex]),
+        );
 
       },
     );
@@ -205,7 +208,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
   Widget _buildRecentSearches() {
     return Padding(
-      padding: const EdgeInsets.only(left: 22.0, right: 10.0, top: 20.0),
+      padding: const EdgeInsets.only(left: 20.0, right: 10.0, top: 20.0),
       child: ValueListenableBuilder(
         valueListenable: searchHistoryNotifier,
         builder: (_, searchHistoryText, __) {
