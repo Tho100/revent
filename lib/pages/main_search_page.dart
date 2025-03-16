@@ -103,12 +103,16 @@ class _MainSearchPageState extends State<MainSearchPage> {
     
               const SizedBox(width: 15),
     
-              Text(
-                searchText,
-                style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
-                  fontWeight: FontWeight.w700,
-                  fontSize: 16
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.60,
+                child: Text(
+                  searchText,
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.secondaryWhite,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 16
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
     
