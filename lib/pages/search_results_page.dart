@@ -139,8 +139,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
                   ),
                 ),
             
-                Align(
-                  alignment: Alignment.center,
+                Center(
                   child: SizedBox(
                     width: MediaQuery.of(context).size.width * 0.60,
                     child: Text(
@@ -150,7 +149,8 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
                       ),
-                      overflow: TextOverflow.ellipsis,  
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis
                     ),
                   ),
                 ),
