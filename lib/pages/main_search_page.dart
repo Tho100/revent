@@ -145,21 +145,73 @@ class _MainSearchPageState extends State<MainSearchPage> {
     );
   }
 
+  Widget _buildClearRecentSearches() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+
+        Text(
+          'Recent',
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontWeight: FontWeight.w700,
+            fontSize: 15
+          )
+        ),
+
+        GestureDetector(
+          onTap: () async {
+            await localStorageModel.deleteAllSearchHistory().then(
+              (_) => searchHistoryNotifier.value = []
+            );
+          },
+          child: Text(
+            'Clear',
+            style: GoogleFonts.inter(
+              color: ThemeColor.secondaryWhite,
+              fontWeight: FontWeight.w700,
+              fontSize: 15
+            )
+          ),
+        ),
+
+      ],
+    );
+  }
+
+  Widget _buildRecentSearchesListView(List<String> searchesHistory) {
+    return ListView.builder(
+      itemCount: searchesHistory.length + 1,
+      itemBuilder: (_, index) {
+
+        if (index == 0) {
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(right: 12, top: 2, bottom: 16),
+              child: _buildClearRecentSearches(),
+            ),
+          );
+        }
+
+        final adjustedIndex = index - 1;
+        final reversedIndex = searchesHistory.length - 1 - adjustedIndex;
+
+        return _buildSearchItem(searchesHistory[reversedIndex]);
+
+      },
+    );
+  }
+
   Widget _buildRecentSearches() {
     return Padding(
-      padding: const EdgeInsets.only(left: 25.0, right: 10.0, top: 20.0),
+      padding: const EdgeInsets.only(left: 22.0, right: 10.0, top: 20.0),
       child: ValueListenableBuilder(
         valueListenable: searchHistoryNotifier,
         builder: (_, searchHistoryText, __) {
           return searchHistoryText.isEmpty 
             ? _buildNoRecentSearches()
-            : ListView.builder(
-            itemCount: searchHistoryText.length,
-            itemBuilder: (_, index) {
-              final reversedIndex = searchHistoryText.length - 1 - index;
-              return _buildSearchItem(searchHistoryText[reversedIndex]);
-            },
-          );
+            : _buildRecentSearchesListView(searchHistoryText);
         },
       ),
     );
