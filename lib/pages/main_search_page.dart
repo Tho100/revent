@@ -240,7 +240,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context,
-        actions: [_buildSearchBar()],
+        titleWidget: _buildSearchBar(),
       ).buildAppBar(),
       body: _buildRecentSearches(),
     );
