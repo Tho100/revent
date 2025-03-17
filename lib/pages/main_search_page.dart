@@ -57,9 +57,8 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
   Widget _buildSearchBar() {
     return Padding(
-      padding: const EdgeInsets.only(top: 4.0),
+      padding: const EdgeInsets.only(right: 4.0, top: 4.0),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.80,
         child: TextFormField(
           autofocus: true,
           maxLines: 1,
