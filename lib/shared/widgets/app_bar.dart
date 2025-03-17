@@ -10,6 +10,7 @@ class CustomAppBar {
   final List<Widget>? actions;
   final PreferredSizeWidget? bottom;
   final Color? backgroundColor;
+  final Widget? titleWidget;
   final Widget? customLeading;
   final bool? enableCenter;
   final Color? leadingColor;
@@ -17,6 +18,7 @@ class CustomAppBar {
 
   const CustomAppBar({
     required this.context,
+    this.titleWidget,
     this.title,
     this.actions,
     this.bottom,
@@ -31,7 +33,7 @@ class CustomAppBar {
     return AppBar(
       centerTitle: enableCenter ?? true,
       automaticallyImplyLeading: false,
-      title: Text(
+      title: titleWidget ?? Text(
         title ?? '',
         style: GoogleFonts.inter(
           color: ThemeColor.white,

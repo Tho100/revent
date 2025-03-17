@@ -57,33 +57,31 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
   Widget _buildSearchBar() {
     return Padding(
-      padding: const EdgeInsets.only(right: 12, top: 4.0),
-      child: Center(
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.84,
-          child: TextFormField(
-            autofocus: true,
-            maxLines: 1,
-            controller: searchController,
-            style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
-              fontWeight: FontWeight.w700,
-            ),
-            decoration: InputDecoration(
-              hintText: 'Search for anything...',
-              counterText: '',
-              border: InputBorder.none,
-              hintStyle: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite, 
-                fontWeight: FontWeight.w700
-              ),
-            ),
-            textInputAction: TextInputAction.done,
-            onFieldSubmitted: (searchText) {
-              _addSearchHistory(text: searchText);
-              _goToSearchResults(searchText: searchText);
-            },
+      padding: const EdgeInsets.only(top: 4.0),
+      child: SizedBox(
+        width: MediaQuery.of(context).size.width * 0.80,
+        child: TextFormField(
+          autofocus: true,
+          maxLines: 1,
+          controller: searchController,
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontWeight: FontWeight.w700,
           ),
+          decoration: InputDecoration(
+            hintText: 'Search for anything...',
+            counterText: '',
+            border: InputBorder.none,
+            hintStyle: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite, 
+              fontWeight: FontWeight.w700
+            ),
+          ),
+          textInputAction: TextInputAction.done,
+          onFieldSubmitted: (searchText) {
+            _addSearchHistory(text: searchText);
+            _goToSearchResults(searchText: searchText);
+          },
         ),
       ),
     );
@@ -242,7 +240,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context,
-        actions: [_buildSearchBar()]
+        actions: [_buildSearchBar()],
       ).buildAppBar(),
       body: _buildRecentSearches(),
     );
