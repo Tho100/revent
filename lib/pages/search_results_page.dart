@@ -111,53 +111,50 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
 
   Widget _buildSearchTextContainer() {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 4.0),
-      child: Center(
-        child: Container(
-          width: MediaQuery.of(context).size.width * 0.84,
-          height: 45,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: ThemeColor.thirdWhite)
-          ),
-          child: InkWellEffect(
-            onPressed: () {
-              _clearSearchDataOnClose();
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const MainSearchPage())
-              );
-            },
-            child: Stack(
-              children: [
-            
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 18.0),
-                    child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
-                  ),
+      padding: const EdgeInsets.only(right: 10, top: 4.0),
+      child: Container(
+        height: 45,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(color: ThemeColor.thirdWhite)
+        ),
+        child: InkWellEffect(
+          onPressed: () {
+            _clearSearchDataOnClose();
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const MainSearchPage())
+            );
+          },
+          child: Stack(
+            children: [
+          
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Padding(
+                  padding: EdgeInsets.only(left: 18.0),
+                  child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
                 ),
-            
-                Center(
-                  child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.60,
-                    child: Text(
-                      widget.searchText,
-                      style: GoogleFonts.inter(
-                        color: ThemeColor.white,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 16,
-                      ),
-                      textAlign: TextAlign.center,
-                      overflow: TextOverflow.ellipsis
+              ),
+          
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.58,
+                  child: Text(
+                    widget.searchText,
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 16,
                     ),
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis
                   ),
                 ),
-            
-              ],
-            )
-          ),
+              ),
+          
+            ],
+          )
         ),
       ),
     );
@@ -184,7 +181,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
     return Scaffold(
       appBar: CustomAppBar(
         context: context,
-        actions: [_buildSearchTextContainer()]
+        titleWidget: _buildSearchTextContainer()
       ).buildAppBar(),    
       body: _buildResultsTabs(),
     );
