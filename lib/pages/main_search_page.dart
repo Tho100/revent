@@ -99,7 +99,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
           child: Row(
             children: [
     
-              const Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 18),
+              const Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
     
               const SizedBox(width: 15),
     
@@ -120,7 +120,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
     
               IconButton(
                 onPressed: () => _deleteSearchHistory(text: searchText),
-                icon: const Icon(CupertinoIcons.clear, color: ThemeColor.secondaryWhite, size: 16)
+                icon: const Icon(CupertinoIcons.clear, color: ThemeColor.secondaryWhite, size: 18)
               ),
     
             ],
@@ -159,7 +159,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
           style: GoogleFonts.inter(
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w700,
-            fontSize: 15
+            fontSize: 14
           )
         ),
 
@@ -174,7 +174,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
             style: GoogleFonts.inter(
               color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w700,
-              fontSize: 15
+              fontSize: 14
             )
           ),
         ),
@@ -192,7 +192,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
           return Align(
             alignment: Alignment.topLeft,
             child: Padding(
-              padding: const EdgeInsets.only(right: 12, bottom: 20),
+              padding: const EdgeInsets.only(right: 12, bottom: 25),
               child: _buildClearRecentSearches(),
             ),
           );
@@ -202,7 +202,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
         final reversedIndex = searchesHistory.length - 1 - adjustedIndex;
 
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 6.0),
+          padding: const EdgeInsets.symmetric(horizontal: 2.0),
           child: _buildSearchItem(searchesHistory[reversedIndex]),
         );
 
