@@ -111,10 +111,10 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
 
   Widget _buildSearchTextContainer() {
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0, right: 16.0, top: 4.0),
+      padding: const EdgeInsets.only(right: 14, top: 4.0),
       child: Center(
         child: Container(
-          width: MediaQuery.of(context).size.width * 0.84,
+          width: MediaQuery.of(context).size.width * 0.80,
           height: 45,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
@@ -141,7 +141,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
             
                 Center(
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.60,
+                    width: MediaQuery.of(context).size.width * 0.58,
                     child: Text(
                       widget.searchText,
                       style: GoogleFonts.inter(
@@ -184,7 +184,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
     return Scaffold(
       appBar: CustomAppBar(
         context: context,
-        actions: [_buildSearchTextContainer()]
+        titleWidget: _buildSearchTextContainer()
       ).buildAppBar(),    
       body: _buildResultsTabs(),
     );
