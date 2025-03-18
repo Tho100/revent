@@ -63,7 +63,10 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
         'creator': userProvider.user.username,
         'last_edit': dateTimeNow
         } 
-      : {'post_id': activeVentProvider.ventData.postId};
+      : {
+        'post_id': activeVentProvider.ventData.postId,
+        'last_edit': dateTimeNow
+        };
 
     await executeQuery(query, params);
 
