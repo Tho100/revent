@@ -33,7 +33,10 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
         AND ubi.blocked_username IS NULL
     ''';
 
-    final param = {'blocked_by': userProvider.user.username};
+    final param = {
+      'post_id': activeVentProvider.ventData.postId,
+      'blocked_by': userProvider.user.username
+    };
 
     final results = await executeQuery(getCommentsQuery, param);
 
