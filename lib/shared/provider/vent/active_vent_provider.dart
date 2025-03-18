@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 
 class ActiveVentData {
 
+  int postId;
+
   String title;
   String creator;
   String body;
@@ -11,6 +13,7 @@ class ActiveVentData {
   String? lastEdit;
 
   ActiveVentData({
+    required this.postId,
     required this.title,
     required this.creator,
     required this.body,
@@ -23,7 +26,7 @@ class ActiveVentData {
 class ActiveVentProvider extends ChangeNotifier {
 
   ActiveVentData _ventData = ActiveVentData(
-    title: '', creator: '', body: '', creatorPfp: Uint8List(0), lastEdit: ''
+    postId: 0, title: '', creator: '', body: '', creatorPfp: Uint8List(0), lastEdit: ''
   );
 
   ActiveVentData get ventData => _ventData;
@@ -35,6 +38,7 @@ class ActiveVentProvider extends ChangeNotifier {
 
   void setBody(String body) {
     _ventData = ActiveVentData(
+      postId: _ventData.postId,
       title: _ventData.title,
       creator: _ventData.creator,
       body: body,
@@ -46,6 +50,7 @@ class ActiveVentProvider extends ChangeNotifier {
 
   void setLastEdit(String lastEdit) {
     _ventData = ActiveVentData(
+      postId: _ventData.postId,
       title: _ventData.title,
       creator: _ventData.creator,
       body: _ventData.body,

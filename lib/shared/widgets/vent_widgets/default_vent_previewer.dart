@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -54,6 +55,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   late VentPreviewerWidgets ventPreviewer;
   late String ventBodyText;
+  late int postId;
 
   void _initializeVentPreviewer() {
     ventPreviewer = VentPreviewerWidgets(
@@ -109,6 +111,12 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
     );
   }
 
+  void _initializePostId() async {
+
+    postId = await PostIdGetter(title: widget.title, creator: widget.creator).getPostId();
+    
+  }
+
   void _initializeBodyText() async {
 
     final customBodyTextPage = [AppRoute.searchResults.path];
@@ -132,6 +140,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => VentPostPage(
+        postId: postId,
         title: widget.title, 
         bodyText: ventBodyText, 
         tags: widget.tags,
@@ -251,6 +260,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   @override
   void initState() {
+    _initializePostId();
     _initializeBodyText();
     _initializeVentPreviewer();
     super.initState();

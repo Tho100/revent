@@ -36,6 +36,7 @@ import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class VentPostPage extends StatefulWidget {
 
+  final int postId;
   final String title;
   final String bodyText;
   final String tags;
@@ -45,6 +46,7 @@ class VentPostPage extends StatefulWidget {
   final Uint8List pfpData;
 
   const VentPostPage({
+    required this.postId,
     required this.title,
     required this.bodyText,
     required this.tags,
@@ -707,6 +709,7 @@ class _VentPostPageState extends State<VentPostPage> with
   void initState() {
     activeVentProvider.setVentData(
       ActiveVentData(
+        postId: widget.postId,
         title: widget.title, 
         creator: widget.creator, 
         body: widget.bodyText,
