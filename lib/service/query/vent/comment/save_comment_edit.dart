@@ -1,6 +1,5 @@
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 
 class SaveCommentEdit extends BaseQueryService with 
   UserProfileProviderService, 
@@ -17,10 +16,6 @@ class SaveCommentEdit extends BaseQueryService with
 
   Future<void> save() async {
 
-    final postId = await PostIdGetter(
-      title: activeVentProvider.ventData.title, creator: activeVentProvider.ventData.creator
-    ).getPostId();
-
     const query = 
     '''
       UPDATE comments_info 
@@ -31,7 +26,7 @@ class SaveCommentEdit extends BaseQueryService with
     ''';
 
     final params = {
-      'post_id': postId,
+      'post_id': activeVentProvider.ventData.postId,
       'original_comment': originalComment,
       'new_comment': newComment,
       'commented_by': userProvider.user.username
