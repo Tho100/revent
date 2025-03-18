@@ -70,7 +70,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
       LEFT JOIN user_blocked_info ubi
         ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
       WHERE 
-        (LOWER(title) LIKE LOWER(:search_text) OR LOWER(body_text) LIKE LOWER(:search_text))
+        (LOWER(title) LIKE LOWER(:search_text) OR LOWER(body_text) LIKE LOWER(:search_text) OR LOWER(tags) LIKE LOWER(:search_text))
         AND ubi.blocked_username IS NULL;
     ''';
 

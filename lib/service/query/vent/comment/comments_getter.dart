@@ -12,7 +12,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
   final formatTimestamp = FormatDate();
 
   Future<Map<String, List<dynamic>>> getComments() async {
-
+    // TODO: Pass postID from vent-post page
     final postId = await PostIdGetter(
       title: activeVentProvider.ventData.title, creator: activeVentProvider.ventData.creator
     ).getPostId();

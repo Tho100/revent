@@ -28,6 +28,8 @@ class CommentSettings extends BaseQueryService {
     required String creator
   }) async {
 
+    // TODO: use post id parameter
+
     const query = 
       'SELECT comment_enabled FROM vent_info WHERE creator = :creator AND title = :title';
 
