@@ -3,7 +3,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class DeleteVent extends BaseQueryService with UserProfileProviderService {
+class DeleteVent extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
   final String title;
   final String creator;
@@ -15,9 +15,9 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService {
 
   Future<void> delete() async {
 
-    final postId = await PostIdGetter(
-      title: title, creator: userProvider.user.username
-    ).getPostId();
+    final postId = activeVentProvider.ventData.postId != 0 
+      ? activeVentProvider.ventData.postId 
+      : await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
     await _deleteVentInfo(postId: postId).then((_) async {
       await _deleteComments(postId: postId);
