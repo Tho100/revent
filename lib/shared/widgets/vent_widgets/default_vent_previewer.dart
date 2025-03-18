@@ -55,7 +55,8 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   late VentPreviewerWidgets ventPreviewer;
   late String ventBodyText;
-  late int postId;
+  
+  late int postId = 0;
 
   void _initializeVentPreviewer() {
     ventPreviewer = VentPreviewerWidgets(
