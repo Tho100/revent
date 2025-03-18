@@ -1,13 +1,11 @@
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/query/general/replies_id_getter.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
-class ReplyActions extends BaseQueryService {
+class ReplyActions extends BaseQueryService with RepliesProviderService, UserProfileProviderService {
 
   final String replyText;
   final String repliedBy;
@@ -21,14 +19,9 @@ class ReplyActions extends BaseQueryService {
     required this.commentedBy
   });
 
-  final activeVent = getIt.activeVentProvider.ventData;
-  final repliesProvider = getIt.commentRepliesProvider;
-
   Future<int> _getCommentId() async {
 
-    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
-
-    return await CommentIdGetter(postId: postId).getCommentId(
+    return await CommentIdGetter().getCommentId(
       username: commentedBy, commentText: commentText
     );
 
@@ -80,10 +73,10 @@ class ReplyActions extends BaseQueryService {
       reply: replyText,
       repliedBy: repliedBy, 
       replyTimestamp: formattedTimestamp,
-      pfpData: getIt.profileProvider.profile.profilePicture
+      pfpData: profileProvider.profile.profilePicture
     );
 
-    getIt.commentRepliesProvider.addReply(newReply);
+    repliesProvider.addReply(newReply);
 
   }
 
@@ -100,7 +93,7 @@ class ReplyActions extends BaseQueryService {
 
     final likesInfoParams = {
       'reply_id': replyId,
-      'liked_by': getIt.userProvider.user.username,
+      'liked_by': userProvider.user.username,
     };
 
     final isUserLikedReply = await _isUserLikedReply(

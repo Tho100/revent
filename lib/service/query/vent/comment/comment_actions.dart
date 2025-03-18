@@ -3,9 +3,8 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 
-class CommentActions extends BaseQueryService with CommentsProviderService {
+class CommentActions extends BaseQueryService with CommentsProviderService, VentProviderService {
 
   final String username;
   final String commentText;
@@ -19,14 +18,12 @@ class CommentActions extends BaseQueryService with CommentsProviderService {
 
   Future<Map<String, int>> _getIdInfo() async {
 
-    final postId = await PostIdGetter(title: activeVent.title, creator: activeVent.creator).getPostId();
-
-    final commentId = await CommentIdGetter(postId: postId).getCommentId(
+    final commentId = await CommentIdGetter().getCommentId(
       username: username, commentText: commentText
     );
 
     return {
-      'post_id': postId,
+      'post_id': activeVentProvider.ventData.postId,
       'comment_id': commentId
     };
 
