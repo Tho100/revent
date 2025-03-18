@@ -36,6 +36,7 @@ import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class VentPostPage extends StatefulWidget {
 
+  final int postId;
   final String title;
   final String bodyText;
   final String tags;
@@ -45,6 +46,7 @@ class VentPostPage extends StatefulWidget {
   final Uint8List pfpData;
 
   const VentPostPage({
+    required this.postId,
     required this.title,
     required this.bodyText,
     required this.tags,
@@ -82,9 +84,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   Future<void> _loadCommentsSettings() async {
 
-    final currentOptions = await commentSettings.getCurrentOptions(
-      title: widget.title, creator: widget.creator
-    );
+    final currentOptions = await commentSettings.getCurrentOptions();
 
     enableCommentNotifier.value = currentOptions['comment_enabled'] == 1;
 
@@ -93,8 +93,8 @@ class _VentPostPageState extends State<VentPostPage> with
   Future<void> _toggleCommentsOnPressed() async {
 
     enableCommentNotifier.value 
-      ? commentSettings.toggleComment(isEnableComment: 1, title: widget.title)
-      : commentSettings.toggleComment(isEnableComment: 0, title: widget.title);
+      ? commentSettings.toggleComment(isEnableComment: 1)
+      : commentSettings.toggleComment(isEnableComment: 0);
 
     if(!enableCommentNotifier.value) {
       commentsProvider.deleteComments();
@@ -707,6 +707,7 @@ class _VentPostPageState extends State<VentPostPage> with
   void initState() {
     activeVentProvider.setVentData(
       ActiveVentData(
+        postId: widget.postId,
         title: widget.title, 
         creator: widget.creator, 
         body: widget.bodyText,

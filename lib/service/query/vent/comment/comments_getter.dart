@@ -5,7 +5,6 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 
 class CommentsGetter extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
@@ -13,11 +12,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
 
   Future<Map<String, List<dynamic>>> getComments() async {
 
-    final postId = await PostIdGetter(
-      title: activeVentProvider.ventData.title, creator: activeVentProvider.ventData.creator
-    ).getPostId();
-
-    final commentIds = await CommentIdGetter(postId: postId).getAllCommentsId();
+    final commentIds = await CommentIdGetter().getAllCommentsId();
 
     const getCommentsQuery = 
     '''
@@ -38,10 +33,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
         AND ubi.blocked_username IS NULL
     ''';
 
-    final param = {
-      'post_id': postId,
-      'blocked_by': userProvider.user.username
-    };
+    final param = {'blocked_by': userProvider.user.username};
 
     final results = await executeQuery(getCommentsQuery, param);
 
@@ -63,13 +55,11 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
       .toList();
 
     final isLikedState = await _commentLikedState(
-      postId: postId,
       isLikedByCreator: false,
       commentIds: commentIds,
     );
 
     final isLikedByCreatorState = await _commentLikedState(
-      postId: postId,
       isLikedByCreator: true,
       commentIds: commentIds,
     );
@@ -88,7 +78,6 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
   }
 
   Future<List<bool>> _commentLikedState({
-    required int postId,
     required bool isLikedByCreator,
     required List<int> commentIds,
   }) async {
@@ -104,7 +93,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
 
     final params = {
       'liked_by': isLikedByCreator ? activeVentProvider.ventData.creator : userProvider.user.username,
-      'post_id': postId
+      'post_id': activeVentProvider.ventData.postId
     };
 
     final results = await executeQuery(readLikesQuery, params);

@@ -7,7 +7,10 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 
-class VentActions extends BaseQueryService with UserProfileProviderService, CommentsProviderService {
+class VentActions extends BaseQueryService with 
+  UserProfileProviderService, 
+  CommentsProviderService, 
+  VentProviderService {
 
   final String title;
   final String creator;
@@ -30,7 +33,9 @@ class VentActions extends BaseQueryService with UserProfileProviderService, Comm
 
   Future<void> likePost() async {
 
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+    final postId = activeVentProvider.ventData.postId != 0
+      ? activeVentProvider.ventData.postId
+      : await PostIdGetter(title: title, creator: creator).getPostId();
 
     const likesInfoParameterQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
 
@@ -120,8 +125,8 @@ class VentActions extends BaseQueryService with UserProfileProviderService, Comm
 
   Future<void> sendComment({required String comment}) async {
 
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
-
+    final postId = activeVentProvider.ventData.postId;
+      
     const insertCommentQuery = 
       'INSERT INTO comments_info (commented_by, comment, total_likes, total_replies, post_id) VALUES (:commented_by, :comment, :total_likes, :total_replies, :post_id)'; 
       
@@ -170,7 +175,9 @@ class VentActions extends BaseQueryService with UserProfileProviderService, Comm
 
   Future<void> savePost() async {
 
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
+    final postId = activeVentProvider.ventData.postId != 0 
+      ? activeVentProvider.ventData.postId
+      : await PostIdGetter(title: title, creator: creator).getPostId();
 
     const savedInfoParamsQuery = 'WHERE post_id = :post_id AND saved_by = :saved_by';
 

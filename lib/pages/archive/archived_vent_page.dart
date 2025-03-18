@@ -62,6 +62,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
     activeVentProvider.setVentData(
       ActiveVentData(
+        postId: 0,
         title: title, 
         creator: userProvider.user.username, 
         body: '',

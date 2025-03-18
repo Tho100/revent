@@ -15,11 +15,10 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
   Future<void> save() async {
 
     const query = 
-      'UPDATE vent_info SET body_text = :new_body WHERE title = :title AND creator = :creator';
+      'UPDATE vent_info SET body_text = :new_body WHERE post_id = :post_id';
 
     final params = {
-      'title': title,
-      'creator': userProvider.user.username,
+      'post_id': activeVentProvider.ventData.postId,
       'new_body': newBody
     };
 
@@ -56,13 +55,15 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
 
     final query = isFromArchive 
       ? 'UPDATE archive_vent_info SET last_edit = :last_edit WHERE title = :title AND creator = :creator'
-      : 'UPDATE vent_info SET last_edit = :last_edit WHERE title = :title AND creator = :creator';
+      : 'UPDATE vent_info SET last_edit = :last_edit WHERE post_id = :post_id';
 
-    final params = {
-      'title': title,
-      'creator': userProvider.user.username,
-      'last_edit': dateTimeNow
-    };
+    final params = isFromArchive 
+      ? {
+        'title': title,
+        'creator': userProvider.user.username,
+        'last_edit': dateTimeNow
+        } 
+      : {'post_id': activeVentProvider.ventData.postId};
 
     await executeQuery(query, params);
 
