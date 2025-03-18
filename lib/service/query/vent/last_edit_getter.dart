@@ -19,7 +19,10 @@ class LastEditGetter extends BaseQueryService with VentProviderService {
       : 'SELECT last_edit FROM vent_info WHERE post_id = :post_id';
 
     final params = isFromArchive 
-      ? {'title': activeVentProvider.ventData.title, 'creator': activeVentProvider.ventData.creator} 
+      ? {
+        'title': activeVentProvider.ventData.title, 
+        'creator': activeVentProvider.ventData.creator
+        } 
       : {'post_id': activeVentProvider.ventData.postId};
 
     final results = await executeQuery(query, params);
