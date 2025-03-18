@@ -61,6 +61,7 @@ class ActiveVentProvider extends ChangeNotifier {
   }
 
   void clearData() {
+    _ventData.postId = 0;
     _ventData.title = '';
     _ventData.creator = '';
     _ventData.body = '';
