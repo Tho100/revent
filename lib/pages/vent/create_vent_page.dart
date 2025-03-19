@@ -282,7 +282,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: CustomOutlinedButton(
-        customWidth: 38,
+        customWidth: 36,
         customHeight: 35,
         icon: CupertinoIcons.ellipsis_vertical,
         onPressed: () {
