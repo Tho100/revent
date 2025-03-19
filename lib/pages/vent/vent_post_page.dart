@@ -281,27 +281,37 @@ class _VentPostPageState extends State<VentPostPage> with
 
           Consumer<ActiveVentProvider>(
             builder: (_, data, __) {
+
               final lastEdit = data.ventData.lastEdit;
-              return lastEdit != '' 
-                ? Row(
-                  children: [
 
-                    const Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
-                    
-                    const SizedBox(width: 6),
+              if(lastEdit != '') {
+                return GestureDetector(
+                  onTap: () => SnackBarDialog.temporarySnack(
+                    message: 'Post was edited ${lastEdit == 'Just now' ? 'just now' : '$lastEdit ago'}.'
+                  ),
+                  child: Row(
+                    children: [
+                
+                      const Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
+                      
+                      const SizedBox(width: 6),
+                
+                      Text(
+                        '${lastEdit == 'Just now' ? 'Just now' : '$lastEdit ago'} ',
+                        style: GoogleFonts.inter(
+                          color: ThemeColor.thirdWhite,
+                          fontWeight: FontWeight.w700,
+                          fontSize: 12.2
+                        )
+                      ),
+                
+                    ],
+                  ),
+                );
+              }
 
-                    Text(
-                      '${lastEdit == 'Just now' ? 'Edit just now' : 'Edit $lastEdit ago'} ',
-                      style: GoogleFonts.inter(
-                        color: ThemeColor.thirdWhite,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12.2
-                      )
-                    ),
+              return const SizedBox.shrink();
 
-                  ],
-                ) 
-              : const SizedBox.shrink();
             },
           )
 
