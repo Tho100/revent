@@ -60,7 +60,6 @@ class _EditVentPageState extends State<EditVentPage> {
       }
 
     } catch (_) {
-      print(_.toString());
       SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
     }
 
