@@ -12,6 +12,7 @@ import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
 import 'package:revent/shared/widgets/bottomsheet/tags_bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/vent_options_bottomsheet.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -281,10 +282,20 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: CustomOutlinedButton(
-        customWidth: 45,
+        customWidth: 45, // TODO: Reduce the width
         customHeight: 35,
-        icon: CupertinoIcons.ellipsis_vertical,
-        onPressed: () {}
+        icon: CupertinoIcons.ellipsis_vertical, // TODO: Reduce the icon size
+        onPressed: () {
+          BottomsheetVentOptions().buildBottomsheet(
+            context: context,
+            archiveNotifier: isArchivedVentNotifier,
+            commentNotifier: isArchivedVentNotifier,
+            markNsfwNotifier: isArchivedVentNotifier,
+            archiveOnToggled: () => isArchivedVentNotifier.value = !isArchivedVentNotifier.value,
+            commentOnToggled: () {},
+            markNsfwOnToggled: () {},
+          );
+        }
       ),
     );
   }
@@ -300,6 +311,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
             const Spacer(),
           
             _buildAddTagsButton(),
+
+            // TODO: Add some spacing here
 
             _buildMoreOptionsButton()
           
