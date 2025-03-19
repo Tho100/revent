@@ -282,9 +282,9 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
       child: CustomOutlinedButton(
-        customWidth: 45, // TODO: Reduce the width
+        customWidth: 38,
         customHeight: 35,
-        icon: CupertinoIcons.ellipsis_vertical, // TODO: Reduce the icon size
+        icon: CupertinoIcons.ellipsis_vertical,
         onPressed: () {
           BottomsheetVentOptions().buildBottomsheet(
             context: context,
@@ -312,7 +312,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
           
             _buildAddTagsButton(),
 
-            // TODO: Add some spacing here
+            const SizedBox(width: 10),
 
             _buildMoreOptionsButton()
           

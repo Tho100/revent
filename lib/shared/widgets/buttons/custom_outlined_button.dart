@@ -12,6 +12,7 @@ class CustomOutlinedButton extends StatelessWidget {
   final double? customWidth;
   final double? customHeight;
   final double? customFontSize;
+  final double? customIconSize;
 
   const CustomOutlinedButton({
     required this.onPressed,
@@ -20,6 +21,7 @@ class CustomOutlinedButton extends StatelessWidget {
     this.customWidth, 
     this.customHeight,
     this.customFontSize,
+    this.customIconSize,
     super.key
   });
 
@@ -40,7 +42,7 @@ class CustomOutlinedButton extends StatelessWidget {
           shape: const StadiumBorder(),
         ),
         child: icon != null 
-          ? Icon(icon, color: ThemeColor.white)
+          ? Icon(icon, color: ThemeColor.white, size: customIconSize ?? 17)
           : Text(
             text!,
             style: GoogleFonts.inter(
