@@ -4,16 +4,19 @@ import 'package:revent/shared/themes/theme_color.dart';
 
 class CustomOutlinedButton extends StatelessWidget {
 
-  final String text;
   final VoidCallback onPressed;
+
+  final IconData? icon;
+  final String? text;
 
   final double? customWidth;
   final double? customHeight;
   final double? customFontSize;
 
   const CustomOutlinedButton({
-    required this.text, 
     required this.onPressed,
+    this.text, 
+    this.icon,
     this.customWidth, 
     this.customHeight,
     this.customFontSize,
@@ -36,13 +39,15 @@ class CustomOutlinedButton extends StatelessWidget {
           ),
           shape: const StadiumBorder(),
         ),
-        child: Text(
-          text,
-          style: GoogleFonts.inter(
-            color: ThemeColor.white,
-            fontWeight: FontWeight.w800,
-            fontSize: customFontSize ?? 17,
-          )
+        child: icon != null 
+          ? Icon(icon, color: ThemeColor.white)
+          : Text(
+            text!,
+            style: GoogleFonts.inter(
+              color: ThemeColor.white,
+              fontWeight: FontWeight.w800,
+              fontSize: customFontSize ?? 17,
+            )
         ),
       ),
     );

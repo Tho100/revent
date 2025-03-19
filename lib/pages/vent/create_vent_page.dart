@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -276,19 +277,31 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     );
   }
 
+  Widget _buildMoreOptionsButton() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4.0),
+      child: CustomOutlinedButton(
+        customWidth: 45,
+        customHeight: 35,
+        icon: CupertinoIcons.ellipsis_vertical,
+        onPressed: () {}
+      ),
+    );
+  }
+
   Widget _buildBottomOptions() {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 15.0, bottom: 8.0, top: 4.0),
+        padding: const EdgeInsets.only(right: 15.0, bottom: 8.0, top: 4.0),
         child: Row(
           children: [
-            
-            _buildArchivePostCheckBox(),
           
             const Spacer(),
           
-            _buildAddTagsButton()
+            _buildAddTagsButton(),
+
+            _buildMoreOptionsButton()
           
           ],
         ),
