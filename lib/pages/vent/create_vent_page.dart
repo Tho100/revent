@@ -348,6 +348,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
   void dispose() {
     postController.dispose();
     isArchivedVentNotifier.dispose();
+    chipsSelectedNotifier.dispose();
     tagsProvider.selectedTags.clear();
     super.dispose();
   }
