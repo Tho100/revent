@@ -52,7 +52,7 @@ class BottomsheetVentOptions {
                 },
                 activeColor: ThemeColor.white,
                 trackColor: ThemeColor.darkWhite,
-                thumbColor: isToggled ? ThemeColor.black : ThemeColor.white,
+                thumbColor: ThemeColor.black,
               );
             }
           ),
