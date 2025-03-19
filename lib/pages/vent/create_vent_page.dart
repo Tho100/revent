@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -11,6 +12,7 @@ import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
 import 'package:revent/shared/widgets/bottomsheet/tags_bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/vent_options_bottomsheet.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -276,19 +278,43 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     );
   }
 
+  Widget _buildMoreOptionsButton() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 4.0),
+      child: CustomOutlinedButton(
+        customWidth: 38,
+        customHeight: 35,
+        icon: CupertinoIcons.ellipsis_vertical,
+        onPressed: () {
+          BottomsheetVentOptions().buildBottomsheet(
+            context: context,
+            archiveNotifier: isArchivedVentNotifier,
+            commentNotifier: isArchivedVentNotifier,
+            markNsfwNotifier: isArchivedVentNotifier,
+            archiveOnToggled: () => isArchivedVentNotifier.value = !isArchivedVentNotifier.value,
+            commentOnToggled: () {},
+            markNsfwOnToggled: () {},
+          );
+        }
+      ),
+    );
+  }
+
   Widget _buildBottomOptions() {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
       child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 15.0, bottom: 8.0, top: 4.0),
+        padding: const EdgeInsets.only(right: 15.0, bottom: 8.0, top: 4.0),
         child: Row(
           children: [
-            
-            _buildArchivePostCheckBox(),
           
             const Spacer(),
           
-            _buildAddTagsButton()
+            _buildAddTagsButton(),
+
+            const SizedBox(width: 10),
+
+            _buildMoreOptionsButton()
           
           ],
         ),

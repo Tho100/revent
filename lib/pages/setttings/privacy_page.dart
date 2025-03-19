@@ -92,7 +92,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
                     },
                     activeColor: ThemeColor.white,
                     trackColor: ThemeColor.darkWhite,
-                    thumbColor: isToggled ? ThemeColor.black : ThemeColor.white,
+                    thumbColor: ThemeColor.black,
                   );
                 }
               ),

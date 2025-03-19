@@ -17,5 +17,6 @@ class ThemeColor {
   static const darkWhite = Color.fromARGB(255, 75, 75, 75);
 
   static const likedColor = Color.fromARGB(197, 244, 3, 51);
+  static const nsfwColor = Color.fromARGB(197, 244, 3, 115);
   
 }

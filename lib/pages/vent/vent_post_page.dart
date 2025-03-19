@@ -242,6 +242,44 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
+  Widget _buildLastEdit() {
+    return Consumer<ActiveVentProvider>(
+      builder: (_, data, __) {
+
+        final lastEdit = data.ventData.lastEdit;
+
+        if(lastEdit != '') {
+          return GestureDetector(
+            onTap: () => SnackBarDialog.temporarySnack(
+              message: 'Post was edited ${lastEdit == 'Just now' ? 'just now' : '$lastEdit ago'}.'
+            ),
+            child: Row(
+              children: [
+          
+                const Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
+                
+                const SizedBox(width: 6),
+          
+                Text(
+                  '${lastEdit == 'Just now' ? 'Just now' : '$lastEdit ago'} ',
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.thirdWhite,
+                    fontWeight: FontWeight.w700,
+                    fontSize: 12.2
+                  )
+                ),
+          
+              ],
+            ),
+          );
+        }
+
+        return const SizedBox.shrink();
+
+      },
+    );
+  }
+
   Widget _buildPostHeaderInfo() {
     return InkWellEffect(
       onPressed: () => NavigatePage.userProfilePage(username: widget.creator, pfpData: widget.pfpData),
@@ -279,31 +317,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
           const Spacer(),
 
-          Consumer<ActiveVentProvider>(
-            builder: (_, data, __) {
-              final lastEdit = data.ventData.lastEdit;
-              return lastEdit != '' 
-                ? Row(
-                  children: [
-
-                    const Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
-                    
-                    const SizedBox(width: 6),
-
-                    Text(
-                      '${lastEdit == 'Just now' ? 'Edit just now' : 'Edit $lastEdit ago'} ',
-                      style: GoogleFonts.inter(
-                        color: ThemeColor.thirdWhite,
-                        fontWeight: FontWeight.w700,
-                        fontSize: 12.2
-                      )
-                    ),
-
-                  ],
-                ) 
-              : const SizedBox.shrink();
-            },
-          )
+          _buildLastEdit()
 
         ],
       ),

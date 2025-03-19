@@ -14,13 +14,7 @@ class SearchResultsTabBarWidgets {
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: TabBarView(
         controller: controller,
-        children: [
-
-          const SearchPostsListView(),
-          const SearchAccountsListView(),
-          Container(),
-
-        ],
+        children: const [SearchPostsListView(), SearchAccountsListView()]
       ),
     );
   }
@@ -32,7 +26,6 @@ class SearchResultsTabBarWidgets {
       tabs: const [
         Tab(text: 'Posts'),
         Tab(text: 'Accounts'),
-        Tab(text: 'Tags'),
       ],
     ).buildTabBar();
   }
