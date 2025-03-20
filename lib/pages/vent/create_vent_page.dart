@@ -284,6 +284,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       child: CustomOutlinedButton(
         customWidth: 36,
         customHeight: 35,
+        customIconSize: 18,
         icon: CupertinoIcons.ellipsis_vertical,
         onPressed: () {
           BottomsheetVentOptions().buildBottomsheet(
