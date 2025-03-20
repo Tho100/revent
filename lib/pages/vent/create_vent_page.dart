@@ -40,7 +40,9 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   final loading = SpinnerLoading();
 
-  final isArchivedVentNotifier = ValueNotifier<bool>(false);
+  final allowCommentingNotifier = ValueNotifier<bool>(true);
+  final archiveVentNotifier = ValueNotifier<bool>(false); // TODO: Dispose all of them
+  final markAsNsfwNotifier = ValueNotifier<bool>(false);
 
   final chipsSelectedNotifier = ValueNotifier<List<bool>>(
     List<bool>.filled(PostTags.tags.length, false)
@@ -78,7 +80,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         return;
       }
 
-      if(isArchivedVentNotifier.value) {
+      if(archiveVentNotifier.value) {
         await _createArchiveVent(title: ventTitle, bodyText: ventBodyText);
         return;
       }
@@ -135,7 +137,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     await CreateNewItem().newVent(
       ventTitle: title, 
       ventBodyText: bodyText,
-      ventTags: tags
+      ventTags: tags,
+      commentDisabled: allowCommentingNotifier.value != true
     ).then((_) {
 
       loading.stopLoading();
@@ -209,7 +212,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     );
   }
 
-  Widget _buildArchivePostCheckBox() {
+  /*Widget _buildArchivePostCheckBox() {
     return CheckboxTheme(
       data: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith(
@@ -259,7 +262,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         ],
       ),
     );
-  }
+  }*/
 
   Widget _buildAddTagsButton() {
     return Padding(
@@ -284,16 +287,14 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       child: CustomOutlinedButton(
         customWidth: 36,
         customHeight: 35,
+        customIconSize: 18,
         icon: CupertinoIcons.ellipsis_vertical,
-        onPressed: () {
+        onPressed: () { // TODO: Create notifier/toggle function for each params
           BottomsheetVentOptions().buildBottomsheet(
             context: context,
-            archiveNotifier: isArchivedVentNotifier,
-            commentNotifier: isArchivedVentNotifier,
-            markNsfwNotifier: isArchivedVentNotifier,
-            archiveOnToggled: () => isArchivedVentNotifier.value = !isArchivedVentNotifier.value,
-            commentOnToggled: () {},
-            markNsfwOnToggled: () {},
+            commentNotifier: allowCommentingNotifier,
+            archiveNotifier: archiveVentNotifier,
+            markNsfwNotifier: markAsNsfwNotifier,
           );
         }
       ),
@@ -347,7 +348,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
   @override
   void dispose() {
     postController.dispose();
-    isArchivedVentNotifier.dispose();
+    archiveVentNotifier.dispose();
     chipsSelectedNotifier.dispose();
     tagsProvider.selectedTags.clear();
     super.dispose();

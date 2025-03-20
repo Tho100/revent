@@ -3,6 +3,7 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/service/query/vent/comment/comment_settings.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 
 class CreateNewItem extends BaseQueryService with UserProfileProviderService, TagsProviderService {
@@ -10,7 +11,8 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
   Future<void> newVent({
     required String ventTitle,
     required String ventBodyText,
-    required String ventTags
+    required String ventTags,
+    required bool commentDisabled
   }) async {
 
     await _insertVentInfo(
@@ -18,6 +20,11 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
     ).then(
       (_) async => await _updateTotalPosts()
     );
+
+    if(commentDisabled) {
+      print("IN");
+      await CommentSettings().toggleComment(isEnableComment: 0);
+    }
     
     _addVent(
       ventTitle: ventTitle, 
