@@ -40,8 +40,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   final loading = SpinnerLoading();
 
-  final archiveVentNotifier = ValueNotifier<bool>(false);
-  final allowCommentingNotifier = ValueNotifier<bool>(false);
+  final allowCommentingNotifier = ValueNotifier<bool>(true);
+  final archiveVentNotifier = ValueNotifier<bool>(false); // TODO: Dispose all of them
   final markAsNsfwNotifier = ValueNotifier<bool>(false);
 
   final chipsSelectedNotifier = ValueNotifier<List<bool>>(
@@ -137,7 +137,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     await CreateNewItem().newVent(
       ventTitle: title, 
       ventBodyText: bodyText,
-      ventTags: tags
+      ventTags: tags,
+      commentDisabled: allowCommentingNotifier.value != true
     ).then((_) {
 
       loading.stopLoading();

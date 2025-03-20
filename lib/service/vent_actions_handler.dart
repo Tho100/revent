@@ -69,7 +69,7 @@ class VentActionsHandler {
 
       await DeleteArchiveVent(title: title).delete().then(
         (_) {
-          _showTemporarySnack('Archive has been deleted.');
+          _showTemporarySnack('Archive has been deleted.'); // TODO: Update to Archive post ...
           _closeScreens(2);
         }
       );
