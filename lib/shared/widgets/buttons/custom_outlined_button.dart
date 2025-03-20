@@ -43,7 +43,7 @@ class CustomOutlinedButton extends StatelessWidget {
         ),
         child: icon != null 
           ? Transform.translate(
-              offset: const Offset(0, -1),
+              offset: const Offset(0.5, -1),
               child: Icon(icon, color: ThemeColor.white, size: customIconSize ?? 17)
             )
           : Text(
