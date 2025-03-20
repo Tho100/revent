@@ -289,7 +289,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         customHeight: 35,
         customIconSize: 18,
         icon: CupertinoIcons.ellipsis_vertical,
-        onPressed: () { // TODO: Create notifier/toggle function for each params
+        onPressed: () {
           BottomsheetVentOptions().buildBottomsheet(
             context: context,
             commentNotifier: allowCommentingNotifier,
