@@ -4,9 +4,9 @@ import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
 
-class SearchAccountsListView extends StatelessWidget {
+class SearchProfilesListView extends StatelessWidget {
 
-  const SearchAccountsListView({super.key});
+  const SearchProfilesListView({super.key});
 
   Widget _buildListView(SearchAccountsData accountsData) {
     return Padding(
