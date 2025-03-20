@@ -11,7 +11,6 @@ class BottomsheetVentOptions {
 
   Widget _buildOptionButton({
     required ValueNotifier notifier,
-    required VoidCallback onToggled,
     required String text, 
     bool? isNSFW = false,
     IconData? icon
@@ -46,10 +45,7 @@ class BottomsheetVentOptions {
             builder: (_, isToggled, __) {
               return CupertinoSwitch(
                 value: isToggled,
-                onChanged: (_) {
-                  notifier.value = !isToggled;
-                  onToggled();
-                },
+                onChanged: (_) => notifier.value = !isToggled,
                 activeColor: ThemeColor.white,
                 trackColor: ThemeColor.darkWhite,
                 thumbColor: ThemeColor.black,
@@ -67,9 +63,6 @@ class BottomsheetVentOptions {
     required ValueNotifier commentNotifier,
     required ValueNotifier archiveNotifier,
     required ValueNotifier markNsfwNotifier,
-    required VoidCallback commentOnToggled,
-    required VoidCallback archiveOnToggled,
-    required VoidCallback markNsfwOnToggled,
   }) {
     return Bottomsheet().buildBottomSheet(
       context: context, 
@@ -83,14 +76,12 @@ class BottomsheetVentOptions {
 
         _buildOptionButton(          
           notifier: commentNotifier,
-          onToggled: commentOnToggled,
           text: 'Allow commenting',
           icon: CupertinoIcons.chat_bubble,
         ),
 
         _buildOptionButton(
           notifier: archiveNotifier,
-          onToggled: archiveOnToggled,
           text: 'Archive vent',
           icon: CupertinoIcons.archivebox
         ),
@@ -101,7 +92,6 @@ class BottomsheetVentOptions {
 
         _buildOptionButton(
           notifier: markNsfwNotifier,
-          onToggled: markNsfwOnToggled,
           text: 'Mark as NSFW',
           isNSFW: true
         ),
