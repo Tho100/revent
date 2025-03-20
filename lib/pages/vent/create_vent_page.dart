@@ -41,7 +41,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
   final loading = SpinnerLoading();
 
   final allowCommentingNotifier = ValueNotifier<bool>(true);
-  final archiveVentNotifier = ValueNotifier<bool>(false); // TODO: Dispose all of them
+  final archiveVentNotifier = ValueNotifier<bool>(false);
   final markAsNsfwNotifier = ValueNotifier<bool>(false);
 
   final chipsSelectedNotifier = ValueNotifier<List<bool>>(
@@ -289,7 +289,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         customHeight: 35,
         customIconSize: 18,
         icon: CupertinoIcons.ellipsis_vertical,
-        onPressed: () { // TODO: Create notifier/toggle function for each params
+        onPressed: () {
           BottomsheetVentOptions().buildBottomsheet(
             context: context,
             commentNotifier: allowCommentingNotifier,
@@ -348,7 +348,9 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
   @override
   void dispose() {
     postController.dispose();
+    allowCommentingNotifier.dispose();
     archiveVentNotifier.dispose();
+    markAsNsfwNotifier.dispose();
     chipsSelectedNotifier.dispose();
     tagsProvider.selectedTags.clear();
     super.dispose();
