@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/service/user/user_login_service.dart';
-import 'package:revent/helper/textinput_formatter.dart';
+import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/helper/input_validator.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -146,7 +146,7 @@ class _SignInPageState extends State<SignInPage> {
           MainTextField(
             hintText: 'Enter your email address', 
             textInputAction: TextInputAction.next,
-            inputFormatters: TextInputFormatterModel().disableWhitespaces(),
+            inputFormatters: InputFormatters().noSpaces(),
             controller: authController.emailController
           ),
 

@@ -1,18 +1,18 @@
 import 'package:flutter/services.dart';
 
-class TextInputFormatterModel {
+class InputFormatters {
 
-  List<TextInputFormatter> disableWhitespaces() {
+  List<TextInputFormatter> noSpaces() {
     return [FilteringTextInputFormatter.deny(RegExp(r'\s'))];
   }
 
-  List<TextInputFormatter> onlyAllowLetters() {
+  List<TextInputFormatter> onlyLetters() {
     return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))];
   }
 
   List<TextInputFormatter> usernameFormatter() {
     return [
-      ...TextInputFormatterModel().disableWhitespaces(), 
+      ...noSpaces(), 
       FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9._]'))
     ];
   }

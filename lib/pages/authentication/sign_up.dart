@@ -3,7 +3,7 @@ import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/service/user/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/helper/textinput_formatter.dart';
+import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/helper/input_validator.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -115,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
             hintText: 'Enter a username', 
             maxLength: 24,
             textInputAction: TextInputAction.next,
-            inputFormatters: TextInputFormatterModel().usernameFormatter(),
+            inputFormatters: InputFormatters().usernameFormatter(),
             controller: authController.usernameController,
           ),
 
@@ -124,7 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
           MainTextField(
             hintText: 'Enter your email address', 
             textInputAction: TextInputAction.next,
-            inputFormatters: TextInputFormatterModel().disableWhitespaces(),
+            inputFormatters: InputFormatters().noSpaces(),
             controller: authController.emailController,
           ),
 

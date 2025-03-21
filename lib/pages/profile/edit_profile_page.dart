@@ -7,7 +7,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/user/user_socials.dart';
 import 'package:revent/service/query/user_profile/profile_data_update.dart';
-import 'package:revent/helper/textinput_formatter.dart';
+import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -406,7 +406,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
                 hintText: '',
                 maxLines: 1,
                 maxLength: 10,
-                inputFormatters: TextInputFormatterModel().onlyAllowLetters()
+                inputFormatters: InputFormatters().onlyLetters()
               ),
             ),
 
@@ -429,7 +429,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
                 hintText: '',
                 maxLines: 1,
                 maxLength: 10,
-                inputFormatters: TextInputFormatterModel().onlyAllowLetters()
+                inputFormatters: InputFormatters().onlyLetters()
               ),
             ),
 
