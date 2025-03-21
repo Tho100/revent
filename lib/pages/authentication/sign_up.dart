@@ -115,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
             hintText: 'Enter a username', 
             maxLength: 24,
             textInputAction: TextInputAction.next,
-            inputFormatters: TextInputFormatterModel().disableWhitespaces(),
+            inputFormatters: TextInputFormatterModel().onlyAllowLettersAndNumbers(),
             controller: authController.usernameController,
           ),
 
