@@ -22,7 +22,6 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
     );
 
     if(commentDisabled) {
-      print("IN");
       await CommentSettings().toggleComment(isEnableComment: 0);
     }
     

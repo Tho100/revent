@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mysql_client/mysql_client.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/user/user_data_registration.dart';
@@ -50,7 +51,7 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
     if (data.rows.isNotEmpty) {
 
       WidgetsBinding.instance.addPostFrameCallback(
-        (_) => CustomAlertDialog.alertDialogTitle('Sign up failed', errorMessage)
+        (_) => CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, errorMessage)
       );
 
       return true;

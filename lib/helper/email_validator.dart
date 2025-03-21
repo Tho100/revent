@@ -1,8 +1,0 @@
-class EmailValidator {
-  
-  bool validateEmail(String emailInput) {
-    return RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-      .hasMatch(emailInput);
-  }
-
-}

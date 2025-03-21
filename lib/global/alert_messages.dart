@@ -1,5 +1,8 @@
 class AlertMessages {
 
+  static const failedSignUp = 'Sign up failed';
+  static const failedSignIn = 'Sign in failed';
+
   static const savedChanges = 'Saved changes.';
 
   static const defaultError = 'Something went wrong.';

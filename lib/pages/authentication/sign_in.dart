@@ -3,8 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/service/user/user_login_service.dart';
-import 'package:revent/helper/textinput_formatter.dart';
-import 'package:revent/helper/email_validator.dart';
+import 'package:revent/helper/input_formatters.dart';
+import 'package:revent/helper/input_validator.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -53,18 +53,18 @@ class _SignInPageState extends State<SignInPage> {
     final authInput = authController.passwordController.text;
     final emailInput = authController.emailController.text;
 
-    if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle('Sign in failed', 'Email address is not valid');
+    if (!InputValidator().validEmailFormat(emailInput)) {
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, 'Email address is not valid');
       return;
     }
 
     if (emailInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle('Sign in failed', 'Please enter your email address');
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, 'Please enter your email address');
       return;
     }
 
     if (authInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle('Sign in failed', 'Please enter your password');              
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, 'Please enter your password');              
       return;
     }
 
@@ -146,8 +146,8 @@ class _SignInPageState extends State<SignInPage> {
           MainTextField(
             hintText: 'Enter your email address', 
             textInputAction: TextInputAction.next,
-            inputFormatters: TextInputFormatterModel().disableWhitespaces(),
-            controller: authController.emailController,
+            inputFormatters: InputFormatters().noSpaces(),
+            controller: authController.emailController
           ),
 
           const SizedBox(height: 15),

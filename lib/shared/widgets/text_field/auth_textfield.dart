@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/helper/textinput_formatter.dart';
+import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 
@@ -19,7 +19,7 @@ class AuthTextField {
             color: ThemeColor.secondaryWhite,
             fontWeight: FontWeight.w700,
           ),
-          inputFormatters: TextInputFormatterModel().disableWhitespaces(),
+          inputFormatters: InputFormatters().noSpaces(),
           controller: controller,
           obscureText: !value,
           decoration: ThemeStyle.txtFieldStye(
