@@ -17,8 +17,4 @@ class TextInputFormatterModel {
     ];
   }
 
-  bool isValidUsernameFormat(String username) {
-    return RegExp(r'^(?!.*\.\.)(?!^\.)[a-zA-Z0-9._]+(?<!\.)$').hasMatch(username);
-  }
-
 }

@@ -4,7 +4,7 @@ import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/service/user/user_login_service.dart';
 import 'package:revent/helper/textinput_formatter.dart';
-import 'package:revent/helper/email_validator.dart';
+import 'package:revent/helper/input_validator.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -53,7 +53,7 @@ class _SignInPageState extends State<SignInPage> {
     final authInput = authController.passwordController.text;
     final emailInput = authController.emailController.text;
 
-    if (!EmailValidator().validateEmail(emailInput)) {
+    if (!InputValidator().validEmailFormat(emailInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, 'Email address is not valid');
       return;
     }

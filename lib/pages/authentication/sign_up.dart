@@ -4,7 +4,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/service/user/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/textinput_formatter.dart';
-import 'package:revent/helper/email_validator.dart';
+import 'package:revent/helper/input_validator.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/single_text_loading.dart';
@@ -64,7 +64,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    if(TextInputFormatterModel().isValidUsernameFormat(usernameInput)) {
+    if(!InputValidator().validUsernameFormat(usernameInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Username is invalid');
       return;
     }
@@ -74,7 +74,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    if (!EmailValidator().validateEmail(emailInput)) {
+    if (!InputValidator().validEmailFormat(emailInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Email address is not valid');
       return;
     }
