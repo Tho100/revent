@@ -65,17 +65,17 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     if(TextInputFormatterModel().isValidUsernameFormat(usernameInput)) {
-      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Username is invalid');
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Username is invalid');
       return;
     }
 
     if (authInput.length <= 5) {
-      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Password must be at least 6 characters');
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Password must be at least 6 characters');
       return;
     }
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Email address is not valid'); // TODO: Create alert_message for sign up failed
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Email address is not valid');
       return;
     }
 
