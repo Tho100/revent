@@ -64,8 +64,8 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    if (usernameInput.contains(RegExp(r'[&%;?]'))) {
-      CustomAlertDialog.alertDialogTitle('Sign up failed', "Username can't include special characters");
+    if(TextInputFormatterModel().isValidUsernameFormat(usernameInput)) {
+      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Username is invalid');
       return;
     }
 
@@ -75,7 +75,7 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     if (!EmailValidator().validateEmail(emailInput)) {
-      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Email address is not valid');
+      CustomAlertDialog.alertDialogTitle('Sign up failed', 'Email address is not valid'); // TODO: Create alert_message for sign up failed
       return;
     }
 
@@ -115,7 +115,7 @@ class _SignUpPageState extends State<SignUpPage> {
             hintText: 'Enter a username', 
             maxLength: 24,
             textInputAction: TextInputAction.next,
-            inputFormatters: TextInputFormatterModel().onlyAllowLettersAndNumbers(),
+            inputFormatters: TextInputFormatterModel().usernameFormatter(),
             controller: authController.usernameController,
           ),
 

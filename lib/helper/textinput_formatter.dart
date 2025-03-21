@@ -10,11 +10,15 @@ class TextInputFormatterModel {
     return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))];
   }
 
-  List<TextInputFormatter> onlyAllowLettersAndNumbers() {
+  List<TextInputFormatter> usernameFormatter() {
     return [
       ...TextInputFormatterModel().disableWhitespaces(), 
-      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9]'))
+      FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9._]'))
     ];
+  }
+
+  bool isValidUsernameFormat(String username) {
+    return RegExp(r'^(?!.*\.\.)(?!^\.)[a-zA-Z0-9._]+(?<!\.)$').hasMatch(username);
   }
 
 }
