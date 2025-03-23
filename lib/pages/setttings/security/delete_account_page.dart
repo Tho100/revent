@@ -27,7 +27,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
 
   final currentPasswordNotifier = ValueNotifier<bool>(false);
 
-  void _deleteAccountConfirmation() {
+  void _deactivateAccountConfirmationDialog() {
     CustomAlertDialog.alertDialogCustomOnPress(
       message: AlertMessages.deleteAccount, 
       buttonMessage: 'Delete', 
@@ -38,7 +38,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
     );
   }
 
-  Future<void> _deleteOnPressed() async {
+  Future<void> _deactivateOnPressed() async {
 
     try {
 
@@ -49,13 +49,12 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
       final currentPasswordInput = authController.currentPasswordController.text;
       final currentPasswordInputHash = HashingModel().computeHash(currentPasswordInput);
 
-      if(currentPasswordHash == currentPasswordInputHash) {
-        _deleteAccountConfirmation();
-        
-      } else {
+      if(currentPasswordHash != currentPasswordInputHash) {
         CustomAlertDialog.alertDialog('Password is incorrect');
-
+        return;
       }
+
+      _deactivateAccountConfirmationDialog();
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
@@ -94,7 +93,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
             customFontSize: 17,
             onPressed: () async {
               FocusScope.of(context).unfocus(); 
-              await _deleteOnPressed();
+              await _deactivateOnPressed();
             }
           ),
     
