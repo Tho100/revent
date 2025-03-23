@@ -12,22 +12,22 @@ import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/header_text.dart';
 import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
 
-class DeleteAccountPage extends StatefulWidget {
+class DeactivateAccountPage extends StatefulWidget {
 
-  const DeleteAccountPage({super.key});
+  const DeactivateAccountPage({super.key});
 
   @override
-  State<DeleteAccountPage> createState() => _DeleteAccountPageState();
+  State<DeactivateAccountPage> createState() => _DeleteAccountPageState();
 
 }
 
-class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileProviderService {
+class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProfileProviderService {
 
   final authController = SecurityAuthController();
 
   final currentPasswordNotifier = ValueNotifier<bool>(false);
 
-  void _deleteAccountConfirmation() {
+  void _deactivateAccountConfirmationDialog() {
     CustomAlertDialog.alertDialogCustomOnPress(
       message: AlertMessages.deleteAccount, 
       buttonMessage: 'Delete', 
@@ -38,7 +38,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
     );
   }
 
-  Future<void> _deleteOnPressed() async {
+  Future<void> _deactivateOnPressed() async {
 
     try {
 
@@ -49,13 +49,12 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
       final currentPasswordInput = authController.currentPasswordController.text;
       final currentPasswordInputHash = HashingModel().computeHash(currentPasswordInput);
 
-      if(currentPasswordHash == currentPasswordInputHash) {
-        _deleteAccountConfirmation();
-        
-      } else {
+      if(currentPasswordHash != currentPasswordInputHash) {
         CustomAlertDialog.alertDialog('Password is incorrect');
-
+        return;
       }
+
+      _deactivateAccountConfirmationDialog();
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
@@ -74,7 +73,7 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
           const Padding(
             padding: EdgeInsets.only(left: 4.0),
             child: HeaderText(
-              title: 'Delete Account', 
+              title: 'Deactivate Account', 
               subTitle: 'Your entire account data will be permanently deleted and this action is irreversible.'
             ),
           ),
@@ -90,11 +89,11 @@ class _DeleteAccountPageState extends State<DeleteAccountPage> with UserProfileP
           const SizedBox(height: 30),
 
           MainButton(
-            text: 'Delete',
+            text: 'Deactivate',
             customFontSize: 17,
             onPressed: () async {
               FocusScope.of(context).unfocus(); 
-              await _deleteOnPressed();
+              await _deactivateOnPressed();
             }
           ),
     
