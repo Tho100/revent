@@ -75,7 +75,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget _buildChip(String label) {
+  Widget _buildTagsChips(String label) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -104,7 +104,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget _buildTagsChoiceChips() {
+  Widget _buildPopularTags() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -126,7 +126,7 @@ class _SearchPageState extends State<SearchPage> {
             spacing: 8.0, 
             children: [
               for(final tags in chipsTags) ... [
-                _buildChip(tags)
+                _buildTagsChips(tags)
               ]
             ],
           ),
@@ -146,7 +146,7 @@ class _SearchPageState extends State<SearchPage> {
 
           const SizedBox(height: 32),
   
-          _buildTagsChoiceChips(),
+          _buildPopularTags(),
 
         ]
       ),
