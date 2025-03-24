@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/main_search_page.dart';
+import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
@@ -78,38 +79,35 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget _buildChip(String label, int index) {
-    return ValueListenableBuilder(
-      valueListenable: chipsSelectedNotifier,
-      builder: (_, chipSelected, __) {
-        return ChoiceChip(
-        label: Text(
-          '#$label',
-            style: GoogleFonts.inter(
-              color: chipSelected[index] ?ThemeColor.mediumBlack : ThemeColor.secondaryWhite,
-              fontWeight: FontWeight.w700,
-              fontSize: 14
-            )
-          ),
-          selected: chipSelected[index],
-          onSelected: (bool selected) {
-            chipsSelectedNotifier.value[index] = selected;
-            chipsSelectedNotifier.value = List.from(chipSelected);
-          },
-          selectedColor: ThemeColor.white,
-          backgroundColor: ThemeColor.black,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-            side: BorderSide(
-              color: chipSelected[index] ? ThemeColor.black : ThemeColor.thirdWhite, 
-              width: 1,
-            ),
-          ),
+  Widget _buildChip(String label) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (_) => SearchResultsPage(searchText: "#$label"))
         );
       },
+      child: Chip(
+        label: Text(
+          '#$label',
+          style: GoogleFonts.inter(
+            color: ThemeColor.secondaryWhite,
+            fontWeight: FontWeight.w700,
+            fontSize: 14,
+          ),
+        ),
+        backgroundColor: ThemeColor.black,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+          side: const BorderSide(
+            color: ThemeColor.thirdWhite,
+            width: 1,
+          ),
+        ),
+      ),
     );
   }
-  
+
   Widget _buildTagsChoiceChips() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +130,7 @@ class _SearchPageState extends State<SearchPage> {
             spacing: 8.0, 
             children: [
               for(int i=0; i<chipsSelectedNotifier.value.length; i++) ... [
-                _buildChip(chipsTags[i], i),
+                _buildChip(chipsTags[i]),
               ]
             ],
           ),
