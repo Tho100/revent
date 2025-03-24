@@ -26,10 +26,6 @@ class _SearchPageState extends State<SearchPage> {
 
   final chipsTags = PostTags.tags;
 
-  final chipsSelectedNotifier = ValueNotifier<List<bool>>(
-    List<bool>.filled(PostTags.tags.length, false)
-  );
-
   Widget _buildSearchBar() {
     return Align(
       alignment: Alignment.center,
@@ -129,8 +125,8 @@ class _SearchPageState extends State<SearchPage> {
           child: Wrap(
             spacing: 8.0, 
             children: [
-              for(int i=0; i<chipsSelectedNotifier.value.length; i++) ... [
-                _buildChip(chipsTags[i]),
+              for(final tags in chipsTags) ... [
+                _buildChip(tags)
               ]
             ],
           ),
