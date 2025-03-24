@@ -26,10 +26,6 @@ class _SearchPageState extends State<SearchPage> {
 
   final chipsTags = PostTags.tags;
 
-  final chipsSelectedNotifier = ValueNotifier<List<bool>>(
-    List<bool>.filled(PostTags.tags.length, false)
-  );
-
   Widget _buildSearchBar() {
     return Align(
       alignment: Alignment.center,
@@ -79,7 +75,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget _buildChip(String label) {
+  Widget _buildTagsChips(String label) {
     return GestureDetector(
       onTap: () {
         Navigator.push(
@@ -108,7 +104,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Widget _buildTagsChoiceChips() {
+  Widget _buildPopularTags() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -129,8 +125,8 @@ class _SearchPageState extends State<SearchPage> {
           child: Wrap(
             spacing: 8.0, 
             children: [
-              for(int i=0; i<chipsSelectedNotifier.value.length; i++) ... [
-                _buildChip(chipsTags[i]),
+              for(final tags in chipsTags) ... [
+                _buildTagsChips(tags)
               ]
             ],
           ),
@@ -150,7 +146,7 @@ class _SearchPageState extends State<SearchPage> {
 
           const SizedBox(height: 32),
   
-          _buildTagsChoiceChips(),
+          _buildPopularTags(),
 
         ]
       ),
