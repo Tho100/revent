@@ -64,7 +64,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
   }
 
-  Future<Map<String, dynamic>> getSearchVentsData({required String? searchTitleText}) async {
+  Future<Map<String, dynamic>> getSearchVentsData({required String? searchText}) async {
 
     const query = '''
       SELECT 
@@ -78,7 +78,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
     ''';
 
     final params = {
-      'search_text': '%$searchTitleText%',
+      'search_text': '%$searchText%',
       'blocked_by': userProvider.user.username
     };
 
