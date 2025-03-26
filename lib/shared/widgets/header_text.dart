@@ -6,10 +6,12 @@ class HeaderText extends StatelessWidget {
 
   final String title;
   final String subTitle;
+  final double? customTitleSize;
 
   const HeaderText({
     required this.title,
     required this.subTitle,
+    this.customTitleSize,
     super.key
   });
 
@@ -27,7 +29,7 @@ class HeaderText extends StatelessWidget {
             title,
             style: GoogleFonts.inter(
               color: ThemeColor.white,
-              fontSize: 32,
+              fontSize: customTitleSize ?? 32,
               fontWeight: FontWeight.w800,
             ),
           ),

@@ -74,7 +74,8 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
             padding: EdgeInsets.only(left: 4.0),
             child: HeaderText(
               title: 'Deactivate Account', 
-              subTitle: 'Your entire account data will be permanently deleted and this action is irreversible.'
+              subTitle: 'Your entire account data will be permanently deleted and this action is irreversible.',
+              customTitleSize: 30
             ),
           ),
           
