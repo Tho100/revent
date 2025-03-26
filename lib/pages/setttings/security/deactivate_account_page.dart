@@ -74,14 +74,15 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
             padding: EdgeInsets.only(left: 4.0),
             child: HeaderText(
               title: 'Deactivate Account', 
-              subTitle: 'Your entire account data will be permanently deleted and this action is irreversible.'
+              subTitle: 'Your entire account data will be permanently deleted and this action is irreversible.',
+              customTitleSize: 30
             ),
           ),
           
           const SizedBox(height: 35),
 
           AuthTextField().passwordTextField(
-            hintText: 'Enter your current password',
+            hintText: 'Enter your password',
             controller: authController.currentPasswordController, 
             visibility: currentPasswordNotifier
           ),
