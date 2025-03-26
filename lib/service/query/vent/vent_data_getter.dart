@@ -66,6 +66,8 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getSearchVentsData({required String? searchText}) async {
 
+    final cleanSearchText = searchText?.replaceAll(RegExp(r'[^\w\s]'), '') ?? '';
+
     const query = '''
       SELECT 
         post_id, title, creator, created_at, tags, total_likes, total_comments 
@@ -78,7 +80,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
     ''';
 
     final params = {
-      'search_text': '%$searchText%',
+      'search_text': '%$cleanSearchText%',
       'blocked_by': userProvider.user.username
     };
 
