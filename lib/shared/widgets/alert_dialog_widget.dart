@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_style.dart';
 
 class AlertDialogWidget extends StatelessWidget {
 
@@ -19,10 +20,7 @@ class AlertDialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        side: const BorderSide(
-          color: ThemeColor.lightGrey,
-          width: 1
-        ),
+        side: ThemeStyle.dialogSideBorder,
         borderRadius: BorderRadius.circular(20)
       ),
       backgroundColor: ThemeColor.black,

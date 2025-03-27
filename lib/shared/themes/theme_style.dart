@@ -39,6 +39,11 @@ class ThemeStyle {
       borderRadius: BorderRadius.zero, 
     ),
   );
+
+  static const dialogSideBorder = BorderSide(
+    color: ThemeColor.lightGrey,
+    width: 1
+  );
   
   static const btnBottomsheetIconColor = ThemeColor.thirdWhite;
 
