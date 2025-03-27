@@ -42,7 +42,7 @@ class SecurityPage extends StatelessWidget {
           const SizedBox(height: 8),
 
           SettingsButton(
-            text: 'Delete account', 
+            text: 'Deactivate account', 
             makeRed: true,
             onPressed: () {
               Navigator.push(
