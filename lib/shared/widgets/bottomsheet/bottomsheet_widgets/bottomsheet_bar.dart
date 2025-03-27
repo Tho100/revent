@@ -7,14 +7,17 @@ class BottomsheetBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: Alignment.center,
-      child: Container(
-        width: 35,
-        height: 6,
-        decoration: BoxDecoration(
-          color: ThemeColor.darkWhite,
-          borderRadius: BorderRadius.circular(18),
+    return Padding(
+      padding: const EdgeInsets.only(top: 8.0),
+      child: Align(
+        alignment: Alignment.center,
+        child: Container(
+          width: 35,
+          height: 6,
+          decoration: BoxDecoration(
+            color: ThemeColor.white,
+            borderRadius: BorderRadius.circular(18),
+          ),
         ),
       ),
     );

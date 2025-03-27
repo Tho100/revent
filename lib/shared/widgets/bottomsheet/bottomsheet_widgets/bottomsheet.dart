@@ -8,10 +8,14 @@ class Bottomsheet {
     required List<Widget> children
   }) {
     return showModalBottomSheet(
-      backgroundColor: ThemeColor.mediumBlack,
+      backgroundColor: ThemeColor.black,
       shape: const RoundedRectangleBorder( 
+        side: BorderSide(
+          color: ThemeColor.lightGrey,
+          width: 1
+        ),
         borderRadius: BorderRadius.vertical(
-          top: Radius.circular(18),
+          top: Radius.circular(25)
         ),
       ),
       isScrollControlled: true,
