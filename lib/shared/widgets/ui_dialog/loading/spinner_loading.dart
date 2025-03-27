@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 
 class SpinnerLoading {
@@ -26,8 +27,9 @@ class SpinnerLoading {
 
   AlertDialog _buildLoadingDialog(BuildContext context) {
     return AlertDialog(
-      backgroundColor: ThemeColor.darkGrey,
+      backgroundColor: ThemeColor.black,
       shape: RoundedRectangleBorder(
+        side: ThemeStyle.dialogSideBorder,
         borderRadius: BorderRadius.circular(14),
       ),
       title: const SizedBox(

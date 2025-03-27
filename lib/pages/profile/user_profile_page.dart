@@ -374,7 +374,6 @@ class _UserProfilePageState extends State<UserProfilePage> with
               username: widget.username, 
               pronouns: pronounsNotifier.value,
               pfpData: widget.pfpData,
-              totalVents: postsNotifier.value,
               joinedDate: joinedDate
             );
           });

@@ -12,6 +12,7 @@ class BottomsheetVentOptions {
   Widget _buildOptionButton({
     required ValueNotifier notifier,
     required String text, 
+    VoidCallback? onToggled,
     bool? isNSFW = false,
     IconData? icon
   }) {
@@ -45,7 +46,15 @@ class BottomsheetVentOptions {
             builder: (_, isToggled, __) {
               return CupertinoSwitch(
                 value: isToggled,
-                onChanged: (_) => notifier.value = !isToggled,
+                onChanged: (_) {
+
+                  notifier.value = !isToggled;
+
+                  if(onToggled != null) {
+                    onToggled();
+                  }
+
+                },
                 activeColor: ThemeColor.white,
                 trackColor: ThemeColor.darkWhite,
                 thumbColor: ThemeColor.black,
@@ -78,12 +87,14 @@ class BottomsheetVentOptions {
           notifier: commentNotifier,
           text: 'Allow commenting',
           icon: CupertinoIcons.chat_bubble,
+          onToggled: () => archiveNotifier.value = false
         ),
 
         _buildOptionButton(
           notifier: archiveNotifier,
           text: 'Archive vent',
-          icon: CupertinoIcons.archivebox
+          icon: CupertinoIcons.archivebox,
+          onToggled: () => commentNotifier.value = false
         ),
 
         const Divider(color: ThemeColor.lightGrey),

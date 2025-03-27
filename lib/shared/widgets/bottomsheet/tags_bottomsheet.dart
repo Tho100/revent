@@ -58,11 +58,11 @@ class BottomsheetTagsSelection with TagsProviderService {
 
           },
           selectedColor: ThemeColor.white,
-          backgroundColor: ThemeColor.mediumBlack,
+          backgroundColor: ThemeColor.black,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
             side: BorderSide(
-              color: chipSelected[index] ? ThemeColor.mediumBlack : ThemeColor.thirdWhite, 
+              color: chipSelected[index] ? ThemeColor.black : ThemeColor.thirdWhite, 
               width: 1,
             ),
           ),
