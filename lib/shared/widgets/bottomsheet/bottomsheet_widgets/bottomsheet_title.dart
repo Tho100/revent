@@ -19,7 +19,7 @@ class BottomsheetTitle extends StatelessWidget {
         child: Text(
           title,
           style: GoogleFonts.inter(
-            color: ThemeColor.thirdWhite,
+            color: ThemeColor.secondaryWhite,
             fontSize: 19,
             fontWeight: FontWeight.w800
           ),

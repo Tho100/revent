@@ -15,7 +15,7 @@ class BottomsheetBar extends StatelessWidget {
           width: 35,
           height: 6,
           decoration: BoxDecoration(
-            color: ThemeColor.white,
+            color: ThemeColor.thirdWhite,
             borderRadius: BorderRadius.circular(18),
           ),
         ),
