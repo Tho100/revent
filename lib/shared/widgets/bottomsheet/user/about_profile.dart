@@ -49,7 +49,6 @@ class BottomsheetAboutProfile {
     required String username,
     required String pronouns,
     required String joinedDate,
-    required int totalVents,
     required Uint8List pfpData
   }) {
     return Bottomsheet().buildBottomSheet(
@@ -87,8 +86,6 @@ class BottomsheetAboutProfile {
                   _buildHeaders('Pronouns', pronouns),
 
                   _buildHeaders('Joined', joinedDate),
-
-                  _buildHeaders('Vents', totalVents.toString())
         
                 ],
               )
