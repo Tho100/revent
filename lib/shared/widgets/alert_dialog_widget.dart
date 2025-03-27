@@ -19,9 +19,13 @@ class AlertDialogWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Dialog(
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16)
+        side: const BorderSide(
+          color: ThemeColor.lightGrey,
+          width: 1
+        ),
+        borderRadius: BorderRadius.circular(20)
       ),
-      backgroundColor: ThemeColor.mediumBlack,
+      backgroundColor: ThemeColor.black,
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.75,
         height: content.isNotEmpty ? 220 : 190,
