@@ -9,13 +9,15 @@ class SettingsButton extends StatelessWidget {
   final VoidCallback onPressed;
 
   final bool? makeRed;
+  final bool? hideCaret;
 
   const SettingsButton({
     required this.text,
     required this.onPressed,
     this.icon,
     this.makeRed,
-    super.key,
+    this.hideCaret = false,
+    super.key
   });
 
   @override
@@ -53,12 +55,12 @@ class SettingsButton extends StatelessWidget {
                           fontWeight: FontWeight.w800,
                           fontSize: 19
                         ),
-                        textAlign: TextAlign.center,
+                        textAlign: TextAlign.center
                       ),
 
                       const Spacer(),
 
-                      if(makeRed != true)
+                      if(!hideCaret!)
                       Icon(
                         Icons.arrow_forward_ios, 
                         color: makeRed == true ? ThemeColor.darkRed : ThemeColor.thirdWhite, 
