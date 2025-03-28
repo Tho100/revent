@@ -42,7 +42,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
 
     setupSearch = SearchSetup(searchText: widget.searchText);
 
-    tabController = TabController(length: 3, vsync: this);
+    tabController = TabController(length: 2, vsync: this);
 
     tabController.addListener(_onTabChanged);
 
