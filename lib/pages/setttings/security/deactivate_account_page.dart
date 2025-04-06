@@ -32,8 +32,9 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
       message: AlertMessages.deleteAccount, 
       buttonMessage: 'Delete', 
       onPressedEvent: () async {
-        Navigator.pop(context);
-        await UserAccountManager().deleteAccountData(username: userProvider.user.username);
+        await UserAccountManager().deactivateUserAccount(username: userProvider.user.username).then(
+          (_) => Navigator.pop(context)
+        );
       } 
     );
   }
