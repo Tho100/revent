@@ -32,11 +32,9 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   final pronounOneController = TextEditingController();
   final pronounTwoController = TextEditingController();
 
-  final socialControllers = {
-    'instagram': TextEditingController(),
-    'twitter': TextEditingController(),
-    'tiktok': TextEditingController(),
-  };
+  final instagramController = TextEditingController();
+  final twitterController = TextEditingController();
+  final tiktokController = TextEditingController();
 
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
   final pronounsSelectedNotifier = ValueNotifier<List<bool>>([]);
@@ -74,10 +72,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       );
     }
 
-    for (var controller in socialControllers.values) {
-      controller.addListener(() {
-        isSocialChanges = true;
-      });
+    for (var socialsController in [instagramController, twitterController, tiktokController]) {
+      socialsController.addListener(
+        () => isSocialChanges = true
+      );
     }
 
   }
@@ -86,10 +84,14 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     final socialHandles = userProvider.user.socialHandles;
 
-    socialHandles.forEach((platform, handle) {
-      if (socialControllers.containsKey(platform)) {
-        socialControllers[platform]!.text = handle;
-      }
+    final controllers = {
+      'instagram': instagramController,
+      'twitter': twitterController,
+      'tiktok': tiktokController,
+    };
+
+    controllers.forEach((platform, controller) {
+      controller.text = socialHandles[platform] ?? '';
     });
 
   }
@@ -167,28 +169,23 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
-  void _deleteSocialLink(String platform) async {
-
-    socialControllers[platform]!.text = '';
-
-    await _saveSocialLinks();
-
-  }
-
   Future<bool> _saveSocialLinks() async {
 
     try {
 
-      final Map<String, String> socialLinks = {};
+      final socialLinks = {
+        'instagram': instagramController.text,
+        'twitter': twitterController.text,
+        'tiktok': tiktokController.text,
+      };
 
-      for (final entry in socialControllers.entries) {
+      for (final entry in socialLinks.entries) {
 
         final platform = entry.key;
-        final handle = entry.value.text;
+        final handle = entry.value;
 
         if (handle.isNotEmpty) {
           await UserSocials(platform: platform, handle: handle).addSocial();
-          socialLinks[platform] = handle;
         }
 
       }
@@ -520,33 +517,30 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   Widget _buildSocialLinks() {
     return _buildProfileEditingWidget(
-      header: 'Social Links',
+      header: 'Social Links', 
       children: [
 
         const SizedBox(height: 10),
 
-        if(socialControllers['instagram']!.text.isNotEmpty)
         _buildSocialHeader(
           'Instagram',
           FontAwesomeIcons.instagram,
-          socialControllers['instagram']!
+          instagramController
         ),
 
-        if(socialControllers['twitter']!.text.isNotEmpty)
         _buildSocialHeader(
           'Twitter',
           FontAwesomeIcons.twitter,
-          socialControllers['twitter']!
+          twitterController
         ),
 
-        if(socialControllers['tiktok']!.text.isNotEmpty)
         _buildSocialHeader(
           'TikTok',
           FontAwesomeIcons.tiktok,
-          socialControllers['tiktok']!
+          tiktokController
         ),
 
-      ],
+      ]
     );
   }
 
@@ -605,9 +599,9 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     bioController.dispose();
     pronounOneController.dispose();
     pronounTwoController.dispose();
-    socialControllers.forEach(
-      (key, controller) => controller.dispose()
-    );
+    instagramController.dispose();
+    twitterController.dispose();
+    tiktokController.dispose();
     super.dispose();
   }
 
