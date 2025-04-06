@@ -39,6 +39,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
   final pronounsSelectedNotifier = ValueNotifier<List<bool>>([]);
 
+  final isSavedNotifier = ValueNotifier<bool>(true);
+
   List<String> pronounsChips = [];
 
   bool isBioChanges = false;
@@ -62,20 +64,23 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _initializeTextFieldsListeners() {
 
-    bioController.addListener(
-      () => isBioChanges = true
-    );
+    bioController.addListener(() {
+      isBioChanges = true;
+      isSavedNotifier.value = false;
+    });
 
     for (var pronounController in [pronounOneController, pronounTwoController]) {
-      pronounController.addListener(
-        () => isPronounsChanges = true
-      );
+      pronounController.addListener(() {
+        isPronounsChanges = true;
+        isSavedNotifier.value = false;
+      });
     }
 
     for (var socialsController in [instagramController, twitterController, tiktokController]) {
-      socialsController.addListener(
-        () => isSocialChanges = true
-      );
+      socialsController.addListener(() {
+        isSocialChanges = true;
+        isSavedNotifier.value = false;
+      });
     }
 
   }
@@ -132,27 +137,25 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _saveChangesOnPressed() async {
 
-    bool isSaved = true;
-
     if (isBioChanges) {
       if (!await _saveBio()) {
-        isSaved = false; 
+        isSavedNotifier.value = false; 
       }
     }
 
     if (isPronounsChanges) {
       if (!await _savePronouns()) {
-        isSaved = false; 
+        isSavedNotifier.value = false; 
       }
     }
 
     if (isSocialChanges) {
       if(!await _saveSocialLinks()) {
-        isSaved = false;
+        isSavedNotifier.value = false;
       }
     }
 
-    if (isSaved) {
+    if (isSavedNotifier.value) {
       SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
     }
 
@@ -544,10 +547,15 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     );
   }
 
-  Widget _buildActionButton() {
-    return IconButton(
-      icon: const Icon(Icons.check, size: 22),
-      onPressed: () => _saveChangesOnPressed(),
+  Widget _buildActionButton() { // TODO: Rename to saveChangesButton
+    return ValueListenableBuilder(
+      valueListenable: isSavedNotifier,
+      builder: (_, isSaved, __) {
+        return IconButton(
+          icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.thirdWhite : ThemeColor.white),
+          onPressed: () => isSaved ? null :  _saveChangesOnPressed(),
+        );
+      }
     );
   }
 
@@ -602,6 +610,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     instagramController.dispose();
     twitterController.dispose();
     tiktokController.dispose();
+    isSavedNotifier.dispose();
     super.dispose();
   }
 
