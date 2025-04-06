@@ -290,7 +290,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
                       color: ThemeColor.white,
                       borderRadius: BorderRadius.circular(360)
                     ),
-                    child: const Icon(CupertinoIcons.camera, color: ThemeColor.mediumBlack, size: 16),
+                    child: const Icon(CupertinoIcons.pencil, color: ThemeColor.mediumBlack, size: 18.5),
                   ),
                 ),
               ),
