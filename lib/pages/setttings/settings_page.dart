@@ -27,7 +27,7 @@ class SettingsPage extends StatelessWidget {
       message: AlertMessages.signOut, 
       buttonMessage: 'Sign out', 
       onPressedEvent: () async {
-        await UserAccountManager().signOutUser().then(
+        await UserAccountManager().signOutUserAccount().then(
           (_) => NavigatePage.mainScreenPage()
         );
       }
