@@ -32,9 +32,11 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   final pronounOneController = TextEditingController();
   final pronounTwoController = TextEditingController();
 
-  final instagramController = TextEditingController();
-  final twitterController = TextEditingController();
-  final tiktokController = TextEditingController();
+  final socialControllers = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+  ];
 
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
   final pronounsSelectedNotifier = ValueNotifier<List<bool>>([]);
@@ -76,7 +78,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       });
     }
 
-    for (var socialsController in [instagramController, twitterController, tiktokController]) {
+    for (var socialsController in socialControllers) {
       socialsController.addListener(() {
         isSocialChanges = true;
         isSavedNotifier.value = false;
@@ -90,9 +92,9 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     final socialHandles = userProvider.user.socialHandles;
 
     final controllers = {
-      'instagram': instagramController,
-      'twitter': twitterController,
-      'tiktok': tiktokController,
+      'instagram': socialControllers[0],
+      'twitter': socialControllers[1],
+      'tiktok': socialControllers[2],
     };
 
     controllers.forEach((platform, controller) {
@@ -177,9 +179,9 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     try {
 
       final socialLinks = {
-        'instagram': instagramController.text,
-        'twitter': twitterController.text,
-        'tiktok': tiktokController.text,
+        'instagram': socialControllers[0].text,
+        'twitter': socialControllers[1].text,
+        'tiktok': socialControllers[2].text,
       };
 
       for (final entry in socialLinks.entries) {
@@ -528,19 +530,19 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         _buildSocialHeader(
           'Instagram',
           FontAwesomeIcons.instagram,
-          instagramController
+          socialControllers[0]
         ),
 
         _buildSocialHeader(
           'Twitter',
           FontAwesomeIcons.twitter,
-          twitterController
+          socialControllers[1]
         ),
 
         _buildSocialHeader(
           'TikTok',
           FontAwesomeIcons.tiktok,
-          tiktokController
+          socialControllers[2]
         ),
 
       ]
@@ -607,9 +609,6 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     bioController.dispose();
     pronounOneController.dispose();
     pronounTwoController.dispose();
-    instagramController.dispose();
-    twitterController.dispose();
-    tiktokController.dispose();
     isSavedNotifier.dispose();
     super.dispose();
   }
