@@ -29,8 +29,11 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> with UserProfileProviderService {
 
   final bioController = TextEditingController();
-  final pronounOneController = TextEditingController();
-  final pronounTwoController = TextEditingController();
+
+  final pronounControllers = [
+    TextEditingController(),
+    TextEditingController(),
+  ];
 
   final socialControllers = [
     TextEditingController(),
@@ -71,8 +74,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       isSavedNotifier.value = false;
     });
 
-    for (var pronounController in [pronounOneController, pronounTwoController]) {
-      pronounController.addListener(() {
+    for (var pronounsController in pronounControllers) {
+      pronounsController.addListener(() {
         isPronounsChanges = true;
         isSavedNotifier.value = false;
       });
@@ -111,7 +114,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       'they/them',
     ];
 
-    final currentPronouns = '${pronounOneController.text}/${pronounTwoController.text}';
+    final currentPronouns = '${pronounControllers[0].text}/${pronounControllers[1].text}';
 
     pronounsSelectedNotifier.value = List<bool>.generate(pronounsChips.length, 
       (index) => pronounsChips[index] == currentPronouns ? true : false
@@ -130,8 +133,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       
       final splittedPronouns = profileProvider.profile.pronouns.split('/');
 
-      pronounOneController.text = splittedPronouns[0];
-      pronounTwoController.text = splittedPronouns[1];
+      pronounControllers[0].text = splittedPronouns[0];
+      pronounControllers[1].text = splittedPronouns[1];
 
     }
 
@@ -224,8 +227,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     try {
 
-      final isBothEmpty = pronounOneController.text.isEmpty && pronounTwoController.text.isEmpty;
-      final isBothFilled = pronounOneController.text.isNotEmpty && pronounTwoController.text.isNotEmpty;
+      final isBothEmpty = pronounControllers[0].text.isEmpty && pronounControllers[1].text.isEmpty;
+      final isBothFilled = pronounControllers[0].text.isNotEmpty && pronounControllers[1].text.isNotEmpty;
 
       if (!isBothEmpty && !isBothFilled) {
         CustomAlertDialog.alertDialog('Both fields must be filled or left empty');
@@ -234,7 +237,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
       final concatenatedPronouns = isBothEmpty 
         ? '' 
-        : '${pronounOneController.text}/${pronounTwoController.text}';
+        : '${pronounControllers[0].text}/${pronounControllers[1].text}';
 
       await ProfileDataUpdate().updatePronouns(pronouns: concatenatedPronouns);
 
@@ -250,15 +253,15 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void _pronounsChipsOnSelected(String pronouns) {
 
     if(pronouns.isEmpty) {
-      pronounOneController.text = '';
-      pronounTwoController.text = '';
+      pronounControllers[0].text = '';
+      pronounControllers[1].text = '';
       return;
     }
 
     final splittedPronouns = pronouns.split('/'); 
 
-    pronounOneController.text = splittedPronouns[0];
-    pronounTwoController.text = splittedPronouns[1];
+    pronounControllers[0].text = splittedPronouns[0];
+    pronounControllers[1].text = splittedPronouns[1];
 
   }
 
@@ -407,7 +410,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
             Flexible(
               child: MainTextField(
-                controller: pronounOneController, 
+                controller: pronounControllers[0], 
                 hintText: '',
                 maxLines: 1,
                 maxLength: 10,
@@ -430,7 +433,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
           
             Flexible(
               child: MainTextField(
-                controller: pronounTwoController, 
+                controller: pronounControllers[1], 
                 hintText: '',
                 maxLines: 1,
                 maxLength: 10,
@@ -607,8 +610,6 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void dispose() {
     profilePicNotifier.dispose();
     bioController.dispose();
-    pronounOneController.dispose();
-    pronounTwoController.dispose();
     isSavedNotifier.dispose();
     super.dispose();
   }
