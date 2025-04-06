@@ -88,15 +88,15 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       isSavedNotifier.value = false;
     });
 
-    for (var pronounsController in pronounControllers) {
-      pronounsController.addListener(() {
+    for (var pronouns in pronounControllers) {
+      pronouns.addListener(() {
         isPronounsChanges = true;
         isSavedNotifier.value = false;
       });
     }
 
-    for (var socialsController in socialControllers) {
-      socialsController.addListener(() {
+    for (var socials in socialControllers) {
+      socials.addListener(() {
         isSocialChanges = true;
         isSavedNotifier.value = false;
       });
