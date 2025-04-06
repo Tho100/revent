@@ -52,6 +52,20 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   bool isPronounsChanges = false;
   bool isSocialChanges = false;
 
+  void _disposeControllers() {
+
+    bioController.dispose();
+
+    for (var pronouns in pronounControllers) {
+      pronouns.dispose();
+    }
+
+    for (var socials in socialControllers) {
+      socials.dispose();
+    }
+
+  }
+
   void _enforceBioMaxLines() {
 
     final text = bioController.text;
@@ -609,8 +623,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   @override
   void dispose() {
     profilePicNotifier.dispose();
-    bioController.dispose();
     isSavedNotifier.dispose();
+    _disposeControllers();
     super.dispose();
   }
 
