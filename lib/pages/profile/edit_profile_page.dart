@@ -547,7 +547,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     );
   }
 
-  Widget _buildActionButton() { // TODO: Rename to saveChangesButton
+  Widget _buildSaveChangesButton() { 
     return ValueListenableBuilder(
       valueListenable: isSavedNotifier,
       builder: (_, isSaved, __) {
@@ -620,7 +620,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       appBar: CustomAppBar(
         context: context,
         title: 'Edit profile',
-        actions: [_buildActionButton()]
+        actions: [_buildSaveChangesButton()]
       ).buildAppBar(),
       body: _buildBody(),
     );
