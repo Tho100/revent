@@ -29,21 +29,42 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> with UserProfileProviderService {
 
   final bioController = TextEditingController();
-  final pronounOneController = TextEditingController();
-  final pronounTwoController = TextEditingController();
 
-  final instagramController = TextEditingController();
-  final twitterController = TextEditingController();
-  final tiktokController = TextEditingController();
+  final pronounControllers = [
+    TextEditingController(),
+    TextEditingController(),
+  ];
+
+  final socialControllers = [
+    TextEditingController(),
+    TextEditingController(),
+    TextEditingController(),
+  ];
 
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
   final pronounsSelectedNotifier = ValueNotifier<List<bool>>([]);
+
+  final isSavedNotifier = ValueNotifier<bool>(true);
 
   List<String> pronounsChips = [];
 
   bool isBioChanges = false;
   bool isPronounsChanges = false;
   bool isSocialChanges = false;
+
+  void _disposeControllers() {
+
+    bioController.dispose();
+
+    for (var pronouns in pronounControllers) {
+      pronouns.dispose();
+    }
+
+    for (var socials in socialControllers) {
+      socials.dispose();
+    }
+
+  }
 
   void _enforceBioMaxLines() {
 
@@ -62,20 +83,23 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _initializeTextFieldsListeners() {
 
-    bioController.addListener(
-      () => isBioChanges = true
-    );
+    bioController.addListener(() {
+      isBioChanges = true;
+      isSavedNotifier.value = false;
+    });
 
-    for (var pronounController in [pronounOneController, pronounTwoController]) {
-      pronounController.addListener(
-        () => isPronounsChanges = true
-      );
+    for (var pronouns in pronounControllers) {
+      pronouns.addListener(() {
+        isPronounsChanges = true;
+        isSavedNotifier.value = false;
+      });
     }
 
-    for (var socialsController in [instagramController, twitterController, tiktokController]) {
-      socialsController.addListener(
-        () => isSocialChanges = true
-      );
+    for (var socials in socialControllers) {
+      socials.addListener(() {
+        isSocialChanges = true;
+        isSavedNotifier.value = false;
+      });
     }
 
   }
@@ -85,9 +109,9 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     final socialHandles = userProvider.user.socialHandles;
 
     final controllers = {
-      'instagram': instagramController,
-      'twitter': twitterController,
-      'tiktok': tiktokController,
+      'instagram': socialControllers[0],
+      'twitter': socialControllers[1],
+      'tiktok': socialControllers[2],
     };
 
     controllers.forEach((platform, controller) {
@@ -104,7 +128,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       'they/them',
     ];
 
-    final currentPronouns = '${pronounOneController.text}/${pronounTwoController.text}';
+    final currentPronouns = '${pronounControllers[0].text}/${pronounControllers[1].text}';
 
     pronounsSelectedNotifier.value = List<bool>.generate(pronounsChips.length, 
       (index) => pronounsChips[index] == currentPronouns ? true : false
@@ -123,8 +147,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       
       final splittedPronouns = profileProvider.profile.pronouns.split('/');
 
-      pronounOneController.text = splittedPronouns[0];
-      pronounTwoController.text = splittedPronouns[1];
+      pronounControllers[0].text = splittedPronouns[0];
+      pronounControllers[1].text = splittedPronouns[1];
 
     }
 
@@ -132,27 +156,25 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _saveChangesOnPressed() async {
 
-    bool isSaved = true;
-
     if (isBioChanges) {
       if (!await _saveBio()) {
-        isSaved = false; 
+        isSavedNotifier.value = false; 
       }
     }
 
     if (isPronounsChanges) {
       if (!await _savePronouns()) {
-        isSaved = false; 
+        isSavedNotifier.value = false; 
       }
     }
 
     if (isSocialChanges) {
       if(!await _saveSocialLinks()) {
-        isSaved = false;
+        isSavedNotifier.value = false;
       }
     }
 
-    if (isSaved) {
+    if (isSavedNotifier.value) {
       SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
     }
 
@@ -174,9 +196,9 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     try {
 
       final socialLinks = {
-        'instagram': instagramController.text,
-        'twitter': twitterController.text,
-        'tiktok': tiktokController.text,
+        'instagram': socialControllers[0].text,
+        'twitter': socialControllers[1].text,
+        'tiktok': socialControllers[2].text,
       };
 
       for (final entry in socialLinks.entries) {
@@ -219,8 +241,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     try {
 
-      final isBothEmpty = pronounOneController.text.isEmpty && pronounTwoController.text.isEmpty;
-      final isBothFilled = pronounOneController.text.isNotEmpty && pronounTwoController.text.isNotEmpty;
+      final isBothEmpty = pronounControllers[0].text.isEmpty && pronounControllers[1].text.isEmpty;
+      final isBothFilled = pronounControllers[0].text.isNotEmpty && pronounControllers[1].text.isNotEmpty;
 
       if (!isBothEmpty && !isBothFilled) {
         CustomAlertDialog.alertDialog('Both fields must be filled or left empty');
@@ -229,7 +251,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
       final concatenatedPronouns = isBothEmpty 
         ? '' 
-        : '${pronounOneController.text}/${pronounTwoController.text}';
+        : '${pronounControllers[0].text}/${pronounControllers[1].text}';
 
       await ProfileDataUpdate().updatePronouns(pronouns: concatenatedPronouns);
 
@@ -245,15 +267,15 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void _pronounsChipsOnSelected(String pronouns) {
 
     if(pronouns.isEmpty) {
-      pronounOneController.text = '';
-      pronounTwoController.text = '';
+      pronounControllers[0].text = '';
+      pronounControllers[1].text = '';
       return;
     }
 
     final splittedPronouns = pronouns.split('/'); 
 
-    pronounOneController.text = splittedPronouns[0];
-    pronounTwoController.text = splittedPronouns[1];
+    pronounControllers[0].text = splittedPronouns[0];
+    pronounControllers[1].text = splittedPronouns[1];
 
   }
 
@@ -290,7 +312,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
                       color: ThemeColor.white,
                       borderRadius: BorderRadius.circular(360)
                     ),
-                    child: const Icon(CupertinoIcons.camera, color: ThemeColor.mediumBlack, size: 16),
+                    child: const Icon(CupertinoIcons.pencil, color: ThemeColor.mediumBlack, size: 18.5),
                   ),
                 ),
               ),
@@ -402,7 +424,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
             Flexible(
               child: MainTextField(
-                controller: pronounOneController, 
+                controller: pronounControllers[0], 
                 hintText: '',
                 maxLines: 1,
                 maxLength: 10,
@@ -425,7 +447,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
           
             Flexible(
               child: MainTextField(
-                controller: pronounTwoController, 
+                controller: pronounControllers[1], 
                 hintText: '',
                 maxLines: 1,
                 maxLength: 10,
@@ -525,29 +547,34 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         _buildSocialHeader(
           'Instagram',
           FontAwesomeIcons.instagram,
-          instagramController
+          socialControllers[0]
         ),
 
         _buildSocialHeader(
           'Twitter',
           FontAwesomeIcons.twitter,
-          twitterController
+          socialControllers[1]
         ),
 
         _buildSocialHeader(
           'TikTok',
           FontAwesomeIcons.tiktok,
-          tiktokController
+          socialControllers[2]
         ),
 
       ]
     );
   }
 
-  Widget _buildActionButton() {
-    return IconButton(
-      icon: const Icon(Icons.check, size: 22),
-      onPressed: () => _saveChangesOnPressed(),
+  Widget _buildSaveChangesButton() { 
+    return ValueListenableBuilder(
+      valueListenable: isSavedNotifier,
+      builder: (_, isSaved, __) {
+        return IconButton(
+          icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.thirdWhite : ThemeColor.white),
+          onPressed: () => isSaved ? null :  _saveChangesOnPressed(),
+        );
+      }
     );
   }
 
@@ -596,12 +623,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   @override
   void dispose() {
     profilePicNotifier.dispose();
-    bioController.dispose();
-    pronounOneController.dispose();
-    pronounTwoController.dispose();
-    instagramController.dispose();
-    twitterController.dispose();
-    tiktokController.dispose();
+    isSavedNotifier.dispose();
+    _disposeControllers();
     super.dispose();
   }
 
@@ -611,7 +634,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       appBar: CustomAppBar(
         context: context,
         title: 'Edit profile',
-        actions: [_buildActionButton()]
+        actions: [_buildSaveChangesButton()]
       ).buildAppBar(),
       body: _buildBody(),
     );
