@@ -9,20 +9,17 @@ class Bottomsheet {
     required List<Widget> children
   }) {
     return showModalBottomSheet(
-      backgroundColor: Colors.transparent,
+      backgroundColor: ThemeColor.black,
+      shape: const RoundedRectangleBorder( 
+        side: ThemeStyle.dialogSideBorder,
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25)
+        ),
+      ),
       isScrollControlled: true,
       context: context,
       builder: (_) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: ThemeColor.black,
-            borderRadius: BorderRadius.vertical(
-              top: Radius.circular(25),
-            ),
-            border: Border(
-              top: ThemeStyle.dialogSideBorder
-            ),
-          ),
+        return Padding(
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
