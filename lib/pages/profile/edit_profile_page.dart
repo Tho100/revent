@@ -306,8 +306,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       final isBothFilled = pronounControllers[0].text.isNotEmpty && pronounControllers[1].text.isNotEmpty;
 
       if (!isBothEmpty && !isBothFilled) {
-        // TODO: Update to: Enter both pronouns or leave both blank 
-        CustomAlertDialog.alertDialog('Both fields must be filled or left ');
+        CustomAlertDialog.alertDialog('Enter both pronouns or leave both blank');
         return false; 
       }
 
