@@ -127,9 +127,20 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     for (var i = 0; i < socialControllers.length; i++) {
       socialControllers[i].addListener(() {
-        final hasChanged = socialControllers[i].text != initialSocials[i];
-        isSocialChanges = hasChanged;
-        if (hasChanged) isSavedNotifier.value = false;
+
+          final currentText = socialControllers[i].text;
+          final initialText = initialSocials[i];
+
+          final hasChanged = currentText != initialText;
+
+          //SnackBarDialog.temporarySnack(message: 'hasChanged: $hasChanged | initial: $initialText');
+
+          isSocialChanges = hasChanged;
+
+          if (hasChanged) {
+            isSavedNotifier.value = false;
+          }
+
       });
     }
 
@@ -243,6 +254,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     try {
 
+      SnackBarDialog.temporarySnack(message: 'IN');
+
       final socialLinks = {
         'instagram': socialControllers[0].text,
         'twitter': socialControllers[1].text,
@@ -254,9 +267,9 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         final platform = entry.key;
         final handle = entry.value;
 
-        if (handle.isNotEmpty) {
-          await UserSocials(platform: platform, handle: handle).addSocial();
-        }
+        SnackBarDialog.temporarySnack(message: '$platform | $handle');
+
+        await UserSocials(platform: platform, handle: handle).addSocial();
 
       }
 
@@ -293,7 +306,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       final isBothFilled = pronounControllers[0].text.isNotEmpty && pronounControllers[1].text.isNotEmpty;
 
       if (!isBothEmpty && !isBothFilled) {
-        CustomAlertDialog.alertDialog('Both fields must be filled or left empty');
+        // TODO: Update to: Enter both pronouns or leave both blank 
+        CustomAlertDialog.alertDialog('Both fields must be filled or left ');
         return false; 
       }
 
@@ -667,12 +681,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void initState() {
     super.initState();
     _initializeProfileData();
+    _initializePronounsChips();
+    _initializeSocialHandles();
     _initializeTextFields();
     Future.microtask(() {
       _initializeTextFieldsListeners();
     });
-    _initializePronounsChips();
-    _initializeSocialHandles();
   }
 
   @override

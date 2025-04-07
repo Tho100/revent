@@ -175,7 +175,6 @@ class LocalStorageModel {
       existingHandles.addAll(socialHandles);
 
       final filteredHandles = existingHandles.entries
-        .where((entry) => entry.value.isNotEmpty)
         .map((entry) => '${entry.key} ${entry.value}')
         .join('\n');
 
