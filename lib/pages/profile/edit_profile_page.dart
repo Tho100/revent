@@ -52,6 +52,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   bool isPronounsChanges = false;
   bool isSocialChanges = false;
 
+  late String initialBio;
+  late List<String> initialPronouns;
+  late List<String> initialSocials;
+
   void _disposeControllers() {
 
     bioController.dispose();
@@ -81,24 +85,33 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
+  void _initializeTextFields() {
+    initialBio = bioController.text;
+    initialPronouns = pronounControllers.map((c) => c.text).toList();
+    initialSocials = socialControllers.map((c) => c.text).toList();
+  }
+
   void _initializeTextFieldsListeners() {
 
     bioController.addListener(() {
-      isBioChanges = true;
-      isSavedNotifier.value = false;
+      final hasChanged = bioController.text != initialBio;
+      isBioChanges = hasChanged;
+      if (hasChanged) isSavedNotifier.value = false;
     });
 
-    for (var pronouns in pronounControllers) {
-      pronouns.addListener(() {
-        isPronounsChanges = true;
-        isSavedNotifier.value = false;
+    for (var i = 0; i < pronounControllers.length; i++) {
+      pronounControllers[i].addListener(() {
+        final hasChanged = pronounControllers[i].text != initialPronouns[i];
+        isPronounsChanges = hasChanged;
+        if (hasChanged) isSavedNotifier.value = false;
       });
     }
 
-    for (var socials in socialControllers) {
-      socials.addListener(() {
-        isSocialChanges = true;
-        isSavedNotifier.value = false;
+    for (var i = 0; i < socialControllers.length; i++) {
+      socialControllers[i].addListener(() {
+        final hasChanged = socialControllers[i].text != initialSocials[i];
+        isSocialChanges = hasChanged;
+        if (hasChanged) isSavedNotifier.value = false;
       });
     }
 
@@ -156,26 +169,43 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _saveChangesOnPressed() async {
 
+    bool allSaved = true;
+
     if (isBioChanges) {
       if (!await _saveBio()) {
-        isSavedNotifier.value = false; 
+        isSavedNotifier.value = false;
+        allSaved = false;
       }
     }
 
     if (isPronounsChanges) {
       if (!await _savePronouns()) {
-        isSavedNotifier.value = false; 
+        isSavedNotifier.value = false;
+        allSaved = false;
       }
     }
 
     if (isSocialChanges) {
-      if(!await _saveSocialLinks()) {
+      if (!await _saveSocialLinks()) {
         isSavedNotifier.value = false;
+        allSaved = false;
       }
     }
 
-    if (isSavedNotifier.value) {
+    if (allSaved) {
+
+      initialBio = bioController.text;
+      initialPronouns = pronounControllers.map((c) => c.text).toList();
+      initialSocials = socialControllers.map((c) => c.text).toList();
+
+      isBioChanges = false;
+      isPronounsChanges = false;
+      isSocialChanges = false;
+
+      isSavedNotifier.value = true;
+
       SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
+
     }
 
   }
@@ -615,7 +645,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void initState() {
     super.initState();
     _initializeProfileData();
-    _initializeTextFieldsListeners();
+    _initializeTextFields();
+    Future.microtask(() {
+      _initializeTextFieldsListeners();
+    });
     _initializePronounsChips();
     _initializeSocialHandles();
   }
