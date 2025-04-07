@@ -30,11 +30,17 @@ class FollowsPage extends StatefulWidget {
 
   final String pageType;
   final String username;
+
+  final int totalFollowers;
+  final int totalFollowing;
+
   final bool isFollowingListHidden;
 
   const FollowsPage({
     required this.pageType,
     required this.username, 
+    required this.totalFollowers,
+    required this.totalFollowing,
     required this.isFollowingListHidden,
     super.key
   });
@@ -234,9 +240,9 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
     return CustomTabBar(
       controller: tabController, 
       tabAlignment: TabAlignment.center,
-      tabs: const [
-        Tab(text: 'Followers'),
-        Tab(text: 'Following'),
+      tabs: [
+        Tab(text: '${widget.totalFollowers} followers'),
+        Tab(text: '${widget.totalFollowing} following'),
       ],
     ).buildTabBar();
   }

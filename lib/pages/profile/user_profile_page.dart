@@ -327,14 +327,27 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
         GestureDetector(
           onTap: () => isPrivateAccount || isBlockedAccount 
-            ? null : NavigatePage.followsPage(pageType: 'Followers', username: widget.username, isFollowingListHidden: isFollowingListHidden),
+            ? null 
+            : NavigatePage.followsPage(
+              pageType: 'Followers', 
+              username: widget.username, 
+              totalFollowers: followersNotifier.value, 
+              totalFollowing: followingNotifier.value, 
+              isFollowingListHidden: isFollowingListHidden
+            ),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
         ),
 
         GestureDetector(
           onTap: () => isPrivateAccount || isBlockedAccount || isFollowingListHidden
             ? (isFollowingListHidden ? SnackBarDialog.temporarySnack(message: 'Following list is hidden.') : null) 
-            : NavigatePage.followsPage(pageType: 'Following', username: widget.username, isFollowingListHidden: isFollowingListHidden),
+            : NavigatePage.followsPage(
+              pageType: 'Following', 
+              username: widget.username, 
+              totalFollowers: followersNotifier.value, 
+              totalFollowing: followingNotifier.value, 
+              isFollowingListHidden: isFollowingListHidden
+            ),
           child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
         ),
   
