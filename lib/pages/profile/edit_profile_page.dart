@@ -50,6 +50,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   bool isBioChanges = false;
   bool isPronounsChanges = false;
+  bool isCustomPronouns = false;
   bool isSocialChanges = false;
 
   late String initialBio;
@@ -101,9 +102,26 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     for (var i = 0; i < pronounControllers.length; i++) {
       pronounControllers[i].addListener(() {
+
+        final currentPronouns = '${pronounControllers[0].text}/${pronounControllers[1].text}';
+        final matchedChipIndex = pronounsChips.indexOf(currentPronouns);
+
+        if (matchedChipIndex != -1) {
+          pronounsSelectedNotifier.value = List.generate(pronounsChips.length, (j) => j == matchedChipIndex);
+          isCustomPronouns = false;
+
+        } else {
+          pronounsSelectedNotifier.value = List.generate(pronounsChips.length, (j) => false);
+          isCustomPronouns = true;
+
+        }
+
         final hasChanged = pronounControllers[i].text != initialPronouns[i];
+        
         isPronounsChanges = hasChanged;
+
         if (hasChanged) isSavedNotifier.value = false;
+
       });
     }
 
@@ -295,6 +313,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   }
 
   void _pronounsChipsOnSelected(String pronouns) {
+
+    if(isCustomPronouns) {
+      return;
+    }
 
     if(pronouns.isEmpty) {
       pronounControllers[0].text = '';
