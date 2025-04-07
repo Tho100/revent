@@ -50,7 +50,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   bool isBioChanges = false;
   bool isPronounsChanges = false;
+  bool isCustomPronouns = false;
   bool isSocialChanges = false;
+
+  late String initialBio;
+  late List<String> initialPronouns;
+  late List<String> initialSocials;
 
   void _disposeControllers() {
 
@@ -81,24 +86,61 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
+  void _initializeTextFields() {
+    initialBio = bioController.text;
+    initialPronouns = pronounControllers.map((c) => c.text).toList();
+    initialSocials = socialControllers.map((c) => c.text).toList();
+  }
+
   void _initializeTextFieldsListeners() {
 
     bioController.addListener(() {
-      isBioChanges = true;
-      isSavedNotifier.value = false;
+      final hasChanged = bioController.text != initialBio;
+      isBioChanges = hasChanged;
+      if (hasChanged) isSavedNotifier.value = false;
     });
 
-    for (var pronouns in pronounControllers) {
-      pronouns.addListener(() {
-        isPronounsChanges = true;
-        isSavedNotifier.value = false;
+    for (var i = 0; i < pronounControllers.length; i++) {
+      pronounControllers[i].addListener(() {
+
+        final currentPronouns = '${pronounControllers[0].text}/${pronounControllers[1].text}';
+        final matchedChipIndex = pronounsChips.indexOf(currentPronouns);
+
+        if (matchedChipIndex != -1) {
+          pronounsSelectedNotifier.value = List.generate(pronounsChips.length, (j) => j == matchedChipIndex);
+          isCustomPronouns = false;
+
+        } else {
+          pronounsSelectedNotifier.value = List.generate(pronounsChips.length, (j) => false);
+          isCustomPronouns = true;
+
+        }
+
+        final hasChanged = pronounControllers[i].text != initialPronouns[i];
+        
+        isPronounsChanges = hasChanged;
+
+        if (hasChanged) isSavedNotifier.value = false;
+
       });
     }
 
-    for (var socials in socialControllers) {
-      socials.addListener(() {
-        isSocialChanges = true;
-        isSavedNotifier.value = false;
+    for (var i = 0; i < socialControllers.length; i++) {
+      socialControllers[i].addListener(() {
+
+          final currentText = socialControllers[i].text;
+          final initialText = initialSocials[i];
+
+          final hasChanged = currentText != initialText;
+
+          //SnackBarDialog.temporarySnack(message: 'hasChanged: $hasChanged | initial: $initialText');
+
+          isSocialChanges = hasChanged;
+
+          if (hasChanged) {
+            isSavedNotifier.value = false;
+          }
+
       });
     }
 
@@ -156,26 +198,43 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _saveChangesOnPressed() async {
 
+    bool allSaved = true;
+
     if (isBioChanges) {
       if (!await _saveBio()) {
-        isSavedNotifier.value = false; 
+        isSavedNotifier.value = false;
+        allSaved = false;
       }
     }
 
     if (isPronounsChanges) {
       if (!await _savePronouns()) {
-        isSavedNotifier.value = false; 
+        isSavedNotifier.value = false;
+        allSaved = false;
       }
     }
 
     if (isSocialChanges) {
-      if(!await _saveSocialLinks()) {
+      if (!await _saveSocialLinks()) {
         isSavedNotifier.value = false;
+        allSaved = false;
       }
     }
 
-    if (isSavedNotifier.value) {
+    if (allSaved) {
+
+      initialBio = bioController.text;
+      initialPronouns = pronounControllers.map((c) => c.text).toList();
+      initialSocials = socialControllers.map((c) => c.text).toList();
+
+      isBioChanges = false;
+      isPronounsChanges = false;
+      isSocialChanges = false;
+
+      isSavedNotifier.value = true;
+
       SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
+
     }
 
   }
@@ -195,6 +254,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     try {
 
+      SnackBarDialog.temporarySnack(message: 'IN');
+
       final socialLinks = {
         'instagram': socialControllers[0].text,
         'twitter': socialControllers[1].text,
@@ -206,9 +267,9 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         final platform = entry.key;
         final handle = entry.value;
 
-        if (handle.isNotEmpty) {
-          await UserSocials(platform: platform, handle: handle).addSocial();
-        }
+        SnackBarDialog.temporarySnack(message: '$platform | $handle');
+
+        await UserSocials(platform: platform, handle: handle).addSocial();
 
       }
 
@@ -245,7 +306,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       final isBothFilled = pronounControllers[0].text.isNotEmpty && pronounControllers[1].text.isNotEmpty;
 
       if (!isBothEmpty && !isBothFilled) {
-        CustomAlertDialog.alertDialog('Both fields must be filled or left empty');
+        // TODO: Update to: Enter both pronouns or leave both blank 
+        CustomAlertDialog.alertDialog('Both fields must be filled or left ');
         return false; 
       }
 
@@ -265,6 +327,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   }
 
   void _pronounsChipsOnSelected(String pronouns) {
+
+    if(isCustomPronouns) {
+      return;
+    }
 
     if(pronouns.isEmpty) {
       pronounControllers[0].text = '';
@@ -615,9 +681,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void initState() {
     super.initState();
     _initializeProfileData();
-    _initializeTextFieldsListeners();
     _initializePronounsChips();
     _initializeSocialHandles();
+    _initializeTextFields();
+    Future.microtask(() {
+      _initializeTextFieldsListeners();
+    });
   }
 
   @override

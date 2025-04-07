@@ -174,12 +174,22 @@ class _MyProfilePageState extends State<MyProfilePage> with
                 profileInfoWidgets.buildPopularityHeader('vents', postsData.myProfile.titles.length),
 
                 GestureDetector(
-                  onTap: () => NavigatePage.followsPage(pageType: 'Followers', username: userProvider.user.username),
+                  onTap: () => NavigatePage.followsPage(
+                    pageType: 'Followers', 
+                    username: userProvider.user.username,
+                    totalFollowers: profileData.profile.followers,
+                    totalFollowing: profileData.profile.following
+                  ),
                   child: profileInfoWidgets.buildPopularityHeader('followers', profileData.profile.followers)
                 ),
           
                 GestureDetector(
-                  onTap: () => NavigatePage.followsPage(pageType: 'Following', username: userProvider.user.username),
+                  onTap: () => NavigatePage.followsPage(
+                    pageType: 'Following', 
+                    username: userProvider.user.username,
+                    totalFollowers: profileData.profile.followers,
+                    totalFollowing: profileData.profile.following
+                  ),
                   child: profileInfoWidgets.buildPopularityHeader('following', profileData.profile.following)
                 ),
           

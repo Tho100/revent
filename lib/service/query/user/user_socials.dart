@@ -14,10 +14,10 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
 
   Future<void> addSocial() async {
 
-    if (userProvider.user.socialHandles.isNotEmpty) {
+    if(userProvider.user.socialHandles[platform]!.isNotEmpty) {
       await _updateSocialHandles();
       return;
-    } 
+    }
 
     const query = 
       'INSERT INTO user_social_links (social_handle, platform, username) VALUES (:social_handle, :platform, :username)';
