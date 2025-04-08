@@ -20,7 +20,7 @@ class BottomsheetProfilePictureOptions {
         const BottomsheetTitle(title: 'Options'),
 
         BottomsheetOptionButton(
-          text: 'Upload avatar',
+          text: 'Change avatar',
           icon: CupertinoIcons.photo,
           onPressed: changeAvatarOnPressed
         ),
