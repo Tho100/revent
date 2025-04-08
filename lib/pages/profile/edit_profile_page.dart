@@ -251,7 +251,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
-  void _changeProfilePicOnPressed() async {
+  void _changeProfilePictureOnPressed() async {
     
     if (profileProvider.profile.profilePicture.isEmpty) {
       _selectProfilePicture();
@@ -367,7 +367,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     return Padding(
       padding: const EdgeInsets.only(left: 4.0),
       child: InkWellEffect(
-        onPressed: () => _changeProfilePicOnPressed(),
+        onPressed: () => _changeProfilePictureOnPressed(),
         child: SizedBox(
           width: 88,
           height: 88,
