@@ -1,37 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetReplyActions with UserProfileProviderService {
-
-  Widget _buildOptionButton({
-    required String text, 
-    required IconData icon, 
-    required VoidCallback onPressed
-  }) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ThemeStyle.btnBottomsheetBgStyle,
-      child: Row(
-        children: [
-
-          Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
-
-          const SizedBox(width: 15),
-
-          Text(
-            text,
-            style: ThemeStyle.btnBottomsheetTextStyle,
-          )
-
-        ],
-      )
-    );
-  }
 
   Future buildBottomsheet({
     required BuildContext context,
@@ -51,28 +25,28 @@ class BottomsheetReplyActions with UserProfileProviderService {
 
         const BottomsheetTitle(title: 'Reply Action'),
 
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Copy text',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
         ),
 
         if(userProvider.user.username != repliedBy)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Report reply',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
         if(userProvider.user.username == repliedBy)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Delete reply',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),
 
         if(userProvider.user.username != repliedBy)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Block @$repliedBy',
           icon: CupertinoIcons.clear_circled,
           onPressed: blockOnPressed

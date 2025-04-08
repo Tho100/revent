@@ -1,37 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetVentPostActions with UserProfileProviderService {
-
-  Widget _buildOptionButton({
-    required String text, 
-    required IconData icon, 
-    required VoidCallback onPressed
-  }) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ThemeStyle.btnBottomsheetBgStyle,
-      child: Row(
-        children: [
-
-          Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
-
-          const SizedBox(width: 15),
-
-          Text(
-            text,
-            style: ThemeStyle.btnBottomsheetTextStyle,
-          )
-
-        ],
-      )
-    );
-  }
 
   Future buildBottomsheet({
     required BuildContext context,
@@ -55,42 +29,42 @@ class BottomsheetVentPostActions with UserProfileProviderService {
         const BottomsheetTitle(title: 'Post Action'),
 
         if(removeSavedPostOnPressed != null)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Unsave',
           icon: CupertinoIcons.bookmark_fill,
           onPressed: removeSavedPostOnPressed
         ),
 
         if(userProvider.user.username == creator && editOnPressed != null)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Edit post',
           icon: CupertinoIcons.square_pencil,
           onPressed: editOnPressed
         ),
 
         if(copyOnPressed != null)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Copy body',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
         ),
 
         if(userProvider.user.username != creator && reportOnPressed != null)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Report post',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
         if(userProvider.user.username != creator && blockOnPressed != null)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Block @$creator',
           icon: CupertinoIcons.clear_circled,
           onPressed: blockOnPressed
         ),
 
         if(userProvider.user.username == creator && deleteOnPressed != null)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Delete post',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed

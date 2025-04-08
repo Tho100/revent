@@ -1,36 +1,10 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetProfilePictureOptions {
-
-  Widget _buildOptionButton({ // TODO: Try to create a separated widget class for this
-    required String text, 
-    required IconData icon, 
-    required VoidCallback onPressed
-  }) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ThemeStyle.btnBottomsheetBgStyle,
-      child: Row(
-        children: [
-
-          Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
-
-          const SizedBox(width: 15),
-
-          Text(
-            text,
-            style: ThemeStyle.btnBottomsheetTextStyle,
-          )
-
-        ],
-      )
-    );
-  }
 
   Future buildBottomsheet({
     required BuildContext context,
@@ -47,13 +21,13 @@ class BottomsheetProfilePictureOptions {
 
         const BottomsheetTitle(title: 'Options'),
 
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Upload avatar',
           icon: CupertinoIcons.photo,
           onPressed: changeAvatarOnPressed
         ),
 
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Remove avatar',
           icon: CupertinoIcons.trash,
           onPressed: removeAvatarOnPressed
