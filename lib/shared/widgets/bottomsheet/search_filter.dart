@@ -58,8 +58,6 @@ class BottomsheetSearchFilter {
       context: context, 
       children: [
 
-        const SizedBox(height: 12),
-
         const BottomsheetBar(),
 
         const BottomsheetTitle(title: 'Sort Posts'),
@@ -110,8 +108,6 @@ class BottomsheetSearchFilter {
     return Bottomsheet().buildBottomSheet(
       context: context, 
       children: [
-
-        const SizedBox(height: 12),
 
         const BottomsheetBar(),
 
