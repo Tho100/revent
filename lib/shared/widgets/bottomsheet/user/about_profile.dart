@@ -55,8 +55,6 @@ class BottomsheetAboutProfile {
       context: context, 
       children: [
 
-        const SizedBox(height: 12),
-
         const BottomsheetBar(),
 
         const BottomsheetTitle(title: 'About this profile'),

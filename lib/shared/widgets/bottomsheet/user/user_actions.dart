@@ -16,11 +16,9 @@ class BottomsheetUserActions {
       context: context, 
       children: [
 
-        const SizedBox(height: 12),
-
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'User Action'),
+        const BottomsheetTitle(title: 'User Options'),
 
         BottomsheetOptionButton(
           text: 'About this profile',

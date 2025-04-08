@@ -58,8 +58,6 @@ class BottomsheetSearchFilter {
       context: context, 
       children: [
 
-        const SizedBox(height: 12),
-
         const BottomsheetBar(),
 
         const BottomsheetTitle(title: 'Sort Posts'),
@@ -111,11 +109,9 @@ class BottomsheetSearchFilter {
       context: context, 
       children: [
 
-        const SizedBox(height: 12),
-
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Sort Posts by Time'),
+        const BottomsheetTitle(title: 'Sort by date'),
 
         _buildOptionButton(
           text: 'All time',

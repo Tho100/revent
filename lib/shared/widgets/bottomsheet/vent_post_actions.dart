@@ -22,11 +22,9 @@ class BottomsheetVentPostActions with UserProfileProviderService {
       context: context, 
       children: [
 
-        const SizedBox(height: 12),
-
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Post Action'),
+        const BottomsheetTitle(title: 'Post Options'),
 
         if(removeSavedPostOnPressed != null)
         BottomsheetOptionButton(

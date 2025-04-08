@@ -15,14 +15,12 @@ class BottomsheetProfilePictureOptions {
       context: context, 
       children: [
 
-        const SizedBox(height: 12),
-
         const BottomsheetBar(),
 
         const BottomsheetTitle(title: 'Options'),
 
         BottomsheetOptionButton(
-          text: 'Upload avatar',
+          text: 'Change avatar',
           icon: CupertinoIcons.photo,
           onPressed: changeAvatarOnPressed
         ),

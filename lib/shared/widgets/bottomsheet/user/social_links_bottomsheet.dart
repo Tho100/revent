@@ -24,7 +24,7 @@ class BottomsheetSocialLinks {
 
   }
 
-  Widget _buildOptionButton({
+  Widget _buildSocialButton({
     required BuildContext context,
     required String platform,
     required IconData icon,
@@ -88,14 +88,12 @@ class BottomsheetSocialLinks {
       context: context, 
       children: [
 
-        const SizedBox(height: 12),
-
         const BottomsheetBar(),
 
         const BottomsheetTitle(title: 'Social Links'),
 
         if (handles['instagram']!.isNotEmpty) 
-        _buildOptionButton(
+        _buildSocialButton(
           context: context,
           platform: 'instagram',
           handle: handles['instagram']!,
@@ -103,7 +101,7 @@ class BottomsheetSocialLinks {
         ),
 
         if (handles['twitter']!.isNotEmpty) 
-        _buildOptionButton(
+        _buildSocialButton(
           context: context,
           platform: 'twitter',
           handle: handles['twitter']!,
@@ -111,7 +109,7 @@ class BottomsheetSocialLinks {
         ),
 
         if (handles['tiktok']!.isNotEmpty) 
-        _buildOptionButton(
+        _buildSocialButton(
           context: context,
           platform: 'tiktok',
           handle: handles['tiktok']!,
