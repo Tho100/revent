@@ -115,7 +115,7 @@ class BottomsheetSearchFilter {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Sort Posts by Time'),
+        const BottomsheetTitle(title: 'Sort by date'),
 
         _buildOptionButton(
           text: 'All time',

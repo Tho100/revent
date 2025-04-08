@@ -20,7 +20,7 @@ class BottomsheetUserActions {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'User Action'),
+        const BottomsheetTitle(title: 'User Options'),
 
         BottomsheetOptionButton(
           text: 'About this profile',

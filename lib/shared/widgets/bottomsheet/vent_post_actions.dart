@@ -26,7 +26,7 @@ class BottomsheetVentPostActions with UserProfileProviderService {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Post Action'),
+        const BottomsheetTitle(title: 'Post Options'),
 
         if(removeSavedPostOnPressed != null)
         BottomsheetOptionButton(
