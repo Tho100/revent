@@ -4,13 +4,12 @@ import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomshee
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
-class BottomsheetUserActions {
+class BottomsheetProfilePictureOptions {
 
   Future buildBottomsheet({
     required BuildContext context,
-    required VoidCallback reportOnPressed,
-    required VoidCallback blockOnPressed,
-    required VoidCallback aboutProfileOnPressed
+    required VoidCallback changeAvatarOnPressed,
+    required VoidCallback removeAvatarOnPressed,
   }) {
     return Bottomsheet().buildBottomSheet(
       context: context, 
@@ -20,24 +19,18 @@ class BottomsheetUserActions {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'User Action'),
+        const BottomsheetTitle(title: 'Options'),
 
         BottomsheetOptionButton(
-          text: 'About this profile',
-          icon: CupertinoIcons.info_circle,
-          onPressed: aboutProfileOnPressed
+          text: 'Upload avatar',
+          icon: CupertinoIcons.photo,
+          onPressed: changeAvatarOnPressed
         ),
 
         BottomsheetOptionButton(
-          text: 'Report',
-          icon: CupertinoIcons.flag,
-          onPressed: reportOnPressed
-        ),
-
-        BottomsheetOptionButton(
-          text: 'Block',
-          icon: CupertinoIcons.clear_circled,
-          onPressed: blockOnPressed
+          text: 'Remove avatar',
+          icon: CupertinoIcons.trash,
+          onPressed: removeAvatarOnPressed
         ),
 
         const SizedBox(height: 25),

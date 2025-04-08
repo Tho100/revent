@@ -1,37 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetCommentActions with UserProfileProviderService {
-
-  Widget _buildOptionButton({
-    required String text, 
-    required IconData icon, 
-    required VoidCallback onPressed
-  }) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ThemeStyle.btnBottomsheetBgStyle,
-      child: Row(
-        children: [
-
-          Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
-
-          const SizedBox(width: 15),
-
-          Text(
-            text,
-            style: ThemeStyle.btnBottomsheetTextStyle,
-          )
-
-        ],
-      )
-    );
-  }
 
   Future buildBottomsheet({
     required BuildContext context,
@@ -53,34 +27,34 @@ class BottomsheetCommentActions with UserProfileProviderService {
         const BottomsheetTitle(title: 'Comment Action'),
 
         if(userProvider.user.username == commenter)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Edit comment',
           icon: CupertinoIcons.square_pencil,
           onPressed: editOnPressed
         ),
 
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Copy text',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
         ),
 
         if(userProvider.user.username != commenter)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Report comment',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
         if(userProvider.user.username == commenter)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Delete comment',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),
 
         if(userProvider.user.username != commenter)
-        _buildOptionButton(
+        BottomsheetOptionButton(
           text: 'Block @$commenter',
           icon: CupertinoIcons.clear_circled,
           onPressed: blockOnPressed
