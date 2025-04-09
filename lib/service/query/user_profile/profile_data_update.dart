@@ -33,10 +33,26 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
       'username': userProvider.user.username
     };
 
-    profileProvider.profile.profilePicture = picData;
+    profileProvider.profile.profilePicture = picData; // TODO: Remove this
 
     await executeQuery(query, params).then(
       (_) => profileProvider.profile.profilePicture = picData
+    );
+
+  }
+
+  Future<void> removeProfilePicture() async {
+
+    const query = 
+      'UPDATE user_profile_info SET profile_picture = :profile_pic_data WHERE username = :username';
+
+    final params = {
+      'profile_pic_data': '',
+      'username': userProvider.user.username
+    };
+
+    await executeQuery(query, params).then(
+      (_) => profileProvider.profile.profilePicture = Uint8List(0)
     );
 
   }
@@ -50,7 +66,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
       'username': userProvider.user.username
     };
 
-    profileProvider.profile.pronouns = pronouns;
+    profileProvider.profile.pronouns = pronouns; // TODO: Remove this
 
     await executeQuery(query, params).then(
       (_) => profileProvider.profile.pronouns = pronouns
