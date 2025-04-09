@@ -392,12 +392,13 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
               Align(
                 alignment: Alignment.bottomRight,
                 child: SizedBox(
-                  width: 30,
+                  width: 32,
                   height: 30,
                   child: Container(
                     decoration: BoxDecoration(
+                      border: Border.all(color: ThemeColor.black, width: 0.8),
                       color: ThemeColor.white,
-                      borderRadius: BorderRadius.circular(360)
+                      shape: BoxShape.circle
                     ),
                     child: const Icon(CupertinoIcons.pencil, color: ThemeColor.mediumBlack, size: 18.5),
                   ),
