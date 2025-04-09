@@ -261,8 +261,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     BottomsheetProfilePictureOptions().buildBottomsheet(
       context: context, 
       changeAvatarOnPressed: () {
-        _selectProfilePicture();
         Navigator.pop(context);
+        _selectProfilePicture();
       },
       removeAvatarOnPressed: () {}
     );
