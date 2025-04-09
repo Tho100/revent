@@ -21,7 +21,7 @@ class BottomsheetProfilePictureOptions {
 
         BottomsheetOptionButton(
           text: 'Change avatar',
-          icon: CupertinoIcons.photo,
+          icon: CupertinoIcons.camera,
           onPressed: changeAvatarOnPressed
         ),
 
