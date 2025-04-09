@@ -33,8 +33,6 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
       'username': userProvider.user.username
     };
 
-    profileProvider.profile.profilePicture = picData; // TODO: Remove this
-
     await executeQuery(query, params).then(
       (_) => profileProvider.profile.profilePicture = picData
     );
@@ -65,8 +63,6 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
       'pronouns': pronouns,
       'username': userProvider.user.username
     };
-
-    profileProvider.profile.pronouns = pronouns; // TODO: Remove this
 
     await executeQuery(query, params).then(
       (_) => profileProvider.profile.pronouns = pronouns
