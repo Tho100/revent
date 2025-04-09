@@ -264,7 +264,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         Navigator.pop(context);
         _selectProfilePicture();
       },
-      removeAvatarOnPressed: () {}
+      removeAvatarOnPressed: () async {
+        Navigator.pop(context);
+        await ProfileDataUpdate().removeProfilePicture().then(
+          (_) => profilePicNotifier.value = profileProvider.profile.profilePicture
+        );
+      }
     );
 
   }
@@ -272,8 +277,6 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   Future<bool> _saveSocialLinks() async {
 
     try {
-
-      SnackBarDialog.temporarySnack(message: 'IN');
 
       final socialLinks = {
         'instagram': socialControllers[0].text,
