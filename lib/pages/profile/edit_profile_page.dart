@@ -623,7 +623,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   Widget _buildSocialLinks() {
     return _buildProfileEditingWidget(
-      header: 'Social Links', 
+      header: 'Social links', 
       children: [
 
         const SizedBox(height: 10),
