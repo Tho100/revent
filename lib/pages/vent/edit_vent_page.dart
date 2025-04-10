@@ -32,15 +32,12 @@ class _EditVentPageState extends State<EditVentPage> {
   final postController = VentPostController(); 
 
   final isSavedNotifier = ValueNotifier<bool>(true);
-  // TODO: TRy to remove this
-  bool isBodyTextChanges = false;
 
   void _initializeChangesListener() {
 
     postController.bodyTextController.addListener(() {
       final hasChanged = postController.bodyTextController.text != widget.body;
-      isBodyTextChanges = hasChanged;
-      if (hasChanged) isSavedNotifier.value = false;
+      isSavedNotifier.value = hasChanged ? false : true;
     });
 
   }
