@@ -31,6 +31,17 @@ class _EditVentPageState extends State<EditVentPage> {
 
   final postController = VentPostController(); 
 
+  final isSavedNotifier = ValueNotifier<bool>(true);
+
+  void _initializeChangesListener() {
+
+    postController.bodyTextController.addListener(() {
+      final hasChanged = postController.bodyTextController.text != widget.body;
+      isSavedNotifier.value = hasChanged ? false : true;
+    });
+
+  }
+
   Future<void> _saveOnPressed() async {
 
     try {
@@ -106,9 +117,14 @@ class _EditVentPageState extends State<EditVentPage> {
   }
 
   Widget _buildSaveChangesButton() {
-    return IconButton(
-      icon: const Icon(Icons.check, size: 22),
-      onPressed: () async => _saveOnPressed()
+    return ValueListenableBuilder(
+      valueListenable: isSavedNotifier,
+      builder: (_, isSaved, __) {
+        return IconButton(
+          icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.thirdWhite : ThemeColor.white),
+          onPressed: () async => isSaved ? null : _saveOnPressed()
+        );
+      },
     );
   }
 
@@ -128,11 +144,13 @@ class _EditVentPageState extends State<EditVentPage> {
   void initState() {
     super.initState();
     postController.bodyTextController.text = widget.body;
+    _initializeChangesListener();
   }
 
   @override
   void dispose() {
     postController.dispose();
+    isSavedNotifier.dispose();
     super.dispose();
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/comment/save_comment_edit.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -25,6 +26,17 @@ class EditCommentPage extends StatefulWidget {
 class _EditCommentPageState extends State<EditCommentPage> {
 
   final commentController = TextEditingController();
+
+  final isSavedNotifier = ValueNotifier<bool>(true);
+
+  void _initializeChangesListener() {
+
+    commentController.addListener(() {
+      final hasChanged = commentController.text != widget.originalComment;
+      isSavedNotifier.value = hasChanged ? false : true;
+    });
+
+  }
 
   Future<void> _saveOnPressed() async {
 
@@ -83,10 +95,15 @@ class _EditCommentPageState extends State<EditCommentPage> {
     );
   }
 
-  Widget _buildActionButton() {
-    return IconButton(
-      icon: const Icon(Icons.check, size: 22),
-      onPressed: () async => _saveOnPressed()
+  Widget _buildSaveChangesButton() {
+    return ValueListenableBuilder(
+      valueListenable: isSavedNotifier,
+      builder: (_, isSaved, __) {
+        return IconButton(
+          icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.thirdWhite : ThemeColor.white),
+          onPressed: () async => isSaved ? null : _saveOnPressed()
+        );
+      }
     );
   }
 
@@ -94,11 +111,13 @@ class _EditCommentPageState extends State<EditCommentPage> {
   void initState() {
     super.initState();
     commentController.text = widget.originalComment;
+    _initializeChangesListener();
   }
 
   @override
   void dispose() {
     commentController.dispose();
+    isSavedNotifier.dispose();
     super.dispose();
   }
 
@@ -107,7 +126,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        actions: [_buildActionButton()],
+        actions: [_buildSaveChangesButton()],
         title: 'Edit comment'
       ).buildAppBar(),
       body: _buildBody(),
