@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/comment/save_comment_edit.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -95,9 +96,14 @@ class _EditCommentPageState extends State<EditCommentPage> {
   }
   // TODO: Rename to _buildSaveChangesButton
   Widget _buildActionButton() {
-    return IconButton(
-      icon: const Icon(Icons.check, size: 22),
-      onPressed: () async => _saveOnPressed()
+    return ValueListenableBuilder(
+      valueListenable: isSavedNotifier,
+      builder: (_, isSaved, __) {
+        return IconButton(
+          icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.thirdWhite : ThemeColor.white),
+          onPressed: () async => isSaved ? null : _saveOnPressed()
+        );
+      }
     );
   }
 
