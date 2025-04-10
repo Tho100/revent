@@ -94,8 +94,8 @@ class _EditCommentPageState extends State<EditCommentPage> {
       ),
     );
   }
-  // TODO: Rename to _buildSaveChangesButton
-  Widget _buildActionButton() {
+
+  Widget _buildSaveChangesButton() {
     return ValueListenableBuilder(
       valueListenable: isSavedNotifier,
       builder: (_, isSaved, __) {
@@ -126,7 +126,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        actions: [_buildActionButton()],
+        actions: [_buildSaveChangesButton()],
         title: 'Edit comment'
       ).buildAppBar(),
       body: _buildBody(),
