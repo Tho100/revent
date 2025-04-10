@@ -26,6 +26,17 @@ class _EditCommentPageState extends State<EditCommentPage> {
 
   final commentController = TextEditingController();
 
+  final isSavedNotifier = ValueNotifier<bool>(true);
+
+  void _initializeChangesListener() {
+
+    commentController.addListener(() {
+      final hasChanged = commentController.text != widget.originalComment;
+      isSavedNotifier.value = hasChanged ? false : true;
+    });
+
+  }
+
   Future<void> _saveOnPressed() async {
 
     try {
@@ -82,7 +93,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
       ),
     );
   }
-
+  // TODO: Rename to _buildSaveChangesButton
   Widget _buildActionButton() {
     return IconButton(
       icon: const Icon(Icons.check, size: 22),
@@ -94,11 +105,13 @@ class _EditCommentPageState extends State<EditCommentPage> {
   void initState() {
     super.initState();
     commentController.text = widget.originalComment;
+    _initializeChangesListener();
   }
 
   @override
   void dispose() {
     commentController.dispose();
+    isSavedNotifier.dispose();
     super.dispose();
   }
 

@@ -32,7 +32,7 @@ class _EditVentPageState extends State<EditVentPage> {
   final postController = VentPostController(); 
 
   final isSavedNotifier = ValueNotifier<bool>(true);
-
+  // TODO: TRy to remove this
   bool isBodyTextChanges = false;
 
   void _initializeChangesListener() {
