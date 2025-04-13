@@ -151,7 +151,7 @@ class CustomAlertDialog {
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
                   child: Text(
-                    'Cancel', // TODO: Update to Continue writing
+                    'Continue writing', // TODO: Update to Continue writing
                     style: GoogleFonts.inter(
                       color: ThemeColor.secondaryWhite,
                       fontWeight: FontWeight.w800,
