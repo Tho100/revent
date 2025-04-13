@@ -1,6 +1,7 @@
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
 
 class SettingsButton extends StatelessWidget {
 
@@ -26,8 +27,8 @@ class SettingsButton extends StatelessWidget {
       children: [
 
         Expanded(
-          child: InkWell(
-            onTap: onPressed,
+          child: InkWellEffect(
+            onPressed: onPressed,
             child: Padding(
               padding: const EdgeInsets.only(left: 16.0),
               child: Column(
