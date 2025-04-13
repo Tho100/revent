@@ -16,31 +16,30 @@ class SecurityPage extends StatelessWidget {
         children: [
 
           BorderedContainer(
-            child: Column(
-              children: [
-                // TODO: Simplify by using padding vertical
-                const SizedBox(height: 8),
-                  
-                SettingsButton(
-                  text: 'Change password', 
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const ChangePasswordPage())
-                    );
-                  }
-                ),
-                    
-                const SizedBox(height: 8),
-                    
-                SettingsButton(
-                  text: 'Recovery key', 
-                  onPressed: () {}
-                ),
-                  
-                const SizedBox(height: 8),
-                
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                children: [
+                                
+                  SettingsButton(
+                    text: 'Change password', 
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const ChangePasswordPage())
+                      );
+                    }
+                  ),
+                      
+                  const SizedBox(height: 8),
+                      
+                  SettingsButton(
+                    text: 'Recovery key', 
+                    onPressed: () {}
+                  ),
+                                      
+                ],
+              ),
             ),
           ),
           
