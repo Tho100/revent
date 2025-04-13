@@ -18,7 +18,7 @@ class SecurityPage extends StatelessWidget {
           BorderedContainer(
             child: Column(
               children: [
-                  
+                // TODO: Simplify by using padding vertical
                 const SizedBox(height: 8),
                   
                 SettingsButton(
