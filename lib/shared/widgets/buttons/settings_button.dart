@@ -29,7 +29,7 @@ class SettingsButton extends StatelessWidget {
           child: InkWell(
             onTap: onPressed,
             child: Padding(
-              padding: const EdgeInsets.only(left: 18.0),
+              padding: const EdgeInsets.only(left: 16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -53,7 +53,7 @@ class SettingsButton extends StatelessWidget {
                         style: GoogleFonts.inter(
                           color: makeRed == true ? ThemeColor.darkRed : ThemeColor.white,
                           fontWeight: FontWeight.w800,
-                          fontSize: 19
+                          fontSize: 18
                         ),
                         textAlign: TextAlign.center
                       ),
@@ -67,7 +67,7 @@ class SettingsButton extends StatelessWidget {
                         size: 18
                       ),
                       
-                      const SizedBox(width: 25),
+                      const SizedBox(width: 16),
 
                     ],
                   ),

@@ -9,47 +9,86 @@ class SecurityPage extends StatelessWidget {
 
   const SecurityPage({super.key});
 
+  Widget _borderedContainer(Widget child) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          border: Border.all(
+            color: ThemeColor.lightGrey,
+            width: 0.8
+          ),
+          borderRadius: BorderRadius.circular(20),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: child,
+        ),
+      ),
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: Column(
         children: [
 
-          SettingsButton(
-            text: 'Change password', 
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ChangePasswordPage())
-              );
-            }
-          ),
-
-          const SizedBox(height: 8),
-
-          SettingsButton(
-            text: 'Recovery key', 
-            onPressed: () {}
-          ),
-
-          const SizedBox(height: 8),
-
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.0),
-            child: Divider(color: ThemeColor.lightGrey),
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.transparent,
+                border: Border.all(
+                  color: ThemeColor.lightGrey,
+                  width: 0.8
+                ),
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(8),
+                child: Column(
+                  children: [
+              
+                    const SizedBox(height: 8),
+              
+                    SettingsButton(
+                      text: 'Change password', 
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (_) => const ChangePasswordPage())
+                        );
+                      }
+                    ),
+                        
+                    const SizedBox(height: 8),
+                        
+                    SettingsButton(
+                      text: 'Recovery key', 
+                      onPressed: () {}
+                    ),
+              
+                    const SizedBox(height: 8),
+                    
+                  ],
+                ),
+              ),
+            ),
           ),
           
-          const SizedBox(height: 8),
-
-          SettingsButton(
-            text: 'Deactivate account', 
-            makeRed: true,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const DeactivateAccountPage())
-              );
-            }
+          _borderedContainer(
+            SettingsButton(
+              text: 'Deactivate account', 
+              makeRed: true,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const DeactivateAccountPage())
+                );
+              }
+            ),
           ),
 
         ],
