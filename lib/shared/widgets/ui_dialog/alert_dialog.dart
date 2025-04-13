@@ -6,6 +6,20 @@ import 'package:revent/shared/widgets/alert_dialog_widget.dart';
 
 class CustomAlertDialog {
 
+  static Widget _roundedActionButton(Widget textButton) {
+    return Transform.translate(
+      offset: const Offset(0, 2),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(25),
+        child: SizedBox(
+          width: 200,
+          height: 50,
+          child: textButton
+        )
+      )
+    );
+  }
+
   static Future alertDialog(String title) {
     return showDialog(
       barrierDismissible: false,
@@ -14,14 +28,16 @@ class CustomAlertDialog {
         return AlertDialogWidget(
           title: title,
           content: '',
-          actions: TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              'Close',
-              style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
-                fontWeight: FontWeight.w800,
-              )
+          actions: _roundedActionButton(
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Close',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.secondaryWhite,
+                  fontWeight: FontWeight.w800,
+                )
+              ),
             ),
           ),
         );
@@ -36,14 +52,16 @@ class CustomAlertDialog {
         return AlertDialogWidget(
           title: title,
           content: messages,
-          actions: TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              'Close',
-              style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
-                fontWeight: FontWeight.w800,
-              )
+          actions: _roundedActionButton(
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              child: Text(
+                'Close',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.secondaryWhite,
+                  fontWeight: FontWeight.w800,
+                )
+              ),
             ),
           ),
         );
@@ -61,31 +79,37 @@ class CustomAlertDialog {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialogWidget(
+          isMultipleActions: true,
           title: message,
           content: '',
-          actions: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          actions: Column(
             children: [
 
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: Text(
-                  'Cancel',
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.secondaryWhite,
-                    fontWeight: FontWeight.w800,
-                  )
+              _roundedActionButton(
+                TextButton(
+                  onPressed: onPressedEvent,
+                  child: Text(
+                    buttonMessage,
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.darkRed,
+                      fontWeight: FontWeight.w800,
+                    )
+                  ),
                 ),
               ),
 
-              TextButton(
-                onPressed: onPressedEvent,
-                child: Text(
-                  buttonMessage,
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.darkRed,
-                    fontWeight: FontWeight.w800,
-                  )
+              const Divider(color: ThemeColor.lightGrey, height: 1),
+
+              _roundedActionButton(
+                TextButton(
+                  onPressed: () => Navigator.pop(context),
+                  child: Text(
+                    'Cancel',
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.secondaryWhite,
+                      fontWeight: FontWeight.w800,
+                    )
+                  ),
                 ),
               ),
 
@@ -102,33 +126,40 @@ class CustomAlertDialog {
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialogWidget(
+          isMultipleActions: true,
           title: message,
           content: '',
-          actions: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          actions: Column(
             children: [
 
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(false),
-                child: Text(
-                  'Cancel',
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.secondaryWhite,
-                    fontWeight: FontWeight.w800,
-                  )
+              _roundedActionButton(
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  child: Text(
+                    'Discard',
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.darkRed,
+                      fontWeight: FontWeight.w800,
+                    )
+                  ),
                 ),
               ),
 
-              TextButton(
-                onPressed: () => Navigator.of(context).pop(true),
-                child: Text(
-                  'Discard',
-                  style: GoogleFonts.inter(
-                    color: ThemeColor.darkRed,
-                    fontWeight: FontWeight.w800,
-                  )
+              const Divider(color: ThemeColor.lightGrey, height: 1),
+
+              _roundedActionButton(
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(false),
+                  child: Text(
+                    'Cancel', // TODO: Update to Continue writing
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.secondaryWhite,
+                      fontWeight: FontWeight.w800,
+                    )
+                  ),
                 ),
               ),
+
 
             ]
           ),
