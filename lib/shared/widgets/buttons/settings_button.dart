@@ -1,6 +1,7 @@
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
 
 class SettingsButton extends StatelessWidget {
 
@@ -26,10 +27,10 @@ class SettingsButton extends StatelessWidget {
       children: [
 
         Expanded(
-          child: InkWell(
-            onTap: onPressed,
+          child: InkWellEffect(
+            onPressed: onPressed,
             child: Padding(
-              padding: const EdgeInsets.only(left: 18.0),
+              padding: EdgeInsets.only(left: icon == null ? 16 : 12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -53,7 +54,7 @@ class SettingsButton extends StatelessWidget {
                         style: GoogleFonts.inter(
                           color: makeRed == true ? ThemeColor.darkRed : ThemeColor.white,
                           fontWeight: FontWeight.w800,
-                          fontSize: 19
+                          fontSize: 18
                         ),
                         textAlign: TextAlign.center
                       ),
@@ -67,7 +68,7 @@ class SettingsButton extends StatelessWidget {
                         size: 18
                       ),
                       
-                      const SizedBox(width: 25),
+                      const SizedBox(width: 16),
 
                     ],
                   ),

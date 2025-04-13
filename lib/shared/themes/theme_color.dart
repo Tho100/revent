@@ -9,7 +9,7 @@ class ThemeColor {
   static const mediumGrey = Color.fromARGB(255, 25, 25, 25);
   static const lightGrey = Color.fromARGB(255, 35, 35, 35);
 
-  static const darkRed = Colors.red;
+  static const darkRed = Color.fromARGB(255, 218, 36, 34);
 
   static const white = Colors.white;
   static const secondaryWhite = Color.fromARGB(255, 212, 212, 212);

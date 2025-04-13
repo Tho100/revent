@@ -5,6 +5,7 @@ import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/boredered_container.dart';
 
 class AccountInformationPage extends StatefulWidget {
 
@@ -39,33 +40,43 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
 
   Widget _buildHeaders(String header, String value) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      padding: const EdgeInsets.only(left: 14.0),
+      child: Row(
         children: [
-          
-          Text(
-            header,
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontSize: 15,
-              fontWeight: FontWeight.w700,
-            ),
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              const SizedBox(height: 8),
+              
+              Text(
+                header,
+                style: GoogleFonts.inter(
+                  color: ThemeColor.thirdWhite,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+    
+              const SizedBox(height: 8),
+    
+              Text(
+                value,
+                style: GoogleFonts.inter(
+                  color: ThemeColor.white,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+    
+              const SizedBox(height: 8),
+    
+            ],
           ),
-    
-          const SizedBox(height: 8),
-    
-          Text(
-            value,
-            style: GoogleFonts.inter(
-              color: ThemeColor.white,
-              fontSize: 18,
-              fontWeight: FontWeight.w800,
-            ),
-          ),
-    
-          const SizedBox(height: 20),
-    
+
+          const Spacer(),
+
         ],
       ),
     );
@@ -92,19 +103,23 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
 
   Widget _buildBody() {
     return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.only(top: 15.0, left: 14.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-                        
-            _buildHeaders('Username', userProvider.user.username),
-            _buildHeaders('Email', userProvider.user.email),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+                      
+          BorderedContainer(
+            child: _buildHeaders('Username', userProvider.user.username)
+          ),
 
-            _buildJoinedDate(),
-                  
-          ],
-        ),
+          BorderedContainer(
+            child: _buildHeaders('Email', userProvider.user.email)
+          ),
+    
+          BorderedContainer(
+            child: _buildJoinedDate()
+          ),
+                
+        ],
       ),
     );
   }

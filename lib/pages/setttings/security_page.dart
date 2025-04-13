@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:revent/pages/setttings/security/change_password_page.dart';
 import 'package:revent/pages/setttings/security/deactivate_account_page.dart';
-import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/buttons/settings_button.dart';
 
 class SecurityPage extends StatelessWidget {
@@ -15,41 +15,45 @@ class SecurityPage extends StatelessWidget {
       child: Column(
         children: [
 
-          SettingsButton(
-            text: 'Change password', 
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ChangePasswordPage())
-              );
-            }
-          ),
-
-          const SizedBox(height: 8),
-
-          SettingsButton(
-            text: 'Recovery key', 
-            onPressed: () {}
-          ),
-
-          const SizedBox(height: 8),
-
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.0),
-            child: Divider(color: ThemeColor.lightGrey),
+          BorderedContainer(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                children: [
+                                
+                  SettingsButton(
+                    text: 'Change password', 
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const ChangePasswordPage())
+                      );
+                    }
+                  ),
+                      
+                  const SizedBox(height: 8),
+                      
+                  SettingsButton(
+                    text: 'Recovery key', 
+                    onPressed: () {}
+                  ),
+                                      
+                ],
+              ),
+            ),
           ),
           
-          const SizedBox(height: 8),
-
-          SettingsButton(
-            text: 'Deactivate account', 
-            makeRed: true,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const DeactivateAccountPage())
-              );
-            }
+          BorderedContainer(
+            child: SettingsButton(
+              text: 'Deactivate account', 
+              makeRed: true,
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (_) => const DeactivateAccountPage())
+                );
+              }
+            ),
           ),
 
         ],

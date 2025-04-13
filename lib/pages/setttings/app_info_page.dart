@@ -6,6 +6,7 @@ import 'package:revent/app/app_cache.dart';
 import 'package:revent/pages/setttings/app_info/pp_page.dart';
 import 'package:revent/pages/setttings/app_info/tp_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/settings_button.dart';
@@ -52,7 +53,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
 
   Widget _buildHeaders(String header, String value) {
     return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
+      padding: const EdgeInsets.only(left: 14.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -98,70 +99,90 @@ class _AppInfoPageState extends State<AppInfoPage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
     
-          Padding(
-            padding: const EdgeInsets.only(left: 14.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          BorderedContainer(
+            doubleInternalPadding: true,
+            child: Row(
               children: [
-                
-                _buildHeaders('Version', '1.4.2'),
 
-                ValueListenableBuilder(
-                  valueListenable: cacheNotifier,
-                  builder: (_, cacheSize, __) {
-                    return _buildHeaders('Cache', cacheSize);
-                  },
-                ),
-                    
                 Padding(
-                  padding: const EdgeInsets.only(left: 8.0),
-                  child: Text(
-                    "You can free up storage by clearing cache.\nYour data won't be affected.",
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.thirdWhite,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 14
-                    ),
+                  padding: const EdgeInsets.symmetric(vertical: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      
+                      _buildHeaders('Version', '1.4.2'),
+                          
+                      ValueListenableBuilder(
+                        valueListenable: cacheNotifier,
+                        builder: (_, cacheSize, __) {
+                          return _buildHeaders('Cache', cacheSize);
+                        },
+                      ),
+                          
+                      Padding(
+                        padding: const EdgeInsets.only(left: 14.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            
+                            Text(
+                              "You can free up storage by clearing cache.\nYour data won't be affected.",
+                              style: GoogleFonts.inter(
+                                color: ThemeColor.thirdWhite,
+                                fontWeight: FontWeight.w800,
+                                fontSize: 14
+                              ),
+                            ),
+                            
+                            const SizedBox(height: 15),
+                                      
+                            _buildClearCacheButton(),
+                      
+                          ],
+                        ),
+                      ),
+                  
+                    ],
                   ),
                 ),
-          
-                const SizedBox(height: 15),
-    
-                _buildClearCacheButton(),
-    
+
+                const Spacer(),
+
               ],
             ),
           ),
-          
-          const SizedBox(height: 15),
-    
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.0),
-            child: Divider(color: ThemeColor.lightGrey),
-          ),
-    
-          const SizedBox(height: 8),
-    
-          SettingsButton(
-            text: 'Term and Conditions', 
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const TermAndConditionsPage())
-              );
-            }
-          ),
-    
-          const SizedBox(height: 8),
-    
-          SettingsButton(
-            text: 'Privacy Policy', 
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const PrivacyPolicyPage())
-              );
-            }
+              
+          BorderedContainer(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 8.0),
+              child: Column(
+                children: [
+                      
+                  SettingsButton(
+                    text: 'Term and Conditions', 
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const TermAndConditionsPage())
+                      );
+                    }
+                  ),
+                
+                  const SizedBox(height: 8),
+                
+                  SettingsButton(
+                    text: 'Privacy Policy', 
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (_) => const PrivacyPolicyPage())
+                      );
+                    }
+                  ),
+                  
+                ],
+              ),
+            ),
           ),
     
         ],
