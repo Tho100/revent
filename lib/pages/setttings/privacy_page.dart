@@ -6,6 +6,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/boredered_container.dart';
 
 class PrivacyPage extends StatefulWidget {
 
@@ -62,7 +63,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   Widget _buildSwitch(ValueNotifier notifier, VoidCallback onToggled, String text, String description) {
     return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 8.0),
+      padding: const EdgeInsets.only(left: 18.0, right: 8.0, bottom: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -123,36 +124,39 @@ class _PrivacyPageState extends State<PrivacyPage> {
       child: Column(
         children: [
 
-          _buildSwitch(
-            privateAccountNotifier,
-            () async => await _privateAccountOnPressed(),
-            'Private account',
-            "When your account is private, your profile posts, saved posts, following, and followers list can't be seen by other user."
+          BorderedContainer(
+            doubleInternalPadding: true,
+            child: _buildSwitch(
+              privateAccountNotifier,
+              () async => await _privateAccountOnPressed(),
+              'Private account',
+              "When your account is private, your profile posts, saved posts, following, and followers list can't be seen by other user."
+            ),
           ),
+          
+          BorderedContainer(
+            doubleInternalPadding: true,
+            child: Column(
+              children: [
 
-          const SizedBox(height: 8),
+                _buildSwitch(
+                  hideSavedPostNotifier,
+                  () async => await _hideSavedPostsOnPressed(),
+                  'Hide saved post',
+                  'Only you can see your saved vent post when this option is enabled.'
+                ),
+          
+                const SizedBox(height: 16),
+          
+                _buildSwitch(
+                  hideFollowingListNotifier,
+                  () async => await _hideFollowingListOnPressed(),
+                  'Hide following list',
+                  'Only you can see your following list when this option is enabled.'
+                ),
 
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.0),
-            child: Divider(color: ThemeColor.lightGrey),
-          ),
-
-          const SizedBox(height: 8),
-
-          _buildSwitch(
-            hideSavedPostNotifier,
-            () async => await _hideSavedPostsOnPressed(),
-            'Hide saved post',
-            'Only you can see your saved vent post when this option is enabled.'
-          ),
-
-          const SizedBox(height: 16),
-
-          _buildSwitch(
-            hideFollowingListNotifier,
-            () async => await _hideFollowingListOnPressed(),
-            'Hide following list',
-            'Only you can see your following list when this option is enabled.'
+              ],
+            ),
           ),
 
         ],
