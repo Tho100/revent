@@ -30,7 +30,7 @@ class SettingsButton extends StatelessWidget {
           child: InkWellEffect(
             onPressed: onPressed,
             child: Padding(
-              padding: const EdgeInsets.only(left: 16.0),
+              padding: EdgeInsets.only(left: icon == null ? 16 : 12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
