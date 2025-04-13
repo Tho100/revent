@@ -4,16 +4,18 @@ import 'package:revent/shared/themes/theme_color.dart';
 class BorderedContainer extends StatelessWidget {
 
   final Widget child;
+  final bool? doubleInternalPadding;
 
   const BorderedContainer({
     required this.child, 
+    this.doubleInternalPadding = false,
     super.key
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 5.0),
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8.0),
       child: Container(
         decoration: BoxDecoration(
           color: Colors.transparent,
@@ -24,7 +26,7 @@ class BorderedContainer extends StatelessWidget {
           borderRadius: BorderRadius.circular(20),
         ),
         child: Padding(
-          padding: const EdgeInsets.all(8),
+          padding: EdgeInsets.symmetric(horizontal: 8, vertical: doubleInternalPadding! ? 16 : 8),
           child: child,
         ),
       ),

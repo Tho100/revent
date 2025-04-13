@@ -13,7 +13,7 @@ import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/pages/setttings/saved_page.dart';
 import 'package:revent/pages/setttings/security_page.dart';
 import 'package:revent/pages/setttings/liked_page.dart';
-import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/settings_button.dart';
@@ -48,123 +48,123 @@ class SettingsPage extends StatelessWidget {
       child: Column(
         children: [
                     
-          SettingsButton(
-            text: 'Account information', 
-            icon: CupertinoIcons.person,
-            onPressed: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (_) => const AccountInformationPage())
-              );
-            }
-          ),
-        
-          const SizedBox(height: buttonGap),
+          BorderedContainer(
+            doubleInternalPadding: true,
+            child: Column(
+              children: [
+                SettingsButton(
+                  text: 'Account information', 
+                  icon: CupertinoIcons.person,
+                  onPressed: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (_) => const AccountInformationPage())
+                    );
+                  }
+                ),
+                  
+                const SizedBox(height: buttonGap),
+                
+                SettingsButton(
+                  text: 'Privacy', 
+                  icon: CupertinoIcons.lock,
+                  onPressed: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (_) => const PrivacyPage())
+                    );
+                  }
+                ),
+                  
+                const SizedBox(height: buttonGap),
+                
+                SettingsButton(
+                  text: 'Security', 
+                  icon: CupertinoIcons.shield,
+                  onPressed: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (_) => const SecurityPage())
+                    );
+                  }
+                ),
           
-          SettingsButton(
-            text: 'Privacy', 
-            icon: CupertinoIcons.lock,
-            onPressed: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (_) => const PrivacyPage())
-              );
-            }
-          ),
-        
-          const SizedBox(height: buttonGap),
+                const SizedBox(height: buttonGap),
+                
+                SettingsButton(
+                  text: 'Blocked', 
+                  icon: CupertinoIcons.clear_circled,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const BlockedAccountsPage())
+                    );
+                  }
+                ),
           
-          SettingsButton(
-            text: 'Security', 
-            icon: CupertinoIcons.shield,
-            onPressed: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (_) => const SecurityPage())
-              );
-            }
-          ),
-
-          const SizedBox(height: buttonGap),
+                const SizedBox(height: buttonGap),
           
-          SettingsButton(
-            text: 'Blocked', 
-            icon: CupertinoIcons.clear_circled,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const BlockedAccountsPage())
-              );
-            }
-          ),
-
-          const SizedBox(height: buttonGap),
-
-          SettingsButton(
-            text: 'Liked', 
-            icon: CupertinoIcons.heart,
-            onPressed: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (_) => const LikedPage())
-              );
-            }
-          ),
-        
-          const SizedBox(height: buttonGap),
+                SettingsButton(
+                  text: 'Liked', 
+                  icon: CupertinoIcons.heart,
+                  onPressed: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (_) => const LikedPage())
+                    );
+                  }
+                ),
+                  
+                const SizedBox(height: buttonGap),
+                
+                SettingsButton(
+                  text: 'Saved', 
+                  icon: CupertinoIcons.bookmark,
+                  onPressed: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (_) => const SavedPage())
+                    );
+                  }
+                ),
           
-          SettingsButton(
-            text: 'Saved', 
-            icon: CupertinoIcons.bookmark,
-            onPressed: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (_) => const SavedPage())
-              );
-            }
-          ),
-
-          const SizedBox(height: buttonGap),
+                const SizedBox(height: buttonGap),
+                
+                SettingsButton(
+                  text: 'Archive', 
+                  icon: CupertinoIcons.archivebox,
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (_) => const ArchivedVentPage())
+                    );
+                  }
+                ),
           
-          SettingsButton(
-            text: 'Archive', 
-            icon: CupertinoIcons.archivebox,
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (_) => const ArchivedVentPage())
-              );
-            }
+                const SizedBox(height: buttonGap),
+          
+                SettingsButton(
+                  text: 'Info', 
+                  icon: CupertinoIcons.info,
+                  onPressed: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (_) => const AppInfoPage())
+                    );
+                  }
+                ),
+              ],
+            ),
           ),
 
-          const SizedBox(height: buttonGap),
-
-          SettingsButton(
-            text: 'Info', 
-            icon: CupertinoIcons.info,
-            onPressed: () {
-              Navigator.push(
-                context, 
-                MaterialPageRoute(builder: (_) => const AppInfoPage())
-              );
-            }
-          ),
-
-          const SizedBox(height: 16),
-
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 18.0),
-            child: Divider(color: ThemeColor.lightGrey),
-          ),
-
-          const SizedBox(height: 8),
-
-          SettingsButton(
-            text: 'Sign out', 
-            icon: CupertinoIcons.square_arrow_right,
-            makeRed: true,
-            hideCaret: true,
-            onPressed: () => _signOutOnPressed()
+          BorderedContainer(
+            child: SettingsButton(
+              text: 'Sign out', 
+              icon: CupertinoIcons.square_arrow_right,
+              makeRed: true,
+              hideCaret: true,
+              onPressed: () => _signOutOnPressed()
+            ),
           ),
           
         ]
