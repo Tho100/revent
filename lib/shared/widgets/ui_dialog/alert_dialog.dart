@@ -12,7 +12,7 @@ class CustomAlertDialog {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: SizedBox(
-          width: 210,
+          width: 220,
           height: 50,
           child: textButton
         )
