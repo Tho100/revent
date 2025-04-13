@@ -12,7 +12,7 @@ class CustomAlertDialog {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(25),
         child: SizedBox(
-          width: 200,
+          width: 210,
           height: 50,
           child: textButton
         )
@@ -151,7 +151,7 @@ class CustomAlertDialog {
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
                   child: Text(
-                    'Continue writing', // TODO: Update to Continue writing
+                    'Continue writing',
                     style: GoogleFonts.inter(
                       color: ThemeColor.secondaryWhite,
                       fontWeight: FontWeight.w800,
