@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/alert_dialog_widget.dart';
 
 class CustomAlertDialog {
@@ -31,6 +32,7 @@ class CustomAlertDialog {
           actions: _roundedActionButton(
             TextButton(
               onPressed: () => Navigator.pop(context),
+              style: ThemeStyle.dialogBtnStyle,
               child: Text(
                 'Close',
                 style: GoogleFonts.inter(
@@ -55,6 +57,7 @@ class CustomAlertDialog {
           actions: _roundedActionButton(
             TextButton(
               onPressed: () => Navigator.pop(context),
+              style: ThemeStyle.dialogBtnStyle,
               child: Text(
                 'Close',
                 style: GoogleFonts.inter(
@@ -88,6 +91,9 @@ class CustomAlertDialog {
               _roundedActionButton(
                 TextButton(
                   onPressed: onPressedEvent,
+                  style: ButtonStyle(
+                    overlayColor: MaterialStateColor.resolveWith((_) => ThemeColor.thirdWhite),
+                  ),
                   child: Text(
                     buttonMessage,
                     style: GoogleFonts.inter(
@@ -98,11 +104,14 @@ class CustomAlertDialog {
                 ),
               ),
 
+              const SizedBox(height: 4),
+
               const Divider(color: ThemeColor.lightGrey, height: 1),
 
               _roundedActionButton(
                 TextButton(
                   onPressed: () => Navigator.pop(context),
+                  style: ThemeStyle.dialogBtnStyle,
                   child: Text(
                     'Cancel',
                     style: GoogleFonts.inter(
@@ -135,6 +144,7 @@ class CustomAlertDialog {
               _roundedActionButton(
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(true),
+                  style: ThemeStyle.dialogBtnStyle,
                   child: Text(
                     'Discard',
                     style: GoogleFonts.inter(
@@ -145,11 +155,14 @@ class CustomAlertDialog {
                 ),
               ),
 
+              const SizedBox(height: 4),
+
               const Divider(color: ThemeColor.lightGrey, height: 1),
 
               _roundedActionButton(
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(false),
+                  style: ThemeStyle.dialogBtnStyle,
                   child: Text(
                     'Continue writing',
                     style: GoogleFonts.inter(
@@ -159,7 +172,6 @@ class CustomAlertDialog {
                   ),
                 ),
               ),
-
 
             ]
           ),

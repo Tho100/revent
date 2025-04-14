@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
 
 class ThemePage extends StatefulWidget {
 
@@ -21,17 +22,27 @@ class _ThemePageState extends State<ThemePage> {
   final themes = ['Dark', 'Light'];
 
   final themeColor = {
-    'Dark': ThemeColor.darkRed,
+    'Dark': ThemeColor.black,
     'Light': ThemeColor.white,
   };
 
-  final currentTheme = 'Dark';
+  String currentTheme = 'Dark';
 
   void _initializeCurrentTheme() {
 
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => currentTheme == themes[index]
     );
+
+  }
+
+  void _changeTheme(int themeIndex) {
+
+    isSelectedThemeNotifier.value = List<bool>.generate(
+      themes.length, (index) => index == themeIndex
+    );
+    
+    currentTheme = themes[themeIndex];
 
   }
 
@@ -45,46 +56,50 @@ class _ThemePageState extends State<ThemePage> {
             doubleInternalPadding: true,
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Row(
-                children: [
-                
-                  Container(
-                    width: 45,
-                    height: 45,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: themeColor[themes[index]]
+              child: InkWellEffect(
+                onPressed: () => _changeTheme(index),
+                child: Row(
+                  children: [
+                  
+                    Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        border: Border.all(color: ThemeColor.white),
+                        shape: BoxShape.circle,
+                        color: themeColor[themes[index]]
+                      ),
                     ),
-                  ),
-                
-                  const SizedBox(width: 16),
-            
-                  Text(
-                    themes[index],
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.white,
-                      fontWeight: FontWeight.w800,
-                      fontSize: 17
+                  
+                    const SizedBox(width: 16),
+                          
+                    Text(
+                      themes[index],
+                      style: GoogleFonts.inter(
+                        color: ThemeColor.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 17
+                      ),
                     ),
-                  ),
-
-                  const Spacer(),
-
-                  ValueListenableBuilder(
-                    valueListenable: isSelectedThemeNotifier,
-                    builder: (_, isSelected, __) {
-                      return Padding(
-                        padding: const EdgeInsets.only(right: 16.0),
-                        child: Icon(
-                          isSelected[index] ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
-                          color: isSelected[index] ? ThemeColor.white : ThemeColor.thirdWhite, 
-                          size: 20
-                        ),
-                      );
-                    },
-                  ),
-                
-                ],
+              
+                    const Spacer(),
+              
+                    ValueListenableBuilder(
+                      valueListenable: isSelectedThemeNotifier,
+                      builder: (_, isSelected, __) {
+                        return Padding(
+                          padding: const EdgeInsets.only(right: 16.0),
+                          child: Icon(
+                            isSelected[index] ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
+                            color: isSelected[index] ? ThemeColor.white : ThemeColor.thirdWhite, 
+                            size: 25
+                          ),
+                        );
+                      },
+                    ),
+                  
+                  ],
+                ),
               ),
             ),
           );

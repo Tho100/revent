@@ -44,6 +44,10 @@ class ThemeStyle {
     color: ThemeColor.lightGrey,
     width: 1
   );
+
+  static final dialogBtnStyle = ButtonStyle(
+    overlayColor: MaterialStateColor.resolveWith((_) => ThemeColor.thirdWhite),
+  );
   
   static const btnBottomsheetIconColor = ThemeColor.thirdWhite;
 
