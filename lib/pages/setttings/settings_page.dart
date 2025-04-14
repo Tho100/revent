@@ -13,6 +13,7 @@ import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/pages/setttings/saved_page.dart';
 import 'package:revent/pages/setttings/security_page.dart';
 import 'package:revent/pages/setttings/liked_page.dart';
+import 'package:revent/pages/setttings/theme_page.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -141,6 +142,19 @@ class SettingsPage extends StatelessWidget {
                   }
                 ),
           
+                const SizedBox(height: buttonGap),
+                
+                SettingsButton(
+                  text: 'Theme', 
+                  icon: CupertinoIcons.paintbrush,
+                  onPressed: () {
+                    Navigator.push(
+                      context, 
+                      MaterialPageRoute(builder: (_) => const ThemePage())
+                    );
+                  }
+                ),
+
                 const SizedBox(height: buttonGap),
           
                 SettingsButton(
