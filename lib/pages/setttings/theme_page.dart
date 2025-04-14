@@ -26,13 +26,23 @@ class _ThemePageState extends State<ThemePage> {
     'Light': ThemeColor.white,
   };
 
-  final currentTheme = 'Dark';
+  String currentTheme = 'Dark';
 
   void _initializeCurrentTheme() {
 
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => currentTheme == themes[index]
     );
+
+  }
+
+  void _changeTheme(int themeIndex) {
+
+    isSelectedThemeNotifier.value = List<bool>.generate(
+      themes.length, (index) => index == themeIndex
+    );
+    
+    currentTheme = themes[themeIndex];
 
   }
 
@@ -47,7 +57,7 @@ class _ThemePageState extends State<ThemePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: InkWellEffect(
-                onPressed: () {},
+                onPressed: () => _changeTheme(index),
                 child: Row(
                   children: [
                   
