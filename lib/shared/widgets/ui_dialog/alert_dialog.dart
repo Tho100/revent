@@ -104,6 +104,8 @@ class CustomAlertDialog {
                 ),
               ),
 
+              const SizedBox(height: 4),
+
               const Divider(color: ThemeColor.lightGrey, height: 1),
 
               _roundedActionButton(
@@ -152,6 +154,8 @@ class CustomAlertDialog {
                   ),
                 ),
               ),
+
+              const SizedBox(height: 4),
 
               const Divider(color: ThemeColor.lightGrey, height: 1),
 
