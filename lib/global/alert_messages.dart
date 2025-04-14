@@ -11,7 +11,6 @@ class AlertMessages {
 
   static const deletePost = 'Delete this post?';
   static const deleteArchive = 'Delete this archive post?';
-  static const deleteAccount = 'Delete your account?';
 
   static const discardPost = 'Discard post?';
   static const discardComment = 'Discard comment?';
@@ -19,7 +18,8 @@ class AlertMessages {
   static const discardEdit = 'Discard edit?';
 
   static const signOut = 'Sign out of your account?';
-  
+  static const deactivateAccount = 'Deactivate your account?';
+
   static const textCopied = 'Text copied.';
 
 }

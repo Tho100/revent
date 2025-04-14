@@ -29,8 +29,8 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
 
   void _deactivateAccountConfirmationDialog() {
     CustomAlertDialog.alertDialogCustomOnPress(
-      message: AlertMessages.deleteAccount, 
-      buttonMessage: 'Delete', 
+      message: AlertMessages.deactivateAccount, 
+      buttonMessage: 'Proceed', 
       onPressedEvent: () async {
         await UserAccountManager().deactivateUserAccount(username: userProvider.user.username).then(
           (_) => Navigator.pop(context)
