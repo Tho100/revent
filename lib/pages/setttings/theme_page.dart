@@ -19,6 +19,8 @@ class ThemePage extends StatefulWidget {
 
 class _ThemePageState extends State<ThemePage> {
 
+  final localStorageModel = LocalStorageModel();
+
   final isSelectedThemeNotifier = ValueNotifier<List<bool>>([]);
 
   final themes = ['dark', 'light'];
@@ -32,7 +34,7 @@ class _ThemePageState extends State<ThemePage> {
 
   void _initializeCurrentTheme() async {
 
-    currentTheme = await LocalStorageModel().readThemeInformation();
+    currentTheme = await localStorageModel.readThemeInformation();
 
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => currentTheme == themes[index]
@@ -40,13 +42,17 @@ class _ThemePageState extends State<ThemePage> {
 
   }
 
-  void _changeTheme(int themeIndex) {
+  void _changeTheme(int themeIndex) async {
+
+    final selectedTheme = themes[themeIndex];
+
+    await localStorageModel.setupThemeInformation(theme: selectedTheme);
 
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => index == themeIndex
     );
     
-    currentTheme = themes[themeIndex];
+    currentTheme = selectedTheme;
 
   }
 
