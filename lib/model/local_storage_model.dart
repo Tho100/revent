@@ -267,6 +267,7 @@ class LocalStorageModel {
 
     final userInfo = File('${localDir.path}/$_userInfoFile');
     final userSocialHandles = File('${localDir.path}/$_userSocialHandles');
+    final themeInfo = File('${localDir.path}/$_userThemeFile');
 
     try {
 
@@ -274,6 +275,10 @@ class LocalStorageModel {
 
       if(await userSocialHandles.exists()) {
         await userSocialHandles.delete();
+      }
+
+      if(await themeInfo.exists()) {
+        await themeInfo.delete();
       }
 
     } catch (_) {
