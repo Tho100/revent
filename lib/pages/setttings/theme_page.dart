@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recase/recase.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
@@ -19,14 +20,14 @@ class _ThemePageState extends State<ThemePage> {
 
   final isSelectedThemeNotifier = ValueNotifier<List<bool>>([]);
 
-  final themes = ['Dark', 'Light']; // TODO: Make them all underscore
+  final themes = ['dark', 'light'];
 
   final themeColor = {
-    'Dark': ThemeColor.black,
-    'Light': ThemeColor.white,
+    'dark': ThemeColor.black,
+    'light': ThemeColor.white,
   };
 
-  String currentTheme = 'Dark';
+  String currentTheme = 'dark';
 
   void _initializeCurrentTheme() {
 
@@ -74,7 +75,7 @@ class _ThemePageState extends State<ThemePage> {
                     const SizedBox(width: 16),
                           
                     Text(
-                      themes[index], // TOOD: capitalize the initial
+                      themes[index].titleCase,
                       style: GoogleFonts.inter(
                         color: ThemeColor.white,
                         fontWeight: FontWeight.w800,
