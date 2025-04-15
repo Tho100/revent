@@ -45,6 +45,12 @@ class ThemeStyle {
     width: 1
   );
 
+  static final dialogBtnTextStyle = GoogleFonts.inter(
+    color: ThemeColor.secondaryWhite,
+    fontWeight: FontWeight.w800,
+    fontSize: 15
+  );
+
   static final dialogBtnStyle = ButtonStyle(
     overlayColor: MaterialStateColor.resolveWith((_) => ThemeColor.thirdWhite),
   );
