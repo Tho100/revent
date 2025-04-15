@@ -34,7 +34,7 @@ class ThemeStyle {
   static final btnBottomsheetBgStyle = ElevatedButton.styleFrom(
     backgroundColor: ThemeColor.black,
     elevation: 0,
-    minimumSize: const Size(double.infinity, 55), // TODO: THis might be why it wont work
+    minimumSize: const Size(double.infinity, 55),
     shape: const RoundedRectangleBorder(
       borderRadius: BorderRadius.zero, 
     ),
