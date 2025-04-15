@@ -31,10 +31,28 @@ class LocalStorageModel {
 
   }
 
-  Future<void> readThemeInformation() async {
-
-    //
+  Future<String> readThemeInformation() async {
     
+    final localDir = await _readLocalDirectory();
+
+    if (!localDir.existsSync()) {
+      return 'dark'; 
+    }
+
+    final setupFile = File('${localDir.path}/$_userThemeFile');
+
+    if (!setupFile.existsSync()) {
+      return 'dark'; 
+    }
+
+    try {
+
+      return await setupFile.readAsString();
+
+    } catch (_) {
+      return 'dark';
+    }
+
   }
 
   Future<void> addSearchHistory({required String text}) async {

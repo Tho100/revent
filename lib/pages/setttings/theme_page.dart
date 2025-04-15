@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recase/recase.dart';
+import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
@@ -29,7 +30,9 @@ class _ThemePageState extends State<ThemePage> {
 
   String currentTheme = 'dark';
 
-  void _initializeCurrentTheme() {
+  void _initializeCurrentTheme() async {
+
+    currentTheme = await LocalStorageModel().readThemeInformation();
 
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => currentTheme == themes[index]
