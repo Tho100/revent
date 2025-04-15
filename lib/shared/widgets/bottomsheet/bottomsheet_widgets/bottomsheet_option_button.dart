@@ -28,8 +28,8 @@ class BottomsheetOptionButton extends StatelessWidget {
 
           Text(
             text,
-            style: ThemeStyle.btnBottomsheetTextStyle,
-          )
+            style: ThemeStyle.btnBottomsheetTextStyle
+          ),
 
         ],
       )

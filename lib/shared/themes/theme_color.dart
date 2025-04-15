@@ -18,5 +18,8 @@ class ThemeColor {
 
   static const likedColor = Color.fromARGB(197, 244, 3, 51);
   static const nsfwColor = Color.fromARGB(197, 244, 3, 115);
-  
+
+  static final barrierColor = mediumBlack.withOpacity(0.7);
+
+
 }

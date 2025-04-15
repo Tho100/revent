@@ -102,7 +102,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
           ),
 
           SizedBox(
-            width: 285,
+            width: 230,
             child: Text(
               description,
               style: GoogleFonts.inter(

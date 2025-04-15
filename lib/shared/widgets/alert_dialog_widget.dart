@@ -19,6 +19,26 @@ class AlertDialogWidget extends StatelessWidget {
     super.key
   });
 
+  double _getDialogHeight() {
+    
+    if (isMultipleActions! && content.isNotEmpty) {
+      return 210;
+
+    } else if (isMultipleActions! && content.isEmpty) {
+      return 180;
+
+    } else if (!isMultipleActions! && content.isEmpty) {
+      return 140;
+
+    } else if (!isMultipleActions! && content.isNotEmpty) {
+      return 170;
+
+    }
+
+    return 100;
+
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -28,21 +48,21 @@ class AlertDialogWidget extends StatelessWidget {
       ),
       backgroundColor: ThemeColor.black,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.60,
-        height: isMultipleActions! ? 210 : 175,
+        width: MediaQuery.of(context).size.width * 0.55,
+        height: _getDialogHeight(),
         child: Column(
           children: [
 
             const SizedBox(height: 25),
             
-            SizedBox(
-              width: 225,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Text(
                 title,
                 style: GoogleFonts.inter(
                   color: ThemeColor.white,
                   fontWeight: FontWeight.w800,
-                  fontSize: 20
+                  fontSize: 19
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -50,16 +70,14 @@ class AlertDialogWidget extends StatelessWidget {
 
             if(content.isNotEmpty) ... [
 
-              const SizedBox(height: 10),
-
-              SizedBox(
-                width: 200,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),
                 child: Text(
                   content,
                   style: GoogleFonts.inter(
                     color: ThemeColor.secondaryWhite,
                     fontWeight: FontWeight.w800,
-                    fontSize: 16
+                    fontSize: 15
                   ),
                   textAlign: TextAlign.center,
                 ),

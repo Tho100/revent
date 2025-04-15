@@ -24,7 +24,8 @@ class CustomAlertDialog {
   static Future alertDialog(String title) {
     return showDialog(
       barrierDismissible: false,
-      context: navigatorKey.currentContext!, 
+      context: navigatorKey.currentContext!,
+      barrierColor: ThemeColor.barrierColor, 
       builder: (context) {
         return AlertDialogWidget(
           title: title,
@@ -35,10 +36,7 @@ class CustomAlertDialog {
               style: ThemeStyle.dialogBtnStyle,
               child: Text(
                 'Close',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
-                  fontWeight: FontWeight.w800,
-                )
+                style: ThemeStyle.dialogBtnTextStyle
               ),
             ),
           ),
@@ -50,6 +48,7 @@ class CustomAlertDialog {
   static Future alertDialogTitle(String title, String messages) {
     return showDialog(
       context: navigatorKey.currentContext!,
+      barrierColor: ThemeColor.barrierColor,
       builder: (BuildContext context) {
         return AlertDialogWidget(
           title: title,
@@ -60,10 +59,7 @@ class CustomAlertDialog {
               style: ThemeStyle.dialogBtnStyle,
               child: Text(
                 'Close',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
-                  fontWeight: FontWeight.w800,
-                )
+                style: ThemeStyle.dialogBtnTextStyle
               ),
             ),
           ),
@@ -79,6 +75,7 @@ class CustomAlertDialog {
   }) {
     return showDialog(
       context: navigatorKey.currentContext!,
+      barrierColor: ThemeColor.barrierColor,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialogWidget(
@@ -99,6 +96,7 @@ class CustomAlertDialog {
                     style: GoogleFonts.inter(
                       color: ThemeColor.darkRed,
                       fontWeight: FontWeight.w800,
+                      fontSize: 15
                     )
                   ),
                 ),
@@ -114,10 +112,7 @@ class CustomAlertDialog {
                   style: ThemeStyle.dialogBtnStyle,
                   child: Text(
                     'Cancel',
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.secondaryWhite,
-                      fontWeight: FontWeight.w800,
-                    )
+                    style: ThemeStyle.dialogBtnTextStyle
                   ),
                 ),
               ),
@@ -132,6 +127,7 @@ class CustomAlertDialog {
   static Future<bool> alertDialogDiscardConfirmation({required String message}) async {
     return await showDialog(
       context: navigatorKey.currentContext!,
+      barrierColor: ThemeColor.barrierColor,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialogWidget(
@@ -150,6 +146,7 @@ class CustomAlertDialog {
                     style: GoogleFonts.inter(
                       color: ThemeColor.darkRed,
                       fontWeight: FontWeight.w800,
+                      fontSize: 15
                     )
                   ),
                 ),
@@ -165,10 +162,7 @@ class CustomAlertDialog {
                   style: ThemeStyle.dialogBtnStyle,
                   child: Text(
                     'Continue writing',
-                    style: GoogleFonts.inter(
-                      color: ThemeColor.secondaryWhite,
-                      fontWeight: FontWeight.w800,
-                    )
+                    style: ThemeStyle.dialogBtnTextStyle
                   ),
                 ),
               ),
