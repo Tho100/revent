@@ -5,10 +5,37 @@ import 'package:path_provider/path_provider.dart';
 class LocalStorageModel {
 
   final _userInfoFile = 'info.txt';
+  final _userThemeFile = 'theme_info.txt';
   final _userSocialHandles = 'socials_info.txt';
   final _searchHistoryFile = 'search_history.txt';
 
   final _folderName = 'ReventInfos';
+
+  Future<void> setupThemeInformation({required String theme}) async {
+
+    final localDir = await _readLocalDirectory();
+    
+    if (!localDir.existsSync()) {
+      localDir.createSync(recursive: true);
+    }
+
+    final setupFile = File('${localDir.path}/$_userThemeFile');
+
+    try {
+
+      await setupFile.writeAsString(theme);
+
+    } catch (_) {
+      return;
+    }
+
+  }
+
+  Future<void> readThemeInformation() async {
+
+    //
+    
+  }
 
   Future<void> addSearchHistory({required String text}) async {
 

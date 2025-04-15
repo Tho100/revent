@@ -19,7 +19,7 @@ class _ThemePageState extends State<ThemePage> {
 
   final isSelectedThemeNotifier = ValueNotifier<List<bool>>([]);
 
-  final themes = ['Dark', 'Light'];
+  final themes = ['Dark', 'Light']; // TODO: Make them all underscore
 
   final themeColor = {
     'Dark': ThemeColor.black,
@@ -74,7 +74,7 @@ class _ThemePageState extends State<ThemePage> {
                     const SizedBox(width: 16),
                           
                     Text(
-                      themes[index],
+                      themes[index], // TOOD: capitalize the initial
                       style: GoogleFonts.inter(
                         color: ThemeColor.white,
                         fontWeight: FontWeight.w800,
