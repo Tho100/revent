@@ -4,8 +4,8 @@ import 'package:path_provider/path_provider.dart';
 
 class LocalStorageModel {
 
-  final _fileName = 'info.txt';
-  final _socialHandlesName = 'socials_info.txt';
+  final _userInfoFile = 'info.txt';
+  final _userSocialHandles = 'socials_info.txt';
   final _searchHistoryFile = 'search_history.txt';
 
   final _folderName = 'ReventInfos';
@@ -117,7 +117,7 @@ class LocalStorageModel {
 
     if (localDir.existsSync()) {
 
-      final setupFile = File('${localDir.path}/$_fileName');
+      final setupFile = File('${localDir.path}/$_userInfoFile');
 
       if (setupFile.existsSync()) {
 
@@ -150,7 +150,7 @@ class LocalStorageModel {
       localDir.createSync(recursive: true);
     }
 
-    final setupFile = File('${localDir.path}/$_fileName');
+    final setupFile = File('${localDir.path}/$_userInfoFile');
 
     try {
 
@@ -166,7 +166,7 @@ class LocalStorageModel {
 
     final localDir = await _readLocalDirectory();
     
-    final setupFile = File('${localDir.path}/$_socialHandlesName');
+    final setupFile = File('${localDir.path}/$_userSocialHandles');
 
     try {
 
@@ -190,7 +190,7 @@ class LocalStorageModel {
 
     final localDir = await _readLocalDirectory();
     
-    final setupFile = File('${localDir.path}/$_socialHandlesName');
+    final setupFile = File('${localDir.path}/$_userSocialHandles');
 
     if (!await setupFile.exists()) return {};
     
@@ -220,8 +220,8 @@ class LocalStorageModel {
 
     final localDir = await _readLocalDirectory();
 
-    final userInfo = File('${localDir.path}/$_fileName');
-    final userSocialHandles = File('${localDir.path}/$_socialHandlesName');
+    final userInfo = File('${localDir.path}/$_userInfoFile');
+    final userSocialHandles = File('${localDir.path}/$_userSocialHandles');
 
     try {
 
