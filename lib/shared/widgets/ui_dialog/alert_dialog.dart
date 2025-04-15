@@ -24,6 +24,7 @@ class CustomAlertDialog {
   static Future alertDialog(String title) {
     return showDialog(
       barrierDismissible: false,
+      barrierColor: ThemeColor.barrierColor,
       context: navigatorKey.currentContext!, 
       builder: (context) {
         return AlertDialogWidget(
@@ -49,6 +50,7 @@ class CustomAlertDialog {
   
   static Future alertDialogTitle(String title, String messages) {
     return showDialog(
+      barrierColor: ThemeColor.barrierColor,
       context: navigatorKey.currentContext!,
       builder: (BuildContext context) {
         return AlertDialogWidget(
@@ -79,6 +81,7 @@ class CustomAlertDialog {
   }) {
     return showDialog(
       context: navigatorKey.currentContext!,
+      barrierColor: ThemeColor.barrierColor,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialogWidget(
@@ -132,6 +135,7 @@ class CustomAlertDialog {
   static Future<bool> alertDialogDiscardConfirmation({required String message}) async {
     return await showDialog(
       context: navigatorKey.currentContext!,
+      barrierColor: ThemeColor.barrierColor,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialogWidget(
