@@ -262,23 +262,25 @@ class LocalStorageModel {
   }
 
   Future<void> deleteLocalData() async {
-
+    
     final localDir = await _readLocalDirectory();
 
-    final userInfo = File('${localDir.path}/$_userInfoFile');
-    final userSocialHandles = File('${localDir.path}/$_userSocialHandles');
-    final themeInfo = File('${localDir.path}/$_userThemeFile');
+    final fileNames = [
+      _userInfoFile,
+      _userSocialHandles,
+      _userThemeFile
+    ];
 
     try {
 
-      await userInfo.delete();
+      for (final name in fileNames) {
 
-      if(await userSocialHandles.exists()) {
-        await userSocialHandles.delete();
-      }
+        final file = File('${localDir.path}/$name');
 
-      if(await themeInfo.exists()) {
-        await themeInfo.delete();
+        if (await file.exists()) {
+          await file.delete();
+        }
+
       }
 
     } catch (_) {
