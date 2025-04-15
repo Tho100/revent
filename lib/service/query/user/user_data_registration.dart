@@ -4,6 +4,8 @@ import 'package:revent/model/local_storage_model.dart';
 
 class UserDataRegistration extends BaseQueryService with UserProfileProviderService { 
 
+  final localStorageModel = LocalStorageModel();
+
   Future<void> insert({required String? hashPassword}) async {
       
     const queries = [
@@ -39,9 +41,11 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
       }
     });
 
-    await LocalStorageModel().setupLocalAccountInformation(
+    await localStorageModel.setupLocalAccountInformation(
       username: userProvider.user.username, email: userProvider.user.email
     );
+
+    await localStorageModel.setupThemeInformation(theme: 'dark');
 
   }  
 

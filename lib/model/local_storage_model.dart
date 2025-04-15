@@ -4,11 +4,56 @@ import 'package:path_provider/path_provider.dart';
 
 class LocalStorageModel {
 
-  final _fileName = 'info.txt';
-  final _socialHandlesName = 'socials_info.txt';
+  final _userInfoFile = 'info.txt';
+  final _userThemeFile = 'theme_info.txt';
+  final _userSocialHandles = 'socials_info.txt';
   final _searchHistoryFile = 'search_history.txt';
 
   final _folderName = 'ReventInfos';
+
+  Future<void> setupThemeInformation({required String theme}) async {
+
+    final localDir = await _readLocalDirectory();
+    
+    if (!localDir.existsSync()) {
+      localDir.createSync(recursive: true);
+    }
+
+    final setupFile = File('${localDir.path}/$_userThemeFile');
+
+    try {
+
+      await setupFile.writeAsString(theme);
+
+    } catch (_) {
+      return;
+    }
+
+  }
+
+  Future<String> readThemeInformation() async {
+    
+    final localDir = await _readLocalDirectory();
+
+    if (!localDir.existsSync()) {
+      return 'dark'; 
+    }
+
+    final setupFile = File('${localDir.path}/$_userThemeFile');
+
+    if (!setupFile.existsSync()) {
+      return 'dark'; 
+    }
+
+    try {
+
+      return await setupFile.readAsString();
+
+    } catch (_) {
+      return 'dark';
+    }
+
+  }
 
   Future<void> addSearchHistory({required String text}) async {
 
@@ -117,7 +162,7 @@ class LocalStorageModel {
 
     if (localDir.existsSync()) {
 
-      final setupFile = File('${localDir.path}/$_fileName');
+      final setupFile = File('${localDir.path}/$_userInfoFile');
 
       if (setupFile.existsSync()) {
 
@@ -150,7 +195,7 @@ class LocalStorageModel {
       localDir.createSync(recursive: true);
     }
 
-    final setupFile = File('${localDir.path}/$_fileName');
+    final setupFile = File('${localDir.path}/$_userInfoFile');
 
     try {
 
@@ -166,7 +211,7 @@ class LocalStorageModel {
 
     final localDir = await _readLocalDirectory();
     
-    final setupFile = File('${localDir.path}/$_socialHandlesName');
+    final setupFile = File('${localDir.path}/$_userSocialHandles');
 
     try {
 
@@ -190,7 +235,7 @@ class LocalStorageModel {
 
     final localDir = await _readLocalDirectory();
     
-    final setupFile = File('${localDir.path}/$_socialHandlesName');
+    final setupFile = File('${localDir.path}/$_userSocialHandles');
 
     if (!await setupFile.exists()) return {};
     
@@ -217,18 +262,25 @@ class LocalStorageModel {
   }
 
   Future<void> deleteLocalData() async {
-
+    
     final localDir = await _readLocalDirectory();
 
-    final userInfo = File('${localDir.path}/$_fileName');
-    final userSocialHandles = File('${localDir.path}/$_socialHandlesName');
+    final fileNames = [
+      _userInfoFile,
+      _userSocialHandles,
+      _userThemeFile
+    ];
 
     try {
 
-      await userInfo.delete();
+      for (final name in fileNames) {
 
-      if(await userSocialHandles.exists()) {
-        await userSocialHandles.delete();
+        final file = File('${localDir.path}/$name');
+
+        if (await file.exists()) {
+          await file.delete();
+        }
+
       }
 
     } catch (_) {

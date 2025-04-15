@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:recase/recase.dart';
+import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
@@ -17,18 +19,22 @@ class ThemePage extends StatefulWidget {
 
 class _ThemePageState extends State<ThemePage> {
 
+  final localStorageModel = LocalStorageModel();
+
   final isSelectedThemeNotifier = ValueNotifier<List<bool>>([]);
 
-  final themes = ['Dark', 'Light'];
+  final themes = ['dark', 'light'];
 
   final themeColor = {
-    'Dark': ThemeColor.black,
-    'Light': ThemeColor.white,
+    'dark': ThemeColor.black,
+    'light': ThemeColor.white,
   };
 
-  String currentTheme = 'Dark';
+  String currentTheme = 'dark';
 
-  void _initializeCurrentTheme() {
+  void _initializeCurrentTheme() async {
+
+    currentTheme = await localStorageModel.readThemeInformation();
 
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => currentTheme == themes[index]
@@ -36,13 +42,17 @@ class _ThemePageState extends State<ThemePage> {
 
   }
 
-  void _changeTheme(int themeIndex) {
+  void _changeTheme(int themeIndex) async {
+
+    final selectedTheme = themes[themeIndex];
+
+    await localStorageModel.setupThemeInformation(theme: selectedTheme);
 
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => index == themeIndex
     );
     
-    currentTheme = themes[themeIndex];
+    currentTheme = selectedTheme;
 
   }
 
@@ -74,7 +84,7 @@ class _ThemePageState extends State<ThemePage> {
                     const SizedBox(width: 16),
                           
                     Text(
-                      themes[index],
+                      themes[index].titleCase,
                       style: GoogleFonts.inter(
                         color: ThemeColor.white,
                         fontWeight: FontWeight.w800,
