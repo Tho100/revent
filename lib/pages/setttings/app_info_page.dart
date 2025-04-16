@@ -87,7 +87,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
 
   Widget _buildClearCacheButton() {
     return SubButton(
-      text: 'Clear cache', 
+      text: 'Clear Cache', 
       onPressed: () => _clearAppCache()
     );
   }
