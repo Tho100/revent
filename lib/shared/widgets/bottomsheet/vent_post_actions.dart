@@ -35,21 +35,21 @@ class BottomsheetVentPostActions with UserProfileProviderService {
 
         if(userProvider.user.username == creator && editOnPressed != null)
         BottomsheetOptionButton(
-          text: 'Edit post',
+          text: 'Edit Post',
           icon: CupertinoIcons.square_pencil,
           onPressed: editOnPressed
         ),
 
         if(copyOnPressed != null)
         BottomsheetOptionButton(
-          text: 'Copy body',
+          text: 'Copy Body',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
         ),
 
         if(userProvider.user.username != creator && reportOnPressed != null)
         BottomsheetOptionButton(
-          text: 'Report post',
+          text: 'Report Post',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
@@ -63,7 +63,7 @@ class BottomsheetVentPostActions with UserProfileProviderService {
 
         if(userProvider.user.username == creator && deleteOnPressed != null)
         BottomsheetOptionButton(
-          text: 'Delete post',
+          text: 'Delete Post',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),

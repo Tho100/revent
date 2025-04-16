@@ -218,7 +218,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
       child: Scaffold(
         appBar: CustomAppBar(
           context: context, 
-          title: 'Add a reply',
+          title: 'Add a Reply',
           enableCenter: false,
           actions: [_buildActionButton()],
           customBackOnPressed: () async {

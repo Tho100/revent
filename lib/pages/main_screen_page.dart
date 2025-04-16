@@ -24,7 +24,7 @@ class MainScreenPage extends StatelessWidget {
         const SizedBox(height: 15),
 
         CustomOutlinedButton(
-          text: 'Create an account',
+          text: 'Create an Account',
           onPressed: () => NavigatePage.signUpPage(),
         ),
 

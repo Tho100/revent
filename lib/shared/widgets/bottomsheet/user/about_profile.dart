@@ -57,7 +57,7 @@ class BottomsheetAboutProfile {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'About this profile'),
+        const BottomsheetTitle(title: 'About'),
 
         Padding(
           padding: const EdgeInsets.only(left: 16.0),

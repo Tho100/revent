@@ -493,7 +493,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   Widget _buildPronouns() {
     return _buildProfileEditingWidget(
-      header: 'My pronouns', 
+      header: 'My Pronouns', 
       children: [
         
         Row(
@@ -616,7 +616,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   Widget _buildSocialLinks() {
     return _buildProfileEditingWidget(
-      header: 'Social links', 
+      header: 'Social Links', 
       children: [
 
         const SizedBox(height: 10),
@@ -713,7 +713,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     return Scaffold(
       appBar: CustomAppBar(
         context: context,
-        title: 'Edit profile',
+        title: 'Edit Profile',
         actions: [_buildSaveChangesButton()]
       ).buildAppBar(),
       body: _buildBody(),

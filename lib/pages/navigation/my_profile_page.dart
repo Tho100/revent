@@ -151,7 +151,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
         customWidth: MediaQuery.of(context).size.width * 0.87,
         customHeight: 45.0,
         customFontSize: 15.5,
-        text: 'Edit profile',
+        text: 'Edit Profile',
         onPressed: () {
           Navigator.push(
             context,

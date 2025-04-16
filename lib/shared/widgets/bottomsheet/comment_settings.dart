@@ -64,9 +64,9 @@ class BottomsheetCommentsSettings {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Comments Settings'),
+        const BottomsheetTitle(title: 'Comment Settings'),
 
-        _buildSwitch(
+        _buildSwitch( // TODO: Add bubble chat icon
           notifier,
           onToggled,
           text

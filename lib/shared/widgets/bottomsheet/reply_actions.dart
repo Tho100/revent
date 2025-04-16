@@ -21,24 +21,24 @@ class BottomsheetReplyActions with UserProfileProviderService {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Reply Action'),
+        const BottomsheetTitle(title: 'Reply Options'),
 
         BottomsheetOptionButton(
-          text: 'Copy text',
+          text: 'Copy Text',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
         ),
 
         if(userProvider.user.username != repliedBy)
         BottomsheetOptionButton(
-          text: 'Report reply',
+          text: 'Report Reply',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
         if(userProvider.user.username == repliedBy)
         BottomsheetOptionButton(
-          text: 'Delete reply',
+          text: 'Delete Reply',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),

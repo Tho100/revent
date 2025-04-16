@@ -244,7 +244,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
       child: Scaffold(
         appBar: CustomAppBar(
           context: context, 
-          title: 'Add a comment',
+          title: 'Add a Comment',
           enableCenter: false,
           actions: [_buildActionButton()],
           customBackOnPressed: () async {

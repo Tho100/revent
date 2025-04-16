@@ -111,29 +111,29 @@ class BottomsheetSearchFilter {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Sort by date'),
+        const BottomsheetTitle(title: 'Sort by Date'),
 
         _buildOptionButton(
-          text: 'All time',
-          isCurrentlySelected: currentFilter == 'All time',
+          text: 'All Time',
+          isCurrentlySelected: currentFilter == 'All Time',
           onPressed: allTimeOnPressed
         ),
 
         _buildOptionButton(
-          text: 'Past year',
-          isCurrentlySelected: currentFilter == 'Past year',
+          text: 'Past Year',
+          isCurrentlySelected: currentFilter == 'Past Year',
           onPressed: pastYearOnPressed
         ),
 
         _buildOptionButton(
-          text: 'Past month',
-          isCurrentlySelected: currentFilter == 'Past month',
+          text: 'Past Month',
+          isCurrentlySelected: currentFilter == 'Past Month',
           onPressed: pastMonthOnPressed
         ),
 
         _buildOptionButton(
-          text: 'Past week',
-          isCurrentlySelected: currentFilter == 'Past week',
+          text: 'Past Week',
+          isCurrentlySelected: currentFilter == 'Past Week',
           onPressed: pastWeekOnPressed
         ),
 

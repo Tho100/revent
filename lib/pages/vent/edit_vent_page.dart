@@ -162,7 +162,7 @@ class _EditVentPageState extends State<EditVentPage> {
         appBar: CustomAppBar(
           context: context, 
           actions: [_buildSaveChangesButton()],
-          title: 'Edit post',
+          title: 'Edit Post',
           customBackOnPressed: () async {
             if(await _onClosePage()) {
               if(context.mounted) {

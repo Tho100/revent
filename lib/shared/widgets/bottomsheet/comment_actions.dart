@@ -22,31 +22,31 @@ class BottomsheetCommentActions with UserProfileProviderService {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Comment Action'),
+        const BottomsheetTitle(title: 'Comment Options'),
 
         if(userProvider.user.username == commenter)
         BottomsheetOptionButton(
-          text: 'Edit comment',
+          text: 'Edit Comment',
           icon: CupertinoIcons.square_pencil,
           onPressed: editOnPressed
         ),
 
         BottomsheetOptionButton(
-          text: 'Copy text',
+          text: 'Copy Text',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
         ),
 
         if(userProvider.user.username != commenter)
         BottomsheetOptionButton(
-          text: 'Report comment',
+          text: 'Report Comment',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
         if(userProvider.user.username == commenter)
         BottomsheetOptionButton(
-          text: 'Delete comment',
+          text: 'Delete Comment',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),

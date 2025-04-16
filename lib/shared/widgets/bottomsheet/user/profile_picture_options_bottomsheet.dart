@@ -20,13 +20,13 @@ class BottomsheetProfilePictureOptions {
         const BottomsheetTitle(title: 'Options'),
 
         BottomsheetOptionButton(
-          text: 'Change avatar',
+          text: 'Change Avatar',
           icon: CupertinoIcons.camera,
           onPressed: changeAvatarOnPressed
         ),
 
         BottomsheetOptionButton(
-          text: 'Remove avatar',
+          text: 'Remove Avatar',
           icon: CupertinoIcons.trash,
           onPressed: removeAvatarOnPressed
         ),
