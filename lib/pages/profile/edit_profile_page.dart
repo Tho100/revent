@@ -456,12 +456,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   Widget _buildPronouns() {
     return _buildProfileEditingWidget(
-      header: 'My Pronouns', 
+      header: 'Pronouns', 
       children: [
 
         MainTextField(
           controller: pronounController, 
-          hintText: '',
+          hintText: "What are your pronouns?",
           maxLines: 1,
           maxLength: 14,
           inputFormatters: InputFormatters().noSpaces()
@@ -484,7 +484,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         
         MainTextField(
           controller: bioController, 
-          hintText: 'Enter your bio here...',
+          hintText: "What's on your mind?",
           maxLines: 6,
           maxLength: 245,
         ),
