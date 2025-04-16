@@ -21,7 +21,7 @@ class BottomsheetUserActions {
         const BottomsheetTitle(title: 'User Options'),
 
         BottomsheetOptionButton(
-          text: 'About',
+          text: 'About Profile',
           icon: CupertinoIcons.info_circle,
           onPressed: aboutProfileOnPressed
         ),
