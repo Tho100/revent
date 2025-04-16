@@ -30,11 +30,7 @@ class EditProfilePage extends StatefulWidget {
 class _EditProfilePageState extends State<EditProfilePage> with UserProfileProviderService {
 
   final bioController = TextEditingController();
-
-  final pronounControllers = [
-    TextEditingController(),
-    TextEditingController(),
-  ];
+  final pronounController = TextEditingController();
 
   final socialControllers = [
     TextEditingController(),
@@ -54,16 +50,13 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   bool isSocialChanges = false;
 
   late String initialBio;
-  late List<String> initialPronouns;
+  late String initialPronouns;
   late List<String> initialSocials;
 
   void _disposeControllers() {
 
     bioController.dispose();
-
-    for (var pronouns in pronounControllers) {
-      pronouns.dispose();
-    }
+    pronounController.dispose();
 
     for (var socials in socialControllers) {
       socials.dispose();
@@ -88,7 +81,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _initializeTextFields() {
     initialBio = bioController.text;
-    initialPronouns = pronounControllers.map((c) => c.text).toList();
+    initialPronouns = pronounController.text;
     initialSocials = socialControllers.map((c) => c.text).toList();
   }
 
@@ -100,28 +93,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       if (hasChanged) isSavedNotifier.value = false;
     });
 
-    for (var i = 0; i < pronounControllers.length; i++) {
-      pronounControllers[i].addListener(() {
+    pronounController.addListener(() {
+      final hasChanged = pronounController.text != initialPronouns;
+      isPronounsChanges = hasChanged;
+      if (hasChanged) isSavedNotifier.value = false;
+    });
 
-        final currentPronouns = '${pronounControllers[0].text}/${pronounControllers[1].text}';
-        final matchedChipIndex = pronounsChips.indexOf(currentPronouns);
-
-        if (matchedChipIndex != -1) {
-          pronounsSelectedNotifier.value = List.generate(pronounsChips.length, (j) => j == matchedChipIndex);
-
-        } else {
-          pronounsSelectedNotifier.value = List.generate(pronounsChips.length, (j) => false);
-
-        }
-
-        final hasChanged = pronounControllers[i].text != initialPronouns[i];
-        
-        isPronounsChanges = hasChanged;
-
-        if (hasChanged) isSavedNotifier.value = false;
-
-      });
-    }
 
     for (var i = 0; i < socialControllers.length; i++) {
       socialControllers[i].addListener(() {
@@ -164,7 +141,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       'they/them',
     ];
 
-    final currentPronouns = '${pronounControllers[0].text}/${pronounControllers[1].text}';
+    final currentPronouns = pronounController.text;
 
     pronounsSelectedNotifier.value = List<bool>.generate(pronounsChips.length, 
       (index) => pronounsChips[index] == currentPronouns ? true : false
@@ -180,12 +157,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     bioController.addListener(_enforceBioMaxLines);
 
     if(profileProvider.profile.pronouns.isNotEmpty) {
-      
-      final splittedPronouns = profileProvider.profile.pronouns.split('/');
-
-      pronounControllers[0].text = splittedPronouns[0];
-      pronounControllers[1].text = splittedPronouns[1];
-
+      pronounController.text = profileProvider.profile.pronouns;
     }
 
   }
@@ -218,7 +190,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     if (allSaved) {
 
       initialBio = bioController.text;
-      initialPronouns = pronounControllers.map((c) => c.text).toList();
+      initialPronouns = pronounController.text;
       initialSocials = socialControllers.map((c) => c.text).toList();
 
       isBioChanges = false;
@@ -317,19 +289,14 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     try {
 
-      final isBothEmpty = pronounControllers[0].text.isEmpty && pronounControllers[1].text.isEmpty;
-      final isBothFilled = pronounControllers[0].text.isNotEmpty && pronounControllers[1].text.isNotEmpty;
+      final pronouns = pronounController.text;
 
-      if (!isBothEmpty && !isBothFilled) {
-        CustomAlertDialog.alertDialog('Enter both pronouns or leave both blank');
+      if (pronouns.isEmpty) {
+        CustomAlertDialog.alertDialog('Please set your pronoun');
         return false; 
       }
 
-      final concatenatedPronouns = isBothEmpty 
-        ? '' 
-        : '${pronounControllers[0].text}/${pronounControllers[1].text}';
-
-      await ProfileDataUpdate().updatePronouns(pronouns: concatenatedPronouns);
+      await ProfileDataUpdate().updatePronouns(pronouns: pronouns);
 
       return true;
 
@@ -343,15 +310,11 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void _pronounsChipsOnSelected(String pronouns) {
 
     if(pronouns.isEmpty) {
-      pronounControllers[0].text = '';
-      pronounControllers[1].text = '';
+      pronounController.text = '';
       return;
     }
 
-    final splittedPronouns = pronouns.split('/'); 
-
-    pronounControllers[0].text = splittedPronouns[0];
-    pronounControllers[1].text = splittedPronouns[1];
+    pronounController.text = pronouns;
 
   }
 
@@ -493,48 +456,17 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   Widget _buildPronouns() {
     return _buildProfileEditingWidget(
-      header: 'My pronouns', 
+      header: 'Pronouns', 
       children: [
-        
-        Row(
-          children: [
 
-            Flexible(
-              child: MainTextField(
-                controller: pronounControllers[0], 
-                hintText: '',
-                maxLines: 1,
-                maxLength: 10,
-                inputFormatters: InputFormatters().onlyLetters()
-              ),
-            ),
-
-            const SizedBox(width: 8),
-
-            Text(
-              '/',
-              style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
-                fontWeight: FontWeight.w800,
-                fontSize: 18
-              ),
-            ),
-            
-            const SizedBox(width: 8),
-          
-            Flexible(
-              child: MainTextField(
-                controller: pronounControllers[1], 
-                hintText: '',
-                maxLines: 1,
-                maxLength: 10,
-                inputFormatters: InputFormatters().onlyLetters()
-              ),
-            ),
-
-          ],
+        MainTextField(
+          controller: pronounController, 
+          hintText: "What are your pronouns?",
+          maxLines: 1,
+          maxLength: 14,
+          inputFormatters: InputFormatters().noSpaces()
         ),
-
+        
         const SizedBox(height: 14),
 
         _buildPronounsChoiceChips(),
@@ -552,7 +484,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         
         MainTextField(
           controller: bioController, 
-          hintText: 'Enter your bio here...',
+          hintText: "What's on your mind?",
           maxLines: 6,
           maxLength: 245,
         ),
@@ -616,7 +548,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   Widget _buildSocialLinks() {
     return _buildProfileEditingWidget(
-      header: 'Social links', 
+      header: 'Social Links', 
       children: [
 
         const SizedBox(height: 10),
@@ -713,7 +645,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     return Scaffold(
       appBar: CustomAppBar(
         context: context,
-        title: 'Edit profile',
+        title: 'Edit Profile',
         actions: [_buildSaveChangesButton()]
       ).buildAppBar(),
       body: _buildBody(),

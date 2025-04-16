@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
@@ -17,13 +17,13 @@ class BottomsheetCommentsSettings {
           Row(
             children: [
 
+              const Icon(CupertinoIcons.chat_bubble, color: ThemeStyle.btnBottomsheetIconColor),
+
+              const SizedBox(width: 10),
+
               Text(
                 text,
-                style: GoogleFonts.inter(
-                  color: ThemeColor.white,
-                  fontWeight: FontWeight.w800,
-                  fontSize: 18
-                ),
+                style: ThemeStyle.btnBottomsheetTextStyle
               ),
 
               const Spacer(),
@@ -64,7 +64,7 @@ class BottomsheetCommentsSettings {
 
         const BottomsheetBar(),
 
-        const BottomsheetTitle(title: 'Comments Settings'),
+        const BottomsheetTitle(title: 'Comment Settings'),
 
         _buildSwitch(
           notifier,

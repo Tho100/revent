@@ -22,7 +22,7 @@ class SecurityPage extends StatelessWidget {
                 children: [
                                 
                   SettingsButton(
-                    text: 'Change password', 
+                    text: 'Change Password', 
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -34,7 +34,7 @@ class SecurityPage extends StatelessWidget {
                   const SizedBox(height: 8),
                       
                   SettingsButton(
-                    text: 'Recovery key', 
+                    text: 'Recovery Key', 
                     onPressed: () {}
                   ),
                                       
@@ -45,7 +45,7 @@ class SecurityPage extends StatelessWidget {
           
           BorderedContainer(
             child: SettingsButton(
-              text: 'Deactivate account', 
+              text: 'Deactivate Account', 
               makeRed: true,
               onPressed: () {
                 Navigator.push(

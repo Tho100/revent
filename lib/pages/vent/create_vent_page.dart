@@ -365,7 +365,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         appBar: CustomAppBar(
           context: context, 
           enableCenter: false,
-          title: 'New vent',
+          title: 'New Vent',
           actions: [_buildPostButton()],
           customBackOnPressed: () async {
             if(await _onClosePage()) {

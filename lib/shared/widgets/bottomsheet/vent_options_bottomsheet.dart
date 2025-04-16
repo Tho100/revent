@@ -83,14 +83,14 @@ class BottomsheetVentOptions {
 
         _buildOptionButton(          
           notifier: commentNotifier,
-          text: 'Allow commenting',
+          text: 'Allow Commenting',
           icon: CupertinoIcons.chat_bubble,
           onToggled: () => archiveNotifier.value = false
         ),
 
         _buildOptionButton(
           notifier: archiveNotifier,
-          text: 'Archive vent',
+          text: 'Archive Vent',
           icon: CupertinoIcons.archivebox,
           onToggled: () => commentNotifier.value = false
         ),

@@ -129,7 +129,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
             child: _buildSwitch(
               privateAccountNotifier,
               () async => await _privateAccountOnPressed(),
-              'Private account',
+              'Private Account',
               "When your account is private, your profile posts, saved posts, following, and followers list can't be seen by other user."
             ),
           ),
@@ -142,7 +142,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
                 _buildSwitch(
                   hideSavedPostNotifier,
                   () async => await _hideSavedPostsOnPressed(),
-                  'Hide saved post',
+                  'Hide Saved Posts',
                   'Only you can see your saved vent post when this option is enabled.'
                 ),
           
@@ -151,7 +151,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
                 _buildSwitch(
                   hideFollowingListNotifier,
                   () async => await _hideFollowingListOnPressed(),
-                  'Hide following list',
+                  'Hide Following List',
                   'Only you can see your following list when this option is enabled.'
                 ),
 

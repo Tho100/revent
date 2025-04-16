@@ -26,7 +26,7 @@ class SettingsPage extends StatelessWidget {
   void _signOutOnPressed() {
     CustomAlertDialog.alertDialogCustomOnPress(
       message: AlertMessages.signOut, 
-      buttonMessage: 'Sign out', 
+      buttonMessage: 'Sign Out', 
       onPressedEvent: () async {
         await UserAccountManager().signOutUserAccount().then(
           (_) => NavigatePage.mainScreenPage()
@@ -54,7 +54,7 @@ class SettingsPage extends StatelessWidget {
             child: Column(
               children: [
                 SettingsButton(
-                  text: 'Account information', 
+                  text: 'Account Information', 
                   icon: CupertinoIcons.person,
                   onPressed: () {
                     Navigator.push(
@@ -173,7 +173,7 @@ class SettingsPage extends StatelessWidget {
 
           BorderedContainer(
             child: SettingsButton(
-              text: 'Sign out', 
+              text: 'Sign Out', 
               icon: CupertinoIcons.square_arrow_right,
               makeRed: true,
               hideCaret: true,
@@ -195,7 +195,7 @@ class SettingsPage extends StatelessWidget {
       },
       child: Scaffold(
         appBar: CustomAppBar(
-          title: 'Settings and activity',
+          title: 'Settings & Activity',
           context: context,
           customBackOnPressed: () {
             _clearLikedAndSavedData();

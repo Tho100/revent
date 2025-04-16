@@ -161,7 +161,7 @@ class CustomAlertDialog {
                   onPressed: () => Navigator.of(context).pop(false),
                   style: ThemeStyle.dialogBtnStyle,
                   child: Text(
-                    'Continue writing',
+                    'Continue Writing',
                     style: ThemeStyle.dialogBtnTextStyle
                   ),
                 ),

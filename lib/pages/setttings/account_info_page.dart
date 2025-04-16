@@ -129,7 +129,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: 'Account information'
+        title: 'Account Information'
       ).buildAppBar(),
       body: _buildBody(),
     );

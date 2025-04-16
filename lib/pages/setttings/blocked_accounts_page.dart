@@ -119,7 +119,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
     return Scaffold(
       appBar: CustomAppBar(
         context: context,
-        title: 'Blocked accounts'
+        title: 'Blocked Accounts'
       ).buildAppBar(),
       body: _buildAccountsListView(),
     );
