@@ -463,7 +463,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
           controller: pronounController, 
           hintText: '',
           maxLines: 1,
-          maxLength: 10,
+          maxLength: 14,
           inputFormatters: InputFormatters().noSpaces()
         ),
         
