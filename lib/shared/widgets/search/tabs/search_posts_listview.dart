@@ -104,7 +104,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     return Consumer<SearchPostsProvider>(
       builder: (_, posts, __) {
         return Padding(
-          padding: const EdgeInsets.only(left: 10.0, top: 2.0),
+          padding: const EdgeInsets.only(left: 12.0, top: 2.0),
           child: RichText(
             text: TextSpan(
               style: GoogleFonts.inter(
@@ -114,7 +114,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
               children: [
       
                 TextSpan(
-                  text: '${posts.vents.length.toString()}  ',
+                  text: '${posts.vents.length.toString()}   ',
                   style: const TextStyle(color: ThemeColor.white),
                 ),
       
