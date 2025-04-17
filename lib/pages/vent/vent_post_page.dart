@@ -552,7 +552,7 @@ class _VentPostPageState extends State<VentPostPage> with
         
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 5),
-          child: Divider(color: ThemeColor.lightGrey,),
+          child: Divider(color: ThemeColor.lightGrey),
         ),
   
         const SizedBox(height: 6),
