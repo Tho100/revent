@@ -44,7 +44,7 @@ class ProfileBodyWidgets extends StatelessWidget {
         const SizedBox(height: 18),
 
         NoContentMessage().headerCustomMessage(
-          header: 'This account is private', 
+          header: 'This Account is Private', 
           subheader: 'Only approved followers can view the content.'
         )
 
@@ -63,7 +63,7 @@ class ProfileBodyWidgets extends StatelessWidget {
         const SizedBox(height: 18),
 
         NoContentMessage().headerCustomMessage(
-          header: 'Blocked account', 
+          header: 'Blocked Account', 
           subheader: "Can't view this account at the moment."
         )
 

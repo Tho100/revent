@@ -65,7 +65,7 @@ class CommentsListView extends StatelessWidget {
       padding: const EdgeInsets.only(top: 35),
       child: NoContentMessage().headerCustomMessage(
         header: isCommentEnabled 
-          ? 'No comment yet' : 'Commenting disabled', 
+          ? "No Comment Yet" : 'Commenting Disabled', 
         subheader: isCommentEnabled 
           ? 'Be the first to comment!' : commentDisabledMessage
       ),
