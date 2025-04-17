@@ -518,10 +518,6 @@ class _VentPostPageState extends State<VentPostPage> with
           children: [
     
             const SizedBox(width: 8),
-  
-            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 18),
-    
-            const SizedBox(width: 8),
     
             ValueListenableBuilder(
               valueListenable: filterTextNotifier,
@@ -529,14 +525,18 @@ class _VentPostPageState extends State<VentPostPage> with
                 return Text(
                   filterText,
                   style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
+                    color: ThemeColor.white,
                     fontWeight: FontWeight.w800,
                     fontSize: 15
                   )
                 );
               },
             ),
-  
+
+            const SizedBox(width: 8),
+
+            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.white, size: 18),
+
             const SizedBox(width: 8),
     
           ],
@@ -569,7 +569,7 @@ class _VentPostPageState extends State<VentPostPage> with
                     child: Text(
                       'Comments',
                       style: GoogleFonts.inter(
-                        color: ThemeColor.secondaryWhite,
+                        color: ThemeColor.thirdWhite,
                         fontWeight: FontWeight.w800,
                         fontSize: 17,
                       ),
