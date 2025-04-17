@@ -20,7 +20,7 @@ class CustomTabBar {
       tabAlignment: tabAlignment,
       controller: controller,
       labelColor: ThemeColor.white,              
-      unselectedLabelColor: Colors.grey,      
+      unselectedLabelColor: ThemeColor.thirdWhite,      
       indicator: UnderlineTabIndicator(
         borderRadius: BorderRadius.circular(36),
         borderSide: const BorderSide(width: 2.5, color: ThemeColor.white),
