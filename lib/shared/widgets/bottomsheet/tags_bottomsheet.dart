@@ -83,18 +83,15 @@ class BottomsheetTagsSelection with TagsProviderService {
 
         const BottomsheetTitle(title: 'Tags'),
 
-        Transform.translate(
-          offset: const Offset(0, 0),
-          child: Align(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Text(
-                'Add up to 3 tags',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800
-                ),
+        Align(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Text(
+              'Add up to 3 tags',
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontSize: 14,
+                fontWeight: FontWeight.w800
               ),
             ),
           ),
