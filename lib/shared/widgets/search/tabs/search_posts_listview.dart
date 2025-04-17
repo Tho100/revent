@@ -100,7 +100,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   }
 
-  Widget _searchResults() {
+  Widget _totalSearchResults() {
     return Consumer<SearchPostsProvider>(
       builder: (_, posts, __) {
         return Padding(
@@ -191,7 +191,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
               Row(
                 children: [
 
-                  _searchResults(),
+                  _totalSearchResults(),
 
                   const Spacer(),
 
