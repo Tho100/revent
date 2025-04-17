@@ -100,6 +100,37 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   }
 
+  Widget _searchResults() {
+    return Consumer<SearchPostsProvider>(
+      builder: (_, posts, __) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 10.0, top: 2.0),
+          child: RichText(
+            text: TextSpan(
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w800,
+                fontSize: 14,
+              ),
+              children: [
+      
+                TextSpan(
+                  text: '${posts.vents.length.toString()}  ',
+                  style: const TextStyle(color: ThemeColor.white),
+                ),
+      
+                const TextSpan(
+                  text: 'Results',
+                  style: TextStyle(color: ThemeColor.thirdWhite),
+                ),
+      
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _buildFilterButtons({
     required ValueListenable notifier, 
     required VoidCallback onPressed
@@ -159,6 +190,8 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
               Row(
                 children: [
+
+                  _searchResults(),
 
                   const Spacer(),
 
