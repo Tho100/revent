@@ -16,13 +16,23 @@ class BottomsheetTitle extends StatelessWidget {
     return Align(
       child: Padding(
         padding: const EdgeInsets.only(bottom: 24, top: 25.5),
-        child: Text(
-          title,
-          style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
-            fontSize: 19,
-            fontWeight: FontWeight.w800
-          ),
+        child: Column(
+          children: [
+
+            Text(
+              title,
+              style: GoogleFonts.inter(
+                color: ThemeColor.secondaryWhite,
+                fontSize: 19,
+                fontWeight: FontWeight.w800
+              ),
+            ),
+
+            const SizedBox(height: 25),
+
+            const Divider(color: ThemeColor.lightGrey, height: 1)
+
+          ],
         ),
       ),
     );

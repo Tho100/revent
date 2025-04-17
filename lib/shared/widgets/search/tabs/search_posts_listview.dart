@@ -23,7 +23,7 @@ class SearchPostsListView extends StatefulWidget {
 class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   final sortOptionsNotifier = ValueNotifier<String>('Best');
-  final timeFilterNotifier = ValueNotifier<String>('All time');
+  final timeFilterNotifier = ValueNotifier<String>('All Time');
 
   final searchPostsFilter = SearchPostsFilter();
 
@@ -76,18 +76,18 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   void _timeFilterNotifier(String filter) {
     
     switch (filter) {
-      case == 'All time':
-        searchPostsFilter.filterPostsByTimestamp('All time');
+      case == 'All Time':
+        searchPostsFilter.filterPostsByTimestamp('All Time');
         searchPostsFilter.filterPostsToBest();
         break;
-      case == 'Past year':
-        searchPostsFilter.filterPostsByTimestamp('Past year');
+      case == 'Past Year':
+        searchPostsFilter.filterPostsByTimestamp('Past Year');
         break;
-      case == 'Past month':
-        searchPostsFilter.filterPostsByTimestamp('Past month');
+      case == 'Past Month':
+        searchPostsFilter.filterPostsByTimestamp('Past Month');
         break;
-      case == 'Past week':
-        searchPostsFilter.filterPostsByTimestamp('Past week');
+      case == 'Past Week':
+        searchPostsFilter.filterPostsByTimestamp('Past Week');
         break;
       case == 'Today':
         searchPostsFilter.filterPostsByTimestamp('Today');
@@ -98,6 +98,37 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
     Navigator.pop(context);
 
+  }
+
+  Widget _searchResults() {
+    return Consumer<SearchPostsProvider>(
+      builder: (_, posts, __) {
+        return Padding(
+          padding: const EdgeInsets.only(left: 10.0, top: 2.0),
+          child: RichText(
+            text: TextSpan(
+              style: GoogleFonts.inter(
+                fontWeight: FontWeight.w800,
+                fontSize: 14,
+              ),
+              children: [
+      
+                TextSpan(
+                  text: '${posts.vents.length.toString()}  ',
+                  style: const TextStyle(color: ThemeColor.white),
+                ),
+      
+                const TextSpan(
+                  text: 'Results',
+                  style: TextStyle(color: ThemeColor.thirdWhite),
+                ),
+      
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget _buildFilterButtons({
@@ -111,11 +142,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-      
-            const SizedBox(width: 12),
-
-            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.thirdWhite, size: 15),
-    
+          
             const SizedBox(width: 8),
     
             ValueListenableBuilder(
@@ -124,7 +151,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                 return Text(
                   filterText,
                   style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
+                    color: ThemeColor.white,
                     fontWeight: FontWeight.w800,
                     fontSize: 13
                   )
@@ -133,6 +160,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
             ),
   
             const SizedBox(width: 8),
+
+            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.white, size: 15),
+
+            const SizedBox(width: 12),
     
           ],
         ),
@@ -160,6 +191,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
               Row(
                 children: [
 
+                  _searchResults(),
+
+                  const Spacer(),
+
                   _buildFilterButtons(
                     notifier: sortOptionsNotifier,
                     onPressed: () {
@@ -180,10 +215,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                       BottomsheetSearchFilter().buildTimeFilterBottomsheet(
                         context: context,
                         currentFilter: timeFilterNotifier.value,
-                        allTimeOnPressed: () => _timeFilterNotifier('All time'),
-                        pastYearOnPressed: () => _timeFilterNotifier('Past year'),
-                        pastMonthOnPressed: () => _timeFilterNotifier('Past month'),
-                        pastWeekOnPressed: () => _timeFilterNotifier('Past week'),
+                        allTimeOnPressed: () => _timeFilterNotifier('All Time'),
+                        pastYearOnPressed: () => _timeFilterNotifier('Past Year'),
+                        pastMonthOnPressed: () => _timeFilterNotifier('Past Month'),
+                        pastWeekOnPressed: () => _timeFilterNotifier('Past Week'),
                         todayOnPressed: () => _timeFilterNotifier('Today'),
                       );
                     },

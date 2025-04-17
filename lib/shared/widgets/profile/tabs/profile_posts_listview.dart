@@ -61,7 +61,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
             const SizedBox(height: 14),
       
             NoContentMessage().headerCustomMessage(
-              header: 'Create vent', 
+              header: 'Create Vent', 
               subheader: 'Share your thoughts, stories and more!'
             ),
               

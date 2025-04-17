@@ -212,58 +212,6 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     );
   }
 
-  /*Widget _buildArchivePostCheckBox() {
-    return CheckboxTheme(
-      data: CheckboxThemeData(
-        fillColor: MaterialStateColor.resolveWith(
-          (states) => ThemeColor.thirdWhite,
-        ),
-        checkColor: MaterialStateColor.resolveWith(
-          (states) => ThemeColor.secondaryWhite,
-        ),
-        overlayColor: MaterialStateColor.resolveWith(
-          (states) => ThemeColor.secondaryWhite.withOpacity(0.1),
-        ),
-        side: const BorderSide(
-          color: ThemeColor.thirdWhite,
-          width: 2.0,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(4.0),
-        ),
-      ),
-      child: Row(
-        children: [
-          
-          ValueListenableBuilder(
-            valueListenable: isArchivedVentNotifier,
-            builder: (_, value, __) {
-              return Checkbox(
-                value: value,
-                onChanged: (checkedValue) {
-                  isArchivedVentNotifier.value = checkedValue ?? true;
-                },
-              );
-            },
-          ),
-
-          Transform.translate(
-            offset: const Offset(-5, 0),
-            child: Text(
-              'Archive post',
-              style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
-                fontWeight: FontWeight.w800,
-                fontSize: 12.5,
-              ),
-            ),
-          ),
-
-        ],
-      ),
-    );
-  }*/
-
   Widget _buildAddTagsButton() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),

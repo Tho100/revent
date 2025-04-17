@@ -130,7 +130,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
               privateAccountNotifier,
               () async => await _privateAccountOnPressed(),
               'Private Account',
-              "When your account is private, your profile posts, saved posts, following, and followers list can't be seen by other user."
+              "Your posts, saves, followers, and following will be hidden from others."
             ),
           ),
           

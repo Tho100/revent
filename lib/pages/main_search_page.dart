@@ -138,7 +138,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
         const SizedBox(height: 18),
 
         NoContentMessage().headerCustomMessage(
-          header: 'No search history', 
+          header: 'No Recent Searches', 
           subheader: 'Your search history will appear here.'
         )
 
