@@ -545,18 +545,19 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  Widget _buildCommentsHeader() {
+  Widget _buildCommentsHeader(bool isCommentEmpty) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         
         const Padding(
           padding: EdgeInsets.symmetric(horizontal: 5),
-          child: Divider(color: ThemeColor.lightGrey),
+          child: Divider(color: ThemeColor.lightGrey,),
         ),
   
         const SizedBox(height: 6),
   
+        if(!isCommentEmpty)
         ValueListenableBuilder(
           valueListenable: enableCommentNotifier,
           builder: (_, isCommentEnabled, __) {
@@ -699,7 +700,7 @@ class _VentPostPageState extends State<VentPostPage> with
         
                     const SizedBox(height: 12),
         
-                    _buildCommentsHeader(),
+                    _buildCommentsHeader(commentData.comments.isEmpty),
         
                     const SizedBox(height: 20),
         
