@@ -83,18 +83,15 @@ class BottomsheetTagsSelection with TagsProviderService {
 
         const BottomsheetTitle(title: 'Tags'),
 
-        Transform.translate(
-          offset: const Offset(0, 0),
-          child: Align(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Text(
-                'Add up to 3 tags',
-                style: GoogleFonts.inter(
-                  color: ThemeColor.thirdWhite,
-                  fontSize: 14,
-                  fontWeight: FontWeight.w800
-                ),
+        Align(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 12),
+            child: Text(
+              'Add up to 3 tags',
+              style: GoogleFonts.inter(
+                color: ThemeColor.thirdWhite,
+                fontSize: 14,
+                fontWeight: FontWeight.w800
               ),
             ),
           ),
@@ -186,10 +183,9 @@ class BottomsheetTagsSelection with TagsProviderService {
         const SizedBox(height: 12),
 
         Padding(
-          padding: const EdgeInsets.only(left: 20.0, bottom: 8.0),
+          padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 8.0),
           child: SizedBox(
             height: 40,
-            width: MediaQuery.of(context).size.width * 0.90,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: chipsTags.length,
