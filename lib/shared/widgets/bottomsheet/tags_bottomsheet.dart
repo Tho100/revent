@@ -199,7 +199,7 @@ class BottomsheetTagsSelection with TagsProviderService {
           ),
         ),
 
-        const SizedBox(height: 35),
+        const SizedBox(height: 25),
 
       ]
     );

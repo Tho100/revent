@@ -1,18 +1,17 @@
 class AlertMessages {
 
-  static const failedSignUp = 'Sign up failed';
-  static const failedSignIn = 'Sign in failed';
+  static const failedSignUp = 'Sign Up failed';
+  static const failedSignIn = 'Sign In failed';
 
-  static const deletePost = 'Delete this post?';
-  static const deleteArchive = 'Delete this archive post?';
+  static const deletePost = 'Delete Post?';
 
-  static const discardPost = 'Discard post?';
-  static const discardComment = 'Discard comment?';
-  static const discardReply = 'Discard reply?';
-  static const discardEdit = 'Discard edit?';
+  static const discardPost = 'Discard Post?';
+  static const discardComment = 'Discard Comment?';
+  static const discardReply = 'Discard Reply?';
+  static const discardEdit = 'Discard Edit?';
 
-  static const signOut = 'Confirm sign out?';
-  static const deactivateAccount = 'Deactivate account?';
+  static const signOut = 'Confirm Sign Out?';
+  static const deactivateAccount = 'Deactivate Account?';
 
   static const defaultError = 'Something went wrong.';
   static const changesFailed = 'Failed to save changes.';

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recase/recase.dart';
+import 'package:revent/app/app_color_theme.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -42,11 +43,13 @@ class _ThemePageState extends State<ThemePage> {
 
   }
 
-  void _changeTheme(int themeIndex) async {
+  void _changeToNewTheme(int themeIndex) async {
 
     final selectedTheme = themes[themeIndex];
 
-    await localStorageModel.setupThemeInformation(theme: selectedTheme);
+    await localStorageModel.setupThemeInformation(theme: selectedTheme).then(
+      (_) => AppColorTheme(theme: selectedTheme).updateTheme()
+    );
 
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => index == themeIndex
@@ -67,7 +70,7 @@ class _ThemePageState extends State<ThemePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: InkWellEffect(
-                onPressed: () => _changeTheme(index),
+                onPressed: () => _changeToNewTheme(index),
                 child: Row(
                   children: [
                   
