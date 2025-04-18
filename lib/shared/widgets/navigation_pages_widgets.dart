@@ -7,13 +7,6 @@ import 'package:revent/shared/widgets/profile_picture.dart';
 
 class NavigationPagesWidgets {
 
-  static Widget settingsActionButton() {
-    return IconButton(
-      icon: const Icon(CupertinoIcons.bars, size: 28),
-      onPressed: () => NavigatePage.settingsPage()
-    );
-  }
-
   static Widget profilePictureLeading() {
     return Padding(
       padding: const EdgeInsets.only(right: 16.0),

@@ -113,7 +113,7 @@ class _SignInPageState extends State<SignInPage> {
           Text(
             'Remember Me',
             style: GoogleFonts.inter(
-              color: const Color.fromARGB(225, 225, 225, 225),
+              color: ThemeColor.secondaryWhite,
               fontWeight: FontWeight.w800,
               fontSize: 14,
             ),

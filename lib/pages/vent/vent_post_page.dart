@@ -423,7 +423,7 @@ class _VentPostPageState extends State<VentPostPage> with
     return Padding(
       padding: const EdgeInsets.only(right: 18.0),
       child: ventPreviewer.buildVentOptionsButton(
-        customIconWidget: const Icon(CupertinoIcons.ellipsis_circle, size: 25)
+        customIconWidget: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.white)
       ),
     );
 
