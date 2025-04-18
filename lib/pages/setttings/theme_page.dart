@@ -29,8 +29,8 @@ class _ThemePageState extends State<ThemePage> {
   final themes = ['dark', 'light'];
 
   final themeColor = {
-    'dark': ThemeColor.black, // TODO: Use Colors instead of ThemeColor
-    'light': ThemeColor.white,
+    'dark': Colors.black,
+    'light': Colors.white,
   };
 
   String currentTheme = 'dark';
