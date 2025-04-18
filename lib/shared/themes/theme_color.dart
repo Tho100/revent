@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 class ThemeColor {
 
   static Color black = Colors.black;
-  static Color mediumBlack = Color.fromARGB(255, 12, 12, 12);
+  static Color mediumBlack = const Color.fromARGB(255, 12, 12, 12);
 
-  static Color darkGrey = Color.fromARGB(255, 17, 17, 17);
-  static Color lightGrey = Color.fromARGB(255, 35, 35, 35);
+  static Color darkGrey = const Color.fromARGB(255, 17, 17, 17);
+  static Color lightGrey = const Color.fromARGB(255, 35, 35, 35);
 
   static Color white = Colors.white;
-  static Color secondaryWhite = Color.fromARGB(255, 212, 212, 212);
-  static Color thirdWhite = Color.fromARGB(255, 117, 117, 117);
-  static Color darkWhite = Color.fromARGB(255, 75, 75, 75);
+  static Color secondaryWhite = const Color.fromARGB(255, 212, 212, 212);
+  static Color thirdWhite = const Color.fromARGB(255, 117, 117, 117);
+  static Color darkWhite = const Color.fromARGB(255, 75, 75, 75);
 
   static const darkRed = Color.fromARGB(255, 218, 36, 34);
   static const likedColor = Color.fromARGB(197, 244, 3, 51);
