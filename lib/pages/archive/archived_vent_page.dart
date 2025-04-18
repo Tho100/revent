@@ -158,7 +158,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       },
       deleteOnPressed: () {
         CustomAlertDialog.alertDialogCustomOnPress(
-          message: AlertMessages.deleteArchive, 
+          message: AlertMessages.deletePost, 
           buttonMessage: 'Delete',
           onPressedEvent: () => _deleteVentArchive(title)
         );
