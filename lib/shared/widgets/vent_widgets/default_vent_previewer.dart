@@ -159,7 +159,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       child: Row(
         children: [
 
-          const Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 18.5),
+          Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 18.5),
 
           const SizedBox(width: 6),
 

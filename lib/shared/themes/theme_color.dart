@@ -13,9 +13,9 @@ class ThemeColor {
   static Color thirdWhite = const Color.fromARGB(255, 117, 117, 117);
   static Color darkWhite = const Color.fromARGB(255, 75, 75, 75);
 
-  static const darkRed = Color.fromARGB(255, 218, 36, 34);
-  static const likedColor = Color.fromARGB(197, 244, 3, 51);
-  static const nsfwColor = Color.fromARGB(197, 244, 3, 115);
+  static Color darkRed = const Color.fromARGB(255, 218, 36, 34);
+  static Color likedColor = const Color.fromARGB(197, 244, 3, 51);
+  static Color nsfwColor = const Color.fromARGB(197, 244, 3, 115);
 
   static final barrierColor = const Color.fromARGB(255, 25, 25, 25).withOpacity(0.7);
 
