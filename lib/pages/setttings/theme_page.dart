@@ -51,6 +51,10 @@ class _ThemePageState extends State<ThemePage> {
 
     final selectedTheme = themes[themeIndex];
 
+    if(selectedTheme == currentTheme) {
+      return;
+    }
+
     await localStorageModel.setupThemeInformation(theme: selectedTheme).then(
       (_) => ThemeUpdater(theme: selectedTheme).updateTheme()    
     );
