@@ -39,7 +39,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
         const SizedBox(height: 35),
 
-        const Icon(CupertinoIcons.lock, color: ThemeColor.secondaryWhite, size: 32),
+        Icon(CupertinoIcons.lock, color: ThemeColor.secondaryWhite, size: 32),
 
         const SizedBox(height: 18),
 
@@ -58,7 +58,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
         const SizedBox(height: 35),
 
-        const Icon(CupertinoIcons.clear_circled, color: ThemeColor.secondaryWhite, size: 32),
+        Icon(CupertinoIcons.clear_circled, color: ThemeColor.secondaryWhite, size: 32),
 
         const SizedBox(height: 18),
 
@@ -105,7 +105,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
         tabBarWidgets.buildTabBar(),
 
-        const Divider(color: ThemeColor.lightGrey, height: 1),
+        Divider(color: ThemeColor.lightGrey, height: 1),
 
         Expanded(
           child: tabBarWidgets.buildTabBarTabs()

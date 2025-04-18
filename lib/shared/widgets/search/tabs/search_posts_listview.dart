@@ -115,10 +115,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
       
                 TextSpan(
                   text: '${posts.vents.length.toString()}   ',
-                  style: const TextStyle(color: ThemeColor.white),
+                  style: TextStyle(color: ThemeColor.white),
                 ),
       
-                const TextSpan(
+                TextSpan(
                   text: 'Results',
                   style: TextStyle(color: ThemeColor.thirdWhite),
                 ),
@@ -161,7 +161,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   
             const SizedBox(width: 8),
 
-            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.white, size: 15),
+            Icon(CupertinoIcons.chevron_down, color: ThemeColor.white, size: 15),
 
             const SizedBox(width: 12),
     

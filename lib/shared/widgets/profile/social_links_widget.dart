@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:revent/global/app_keys.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/social_links_bottomsheet.dart';
 
 class SocialLinksWidgets {
@@ -52,7 +53,7 @@ class SocialLinksWidgets {
   Widget _buildSocialLinksIcon(String platform, String handle, IconData icon, double size) {
     return Padding(
       padding: const EdgeInsets.only(right: 16.0, top: 2.0),
-      child: FaIcon(icon, size: size),
+      child: FaIcon(icon, size: size, color: ThemeColor.white),
     );
   }
 

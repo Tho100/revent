@@ -102,7 +102,7 @@ class ActionsButton {
   
           Transform.translate(
             offset: iconOffset,
-            child: const Icon(
+            child: Icon(
               CupertinoIcons.chat_bubble, 
               color: ThemeColor.white,
               size: 18, 

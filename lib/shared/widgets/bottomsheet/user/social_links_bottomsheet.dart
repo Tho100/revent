@@ -41,7 +41,7 @@ class BottomsheetSocialLinks {
             style: ElevatedButton.styleFrom(
               foregroundColor: ThemeColor.thirdWhite,
               backgroundColor: ThemeColor.black,
-              side: const BorderSide(
+              side: BorderSide(
                 color: ThemeColor.lightGrey,
                 width: 1
               ),

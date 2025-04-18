@@ -56,7 +56,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             
-            const Icon(CupertinoIcons.square_pencil, color: ThemeColor.secondaryWhite, size: 32),
+            Icon(CupertinoIcons.square_pencil, color: ThemeColor.secondaryWhite, size: 32),
 
             const SizedBox(height: 14),
       

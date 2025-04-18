@@ -175,7 +175,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
           const SizedBox(width: 18),
 
-          const Icon(CupertinoIcons.chat_bubble, color: ThemeColor.white, size: 18.5),
+          Icon(CupertinoIcons.chat_bubble, color: ThemeColor.white, size: 18.5),
   
           const SizedBox(width: 6), 
   

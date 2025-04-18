@@ -116,7 +116,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
         ),
         icon: Transform.translate(
           offset: const Offset(0, -10),
-          child: const Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
+          child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
         )
       ),
     );

@@ -17,7 +17,7 @@ class BottomsheetCommentsSettings {
           Row(
             children: [
 
-              const Icon(CupertinoIcons.chat_bubble, color: ThemeStyle.btnBottomsheetIconColor),
+              Icon(CupertinoIcons.chat_bubble, color: ThemeStyle.btnBottomsheetIconColor),
 
               const SizedBox(width: 10),
 

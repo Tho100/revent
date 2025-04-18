@@ -95,7 +95,7 @@ class BottomsheetVentOptions {
           onToggled: () => commentNotifier.value = false
         ),
 
-        const Divider(color: ThemeColor.lightGrey),
+        Divider(color: ThemeColor.lightGrey),
 
         const SizedBox(height: 10),
 

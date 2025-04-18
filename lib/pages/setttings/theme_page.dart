@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recase/recase.dart';
 import 'package:revent/app/app_color_theme.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
+import 'package:revent/shared/themes/app_theme.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
@@ -27,7 +29,7 @@ class _ThemePageState extends State<ThemePage> {
   final themes = ['dark', 'light'];
 
   final themeColor = {
-    'dark': ThemeColor.black,
+    'dark': ThemeColor.black, // TODO: Use Colors instead of ThemeColor
     'light': ThemeColor.white,
   };
 
@@ -48,14 +50,18 @@ class _ThemePageState extends State<ThemePage> {
     final selectedTheme = themes[themeIndex];
 
     await localStorageModel.setupThemeInformation(theme: selectedTheme).then(
-      (_) => AppColorTheme(theme: selectedTheme).updateTheme()
+      (_) => AppColorTheme(theme: selectedTheme).updateTheme()    
     );
+
+    globalThemeNotifier.value = GlobalAppTheme().buildAppTheme();
 
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => index == themeIndex
     );
-    
+      
     currentTheme = selectedTheme;
+
+    // TODO: Add a dialog to ask user to restart the app
 
   }
 

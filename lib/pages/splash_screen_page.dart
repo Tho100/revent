@@ -2,11 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/app/app_color_theme.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/main.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/provider/user_provider.dart';
+import 'package:revent/shared/themes/app_theme.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
@@ -49,6 +52,12 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
     await ProfileDataSetup().setup(username: userProvider.user.username).then(
       (_) async => await VentDataSetup().setupForYou()
     );
+
+    await localModel.readThemeInformation().then(
+      (theme) => AppColorTheme(theme: theme).updateTheme()
+    );
+
+    globalThemeNotifier.value = GlobalAppTheme().buildAppTheme();
 
   }
 
