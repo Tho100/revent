@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/app/app_color_theme.dart';
+import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
@@ -54,7 +54,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
     );
 
     await localModel.readThemeInformation().then(
-      (theme) => AppColorTheme(theme: theme).updateTheme()
+      (theme) => ThemeUpdater(theme: theme).updateTheme()
     );
 
     globalThemeNotifier.value = GlobalAppTheme().buildAppTheme();

@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recase/recase.dart';
-import 'package:revent/app/app_color_theme.dart';
+import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/themes/app_theme.dart';
@@ -50,7 +50,7 @@ class _ThemePageState extends State<ThemePage> {
     final selectedTheme = themes[themeIndex];
 
     await localStorageModel.setupThemeInformation(theme: selectedTheme).then(
-      (_) => AppColorTheme(theme: selectedTheme).updateTheme()    
+      (_) => ThemeUpdater(theme: selectedTheme).updateTheme()    
     );
 
     globalThemeNotifier.value = GlobalAppTheme().buildAppTheme();

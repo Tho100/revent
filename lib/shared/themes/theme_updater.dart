@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
-class AppColorTheme { // TODO: Move this to theme and rename to "Theme_Updater"
+class ThemeUpdater { // TODO: Move this to theme and rename to "Theme_Updater"
 
   final String theme;
 
-  AppColorTheme({required this.theme});
+  ThemeUpdater({required this.theme});
 
   void updateTheme() {
 
