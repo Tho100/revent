@@ -6,7 +6,6 @@ class ThemeColor {
   static const mediumBlack = Color.fromARGB(255, 12, 12, 12);
 
   static const darkGrey = Color.fromARGB(255, 17, 17, 17);
-  static const mediumGrey = Color.fromARGB(255, 25, 25, 25);
   static const lightGrey = Color.fromARGB(255, 35, 35, 35);
 
   static const darkRed = Color.fromARGB(255, 218, 36, 34);
@@ -19,7 +18,7 @@ class ThemeColor {
   static const likedColor = Color.fromARGB(197, 244, 3, 51);
   static const nsfwColor = Color.fromARGB(197, 244, 3, 115);
 
-  static final barrierColor = mediumGrey.withOpacity(0.7);
+  static final barrierColor = const Color.fromARGB(255, 25, 25, 25).withOpacity(0.7);
 
 
 }
