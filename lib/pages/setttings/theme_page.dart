@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:recase/recase.dart';
-import 'package:revent/app/app_color_theme.dart';
+import 'package:revent/app/app_widget_restart.dart';
+import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/themes/app_theme.dart';
@@ -10,6 +11,7 @@ import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
+import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 
 class ThemePage extends StatefulWidget {
 
@@ -29,8 +31,8 @@ class _ThemePageState extends State<ThemePage> {
   final themes = ['dark', 'light'];
 
   final themeColor = {
-    'dark': ThemeColor.black, // TODO: Use Colors instead of ThemeColor
-    'light': ThemeColor.white,
+    'dark': Colors.black,
+    'light': Colors.white,
   };
 
   String currentTheme = 'dark';
@@ -49,8 +51,12 @@ class _ThemePageState extends State<ThemePage> {
 
     final selectedTheme = themes[themeIndex];
 
+    if(selectedTheme == currentTheme) {
+      return;
+    }
+
     await localStorageModel.setupThemeInformation(theme: selectedTheme).then(
-      (_) => AppColorTheme(theme: selectedTheme).updateTheme()    
+      (_) => ThemeUpdater(theme: selectedTheme).updateTheme()    
     );
 
     globalThemeNotifier.value = GlobalAppTheme().buildAppTheme();
@@ -61,7 +67,14 @@ class _ThemePageState extends State<ThemePage> {
       
     currentTheme = selectedTheme;
 
-    // TODO: Add a dialog to ask user to restart the app
+    if(context.mounted) {
+      RestartAppWidget.restartApp(context);
+    }
+
+    CustomAlertDialog.alertDialogTitle(
+      'Update Theme', 
+      'To properly update the theme, please restart the app.', 
+    );
 
   }
 

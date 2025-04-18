@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/app/app_widget_restart.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/pages/splash_screen_page.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
@@ -82,9 +83,12 @@ void main() async {
   runApp(
     MultiProvider(
       providers: providers,
-      child: const MainRun(),
+      child: const RestartAppWidget(
+        child: MainRun(),
+      ),
     ),
   );
+
 
 }
 

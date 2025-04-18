@@ -157,8 +157,8 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
                     color: ThemeColor.black,
                     borderRadius: BorderRadius.circular(360)
                   ),
-                  child: const Padding(
-                    padding: EdgeInsets.only(left: 4, top: 2),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 4, top: 2),
                     child: Icon(CupertinoIcons.heart_fill, color: ThemeColor.likedColor, size: 12.2),
                   ),
                 ),
