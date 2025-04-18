@@ -73,7 +73,7 @@ class _ThemePageState extends State<ThemePage> {
 
     CustomAlertDialog.alertDialogTitle(
       'Update Theme', 
-      'To properly apply the theme, please restart the app.', 
+      'To properly update the theme, please restart the app.', 
     );
 
   }
