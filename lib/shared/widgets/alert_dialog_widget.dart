@@ -87,7 +87,7 @@ class AlertDialogWidget extends StatelessWidget {
 
             const Spacer(),
     
-            const Divider(color: ThemeColor.lightGrey, height: 1),
+            Divider(color: ThemeColor.lightGrey, height: 1),
 
             Padding(
               padding: const EdgeInsets.only(bottom: 5.0),

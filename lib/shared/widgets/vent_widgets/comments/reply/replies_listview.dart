@@ -37,9 +37,9 @@ class RepliesListView extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
 
-          const Expanded(
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 4.0, right: 14.0),
+              padding: const EdgeInsets.only(left: 4.0, right: 14.0),
               child: Divider(color: ThemeColor.lightGrey),
             )
           ),
@@ -53,9 +53,9 @@ class RepliesListView extends StatelessWidget {
             ),
           ),
 
-          const Expanded(
+          Expanded(
             child: Padding(
-              padding: EdgeInsets.only(left: 14.0, right: 4.0),
+              padding: const EdgeInsets.only(left: 14.0, right: 4.0),
               child: Divider(color: ThemeColor.lightGrey),
             )
           ),

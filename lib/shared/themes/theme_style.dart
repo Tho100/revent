@@ -12,7 +12,7 @@ class ThemeStyle {
     fontSize: 12.5
   );
 
-  static const profileEmptyBioStyle = TextStyle(
+  static final profileEmptyBioStyle = TextStyle(
     color: ThemeColor.thirdWhite,
     fontStyle: FontStyle.italic,
     fontWeight: FontWeight.w700,
@@ -40,7 +40,7 @@ class ThemeStyle {
     ),
   );
 
-  static const dialogSideBorder = BorderSide(
+  static final dialogSideBorder = BorderSide(
     color: ThemeColor.lightGrey,
     width: 1
   );
@@ -55,7 +55,7 @@ class ThemeStyle {
     overlayColor: MaterialStateColor.resolveWith((_) => ThemeColor.thirdWhite),
   );
   
-  static const btnBottomsheetIconColor = ThemeColor.thirdWhite;
+  static final btnBottomsheetIconColor = ThemeColor.thirdWhite;
 
   static InputDecoration txtFieldStye({
     required String hintText, 
@@ -77,13 +77,13 @@ class ThemeStyle {
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           color: ThemeColor.thirdWhite
         ),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(16),
-        borderSide: const BorderSide(
+        borderSide: BorderSide(
           width: 2,
           color: ThemeColor.secondaryWhite
         )

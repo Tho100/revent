@@ -46,10 +46,10 @@ class _SearchPageState extends State<SearchPage> {
           child: Row(
             children: [
 
-              const Align(
+              Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 18.0),
+                  padding: const EdgeInsets.only(left: 18.0),
                   child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
                 ),
               ),
@@ -95,7 +95,7 @@ class _SearchPageState extends State<SearchPage> {
         backgroundColor: ThemeColor.black,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
-          side: const BorderSide(
+          side: BorderSide(
             color: ThemeColor.thirdWhite,
             width: 1,
           ),

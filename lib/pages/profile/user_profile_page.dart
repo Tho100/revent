@@ -16,6 +16,7 @@ import 'package:revent/service/query/user_profile/profile_data_getter.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/about_profile.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
@@ -261,7 +262,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
           return bio.isEmpty
             ? Transform.translate(
               offset: Offset(0, pronounsNotifier.value.isEmpty ? -5 : -2),
-              child: const Text(
+              child: Text(
                 'No bio yet...',
                 style: ThemeStyle.profileEmptyBioStyle,
                 textAlign: TextAlign.start
@@ -376,7 +377,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Widget _buildOptionsActionButton() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.ellipsis_circle, size: 25),
+      icon: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.white),
       onPressed: () => BottomsheetUserActions().buildBottomsheet(
         context: context, 
         aboutProfileOnPressed: () async {

@@ -9,6 +9,7 @@ import 'package:revent/service/refresh_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/profile/social_links_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
@@ -120,7 +121,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
           return profileData.profile.bio.isEmpty
             ? Transform.translate(
               offset: Offset(0, profileData.profile.pronouns.isEmpty ? -5 : -2),
-              child: const Text(
+              child: Text(
                 'No bio yet...',
                 style: ThemeStyle.profileEmptyBioStyle,
                 textAlign: TextAlign.start,
@@ -219,14 +220,14 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
   Widget _buildSettingsActionButton() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.bars, size: 28),
+      icon: Icon(CupertinoIcons.bars, size: 28, color: ThemeColor.white),
       onPressed: () => NavigatePage.settingsPage()
     );
   }
 
   Widget _buildPrivacyLeadingButton() {
     return IconButton(
-      icon: const Icon(CupertinoIcons.lock, size: 24),
+      icon: Icon(CupertinoIcons.lock, size: 24, color: ThemeColor.white),
       onPressed: () {
         Navigator.push(
           context,

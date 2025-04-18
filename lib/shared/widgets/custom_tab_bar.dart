@@ -23,7 +23,7 @@ class CustomTabBar {
       unselectedLabelColor: ThemeColor.thirdWhite,      
       indicator: UnderlineTabIndicator(
         borderRadius: BorderRadius.circular(36),
-        borderSide: const BorderSide(width: 2.5, color: ThemeColor.white),
+        borderSide: BorderSide(width: 2.5, color: ThemeColor.white),
         insets: const EdgeInsets.symmetric(horizontal: 25), 
       ),
       labelStyle: GoogleFonts.inter(             

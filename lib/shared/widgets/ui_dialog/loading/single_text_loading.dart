@@ -36,7 +36,7 @@ class SingleTextLoading {
       title: Row(
         children: [
 
-          const SizedBox(
+          SizedBox(
             height: 20,
             width: 20,
             child: CircularProgressIndicator(color: ThemeColor.white),

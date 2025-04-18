@@ -85,7 +85,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
 
         resultsTabBarWidgets.buildTabBar(),
 
-        const Divider(color: ThemeColor.lightGrey, height: 1),
+        Divider(color: ThemeColor.lightGrey, height: 1),
 
         ValueListenableBuilder(
           valueListenable: pageIsLoadedNotifier,
@@ -131,10 +131,10 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
             child: Stack(
               children: [
             
-                const Align(
+                Align(
                   alignment: Alignment.centerLeft,
                   child: Padding(
-                    padding: EdgeInsets.only(left: 18.0),
+                    padding: const EdgeInsets.only(left: 18.0),
                     child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
                   ),
                 ),

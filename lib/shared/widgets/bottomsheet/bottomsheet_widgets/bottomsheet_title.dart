@@ -30,7 +30,7 @@ class BottomsheetTitle extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            const Divider(color: ThemeColor.lightGrey, height: 1)
+            Divider(color: ThemeColor.lightGrey, height: 1)
 
           ],
         ),

@@ -87,7 +87,7 @@ class _SignInPageState extends State<SignInPage> {
         overlayColor: MaterialStateColor.resolveWith(
           (states) => ThemeColor.secondaryWhite.withOpacity(0.1),
         ),
-        side: const BorderSide(
+        side: BorderSide(
           color: ThemeColor.thirdWhite,
           width: 2.0,
         ),

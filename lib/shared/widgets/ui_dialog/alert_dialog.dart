@@ -104,7 +104,7 @@ class CustomAlertDialog {
 
               const SizedBox(height: 4),
 
-              const Divider(color: ThemeColor.lightGrey, height: 1),
+              Divider(color: ThemeColor.lightGrey, height: 1),
 
               _roundedActionButton(
                 TextButton(
@@ -154,7 +154,7 @@ class CustomAlertDialog {
 
               const SizedBox(height: 4),
 
-              const Divider(color: ThemeColor.lightGrey, height: 1),
+              Divider(color: ThemeColor.lightGrey, height: 1),
 
               _roundedActionButton(
                 TextButton(

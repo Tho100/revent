@@ -79,7 +79,7 @@ class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderServic
     return Row(
       children: [
   
-        const Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
+        Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
         
         const SizedBox(width: 6),
   

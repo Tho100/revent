@@ -256,7 +256,7 @@ class _VentPostPageState extends State<VentPostPage> with
             child: Row(
               children: [
           
-                const Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
+                Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
                 
                 const SizedBox(width: 6),
           
@@ -535,7 +535,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
             const SizedBox(width: 8),
 
-            const Icon(CupertinoIcons.chevron_down, color: ThemeColor.white, size: 16),
+            Icon(CupertinoIcons.chevron_down, color: ThemeColor.white, size: 16),
 
             const SizedBox(width: 8),
     
@@ -550,8 +550,8 @@ class _VentPostPageState extends State<VentPostPage> with
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         
-        const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 5),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 5),
           child: Divider(color: ThemeColor.lightGrey),
         ),
   
@@ -619,7 +619,7 @@ class _VentPostPageState extends State<VentPostPage> with
         style: ElevatedButton.styleFrom(
           foregroundColor: ThemeColor.thirdWhite,
           backgroundColor: ThemeColor.black,
-          side: const BorderSide(
+          side: BorderSide(
             color: ThemeColor.thirdWhite,
             width: 1.5
           ),
@@ -627,7 +627,7 @@ class _VentPostPageState extends State<VentPostPage> with
         ),
         child: Transform.translate(
           offset: const Offset(-3, -1),
-          child: const Icon(CupertinoIcons.gear, color: ThemeColor.thirdWhite)
+          child: Icon(CupertinoIcons.gear, color: ThemeColor.thirdWhite)
         )
       ),
     );

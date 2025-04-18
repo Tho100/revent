@@ -25,6 +25,10 @@ import 'package:get_it/get_it.dart';
 
 final getIt = GetIt.I;
 
+final globalThemeNotifier = ValueNotifier<ThemeData>(
+  GlobalAppTheme().buildAppTheme()
+);
+
 void initializeLocators() {
 
   getIt.registerLazySingleton<NavigationProvider>(() => NavigationProvider());
@@ -90,12 +94,17 @@ class MainRun extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      navigatorKey: navigatorKey,
-      scaffoldMessengerKey: scaffoldMessengerKey,
-      theme: GlobalAppTheme().buildAppTheme(),
-      home: const SplashScreen()
+    return ValueListenableBuilder(
+      valueListenable: globalThemeNotifier,
+      builder: (_, themeData, __) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          navigatorKey: navigatorKey,
+          scaffoldMessengerKey: scaffoldMessengerKey,
+          theme: themeData,
+          home: const SplashScreen()
+        );
+      },
     );
   }
 

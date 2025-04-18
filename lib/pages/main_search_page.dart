@@ -96,7 +96,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
           child: Row(
             children: [
     
-              const Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
+              Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
     
               const SizedBox(width: 15),
     
@@ -117,7 +117,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
     
               IconButton(
                 onPressed: () => _deleteSearchHistory(text: searchText),
-                icon: const Icon(CupertinoIcons.clear, color: ThemeColor.secondaryWhite, size: 18)
+                icon: Icon(CupertinoIcons.clear, color: ThemeColor.secondaryWhite, size: 18)
               ),
     
             ],
@@ -133,7 +133,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
         const SizedBox(height: 45),
 
-        const Icon(CupertinoIcons.search, color: ThemeColor.secondaryWhite, size: 32),
+        Icon(CupertinoIcons.search, color: ThemeColor.secondaryWhite, size: 32),
 
         const SizedBox(height: 18),
 

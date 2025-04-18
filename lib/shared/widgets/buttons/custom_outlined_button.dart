@@ -35,7 +35,7 @@ class CustomOutlinedButton extends StatelessWidget {
         style: ElevatedButton.styleFrom(
           foregroundColor: ThemeColor.thirdWhite,
           backgroundColor: ThemeColor.black,
-          side: const BorderSide(
+          side: BorderSide(
             color: ThemeColor.white,
             width: 1.5
           ),
