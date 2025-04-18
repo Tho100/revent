@@ -40,6 +40,7 @@ class ActionsButton {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+          elevation: 0,
           foregroundColor: ThemeColor.thirdWhite,
           backgroundColor: backgroundColor!,
           shape: StadiumBorder(
