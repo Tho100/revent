@@ -42,7 +42,7 @@ class _ThemePageState extends State<ThemePage> {
 
   }
 
-  void _changeTheme(int themeIndex) async {
+  void _changeToNewTheme(int themeIndex) async {
 
     final selectedTheme = themes[themeIndex];
 
@@ -67,7 +67,7 @@ class _ThemePageState extends State<ThemePage> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 12),
               child: InkWellEffect(
-                onPressed: () => _changeTheme(index),
+                onPressed: () => _changeToNewTheme(index),
                 child: Row(
                   children: [
                   
