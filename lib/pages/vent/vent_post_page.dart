@@ -551,11 +551,11 @@ class _VentPostPageState extends State<VentPostPage> with
       children: [
         
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 5),
+          padding: const EdgeInsets.symmetric(horizontal: 2),
           child: Divider(color: ThemeColor.lightGrey),
         ),
   
-        const SizedBox(height: 6),
+        const SizedBox(height: 4),
   
         if(!isCommentEmpty)
         ValueListenableBuilder(
@@ -585,7 +585,21 @@ class _VentPostPageState extends State<VentPostPage> with
               )
               : const SizedBox.shrink();
           }
-        )
+        ),
+
+        if(!isCommentEmpty)
+        Column(
+          children: [
+            
+            const SizedBox(height: 5),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 2),
+              child: Divider(color: ThemeColor.lightGrey),
+            ),
+
+          ],
+        ),
   
       ],
     );
@@ -701,7 +715,7 @@ class _VentPostPageState extends State<VentPostPage> with
                     const SizedBox(height: 12),
         
                     _buildCommentsHeader(commentData.comments.isEmpty),
-        
+                    
                     const SizedBox(height: 20),
         
                     _buildCommentSectionListView(),
