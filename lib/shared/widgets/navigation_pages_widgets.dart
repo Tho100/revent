@@ -9,7 +9,7 @@ class NavigationPagesWidgets {
 
   static Widget profilePictureLeading() {
     return Padding(
-      padding: const EdgeInsets.only(right: 16.0),
+      padding: const EdgeInsets.only(right: 16.0, top: 10.0),
       child: GestureDetector(
         onTap: () => NavigatePage.myProfilePage(),
         child: Center(

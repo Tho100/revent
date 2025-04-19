@@ -33,13 +33,16 @@ class CustomAppBar {
     return AppBar(
       centerTitle: enableCenter ?? true,
       automaticallyImplyLeading: false,
-      title: titleWidget ?? Text(
-        title ?? '',
-        style: GoogleFonts.inter(
-          color: ThemeColor.white,
-          fontWeight: FontWeight.w800,
-          fontSize: 18
-        )
+      title: Padding(
+        padding: const EdgeInsets.only(top: 4.0),
+        child: titleWidget ?? Text(
+          title ?? '',
+          style: GoogleFonts.inter(
+            color: ThemeColor.white,
+            fontWeight: FontWeight.w800,
+            fontSize: 18
+          )
+        ),
       ),
       leading: customLeading ?? IconButton(
         icon: Icon(CupertinoIcons.chevron_back, color: leadingColor ?? ThemeColor.white),
@@ -57,7 +60,7 @@ class CustomAppBar {
       leadingWidth: 250,
       automaticallyImplyLeading: false,
       leading: Padding(
-        padding: const EdgeInsets.only(left: 20.0, top: 10.0),
+        padding: const EdgeInsets.only(left: 20.0, top: 16.0),
         child: Text(
           title ?? '',
           style: GoogleFonts.inter(
