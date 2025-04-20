@@ -187,6 +187,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
 
   Widget _buildBody() {
     return RefreshIndicator(      
+      backgroundColor: ThemeColor.white,
       color: ThemeColor.black,
       onRefresh: () async => await RefreshService().refreshReplies(commentId: commentId),
       child: Padding(

@@ -136,7 +136,8 @@ class ProfileBodyWidgets extends StatelessWidget {
       notificationPredicate: (notification) {
         return notification.depth == 2;
       },
-      color: ThemeColor.mediumBlack,
+      backgroundColor: ThemeColor.white,
+      color: ThemeColor.black,
       onRefresh: onRefresh,
       child: NestedScrollView(
         headerSliverBuilder: (_, __) => [
