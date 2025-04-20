@@ -689,6 +689,7 @@ class _VentPostPageState extends State<VentPostPage> with
     return Consumer<CommentsProvider>(
       builder: (_, commentData, __) {
         return RefreshIndicator(      
+          backgroundColor: ThemeColor.white,
           color: ThemeColor.black,
           onRefresh: () async => await _onPageRefresh(),
           child: Padding(

@@ -140,6 +140,7 @@ class _HomePageState extends State<HomePage> with
       child: SizedBox(
         width: MediaQuery.of(context).size.width - 25,
         child: RefreshIndicator(
+          backgroundColor: ThemeColor.white,
           color: ThemeColor.black,
           onRefresh: onRefresh,
           child: child
