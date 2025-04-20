@@ -61,8 +61,8 @@ void main() async {
     const SystemUiOverlayStyle(
     statusBarColor: Colors.transparent,
     systemNavigationBarColor: Colors.transparent,
-    //systemNavigationBarDividerColor: Colors.transparent,
-    //systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarDividerColor: Colors.transparent,
+    systemNavigationBarIconBrightness: Brightness.dark,
   ));
 
   await dotenv.load(fileName: '.env');
