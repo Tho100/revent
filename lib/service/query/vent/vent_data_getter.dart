@@ -34,6 +34,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
       LEFT JOIN user_blocked_info ubi
         ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
       WHERE ubi.blocked_username IS NULL
+        AND vi.created_at >= DATE_SUB(NOW(), INTERVAL 16 DAY)
         ORDER BY (total_likes >= 5 AND total_comments >= 1) ASC, total_likes ASC
       LIMIT 25
     ''';
