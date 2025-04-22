@@ -148,6 +148,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         bodyText: ventBodyText, 
         tags: widget.tags,
         postTimestamp: widget.postTimestamp,
+        isNsfw: widget.isNsfw,
         totalLikes: widget.totalLikes,
         creator: widget.creator, 
         pfpData: widget.pfpData,
@@ -217,15 +218,8 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   
         const SizedBox(height: 12),
   
-        if(widget.isNsfw) ... [
-
-          const SizedBox(height: 2),
-
-          ventPreviewer.buildNsfw(),
-
-          const SizedBox(height: 6)
-
-        ],
+        if(widget.isNsfw) 
+        ventPreviewer.buildNsfw(),
 
         ventPreviewer.buildTitle(),
 
