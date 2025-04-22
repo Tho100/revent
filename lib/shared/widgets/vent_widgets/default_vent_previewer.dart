@@ -217,6 +217,16 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   
         const SizedBox(height: 12),
   
+        if(widget.isNsfw) ... [
+
+          const SizedBox(height: 2),
+
+          ventPreviewer.buildNsfw(),
+
+          const SizedBox(height: 6)
+
+        ],
+
         ventPreviewer.buildTitle(),
 
         if(widget.tags.isNotEmpty) ... [

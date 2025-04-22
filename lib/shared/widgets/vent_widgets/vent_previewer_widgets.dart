@@ -23,6 +23,7 @@ class VentPreviewerWidgets {
   final String? bodyText;
   final String? tags;
   final String? postTimestamp;
+  final bool? isNsfw;
   final int? totalLikes;
   final int? totalComments;
   final String? creator;
@@ -42,6 +43,7 @@ class VentPreviewerWidgets {
     this.bodyText,
     this.tags,
     this.postTimestamp,
+    this.isNsfw,
     this.creator,
     this.totalLikes,
     this.totalComments,
@@ -254,6 +256,30 @@ class VentPreviewerWidgets {
       ),
     );
 
+  }
+
+  Widget buildNsfw() {
+    return Transform.translate(
+      offset: const Offset(-4, 0),
+      child: Container(
+        width: 95,
+        height: 20,
+        decoration: BoxDecoration(
+          color: ThemeColor.likedColor,
+          borderRadius: BorderRadius.circular(25)
+        ),
+        child: Center(
+          child: Text(
+            '18+ / NSFW',
+            style: GoogleFonts.inter(
+              color: Colors.white,
+              fontWeight: FontWeight.w800,
+              fontSize: 13
+            ),
+          ),
+        ),
+      ),
+    );
   }
 
   Widget buildTitle() {
