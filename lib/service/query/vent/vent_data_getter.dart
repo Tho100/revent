@@ -27,16 +27,21 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
   }
 
   Future<Map<String, dynamic>> getTrendingVentsData() async {
-    // TODO: Fix shows posts that doesn't meet the condition
+
     const query = '''
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM vent_info vi
       LEFT JOIN user_blocked_info ubi
         ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
-      WHERE ubi.blocked_username IS NULL
+      WHERE 
+        ubi.blocked_username IS NULL
         AND vi.created_at >= DATE_SUB(NOW(), INTERVAL 16 DAY)
-        ORDER BY (total_likes >= 5 AND total_comments >= 1) ASC, total_likes ASC, created_at DESC
+        AND (total_likes >= 5 OR total_comments >= 1)
+      ORDER BY 
+        (total_likes >= 5 AND total_comments >= 1) ASC, 
+        total_likes ASC, 
+        created_at DESC
       LIMIT 25
     ''';
 
