@@ -16,7 +16,7 @@ class NsfwWidget extends StatelessWidget {
           width: 95,
           height: 20,
           decoration: BoxDecoration(
-            color: ThemeColor.likedColor,
+            color: ThemeColor.nsfwColor,
             borderRadius: BorderRadius.circular(25)
           ),
           child: Center(
