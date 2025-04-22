@@ -7,18 +7,22 @@ import 'package:revent/service/query/vent/comment/comment_settings.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 
 class CreateNewItem extends BaseQueryService with UserProfileProviderService, TagsProviderService {
-  // TODO: separate title/body into class parameter
+
+  final String title;
+  final String body;
+
+  CreateNewItem({
+    required this.title, 
+    required this.body
+  });
+
   Future<void> newVent({
-    required String ventTitle,
-    required String ventBodyText,
     required String ventTags,
     required bool commentDisabled,
     required bool markedNsfw
   }) async {
 
     await _insertVentInfo(
-      ventTitle: ventTitle, 
-      ventBodyText: ventBodyText, 
       ventTags: ventTags, 
       markedNsfw: markedNsfw
     ).then(
@@ -30,17 +34,13 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
     }
     
     _addVent(
-      ventTitle: ventTitle, 
       ventTags: ventTags,
-      ventBodyText: ventBodyText,
       markedNsfw: markedNsfw
     );
 
   }
 
   Future<void> _insertVentInfo({
-    required String ventTitle,
-    required String ventBodyText,
     required String ventTags,
     required bool markedNsfw
   }) async {
@@ -50,12 +50,12 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
     final params = {
       'creator': userProvider.user.username,
-      'title': ventTitle,
-      'body_text': ventBodyText,
+      'title': title,
+      'body_text': body,
       'tags': ventTags,
+      'marked_nsfw': markedNsfw,
       'total_likes': 0,
       'total_comments': 0,
-      'marked_nsfw': markedNsfw
     };
 
     await executeQuery(insertVentInfoQuery, params);
@@ -74,8 +74,6 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
   }
 
   void _addVent({
-    required String ventTitle, 
-    required String ventBodyText,
     required String ventTags,
     required bool markedNsfw
   }) {
@@ -83,8 +81,8 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
     final formattedTimestamp = FormatDate().formatPostTimestamp(DateTime.now());
 
     final newVent = VentForYouData(
-      title: ventTitle, 
-      bodyText: ventBodyText, 
+      title: title, 
+      bodyText: body, 
       tags: ventTags,
       isNsfw: markedNsfw,
       creator: userProvider.user.username, 
@@ -96,17 +94,14 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
   }
 
-  Future<void> newArchiveVent({
-    required String ventTitle,
-    required String ventBodyText,
-  }) async {
+  Future<void> newArchiveVent() async {
 
     const insertVentInfoQuery = 'INSERT INTO archive_vent_info (creator, title, body_text) VALUES (:creator, :title, :body_text)';
 
     final params = {
       'creator': userProvider.user.username,
-      'title': ventTitle,
-      'body_text': ventBodyText
+      'title': title,
+      'body_text': body
     };
 
     await executeQuery(insertVentInfoQuery, params);
