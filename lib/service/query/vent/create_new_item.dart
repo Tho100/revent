@@ -3,7 +3,6 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/service/query/vent/comment/comment_settings.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 
 class CreateNewItem extends BaseQueryService with UserProfileProviderService, TagsProviderService {
@@ -18,20 +17,17 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
   Future<void> newVent({
     required String ventTags,
-    required bool commentDisabled,
-    required bool markedNsfw
+    required bool markedNsfw,
+    required bool allowCommenting,
   }) async {
 
     await _insertVentInfo(
       ventTags: ventTags, 
-      markedNsfw: markedNsfw
+      markedNsfw: markedNsfw,
+      allowCommenting: allowCommenting
     ).then(
       (_) async => await _updateTotalPosts()
     );
-
-    if(commentDisabled) { // TODO: Remove this and manually set the value to commentDisabled
-      await CommentSettings().toggleComment(isEnableComment: 0);
-    }
     
     _addVent(
       ventTags: ventTags,
@@ -42,11 +38,12 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
   Future<void> _insertVentInfo({
     required String ventTags,
-    required bool markedNsfw
+    required bool markedNsfw,
+    required bool allowCommenting
   }) async {
 
     const insertVentInfoQuery = 
-      'INSERT INTO vent_info (creator, title, body_text, tags, total_likes, total_comments, marked_nsfw) VALUES (:creator, :title, :body_text, :tags, :total_likes, :total_comments, :marked_nsfw)';
+      'INSERT INTO vent_info (creator, title, body_text, tags, marked_nsfw, comment_enabled, total_likes, total_comments) VALUES (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled, :total_likes, :total_comments)';
 
     final params = {
       'creator': userProvider.user.username,
@@ -54,6 +51,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
       'body_text': body,
       'tags': ventTags,
       'marked_nsfw': markedNsfw,
+      'comment_enabled': allowCommenting,
       'total_likes': 0,
       'total_comments': 0,
     };

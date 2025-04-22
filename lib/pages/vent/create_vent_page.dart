@@ -133,8 +133,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
     await CreateNewItem(title: title, body: bodyText).newVent(
       ventTags: tags,
-      commentDisabled: allowCommentingNotifier.value != true,
-      markedNsfw: markAsNsfwNotifier.value
+      markedNsfw: markAsNsfwNotifier.value,
+      allowCommenting: allowCommentingNotifier.value
     ).then((_) {
 
       loading.stopLoading();
