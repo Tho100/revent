@@ -47,7 +47,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
       profilePostsProvider.setTotalComments(profileType, totalComments);
       profilePostsProvider.setPostTimestamp(profileType, postTimestamp);
 
-      profileSavedProvider.setIsNsfw(profileType, isNsfw);
+      profilePostsProvider.setIsNsfw(profileType, isNsfw);
       profilePostsProvider.setIsPostLiked(profileType, isPostLiked);
       profilePostsProvider.setIsPostSaved(profileType, isPostSaved);
 
