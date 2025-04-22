@@ -20,6 +20,7 @@ class ProfileSavedData {
   List<String> creator = [];
   List<Uint8List> pfpData = [];
 
+  List<bool> isNsfw = [];
   List<bool> isPostLiked = [];
   List<bool> isPostSaved = [];
 
@@ -32,6 +33,7 @@ class ProfileSavedData {
     pfpData.clear();
     totalLikes.clear();
     totalComments.clear();
+    isNsfw.clear();
     isPostLiked.clear();
     isPostSaved.clear();
   } 
@@ -86,6 +88,11 @@ class ProfileSavedProvider extends ChangeNotifier {
   void setTags(String profileKey, List<String> tags) {
     _profileData[profileKey]?.tags = tags;
     notifyListeners();
+  }
+
+  void setIsNsfw(String profileKey, List<bool> isNsfw) {
+    _profileData[profileKey]?.isNsfw = isNsfw;
+    notifyListeners(); 
   }
 
   void setIsPostLiked(String profileKey, List<bool> isPostLiked) {

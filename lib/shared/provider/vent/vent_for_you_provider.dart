@@ -17,6 +17,7 @@ class VentForYouData {
 
   bool isPostLiked;
   bool isPostSaved;
+  bool isNsfw;
 
   VentForYouData({
     required this.title,
@@ -28,7 +29,8 @@ class VentForYouData {
     this.totalLikes = 0,
     this.totalComments = 0,
     this.isPostLiked = false,
-    this.isPostSaved = false
+    this.isPostSaved = false,
+    this.isNsfw = false
   });
 
 }

@@ -52,6 +52,7 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
         creator: vents.creator, 
         totalLikes: vents.totalLikes, 
         totalComments: vents.totalComments, 
+        isNsfw: vents.isNsfw,
         pfpData: vents.profilePic,
       ),
     );  

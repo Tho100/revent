@@ -138,7 +138,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       ventTitle: title, 
       ventBodyText: bodyText,
       ventTags: tags,
-      commentDisabled: allowCommentingNotifier.value != true
+      commentDisabled: allowCommentingNotifier.value != true,
+      markedNsfw: markAsNsfwNotifier.value
     ).then((_) {
 
       loading.stopLoading();

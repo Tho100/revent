@@ -8,15 +8,15 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
   final formatPostTimestamp = FormatDate();
 
   Future<Map<String, dynamic>> getVentsData() async {
-
+    // TODO: Show newer posts first
     const query = '''
       SELECT 
-        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments
+        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM vent_info vi
       LEFT JOIN user_blocked_info ubi
         ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
       WHERE ubi.blocked_username IS NULL
-      LIMIT 25
+      LIMIT 30
     ''';
 
     final param = {'blocked_by': userProvider.user.username};
@@ -29,7 +29,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
     const query = '''
       SELECT 
-        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments 
+        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM vent_info vi
       LEFT JOIN user_blocked_info ubi
         ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
@@ -49,7 +49,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
     const query = '''
       SELECT 
-        vi.post_id, vi.title, vi.body_text, vi.creator, vi.created_at, vi.tags, vi.total_likes, vi.total_comments
+        vi.post_id, vi.title, vi.body_text, vi.creator, vi.created_at, vi.tags, vi.total_likes, vi.total_comments, vi.marked_nsfw
       FROM vent_info vi
       INNER JOIN user_follows_info ufi 
           ON ufi.following = vi.creator
@@ -71,7 +71,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
     const query = '''
       SELECT 
-        post_id, title, creator, created_at, tags, total_likes, total_comments 
+        post_id, title, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM vent_info vi
       LEFT JOIN user_blocked_info ubi
         ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
@@ -101,6 +101,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
         vi.created_at,
         vi.total_likes,
         vi.total_comments,
+        vi.marked_nsfw,
         upi.profile_picture
       FROM 
         liked_vent_info lvi
@@ -133,6 +134,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
         vi.created_at,
         vi.total_likes,
         vi.total_comments,
+        vi.marked_nsfw,
         upi.profile_picture
       FROM 
         saved_vent_info svi
@@ -173,7 +175,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
       : extractedData.extractStringColumn('body_text');
 
     final tags = extractedData.extractStringColumn('tags');
-
+    
     final totalLikes = extractedData.extractIntColumn('total_likes');
     final totalComments = extractedData.extractIntColumn('total_comments');
 
@@ -181,6 +183,9 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
       .extractStringColumn('created_at')
       .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();
+
+    final isNsfw = extractedData.extractIntColumn('marked_nsfw')
+      .map((isNsfw) => isNsfw != 0).toList();
 
     final isLikedState = await _ventPostState(
       postIds: postIds, stateType: 'liked'
@@ -198,6 +203,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
       'creator': creator,
       'total_likes': totalLikes,
       'total_comments': totalComments,
+      'is_nsfw': isNsfw,
       'is_liked': isLikedState,
       'is_saved': isSavedState
     };

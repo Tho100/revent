@@ -555,7 +555,7 @@ class _VentPostPageState extends State<VentPostPage> with
           child: Divider(color: ThemeColor.lightGrey),
         ),
   
-        const SizedBox(height: 4),
+        const SizedBox(height: 4), // TODO: Reduce the height by 2
   
         if(!isCommentEmpty)
         ValueListenableBuilder(

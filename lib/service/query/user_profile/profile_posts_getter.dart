@@ -11,7 +11,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
     const query = 
     '''
-      SELECT post_id, title, body_text, tags, created_at, total_likes, total_comments 
+      SELECT post_id, title, body_text, tags, created_at, total_likes, total_comments, marked_nsfw 
       FROM vent_info 
       WHERE creator = :username
     ''';
@@ -35,6 +35,10 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();
 
+    final isNsfw = extractData.extractIntColumn('total_likes')
+      .map((isNsfw) => isNsfw != 0)
+      .toList();
+
     final isLikedState = await _ventPostState(
       postIds: postIds, stateType: 'liked'
     );
@@ -50,6 +54,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'post_timestamp': postTimestamp,
+      'is_nsfw': isNsfw,
       'is_liked': isLikedState,
       'is_saved': isSavedState
     };

@@ -26,6 +26,7 @@ class DefaultVentPreviewer extends StatefulWidget {
 
   final int totalLikes;
   final int totalComments;
+  final bool isNsfw;
 
   final Uint8List pfpData;
 
@@ -40,6 +41,7 @@ class DefaultVentPreviewer extends StatefulWidget {
     required this.creator,
     required this.totalLikes,
     required this.totalComments,
+    required this.isNsfw,
     required this.pfpData,
     this.isMyProfile = false,
     this.useV2ActionButtons = false,

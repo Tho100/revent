@@ -14,7 +14,7 @@ class ProfilePostsData {
   List<int> totalLikes = [];
   List<int> totalComments = [];
 
-
+  List<bool> isNsfw = [];
   List<bool> isPostLiked = [];
   List<bool> isPostSaved = [];
 
@@ -25,6 +25,7 @@ class ProfilePostsData {
     totalLikes.clear();
     totalComments.clear();
     postTimestamp.clear();
+    isNsfw.clear();
     isPostLiked.clear();
     isPostSaved.clear();
   } 
@@ -68,6 +69,11 @@ class ProfilePostsProvider extends ChangeNotifier {
 
   void setTags(String profileKey, List<String> tags) {
     _profileData[profileKey]?.tags = tags;
+    notifyListeners();
+  }
+
+  void setIsNsfw(String profileKey, List<bool> isNsfw) {
+    _profileData[profileKey]?.isNsfw = isNsfw;
     notifyListeners();
   }
 
