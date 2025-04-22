@@ -12,6 +12,7 @@ import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/service/query/search/search_data_getter.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
@@ -219,7 +220,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         const SizedBox(height: 12),
   
         if(widget.isNsfw) 
-        ventPreviewer.buildNsfw(),
+        const NsfwWidget(),
 
         ventPreviewer.buildTitle(),
 
