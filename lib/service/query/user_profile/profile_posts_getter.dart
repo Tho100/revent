@@ -14,6 +14,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       SELECT post_id, title, body_text, tags, created_at, total_likes, total_comments, marked_nsfw 
       FROM vent_info 
       WHERE creator = :username
+      ORDER BY created_at DESC
     ''';
       
     final param = {'username': username};
@@ -35,7 +36,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();
 
-    final isNsfw = extractData.extractIntColumn('total_likes')
+    final isNsfw = extractData.extractIntColumn('marked_nsfw')
       .map((isNsfw) => isNsfw != 0)
       .toList();
 

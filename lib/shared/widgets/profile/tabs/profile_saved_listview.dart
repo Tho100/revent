@@ -61,12 +61,11 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
         }
 
         final adjustedIndex = index - 1;
-        final reversedIndex = savedData.titles.length - 1 - adjustedIndex;
 
         if(index >= 0) {
           return KeyedSubtree(
-            key: ValueKey('${savedData.titles[reversedIndex]}/${savedData.creator[reversedIndex]}'),
-            child: _buildPreviewer(savedData, reversedIndex),
+            key: ValueKey('${savedData.titles[adjustedIndex]}/${savedData.creator[adjustedIndex]}'),
+            child: _buildPreviewer(savedData, adjustedIndex),
           );
         }
 

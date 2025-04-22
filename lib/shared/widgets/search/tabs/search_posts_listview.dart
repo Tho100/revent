@@ -243,10 +243,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
         }
 
-        final reversedVentIndex = ventDataList.length - index;
+        final adjustedIndex = ventDataList.length - index;
 
-        if (reversedVentIndex >= 0) {
-          final vents = ventDataList[reversedVentIndex];
+        if (adjustedIndex >= 0) {
+          final vents = ventDataList[adjustedIndex];
           return KeyedSubtree(
             key: ValueKey('${vents.title}/${vents.creator}'),
             child: _buildVentPreview(vents),

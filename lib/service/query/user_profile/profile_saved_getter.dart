@@ -36,6 +36,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
         ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by
+      ORDER BY created_at DESC
     ''';
 
     final param = {'saved_by': username};
@@ -63,7 +64,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
       .map((pfpBase64) => base64Decode(pfpBase64))
       .toList();
 
-    final isNsfw = extractData.extractIntColumn('total_likes')
+    final isNsfw = extractData.extractIntColumn('marked_nsfw')
       .map((isNsfw) => isNsfw != 0)
       .toList();
 

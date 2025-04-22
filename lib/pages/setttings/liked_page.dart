@@ -95,10 +95,9 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
         }
 
         final adjustedIndex = index - 1;
-        final reversedIndex = likedVentData.length - 1 - adjustedIndex;
 
-        if (reversedIndex >= 0 && reversedIndex < likedVentData.length) {
-          final vents = likedVentData[reversedIndex];
+        if (adjustedIndex >= 0 && adjustedIndex < likedVentData.length) {
+          final vents = likedVentData[adjustedIndex];
           return _buildVentPreviewer(vents);
         }
 

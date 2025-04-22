@@ -95,10 +95,9 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
         }
 
         final adjustedIndex = index - 1;
-        final reversedIndex = savedVentData.length - 1 - adjustedIndex;
 
-        if (reversedIndex >= 0 && reversedIndex < savedVentData.length) {
-          final vents = savedVentData[reversedIndex];
+        if (adjustedIndex >= 0 && adjustedIndex < savedVentData.length) {
+          final vents = savedVentData[adjustedIndex];
           return _buildVentPreviewer(vents);
         }
 
