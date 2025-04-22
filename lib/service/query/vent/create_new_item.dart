@@ -3,50 +3,55 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/service/query/vent/comment/comment_settings.dart';
 import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
 
 class CreateNewItem extends BaseQueryService with UserProfileProviderService, TagsProviderService {
 
+  final String title;
+  final String body;
+
+  CreateNewItem({
+    required this.title, 
+    required this.body
+  });
+
   Future<void> newVent({
-    required String ventTitle,
-    required String ventBodyText,
     required String ventTags,
-    required bool commentDisabled
+    required bool markedNsfw,
+    required bool allowCommenting,
   }) async {
 
     await _insertVentInfo(
-      ventTitle: ventTitle, ventBodyText: ventBodyText, ventTags: ventTags
+      ventTags: ventTags, 
+      markedNsfw: markedNsfw,
+      allowCommenting: allowCommenting
     ).then(
       (_) async => await _updateTotalPosts()
     );
-
-    if(commentDisabled) {
-      await CommentSettings().toggleComment(isEnableComment: 0);
-    }
     
     _addVent(
-      ventTitle: ventTitle, 
       ventTags: ventTags,
-      ventBodyText: ventBodyText
+      markedNsfw: markedNsfw
     );
 
   }
 
   Future<void> _insertVentInfo({
-    required String ventTitle,
-    required String ventBodyText,
-    required String ventTags
+    required String ventTags,
+    required bool markedNsfw,
+    required bool allowCommenting
   }) async {
 
     const insertVentInfoQuery = 
-      'INSERT INTO vent_info (creator, title, body_text, tags, total_likes, total_comments) VALUES (:creator, :title, :body_text, :tags, :total_likes, :total_comments)';
+      'INSERT INTO vent_info (creator, title, body_text, tags, marked_nsfw, comment_enabled, total_likes, total_comments) VALUES (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled, :total_likes, :total_comments)';
 
     final params = {
       'creator': userProvider.user.username,
-      'title': ventTitle,
-      'body_text': ventBodyText,
+      'title': title,
+      'body_text': body,
       'tags': ventTags,
+      'marked_nsfw': markedNsfw,
+      'comment_enabled': allowCommenting,
       'total_likes': 0,
       'total_comments': 0,
     };
@@ -67,37 +72,34 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
   }
 
   void _addVent({
-    required String ventTitle, 
-    required String ventBodyText,
-    required String ventTags
+    required String ventTags,
+    required bool markedNsfw
   }) {
 
     final formattedTimestamp = FormatDate().formatPostTimestamp(DateTime.now());
 
     final newVent = VentForYouData(
-      title: ventTitle, 
-      bodyText: ventBodyText, 
+      title: title, 
+      bodyText: body, 
       tags: ventTags,
+      isNsfw: markedNsfw,
       creator: userProvider.user.username, 
       postTimestamp: formattedTimestamp, 
-      profilePic: getIt.profileProvider.profile.profilePicture
+      profilePic: getIt.profileProvider.profile.profilePicture,
     );
     
     getIt.ventForYouProvider.addVent(newVent);
 
   }
 
-  Future<void> newArchiveVent({
-    required String ventTitle,
-    required String ventBodyText,
-  }) async {
+  Future<void> newArchiveVent() async {
 
     const insertVentInfoQuery = 'INSERT INTO archive_vent_info (creator, title, body_text) VALUES (:creator, :title, :body_text)';
 
     final params = {
       'creator': userProvider.user.username,
-      'title': ventTitle,
-      'body_text': ventBodyText
+      'title': title,
+      'body_text': body
     };
 
     await executeQuery(insertVentInfoQuery, params);

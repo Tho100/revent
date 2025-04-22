@@ -20,6 +20,7 @@ import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottom_input_bar.dart';
+import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -42,6 +43,7 @@ class VentPostPage extends StatefulWidget {
   final String tags;
   final String postTimestamp;
   final String creator;
+  final bool isNsfw;
   final int totalLikes;
   final Uint8List pfpData;
 
@@ -52,6 +54,7 @@ class VentPostPage extends StatefulWidget {
     required this.tags,
     required this.postTimestamp,
     required this.creator,
+    required this.isNsfw,
     required this.totalLikes,
     required this.pfpData,
     super.key
@@ -329,6 +332,9 @@ class _VentPostPageState extends State<VentPostPage> with
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
+        if(widget.isNsfw)
+        const NsfwWidget(),
+
         SelectableText(
           widget.title,
           style: GoogleFonts.inter(
@@ -555,7 +561,7 @@ class _VentPostPageState extends State<VentPostPage> with
           child: Divider(color: ThemeColor.lightGrey),
         ),
   
-        const SizedBox(height: 4),
+        const SizedBox(height: 2),
   
         if(!isCommentEmpty)
         ValueListenableBuilder(
@@ -591,7 +597,7 @@ class _VentPostPageState extends State<VentPostPage> with
         Column(
           children: [
             
-            const SizedBox(height: 5),
+            const SizedBox(height: 3),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 2),

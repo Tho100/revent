@@ -39,6 +39,7 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
         postTimestamp: ventData.postTimestamp,
         totalLikes: ventData.totalLikes,
         totalComments: ventData.totalComments,
+        isNsfw: ventData.isNsfw,
         creator: ventData.creator,
         pfpData: ventData.profilePic,
       ),
@@ -98,8 +99,7 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
       
             if (adjustedIndex >= 0 && adjustedIndex < ventDataList.length) {
       
-              final reversedVentIndex = ventDataList.length - 1 - adjustedIndex;
-              final vents = ventDataList[reversedVentIndex];
+              final vents = ventDataList[adjustedIndex];
       
               return KeyedSubtree(
                 key: ValueKey('${vents.title}/${vents.creator}'),

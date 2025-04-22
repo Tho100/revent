@@ -12,6 +12,7 @@ import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/service/query/search/search_data_getter.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
@@ -26,6 +27,7 @@ class DefaultVentPreviewer extends StatefulWidget {
 
   final int totalLikes;
   final int totalComments;
+  final bool isNsfw;
 
   final Uint8List pfpData;
 
@@ -40,6 +42,7 @@ class DefaultVentPreviewer extends StatefulWidget {
     required this.creator,
     required this.totalLikes,
     required this.totalComments,
+    required this.isNsfw,
     required this.pfpData,
     this.isMyProfile = false,
     this.useV2ActionButtons = false,
@@ -146,6 +149,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         bodyText: ventBodyText, 
         tags: widget.tags,
         postTimestamp: widget.postTimestamp,
+        isNsfw: widget.isNsfw,
         totalLikes: widget.totalLikes,
         creator: widget.creator, 
         pfpData: widget.pfpData,
@@ -215,6 +219,9 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   
         const SizedBox(height: 12),
   
+        if(widget.isNsfw) 
+        const NsfwWidget(),
+
         ventPreviewer.buildTitle(),
 
         if(widget.tags.isNotEmpty) ... [

@@ -23,6 +23,7 @@ class VentPreviewerWidgets {
   final String? bodyText;
   final String? tags;
   final String? postTimestamp;
+  final bool? isNsfw;
   final int? totalLikes;
   final int? totalComments;
   final String? creator;
@@ -42,6 +43,7 @@ class VentPreviewerWidgets {
     this.bodyText,
     this.tags,
     this.postTimestamp,
+    this.isNsfw,
     this.creator,
     this.totalLikes,
     this.totalComments,

@@ -21,6 +21,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     final creator = ventsInfo['creator']! as List<String>;
     final totalLikes = ventsInfo['total_likes']! as List<int>;
     final totalComments = ventsInfo['total_comments']! as List<int>;
+    final isNsfw = ventsInfo['is_nsfw']! as List<bool>;
     final isLiked = ventsInfo['is_liked']! as List<bool>;
     final isSaved = ventsInfo['is_saved']! as List<bool>;
 
@@ -38,6 +39,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       'creator': creator,
       'total_likes': totalLikes,
       'total_comments': totalComments,
+      'is_nsfw': isNsfw,
       'is_liked': isLiked,
       'is_saved': isSaved,
       'pfp': profilePic,
@@ -56,6 +58,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       Uint8List profilePic,
       int totalLikes,
       int totalComments,
+      bool isNsfw,
       bool isPostLiked,
       bool isPostSaved,
     )
@@ -70,6 +73,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     final profilePic = ventsData['pfp'];
     final totalLikes = ventsData['total_likes'];
     final totalComments = ventsData['total_comments'];
+    final isNsfw = ventsData['is_nsfw'];
     final isLiked = ventsData['is_liked'];
     final isSaved = ventsData['is_saved'];
 
@@ -83,6 +87,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         profilePic[index],
         totalLikes[index],
         totalComments[index],
+        isNsfw[index],
         isLiked[index],
         isSaved[index],
       );
@@ -102,6 +107,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       Uint8List profilePic,
       int totalLikes,
       int totalComments,
+      bool isNsfw,
       bool isPostLiked,
       bool isPostSaved,
     )
@@ -120,8 +126,8 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     await _setupVents<VentForYouData>(
       dataGetter: () => VentDataGetter().getVentsData(),
       setVents: forYouVentProvider.setVents,
-      ventBuilder: (title, bodyText, tags, postTimestamp, creator, 
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentForYouData(
+      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
+          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentForYouData(
         title: title,
         bodyText: bodyText,
         tags: tags,
@@ -130,6 +136,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
+        isNsfw: isNsfw,
         isPostLiked: isPostLiked,
         isPostSaved: isPostSaved,
       ),
@@ -141,7 +148,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       dataGetter: () => VentDataGetter().getTrendingVentsData(),
       setVents: trendingVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentTrendingData(
+          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentTrendingData(
         title: title,
         bodyText: bodyText,
         tags: tags,
@@ -150,6 +157,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
+        isNsfw: isNsfw,
         isPostLiked: isPostLiked,
         isPostSaved: isPostSaved,
       ),
@@ -161,7 +169,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       dataGetter: () => VentDataGetter().getFollowingVentsData(),
       setVents: followingVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => VentFollowingData(
+          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentFollowingData(
         title: title,
         bodyText: bodyText,
         tags: tags,
@@ -170,6 +178,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
+        isNsfw: isNsfw,
         isPostLiked: isPostLiked,
         isPostSaved: isPostSaved,
       ),
@@ -183,7 +192,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       ),
       setVents: searchPostsProvider.setVents,
       ventBuilder: (title, _, tags, postTimestamp, creator,
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SearchVents(
+          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => SearchVents(
         title: title,
         tags: tags,
         postTimestamp: postTimestamp,
@@ -191,6 +200,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
+        isNsfw: isNsfw,
         isPostLiked: isPostLiked,
         isPostSaved: isPostSaved,
       ),
@@ -202,7 +212,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       dataGetter: () => VentDataGetter().getLikedVentsData(),
       setVents: likedVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => LikedVentData(
+          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => LikedVentData(
         title: title,
         bodyText: bodyText,
         tags: tags,
@@ -211,6 +221,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
+        isNsfw: isNsfw,
         isPostLiked: isPostLiked,
         isPostSaved: isPostSaved,
       ),
@@ -222,7 +233,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       dataGetter: () => VentDataGetter().getSavedVentsData(),
       setVents: savedVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
-          profilePic, totalLikes, totalComments, isPostLiked, isPostSaved) => SavedVentData(
+          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => SavedVentData(
         title: title,
         bodyText: bodyText,
         tags: tags,
@@ -231,6 +242,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
         profilePic: profilePic,
         totalLikes: totalLikes,
         totalComments: totalComments,
+        isNsfw: isNsfw,
         isPostLiked: isPostLiked,
         isPostSaved: isPostSaved,
       ),

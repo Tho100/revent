@@ -202,8 +202,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       itemCount: archiveData.length,
       builder: (_, index) {
           
-        final reversedVentIndex = archiveData.length - 1 - index;
-        final ventsData = archiveData[reversedVentIndex];
+        final ventsData = archiveData[index];
 
         return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
 

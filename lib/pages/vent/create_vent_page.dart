@@ -104,10 +104,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       loading.startLoading(context: context);
     }
 
-    await CreateNewItem().newArchiveVent(
-      ventTitle: title, 
-      ventBodyText: bodyText
-    ).then((_) {
+    await CreateNewItem(title: title, body: bodyText).newArchiveVent().then((_) {
 
       loading.stopLoading();
 
@@ -134,11 +131,10 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       loading.startLoading(context: context);
     }
 
-    await CreateNewItem().newVent(
-      ventTitle: title, 
-      ventBodyText: bodyText,
+    await CreateNewItem(title: title, body: bodyText).newVent(
       ventTags: tags,
-      commentDisabled: allowCommentingNotifier.value != true
+      markedNsfw: markAsNsfwNotifier.value,
+      allowCommenting: allowCommentingNotifier.value
     ).then((_) {
 
       loading.stopLoading();

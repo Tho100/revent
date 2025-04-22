@@ -44,6 +44,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
         postTimestamp: postsData.postTimestamp[index],
         totalLikes: postsData.totalLikes[index],
         totalComments: postsData.totalComments[index],
+        isNsfw: postsData.isNsfw[index],
         creator: widget.username,
         pfpData: widget.pfpData,
       ),
@@ -90,12 +91,11 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
         }
 
         final adjustedIndex = index - 1;
-        final reversedIndex = postsData.titles.length - 1 - adjustedIndex;
 
         if(index >= 0) {
           return KeyedSubtree(
-            key: ValueKey('${postsData.titles[reversedIndex]}/${widget.username}'),
-            child: _buildPreviewer(postsData, reversedIndex)
+            key: ValueKey('${postsData.titles[adjustedIndex]}/${widget.username}'),
+            child: _buildPreviewer(postsData, adjustedIndex)
           );
         }
 

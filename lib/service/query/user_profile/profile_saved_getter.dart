@@ -23,6 +23,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
         vi.body_text,
         vi.total_likes,
         vi.total_comments,
+        vi.marked_nsfw,
         vi.created_at,
         upi.profile_picture
       FROM 
@@ -35,6 +36,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
         ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by
+      ORDER BY created_at DESC
     ''';
 
     final param = {'saved_by': username};
@@ -62,6 +64,10 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
       .map((pfpBase64) => base64Decode(pfpBase64))
       .toList();
 
+    final isNsfw = extractData.extractIntColumn('marked_nsfw')
+      .map((isNsfw) => isNsfw != 0)
+      .toList();
+
     final isLikedState = await _ventPostLikeState(
       postIds: postIds, stateType: 'liked'
     );
@@ -81,6 +87,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
       'total_comments': totalComments,
       'post_timestamp': postTimestamp,
       'profile_picture': profilePicture,
+      'is_nsfw': isNsfw,
       'is_liked': isLikedState,
       'is_saved': isSavedState
     };
