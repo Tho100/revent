@@ -138,7 +138,7 @@ class _VentPostPageState extends State<VentPostPage> with
       );
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to load comments.');
+      SnackBarDialog.errorSnack(message: 'Comments not loaded.');
     }
 
   }
@@ -151,7 +151,7 @@ class _VentPostPageState extends State<VentPostPage> with
       );
 
     } else {
-      SnackBarDialog.temporarySnack(message: 'Nothing to copy...');
+      SnackBarDialog.temporarySnack(message: 'Nothing to copy.');
 
     }
 

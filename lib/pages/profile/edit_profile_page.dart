@@ -11,7 +11,6 @@ import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/profile_picture_options_bottomsheet.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
@@ -211,7 +210,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     if (isProfileSelected) {
       profilePicNotifier.value = profileProvider.profile.profilePicture;
-      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
+      SnackBarDialog.temporarySnack(message: 'Avatar updated.');
     }
 
   }
@@ -254,8 +253,6 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         final platform = entry.key;
         final handle = entry.value;
 
-        SnackBarDialog.temporarySnack(message: '$platform | $handle');
-
         await UserSocials(platform: platform, handle: handle).addSocial();
 
       }
@@ -292,7 +289,6 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       final pronouns = pronounController.text;
 
       if (pronouns.isEmpty) {
-        CustomAlertDialog.alertDialog('Please set your pronoun');
         return false; 
       }
 

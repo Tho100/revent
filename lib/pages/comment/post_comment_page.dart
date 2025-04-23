@@ -43,7 +43,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
         );
 
         if(commentIndex != -1) {
-          CustomAlertDialog.alertDialogTitle("Can't post comment", 'You have already posted similar comment');
+          CustomAlertDialog.alertDialogTitle("Post Failed", 'You have already posted similar comment');
           return;
         } 
 
@@ -54,12 +54,12 @@ class _PostCommentPageState extends State<PostCommentPage> with
           (_) => Navigator.pop(context)
         );
 
-        SnackBarDialog.temporarySnack(message: 'Comment added.');
+        SnackBarDialog.temporarySnack(message: 'Comment posted.');
 
       }
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to send comment.');
+      SnackBarDialog.errorSnack(message: 'Comment failed.');
     }
 
   }

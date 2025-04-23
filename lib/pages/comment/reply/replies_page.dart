@@ -60,7 +60,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
       await RepliesSetup().setup(commentId: commentId);
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to load replies.');
+      SnackBarDialog.errorSnack(message: 'Replies not loaded.');
     }
 
   }
