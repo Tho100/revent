@@ -288,10 +288,6 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
       final pronouns = pronounController.text;
 
-      if (pronouns.isEmpty) {
-        return false; 
-      }
-
       await ProfileDataUpdate().updatePronouns(pronouns: pronouns);
 
       return true;
