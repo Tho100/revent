@@ -90,7 +90,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       isPostPressed = true;
         
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to post vent.');
+      SnackBarDialog.errorSnack(message: 'Vent post failed.');
     }
 
   }
@@ -108,7 +108,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
       loading.stopLoading();
 
-      SnackBarDialog.temporarySnack(message: 'Added vent to archive.');
+      SnackBarDialog.temporarySnack(message: 'Vent archived.');
       
       Navigator.pop(context);
 
@@ -139,7 +139,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
       loading.stopLoading();
 
-      SnackBarDialog.temporarySnack(message: 'Vent has been posted.');
+      SnackBarDialog.temporarySnack(message: 'Vent posted.');
 
       Navigator.pop(context);        
 

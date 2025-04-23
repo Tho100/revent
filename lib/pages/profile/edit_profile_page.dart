@@ -210,7 +210,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     if (isProfileSelected) {
       profilePicNotifier.value = profileProvider.profile.profilePicture;
-      SnackBarDialog.temporarySnack(message: 'Profile picture has been updated.');
+      SnackBarDialog.temporarySnack(message: 'Avatar updated.');
     }
 
   }
@@ -252,8 +252,6 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
         final platform = entry.key;
         final handle = entry.value;
-
-        SnackBarDialog.temporarySnack(message: '$platform | $handle');
 
         await UserSocials(platform: platform, handle: handle).addSocial();
 

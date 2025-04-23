@@ -54,12 +54,12 @@ class _PostReplyPageState extends State<PostReplyPage> {
           (_) => Navigator.pop(context)
         );
 
-        SnackBarDialog.temporarySnack(message: 'Reply added.');
+        SnackBarDialog.temporarySnack(message: 'Reply posted.');
 
       }
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to send reply.');
+      SnackBarDialog.errorSnack(message: 'Reply failed.');
     }
 
   }
