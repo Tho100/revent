@@ -34,14 +34,14 @@ class VentActionsHandler {
     try {
 
       if(creator == getIt.userProvider.user.username) {
-        _showTemporarySnack("Can't like your own post.");
+        _showTemporarySnack("You can't like your own post.");
         return;
       }
 
       await VentActions(title: title, creator: creator).likePost();
 
     } catch (_) {
-      _showTemporarySnack('Failed to like this post.');
+      _showTemporarySnack('Like failed.');
     }
 
   }
@@ -52,13 +52,13 @@ class VentActionsHandler {
 
       await DeleteVent(title: title, creator: creator).delete().then(
         (_) {
-          _showTemporarySnack('Post has been deleted.');
+          _showTemporarySnack('Post deleted.');
           _closeScreens(2);
         }
       );
 
     } catch (_) {
-      _showTemporarySnack('Failed to delete this post.');
+      _showTemporarySnack('Delete failed.');
     }
 
   }
@@ -69,13 +69,13 @@ class VentActionsHandler {
 
       await DeleteArchiveVent(title: title).delete().then(
         (_) {
-          _showTemporarySnack('Archive post has been deleted.');
+          _showTemporarySnack('Archive post deleted.');
           _closeScreens(2);
         }
       );
 
     } catch (_) {
-      _showTemporarySnack('Failed to delete this archive.');
+      _showTemporarySnack('Archive delete failed.');
     }
 
   }
@@ -86,13 +86,13 @@ class VentActionsHandler {
 
       await DeleteSavedVent(title: title, creator: creator).delete().then(
         (_) {
-          _showTemporarySnack('Removed post from Saved.');
+          _showTemporarySnack('Post removed from Saved.');
           _closeScreens(1);
         }
       );
 
     } catch (_) {
-      _showTemporarySnack('Failed to delete this saved post.');
+      _showTemporarySnack('Unsave failed.');
     }
 
   }
@@ -106,7 +106,7 @@ class VentActionsHandler {
       );
 
     } catch (_) {
-      _showTemporarySnack('Failed to save this post.');
+      _showTemporarySnack('Save failed.');
     }
 
   }

@@ -1,7 +1,7 @@
 class AlertMessages {
 
-  static const failedSignUp = 'Sign Up failed';
-  static const failedSignIn = 'Sign In failed';
+  static const failedSignUp = 'Sign Up Failed';
+  static const failedSignIn = 'Sign In Failed';
 
   static const deletePost = 'Delete Post?';
 
@@ -14,8 +14,8 @@ class AlertMessages {
   static const deactivateAccount = 'Deactivate Account?';
 
   static const defaultError = 'Something went wrong.';
-  static const changesFailed = 'Failed to save changes.';
-  static const postsFailedToLoad = 'Failed to load posts.';
+  static const changesFailed = 'Changes not saved.';
+  static const postsFailedToLoad = 'Posts not loaded.';
   static const savedChanges = 'Saved changes.';
   static const textCopied = 'Text copied.';
 
