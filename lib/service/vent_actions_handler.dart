@@ -101,7 +101,9 @@ class VentActionsHandler {
 
     try {
 
-      await VentActions(title: title, creator: creator).savePost();
+      await VentActions(title: title, creator: creator).savePost().then(
+        (_) => _showTemporarySnack('Post saved.')
+      );
 
     } catch (_) {
       _showTemporarySnack('Failed to save this post.');
