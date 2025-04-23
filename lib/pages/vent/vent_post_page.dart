@@ -467,14 +467,15 @@ class _VentPostPageState extends State<VentPostPage> with
   Widget _buildSaveButton() {
     return Builder(
       builder: (context) {
+        final isSaved = _isVentSaved();
         return ActionsButton().buildSaveButton(
-          isSaved: _isVentSaved(),
+          isSaved: isSaved,
           onPressed: () async {
             await VentActionsHandler(              
               title: widget.title, 
               creator: widget.creator, 
               context: context
-            ).savePost();
+            ).savePost(isSaved); // TODO: Create separated variable to store this class
           }
         );
       },

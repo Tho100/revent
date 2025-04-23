@@ -86,7 +86,7 @@ class VentActionsHandler {
 
       await DeleteSavedVent(title: title, creator: creator).delete().then(
         (_) {
-          _showTemporarySnack('Post removed from Saved.');
+          _showTemporarySnack('Removed post from saved.');
           _closeScreens(1);
         }
       );
@@ -97,12 +97,12 @@ class VentActionsHandler {
 
   }
 
-  Future<void> savePost() async {
+  Future<void> savePost(bool isAlreadySaved) async {
 
     try {
 
       await VentActions(title: title, creator: creator).savePost().then(
-        (_) => _showTemporarySnack('Post saved.')
+        (_) => _showTemporarySnack(isAlreadySaved ? 'Removed post from saved.' : 'Post saved.')
       );
 
     } catch (_) {

@@ -149,14 +149,16 @@ class VentPreviewerWidgets {
     final ventIndex = getProvider['vent_index'];
     final ventData = getProvider['vent_data'];
 
+    final isSaved = ventIndex == -1 ? false : _getIsSaved(ventData, ventIndex);
+
     return ActionsButton().buildSaveButton(
-      isSaved: ventIndex == -1 ? false : _getIsSaved(ventData, ventIndex),
+      isSaved: isSaved,
       onPressed: () async {
         await VentActionsHandler(
           title: title!, 
           creator: creator!, 
           context: context
-        ).savePost();
+        ).savePost(isSaved);
       }
     );
   
