@@ -191,11 +191,11 @@ class _MainSearchPageState extends State<MainSearchPage> {
           );
         }
 
-        final adjustedIndex = index - 1;
+        final reversedIndex = searchesHistory.length - index; 
 
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2.0),
-          child: _buildSearchItem(searchesHistory[adjustedIndex]),
+          child: _buildSearchItem(searchesHistory[reversedIndex]),
         );
 
       },
