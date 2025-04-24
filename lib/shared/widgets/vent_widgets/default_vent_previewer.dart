@@ -57,6 +57,7 @@ class DefaultVentPreviewer extends StatefulWidget {
 class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with NavigationProviderService {
 
   late VentPreviewerWidgets ventPreviewer;
+  late VentActionsHandler actionsHandler;
   late String ventBodyText;
   
   late int postId = 0;
@@ -74,13 +75,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       totalComments: widget.totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
       removeSavedOnPressed: widget.isMyProfile!
-        ? () async {
-          await VentActionsHandler(
-            title: widget.title, 
-            creator: widget.creator, 
-            context: context
-          ).unsavePost();
-        }
+        ? () async => await actionsHandler.unsavePost()
         : null,
       editOnPressed: () {
         Navigator.pop(context);
@@ -90,13 +85,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         CustomAlertDialog.alertDialogCustomOnPress(
           message: AlertMessages.deletePost, 
           buttonMessage: 'Delete',
-          onPressedEvent: () async {
-            await VentActionsHandler(
-              title: widget.title, 
-              creator: widget.creator, 
-              context: context
-            ).deletePost();
-          }
+          onPressedEvent: () async => await actionsHandler.deletePost()
         );
       },
       reportOnPressed: () {},
@@ -113,6 +102,16 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         );
       },
     );
+  }
+
+  void _initializeVentActionsHandler() {
+
+    actionsHandler = VentActionsHandler(              
+      title: widget.title, 
+      creator: widget.creator, 
+      context: context
+    );
+
   }
 
   void _initializePostId() async {
@@ -268,6 +267,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   @override
   void initState() {
+    _initializeVentActionsHandler();
     _initializePostId();
     _initializeBodyText();
     _initializeVentPreviewer();

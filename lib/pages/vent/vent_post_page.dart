@@ -77,6 +77,18 @@ class _VentPostPageState extends State<VentPostPage> with
   final commentSettings = CommentSettings();
   final commentsFilter = CommentsFilter();
 
+  late VentActionsHandler actionsHandler;
+
+  void _initializeVentActionsHandler() {
+
+    actionsHandler = VentActionsHandler(              
+      title: widget.title, 
+      creator: widget.creator, 
+      context: context
+    );
+
+  }
+
   void _loadLastEdit() async {
 
     final lastEdit = await LastEditGetter().getLastEdit();
@@ -399,11 +411,7 @@ class _VentPostPageState extends State<VentPostPage> with
           message: AlertMessages.deletePost, 
           buttonMessage: 'Delete',
           onPressedEvent: () async {
-            await VentActionsHandler(
-              title: widget.title, 
-              creator: widget.creator, 
-              context: context
-            ).deletePost().then(
+            await actionsHandler.deletePost().then(
               (_) => Navigator.pop(context)
             );
           }
@@ -442,13 +450,7 @@ class _VentPostPageState extends State<VentPostPage> with
         return ActionsButton().buildLikeButton(
           value: likesInfo['total_likes'], 
           isLiked: likesInfo['is_liked'],
-          onPressed: () async {
-            await VentActionsHandler(
-              title: widget.title, 
-              creator: widget.creator, 
-              context: context
-            ).likePost();
-          }
+          onPressed: () async => await actionsHandler.likePost()
         );
       },
     );
@@ -470,13 +472,7 @@ class _VentPostPageState extends State<VentPostPage> with
         final isSaved = _isVentSaved();
         return ActionsButton().buildSaveButton(
           isSaved: isSaved,
-          onPressed: () async {
-            await VentActionsHandler(              
-              title: widget.title, 
-              creator: widget.creator, 
-              context: context
-            ).savePost(isSaved); // TODO: Create separated variable to store this class
-          }
+          onPressed: () async => actionsHandler.savePost(isSaved)
         );
       },
     );
@@ -751,6 +747,7 @@ class _VentPostPageState extends State<VentPostPage> with
         creatorPfp: widget.pfpData
       )
     );
+    _initializeVentActionsHandler();
     _loadCommentsSettings().then((_) {
       _initializeComments();
       _loadLastEdit();
