@@ -267,11 +267,11 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   @override
   void initState() {
+    super.initState();
     _initializeVentActionsHandler();
     _initializePostId();
     _initializeBodyText();
     _initializeVentPreviewer();
-    super.initState();
   }
 
   @override

@@ -216,17 +216,18 @@ class _MainSearchPageState extends State<MainSearchPage> {
     );
   }
 
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeSearchHistory();
+  }
+
   @override
   void dispose() {
     searchController.dispose();
     searchHistoryNotifier.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    _initializeSearchHistory();
-    super.initState();
   }
 
   @override

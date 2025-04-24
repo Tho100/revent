@@ -141,9 +141,9 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
 
   @override
   void initState() {
+    super.initState();
     _loadLikedVentsData();
     navigationProvider.setCurrentRoute(AppRoute.likedPosts.path);
-    super.initState();
   }
 
   @override
