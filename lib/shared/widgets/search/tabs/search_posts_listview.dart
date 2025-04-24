@@ -40,7 +40,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
         isNsfw: ventData.isNsfw,
         creator: ventData.creator,
         pfpData: ventData.profilePic,
-        useV2ActionButtons: true,
+        disableActionButtons: true,
       ),
     );
   }

@@ -32,7 +32,7 @@ class DefaultVentPreviewer extends StatefulWidget {
   final Uint8List pfpData;
 
   final bool? isMyProfile;
-  final bool? useV2ActionButtons;
+  final bool? disableActionButtons;
 
   const DefaultVentPreviewer({
     required this.title,
@@ -45,7 +45,7 @@ class DefaultVentPreviewer extends StatefulWidget {
     required this.isNsfw,
     required this.pfpData,
     this.isMyProfile = false,
-    this.useV2ActionButtons = false,
+    this.disableActionButtons = false,
     super.key
   });
 
@@ -156,7 +156,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
     );
   }
 
-  Widget _v2ActionButtonsWidget() {
+  Widget _disabledActionButtonsWidget() {
     return Padding(
       padding: const EdgeInsets.only(left: 4.0, bottom: 4.0),
       child: Row(
@@ -241,8 +241,8 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   
         Padding(
           padding: EdgeInsets.only(top: actionButtonsPadding),
-          child: widget.useV2ActionButtons! 
-            ? _v2ActionButtonsWidget()
+          child: widget.disableActionButtons! 
+            ? _disabledActionButtonsWidget()
             : Row(
             children: [
                   
