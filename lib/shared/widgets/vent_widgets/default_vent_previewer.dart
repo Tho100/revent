@@ -32,7 +32,7 @@ class DefaultVentPreviewer extends StatefulWidget {
   final Uint8List pfpData;
 
   final bool? isMyProfile;
-  final bool? useV2ActionButtons;
+  final bool? disableActionButtons;
 
   const DefaultVentPreviewer({
     required this.title,
@@ -45,7 +45,7 @@ class DefaultVentPreviewer extends StatefulWidget {
     required this.isNsfw,
     required this.pfpData,
     this.isMyProfile = false,
-    this.useV2ActionButtons = false,
+    this.disableActionButtons = false,
     super.key
   });
 
@@ -57,6 +57,7 @@ class DefaultVentPreviewer extends StatefulWidget {
 class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with NavigationProviderService {
 
   late VentPreviewerWidgets ventPreviewer;
+  late VentActionsHandler actionsHandler;
   late String ventBodyText;
   
   late int postId = 0;
@@ -74,13 +75,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       totalComments: widget.totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
       removeSavedOnPressed: widget.isMyProfile!
-        ? () async {
-          await VentActionsHandler(
-            title: widget.title, 
-            creator: widget.creator, 
-            context: context
-          ).unsavePost();
-        }
+        ? () async => await actionsHandler.unsavePost()
         : null,
       editOnPressed: () {
         Navigator.pop(context);
@@ -90,13 +85,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         CustomAlertDialog.alertDialogCustomOnPress(
           message: AlertMessages.deletePost, 
           buttonMessage: 'Delete',
-          onPressedEvent: () async {
-            await VentActionsHandler(
-              title: widget.title, 
-              creator: widget.creator, 
-              context: context
-            ).deletePost();
-          }
+          onPressedEvent: () async => await actionsHandler.deletePost()
         );
       },
       reportOnPressed: () {},
@@ -113,6 +102,16 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         );
       },
     );
+  }
+
+  void _initializeVentActionsHandler() {
+
+    actionsHandler = VentActionsHandler(              
+      title: widget.title, 
+      creator: widget.creator, 
+      context: context
+    );
+
   }
 
   void _initializePostId() async {
@@ -157,7 +156,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
     );
   }
 
-  Widget _v2ActionButtonsWidget() {
+  Widget _disabledActionButtonsWidget() {
     return Padding(
       padding: const EdgeInsets.only(left: 4.0, bottom: 4.0),
       child: Row(
@@ -242,8 +241,8 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   
         Padding(
           padding: EdgeInsets.only(top: actionButtonsPadding),
-          child: widget.useV2ActionButtons! 
-            ? _v2ActionButtonsWidget()
+          child: widget.disableActionButtons! 
+            ? _disabledActionButtonsWidget()
             : Row(
             children: [
                   
@@ -268,6 +267,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   @override
   void initState() {
+    _initializeVentActionsHandler();
     _initializePostId();
     _initializeBodyText();
     _initializeVentPreviewer();

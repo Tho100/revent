@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/pages/main_search_page.dart';
 import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -77,11 +78,13 @@ class _SearchPageState extends State<SearchPage> {
 
   Widget _buildTagsChips(String label) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (_) => SearchResultsPage(searchText: "#$label"))
-        );
+      onTap: () async {
+        await LocalStorageModel().addSearchHistory(text: '#$label').then((_) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (_) => SearchResultsPage(searchText: "#$label"))
+          );
+        });
       },
       child: Chip(
         label: Text(
