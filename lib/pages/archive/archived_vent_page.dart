@@ -243,8 +243,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   @override
   void initState() {
-    _loadArchiveVentsData();
     super.initState();
+    _loadArchiveVentsData();
   }
 
   @override

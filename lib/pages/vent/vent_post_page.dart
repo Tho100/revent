@@ -738,6 +738,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   @override
   void initState() {
+    super.initState();
     activeVentProvider.setVentData(
       ActiveVentData(
         postId: widget.postId,
@@ -752,7 +753,6 @@ class _VentPostPageState extends State<VentPostPage> with
       _initializeComments();
       _loadLastEdit();
     });
-    super.initState();
   }
 
   @override

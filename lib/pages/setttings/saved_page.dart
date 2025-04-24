@@ -141,9 +141,9 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
 
   @override
   void initState() {
+    super.initState();
     _loadSavedVentsData();
     navigationProvider.setCurrentRoute(AppRoute.savedPosts.path);
-    super.initState();
   }
 
   @override

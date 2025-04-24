@@ -260,16 +260,16 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    searchPostsFilter.filterPostsToBest();
+  }
+
+  @override
   void dispose() {
     sortOptionsNotifier.dispose();
     timeFilterNotifier.dispose();
     super.dispose();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    searchPostsFilter.filterPostsToBest();
   }
 
   @override
