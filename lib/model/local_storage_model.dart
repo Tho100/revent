@@ -67,7 +67,11 @@ class LocalStorageModel {
 
     try {
 
-      await setupFile.writeAsString('$text\n', mode: FileMode.append);
+      final searchHistory = await readSearchHistory();
+
+      if (!searchHistory.contains(text)) {
+        await setupFile.writeAsString('$text\n', mode: FileMode.append);
+      }
 
     } catch (_) {
       return;

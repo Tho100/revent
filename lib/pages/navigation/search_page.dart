@@ -83,7 +83,7 @@ class _SearchPageState extends State<SearchPage> {
           MaterialPageRoute(builder: (_) => SearchResultsPage(searchText: "#$label"))
         );
       },
-      child: Chip(
+      child: Chip( // TODO: Add selected tags to search history
         label: Text(
           '#$label',
           style: GoogleFonts.inter(

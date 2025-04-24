@@ -30,11 +30,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
   }
 
   void _addSearchHistory({required String text}) async {
-    
-    if(!searchHistoryNotifier.value.contains(text)) {
-      await localStorageModel.addSearchHistory(text: text);
-    }
-
+    await localStorageModel.addSearchHistory(text: text);
   }
 
   void _deleteSearchHistory({required String text}) async {
