@@ -42,7 +42,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       'is_nsfw': isNsfw,
       'is_liked': isLiked,
       'is_saved': isSaved,
-      'pfp': profilePic,
+      'profile_picture': profilePic,
     };
 
   }
@@ -70,7 +70,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     final tags = ventsData['tags'];
     final postTimestamp = ventsData['post_timestamp'];
     final creator = ventsData['creator'];
-    final profilePic = ventsData['pfp'];
+    final profilePic = ventsData['profile_pic'];
     final totalLikes = ventsData['total_likes'];
     final totalComments = ventsData['total_comments'];
     final isNsfw = ventsData['is_nsfw'];
