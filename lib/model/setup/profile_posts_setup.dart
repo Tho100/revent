@@ -15,11 +15,31 @@ class ProfilePostsSetup with ProfilePostsProviderService {
     required this.username
   });
 
+  bool _isDataEmpty(String type) {
+
+    final isMyProfile = profileType == ProfileType.myProfile.value;
+
+    if(type == 'posts') {
+
+      return isMyProfile 
+        ? profilePostsProvider.myProfile.titles.isEmpty 
+        : profilePostsProvider.userProfile.titles.isEmpty; 
+
+    } else if (type == 'saved') {
+
+      return isMyProfile 
+        ? profileSavedProvider.myProfile.titles.isEmpty 
+        : profileSavedProvider.userProfile.titles.isEmpty; 
+ 
+    }
+
+    return true;
+
+  }
+
   Future<void> setupPosts() async {
 
-    final isDataEmpty = profileType == ProfileType.myProfile.value
-      ? profilePostsProvider.myProfile.titles.isEmpty 
-      : profilePostsProvider.userProfile.titles.isEmpty;
+    final isDataEmpty = _isDataEmpty('posts');
 
     if(isDataEmpty) {
 
@@ -57,9 +77,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
   Future<void> setupSaved() async {
 
-    final isDataEmpty = profileType == ProfileType.myProfile.value 
-      ? profileSavedProvider.myProfile.titles.isEmpty 
-      : profileSavedProvider.userProfile.titles.isEmpty;
+    final isDataEmpty = _isDataEmpty('saved');
 
     if(isDataEmpty) {
 
