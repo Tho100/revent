@@ -47,7 +47,7 @@ class VentForYouProvider extends ChangeNotifier {
   }
 
   void addVent(VentForYouData vent) {
-    _vents.add(vent);
+    _vents.insert(0, vent);
     notifyListeners();
   }
 
