@@ -42,7 +42,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
       'is_nsfw': isNsfw,
       'is_liked': isLiked,
       'is_saved': isSaved,
-      'profile_picture': profilePic,
+      'profile_pic': profilePic,
     };
 
   }

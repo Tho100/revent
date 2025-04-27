@@ -21,10 +21,12 @@ import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 class _ArchivedVentsData {
   
   final String title;
+  final String tags;
   final String postTimestamp;
 
   _ArchivedVentsData({
     required this.title,
+    required this.tags,
     required this.postTimestamp
   });
 
@@ -74,7 +76,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   }
 
-  void _viewVentPostPage(String title, String postTimestamp) async {
+  void _viewVentPostPage(String title, String tags, String postTimestamp) async {
 
     final bodyText = await _getBodyText(title);
     final lastEdit = await _getLastEdit(title);
@@ -83,6 +85,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       navigatorKey.currentContext!,
       MaterialPageRoute(builder: (_) => ViewArchiveVentPage(
         title: title, 
+        tags: tags,
         bodyText: bodyText, 
         lastEdit: lastEdit,
         postTimestamp: postTimestamp
@@ -95,16 +98,20 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
     try {
 
+
       final archiveVentsInfo = await archiveDataGetter.getPosts(
         username: userProvider.user.username
       );
 
       final titles = archiveVentsInfo['title'] as List<String>;
+      final tags = archiveVentsInfo['tags'] as List<String>;
+
       final postTimestamp = archiveVentsInfo['post_timestamp'] as List<String>;
 
       archivedVentsData.value = List.generate(titles.length, (index) {
         return _ArchivedVentsData(
           title: titles[index],
+          tags: tags[index],
           postTimestamp: postTimestamp[index],
         );
       });
@@ -135,16 +142,17 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       .toList();
   }
 
-  Widget _buildVentPreview(String title, String postTimestamp) {
+  Widget _buildVentPreview(String title, String tags, String postTimestamp) {
 
     final ventPreviewer = VentPreviewerWidgets(
       context: context,
       title: title,
+      tags: tags,
       bodyText: '',
       creator: userProvider.user.username,
       pfpData: profileProvider.profile.profilePicture,
       postTimestamp: postTimestamp,
-      viewVentPostOnPressed: () => _viewVentPostPage(title, postTimestamp),
+      viewVentPostOnPressed: () => _viewVentPostPage(title, tags, postTimestamp),
       editOnPressed: () async {
 
         Navigator.pop(navigatorKey.currentContext!);
@@ -181,10 +189,18 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
               
             ],
           ),
-    
-          const SizedBox(height: 14),
-    
+
+          const SizedBox(height: 8),
+      
           ventPreviewer.buildTitle(),
+
+          if(tags.isNotEmpty) ... [
+
+            const SizedBox(height: 8),
+
+            ventPreviewer.buildTags(),
+            
+          ],
 
           const SizedBox(height: 8),
     
@@ -204,7 +220,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
           
         final ventsData = archiveData[index];
 
-        return _buildVentPreview(ventsData.title, ventsData.postTimestamp);
+        return _buildVentPreview(ventsData.title, ventsData.tags, ventsData.postTimestamp);
 
       },
     );
