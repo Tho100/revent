@@ -11,12 +11,14 @@ import 'package:revent/shared/widgets/profile_picture.dart';
 class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderService {
 
   final String title;
+  final String tags;
   final String bodyText;
   final String postTimestamp;
   final String lastEdit;
 
   const ViewArchiveVentPage({
     required this.title,
+    required this.tags,
     required this.bodyText,
     required this.postTimestamp,
     required this.lastEdit,
@@ -110,6 +112,23 @@ class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderServic
           ),
         ),
         
+        if(tags.isNotEmpty) ... [
+
+          const SizedBox(height: 8),
+
+          Text(
+            tags.split(' ').map((tags) => '#$tags').join(' '),
+            style: GoogleFonts.inter(
+              color: ThemeColor.thirdWhite,
+              fontWeight: FontWeight.w700,
+              fontSize: 13
+            ),
+          ),
+          
+          const SizedBox(height: 2),
+
+        ],
+
         const SizedBox(height: 14),
 
         SelectableText(

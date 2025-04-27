@@ -277,7 +277,7 @@ class VentPreviewerWidgets {
   Widget buildBodyText() {
     return Text(
       bodyText!,
-      style: GoogleFonts.inter(
+      style: GoogleFonts.inter( // TODO: Put this into themestyle
         color: ThemeColor.secondaryWhite,
         fontWeight: FontWeight.w800,
         fontSize: 13

@@ -8,7 +8,7 @@ class ArchiveVentDataGetter extends BaseQueryService {
 
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
-    const query = 'SELECT title, created_at FROM archive_vent_info WHERE creator = :username';
+    const query = 'SELECT title, created_at, tags FROM archive_vent_info WHERE creator = :username';
 
     final param = {'username': username};
 
@@ -17,6 +17,7 @@ class ArchiveVentDataGetter extends BaseQueryService {
     final extractData = ExtractData(rowsData: retrievedInfo);
     
     final title = extractData.extractStringColumn('title');
+    final tags = extractData.extractStringColumn('tags');
 
     final postTimestamp = extractData
       .extractStringColumn('created_at')
@@ -25,6 +26,7 @@ class ArchiveVentDataGetter extends BaseQueryService {
 
     return {
       'title': title,
+      'tags': tags,
       'post_timestamp': postTimestamp
     };
 
