@@ -81,7 +81,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       }
 
       if(archiveVentNotifier.value) {
-        await _createArchiveVent(title: ventTitle, bodyText: ventBodyText);
+        await _createArchiveVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
         return;
       }
 
@@ -97,14 +97,15 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<void> _createArchiveVent({
     required String title,
-    required String bodyText
+    required String bodyText,
+    required String tags
   }) async {
 
     if(context.mounted) {
       loading.startLoading(context: context);
     }
 
-    await CreateNewItem(title: title, body: bodyText).newArchiveVent().then((_) {
+    await CreateNewItem(title: title, body: bodyText, tags: tags).newArchiveVent().then((_) {
 
       loading.stopLoading();
 
@@ -131,8 +132,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       loading.startLoading(context: context);
     }
 
-    await CreateNewItem(title: title, body: bodyText).newVent(
-      ventTags: tags,
+    await CreateNewItem(title: title, body: bodyText, tags: tags).newVent(
       markedNsfw: markAsNsfwNotifier.value,
       allowCommenting: allowCommentingNotifier.value
     ).then((_) {

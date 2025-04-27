@@ -9,35 +9,31 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
   final String title;
   final String body;
+  final String tags;
 
   CreateNewItem({
     required this.title, 
-    required this.body
+    required this.body,
+    required this.tags
   });
 
   Future<void> newVent({
-    required String ventTags,
     required bool markedNsfw,
     required bool allowCommenting,
   }) async {
 
     await _insertVentInfo(
-      ventTags: ventTags, 
       markedNsfw: markedNsfw,
       allowCommenting: allowCommenting
     ).then(
       (_) async => await _updateTotalPosts()
     );
     
-    _addVent(
-      ventTags: ventTags,
-      markedNsfw: markedNsfw
-    );
+    _addVent(markedNsfw: markedNsfw);
 
   }
 
   Future<void> _insertVentInfo({
-    required String ventTags,
     required bool markedNsfw,
     required bool allowCommenting
   }) async {
@@ -49,7 +45,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
       'creator': userProvider.user.username,
       'title': title,
       'body_text': body,
-      'tags': ventTags,
+      'tags': tags,
       'marked_nsfw': markedNsfw,
       'comment_enabled': allowCommenting,
       'total_likes': 0,
@@ -71,17 +67,14 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
   }
 
-  void _addVent({
-    required String ventTags,
-    required bool markedNsfw
-  }) {
+  void _addVent({required bool markedNsfw}) {
 
     final formattedTimestamp = FormatDate().formatPostTimestamp(DateTime.now());
 
     final newVent = VentForYouData(
       title: title, 
       bodyText: body, 
-      tags: ventTags,
+      tags: tags,
       isNsfw: markedNsfw,
       creator: userProvider.user.username, 
       postTimestamp: formattedTimestamp, 
@@ -94,12 +87,13 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
   Future<void> newArchiveVent() async {
 
-    const insertVentInfoQuery = 'INSERT INTO archive_vent_info (creator, title, body_text) VALUES (:creator, :title, :body_text)';
+    const insertVentInfoQuery = 'INSERT INTO archive_vent_info (creator, title, body_text, tags) VALUES (:creator, :title, :body_text, :tags)';
 
     final params = {
       'creator': userProvider.user.username,
       'title': title,
-      'body_text': body
+      'body_text': body,
+      'tags': tags
     };
 
     await executeQuery(insertVentInfoQuery, params);
