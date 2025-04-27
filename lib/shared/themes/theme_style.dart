@@ -5,6 +5,24 @@ import 'package:revent/shared/themes/theme_color.dart';
 class ThemeStyle {
 
   static const dotSeparator = ' • ';
+
+  static final ventTitleStyle = GoogleFonts.inter(
+    color: ThemeColor.white,
+    fontWeight: FontWeight.w800,
+    fontSize: 16
+  );
+
+  static final ventBodyStyle = GoogleFonts.inter(
+    color: ThemeColor.secondaryWhite,
+    fontWeight: FontWeight.w800,
+    fontSize: 13
+  );
+
+  static final ventTagsStyle = GoogleFonts.inter(
+    color: ThemeColor.thirdWhite,
+    fontWeight: FontWeight.w700,
+    fontSize: 13
+  );
   
   static final profilePronounsStyle = GoogleFonts.inter(
     color: ThemeColor.secondaryWhite,
