@@ -10,7 +10,6 @@ import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/vent_post_actions.dart';
 import 'package:revent/shared/widgets/buttons/actions_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
@@ -264,7 +263,11 @@ class VentPreviewerWidgets {
   Widget buildTitle() {
     return Text(
       title!,
-      style: ThemeStyle.ventTitleStyle,
+      style: GoogleFonts.inter(
+        color: ThemeColor.white,
+        fontWeight: FontWeight.w800,
+        fontSize: 16
+      ),
       overflow: bodyText!.isEmpty ? TextOverflow.ellipsis : TextOverflow.fade,
       softWrap: true,
       maxLines: 2
@@ -274,7 +277,11 @@ class VentPreviewerWidgets {
   Widget buildBodyText() {
     return Text(
       bodyText!,
-      style: ThemeStyle.ventBodyStyle,
+      style: GoogleFonts.inter(
+        color: ThemeColor.secondaryWhite,
+        fontWeight: FontWeight.w800,
+        fontSize: 13
+      ),
       overflow: TextOverflow.ellipsis,
       maxLines: 3
     );
@@ -283,7 +290,11 @@ class VentPreviewerWidgets {
   Widget buildTags() {
     return Text(
       tags!.split(' ').map((tags) => '#$tags').join(' '),
-      style: ThemeStyle.ventTagsStyle
+      style: GoogleFonts.inter(
+        color: ThemeColor.thirdWhite,
+        fontWeight: FontWeight.w700,
+        fontSize: 13
+      ),
     );
   }
 

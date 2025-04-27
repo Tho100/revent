@@ -6,22 +6,16 @@ class ThemeStyle {
 
   static const dotSeparator = ' • ';
 
-  static final ventTitleStyle = GoogleFonts.inter(
+  static final ventPostPageTitleStyle = GoogleFonts.inter(
     color: ThemeColor.white,
     fontWeight: FontWeight.w800,
-    fontSize: 16
+    fontSize: 21
   );
-
-  static final ventBodyStyle = GoogleFonts.inter(
-    color: ThemeColor.secondaryWhite,
-    fontWeight: FontWeight.w800,
-    fontSize: 13
-  );
-
-  static final ventTagsStyle = GoogleFonts.inter(
+  
+  static final ventPostPageTagsStyle = GoogleFonts.inter(
     color: ThemeColor.thirdWhite,
     fontWeight: FontWeight.w700,
-    fontSize: 13
+    fontSize: 14
   );
   
   static final profilePronounsStyle = GoogleFonts.inter(

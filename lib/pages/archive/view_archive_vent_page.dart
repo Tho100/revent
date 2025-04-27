@@ -4,9 +4,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/styled_text_widget.dart';
 
 class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderService {
 
@@ -105,11 +107,7 @@ class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderServic
 
         SelectableText(
           title,
-          style: GoogleFonts.inter(
-            color: ThemeColor.white,
-            fontWeight: FontWeight.w800,
-            fontSize: 21
-          ),
+          style: ThemeStyle.ventPostPageTitleStyle
         ),
         
         if(tags.isNotEmpty) ... [
@@ -118,27 +116,16 @@ class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderServic
 
           Text(
             tags.split(' ').map((tags) => '#$tags').join(' '),
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w700,
-              fontSize: 13
-            ),
+            style: ThemeStyle.ventPostPageTagsStyle
           ),
           
           const SizedBox(height: 2),
 
         ],
 
-        const SizedBox(height: 14),
+        const SizedBox(height: 10),
 
-        SelectableText(
-          bodyText,
-          style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
-            fontWeight: FontWeight.w700,
-            fontSize: 14
-          ),
-        ),
+        StyledTextWidget(text: bodyText),
 
       ],
     );

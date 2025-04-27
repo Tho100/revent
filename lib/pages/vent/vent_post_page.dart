@@ -19,6 +19,7 @@ import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottom_input_bar.dart';
 import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
@@ -349,11 +350,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
         SelectableText(
           widget.title,
-          style: GoogleFonts.inter(
-            color: ThemeColor.white,
-            fontWeight: FontWeight.w800,
-            fontSize: 21
-          ),
+          style: ThemeStyle.ventPostPageTitleStyle
         ),
 
         if(widget.tags.isNotEmpty) ... [
@@ -362,11 +359,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
           Text(
             widget.tags.split(' ').map((tags) => '#$tags').join(' '),
-            style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
-              fontWeight: FontWeight.w700,
-              fontSize: 14
-            ),
+            style: ThemeStyle.ventPostPageTagsStyle
           ),
 
           const SizedBox(height: 12),
