@@ -116,12 +116,12 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
       
                 TextSpan(
                   text: '${posts.vents.length.toString()}   ',
-                  style: TextStyle(color: ThemeColor.white),
+                  style: TextStyle(color: ThemeColor.contentPrimary),
                 ),
       
                 TextSpan(
                   text: 'Results',
-                  style: TextStyle(color: ThemeColor.thirdWhite),
+                  style: TextStyle(color: ThemeColor.contentThird),
                 ),
       
               ],
@@ -152,7 +152,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                 return Text(
                   filterText,
                   style: GoogleFonts.inter(
-                    color: ThemeColor.white,
+                    color: ThemeColor.contentPrimary,
                     fontWeight: FontWeight.w800,
                     fontSize: 13
                   )
@@ -162,7 +162,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   
             const SizedBox(width: 8),
 
-            Icon(CupertinoIcons.chevron_down, color: ThemeColor.white, size: 15),
+            Icon(CupertinoIcons.chevron_down, color: ThemeColor.contentPrimary, size: 15),
 
             const SizedBox(width: 12),
     

@@ -195,7 +195,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
             child: Text(
               tags,
               style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
+                color: ThemeColor.contentThird,
                 fontWeight: FontWeight.w700,
                 fontSize: 14
               ),

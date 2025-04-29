@@ -42,7 +42,7 @@ class MainTextField extends StatelessWidget {
       inputFormatters: inputFormatters,
       decoration: ThemeStyle.txtFieldStye(hintText: hintText!),
       style: GoogleFonts.inter(
-        color: ThemeColor.secondaryWhite,
+        color: ThemeColor.contentSecondary,
         fontWeight: FontWeight.w700,
       ),
     );

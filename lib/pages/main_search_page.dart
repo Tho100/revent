@@ -60,7 +60,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
           maxLines: 1,
           controller: searchController,
           style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
+            color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w700,
           ),
           decoration: InputDecoration(
@@ -68,7 +68,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
             counterText: '',
             border: InputBorder.none,
             hintStyle: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite, 
+              color: ThemeColor.contentThird, 
               fontWeight: FontWeight.w700
             ),
           ),
@@ -92,7 +92,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
           child: Row(
             children: [
     
-              Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
+              Icon(CupertinoIcons.search, color: ThemeColor.contentThird, size: 20),
     
               const SizedBox(width: 15),
     
@@ -101,7 +101,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
                 child: Text(
                   searchText,
                   style: GoogleFonts.inter(
-                    color: ThemeColor.secondaryWhite,
+                    color: ThemeColor.contentSecondary,
                     fontWeight: FontWeight.w700,
                     fontSize: 16
                   ),
@@ -113,7 +113,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
     
               IconButton(
                 onPressed: () => _deleteSearchHistory(text: searchText),
-                icon: Icon(CupertinoIcons.clear, color: ThemeColor.secondaryWhite, size: 18)
+                icon: Icon(CupertinoIcons.clear, color: ThemeColor.contentSecondary, size: 18)
               ),
     
             ],
@@ -129,7 +129,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
         const SizedBox(height: 45),
 
-        Icon(CupertinoIcons.search, color: ThemeColor.secondaryWhite, size: 32),
+        Icon(CupertinoIcons.search, color: ThemeColor.contentSecondary, size: 32),
 
         const SizedBox(height: 18),
 
@@ -150,7 +150,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
         Text(
           'Recent',
           style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
+            color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w700,
             fontSize: 14
           )
@@ -165,7 +165,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
           child: Text(
             'Clear',
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w700,
               fontSize: 14
             )

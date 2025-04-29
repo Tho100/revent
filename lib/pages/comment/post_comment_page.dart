@@ -84,7 +84,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
         Text(
           activeVentProvider.ventData.creator,
           style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
+            color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w800,
             fontSize: 14.5
           ),
@@ -104,7 +104,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
           bottom: 0,
           child: Container(
             width: 1,
-            color: ThemeColor.lightGrey,
+            color: ThemeColor.divider,
           ),
         ),
 
@@ -124,7 +124,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
                   SelectableText(
                     activeVentProvider.ventData.title,
                     style: GoogleFonts.inter(
-                      color: ThemeColor.white,
+                      color: ThemeColor.contentPrimary,
                       fontWeight: FontWeight.w800,
                       fontSize: 21,
                     ),

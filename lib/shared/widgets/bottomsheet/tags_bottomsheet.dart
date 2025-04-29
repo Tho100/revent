@@ -25,7 +25,7 @@ class BottomsheetTagsSelection with TagsProviderService {
         label: Text(
           '#$label',
             style: GoogleFonts.inter(
-              color: chipSelected[index] ?ThemeColor.mediumBlack : ThemeColor.secondaryWhite,
+              color: chipSelected[index] ? ThemeColor.foregroundPrimary : ThemeColor.contentSecondary,
               fontWeight: FontWeight.w700,
               fontSize: 14
             )
@@ -57,12 +57,12 @@ class BottomsheetTagsSelection with TagsProviderService {
             tagsProvider.addTags(tags);
 
           },
-          selectedColor: ThemeColor.white,
-          backgroundColor: ThemeColor.black,
+          selectedColor: ThemeColor.contentPrimary,
+          backgroundColor: ThemeColor.backgroundPrimary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
             side: BorderSide(
-              color: chipSelected[index] ? ThemeColor.black : ThemeColor.thirdWhite, 
+              color: chipSelected[index] ? ThemeColor.backgroundPrimary : ThemeColor.contentThird, 
               width: 1,
             ),
           ),
@@ -89,7 +89,7 @@ class BottomsheetTagsSelection with TagsProviderService {
             child: Text(
               'Add up to 3 tags',
               style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
+                color: ThemeColor.contentThird,
                 fontSize: 14,
                 fontWeight: FontWeight.w800
               ),
@@ -106,7 +106,7 @@ class BottomsheetTagsSelection with TagsProviderService {
                 Text(
                   '#',
                   style: GoogleFonts.inter(
-                    color: ThemeColor.white,
+                    color: ThemeColor.contentPrimary,
                     fontWeight: FontWeight.w800,
                     fontSize: 21
                   )
@@ -125,7 +125,7 @@ class BottomsheetTagsSelection with TagsProviderService {
                         maxLength: 45,
                         controller: customTagsController,
                         style: GoogleFonts.inter(
-                          color: ThemeColor.secondaryWhite,
+                          color: ThemeColor.contentSecondary,
                           fontWeight: FontWeight.w700,
                         ),
                         decoration: InputDecoration(
@@ -133,7 +133,7 @@ class BottomsheetTagsSelection with TagsProviderService {
                           counterText: '',
                           border: InputBorder.none,
                           hintStyle: GoogleFonts.inter(
-                            color: ThemeColor.thirdWhite, 
+                            color: ThemeColor.contentThird, 
                             fontWeight: FontWeight.w700
                           ),
                         ),

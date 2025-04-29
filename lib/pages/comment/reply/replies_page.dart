@@ -85,7 +85,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
         Text(
           activeVentProvider.ventData.creator,
           style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
+            color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w800,
             fontSize: 14.5
           ),
@@ -105,7 +105,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
           bottom: 0,
           child: Container(
             width: 1,
-            color: ThemeColor.lightGrey,
+            color: ThemeColor.divider,
           ),
         ),
 
@@ -125,7 +125,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
                   SelectableText(
                     activeVentProvider.ventData.title,
                     style: GoogleFonts.inter(
-                      color: ThemeColor.white,
+                      color: ThemeColor.contentPrimary,
                       fontWeight: FontWeight.w800,
                       fontSize: 21,
                     ),
@@ -187,8 +187,8 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
 
   Widget _buildBody() {
     return RefreshIndicator(      
-      backgroundColor: ThemeColor.white,
-      color: ThemeColor.black,
+      backgroundColor: ThemeColor.contentPrimary,
+      color: ThemeColor.backgroundPrimary,
       onRefresh: () async => await RefreshService().refreshReplies(commentId: commentId),
       child: Padding(
         padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),

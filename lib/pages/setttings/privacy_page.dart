@@ -74,7 +74,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
               Text(
                 text,
                 style: GoogleFonts.inter(
-                  color: ThemeColor.white,
+                  color: ThemeColor.contentPrimary,
                   fontWeight: FontWeight.w800,
                   fontSize: 18
                 ),
@@ -91,9 +91,9 @@ class _PrivacyPageState extends State<PrivacyPage> {
                       notifier.value = !isToggled;
                       onToggled();
                     },
-                    activeColor: ThemeColor.white,
-                    trackColor: ThemeColor.darkWhite,
-                    thumbColor: ThemeColor.black,
+                    activeColor: ThemeColor.contentPrimary,
+                    trackColor: ThemeColor.trackSwitch,
+                    thumbColor: ThemeColor.backgroundPrimary,
                   );
                 }
               ),
@@ -106,7 +106,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
             child: Text(
               description,
               style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
+                color: ThemeColor.contentThird,
                 fontWeight: FontWeight.w700,
                 fontSize: 12
               )

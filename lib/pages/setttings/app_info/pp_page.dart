@@ -77,7 +77,7 @@ class PrivacyPolicyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: ThemeColor.white,
+      backgroundColor: ThemeColor.contentPrimary,
       appBar: CustomAppBar(
         context: context,
         title: 'Privacy Policy'
@@ -90,7 +90,7 @@ class PrivacyPolicyPage extends StatelessWidget {
             child: Text(
               _buildMessage(),
               style: GoogleFonts.inter(
-                color: ThemeColor.mediumBlack,
+                color: ThemeColor.foregroundPrimary,
                 fontWeight: FontWeight.w700,
                 fontSize: 18
               ),

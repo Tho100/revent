@@ -116,7 +116,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
         ),
         icon: Transform.translate(
           offset: const Offset(0, -10),
-          child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
+          child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.contentThird, size: 18)
         )
       ),
     );
@@ -154,7 +154,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
                 height: 17,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: ThemeColor.black,
+                    color: ThemeColor.backgroundPrimary,
                     borderRadius: BorderRadius.circular(360)
                   ),
                   child: Padding(
@@ -179,7 +179,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
       
           IconButton(
             onPressed: () async => await _likeOnPressed(),
-            icon: Icon(isReplyLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isReplyLiked ? ThemeColor.likedColor : ThemeColor.secondaryWhite, size: 18),
+            icon: Icon(isReplyLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isReplyLiked ? ThemeColor.likedColor : ThemeColor.contentSecondary, size: 18),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(), 
           ),
@@ -189,7 +189,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
           Text(
             totalLikes.toString(),
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w800,
               fontSize: 13,
             ),
@@ -214,7 +214,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
           child: Text(
             repliedBy,
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w800,
               fontSize: 13
             )
@@ -226,7 +226,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
         Text(
           '$replyTimestamp ${repliedBy == activeVentProvider.ventData.creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
           style: GoogleFonts.inter(
-            color: ThemeColor.thirdWhite,
+            color: ThemeColor.contentThird,
             fontWeight: FontWeight.w800,
             fontSize: 12,
           ),

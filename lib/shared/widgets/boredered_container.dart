@@ -20,7 +20,7 @@ class BorderedContainer extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.transparent,
           border: Border.all(
-            color: ThemeColor.lightGrey,
+            color: ThemeColor.divider,
             width: 0.8
           ),
           borderRadius: BorderRadius.circular(20),

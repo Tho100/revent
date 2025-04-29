@@ -9,7 +9,7 @@ class NoContentMessage {
       child: Text(
         message,
         style: GoogleFonts.inter(
-          color: ThemeColor.secondaryWhite,
+          color: ThemeColor.contentSecondary,
           fontWeight: FontWeight.w800,
           fontSize: 15
         ),
@@ -28,7 +28,7 @@ class NoContentMessage {
           Text(
             header,
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontWeight: FontWeight.w800,
               fontSize: 17
             ),
@@ -39,7 +39,7 @@ class NoContentMessage {
           Text(
             subheader,
             style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
+              color: ThemeColor.contentThird,
               fontWeight: FontWeight.w800,
               fontSize: 15
             ),

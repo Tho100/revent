@@ -67,7 +67,7 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
     return Text(
       postText,
       style: GoogleFonts.inter(
-        color: ThemeColor.thirdWhite,
+        color: ThemeColor.contentThird,
         fontWeight: FontWeight.w800,
         fontSize: 14
       )

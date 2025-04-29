@@ -272,14 +272,14 @@ class _VentPostPageState extends State<VentPostPage> with
             child: Row(
               children: [
           
-                Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
+                Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.contentThird),
                 
                 const SizedBox(width: 6),
           
                 Text(
                   '${lastEdit == 'Just now' ? 'Just now' : '$lastEdit ago'} ',
                   style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
+                    color: ThemeColor.contentThird,
                     fontWeight: FontWeight.w700,
                     fontSize: 12.2
                   )
@@ -314,7 +314,7 @@ class _VentPostPageState extends State<VentPostPage> with
           Text(
             widget.creator,
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w800,
               fontSize: 13.5
             ),
@@ -325,7 +325,7 @@ class _VentPostPageState extends State<VentPostPage> with
           Text(
             widget.postTimestamp,
             style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
+              color: ThemeColor.contentThird,
               fontWeight: FontWeight.w800,
               fontSize: 12.5
             ),
@@ -430,7 +430,7 @@ class _VentPostPageState extends State<VentPostPage> with
     return Padding(
       padding: const EdgeInsets.only(right: 18.0),
       child: ventPreviewer.buildVentOptionsButton(
-        customIconWidget: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.white)
+        customIconWidget: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.contentPrimary)
       ),
     );
 
@@ -521,7 +521,7 @@ class _VentPostPageState extends State<VentPostPage> with
                 return Text(
                   filterText,
                   style: GoogleFonts.inter(
-                    color: ThemeColor.white,
+                    color: ThemeColor.contentPrimary,
                     fontWeight: FontWeight.w800,
                     fontSize: 14
                   )
@@ -531,7 +531,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
             const SizedBox(width: 8),
 
-            Icon(CupertinoIcons.chevron_down, color: ThemeColor.white, size: 16),
+            Icon(CupertinoIcons.chevron_down, color: ThemeColor.contentPrimary, size: 16),
 
             const SizedBox(width: 8),
     
@@ -548,7 +548,7 @@ class _VentPostPageState extends State<VentPostPage> with
         
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 2),
-          child: Divider(color: ThemeColor.lightGrey),
+          child: Divider(color: ThemeColor.divider),
         ),
   
         const SizedBox(height: 2),
@@ -566,7 +566,7 @@ class _VentPostPageState extends State<VentPostPage> with
                     child: Text(
                       'Comments',
                       style: GoogleFonts.inter(
-                        color: ThemeColor.white,
+                        color: ThemeColor.contentPrimary,
                         fontWeight: FontWeight.w800,
                         fontSize: 16,
                       ),
@@ -591,7 +591,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 2),
-              child: Divider(color: ThemeColor.lightGrey),
+              child: Divider(color: ThemeColor.divider),
             ),
 
           ],
@@ -627,17 +627,17 @@ class _VentPostPageState extends State<VentPostPage> with
           );
         },
         style: ElevatedButton.styleFrom(
-          foregroundColor: ThemeColor.thirdWhite,
-          backgroundColor: ThemeColor.black,
+          foregroundColor: ThemeColor.contentThird,
+          backgroundColor: ThemeColor.backgroundPrimary,
           side: BorderSide(
-            color: ThemeColor.thirdWhite,
+            color: ThemeColor.contentThird,
             width: 1.5
           ),
           shape: const StadiumBorder(),
         ),
         child: Transform.translate(
           offset: const Offset(-3, -1),
-          child: Icon(CupertinoIcons.gear, color: ThemeColor.thirdWhite)
+          child: Icon(CupertinoIcons.gear, color: ThemeColor.contentThird)
         )
       ),
     );
@@ -685,8 +685,8 @@ class _VentPostPageState extends State<VentPostPage> with
     return Consumer<CommentsProvider>(
       builder: (_, commentData, __) {
         return RefreshIndicator(      
-          backgroundColor: ThemeColor.white,
-          color: ThemeColor.black,
+          backgroundColor: ThemeColor.contentPrimary,
+          color: ThemeColor.backgroundPrimary,
           onRefresh: () async => await _onPageRefresh(),
           child: Padding(
             padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),

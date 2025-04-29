@@ -8,7 +8,7 @@ class PageLoading extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: CircularProgressIndicator(color: ThemeColor.white, strokeWidth: 2)
+      child: CircularProgressIndicator(color: ThemeColor.contentPrimary, strokeWidth: 2)
     );
   }
 

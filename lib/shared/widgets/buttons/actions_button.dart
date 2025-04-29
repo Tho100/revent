@@ -19,7 +19,7 @@ class ActionsButton {
     Color? borderColor;
 
     if(isLiked! || isSaved!) {
-      borderColor = ThemeColor.black; 
+      borderColor = ThemeColor.backgroundPrimary; 
     }
 
     if(isLiked) {
@@ -27,12 +27,12 @@ class ActionsButton {
     } 
 
     if(isSaved!) {
-      backgroundColor = ThemeColor.white;
+      backgroundColor = ThemeColor.contentPrimary;
     }
 
     if(!isSaved && !isLiked) {
-      backgroundColor = ThemeColor.black;
-      borderColor = ThemeColor.lightGrey;
+      backgroundColor = ThemeColor.backgroundPrimary;
+      borderColor = ThemeColor.divider;
     }
 
     return SizedBox(
@@ -41,7 +41,7 @@ class ActionsButton {
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
           elevation: 0,
-          foregroundColor: ThemeColor.thirdWhite,
+          foregroundColor: ThemeColor.contentThird,
           backgroundColor: backgroundColor!,
           shape: StadiumBorder(
             side: BorderSide(
@@ -71,7 +71,7 @@ class ActionsButton {
             offset: iconOffset,
             child: Icon(
               isLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, 
-              color: isLiked ? ThemeColor.white : ThemeColor.white,
+              color: isLiked ? ThemeColor.contentPrimary : ThemeColor.contentPrimary,
               size: 18.5, 
             ),
           ),
@@ -81,7 +81,7 @@ class ActionsButton {
           AnimatedFlipCounter(
             value: value,
             textStyle: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontWeight: FontWeight.w800,
               fontSize: 13.5,
             ),
@@ -105,7 +105,7 @@ class ActionsButton {
             offset: iconOffset,
             child: Icon(
               CupertinoIcons.chat_bubble, 
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               size: 18, 
             ),
           ),
@@ -115,7 +115,7 @@ class ActionsButton {
           AnimatedFlipCounter(
             value: value,
             textStyle: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontWeight: FontWeight.w800,
               fontSize: 13.5,
             ),
@@ -139,7 +139,7 @@ class ActionsButton {
           offset: iconOffset,
           child: Icon(
             isSaved ? CupertinoIcons.bookmark_fill : CupertinoIcons.bookmark, 
-            color: isSaved ? ThemeColor.black : ThemeColor.white,
+            color: isSaved ? ThemeColor.backgroundPrimary : ThemeColor.contentPrimary,
             size: 16, 
           ),
         ),          

@@ -48,10 +48,10 @@ class FollowSuggestionListView extends StatelessWidget {
                   width: 140,
                   height: 155,
                   decoration: BoxDecoration(
-                    color: ThemeColor.black,
+                    color: ThemeColor.backgroundPrimary,
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: ThemeColor.lightGrey
+                      color: ThemeColor.divider
                     )
                   ),
                   child: InkWellEffect(
@@ -75,7 +75,7 @@ class FollowSuggestionListView extends StatelessWidget {
                           Text(
                             username,
                             style: GoogleFonts.inter(
-                              color: ThemeColor.white,
+                              color: ThemeColor.contentPrimary,
                               fontWeight: FontWeight.w800,
                               fontSize: 14
                             ),

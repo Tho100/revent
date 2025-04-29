@@ -20,7 +20,7 @@ class BottomsheetAboutProfile {
           Text(
             header,
             style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
+              color: ThemeColor.contentThird,
               fontSize: 15,
               fontWeight: FontWeight.w700,
             ),
@@ -31,7 +31,7 @@ class BottomsheetAboutProfile {
           Text(
             value,
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontSize: 18,
               fontWeight: FontWeight.w800,
             ),

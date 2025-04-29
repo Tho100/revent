@@ -97,7 +97,7 @@ class _ThemePageState extends State<ThemePage> {
                       width: 42,
                       height: 42,
                       decoration: BoxDecoration(
-                        border: Border.all(color: ThemeColor.white),
+                        border: Border.all(color: ThemeColor.contentPrimary),
                         shape: BoxShape.circle,
                         color: themeColor[themes[index]]
                       ),
@@ -108,7 +108,7 @@ class _ThemePageState extends State<ThemePage> {
                     Text(
                       themes[index].titleCase,
                       style: GoogleFonts.inter(
-                        color: ThemeColor.white,
+                        color: ThemeColor.contentPrimary,
                         fontWeight: FontWeight.w800,
                         fontSize: 17
                       ),
@@ -123,7 +123,7 @@ class _ThemePageState extends State<ThemePage> {
                           padding: const EdgeInsets.only(right: 16.0),
                           child: Icon(
                             isSelected[index] ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
-                            color: isSelected[index] ? ThemeColor.white : ThemeColor.thirdWhite, 
+                            color: isSelected[index] ? ThemeColor.contentPrimary : ThemeColor.contentThird, 
                             size: 25
                           ),
                         );

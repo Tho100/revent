@@ -46,7 +46,7 @@ class AlertDialogWidget extends StatelessWidget {
         side: ThemeStyle.dialogSideBorder,
         borderRadius: BorderRadius.circular(20)
       ),
-      backgroundColor: ThemeColor.black,
+      backgroundColor: ThemeColor.backgroundPrimary,
       child: SizedBox(
         width: MediaQuery.of(context).size.width * 0.55,
         height: _getDialogHeight(),
@@ -60,7 +60,7 @@ class AlertDialogWidget extends StatelessWidget {
               child: Text(
                 title,
                 style: GoogleFonts.inter(
-                  color: ThemeColor.white,
+                  color: ThemeColor.contentPrimary,
                   fontWeight: FontWeight.w800,
                   fontSize: 19
                 ),
@@ -75,7 +75,7 @@ class AlertDialogWidget extends StatelessWidget {
                 child: Text(
                   content,
                   style: GoogleFonts.inter(
-                    color: ThemeColor.secondaryWhite,
+                    color: ThemeColor.contentSecondary,
                     fontWeight: FontWeight.w800,
                     fontSize: 15
                   ),
@@ -87,7 +87,7 @@ class AlertDialogWidget extends StatelessWidget {
 
             const Spacer(),
     
-            Divider(color: ThemeColor.lightGrey, height: 1),
+            Divider(color: ThemeColor.divider, height: 1),
 
             Padding(
               padding: const EdgeInsets.only(bottom: 5.0),

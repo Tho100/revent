@@ -29,7 +29,7 @@ class SingleTextLoading {
 
   AlertDialog _buildLoadingDialog(BuildContext context) {
     return AlertDialog(
-      backgroundColor: ThemeColor.darkGrey,
+      backgroundColor: ThemeColor.backgroundPrimary,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(14),
       ),
@@ -39,7 +39,7 @@ class SingleTextLoading {
           SizedBox(
             height: 20,
             width: 20,
-            child: CircularProgressIndicator(color: ThemeColor.white),
+            child: CircularProgressIndicator(color: ThemeColor.contentPrimary),
           ),
 
           const SizedBox(width: 25),
@@ -47,7 +47,7 @@ class SingleTextLoading {
           Text(
             title,
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontSize: 18,
               fontWeight: FontWeight.w800,
             ),

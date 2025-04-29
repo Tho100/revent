@@ -85,7 +85,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
 
         resultsTabBarWidgets.buildTabBar(),
 
-        Divider(color: ThemeColor.lightGrey, height: 1),
+        Divider(color: ThemeColor.divider, height: 1),
 
         ValueListenableBuilder(
           valueListenable: pageIsLoadedNotifier,
@@ -118,7 +118,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
           height: 45,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: ThemeColor.thirdWhite)
+            border: Border.all(color: ThemeColor.contentThird)
           ),
           child: InkWellEffect(
             onPressed: () {
@@ -135,7 +135,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 18.0),
-                    child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
+                    child: Icon(CupertinoIcons.search, color: ThemeColor.contentThird, size: 20),
                   ),
                 ),
             
@@ -145,7 +145,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
                     child: Text(
                       widget.searchText,
                       style: GoogleFonts.inter(
-                        color: ThemeColor.white,
+                        color: ThemeColor.contentPrimary,
                         fontWeight: FontWeight.w700,
                         fontSize: 16,
                       ),

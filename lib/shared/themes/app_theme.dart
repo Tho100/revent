@@ -9,10 +9,10 @@ class GlobalAppTheme {
       actionIconTheme: ActionIconThemeData(
         backButtonIconBuilder: (_) => const Icon(CupertinoIcons.chevron_back),
       ),
-      scaffoldBackgroundColor: ThemeColor.black,
+      scaffoldBackgroundColor: ThemeColor.backgroundPrimary,
       appBarTheme: AppBarTheme(
         elevation: 0,
-        backgroundColor: ThemeColor.black,
+        backgroundColor: ThemeColor.backgroundPrimary,
       ),
     );
   }

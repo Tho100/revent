@@ -56,7 +56,7 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
           child: Text(
             'Follow suggestion',
             style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
+              color: ThemeColor.contentThird,
               fontWeight: FontWeight.w800,
               fontSize: 13
             ),

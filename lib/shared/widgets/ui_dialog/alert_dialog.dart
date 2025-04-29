@@ -25,7 +25,7 @@ class CustomAlertDialog {
     return showDialog(
       barrierDismissible: false,
       context: navigatorKey.currentContext!,
-      barrierColor: ThemeColor.barrierColor, 
+      barrierColor: ThemeColor.barrier, 
       builder: (context) {
         return AlertDialogWidget(
           title: title,
@@ -48,7 +48,7 @@ class CustomAlertDialog {
   static Future alertDialogTitle(String title, String messages) {
     return showDialog(
       context: navigatorKey.currentContext!,
-      barrierColor: ThemeColor.barrierColor,
+      barrierColor: ThemeColor.barrier,
       builder: (BuildContext context) {
         return AlertDialogWidget(
           title: title,
@@ -75,7 +75,7 @@ class CustomAlertDialog {
   }) {
     return showDialog(
       context: navigatorKey.currentContext!,
-      barrierColor: ThemeColor.barrierColor,
+      barrierColor: ThemeColor.barrier,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialogWidget(
@@ -89,12 +89,12 @@ class CustomAlertDialog {
                 TextButton(
                   onPressed: onPressedEvent,
                   style: ButtonStyle(
-                    overlayColor: MaterialStateColor.resolveWith((_) => ThemeColor.thirdWhite),
+                    overlayColor: MaterialStateColor.resolveWith((_) => ThemeColor.contentThird),
                   ),
                   child: Text(
                     buttonMessage,
                     style: GoogleFonts.inter(
-                      color: ThemeColor.darkRed,
+                      color: ThemeColor.alert,
                       fontWeight: FontWeight.w800,
                       fontSize: 15
                     )
@@ -104,7 +104,7 @@ class CustomAlertDialog {
 
               const SizedBox(height: 4),
 
-              Divider(color: ThemeColor.lightGrey, height: 1),
+              Divider(color: ThemeColor.divider, height: 1),
 
               _roundedActionButton(
                 TextButton(
@@ -127,7 +127,7 @@ class CustomAlertDialog {
   static Future<bool> alertDialogDiscardConfirmation({required String message}) async {
     return await showDialog(
       context: navigatorKey.currentContext!,
-      barrierColor: ThemeColor.barrierColor,
+      barrierColor: ThemeColor.barrier,
       barrierDismissible: false,
       builder: (BuildContext context) {
         return AlertDialogWidget(
@@ -144,7 +144,7 @@ class CustomAlertDialog {
                   child: Text(
                     'Discard',
                     style: GoogleFonts.inter(
-                      color: ThemeColor.darkRed,
+                      color: ThemeColor.alert,
                       fontWeight: FontWeight.w800,
                       fontSize: 15
                     )
@@ -154,7 +154,7 @@ class CustomAlertDialog {
 
               const SizedBox(height: 4),
 
-              Divider(color: ThemeColor.lightGrey, height: 1),
+              Divider(color: ThemeColor.divider, height: 1),
 
               _roundedActionButton(
                 TextButton(

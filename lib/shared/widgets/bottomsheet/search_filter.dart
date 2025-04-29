@@ -36,7 +36,7 @@ class BottomsheetSearchFilter {
             padding: const EdgeInsets.only(right: 16.0),
             child: Icon(
               isCurrentlySelected ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
-              color: isCurrentlySelected ? ThemeColor.white : ThemeColor.thirdWhite, 
+              color: isCurrentlySelected ? ThemeColor.contentPrimary : ThemeColor.contentThird, 
               size: 20
             ),
           ),

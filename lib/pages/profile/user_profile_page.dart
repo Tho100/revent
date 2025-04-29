@@ -377,7 +377,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Widget _buildOptionsActionButton() {
     return IconButton(
-      icon: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.white),
+      icon: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.contentPrimary),
       onPressed: () => BottomsheetUserActions().buildBottomsheet(
         context: context, 
         aboutProfileOnPressed: () async {

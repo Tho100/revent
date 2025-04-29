@@ -27,7 +27,7 @@ class SpinnerLoading {
 
   AlertDialog _buildLoadingDialog(BuildContext context) {
     return AlertDialog(
-      backgroundColor: ThemeColor.black,
+      backgroundColor: ThemeColor.backgroundPrimary,
       shape: RoundedRectangleBorder(
         side: ThemeStyle.dialogSideBorder,
         borderRadius: BorderRadius.circular(14),

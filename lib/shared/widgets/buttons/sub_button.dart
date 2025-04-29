@@ -26,8 +26,8 @@ class SubButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: ThemeColor.white,
-          foregroundColor: ThemeColor.thirdWhite,
+          backgroundColor: ThemeColor.contentPrimary,
+          foregroundColor: ThemeColor.contentThird,
           elevation: 0,
           shape: const StadiumBorder(),
           padding: const EdgeInsets.symmetric(horizontal: 16), 
@@ -35,7 +35,7 @@ class SubButton extends StatelessWidget {
         child: Text(
           text,
           style: GoogleFonts.inter(
-            color: ThemeColor.mediumBlack,
+            color: ThemeColor.foregroundPrimary,
             fontWeight: FontWeight.w800,
             fontSize: customFontSize ?? 13,
           ),

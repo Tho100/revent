@@ -84,7 +84,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
         Text(
           widget.commentedBy,
           style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
+            color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w800,
             fontSize: 14.5
           ),
@@ -104,7 +104,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
           bottom: 0,
           child: Container(
             width: 1,
-            color: ThemeColor.lightGrey,
+            color: ThemeColor.divider,
           ),
         ),
 

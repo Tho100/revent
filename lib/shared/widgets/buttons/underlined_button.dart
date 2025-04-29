@@ -21,7 +21,7 @@ class UnderlinedButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: onPressed,
           style: ElevatedButton.styleFrom(
-            backgroundColor: ThemeColor.black,
+            backgroundColor: ThemeColor.backgroundPrimary,
             elevation: 0,
             shadowColor: Colors.transparent,
             shape: const StadiumBorder(),
@@ -29,7 +29,7 @@ class UnderlinedButton extends StatelessWidget {
           child: Text(
             text,
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontWeight: FontWeight.w800,
               fontSize: 15,
               decoration: TextDecoration.underline

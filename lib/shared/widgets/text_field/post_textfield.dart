@@ -12,14 +12,14 @@ class PostTextField {
       maxLength: 85,
       textInputAction: TextInputAction.next,
       style: GoogleFonts.inter(
-        color: ThemeColor.white,
+        color: ThemeColor.contentPrimary,
         fontWeight: FontWeight.w800,
         fontSize: 24
       ),
       decoration: InputDecoration(
         counterText: '',
         hintStyle: GoogleFonts.inter(
-          color: ThemeColor.thirdWhite,
+          color: ThemeColor.contentThird,
           fontWeight: FontWeight.w800, 
           fontSize: 24
         ),
@@ -41,7 +41,7 @@ class PostTextField {
       autofocus: autoFocus ?? false,
       maxLines: null,
       style: GoogleFonts.inter(
-        color: ThemeColor.secondaryWhite,
+        color: ThemeColor.contentSecondary,
         fontWeight: FontWeight.w700,
         fontSize: 16
       ),
@@ -49,7 +49,7 @@ class PostTextField {
         isCollapsed: true,
         counterText: '',
         hintStyle: GoogleFonts.inter(
-          color: ThemeColor.thirdWhite,
+          color: ThemeColor.contentThird,
           fontWeight: FontWeight.w700, 
           fontSize: 16
         ),

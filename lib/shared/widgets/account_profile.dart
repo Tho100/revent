@@ -49,7 +49,7 @@ class AccountProfileWidget extends StatelessWidget {
                 Text(
                   username,
                   style: GoogleFonts.inter(
-                    color: ThemeColor.white,
+                    color: ThemeColor.contentPrimary,
                     fontWeight: FontWeight.w800,
                     fontSize: 14.5,
                   ),

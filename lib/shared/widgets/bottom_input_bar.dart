@@ -25,7 +25,7 @@ class BottomInputBar extends StatelessWidget {
         height: 50,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(color: ThemeColor.thirdWhite)
+          border: Border.all(color: ThemeColor.contentThird)
         ),
         child: Padding(
           padding: const EdgeInsets.only(left: 12.0),
@@ -45,7 +45,7 @@ class BottomInputBar extends StatelessWidget {
                 Text(
                   hintText,
                   style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
+                    color: ThemeColor.contentThird,
                     fontWeight: FontWeight.w700,
                     fontSize: 14
                   ),
