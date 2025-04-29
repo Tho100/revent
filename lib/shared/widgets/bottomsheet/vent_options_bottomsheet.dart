@@ -92,7 +92,10 @@ class BottomsheetVentOptions {
           notifier: archiveNotifier,
           text: 'Archive Vent',
           icon: CupertinoIcons.archivebox,
-          onToggled: () => commentNotifier.value = false
+          onToggled: () {
+            commentNotifier.value = false;
+            archiveNotifier.value = false;
+          }
         ),
 
         Divider(color: ThemeColor.lightGrey),
@@ -102,7 +105,8 @@ class BottomsheetVentOptions {
         _buildOptionButton(
           notifier: markNsfwNotifier,
           text: 'Mark as NSFW',
-          isNSFW: true
+          isNSFW: true,
+          onToggled: () => archiveNotifier.value = false
         ),
 
         const SizedBox(height: 20)
