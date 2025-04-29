@@ -140,8 +140,8 @@ class _HomePageState extends State<HomePage> with
       child: SizedBox(
         width: MediaQuery.of(context).size.width - 25,
         child: RefreshIndicator(
-          backgroundColor: ThemeColor.white,
-          color: ThemeColor.black,
+          backgroundColor: ThemeColor.contentPrimary,
+          color: ThemeColor.backgroundPrimary,
           onRefresh: onRefresh,
           child: child
         ),
@@ -229,7 +229,7 @@ class _HomePageState extends State<HomePage> with
         child: Text(
           'Revent',
           style: GoogleFonts.inter(
-            color: ThemeColor.white,
+            color: ThemeColor.contentPrimary,
             fontWeight: FontWeight.w900,
             fontSize: 22.5,
           ),

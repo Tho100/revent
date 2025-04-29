@@ -340,11 +340,11 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
                   height: 30,
                   child: Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: ThemeColor.black, width: 0.8),
-                      color: ThemeColor.white,
+                      border: Border.all(color: ThemeColor.backgroundPrimary, width: 0.8),
+                      color: ThemeColor.contentPrimary,
                       shape: BoxShape.circle
                     ),
-                    child: Icon(CupertinoIcons.pencil, color: ThemeColor.mediumBlack, size: 18.5),
+                    child: Icon(CupertinoIcons.pencil, color: ThemeColor.foregroundPrimary, size: 18.5),
                   ),
                 ),
               ),
@@ -364,7 +364,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
           label: Text(
             pronouns,
             style: GoogleFonts.inter(
-              color: chipSelected[index] ?ThemeColor.mediumBlack : ThemeColor.secondaryWhite,
+              color: chipSelected[index] ?ThemeColor.foregroundPrimary : ThemeColor.contentSecondary,
               fontWeight: FontWeight.w700,
               fontSize: 14
             )
@@ -384,12 +384,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
             }
 
           },
-          selectedColor: ThemeColor.white,
-          backgroundColor: ThemeColor.black,
+          selectedColor: ThemeColor.contentPrimary,
+          backgroundColor: ThemeColor.backgroundPrimary,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
             side: BorderSide(
-              color: chipSelected[index] ? ThemeColor.black : ThemeColor.thirdWhite, 
+              color: chipSelected[index] ? ThemeColor.backgroundPrimary : ThemeColor.contentThird, 
               width: 1,
             ),
           ),
@@ -430,7 +430,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
             Text(
               header,
               style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
+                color: ThemeColor.contentThird,
                 fontSize: 15,
                 fontWeight: FontWeight.w700,
               ),
@@ -496,24 +496,24 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
           height: 36,
           width: 130,
           decoration: BoxDecoration(
-            color: ThemeColor.black,
+            color: ThemeColor.backgroundPrimary,
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: ThemeColor.thirdWhite
+              color: ThemeColor.contentThird
             )
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
 
-              FaIcon(platformIcon, color: ThemeColor.white, size: 16), 
+              FaIcon(platformIcon, color: ThemeColor.contentPrimary, size: 16), 
 
               const SizedBox(width: 6),
 
               Text(
                 platform,
                 style: GoogleFonts.inter(
-                  color: ThemeColor.secondaryWhite,
+                  color: ThemeColor.contentSecondary,
                   fontWeight: FontWeight.w700,
                   fontSize: 14
                 ),
@@ -572,7 +572,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       valueListenable: isSavedNotifier,
       builder: (_, isSaved, __) {
         return IconButton(
-          icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.thirdWhite : ThemeColor.white),
+          icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.contentThird : ThemeColor.contentPrimary),
           onPressed: () => isSaved ? null :  _saveChangesOnPressed(),
         );
       }

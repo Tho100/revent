@@ -169,7 +169,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
           Text(
             widget.totalLikes.toString(),
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontWeight: FontWeight.w800,
               fontSize: 13.5,
             ),
@@ -178,14 +178,14 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
           const SizedBox(width: 18),
 
-          Icon(CupertinoIcons.chat_bubble, color: ThemeColor.white, size: 18.5),
+          Icon(CupertinoIcons.chat_bubble, color: ThemeColor.contentPrimary, size: 18.5),
   
           const SizedBox(width: 6), 
   
           Text(
             widget.totalComments.toString(),
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontWeight: FontWeight.w800,
               fontSize: 13.5,
             ),

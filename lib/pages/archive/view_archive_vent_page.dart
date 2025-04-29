@@ -51,7 +51,7 @@ class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderServic
           Text(
             userProvider.user.username,
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w800,
               fontSize: 14.5
             ),
@@ -62,7 +62,7 @@ class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderServic
           Text(
             postTimestamp,
             style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
+              color: ThemeColor.contentThird,
               fontWeight: FontWeight.w800,
               fontSize: 14
             ),
@@ -83,14 +83,14 @@ class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderServic
     return Row(
       children: [
   
-        Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.thirdWhite),
+        Icon(CupertinoIcons.pencil_outline, size: 15.5, color: ThemeColor.contentThird),
         
         const SizedBox(width: 6),
   
         Text(
           '${lastEdit == 'Just now' ? 'Edit just now' : 'Edit $lastEdit ago'} ',
           style: GoogleFonts.inter(
-            color: ThemeColor.thirdWhite,
+            color: ThemeColor.contentThird,
             fontWeight: FontWeight.w700,
             fontSize: 12.2
           )

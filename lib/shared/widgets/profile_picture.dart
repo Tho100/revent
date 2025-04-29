@@ -21,7 +21,7 @@ class ProfilePictureWidget extends StatelessWidget {
   Widget _buildEmptyPfp() {
     return Icon(
       CupertinoIcons.person, 
-      color: ThemeColor.mediumBlack, size: customEmptyPfpSize ?? 18 
+      color: ThemeColor.foregroundPrimary, size: customEmptyPfpSize ?? 18 
     );
   }
 
@@ -42,7 +42,7 @@ class ProfilePictureWidget extends StatelessWidget {
       width: customWidth ?? 65,
       height: customHeight ?? 65,
       decoration: BoxDecoration(
-        color: (pfpData == null || pfpData!.isEmpty) ? ThemeColor.white : ThemeColor.black,
+        color: (pfpData == null || pfpData!.isEmpty) ? ThemeColor.contentPrimary : ThemeColor.backgroundPrimary,
         shape: BoxShape.circle,
       ),
       child: (pfpData != null && pfpData!.isNotEmpty)

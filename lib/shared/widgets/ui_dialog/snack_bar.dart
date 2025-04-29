@@ -12,7 +12,7 @@ class SnackBarDialog {
       SnackBar(
         shape: const StadiumBorder(),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: ThemeColor.white,
+        backgroundColor: ThemeColor.contentPrimary,
         duration: const Duration(seconds: 2),
         content: Row(
           children: [
@@ -25,7 +25,7 @@ class SnackBarDialog {
                 message, 
                 style: GoogleFonts.inter(
                   fontSize: 13,
-                  color: ThemeColor.mediumBlack,
+                  color: ThemeColor.foregroundPrimary,
                   fontWeight: FontWeight.w800,
                 ),
                 overflow: TextOverflow.ellipsis
@@ -45,7 +45,7 @@ class SnackBarDialog {
       SnackBar(
         shape: const StadiumBorder(),
         behavior: SnackBarBehavior.floating,
-        backgroundColor: ThemeColor.darkRed,
+        backgroundColor: ThemeColor.alert,
         duration: const Duration(seconds: 2),
         content: Row(
           children: [
@@ -58,7 +58,7 @@ class SnackBarDialog {
                 message, 
                 style: GoogleFonts.inter(
                   fontSize: 13,
-                  color: ThemeColor.white,
+                  color: ThemeColor.contentPrimary,
                   fontWeight: FontWeight.w800,
                 ),
                 overflow: TextOverflow.ellipsis

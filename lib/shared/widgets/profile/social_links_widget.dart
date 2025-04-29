@@ -53,7 +53,7 @@ class SocialLinksWidgets {
   Widget _buildSocialLinksIcon(String platform, String handle, IconData icon, double size) {
     return Padding(
       padding: const EdgeInsets.only(right: 16.0, top: 2.0),
-      child: FaIcon(icon, size: size, color: ThemeColor.white),
+      child: FaIcon(icon, size: size, color: ThemeColor.contentPrimary),
     );
   }
 

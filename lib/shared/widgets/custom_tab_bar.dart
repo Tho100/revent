@@ -19,11 +19,11 @@ class CustomTabBar {
     return TabBar(
       tabAlignment: tabAlignment,
       controller: controller,
-      labelColor: ThemeColor.white,              
-      unselectedLabelColor: ThemeColor.thirdWhite,      
+      labelColor: ThemeColor.contentPrimary,              
+      unselectedLabelColor: ThemeColor.contentThird,      
       indicator: UnderlineTabIndicator(
         borderRadius: BorderRadius.circular(36),
-        borderSide: BorderSide(width: 2.5, color: ThemeColor.white),
+        borderSide: BorderSide(width: 2.5, color: ThemeColor.contentPrimary),
         insets: const EdgeInsets.symmetric(horizontal: 25), 
       ),
       labelStyle: GoogleFonts.inter(             

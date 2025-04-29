@@ -20,7 +20,7 @@ class StyledTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
 
     final textStyle = GoogleFonts.inter(
-      color: ThemeColor.secondaryWhite,
+      color: ThemeColor.contentSecondary,
       fontWeight: FontWeight.w700,
       fontSize: 14,
     );

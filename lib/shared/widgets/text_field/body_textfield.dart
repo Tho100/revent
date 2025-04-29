@@ -24,7 +24,7 @@ class BodyTextField extends StatelessWidget {
         maxLength: 1000,
         maxLines: null,
         style: GoogleFonts.inter(
-          color: ThemeColor.secondaryWhite,
+          color: ThemeColor.contentSecondary,
           fontWeight: FontWeight.w700,
           fontSize: 14,
         ),
@@ -32,7 +32,7 @@ class BodyTextField extends StatelessWidget {
           isCollapsed: true, 
           counterText: '',
           hintStyle: GoogleFonts.inter(
-            color: ThemeColor.thirdWhite,
+            color: ThemeColor.contentThird,
             fontWeight: FontWeight.w700, 
             fontSize: 14
           ),

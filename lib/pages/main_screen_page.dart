@@ -38,7 +38,7 @@ class MainScreenPage extends StatelessWidget {
       child: Text(
         '>:(',
         style: GoogleFonts.inter(
-          color: ThemeColor.white,
+          color: ThemeColor.contentPrimary,
           fontSize: 20,
           fontWeight: FontWeight.w900,
         ),
@@ -50,7 +50,7 @@ class MainScreenPage extends StatelessWidget {
     return Text(
       'Read & Vent.',
       style: GoogleFonts.inter(
-        color: ThemeColor.white,
+        color: ThemeColor.contentPrimary,
         fontSize: 42,
         fontWeight: FontWeight.w900,
       ),
@@ -62,7 +62,7 @@ class MainScreenPage extends StatelessWidget {
     return Text(
       'Share your thoughts, stories, and more!',
       style: GoogleFonts.inter(
-        color: ThemeColor.thirdWhite,
+        color: ThemeColor.contentThird,
         fontSize: 16,
         fontWeight: FontWeight.w800,
       ),
@@ -72,7 +72,7 @@ class MainScreenPage extends StatelessWidget {
 
   Widget _buildBottomContainer(BuildContext context) {
     return Container(
-      color: ThemeColor.black,
+      color: ThemeColor.backgroundPrimary,
       width: MediaQuery.of(context).size.width,
       height: 205,
       child: _buildButtons(),

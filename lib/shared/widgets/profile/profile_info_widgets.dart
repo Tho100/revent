@@ -22,7 +22,7 @@ class ProfileInfoWidgets {
     return Text(
       username,
       style: GoogleFonts.inter(
-        color: ThemeColor.white,
+        color: ThemeColor.contentPrimary,
         fontWeight: FontWeight.w800,
         fontSize: 20.5
       ),
@@ -57,7 +57,7 @@ class ProfileInfoWidgets {
         Text(
           value.toString(),
           style: GoogleFonts.inter(
-            color: ThemeColor.white,
+            color: ThemeColor.contentPrimary,
             fontWeight: FontWeight.w800,
             fontSize: 20
           ),
@@ -71,7 +71,7 @@ class ProfileInfoWidgets {
           child: Text(
             header,
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w700,
               fontSize: 13
             ),
@@ -94,7 +94,7 @@ class ProfileInfoWidgets {
             return Text(
               value.toString(),
               style: GoogleFonts.inter(
-                color: ThemeColor.white,
+                color: ThemeColor.contentPrimary,
                 fontWeight: FontWeight.w800,
                 fontSize: 20
               ),
@@ -110,7 +110,7 @@ class ProfileInfoWidgets {
           child: Text(
             header,
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w700,
               fontSize: 13
             ),

@@ -202,7 +202,7 @@ class VentPreviewerWidgets {
           onPressed: () => _callVentOptionsBottomsheet(),
           icon: customIconWidget ?? Transform.translate(
             offset: const Offset(0, -10),
-            child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
+            child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.contentThird, size: 18)
           )
         ),
       ),
@@ -233,7 +233,7 @@ class VentPreviewerWidgets {
             child: Text(
               creator!,
               style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
+                color: ThemeColor.contentSecondary,
                 fontWeight: FontWeight.w800,
                 fontSize: 13.5
               ),
@@ -247,7 +247,7 @@ class VentPreviewerWidgets {
             child: Text(
               postTimestamp!,
               style: GoogleFonts.inter(
-                color: ThemeColor.thirdWhite,
+                color: ThemeColor.contentThird,
                 fontWeight: FontWeight.w800,
                 fontSize: 12.5
               ),
@@ -264,7 +264,7 @@ class VentPreviewerWidgets {
     return Text(
       title!,
       style: GoogleFonts.inter(
-        color: ThemeColor.white,
+        color: ThemeColor.contentPrimary,
         fontWeight: FontWeight.w800,
         fontSize: 16
       ),
@@ -278,7 +278,7 @@ class VentPreviewerWidgets {
     return Text(
       bodyText!,
       style: GoogleFonts.inter(
-        color: ThemeColor.secondaryWhite,
+        color: ThemeColor.contentSecondary,
         fontWeight: FontWeight.w800,
         fontSize: 13
       ),
@@ -291,7 +291,7 @@ class VentPreviewerWidgets {
     return Text(
       tags!.split(' ').map((tags) => '#$tags').join(' '),
       style: GoogleFonts.inter(
-        color: ThemeColor.thirdWhite,
+        color: ThemeColor.contentThird,
         fontWeight: FontWeight.w700,
         fontSize: 13
       ),
@@ -306,7 +306,7 @@ class VentPreviewerWidgets {
         decoration: BoxDecoration(
           color: Colors.transparent,
           border: Border.all(
-            color: ThemeColor.lightGrey,
+            color: ThemeColor.divider,
             width: 0.8
           ),
           borderRadius: BorderRadius.circular(20),

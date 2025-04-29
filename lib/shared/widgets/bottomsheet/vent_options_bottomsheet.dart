@@ -55,9 +55,9 @@ class BottomsheetVentOptions {
                   }
 
                 },
-                activeColor: ThemeColor.white,
-                trackColor: ThemeColor.darkWhite,
-                thumbColor: ThemeColor.black,
+                activeColor: ThemeColor.contentPrimary,
+                trackColor: ThemeColor.trackSwitch,
+                thumbColor: ThemeColor.backgroundPrimary,
               );
             }
           ),
@@ -98,7 +98,7 @@ class BottomsheetVentOptions {
           }
         ),
 
-        Divider(color: ThemeColor.lightGrey),
+        Divider(color: ThemeColor.divider),
 
         const SizedBox(height: 10),
 

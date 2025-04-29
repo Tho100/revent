@@ -37,9 +37,9 @@ class BottomsheetCommentsSettings {
                       notifier.value = !isToggled;
                       onToggled();
                     },
-                    activeColor: ThemeColor.white,
-                    trackColor: ThemeColor.darkWhite,
-                    thumbColor: ThemeColor.black,
+                    activeColor: ThemeColor.contentPrimary,
+                    trackColor: ThemeColor.trackSwitch,
+                    thumbColor: ThemeColor.backgroundPrimary,
                   );
                 }
               ),

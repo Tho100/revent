@@ -128,7 +128,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
         ),
         icon: Transform.translate(
           offset: const Offset(0, -10),
-          child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.thirdWhite, size: 18)
+          child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.contentThird, size: 18)
         )
       ),
     );
@@ -169,7 +169,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
                 height: 17,
                 child: Container(
                   decoration: BoxDecoration(
-                    color: ThemeColor.black,
+                    color: ThemeColor.backgroundPrimary,
                     borderRadius: BorderRadius.circular(360)
                   ),
                   child: Padding(
@@ -194,7 +194,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
       
           IconButton(
             onPressed: () async => await _likeOnPressed(),
-            icon: Icon(isCommentLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isCommentLiked ? ThemeColor.likedColor : ThemeColor.secondaryWhite, size: 18),
+            icon: Icon(isCommentLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isCommentLiked ? ThemeColor.likedColor : ThemeColor.contentSecondary, size: 18),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(), 
           ),
@@ -204,7 +204,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
           Text(
             totalLikes.toString(),
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w800,
               fontSize: 13,
             ),
@@ -225,7 +225,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
                 ))
               );
             },
-            icon: Icon(CupertinoIcons.chat_bubble, color:ThemeColor.secondaryWhite, size: 18),
+            icon: Icon(CupertinoIcons.chat_bubble, color:ThemeColor.contentSecondary, size: 18),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(), 
           ),
@@ -235,7 +235,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
           Text(
             totalReplies.toString(),
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w800,
               fontSize: 13,
             ),
@@ -260,7 +260,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
           child: Text(
             commentedBy,
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w800,
               fontSize: 13
             )
@@ -272,7 +272,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
         Text(
           '$commentTimestamp ${commentedBy == activeVentProvider.ventData.creator ? '${ThemeStyle.dotSeparator} Author' : ''}',
           style: GoogleFonts.inter(
-            color: ThemeColor.thirdWhite,
+            color: ThemeColor.contentThird,
             fontWeight: FontWeight.w800,
             fontSize: 12,
           ),

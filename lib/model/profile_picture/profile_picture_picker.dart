@@ -28,8 +28,8 @@ class ProfilePicturePicker {
     ),
     maximumSelection: 1,
       appTheme: AppTheme(
-        focusColor: ThemeColor.white,
-        primaryColor: ThemeColor.black,
+        focusColor: ThemeColor.contentPrimary,
+        primaryColor: ThemeColor.backgroundPrimary,
       ),
     );
   }

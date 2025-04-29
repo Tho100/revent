@@ -40,14 +40,14 @@ class RepliesListView extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 4.0, right: 14.0),
-              child: Divider(color: ThemeColor.lightGrey),
+              child: Divider(color: ThemeColor.divider),
             )
           ),
 
           Text(
             'No replies yet',
             style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
+              color: ThemeColor.contentThird,
               fontWeight: FontWeight.w800,
               fontSize: 13
             ),
@@ -56,7 +56,7 @@ class RepliesListView extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(left: 14.0, right: 4.0),
-              child: Divider(color: ThemeColor.lightGrey),
+              child: Divider(color: ThemeColor.divider),
             )
           ),
 

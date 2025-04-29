@@ -13,29 +13,27 @@ class ThemeUpdater {
 
       case 'dark':
 
-        ThemeColor.black = Colors.black;
-        ThemeColor.mediumBlack = const Color.fromARGB(255, 12, 12, 12);
+        ThemeColor.backgroundPrimary = Colors.black;
+        ThemeColor.foregroundPrimary = const Color.fromARGB(255, 12, 12, 12);
 
-        ThemeColor.darkGrey = const Color.fromARGB(255, 17, 17, 17);
-        ThemeColor.lightGrey = const Color.fromARGB(255, 35, 35, 35);
+        ThemeColor.divider = const Color.fromARGB(255, 35, 35, 35);
 
-        ThemeColor.white = Colors.white;
-        ThemeColor.secondaryWhite = const Color.fromARGB(255, 212, 212, 212);
-        ThemeColor.thirdWhite = const Color.fromARGB(255, 117, 117, 117);
-        ThemeColor.darkWhite = const Color.fromARGB(255, 75, 75, 75);
+        ThemeColor.contentPrimary = Colors.white;
+        ThemeColor.contentSecondary = const Color.fromARGB(255, 212, 212, 212);
+        ThemeColor.contentThird = const Color.fromARGB(255, 117, 117, 117);
+        ThemeColor.trackSwitch = const Color.fromARGB(255, 75, 75, 75);
 
       case 'light':
 
-        ThemeColor.black = Colors.white;
-        ThemeColor.mediumBlack = const Color.fromARGB(255, 215, 215, 215);
+        ThemeColor.backgroundPrimary = Colors.white;
+        ThemeColor.foregroundPrimary = const Color.fromARGB(255, 215, 215, 215);
 
-        ThemeColor.darkGrey = const Color.fromARGB(255, 117, 117, 117);
-        ThemeColor.lightGrey = const Color.fromARGB(255, 75, 75, 75);
+        ThemeColor.divider = const Color.fromARGB(255, 75, 75, 75);
 
-        ThemeColor.white = Colors.black;
-        ThemeColor.secondaryWhite = const Color.fromARGB(255, 15, 15, 15);
-        ThemeColor.thirdWhite = const Color.fromARGB(255, 25, 25, 25);
-        ThemeColor.darkWhite = const Color.fromARGB(255, 35, 35, 35);
+        ThemeColor.contentPrimary = Colors.black;
+        ThemeColor.contentSecondary = const Color.fromARGB(255, 15, 15, 15);
+        ThemeColor.contentThird = const Color.fromARGB(255, 25, 25, 25);
+        ThemeColor.trackSwitch = const Color.fromARGB(255, 35, 35, 35);
 
     }
 

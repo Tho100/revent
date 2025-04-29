@@ -61,7 +61,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
           Text(
             header,
             style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
+              color: ThemeColor.contentThird,
               fontSize: 15,
               fontWeight: FontWeight.w700,
             ),
@@ -72,7 +72,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
           Text(
             value,
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontSize: 18,
               fontWeight: FontWeight.w800,
             ),
@@ -128,7 +128,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
                             Text(
                               "You can free up storage by clearing cache.\nYour data won't be affected.",
                               style: GoogleFonts.inter(
-                                color: ThemeColor.thirdWhite,
+                                color: ThemeColor.contentThird,
                                 fontWeight: FontWeight.w800,
                                 fontSize: 14
                               ),

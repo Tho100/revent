@@ -38,17 +38,17 @@ class CustomAppBar {
         child: titleWidget ?? Text(
           title ?? '',
           style: GoogleFonts.inter(
-            color: ThemeColor.white,
+            color: ThemeColor.contentPrimary,
             fontWeight: FontWeight.w800,
             fontSize: 18
           )
         ),
       ),
       leading: customLeading ?? IconButton(
-        icon: Icon(CupertinoIcons.chevron_back, color: leadingColor ?? ThemeColor.white),
+        icon: Icon(CupertinoIcons.chevron_back, color: leadingColor ?? ThemeColor.contentPrimary),
         onPressed: customBackOnPressed ?? () => Navigator.pop(context!),
       ),
-      backgroundColor: backgroundColor ?? ThemeColor.black,
+      backgroundColor: backgroundColor ?? ThemeColor.backgroundPrimary,
       elevation: 0,
       actions: actions,
       bottom: bottom,
@@ -64,13 +64,13 @@ class CustomAppBar {
         child: Text(
           title ?? '',
           style: GoogleFonts.inter(
-            color: ThemeColor.white,
+            color: ThemeColor.contentPrimary,
             fontWeight: FontWeight.w800,
             fontSize: 26,
           ),
         ),
       ),
-      backgroundColor: backgroundColor ?? ThemeColor.black,
+      backgroundColor: backgroundColor ?? ThemeColor.backgroundPrimary,
       elevation: 0,
       actions: actions,
       bottom: bottom,

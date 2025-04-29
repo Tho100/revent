@@ -220,14 +220,14 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
   Widget _buildSettingsActionButton() {
     return IconButton(
-      icon: Icon(CupertinoIcons.bars, size: 28, color: ThemeColor.white),
+      icon: Icon(CupertinoIcons.bars, size: 28, color: ThemeColor.contentPrimary),
       onPressed: () => NavigatePage.settingsPage()
     );
   }
 
   Widget _buildPrivacyLeadingButton() {
     return IconButton(
-      icon: Icon(CupertinoIcons.lock, size: 24, color: ThemeColor.white),
+      icon: Icon(CupertinoIcons.lock, size: 24, color: ThemeColor.contentPrimary),
       onPressed: () {
         Navigator.push(
           context,

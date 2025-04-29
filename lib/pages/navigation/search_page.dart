@@ -35,7 +35,7 @@ class _SearchPageState extends State<SearchPage> {
         height: 52,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
-          border: Border.all(color: ThemeColor.thirdWhite)
+          border: Border.all(color: ThemeColor.contentThird)
         ),
         child: InkWellEffect(
           onPressed: () {
@@ -51,7 +51,7 @@ class _SearchPageState extends State<SearchPage> {
                 alignment: Alignment.centerLeft,
                 child: Padding(
                   padding: const EdgeInsets.only(left: 18.0),
-                  child: Icon(CupertinoIcons.search, color: ThemeColor.thirdWhite, size: 20),
+                  child: Icon(CupertinoIcons.search, color: ThemeColor.contentThird, size: 20),
                 ),
               ),
 
@@ -62,7 +62,7 @@ class _SearchPageState extends State<SearchPage> {
                 child: Text(
                   'Search for anything...',
                   style: GoogleFonts.inter(
-                    color: ThemeColor.thirdWhite,
+                    color: ThemeColor.contentThird,
                     fontWeight: FontWeight.w700,
                     fontSize: 16,
                   ),
@@ -90,16 +90,16 @@ class _SearchPageState extends State<SearchPage> {
         label: Text(
           '#$label',
           style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
+            color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w700,
             fontSize: 14,
           ),
         ),
-        backgroundColor: ThemeColor.black,
+        backgroundColor: ThemeColor.backgroundPrimary,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(25),
           side: BorderSide(
-            color: ThemeColor.thirdWhite,
+            color: ThemeColor.contentThird,
             width: 1,
           ),
         ),
@@ -115,7 +115,7 @@ class _SearchPageState extends State<SearchPage> {
         Text(
           'Popular Tags',
           style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
+            color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w800,
             fontSize: 14
           ),

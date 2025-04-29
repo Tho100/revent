@@ -24,7 +24,7 @@ class BottomsheetViewFullBio {
           child: SelectableText(
             bio,
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontWeight: FontWeight.w700,
               fontSize: 16
             ),

@@ -16,7 +16,7 @@ class AuthTextField {
       builder: (_, value, __) {
         return TextFormField(
           style: GoogleFonts.inter(
-            color: ThemeColor.secondaryWhite,
+            color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w700,
           ),
           inputFormatters: InputFormatters().noSpaces(),
@@ -26,7 +26,7 @@ class AuthTextField {
             hintText: hintText,
             customSuffix: IconButton(
               icon: Icon(value ? Icons.visibility : Icons.visibility_off,
-                color: ThemeColor.thirdWhite,
+                color: ThemeColor.contentThird,
               ), 
               onPressed: () => visibility.value = !visibility.value,
             ),

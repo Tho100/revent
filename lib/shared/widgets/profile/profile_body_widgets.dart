@@ -39,7 +39,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
         const SizedBox(height: 35),
 
-        Icon(CupertinoIcons.lock, color: ThemeColor.secondaryWhite, size: 32),
+        Icon(CupertinoIcons.lock, color: ThemeColor.contentSecondary, size: 32),
 
         const SizedBox(height: 18),
 
@@ -58,7 +58,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
         const SizedBox(height: 35),
 
-        Icon(CupertinoIcons.clear_circled, color: ThemeColor.secondaryWhite, size: 32),
+        Icon(CupertinoIcons.clear_circled, color: ThemeColor.contentSecondary, size: 32),
 
         const SizedBox(height: 18),
 
@@ -105,7 +105,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
         tabBarWidgets.buildTabBar(),
 
-        Divider(color: ThemeColor.lightGrey, height: 1),
+        Divider(color: ThemeColor.divider, height: 1),
 
         Expanded(
           child: tabBarWidgets.buildTabBarTabs()
@@ -136,8 +136,8 @@ class ProfileBodyWidgets extends StatelessWidget {
       notificationPredicate: (notification) {
         return notification.depth == 2;
       },
-      backgroundColor: ThemeColor.white,
-      color: ThemeColor.black,
+      backgroundColor: ThemeColor.contentPrimary,
+      color: ThemeColor.backgroundPrimary,
       onRefresh: onRefresh,
       child: NestedScrollView(
         headerSliverBuilder: (_, __) => [

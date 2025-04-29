@@ -79,16 +79,16 @@ class _SignInPageState extends State<SignInPage> {
     return CheckboxTheme(
       data: CheckboxThemeData(
         fillColor: MaterialStateColor.resolveWith(
-          (states) => ThemeColor.thirdWhite,
+          (states) => ThemeColor.contentThird,
         ),
         checkColor: MaterialStateColor.resolveWith(
-          (states) => ThemeColor.secondaryWhite,
+          (states) => ThemeColor.contentSecondary,
         ),
         overlayColor: MaterialStateColor.resolveWith(
-          (states) => ThemeColor.secondaryWhite.withOpacity(0.1),
+          (states) => ThemeColor.contentSecondary.withOpacity(0.1),
         ),
         side: BorderSide(
-          color: ThemeColor.thirdWhite,
+          color: ThemeColor.contentThird,
           width: 2.0,
         ),
         shape: RoundedRectangleBorder(
@@ -113,7 +113,7 @@ class _SignInPageState extends State<SignInPage> {
           Text(
             'Remember Me',
             style: GoogleFonts.inter(
-              color: ThemeColor.secondaryWhite,
+              color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w800,
               fontSize: 14,
             ),

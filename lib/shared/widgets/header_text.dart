@@ -28,7 +28,7 @@ class HeaderText extends StatelessWidget {
           Text(
             title,
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontSize: customTitleSize ?? 32,
               fontWeight: FontWeight.w800,
             ),
@@ -39,7 +39,7 @@ class HeaderText extends StatelessWidget {
           Text(
             subTitle,
             style: GoogleFonts.inter(
-              color: ThemeColor.thirdWhite,
+              color: ThemeColor.contentThird,
               fontSize: 16,
               fontWeight: FontWeight.w700,
             ),

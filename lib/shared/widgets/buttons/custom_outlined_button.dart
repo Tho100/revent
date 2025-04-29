@@ -33,10 +33,10 @@ class CustomOutlinedButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          foregroundColor: ThemeColor.thirdWhite,
-          backgroundColor: ThemeColor.black,
+          foregroundColor: ThemeColor.contentThird,
+          backgroundColor: ThemeColor.backgroundPrimary,
           side: BorderSide(
-            color: ThemeColor.white,
+            color: ThemeColor.contentPrimary,
             width: 1.5
           ),
           shape: const StadiumBorder(),
@@ -44,12 +44,12 @@ class CustomOutlinedButton extends StatelessWidget {
         child: icon != null 
           ? Transform.translate(
               offset: const Offset(0.5, -1),
-              child: Icon(icon, color: ThemeColor.white, size: customIconSize ?? 17)
+              child: Icon(icon, color: ThemeColor.contentPrimary, size: customIconSize ?? 17)
             )
           : Text(
             text!,
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontWeight: FontWeight.w800,
               fontSize: customFontSize ?? 17,
             )

@@ -39,10 +39,10 @@ class BottomsheetSocialLinks {
           child: ElevatedButton(
             onPressed: () async => await _socialHandleOnPressed(platform: platform, handle: handle),
             style: ElevatedButton.styleFrom(
-              foregroundColor: ThemeColor.thirdWhite,
-              backgroundColor: ThemeColor.black,
+              foregroundColor: ThemeColor.contentThird,
+              backgroundColor: ThemeColor.backgroundPrimary,
               side: BorderSide(
-                color: ThemeColor.lightGrey,
+                color: ThemeColor.divider,
                 width: 1
               ),
               shape: RoundedRectangleBorder(
@@ -57,7 +57,7 @@ class BottomsheetSocialLinks {
           
                 Transform.translate(
                   offset: const Offset(0, -1),
-                  child: Icon(icon, color: ThemeColor.white, size: platform == 'instagram' ? 23 : 21)
+                  child: Icon(icon, color: ThemeColor.contentPrimary, size: platform == 'instagram' ? 23 : 21)
                 ),
           
                 const SizedBox(width: 10),
@@ -65,7 +65,7 @@ class BottomsheetSocialLinks {
                 Text(
                   "@$handle",
                   style: GoogleFonts.inter(
-                    color: ThemeColor.white,
+                    color: ThemeColor.contentPrimary,
                     fontWeight: FontWeight.w800,
                     fontSize: 16,
                   ),

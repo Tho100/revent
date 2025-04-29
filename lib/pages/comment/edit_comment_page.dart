@@ -100,7 +100,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
       valueListenable: isSavedNotifier,
       builder: (_, isSaved, __) {
         return IconButton(
-          icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.thirdWhite : ThemeColor.white),
+          icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.contentThird : ThemeColor.contentPrimary),
           onPressed: () async => isSaved ? null : _saveOnPressed()
         );
       }

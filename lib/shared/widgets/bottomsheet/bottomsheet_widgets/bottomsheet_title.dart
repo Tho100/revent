@@ -22,7 +22,7 @@ class BottomsheetTitle extends StatelessWidget {
             Text(
               title,
               style: GoogleFonts.inter(
-                color: ThemeColor.secondaryWhite,
+                color: ThemeColor.contentSecondary,
                 fontSize: 19,
                 fontWeight: FontWeight.w800
               ),
@@ -30,7 +30,7 @@ class BottomsheetTitle extends StatelessWidget {
 
             const SizedBox(height: 25),
 
-            Divider(color: ThemeColor.lightGrey, height: 1)
+            Divider(color: ThemeColor.divider, height: 1)
 
           ],
         ),

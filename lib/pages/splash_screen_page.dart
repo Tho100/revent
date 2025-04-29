@@ -30,14 +30,14 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
   Widget _buildSplashScreen() {
     return Container(
-      color: ThemeColor.black,
+      color: ThemeColor.backgroundPrimary,
       child: Align(
         alignment: Alignment.center,
         child: Center(
           child: Text(
             'Revent',
             style: GoogleFonts.inter(
-              color: ThemeColor.white,
+              color: ThemeColor.contentPrimary,
               fontWeight: FontWeight.w900,
               fontSize: 50
             )
