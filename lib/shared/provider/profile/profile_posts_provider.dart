@@ -15,6 +15,7 @@ class ProfilePostsData {
   List<int> totalComments = [];
 
   List<bool> isNsfw = [];
+  //List<bool> isPinned = [];
   List<bool> isPostLiked = [];
   List<bool> isPostSaved = [];
 
@@ -26,6 +27,7 @@ class ProfilePostsData {
     totalComments.clear();
     postTimestamp.clear();
     isNsfw.clear();
+    //isPinned.clear();
     isPostLiked.clear();
     isPostSaved.clear();
   } 
@@ -77,6 +79,11 @@ class ProfilePostsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void setIsPinned(String profileKey, List<bool> isPinned) {
+    //_profileData[profileKey]?.isPinned = isPinned;
+    notifyListeners();
+  }
+
   void setIsPostLiked(String profileKey, List<bool> isPostLiked) {
     _profileData[profileKey]?.isPostLiked = isPostLiked;
     notifyListeners(); 
@@ -118,11 +125,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
   void likeVent(int index, bool isUserLikedPost) {
 
-    final navigation = getIt.navigationProvider;
-
-    final profileKey = navigation.currentRoute == AppRoute.myProfile.path
-      ? ProfileType.myProfile.value
-      : ProfileType.userProfile.value;
+    final profileKey = _getCurrentProfileKey();
 
     final profile = _profileData[profileKey];
 
@@ -144,11 +147,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
   void saveVent(int index, bool isUserSavedPost) {
 
-    final navigation = getIt.navigationProvider;
-
-    final profileKey = navigation.currentRoute == AppRoute.myProfile.path
-      ? ProfileType.myProfile.value
-      : ProfileType.userProfile.value;
+    final profileKey = _getCurrentProfileKey();
 
     final profile = _profileData[profileKey];
 
@@ -162,6 +161,16 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     }
     
+  }
+
+  String _getCurrentProfileKey() {
+
+    final navigation = getIt.navigationProvider;
+
+    return navigation.currentRoute == AppRoute.myProfile.path
+      ? ProfileType.myProfile.value
+      : ProfileType.userProfile.value;
+
   }
 
 }

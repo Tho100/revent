@@ -32,6 +32,7 @@ class VentPreviewerWidgets {
   final VoidCallback? viewVentPostOnPressed;
   final VoidCallback? editOnPressed;
   final VoidCallback? copyOnPressed;
+  final VoidCallback? pinOnPressed;
   final VoidCallback? reportOnPressed;
   final VoidCallback? blockOnPressed;
   final VoidCallback? removeSavedOnPressed;
@@ -54,7 +55,8 @@ class VentPreviewerWidgets {
     this.blockOnPressed,
     this.removeSavedOnPressed,
     this.deleteOnPressed,
-    this.copyOnPressed
+    this.copyOnPressed,
+    this.pinOnPressed
   });
 
   final navigation = getIt.navigationProvider;
@@ -172,9 +174,10 @@ class VentPreviewerWidgets {
   }
 
   void _callVentOptionsBottomsheet() {
-
+    // TODO: Try to remove this
     if (copyOnPressed == null && removeSavedOnPressed == null && 
-      deleteOnPressed == null && reportOnPressed == null && blockOnPressed == null) {
+      deleteOnPressed == null && reportOnPressed == null && 
+      blockOnPressed == null && pinOnPressed == null) {
       return;
     }
 
@@ -184,6 +187,7 @@ class VentPreviewerWidgets {
       creator: creator!,
       editOnPressed: editOnPressed,
       copyOnPressed: copyOnPressed,
+      pinOnPressed: pinOnPressed,
       removeSavedPostOnPressed: removeSavedOnPressed,
       reportOnPressed: reportOnPressed,
       blockOnPressed: blockOnPressed,

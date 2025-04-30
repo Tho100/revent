@@ -10,7 +10,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
 
   DeleteVent({
     required this.title, 
-    required this.creator
+    required this.creator // TODO: Try to remove this its unnecessary
   });
 
   Future<void> delete() async {

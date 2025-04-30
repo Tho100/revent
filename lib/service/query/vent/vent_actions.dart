@@ -239,5 +239,5 @@ class VentActions extends BaseQueryService with
     ventData.saveVent(index, isUserSavedPost);
 
   }
-
+  
 }
