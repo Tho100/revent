@@ -174,13 +174,6 @@ class VentPreviewerWidgets {
   }
 
   void _callVentOptionsBottomsheet() {
-    // TODO: Try to remove this
-    if (copyOnPressed == null && removeSavedOnPressed == null && 
-      deleteOnPressed == null && reportOnPressed == null && 
-      blockOnPressed == null && pinOnPressed == null) {
-      return;
-    }
-
     BottomsheetVentPostActions().buildBottomsheet(
       context: context, 
       title: title!,
@@ -193,7 +186,6 @@ class VentPreviewerWidgets {
       blockOnPressed: blockOnPressed,
       deleteOnPressed: deleteOnPressed
     );
-
   }
 
   Widget buildVentOptionsButton({Widget? customIconWidget}) {
