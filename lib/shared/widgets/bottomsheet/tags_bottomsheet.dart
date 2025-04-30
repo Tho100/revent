@@ -4,8 +4,7 @@ import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 
 class BottomsheetTagsSelection with TagsProviderService {
  
@@ -79,9 +78,7 @@ class BottomsheetTagsSelection with TagsProviderService {
       context: context, 
       children: [
 
-        const BottomsheetBar(),
-
-        const BottomsheetTitle(title: 'Tags'),
+        const BottomsheetHeader(title: 'Tags'),
 
         Align(
           child: Padding(

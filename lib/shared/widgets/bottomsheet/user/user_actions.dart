@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetUserActions {
 
@@ -16,9 +15,7 @@ class BottomsheetUserActions {
       context: context, 
       children: [
 
-        const BottomsheetBar(),
-
-        const BottomsheetTitle(title: 'User Options'),
+        const BottomsheetHeader(title: 'User Options'),
 
         BottomsheetOptionButton(
           text: 'About Profile',

@@ -6,12 +6,8 @@ import 'package:revent/service/query/general/post_id_getter.dart';
 class DeleteVent extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
   final String title;
-  final String creator;
 
-  DeleteVent({
-    required this.title, 
-    required this.creator // TODO: Try to remove this its unnecessary
-  });
+  DeleteVent({required this.title});
 
   Future<void> delete() async {
 
@@ -85,7 +81,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
 
     final currentProvider = CurrentProviderService(
       title: title, 
-      creator: creator
+      creator: userProvider.user.username
     ).getProvider();
 
     final ventIndex = currentProvider['vent_index'];    

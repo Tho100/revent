@@ -3,8 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 
 class BottomsheetSearchFilter {
 
@@ -58,10 +57,8 @@ class BottomsheetSearchFilter {
       context: context, 
       children: [
 
-        const BottomsheetBar(),
-
-        const BottomsheetTitle(title: 'Sort Posts'),
-
+        const BottomsheetHeader(title: 'Sort Posts'),
+        
         _buildOptionButton(
           text: 'Best',
           isCurrentlySelected: currentFilter == 'Best',
@@ -109,9 +106,7 @@ class BottomsheetSearchFilter {
       context: context, 
       children: [
 
-        const BottomsheetBar(),
-
-        const BottomsheetTitle(title: 'Sort by Date'),
+        const BottomsheetHeader(title: 'Sort by Date'),
 
         _buildOptionButton(
           text: 'All Time',

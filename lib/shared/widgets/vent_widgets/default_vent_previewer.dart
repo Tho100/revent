@@ -63,7 +63,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   late String ventBodyText;
   
   late int postId = 0;
-  // TODO: Create separated function for each of events
+  
   void _initializeVentPreviewer() {
     ventPreviewer = VentPreviewerWidgets(
       context: context,
@@ -82,31 +82,40 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       pinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0
         ? () async => await actionsHandler.pinPost()
         : null,
-      editOnPressed: () {
-        Navigator.pop(context);
-        NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
-      },
-      deleteOnPressed: () {
-        CustomAlertDialog.alertDialogCustomOnPress(
-          message: AlertMessages.deletePost, 
-          buttonMessage: 'Delete',
-          onPressedEvent: () async => await actionsHandler.deletePost()
-        );
-      },
+      editOnPressed: () => _editOnPressed(),
+      deleteOnPressed: () => _deleteOnPressed(),
       reportOnPressed: () {},
-      blockOnPressed: () {
-        Navigator.pop(context);
-        CustomAlertDialog.alertDialogCustomOnPress(
-          message: 'Block @${widget.creator}?', 
-          buttonMessage: 'Block', 
-          onPressedEvent: () async {
-            await UserActions(username: widget.creator).blockUser().then(
-              (_) => Navigator.pop(context)
-            );
-          }
-        );
-      },
+      blockOnPressed: () => _blockOnPressed()
     );
+  }
+
+  void _editOnPressed() {
+    Navigator.pop(context);
+    NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
+  }
+
+  void _deleteOnPressed() {
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: AlertMessages.deletePost, 
+      buttonMessage: 'Delete',
+      onPressedEvent: () async => await actionsHandler.deletePost()
+    );
+  }
+
+  void _blockOnPressed() {
+
+    Navigator.pop(context);
+
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: 'Block @${widget.creator}?', 
+      buttonMessage: 'Block', 
+      onPressedEvent: () async {
+        await UserActions(username: widget.creator).blockUser().then(
+          (_) => Navigator.pop(context)
+        );
+      }
+    );
+
   }
 
   void _initializeVentActionsHandler() {
@@ -121,8 +130,11 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   void _initializePostId() async {
 
-    postId = await PostIdGetter(title: widget.title, creator: widget.creator).getPostId();
-    
+    postId = await PostIdGetter(
+      title: widget.title, 
+      creator: widget.creator
+    ).getPostId();
+
   }
 
   void _initializeBodyText() async {
