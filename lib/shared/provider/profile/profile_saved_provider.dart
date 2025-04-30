@@ -8,7 +8,6 @@ import 'package:revent/main.dart';
 
 class ProfileSavedData {
 
-
   List<String> titles = [];
   List<String> bodyText = [];
   List<String> tags = [];
@@ -139,11 +138,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   void likeVent(int index, bool isUserLikedPost) {
 
-    final navigation = getIt.navigationProvider;
-
-    final profileKey = navigation.currentRoute == AppRoute.myProfile.path
-      ? ProfileType.myProfile.value
-      : ProfileType.userProfile.value;
+    final profileKey = _getCurrentProfileKey();
 
     final profile = _profileData[profileKey];
 
@@ -165,11 +160,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   void saveVent(int index, bool isUserSavedPost) {
 
-    final navigation = getIt.navigationProvider;
-
-    final profileKey = navigation.currentRoute == AppRoute.myProfile.path
-      ? ProfileType.myProfile.value
-      : ProfileType.userProfile.value;
+    final profileKey = _getCurrentProfileKey();
 
     final profile = _profileData[profileKey];
 
@@ -183,6 +174,16 @@ class ProfileSavedProvider extends ChangeNotifier {
 
     }
     
+  }
+
+  String _getCurrentProfileKey() {
+
+    final navigation = getIt.navigationProvider;
+
+    return navigation.currentRoute == AppRoute.myProfile.path
+      ? ProfileType.myProfile.value
+      : ProfileType.userProfile.value;
+
   }
 
 }
