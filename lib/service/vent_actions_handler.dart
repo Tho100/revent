@@ -55,7 +55,7 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteVent(title: title, creator: creator).delete().then(
+      await DeleteVent(title: title).delete().then(
         (_) {
           _showTemporarySnack('Post deleted.');
           _closeScreens(2);
