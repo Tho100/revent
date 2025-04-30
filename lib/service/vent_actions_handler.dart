@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
+import 'package:revent/service/query/vent/pin_vent.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/archive/delete_archive_vent.dart';
 import 'package:revent/service/query/vent/delete_saved_vent.dart';
@@ -41,7 +42,7 @@ class VentActionsHandler {
       await VentActions(title: title, creator: creator).likePost();
 
     } catch (_) {
-      _showTemporarySnack('Like failed.');
+      _showTemporarySnack('Like failed.'); // TODO: Create separated function for error snack
     }
 
   }
@@ -107,6 +108,23 @@ class VentActionsHandler {
 
     } catch (_) {
       _showTemporarySnack('Save failed.');
+    }
+
+  }
+  
+  Future<void> pinPost() async {
+
+    try {
+
+      await PinVent(title: title).pin().then(
+        (_) {
+          _showTemporarySnack('Pinned post.');
+          _closeScreens(1);
+        }
+      );
+
+    } catch (_) {
+      _showTemporarySnack('Pin failed.');
     }
 
   }

@@ -61,7 +61,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   late String ventBodyText;
   
   late int postId = 0;
-
+  // TODO: Create separated function for each of events
   void _initializeVentPreviewer() {
     ventPreviewer = VentPreviewerWidgets(
       context: context,
@@ -74,8 +74,11 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
-      removeSavedOnPressed: widget.isMyProfile!
+      removeSavedOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 1
         ? () async => await actionsHandler.unsavePost()
+        : null,
+      pinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0
+        ? () async => await actionsHandler.pinPost()
         : null,
       editOnPressed: () {
         Navigator.pop(context);

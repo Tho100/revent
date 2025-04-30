@@ -16,13 +16,14 @@ class BottomsheetVentPostActions with UserProfileProviderService {
     VoidCallback? removeSavedPostOnPressed,
     VoidCallback? blockOnPressed,
     VoidCallback? copyOnPressed,
+    VoidCallback? pinOnPressed,
     VoidCallback? deleteOnPressed,
   }) {
     return Bottomsheet().buildBottomSheet(
       context: context, 
       children: [
 
-        const BottomsheetBar(),
+        const BottomsheetBar(), // TODO: Merge these two into one class "BottomsheetHeader"
 
         const BottomsheetTitle(title: 'Post Options'),
 
@@ -45,6 +46,13 @@ class BottomsheetVentPostActions with UserProfileProviderService {
           text: 'Copy Body',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
+        ),
+
+        if(userProvider.user.username == creator && pinOnPressed != null)
+        BottomsheetOptionButton(
+          text: 'Pin Post', 
+          icon: CupertinoIcons.pin, 
+          onPressed: pinOnPressed
         ),
 
         if(userProvider.user.username != creator && reportOnPressed != null)

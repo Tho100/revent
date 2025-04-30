@@ -15,6 +15,7 @@ class ProfilePostsData {
   List<int> totalComments = [];
 
   List<bool> isNsfw = [];
+  //List<bool> isPinned = [];
   List<bool> isPostLiked = [];
   List<bool> isPostSaved = [];
 
@@ -26,6 +27,7 @@ class ProfilePostsData {
     totalComments.clear();
     postTimestamp.clear();
     isNsfw.clear();
+    //isPinned.clear();
     isPostLiked.clear();
     isPostSaved.clear();
   } 
@@ -74,6 +76,11 @@ class ProfilePostsProvider extends ChangeNotifier {
 
   void setIsNsfw(String profileKey, List<bool> isNsfw) {
     _profileData[profileKey]?.isNsfw = isNsfw;
+    notifyListeners();
+  }
+
+  void setIsPinned(String profileKey, List<bool> isPinned) {
+    //_profileData[profileKey]?.isPinned = isPinned;
     notifyListeners();
   }
 

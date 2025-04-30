@@ -38,6 +38,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.5, left: 6, right: 6),
       child: DefaultVentPreviewer(
+        isMyProfile: widget.isMyProfile,
         title: postsData.titles[index],
         bodyText: postsData.bodyText[index],
         tags: postsData.tags[index],
