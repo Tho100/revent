@@ -57,6 +57,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
       final postTimestamp = getPostsData['post_timestamp'] as List<String>;
       
       final isNsfw = getPostsData['is_nsfw'] as List<bool>;
+      final isPinned = getPostsData['is_pinned'] as List<bool>;
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
       final isPostSaved = getPostsData['is_saved'] as List<bool>;
 
@@ -68,6 +69,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
       profilePostsProvider.setPostTimestamp(profileType, postTimestamp);
 
       profilePostsProvider.setIsNsfw(profileType, isNsfw);
+      profilePostsProvider.setIsPinned(profileType, isPinned);
       profilePostsProvider.setIsPostLiked(profileType, isPostLiked);
       profilePostsProvider.setIsPostSaved(profileType, isPostSaved);
 

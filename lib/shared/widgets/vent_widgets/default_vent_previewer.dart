@@ -31,6 +31,7 @@ class DefaultVentPreviewer extends StatefulWidget {
 
   final Uint8List pfpData;
 
+  final bool? isPinned;
   final bool? isMyProfile;
   final bool? disableActionButtons;
 
@@ -44,6 +45,7 @@ class DefaultVentPreviewer extends StatefulWidget {
     required this.totalComments,
     required this.isNsfw,
     required this.pfpData,
+    this.isPinned = false,
     this.isMyProfile = false,
     this.disableActionButtons = false,
     super.key
@@ -206,6 +208,36 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
     return ventPreviewer.buildMainContainer(
       children: [
+
+        if(widget.isPinned!) ... [
+
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 6.0),
+            child: Row(
+              children: [
+          
+                Icon(CupertinoIcons.pin, color: ThemeColor.contentThird, size: 16),
+          
+                const SizedBox(width: 4),
+
+                Text('Pinned Post',
+                  style: GoogleFonts.inter(
+                    color: ThemeColor.contentThird,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 13
+                  ),
+                )
+          
+              ],
+            ),
+          ),
+
+          Padding(
+            padding: const EdgeInsets.only(bottom: 8.0),
+            child: Divider(color: ThemeColor.divider),
+          ),
+
+        ],
 
         Row(
           children: [
