@@ -24,6 +24,10 @@ class VentActionsHandler {
     SnackBarDialog.temporarySnack(message: message);
   }
 
+  void _showErrorSnack(String message) {
+    SnackBarDialog.errorSnack(message: message);
+  }
+
   void _closeScreens(int count) {
     for (int i = 0; i < count; i++) {
       Navigator.pop(context);
@@ -42,7 +46,7 @@ class VentActionsHandler {
       await VentActions(title: title, creator: creator).likePost();
 
     } catch (_) {
-      _showTemporarySnack('Like failed.'); // TODO: Create separated function for error snack
+      _showErrorSnack('Like failed.');
     }
 
   }
@@ -59,7 +63,7 @@ class VentActionsHandler {
       );
 
     } catch (_) {
-      _showTemporarySnack('Delete failed.');
+      _showErrorSnack('Delete failed.');
     }
 
   }
@@ -76,7 +80,7 @@ class VentActionsHandler {
       );
 
     } catch (_) {
-      _showTemporarySnack('Archive delete failed.');
+      _showErrorSnack('Archive delete failed.');
     }
 
   }
@@ -93,7 +97,7 @@ class VentActionsHandler {
       );
 
     } catch (_) {
-      _showTemporarySnack('Unsave failed.');
+      _showErrorSnack('Unsave failed.');
     }
 
   }
@@ -107,7 +111,7 @@ class VentActionsHandler {
       );
 
     } catch (_) {
-      _showTemporarySnack('Save failed.');
+      _showErrorSnack('Save failed.');
     }
 
   }
@@ -124,7 +128,7 @@ class VentActionsHandler {
       );
 
     } catch (_) {
-      _showTemporarySnack('Pin failed.');
+      _showErrorSnack('Pin failed.');
     }
 
   }
