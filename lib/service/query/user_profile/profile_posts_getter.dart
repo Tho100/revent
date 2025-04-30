@@ -40,6 +40,8 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       .map((isNsfw) => isNsfw != 0)
       .toList();
 
+    final isPinned = await _ventPinnedState(postIds: postIds);
+
     final isLikedState = await _ventPostState(
       postIds: postIds, stateType: 'liked'
     );
@@ -56,9 +58,26 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       'total_comments': totalComments,
       'post_timestamp': postTimestamp,
       'is_nsfw': isNsfw,
+      'is_pinned': isPinned,
       'is_liked': isLikedState,
       'is_saved': isSavedState
     };
+
+  }
+
+  Future<List<bool>> _ventPinnedState({required List<int> postIds}) async {
+
+    const query = 'SELECT post_id FROM pinned_vent_info WHERE pinned_by = :username';
+
+    final param = {'username': userProvider.user.username};
+
+    final retrievedIds = await executeQuery(query, param);
+
+    final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
+
+    final statePostIds = extractIds.toSet();
+
+    return postIds.map((postId) => statePostIds.contains(postId)).toList();
 
   }
 
