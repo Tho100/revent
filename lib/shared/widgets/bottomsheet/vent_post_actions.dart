@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetVentPostActions with UserProfileProviderService {
 
@@ -23,9 +22,7 @@ class BottomsheetVentPostActions with UserProfileProviderService {
       context: context, 
       children: [
 
-        const BottomsheetBar(), // TODO: Merge these two into one class "BottomsheetHeader"
-
-        const BottomsheetTitle(title: 'Post Options'),
+        const BottomsheetHeader(title: 'Post Options'),
 
         if(removeSavedPostOnPressed != null)
         BottomsheetOptionButton(

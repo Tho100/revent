@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetReplyActions with UserProfileProviderService {
 
@@ -19,9 +18,7 @@ class BottomsheetReplyActions with UserProfileProviderService {
       context: context, 
       children: [
 
-        const BottomsheetBar(),
-
-        const BottomsheetTitle(title: 'Reply Options'),
+        const BottomsheetHeader(title: 'Reply Options'),
 
         BottomsheetOptionButton(
           text: 'Copy Text',

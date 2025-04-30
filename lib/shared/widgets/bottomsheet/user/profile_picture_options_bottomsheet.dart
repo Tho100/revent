@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_bar.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_title.dart';
 
 class BottomsheetProfilePictureOptions {
 
@@ -15,9 +14,7 @@ class BottomsheetProfilePictureOptions {
       context: context, 
       children: [
 
-        const BottomsheetBar(),
-
-        const BottomsheetTitle(title: 'Options'),
+        const BottomsheetHeader(title: 'Options'),
 
         BottomsheetOptionButton(
           text: 'Change Avatar',
