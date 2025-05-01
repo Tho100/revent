@@ -120,6 +120,11 @@ class VentActionsHandler {
 
     try {
 
+      if(getIt.profilePostsProvider.myProfile.isPinned.contains(true)) {
+        _showTemporarySnack('You already have pinned post.');
+        return;
+      }
+
       await PinVent(title: title).pin().then(
         (_) {
           _showTemporarySnack('Pinned post.');
