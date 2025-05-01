@@ -166,6 +166,7 @@ class ProfilePostsProvider extends ChangeNotifier {
   void reorderPosts() {
 
     final profileKey = _getCurrentProfileKey();
+    
     final profile = _profileData[profileKey];
 
     if (profile != null) {

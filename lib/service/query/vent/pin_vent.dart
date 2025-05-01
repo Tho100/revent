@@ -2,7 +2,7 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class PinVent extends BaseQueryService with UserProfileProviderService {
+class PinVent extends BaseQueryService with UserProfileProviderService, ProfilePostsProviderService {
 
   final String title;
   
@@ -19,7 +19,21 @@ class PinVent extends BaseQueryService with UserProfileProviderService {
       'post_id': postId
     };
 
-    await executeQuery(query, params);
+    await executeQuery(query, params).then(
+      (_) => _updateIsPinnedList()
+    );
+
+  }
+
+  void _updateIsPinnedList() {
+
+    final postsData = profilePostsProvider.myProfile;
+
+    postsData.isPinned = List.generate(postsData.isPinned.length, 
+      (index) => postsData.titles[index] == title
+    );
+
+    profilePostsProvider.reorderPosts();
 
   }
 
