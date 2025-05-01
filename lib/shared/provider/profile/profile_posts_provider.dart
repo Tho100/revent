@@ -163,6 +163,46 @@ class ProfilePostsProvider extends ChangeNotifier {
     
   }
 
+  void reorderPosts() {
+
+    final profileKey = _getCurrentProfileKey();
+    final profile = _profileData[profileKey];
+
+    if (profile != null) {
+
+      List<int> pinnedIndices = [];
+      List<int> nonPinnedIndices = [];
+
+      for (int i = 0; i < profile.isPinned.length; i++) {
+        if (profile.isPinned[i]) {
+          pinnedIndices.add(i);
+        } else {
+          nonPinnedIndices.add(i);
+        }
+      }
+
+      List<int> finalOrder = [...pinnedIndices, ...nonPinnedIndices];
+
+      profile.titles = _reorderList(profile.titles, finalOrder);
+      profile.bodyText = _reorderList(profile.bodyText, finalOrder);
+      profile.tags = _reorderList(profile.tags, finalOrder);
+      profile.totalLikes = _reorderList(profile.totalLikes, finalOrder);
+      profile.totalComments = _reorderList(profile.totalComments, finalOrder);
+      profile.postTimestamp = _reorderList(profile.postTimestamp, finalOrder);
+      profile.isNsfw = _reorderList(profile.isNsfw, finalOrder);
+      profile.isPinned = _reorderList(profile.isPinned, finalOrder);
+      profile.isPostLiked = _reorderList(profile.isPostLiked, finalOrder);
+      profile.isPostSaved = _reorderList(profile.isPostSaved, finalOrder);
+
+      notifyListeners();
+    }
+
+  }
+
+  List<T> _reorderList<T>(List<T> list, List<int> order) {
+    return order.map((index) => list[index]).toList();
+  }
+
   String _getCurrentProfileKey() {
 
     final navigation = getIt.navigationProvider;

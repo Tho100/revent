@@ -73,6 +73,9 @@ class ProfilePostsSetup with ProfilePostsProviderService {
       profilePostsProvider.setIsPostLiked(profileType, isPostLiked);
       profilePostsProvider.setIsPostSaved(profileType, isPostSaved);
 
+      profilePostsProvider.reorderPosts();
+
+
     }
 
   }
