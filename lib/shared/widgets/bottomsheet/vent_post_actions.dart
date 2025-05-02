@@ -13,6 +13,7 @@ class BottomsheetVentPostActions with UserProfileProviderService {
     VoidCallback? editOnPressed,
     VoidCallback? reportOnPressed,
     VoidCallback? removeSavedPostOnPressed,
+    VoidCallback? removePinnedPostOnPressed,
     VoidCallback? blockOnPressed,
     VoidCallback? copyOnPressed,
     VoidCallback? pinOnPressed,
@@ -26,7 +27,7 @@ class BottomsheetVentPostActions with UserProfileProviderService {
 
         if(removeSavedPostOnPressed != null)
         BottomsheetOptionButton(
-          text: 'Unsave',
+          text: 'Unsave', // TODO: Update to Unsave Post
           icon: CupertinoIcons.bookmark_fill,
           onPressed: removeSavedPostOnPressed
         ),
@@ -43,6 +44,13 @@ class BottomsheetVentPostActions with UserProfileProviderService {
           text: 'Copy Body',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
+        ),
+
+        if(userProvider.user.username == creator && removePinnedPostOnPressed != null)
+        BottomsheetOptionButton(
+          text: 'Unpin Post',
+          icon: CupertinoIcons.pin_slash, 
+          onPressed: removePinnedPostOnPressed
         ),
 
         if(userProvider.user.username == creator && pinOnPressed != null)

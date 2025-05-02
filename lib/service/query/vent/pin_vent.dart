@@ -20,18 +20,45 @@ class PinVent extends BaseQueryService with UserProfileProviderService, ProfileP
     };
 
     await executeQuery(query, params).then(
-      (_) => _updateIsPinnedList()
+      (_) => _updateIsPinnedList(true)
     );
 
   }
 
-  void _updateIsPinnedList() {
+  Future<void> unpin() async {
+
+    final postId = await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
+
+    const query = 'DELETE FROM pinned_vent_info WHERE post_id = :post_id AND pinned_by = :pinned_by';
+
+    final params = {
+      'pinned_by': userProvider.user.username,
+      'post_id': postId
+    };
+
+    await executeQuery(query, params).then(
+      (_) => _updateIsPinnedList(false)
+    );
+
+  }
+
+  void _updateIsPinnedList(bool isPin) {
 
     final postsData = profilePostsProvider.myProfile;
 
-    postsData.isPinned = List.generate(postsData.isPinned.length, 
-      (index) => postsData.titles[index] == title
-    );
+    if (isPin) {
+
+      postsData.isPinned = List.generate(postsData.isPinned.length, 
+        (index) => postsData.titles[index] == title
+      );
+
+    } else {
+
+      postsData.isPinned = List.generate(postsData.isPinned.length, 
+        (index) => false
+      );
+
+    }
 
     profilePostsProvider.reorderPosts();
 

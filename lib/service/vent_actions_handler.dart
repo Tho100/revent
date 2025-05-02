@@ -139,4 +139,21 @@ class VentActionsHandler {
 
   }
 
+  Future<void> unpinPost() async {
+
+    try {
+
+      await PinVent(title: title).pin().then(
+        (_) {
+          _showTemporarySnack('Removed post from pinnned.');
+          _closeScreens(1);
+        }
+      );
+
+    } catch (_) {
+      _showErrorSnack('Unpin failed.');
+    }
+
+  }
+
 }
