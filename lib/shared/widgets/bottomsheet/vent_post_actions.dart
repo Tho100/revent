@@ -27,7 +27,7 @@ class BottomsheetVentPostActions with UserProfileProviderService {
 
         if(removeSavedPostOnPressed != null)
         BottomsheetOptionButton(
-          text: 'Unsave', // TODO: Update to Unsave Post
+          text: 'Unsave Post',
           icon: CupertinoIcons.bookmark_fill,
           onPressed: removeSavedPostOnPressed
         ),
