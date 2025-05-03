@@ -1,6 +1,7 @@
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
 
 class SaveVentEdit extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
@@ -14,16 +15,20 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
 
   Future<void> save() async {
 
+    final postId = activeVentProvider.ventData.postId != 0
+      ? activeVentProvider.ventData.postId
+      : await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
+
     const query = 
       'UPDATE vent_info SET body_text = :new_body WHERE post_id = :post_id';
 
     final params = {
-      'post_id': activeVentProvider.ventData.postId,
+      'post_id': postId,
       'new_body': newBody
     };
 
     await executeQuery(query, params).then(
-      (_) async => await _updateLastEdit(isFromArchive: false)
+      (_) async => await _updateLastEdit(isFromArchive: false, postId: postId)
     );
 
     activeVentProvider.setBody(newBody);
@@ -49,7 +54,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
 
   }
 
-  Future<void> _updateLastEdit({required bool isFromArchive}) async {
+  Future<void> _updateLastEdit({required bool isFromArchive, int? postId}) async {
 
     final dateTimeNow = DateTime.now();
 
@@ -64,7 +69,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
         'last_edit': dateTimeNow
         } 
       : {
-        'post_id': activeVentProvider.ventData.postId,
+        'post_id': postId,
         'last_edit': dateTimeNow
         };
 
