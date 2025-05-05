@@ -18,6 +18,7 @@ class CommentsSetup with CommentsProviderService {
     final totalReplies = commentsInfo['total_replies']! as List<int>;
 
     final isLiked = commentsInfo['is_liked']! as List<bool>;
+    final isPinned = commentsInfo['is_pinned']! as List<bool>;
     final isLikedByCreator = commentsInfo['is_liked_by_creator']! as List<bool>;
 
     final pfpData = commentsInfo['profile_picture']! as List<Uint8List>;
@@ -31,6 +32,7 @@ class CommentsSetup with CommentsProviderService {
         totalReplies: totalReplies[index],
         isCommentLiked: isLiked[index],
         isCommentLikedByCreator: isLikedByCreator[index],
+        isPinned: isPinned[index],
         pfpData: pfpData[index]
       );
     });

@@ -17,6 +17,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
     const getCommentsQuery = 
     '''
       SELECT 
+        ci.comment_id,
         ci.comment, 
         ci.commented_by,
         ci.created_at,
@@ -67,6 +68,8 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
       commentIds: commentIds,
     );
 
+    final isPinned = await _commentPinnedState(commentIds: commentIds);
+
     return {
       'commented_by': commentedBy,
       'comment': comment,
@@ -75,8 +78,25 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
       'total_replies': totalReplies,
       'is_liked': isLikedState,
       'is_liked_by_creator': isLikedByCreatorState,
+      'is_pinned': isPinned,
       'profile_picture': profilePictures,
     };
+
+  }
+
+  Future<List<bool>> _commentPinnedState({required List<int> commentIds}) async {
+
+    const query = 'SELECT comment_id FROM pinned_comments_info WHERE pinned_by = :username';
+
+    final param = {'username': activeVentProvider.ventData.creator};
+
+    final retrievedIds = await executeQuery(query, param);
+
+    final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('comment_id');
+
+    final statePostIds = extractIds.toSet();
+
+    return commentIds.map((commentId) => statePostIds.contains(commentId)).toList();
 
   }
 
