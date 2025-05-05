@@ -20,7 +20,7 @@ import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_actions.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
-class CommentPreviewer extends StatelessWidget with VentProviderService {
+class CommentPreviewer extends StatelessWidget with VentProviderService, CommentsProviderService {
 
   final bool isOnRepliesPage;
 
@@ -112,6 +112,9 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
         onPressed: () => BottomsheetCommentActions().buildBottomsheet(
           context: navigatorKey.currentContext!, 
           commenter: commentedBy, 
+          commentIndex: commentsProvider.comments.indexWhere(
+            (mainComment) => mainComment.commentedBy == commentedBy && mainComment.comment == comment
+          ),
           editOnPressed: () {
             Navigator.pop(navigatorKey.currentContext!);
             Navigator.push(
@@ -302,15 +305,13 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
           ),
         ),
 
-        Row(
-          children: [
+        if(isPinned) ... [
 
-            const SizedBox(width: 6),
+          const SizedBox(width: 6),
 
-            Icon(CupertinoIcons.pin, color: ThemeColor.contentThird, size: 16),
+          Icon(CupertinoIcons.pin, color: ThemeColor.contentThird, size: 16),
 
-          ],
-        ),
+        ],
 
         const Spacer(),
 
@@ -338,7 +339,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
 
             _buildCommentHeader(),
 
-            const SizedBox(height: 2),
+            const SizedBox(height: 4),
             
             _buildCommentText(),
       

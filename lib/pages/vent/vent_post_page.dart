@@ -158,15 +158,14 @@ class _VentPostPageState extends State<VentPostPage> with
 
   void _copyBodyText() async {
 
-    if(widget.bodyText.isNotEmpty) {
-      TextCopy(text: widget.bodyText).copy().then(
-        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
-      );
-
-    } else {
+    if(widget.bodyText.isEmpty) {
       SnackBarDialog.temporarySnack(message: 'Nothing to copy.');
-
+      return;
     }
+
+    TextCopy(text: widget.bodyText).copy().then(
+      (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
+    );
 
   }
 
