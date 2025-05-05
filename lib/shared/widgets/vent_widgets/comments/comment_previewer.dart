@@ -10,6 +10,7 @@ import 'package:revent/helper/text_copy.dart';
 import 'package:revent/pages/comment/edit_comment_page.dart';
 import 'package:revent/pages/comment/reply/replies_page.dart';
 import 'package:revent/service/query/user/user_actions.dart';
+import 'package:revent/service/query/vent/comment/pin_comment.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
@@ -32,6 +33,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
 
   final bool isCommentLiked;
   final bool isCommentLikedByCreator;
+  final bool isPinned;
 
   final Uint8List pfpData;
 
@@ -44,6 +46,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
     required this.totalReplies,
     required this.isCommentLiked,
     required this.isCommentLikedByCreator,
+    required this.isPinned,
     required this.pfpData,
     super.key
   });
@@ -67,6 +70,23 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     
+  }
+
+  Future<void> _pinOnPressed() async {
+
+    try {
+
+      await PinComment(
+        username: commentedBy, 
+        commentText: comment, 
+      ).pin().then(
+        (_) => SnackBarDialog.temporarySnack(message: 'Pinned Comment.')
+      );
+
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+    }
+
   }
 
   Future<void> _likeOnPressed() async {
@@ -99,6 +119,10 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
               MaterialPageRoute(builder: (_) => EditCommentPage(originalComment: comment)
               )
             );
+          },
+          pinOnPressed: () async {
+            await _pinOnPressed();
+            Navigator.pop(navigatorKey.currentContext!);
           },
           copyOnPressed: () {
             TextCopy(text: comment).copy().then(
@@ -276,6 +300,16 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
             fontWeight: FontWeight.w800,
             fontSize: 12,
           ),
+        ),
+
+        Row(
+          children: [
+
+            const SizedBox(width: 6),
+
+            Icon(CupertinoIcons.pin, color: ThemeColor.contentThird, size: 16),
+
+          ],
         ),
 
         const Spacer(),

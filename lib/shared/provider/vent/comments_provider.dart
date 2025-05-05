@@ -13,6 +13,7 @@ class CommentsData {
 
   bool isCommentLiked;
   bool isCommentLikedByCreator;
+  bool isPinned;
 
   Uint8List pfpData;
 
@@ -24,7 +25,8 @@ class CommentsData {
     this.totalLikes = 0,
     this.totalReplies = 0,
     this.isCommentLiked = false,
-    this.isCommentLikedByCreator = false
+    this.isCommentLikedByCreator = false,
+    this.isPinned = false
   });
 
 }
@@ -62,6 +64,13 @@ class CommentsProvider extends ChangeNotifier {
 
     notifyListeners();
 
+  }
+
+  void pinComment(bool pin, int index) {
+    if (index >= 0 && index < _comments.length) {
+      _comments[index].isPinned = pin;
+      notifyListeners();
+    }
   }
 
   void likeComment(int index, bool isUserLikedComment) {
