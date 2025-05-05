@@ -338,7 +338,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
 
             _buildCommentHeader(),
 
-            const SizedBox(height: 2),
+            const SizedBox(height: 4),
             
             _buildCommentText(),
       
