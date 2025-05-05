@@ -20,7 +20,7 @@ import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/widgets/bottomsheet/comment_actions.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
-class CommentPreviewer extends StatelessWidget with VentProviderService {
+class CommentPreviewer extends StatelessWidget with VentProviderService, CommentsProviderService {
 
   final bool isOnRepliesPage;
 
@@ -112,6 +112,9 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
         onPressed: () => BottomsheetCommentActions().buildBottomsheet(
           context: navigatorKey.currentContext!, 
           commenter: commentedBy, 
+          commentIndex: commentsProvider.comments.indexWhere(
+            (mainComment) => mainComment.commentedBy == commentedBy && mainComment.comment == comment
+          ),
           editOnPressed: () {
             Navigator.pop(navigatorKey.currentContext!);
             Navigator.push(

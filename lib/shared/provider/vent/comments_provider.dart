@@ -67,7 +67,6 @@ class CommentsProvider extends ChangeNotifier {
   }
 
   void pinComment(bool pin, int index) {
-    print(index);
     if (index >= 0 && index < _comments.length) {
       _comments[index].isPinned = pin;
       notifyListeners();
