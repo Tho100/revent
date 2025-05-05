@@ -49,6 +49,7 @@ class CommentsListView extends StatelessWidget {
           totalReplies: commentData.totalReplies,
           isCommentLiked: commentData.isCommentLiked,
           isCommentLikedByCreator: isCommentLikedByCreator,
+          isPinned: commentData.isPinned,
           pfpData: pfpData,
         ),
       ),

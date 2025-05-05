@@ -4,12 +4,13 @@ import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomshee
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
 
-class BottomsheetCommentActions with UserProfileProviderService {
+class BottomsheetCommentActions with UserProfileProviderService, VentProviderService {
 
   Future buildBottomsheet({
     required BuildContext context,
     required String commenter,
     required VoidCallback editOnPressed,
+    required VoidCallback pinOnPressed,
     required VoidCallback copyOnPressed,
     required VoidCallback reportOnPressed,
     required VoidCallback blockOnPressed,
@@ -26,6 +27,13 @@ class BottomsheetCommentActions with UserProfileProviderService {
           text: 'Edit Comment',
           icon: CupertinoIcons.square_pencil,
           onPressed: editOnPressed
+        ),
+
+        if(userProvider.user.username == activeVentProvider.ventData.creator)
+        BottomsheetOptionButton(
+          text: 'Pin Comment',
+          icon: CupertinoIcons.pin,
+          onPressed: pinOnPressed
         ),
 
         BottomsheetOptionButton(
