@@ -302,15 +302,9 @@ class CommentPreviewer extends StatelessWidget with VentProviderService {
           ),
         ),
 
-        Row(
-          children: [
+        const SizedBox(width: 6),
 
-            const SizedBox(width: 6),
-
-            Icon(CupertinoIcons.pin, color: ThemeColor.contentThird, size: 16),
-
-          ],
-        ),
+        Icon(CupertinoIcons.pin, color: ThemeColor.contentThird, size: 16),
 
         const Spacer(),
 
