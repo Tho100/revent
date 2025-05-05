@@ -52,6 +52,8 @@ class PinComment extends BaseQueryService with UserProfileProviderService, Comme
       (comment) => comment.commentedBy == username && comment.comment == commentText
     );
 
+    print(index);
+
     if(index != -1) {
       commentsProvider.pinComment(isPin, index);
     }
