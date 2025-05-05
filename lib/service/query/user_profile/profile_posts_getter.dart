@@ -69,7 +69,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
     const query = 'SELECT post_id FROM pinned_vent_info WHERE pinned_by = :username';
 
-    final param = {'username': userProvider.user.username}; // TODO: Updarte to activeVentProvider.ventData.creator
+    final param = {'username': userProvider.user.username};
 
     final retrievedIds = await executeQuery(query, param);
 
