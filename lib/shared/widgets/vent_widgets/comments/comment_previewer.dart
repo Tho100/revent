@@ -76,6 +76,13 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
     try {
 
+      for (final comment in commentsProvider.comments) {
+        if (comment.isPinned) {
+          SnackBarDialog.temporarySnack(message: 'You already have a pinned comment.');
+          return;
+        }
+      }
+
       await PinComment(
         username: commentedBy, 
         commentText: comment, 
