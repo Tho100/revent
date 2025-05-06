@@ -76,11 +76,35 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
     try {
 
+      for (final comment in commentsProvider.comments) {
+        if (comment.isPinned) {
+          SnackBarDialog.temporarySnack(message: 'You already have a pinned comment.');
+          return;
+        }
+      }
+
       await PinComment(
         username: commentedBy, 
         commentText: comment, 
       ).pin().then(
         (_) => SnackBarDialog.temporarySnack(message: 'Pinned Comment.')
+      );
+
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+    }
+
+  }
+
+  Future<void> _unPinOnPressed() async {
+
+    try {
+
+      await PinComment(
+        username: commentedBy, 
+        commentText: comment, 
+      ).unpin().then(
+        (_) => SnackBarDialog.temporarySnack(message: 'Removed comment from pinned.')
       );
 
     } catch (_) {
@@ -125,6 +149,10 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
           },
           pinOnPressed: () async {
             await _pinOnPressed();
+            Navigator.pop(navigatorKey.currentContext!);
+          },
+          unPinOnPressed: () async {
+            await _unPinOnPressed();
             Navigator.pop(navigatorKey.currentContext!);
           },
           copyOnPressed: () {
