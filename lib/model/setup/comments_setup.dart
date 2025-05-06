@@ -37,8 +37,6 @@ class CommentsSetup with CommentsProviderService {
       );
     });
 
-    commentsProvider.reorderComments();
-
     commentsProvider.setComments(comments);
 
   }
