@@ -12,8 +12,8 @@ class BottomsheetVentPostActions with UserProfileProviderService {
     required String creator,
     VoidCallback? editOnPressed,
     VoidCallback? reportOnPressed,
-    VoidCallback? removeSavedPostOnPressed,
-    VoidCallback? removePinnedPostOnPressed,
+    VoidCallback? unSaveOnPressed,
+    VoidCallback? unPinOnPressed,
     VoidCallback? blockOnPressed,
     VoidCallback? copyOnPressed,
     VoidCallback? pinOnPressed,
@@ -25,11 +25,11 @@ class BottomsheetVentPostActions with UserProfileProviderService {
 
         const BottomsheetHeader(title: 'Post Options'),
 
-        if(removeSavedPostOnPressed != null)
+        if(unSaveOnPressed != null)
         BottomsheetOptionButton(
           text: 'Unsave Post',
           icon: CupertinoIcons.bookmark_fill,
-          onPressed: removeSavedPostOnPressed
+          onPressed: unSaveOnPressed
         ),
 
         if(userProvider.user.username == creator && editOnPressed != null)
@@ -46,11 +46,11 @@ class BottomsheetVentPostActions with UserProfileProviderService {
           onPressed: copyOnPressed
         ),
 
-        if(userProvider.user.username == creator && removePinnedPostOnPressed != null)
+        if(userProvider.user.username == creator && unPinOnPressed != null)
         BottomsheetOptionButton(
           text: 'Unpin Post',
           icon: CupertinoIcons.pin_slash, 
-          onPressed: removePinnedPostOnPressed // TODO: Rename to unPinOnPressed
+          onPressed: unPinOnPressed
         ),
 
         if(userProvider.user.username == creator && pinOnPressed != null)

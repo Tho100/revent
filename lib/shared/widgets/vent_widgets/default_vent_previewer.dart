@@ -76,13 +76,13 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
       viewVentPostOnPressed: () => _viewVentPostPage(),
-      removeSavedOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 1
+      unSaveOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 1
         ? () async => await actionsHandler.unsavePost()
         : null,
       pinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0 && widget.isPinned == false
         ? () async => await actionsHandler.pinPost()
         : null,
-      removePinnedOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0 && widget.isPinned == true
+      unPinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0 && widget.isPinned == true
         ? () async => await actionsHandler.unpinPost()
         : null,
       editOnPressed: () => _editOnPressed(),
