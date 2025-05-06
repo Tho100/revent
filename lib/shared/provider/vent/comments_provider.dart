@@ -67,10 +67,21 @@ class CommentsProvider extends ChangeNotifier {
   }
 
   void pinComment(bool pin, int index) {
+
     if (index >= 0 && index < _comments.length) {
+
       _comments[index].isPinned = pin;
+
+      _comments.sort((a, b) {
+        if (a.isPinned && !b.isPinned) return -1;
+        if (!a.isPinned && b.isPinned) return 1;
+        return 0;
+      });
+
       notifyListeners();
+
     }
+
   }
 
   void likeComment(int index, bool isUserLikedComment) {

@@ -32,6 +32,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
         AND ubi.blocked_by = :blocked_by
       WHERE ci.post_id = :post_id
         AND ubi.blocked_username IS NULL
+      ORDER BY created_at ASC
     ''';
 
     final param = {

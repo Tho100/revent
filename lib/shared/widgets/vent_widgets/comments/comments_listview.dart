@@ -80,8 +80,7 @@ class CommentsListView extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       itemCount: comments.length,
       itemBuilder: (_, index) {
-        final reversedIndex = comments.length - 1 - index;
-        final comment = comments[reversedIndex];
+        final comment = comments[index];
         return _buildCommentPreview(comment);
       }
     );
