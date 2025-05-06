@@ -35,8 +35,8 @@ class VentPreviewerWidgets {
   final VoidCallback? pinOnPressed;
   final VoidCallback? reportOnPressed;
   final VoidCallback? blockOnPressed;
-  final VoidCallback? removePinnedOnPressed;
-  final VoidCallback? removeSavedOnPressed;
+  final VoidCallback? unPinOnPressed;
+  final VoidCallback? unSaveOnPressed;
   final VoidCallback? deleteOnPressed;
 
   VentPreviewerWidgets({
@@ -54,8 +54,8 @@ class VentPreviewerWidgets {
     this.editOnPressed,
     this.reportOnPressed,
     this.blockOnPressed,
-    this.removePinnedOnPressed,
-    this.removeSavedOnPressed,
+    this.unPinOnPressed,
+    this.unSaveOnPressed,
     this.deleteOnPressed,
     this.copyOnPressed,
     this.pinOnPressed
@@ -183,8 +183,8 @@ class VentPreviewerWidgets {
       editOnPressed: editOnPressed,
       copyOnPressed: copyOnPressed,
       pinOnPressed: pinOnPressed,
-      removePinnedPostOnPressed: removePinnedOnPressed,
-      removeSavedPostOnPressed: removeSavedOnPressed,
+      unPinOnPressed: unPinOnPressed,
+      unSaveOnPressed: unSaveOnPressed,
       reportOnPressed: reportOnPressed,
       blockOnPressed: blockOnPressed,
       deleteOnPressed: deleteOnPressed
