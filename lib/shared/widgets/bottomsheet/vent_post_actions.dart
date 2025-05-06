@@ -50,7 +50,7 @@ class BottomsheetVentPostActions with UserProfileProviderService {
         BottomsheetOptionButton(
           text: 'Unpin Post',
           icon: CupertinoIcons.pin_slash, 
-          onPressed: removePinnedPostOnPressed
+          onPressed: removePinnedPostOnPressed // TODO: Rename to unPinOnPressed
         ),
 
         if(userProvider.user.username == creator && pinOnPressed != null)

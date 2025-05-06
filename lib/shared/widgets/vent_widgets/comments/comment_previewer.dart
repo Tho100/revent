@@ -96,6 +96,23 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
   }
 
+  Future<void> _unPinOnPressed() async {
+
+    try {
+
+      await PinComment(
+        username: commentedBy, 
+        commentText: comment, 
+      ).unpin().then(
+        (_) => SnackBarDialog.temporarySnack(message: 'Removed comment from pinned.')
+      );
+
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+    }
+
+  }
+
   Future<void> _likeOnPressed() async {
 
     try {
@@ -132,6 +149,10 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
           },
           pinOnPressed: () async {
             await _pinOnPressed();
+            Navigator.pop(navigatorKey.currentContext!);
+          },
+          unPinOnPressed: () async {
+            await _unPinOnPressed();
             Navigator.pop(navigatorKey.currentContext!);
           },
           copyOnPressed: () {
