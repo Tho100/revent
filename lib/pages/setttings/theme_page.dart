@@ -97,7 +97,10 @@ class _ThemePageState extends State<ThemePage> {
                       width: 42,
                       height: 42,
                       decoration: BoxDecoration(
-                        border: Border.all(color: ThemeColor.contentPrimary),
+                        border: Border.all(
+                          color: ThemeColor.contentPrimary, 
+                          width: 3
+                        ),
                         shape: BoxShape.circle,
                         color: themeColor[themes[index]]
                       ),
