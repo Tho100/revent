@@ -4,13 +4,13 @@ import 'package:revent/shared/themes/theme_style.dart';
 class BottomsheetOptionButton extends StatelessWidget {
 
   final String text;
-  final IconData icon; 
+  final IconData? icon; 
   final VoidCallback onPressed;
 
   const BottomsheetOptionButton({
     required this.text, 
-    required this.icon, 
     required this.onPressed,
+    this.icon, 
     super.key
   });
 
@@ -22,6 +22,7 @@ class BottomsheetOptionButton extends StatelessWidget {
       child: Row(
         children: [
 
+          if(icon != null)
           Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
 
           const SizedBox(width: 15),
