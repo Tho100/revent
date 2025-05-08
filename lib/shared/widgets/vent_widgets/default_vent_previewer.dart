@@ -12,6 +12,7 @@ import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/bottomsheet/report_post_bottomsheet.dart';
 import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/service/query/search/search_data_getter.dart';
@@ -87,7 +88,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         : null,
       editOnPressed: () => _editOnPressed(),
       deleteOnPressed: () => _deleteOnPressed(),
-      reportOnPressed: () {},
+      reportOnPressed: () => _reportOnPressed(),
       blockOnPressed: () => _blockOnPressed()
     );
   }
@@ -103,6 +104,14 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       buttonMessage: 'Delete',
       onPressedEvent: () async => await actionsHandler.deletePost()
     );
+  }
+
+  void _reportOnPressed() {
+
+    Navigator.pop(context);
+
+    ReportPostBottomsheet().buildBottomsheet(context: context);
+
   }
 
   void _blockOnPressed() {
