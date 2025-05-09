@@ -82,21 +82,17 @@ class _VentPostPageState extends State<VentPostPage> with
   late VentActionsHandler actionsHandler;
 
   void _initializeVentActionsHandler() {
-
     actionsHandler = VentActionsHandler(              
       title: widget.title, 
       creator: widget.creator, 
       context: context
     );
-
   }
 
-  void _loadLastEdit() async {
-
-    final lastEdit = await LastEditGetter().getLastEdit(); // TODO: Use then
-
-    activeVentProvider.setLastEdit(lastEdit);
-
+  Future<void> _loadLastEdit() async {
+    await LastEditGetter().getLastEdit().then(
+      (lastEdit) => activeVentProvider.setLastEdit(lastEdit)
+    );
   }
 
   Future<void> _loadCommentsSettings() async {
