@@ -51,7 +51,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
     super.key
   });
 
-  Future<void> _deleteOnPressed() async {
+  Future<void> _onDeletePressed() async {
 
     try {
 
@@ -72,7 +72,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
     
   }
 
-  Future<void> _pinOnPressed() async {
+  Future<void> _onPinPressed() async {
 
     try {
 
@@ -96,7 +96,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
   }
 
-  Future<void> _unPinOnPressed() async {
+  Future<void> _onUnpinPressed() async {
 
     try {
 
@@ -113,7 +113,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
   }
 
-  Future<void> _likeOnPressed() async {
+  Future<void> _onLikePressed() async {
 
     try {
 
@@ -148,11 +148,11 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
             );
           },
           pinOnPressed: () async {
-            await _pinOnPressed();
+            await _onPinPressed();
             Navigator.pop(navigatorKey.currentContext!);
           },
           unPinOnPressed: () async {
-            await _unPinOnPressed();
+            await _onUnpinPressed();
             Navigator.pop(navigatorKey.currentContext!);
           },
           copyOnPressed: () {
@@ -177,7 +177,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
             );
           },
           deleteOnPressed: () async {  
-            await _deleteOnPressed();
+            await _onDeletePressed();
             Navigator.pop(navigatorKey.currentContext!);
           }
         ),
@@ -248,7 +248,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
         children: [
       
           IconButton(
-            onPressed: () async => await _likeOnPressed(),
+            onPressed: () async => await _onLikePressed(),
             icon: Icon(isCommentLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isCommentLiked ? ThemeColor.likedColor : ThemeColor.contentSecondary, size: 18),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(), 

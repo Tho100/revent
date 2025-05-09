@@ -17,7 +17,7 @@ class FollowSuggestionListView extends StatelessWidget {
 
   const FollowSuggestionListView({super.key});
 
-  void _followOnPressed(String username, Uint8List pfpData, int index) async {
+  Future<void> _onFollowPressed(String username, Uint8List pfpData, int index) async {
 
     await UserActions(username: username).toggleFollowUser(follow: true).then(
       (_) => getIt.followSuggestionProvider.removeSuggestion(index)
@@ -88,7 +88,7 @@ class FollowSuggestionListView extends StatelessWidget {
                             text: 'Follow',
                             customWidth: 85,
                             customHeight: 35, 
-                            onPressed: () => _followOnPressed(username, profilePic, index)
+                            onPressed: () async => await _onFollowPressed(username, profilePic, index)
                           )
                         
                         ],

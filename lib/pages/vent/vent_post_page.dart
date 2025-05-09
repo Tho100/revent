@@ -93,7 +93,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   void _loadLastEdit() async {
 
-    final lastEdit = await LastEditGetter().getLastEdit();
+    final lastEdit = await LastEditGetter().getLastEdit(); // TODO: Use then
 
     activeVentProvider.setLastEdit(lastEdit);
 
@@ -107,7 +107,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  Future<void> _toggleCommentsOnPressed() async {
+  Future<void> _onToggleCommentsPressed() async {
 
     enableCommentNotifier.value 
       ? commentSettings.toggleComment(isEnableComment: 1)
@@ -119,7 +119,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  void _filterOnPressed({required String filter}) {
+  void _onFilterPressed({required String filter}) {
     
     switch (filter) {
       case == 'Best':
@@ -506,9 +506,9 @@ class _VentPostPageState extends State<VentPostPage> with
           BottomsheetCommentFilter().buildBottomsheet(
             context: context, 
             currentFilter: filterTextNotifier.value,
-            bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
-            latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
-            oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
+            bestOnPressed: () => _onFilterPressed(filter: 'Best'), 
+            latestOnPressed: () => _onFilterPressed(filter: 'Latest'),
+            oldestOnPressed: () => _onFilterPressed(filter: 'Oldest'),
           );
         },
         child: Row(
@@ -624,7 +624,7 @@ class _VentPostPageState extends State<VentPostPage> with
           BottomsheetCommentsSettings().buildBottomsheet(
             context: context, 
             notifier: enableCommentNotifier, 
-            onToggled: () async => await _toggleCommentsOnPressed(), 
+            onToggled: () async => await _onToggleCommentsPressed(), 
             text: 'Allow Commenting'
           );
         },

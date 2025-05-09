@@ -46,7 +46,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
     super.key
   });
 
-  Future<void> _deleteOnPressed() async {
+  Future<void> _onDeletePressed() async {
 
     try {
 
@@ -63,7 +63,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
     
   }
 
-  Future<void> _likeOnPressed() async {
+  Future<void> _onLikePressed() async {
 
     try {
 
@@ -110,7 +110,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
             );
           },
           deleteOnPressed: () async {  
-            await _deleteOnPressed();
+            await _onDeletePressed();
             Navigator.pop(navigatorKey.currentContext!);
           }
         ),
@@ -178,7 +178,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
         children: [
       
           IconButton(
-            onPressed: () async => await _likeOnPressed(),
+            onPressed: () async => await _onLikePressed(),
             icon: Icon(isReplyLiked ? CupertinoIcons.heart_fill : CupertinoIcons.heart, color: isReplyLiked ? ThemeColor.likedColor : ThemeColor.contentSecondary, size: 18),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(), 

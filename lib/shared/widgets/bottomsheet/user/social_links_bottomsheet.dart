@@ -8,7 +8,7 @@ import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomshee
 
 class BottomsheetSocialLinks {
 
-  Future<void> _socialHandleOnPressed({
+  Future<void> _onSocialHandlePressed({
     required String platform, 
     required String handle
   }) async {
@@ -36,7 +36,7 @@ class BottomsheetSocialLinks {
           height: 65,
           width: MediaQuery.of(context).size.width * 0.88,
           child: ElevatedButton(
-            onPressed: () async => await _socialHandleOnPressed(platform: platform, handle: handle),
+            onPressed: () async => await _onSocialHandlePressed(platform: platform, handle: handle),
             style: ElevatedButton.styleFrom(
               foregroundColor: ThemeColor.contentThird,
               backgroundColor: ThemeColor.backgroundPrimary,

@@ -52,14 +52,12 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
 
   }
 
-  Future<void> _unBlockOnPressed({required String username}) async {
-
+  Future<void> _onUnblockPressed({required String username}) async {
     await UserActions(username: username).blockUser(block: false).then((_) {
       blockedAccountsData.value = List.from(blockedAccountsData.value)..removeWhere(
         (data) => data.username == username
       );
     });
-
   }
 
   Widget _buildEmptyPage() {
@@ -92,7 +90,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
                 customText: 'Unblock',
                 username: blockedUserData.username,
                 pfpData: blockedUserData.profilePic,
-                onPressed: () async => await _unBlockOnPressed(username: blockedUserData.username)
+                onPressed: () async => await _onUnblockPressed(username: blockedUserData.username)
               );
 
             },

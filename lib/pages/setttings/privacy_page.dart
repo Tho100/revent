@@ -37,7 +37,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   }
 
-  Future<void> _privateAccountOnPressed() async {
+  Future<void> _onPrivateAccountPressed() async {
 
     privateAccountNotifier.value 
       ? userPrivacyActions.privateAccount(isMakePrivate: 1)
@@ -45,7 +45,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   }
 
-  Future<void> _hideFollowingListOnPressed() async {
+  Future<void> _onHideFollowingPressed() async {
 
     hideFollowingListNotifier.value 
       ? userPrivacyActions.hideFollowingList(isHideFollowingList: 1)
@@ -53,7 +53,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   }
 
-  Future<void> _hideSavedPostsOnPressed() async {
+  Future<void> _onHideSavedPostsPressed() async {
 
     hideSavedPostNotifier.value 
       ? userPrivacyActions.hideSavedPosts(isHideSavedPosts: 1)
@@ -128,7 +128,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
             doubleInternalPadding: true,
             child: _buildSwitch(
               privateAccountNotifier,
-              () async => await _privateAccountOnPressed(),
+              () async => await _onPrivateAccountPressed(),
               'Private Account',
               "Your posts, saves, followers, and following will be hidden from others."
             ),
@@ -141,7 +141,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
                 _buildSwitch(
                   hideSavedPostNotifier,
-                  () async => await _hideSavedPostsOnPressed(),
+                  () async => await _onHideSavedPostsPressed(),
                   'Hide Saved Posts',
                   'Only you can see your saved vent post when this option is enabled.'
                 ),
@@ -150,7 +150,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
           
                 _buildSwitch(
                   hideFollowingListNotifier,
-                  () async => await _hideFollowingListOnPressed(),
+                  () async => await _onHideFollowingPressed(),
                   'Hide Following List',
                   'Only you can see your following list when this option is enabled.'
                 ),

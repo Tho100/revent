@@ -30,7 +30,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
 
   final commentController = TextEditingController();
 
-  void _createCommentOnPressed() async {
+  Future<void> _onPostCommentPressed() async {
 
     try {
 
@@ -214,7 +214,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
       padding: const EdgeInsets.all(8.0),
       child: SubButton(
         text: 'Post', 
-        onPressed: () => _createCommentOnPressed(),
+        onPressed: () async => await _onPostCommentPressed(),
       ),
     );
   }

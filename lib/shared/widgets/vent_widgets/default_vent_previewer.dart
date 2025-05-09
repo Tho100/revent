@@ -76,7 +76,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       tags: widget.tags,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
-      viewVentPostOnPressed: () => _navigateToVentPostPage(),
+      navigateVentPostPageOnPressed: () => _navigateToVentPostPage(),
       unSaveOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 1
         ? () async => await actionsHandler.unsavePost()
         : null,

@@ -85,7 +85,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
   }
 
-  Future<void> _followOnPressed(int index, String username, bool follow) async {
+  Future<void> _onFollowPressed(int index, String username, bool follow) async {
 
     await UserFollowActions(username: username).followUser(follow: follow).then((_) {
 
@@ -212,8 +212,8 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
                     pfpData: followsUserData.profilePic,
                     onPressed: () async {
                       currentText == 'Follow' 
-                        ? await _followOnPressed(index, followsUserData.username, true) 
-                        : await _followOnPressed(index, followsUserData.username, false);
+                        ? await _onFollowPressed(index, followsUserData.username, true) 
+                        : await _onFollowPressed(index, followsUserData.username, false);
                     },
                   );
                 },

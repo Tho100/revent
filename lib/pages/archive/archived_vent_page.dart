@@ -147,11 +147,10 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       context: context,
       title: title,
       tags: tags,
-      bodyText: '',
       creator: userProvider.user.username,
       pfpData: profileProvider.profile.profilePicture,
       postTimestamp: postTimestamp,
-      viewVentPostOnPressed: () => _navigateViewArchiveVentPage(title, tags, postTimestamp),
+      navigateVentPostPageOnPressed: () => _navigateViewArchiveVentPage(title, tags, postTimestamp),
       editOnPressed: () async {
 
         Navigator.pop(navigatorKey.currentContext!);

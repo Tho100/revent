@@ -161,7 +161,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
-  void _saveChangesOnPressed() async {
+  Future<void> _onSaveChangesPressed() async {
 
     bool allSaved = true;
 
@@ -215,7 +215,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
-  void _changeProfilePictureOnPressed() async {
+  void _onChangeAvatarPressed() async {
     
     if (profileProvider.profile.profilePicture.isEmpty) {
       _selectProfilePicture();
@@ -314,7 +314,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     return Padding(
       padding: const EdgeInsets.only(left: 4.0),
       child: InkWellEffect(
-        onPressed: () => _changeProfilePictureOnPressed(),
+        onPressed: () => _onChangeAvatarPressed(),
         child: SizedBox(
           width: 88,
           height: 88,
@@ -573,7 +573,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       builder: (_, isSaved, __) {
         return IconButton(
           icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.contentThird : ThemeColor.contentPrimary),
-          onPressed: () => isSaved ? null :  _saveChangesOnPressed(),
+          onPressed: () async => isSaved ? null :  await _onSaveChangesPressed(),
         );
       }
     );

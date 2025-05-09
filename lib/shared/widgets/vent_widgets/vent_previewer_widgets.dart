@@ -29,7 +29,7 @@ class VentPreviewerWidgets {
   final String? creator;
   final Uint8List? pfpData;
 
-  final VoidCallback? viewVentPostOnPressed;
+  final VoidCallback? navigateVentPostPageOnPressed;
   final VoidCallback? editOnPressed;
   final VoidCallback? copyOnPressed;
   final VoidCallback? pinOnPressed;
@@ -50,7 +50,7 @@ class VentPreviewerWidgets {
     this.totalLikes,
     this.totalComments,
     this.pfpData,
-    this.viewVentPostOnPressed,
+    this.navigateVentPostPageOnPressed,
     this.editOnPressed,
     this.reportOnPressed,
     this.blockOnPressed,
@@ -171,7 +171,7 @@ class VentPreviewerWidgets {
   Widget buildCommentButton() {
     return ActionsButton().buildCommentsButton(
       value: totalComments!, 
-      onPressed: viewVentPostOnPressed!
+      onPressed: navigateVentPostPageOnPressed!
     );
   }
 
@@ -300,7 +300,7 @@ class VentPreviewerWidgets {
   Widget buildMainContainer({required List<Widget> children}) {
     return InkWellEffect(
       onLongPress: () => _callVentOptionsBottomsheet(),
-      onPressed: viewVentPostOnPressed!,
+      onPressed: navigateVentPostPageOnPressed!,
       child: Container(
         decoration: BoxDecoration(
           color: Colors.transparent,

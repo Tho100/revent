@@ -51,7 +51,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     );
   }
 
-  void _sortOptionsOnPressed(String filter) {
+  void _onSortPostsPressed(String filter) {
     
     switch (filter) {
       case == 'Best':
@@ -202,10 +202,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                       BottomsheetSearchFilter().buildSortOptionsBottomsheet(
                         context: context,
                         currentFilter: sortOptionsNotifier.value,
-                        bestOnPressed: () => _sortOptionsOnPressed('Best'),
-                        latestOnPressed: () => _sortOptionsOnPressed('Latest'),
-                        oldestOnPressed: () => _sortOptionsOnPressed('Oldest'),
-                        controversialOnPressed: () => _sortOptionsOnPressed('Controversial'),
+                        bestOnPressed: () => _onSortPostsPressed('Best'),
+                        latestOnPressed: () => _onSortPostsPressed('Latest'),
+                        oldestOnPressed: () => _onSortPostsPressed('Oldest'),
+                        controversialOnPressed: () => _onSortPostsPressed('Controversial'),
                       );
                     },
                   ),
