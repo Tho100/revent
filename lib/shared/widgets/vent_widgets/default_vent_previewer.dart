@@ -93,9 +93,18 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
     );
   }
 
-  void _editOnPressed() {
+  void _editOnPressed() async {
+
     Navigator.pop(context);
-    NavigatePage.editVentPage(title: widget.title, body: widget.bodyText);
+
+    String body = widget.bodyText;
+
+    if(navigationProvider.currentRoute == AppRoute.searchResults.path) {
+      body = await _getSearchResultsBodyText();
+    }
+
+    NavigatePage.editVentPage(title: widget.title, body: body);
+
   }
 
   void _deleteOnPressed() {
