@@ -41,8 +41,8 @@ class VentPreviewerWidgets {
 
   VentPreviewerWidgets({
     required this.context,
-    this.title,
-    this.bodyText,
+    this.title = '',
+    this.bodyText = '',
     this.tags,
     this.postTimestamp,
     this.isNsfw,

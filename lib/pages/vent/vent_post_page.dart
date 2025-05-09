@@ -386,7 +386,6 @@ class _VentPostPageState extends State<VentPostPage> with
     final ventPreviewer = VentPreviewerWidgets(
       context: navigatorKey.currentContext!,
       title: widget.title,
-      bodyText: '',
       creator: widget.creator,
       editOnPressed: () {
         Navigator.pop(context);

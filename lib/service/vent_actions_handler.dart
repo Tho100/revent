@@ -58,7 +58,7 @@ class VentActionsHandler {
       await DeleteVent(title: title).delete().then(
         (_) {
           _showTemporarySnack('Post deleted.');
-          _closeScreens(2);
+          _closeScreens(1);
         }
       );
 

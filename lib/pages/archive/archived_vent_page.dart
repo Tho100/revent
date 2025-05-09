@@ -76,7 +76,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   }
 
-  void _viewVentPostPage(String title, String tags, String postTimestamp) async {
+  void _navigateViewArchiveVentPage(String title, String tags, String postTimestamp) async {
 
     final bodyText = await _getBodyText(title);
     final lastEdit = await _getLastEdit(title);
@@ -97,7 +97,6 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
   Future<void> _loadArchiveVentsData() async {
 
     try {
-
 
       final archiveVentsInfo = await archiveDataGetter.getPosts(
         username: userProvider.user.username
@@ -124,7 +123,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   }
 
-  void _deleteVentArchive(String title) async {
+  void _onDeleteArchive(String title) async {
 
     await VentActionsHandler(
       title: title, 
@@ -152,7 +151,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       creator: userProvider.user.username,
       pfpData: profileProvider.profile.profilePicture,
       postTimestamp: postTimestamp,
-      viewVentPostOnPressed: () => _viewVentPostPage(title, tags, postTimestamp),
+      viewVentPostOnPressed: () => _navigateViewArchiveVentPage(title, tags, postTimestamp),
       editOnPressed: () async {
 
         Navigator.pop(navigatorKey.currentContext!);
@@ -168,7 +167,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
         CustomAlertDialog.alertDialogCustomOnPress(
           message: AlertMessages.deletePost, 
           buttonMessage: 'Delete',
-          onPressedEvent: () => _deleteVentArchive(title)
+          onPressedEvent: () => _onDeleteArchive(title)
         );
       },
     );
