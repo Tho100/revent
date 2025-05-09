@@ -30,7 +30,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
   final userAuth = UserAuthService();
   final hashingModel = HashingModel();
 
-  Future<void> _updatePasswordOnPressed() async {
+  Future<void> _onUpdatePasswordPressed() async {
 
     try {
 
@@ -106,7 +106,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
             customFontSize: 17,
             onPressed: () async {
               FocusScope.of(context).unfocus(); 
-              await _updatePasswordOnPressed();
+              await _onUpdatePasswordPressed();
             }
           ),
     

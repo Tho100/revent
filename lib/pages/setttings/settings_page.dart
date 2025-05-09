@@ -23,7 +23,7 @@ class SettingsPage extends StatelessWidget {
 
   const SettingsPage({super.key});
 
-  void _signOutOnPressed() {
+  void _onSignOutPressed() {
     CustomAlertDialog.alertDialogCustomOnPress(
       message: AlertMessages.signOut, 
       buttonMessage: 'Sign Out', 
@@ -177,7 +177,7 @@ class SettingsPage extends StatelessWidget {
               icon: CupertinoIcons.square_arrow_right,
               makeRed: true,
               hideCaret: true,
-              onPressed: () => _signOutOnPressed()
+              onPressed: () => _onSignOutPressed()
             ),
           ),
           

@@ -82,21 +82,17 @@ class _VentPostPageState extends State<VentPostPage> with
   late VentActionsHandler actionsHandler;
 
   void _initializeVentActionsHandler() {
-
     actionsHandler = VentActionsHandler(              
       title: widget.title, 
       creator: widget.creator, 
       context: context
     );
-
   }
 
-  void _loadLastEdit() async {
-
-    final lastEdit = await LastEditGetter().getLastEdit();
-
-    activeVentProvider.setLastEdit(lastEdit);
-
+  Future<void> _loadLastEdit() async {
+    await LastEditGetter().getLastEdit().then(
+      (lastEdit) => activeVentProvider.setLastEdit(lastEdit)
+    );
   }
 
   Future<void> _loadCommentsSettings() async {
@@ -107,7 +103,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  Future<void> _toggleCommentsOnPressed() async {
+  Future<void> _onToggleCommentsPressed() async {
 
     enableCommentNotifier.value 
       ? commentSettings.toggleComment(isEnableComment: 1)
@@ -119,7 +115,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  void _filterOnPressed({required String filter}) {
+  void _onFilterPressed({required String filter}) {
     
     switch (filter) {
       case == 'Best':
@@ -386,7 +382,6 @@ class _VentPostPageState extends State<VentPostPage> with
     final ventPreviewer = VentPreviewerWidgets(
       context: navigatorKey.currentContext!,
       title: widget.title,
-      bodyText: '',
       creator: widget.creator,
       editOnPressed: () {
         Navigator.pop(context);
@@ -507,9 +502,9 @@ class _VentPostPageState extends State<VentPostPage> with
           BottomsheetCommentFilter().buildBottomsheet(
             context: context, 
             currentFilter: filterTextNotifier.value,
-            bestOnPressed: () => _filterOnPressed(filter: 'Best'), 
-            latestOnPressed: () => _filterOnPressed(filter: 'Latest'),
-            oldestOnPressed: () => _filterOnPressed(filter: 'Oldest'),
+            bestOnPressed: () => _onFilterPressed(filter: 'Best'), 
+            latestOnPressed: () => _onFilterPressed(filter: 'Latest'),
+            oldestOnPressed: () => _onFilterPressed(filter: 'Oldest'),
           );
         },
         child: Row(
@@ -625,7 +620,7 @@ class _VentPostPageState extends State<VentPostPage> with
           BottomsheetCommentsSettings().buildBottomsheet(
             context: context, 
             notifier: enableCommentNotifier, 
-            onToggled: () async => await _toggleCommentsOnPressed(), 
+            onToggled: () async => await _onToggleCommentsPressed(), 
             text: 'Allow Commenting'
           );
         },

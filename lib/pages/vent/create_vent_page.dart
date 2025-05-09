@@ -50,7 +50,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   bool isPostPressed = false;
 
-  Future<void> _postVentOnPressed() async {
+  Future<void> _onPostVentPressed() async {
 
     final ventTitle = postController.titleController.text;
     final ventBodyText = postController.bodyTextController.text;
@@ -272,7 +272,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       padding: const EdgeInsets.all(8.0),
       child: SubButton(
         text: 'Post', 
-        onPressed: () async => _postVentOnPressed(),
+        onPressed: () async => await _onPostVentPressed(),
       ),
     );
   }

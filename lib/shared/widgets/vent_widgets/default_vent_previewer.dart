@@ -76,7 +76,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       tags: widget.tags,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
-      viewVentPostOnPressed: () => _viewVentPostPage(),
+      navigateVentPostPageOnPressed: () => _navigateToVentPostPage(),
       unSaveOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 1
         ? () async => await actionsHandler.unsavePost()
         : null,
@@ -86,57 +86,62 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       unPinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0 && widget.isPinned == true
         ? () async => await actionsHandler.unpinPost()
         : null,
-      editOnPressed: () => _editOnPressed(),
-      deleteOnPressed: () => _deleteOnPressed(),
-      reportOnPressed: () => _reportOnPressed(),
-      blockOnPressed: () => _blockOnPressed()
+      editOnPressed: () => _onEditPressed(),
+      deleteOnPressed: () => _onDeletePressed(),
+      reportOnPressed: () => _onReportPressed(),
+      blockOnPressed: () => _onBlockPressed()
     );
   }
 
-  void _editOnPressed() async {
-
+  void _closeOnFinish<T>(T Function() next) {
     Navigator.pop(context);
+    next();
+  }
 
-    String body = widget.bodyText;
+  void _onEditPressed() {
 
-    if(navigationProvider.currentRoute == AppRoute.searchResults.path) {
-      body = await _getSearchResultsBodyText();
-    }
+    _closeOnFinish(() async {
 
-    NavigatePage.editVentPage(title: widget.title, body: body);
+      final isInSearchResults = navigationProvider.currentRoute == AppRoute.searchResults.path;
+
+      final body = isInSearchResults
+        ? await _getSearchResultsBodyText()
+        : widget.bodyText;
+
+      NavigatePage.editVentPage(title: widget.title, body: body);
+
+    });
 
   }
 
-  void _deleteOnPressed() {
-    CustomAlertDialog.alertDialogCustomOnPress(
-      message: AlertMessages.deletePost, 
-      buttonMessage: 'Delete',
-      onPressedEvent: () async => await actionsHandler.deletePost()
-    );
+  void _onDeletePressed() {
+    _closeOnFinish(() {
+      CustomAlertDialog.alertDialogCustomOnPress(
+        message: AlertMessages.deletePost, 
+        buttonMessage: 'Delete',
+        onPressedEvent: () async => await actionsHandler.deletePost()
+      );
+    });
   }
 
-  void _reportOnPressed() {
-
-    Navigator.pop(context);
-
-    ReportPostBottomsheet().buildBottomsheet(context: context);
-
+  void _onReportPressed() {
+    _closeOnFinish(() {
+      ReportPostBottomsheet().buildBottomsheet(context: context);
+    });
   }
 
-  void _blockOnPressed() {
-
-    Navigator.pop(context);
-
-    CustomAlertDialog.alertDialogCustomOnPress(
-      message: 'Block @${widget.creator}?', 
-      buttonMessage: 'Block', 
-      onPressedEvent: () async {
-        await UserActions(username: widget.creator).blockUser().then(
-          (_) => Navigator.pop(context)
-        );
-      }
-    );
-
+  void _onBlockPressed() {
+    _closeOnFinish(() {
+      CustomAlertDialog.alertDialogCustomOnPress(
+        message: 'Block @${widget.creator}?', 
+        buttonMessage: 'Block', 
+        onPressedEvent: () async {
+          await UserActions(username: widget.creator).blockUser().then(
+            (_) => Navigator.pop(context)
+          );
+        }
+      );
+    });
   }
 
   void _initializeVentActionsHandler() {
@@ -177,7 +182,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   }
 
-  void _viewVentPostPage() {
+  void _navigateToVentPostPage() {
     Navigator.push(
       context,
       MaterialPageRoute(builder: (_) => VentPostPage(

@@ -37,7 +37,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
   final replyController = TextEditingController();
 
-  void _postReplyOnPressed() async {
+  Future<void> _onPostReplyPressed() async {
 
     try {
 
@@ -188,7 +188,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
       padding: const EdgeInsets.all(8.0),
       child: SubButton(
         text: 'Post', 
-        onPressed: () => _postReplyOnPressed(),
+        onPressed: () async => await _onPostReplyPressed(),
       ),
     );
   }

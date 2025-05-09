@@ -216,7 +216,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   }
 
-  Future<void> _followUserOnPressed() async {
+  Future<void> _onFollowUserPressed() async {
 
     try {
 
@@ -304,14 +304,14 @@ class _UserProfilePageState extends State<UserProfilePage> with
             customHeight: buttonHeight,
             customFontSize: fontSize,
             text: 'Following',
-            onPressed: () async => await _followUserOnPressed()
+            onPressed: () async => await _onFollowUserPressed()
           )
           : MainButton(
             customWidth: buttonWidth,
             customHeight: buttonHeight,
             customFontSize: fontSize,
             text: 'Follow',
-            onPressed: () async => await _followUserOnPressed()
+            onPressed: () async => await _onFollowUserPressed()
           );
         },
       ),

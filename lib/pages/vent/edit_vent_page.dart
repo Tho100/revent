@@ -42,7 +42,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
   }
 
-  Future<void> _saveOnPressed() async {
+  Future<void> _onSavePressed() async {
 
     try {
 
@@ -122,7 +122,7 @@ class _EditVentPageState extends State<EditVentPage> {
       builder: (_, isSaved, __) {
         return IconButton(
           icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.contentThird : ThemeColor.contentPrimary),
-          onPressed: () async => isSaved ? null : _saveOnPressed()
+          onPressed: () async => isSaved ? null : await _onSavePressed()
         );
       },
     );

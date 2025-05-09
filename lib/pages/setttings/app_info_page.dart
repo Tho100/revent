@@ -25,7 +25,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
   
   final cacheNotifier = ValueNotifier<String>('');
 
-  void _clearAppCache() async {
+  Future<void> _onClearAppCachePressed() async {
     
     final cacheSizeInMb = await AppCache().cacheSizeInMb();
     
@@ -88,7 +88,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
   Widget _buildClearCacheButton() {
     return SubButton(
       text: 'Clear Cache', 
-      onPressed: () => _clearAppCache()
+      onPressed: () async => await _onClearAppCachePressed()
     );
   }
 

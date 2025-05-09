@@ -79,7 +79,7 @@ class NavigationBarDock extends StatelessWidget {
                           if(index != 2) {
                             selectedNavigationIndexNotifier.value = index;
                           }
-                          _buttonOnPressed(index);
+                          _onNavigationButtonPressed(index);
                         }
                       ),
                     );
@@ -95,7 +95,7 @@ class NavigationBarDock extends StatelessWidget {
     
   }
 
-  void _buttonOnPressed(int index) {
+  void _onNavigationButtonPressed(int index) {
     switch (index) {
       case 0:
         homeOnPressed();
