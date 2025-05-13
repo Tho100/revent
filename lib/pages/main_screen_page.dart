@@ -32,17 +32,12 @@ class MainScreenPage extends StatelessWidget {
     );
   }
 
-  Widget _buildLogoText() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 6.0),
-      child: Text(
-        '>:(',
-        style: GoogleFonts.inter(
-          color: ThemeColor.contentPrimary,
-          fontSize: 20,
-          fontWeight: FontWeight.w900,
-        ),
-      ),
+  Widget _buildLogo() {
+    return Image.asset(
+      'assets/images/albert_icon.png',
+      width: 85,
+      height: 85,
+      fit: BoxFit.contain,
     );
   }
 
@@ -90,13 +85,13 @@ class MainScreenPage extends StatelessWidget {
     return Column(
       children: [
 
-        const SizedBox(height: 72),
+        const SizedBox(height: 45),
         
         _buildPaddedWidget(
-          child: _buildLogoText()
+          child: _buildLogo()
         ),
         
-        const SizedBox(height: 30),
+        const SizedBox(height: 10),
 
         _buildPaddedWidget(
           child: _buildHeaderText()
