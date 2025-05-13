@@ -38,7 +38,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/revent_app_icon.png"
+  image_path: "assets/images/albert_icon.png"
 
 flutter:
   uses-material-design: true
