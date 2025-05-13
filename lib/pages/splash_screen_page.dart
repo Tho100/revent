@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
@@ -34,13 +33,11 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
       child: Align(
         alignment: Alignment.center,
         child: Center(
-          child: Text(
-            'Revent',
-            style: GoogleFonts.inter(
-              color: ThemeColor.contentPrimary,
-              fontWeight: FontWeight.w900,
-              fontSize: 50
-            )
+          child: Image.asset(
+            'assets/images/albert_icon.png',
+            width: 280,
+            height: 280,
+            fit: BoxFit.contain,
           )
         )
       )
@@ -71,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
       );
 
     } else {
-      splashScreenTimer = Timer(const Duration(milliseconds: 1750), 
+      splashScreenTimer = Timer(const Duration(milliseconds: 2000), 
         () => _navigateToNextScreen()
       );
       
