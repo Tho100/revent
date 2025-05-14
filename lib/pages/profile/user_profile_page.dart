@@ -18,6 +18,7 @@ import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/about_profile.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/report_user_bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/themes/theme_style.dart';
@@ -406,7 +407,10 @@ class _UserProfilePageState extends State<UserProfilePage> with
             }
           );
         },
-        reportOnPressed: () {} 
+        reportOnPressed: () {
+          Navigator.pop(context);
+          ReportUserBottomsheet().buildBottomsheet(context: context);
+        } 
       )
     );
   }
