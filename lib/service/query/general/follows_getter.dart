@@ -1,11 +1,10 @@
 import 'dart:convert';
 
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 
-class FollowsGetter extends BaseQueryService {
+class FollowsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, List<dynamic>>> getFollows({
     required String followType,
@@ -37,7 +36,7 @@ class FollowsGetter extends BaseQueryService {
 
     final params = {
       'username': username,
-      'current_user': getIt.userProvider.user.username
+      'current_user': userProvider.user.username
     };
 
     final followResults = await executeQuery(getFollowProfilesQuery, params);
