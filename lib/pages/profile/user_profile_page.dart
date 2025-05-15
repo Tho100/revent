@@ -7,7 +7,6 @@ import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/user/user_follow_actions.dart';
-import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
 import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/service/query/user/user_following.dart';
@@ -16,17 +15,14 @@ import 'package:revent/service/query/user_profile/profile_data_getter.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/service/user/user_profile_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/about_profile.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/report_user_bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/profile/social_links_widget.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/user_actions.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/profile/profile_body_widgets.dart';
@@ -379,39 +375,14 @@ class _UserProfilePageState extends State<UserProfilePage> with
   Widget _buildOptionsActionButton() {
     return IconButton(
       icon: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.contentPrimary),
-      onPressed: () => BottomsheetUserActions().buildBottomsheet(
-        context: context, 
-        aboutProfileOnPressed: () async {
-          Navigator.pop(context);
-          await _loadJoinedDate().then((joinedDate) {
-            BottomsheetAboutProfile().buildBottomsheet(
-              context: context, 
-              username: widget.username, 
-              pronouns: pronounsNotifier.value,
-              pfpData: widget.pfpData,
-              joinedDate: joinedDate
-            );
-          });
-        },
-        blockOnPressed: () {
-          Navigator.pop(context);
-          CustomAlertDialog.alertDialogCustomOnPress(
-            message: 'Block @${widget.username}?', 
-            buttonMessage: 'Block', 
-            onPressedEvent: () async {
-              await UserActions(username: widget.username).blockUser().then((_) {
-                  Navigator.pop(context);
-                  Navigator.pop(context);
-                }
-              );
-            }
-          );
-        },
-        reportOnPressed: () {
-          Navigator.pop(context);
-          ReportUserBottomsheet().buildBottomsheet(context: context);
-        } 
-      )
+      onPressed: () {
+        UserProfileActions(context: context).showUserActions(
+          username: widget.username, 
+          pronouns: pronounsNotifier.value, 
+          pfpData: widget.pfpData, 
+          loadJoinedDate: _loadJoinedDate
+        );
+      }
     );
   }
 
