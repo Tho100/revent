@@ -14,15 +14,15 @@ class UserBlockGetter extends BaseQueryService {
   Future<Map<String, dynamic>> getBlockedAccounts() async {
 
     const query = 
-      '''
-        SELECT 
-          upi.username, 
-          upi.profile_picture
-        FROM user_profile_info upi
-        LEFT JOIN user_blocked_info ubi
-          ON ubi.blocked_username = upi.username
-        WHERE ubi.blocked_by = :blocked_by
-      ''';
+    '''
+      SELECT 
+        upi.username, 
+        upi.profile_picture
+      FROM user_profile_info upi
+      LEFT JOIN user_blocked_info ubi
+        ON ubi.blocked_username = upi.username
+      WHERE ubi.blocked_by = :blocked_by
+    ''';
 
     final param = {'blocked_by': username};
 

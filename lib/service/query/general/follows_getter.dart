@@ -1,17 +1,19 @@
 import 'dart:convert';
 
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 
-class FollowsGetter extends BaseQueryService {
+class FollowsGetter extends BaseQueryService with UserProfileProviderService {
+
+  // Fetches list of followers/following for given [username]
+  // Also includes their profile picture and wheter the current user follows them 
 
   Future<Map<String, List<dynamic>>> getFollows({
     required String followType,
     required String username,
   }) async {
-
+    
     final columnName = followType == 'Followers' ? 'follower' : 'following';
     final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
 
@@ -37,7 +39,7 @@ class FollowsGetter extends BaseQueryService {
 
     final params = {
       'username': username,
-      'current_user': getIt.userProvider.user.username
+      'current_user': userProvider.user.username
     };
 
     final followResults = await executeQuery(getFollowProfilesQuery, params);

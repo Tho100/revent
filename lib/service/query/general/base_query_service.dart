@@ -4,11 +4,9 @@ import 'package:revent/service/revent_connection_service.dart';
 class BaseQueryService {
 
   Future<IResultSet> executeQuery(String query, [Map<String, dynamic>? params]) async {
-    
-    final conn = await ReventConnection.connect();
-
-    return await conn.execute(query, params ?? {});
-
+    return await ReventConnection.connect().then((conn) {
+      return conn.execute(query, params ?? {});
+    });
   }
 
   Future<MySQLConnectionPool> connection() async {

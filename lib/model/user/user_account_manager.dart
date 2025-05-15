@@ -19,11 +19,9 @@ class UserAccountManager with UserProfileProviderService, ProfilePostsProviderSe
   }
 
   Future<void> deactivateUserAccount({required String username}) async {
-
     await DeleteAccountData().delete(username: username).then(
       (_) => signOutUserAccount()
     );
-
   }
 
 }

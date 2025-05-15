@@ -7,7 +7,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
   final formatPostTimestamp = FormatDate();
 
-  Future<Map<String, dynamic>> getVentsData() async {
+  Future<Map<String, dynamic>> getForYouVentsData() async {
 
     const query = '''
       SELECT 
