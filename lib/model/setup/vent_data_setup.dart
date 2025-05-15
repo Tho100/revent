@@ -12,7 +12,13 @@ import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
 class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedProviderService {
 
-  Future<dynamic> _ventsData({required Map<String, dynamic> ventsInfo}) async {
+  /// Processes raw vent info map by extracting fields and 
+  /// asynchronously fetching profile picture for each creator
+  //
+  /// Return a map containing list of all vent properties 
+  /// including decoded profile picture.
+
+  Future<dynamic> _rawVentsData({required Map<String, dynamic> ventsInfo}) async {
 
     final titles = ventsInfo['title']! as List<String>;
     final bodyText = ventsInfo['body_text']! as List<String>;
@@ -47,6 +53,11 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   }
 
+  /// Generate a list of vent object of type T using the provided [ventBuilder]
+  /// function, which maps raw vent data fields to T
+  ///
+  /// Assumes all lists in [ventsData] have equal length.
+
   Future<List<T>> _generateVents<T>({
     required Map<String, dynamic> ventsData,
     required T Function(
@@ -77,7 +88,9 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     final isLiked = ventsData['is_liked'];
     final isSaved = ventsData['is_saved'];
 
-    return List.generate(titles.length, (index) {
+    final count = titles.length;
+
+    return List.generate(count, (index) {
       return ventBuilder(
         titles[index],
         bodyText[index],
@@ -94,6 +107,12 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     });
 
   }
+
+  /// Manages the fetching and building of vents.
+  /// - Calls [dataGetter] to fetch raw vent info.
+  /// - Processes it into structured data with [_rawVentsData].
+  /// - Generates typed vent objects with [_generateVents].
+  /// - Finally sets the vents by calling [setVents].
 
   Future<void> _setupVents<T>({
     required Future<Map<String, dynamic>> Function() dataGetter,
@@ -115,7 +134,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
   }) async {
 
     final ventsInfo = await dataGetter();
-    final ventsData = await _ventsData(ventsInfo: ventsInfo);
+    final ventsData = await _rawVentsData(ventsInfo: ventsInfo);
     final vents = await _generateVents(ventsData: ventsData, ventBuilder: ventBuilder);
 
     setVents(vents);
