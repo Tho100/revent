@@ -12,6 +12,12 @@ import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
 class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedProviderService {
 
+  /// Processes raw vent info map by extracting fields and 
+  /// asynchronously fetching profile picture for each creator
+  //
+  /// Return a map containing list of all vent properties 
+  /// including decoded profile picture.
+
   Future<dynamic> _ventsData({required Map<String, dynamic> ventsInfo}) async {
 
     final titles = ventsInfo['title']! as List<String>;
@@ -47,6 +53,11 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   }
 
+  /// Generate a list of vent object of type T using the provided [ventBuilder]
+  /// function, which maps raw vent data fields to T
+  ///
+  /// Assumes all lists in [ventsData] have equal length.
+
   Future<List<T>> _generateVents<T>({
     required Map<String, dynamic> ventsData,
     required T Function(
@@ -77,7 +88,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     final isLiked = ventsData['is_liked'];
     final isSaved = ventsData['is_saved'];
 
-    return List.generate(titles.length, (index) {
+    return List.generate(titles.length, (index) { // TODO: Use something else instead of title for length, and add comments
       return ventBuilder(
         titles[index],
         bodyText[index],
@@ -94,6 +105,12 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
     });
 
   }
+
+  /// Manages the fetching and building of vents.
+  /// - Calls [dataGetter] to fetch raw vent info.
+  /// - Processes it into structured data with [_ventsData].
+  /// - Generates typed vent objects with [_generateVents].
+  /// - Finally sets the vents by calling [setVents].
 
   Future<void> _setupVents<T>({
     required Future<Map<String, dynamic>> Function() dataGetter,
