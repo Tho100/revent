@@ -9,8 +9,8 @@ class DeleteAccountData extends BaseQueryService {
       FROM user_information ui
         LEFT JOIN user_profile_info upi ON upi.username = ui.username
         LEFT JOIN user_privacy_info pvi ON upvi.username = ui.username
-        LEFT JOIN user_follows_info ufi ON ufi.follower = ui.username,
-        LEFT JOIN user_social_links usl ON ufi.username = ui.username,
+        LEFT JOIN user_follows_info ufi ON ufi.follower = ui.username
+        LEFT JOIN user_social_links usl ON ufi.username = ui.username
         LEFT JOIN vent_info vi ON vi.creator = ui.username
         LEFT JOIN saved_vent_info svi ON svi.creator = ui.username
         LEFT JOIN archive_vent_info avi ON avi.creator = ui.username
@@ -21,7 +21,7 @@ class DeleteAccountData extends BaseQueryService {
         LEFT JOIN replies_likes_info rli ON rli.liked_by = ui.username
         LEFT JOIN pinned_comments_info pci ON pci.pinned_by = ui.username
         LEFT JOIN pinned_vent_info pvi ON pvi.pinned_by = ui.username
-      WHERE ui.username = :username;
+      WHERE ui.username = :username
     ''';
 
     final param = {'username': username};
