@@ -124,7 +124,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   Future<void> setupForYou() async {
     await _setupVents<VentForYouData>(
-      dataGetter: () => VentDataGetter().getVentsData(),
+      dataGetter: () => VentDataGetter().getForYouVentsData(),
       setVents: forYouVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentForYouData(
