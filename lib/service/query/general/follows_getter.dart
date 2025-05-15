@@ -7,11 +7,11 @@ import 'package:revent/helper/extract_data.dart';
 class FollowsGetter extends BaseQueryService with UserProfileProviderService {
 
   /// Fetches list of followers/following for given [username] 
-  /// also includes their profile picture and wheter the current user follows them.
+  /// also includes their profile picture and whether the current user follows them.
 
   Future<Map<String, List<dynamic>>> getFollows({
     required String followType,
-    required String username,
+    required String username
   }) async {
     
     final columnName = followType == 'Followers' ? 'follower' : 'following';
