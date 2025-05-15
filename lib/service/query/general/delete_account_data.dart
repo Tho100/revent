@@ -2,7 +2,8 @@ import 'package:revent/service/query/general/base_query_service.dart';
 
 class DeleteAccountData extends BaseQueryService {
 
-  // Delete all stored information for [username] on account deletion
+  /// Delete all stored information for [username] on account deletion
+  /// including non-archived/archived posts, comments, pinned-comment, etc.
 
   Future<void> delete({required String username}) async {
 

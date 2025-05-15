@@ -6,9 +6,9 @@ import 'package:revent/service/query/general/base_query_service.dart';
 
 class FollowSuggestionGetter extends BaseQueryService with UserProfileProviderService {
 
-  // Fetch 5 follow suggestions based on the following logic:
-  // If the current user has followed someone, suggest users that those followed users are also following (excluding already followed users).
-  // Otherwise, suggest the 5 most popular users based on follower count.
+  /// Fetch 5 follow suggestions based on the following logic:
+  /// If the current user has followed someone, suggest users that those followed users are also following (excluding already followed users).
+  /// Otherwise, suggest the 5 most popular users based on follower count.
 
   Future<Map<String, dynamic>> getSuggestion() async {
 
