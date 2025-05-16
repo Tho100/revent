@@ -6,7 +6,7 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
 
   final localStorageModel = LocalStorageModel();
 
-  Future<void> insert({required String? hashPassword}) async {
+  Future<void> registerUser({required String? hashPassword}) async {
       
     const queries = [
       'INSERT INTO user_information (username, email, password) VALUES (:username, :email, :password)',

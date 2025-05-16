@@ -38,7 +38,7 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
 
     _setupUserProfileData(username: username, email: email);
 
-    await UserDataRegistration().insert(hashPassword: hashPassword);
+    await UserDataRegistration().registerUser(hashPassword: hashPassword);
     
     await VentDataSetup().setupForYou()
       .then((_) => NavigatePage.homePage()
