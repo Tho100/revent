@@ -3,8 +3,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:revent/model/user/user_follow_actions.dart';
 import 'package:revent/service/query/general/follows_getter.dart';
+import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -87,7 +87,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
   Future<void> _onFollowPressed(int index, String username, bool follow) async {
 
-    await UserFollowActions(username: username).followUser(follow: follow).then((_) {
+    await UserActions(username: username).toggleFollowUser(follow: follow).then((_) {
 
       final updatedList = List<String>.from(profileActionTextNotifier.value);
 

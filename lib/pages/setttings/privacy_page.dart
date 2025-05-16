@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
+import 'package:revent/service/user/user_privacy_handler.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
@@ -23,11 +24,11 @@ class _PrivacyPageState extends State<PrivacyPage> {
   final hideFollowingListNotifier = ValueNotifier<bool>(false);
   final hideSavedPostNotifier = ValueNotifier<bool>(false);
 
-  final userPrivacyActions = UserPrivacyActions();
+  final userPrivacyHandler = UserPrivacyHandler();
 
   void _loadCurrentOptions() async {
 
-    final currentOptions = await userPrivacyActions.getCurrentOptions(
+    final currentOptions = await UserPrivacyActions().getCurrentOptions(
       username: getIt.userProvider.user.username
     );
 
@@ -40,24 +41,24 @@ class _PrivacyPageState extends State<PrivacyPage> {
   Future<void> _onPrivateAccountPressed() async {
 
     privateAccountNotifier.value 
-      ? userPrivacyActions.privateAccount(isMakePrivate: 1)
-      : userPrivacyActions.privateAccount(isMakePrivate: 0);
+      ? userPrivacyHandler.privateAccount(isMakePrivate: 1)
+      : userPrivacyHandler.privateAccount(isMakePrivate: 0);
 
   }
 
   Future<void> _onHideFollowingPressed() async {
 
     hideFollowingListNotifier.value 
-      ? userPrivacyActions.hideFollowingList(isHideFollowingList: 1)
-      : userPrivacyActions.hideFollowingList(isHideFollowingList: 0);
+      ? userPrivacyHandler.hideFollowingList(isHideFollowingList: 1)
+      : userPrivacyHandler.hideFollowingList(isHideFollowingList: 0);
 
   }
 
   Future<void> _onHideSavedPostsPressed() async {
 
     hideSavedPostNotifier.value 
-      ? userPrivacyActions.hideSavedPosts(isHideSavedPosts: 1)
-      : userPrivacyActions.hideSavedPosts(isHideSavedPosts: 0);
+      ? userPrivacyHandler.hideSavedPosts(isHideSavedPosts: 1)
+      : userPrivacyHandler.hideSavedPosts(isHideSavedPosts: 0);
 
   }
 

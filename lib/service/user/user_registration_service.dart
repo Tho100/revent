@@ -1,38 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:mysql_client/mysql_client.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/user/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/service/query/user/user_registration_validator.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
 class UserRegistrationService extends BaseQueryService with UserProfileProviderService {
 
+  final BuildContext context;
+
+  UserRegistrationService({required this.context});
+
   Future<void> register({
     required String username,
     required String email,
     required String hashPassword,
-    required BuildContext context,
   }) async {
 
-    final getUsername = await executeQuery(
-      'SELECT username FROM user_information WHERE username = :username',
-      {'username': username},
-    );
+    final userValidator = await UserRegistrationValidator(
+      username: username, email: email
+    ).verifyUsernameAndEmail();
 
-    if (_showWarningOnDataAlreadyExists(context, getUsername, 'Username is taken')) {
+    final usernameExists = userValidator['username_exists']!;
+    final emailExists = userValidator['email_exists']!;
+
+    if (_showWarningOnInfoExists(usernameExists, 'Username is taken')) {
       return;
     }
 
-    final getEmail = await executeQuery(
-      'SELECT email FROM user_information WHERE email = :email',
-      {'email': email},
-    );
-
-    if (_showWarningOnDataAlreadyExists(context, getEmail, 'Account with this email already exists')) {
+    if (_showWarningOnInfoExists(emailExists, 'Account with this email already exists')) {
       return;
     }
 
@@ -46,12 +46,12 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
 
   }
 
-  bool _showWarningOnDataAlreadyExists(BuildContext context, IResultSet data, String errorMessage) {
+  bool _showWarningOnInfoExists(bool showWarning, String alertMessage) {
 
-    if (data.rows.isNotEmpty) {
+    if (showWarning) {
 
       WidgetsBinding.instance.addPostFrameCallback(
-        (_) => CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, errorMessage)
+        (_) => CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, alertMessage)
       );
 
       return true;
