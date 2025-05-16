@@ -30,7 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final visiblePasswordNotifier = ValueNotifier<bool>(false);
 
-  Future<void> _verifyUserRegistrationInformation({
+  Future<void> _registerUser({
     required String username,
     required String email,
     required String auth,
@@ -40,11 +40,10 @@ class _SignUpPageState extends State<SignUpPage> {
 
       final authHash = HashingModel().computeHash(auth);
       
-      await UserRegistrationService().register(
+      await UserRegistrationService(context: context).register(
         username: username,
         hashPassword: authHash,
         email: email,
-        context: context
       );
 
     } catch (_) {
@@ -84,7 +83,7 @@ class _SignUpPageState extends State<SignUpPage> {
       context: context
     );
 
-    await _verifyUserRegistrationInformation(
+    await _registerUser(
       username: usernameInput, 
       email: emailInput, 
       auth: authInput, 

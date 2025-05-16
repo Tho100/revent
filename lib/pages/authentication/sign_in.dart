@@ -30,15 +30,14 @@ class _SignInPageState extends State<SignInPage> {
   final visiblePasswordNotifier = ValueNotifier<bool>(false);
   final isRememberMeCheckedNotifier = ValueNotifier<bool>(true); 
 
-  Future<void> _verifyUserLoginInformation({
+  Future<void> _loginUser({
     required String email,
     required String auth,
   }) async {
 
     try {
 
-      await UserLoginService().login(
-        context: context, 
+      await UserLoginService(context: context).login(
         email: email, auth: auth, isRememberMeChecked: isRememberMeCheckedNotifier.value
       );
 
@@ -68,7 +67,7 @@ class _SignInPageState extends State<SignInPage> {
       return;
     }
 
-    await _verifyUserLoginInformation(
+    await _loginUser(
       email: emailInput, 
       auth: authInput, 
     );

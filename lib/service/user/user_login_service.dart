@@ -14,11 +14,14 @@ import 'package:revent/model/setup/vent_data_setup.dart';
 
 class UserLoginService {
 
+  final BuildContext context;
+
+  UserLoginService({required this.context});
+
   final userDataGetter = UserDataGetter();
   final localStorage = LocalStorageModel();
 
   Future<void> login({
-    required BuildContext context,
     required String email, 
     required String auth, 
     required bool isRememberMeChecked

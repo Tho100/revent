@@ -11,11 +11,14 @@ import 'package:revent/model/setup/vent_data_setup.dart';
 
 class UserRegistrationService extends BaseQueryService with UserProfileProviderService {
 
+  final BuildContext context;
+
+  UserRegistrationService({required this.context});
+
   Future<void> register({
     required String username,
     required String email,
     required String hashPassword,
-    required BuildContext context,
   }) async {
 
     final userValidator = await UserRegistrationValidator(
@@ -25,11 +28,11 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
     final usernameExists = userValidator['username_exists']!;
     final emailExists = userValidator['email_exists']!;
 
-    if (_showWarningOnInfoExists(context, usernameExists, 'Username is taken')) {
+    if (_showWarningOnInfoExists(usernameExists, 'Username is taken')) {
       return;
     }
 
-    if (_showWarningOnInfoExists(context, emailExists, 'Account with this email already exists')) {
+    if (_showWarningOnInfoExists(emailExists, 'Account with this email already exists')) {
       return;
     }
 
@@ -43,7 +46,7 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
 
   }
 
-  bool _showWarningOnInfoExists(BuildContext context, bool showWarning, String alertMessage) {
+  bool _showWarningOnInfoExists(bool showWarning, String alertMessage) {
 
     if (showWarning) {
 
