@@ -6,7 +6,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/model/user/user_follow_actions.dart';
+import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
 import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/service/query/user/user_following.dart';
@@ -219,7 +219,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
       final follow = !isFollowingNotifier.value;
 
-      await UserFollowActions(username: widget.username).followUser(follow: follow).then(
+      await UserActions(username: widget.username).toggleFollowUser(follow: follow).then(
         (_) => isFollowingNotifier.value = !isFollowingNotifier.value
       );
 
