@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/model/setup/search_setup.dart';
+import 'package:revent/model/setup/search_results_setup.dart';
 import 'package:revent/pages/main_search_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
@@ -34,13 +34,13 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
 
   late TabController tabController;
   late SearchResultsTabBarWidgets resultsTabBarWidgets;
-  late SearchSetup setupSearch;
+  late SearchResultsSetup setupSearch;
 
   final pageIsLoadedNotifier = ValueNotifier<bool>(false);
 
   void _initializeClasses() {
 
-    setupSearch = SearchSetup(searchText: widget.searchText);
+    setupSearch = SearchResultsSetup(searchText: widget.searchText);
 
     tabController = TabController(length: 2, vsync: this);
 
@@ -58,7 +58,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
   void _onTabChanged() async {
     
     if (tabController.index == 1) {
-      await setupSearch.setupAccounts();
+      await setupSearch.setupAccountsResults();
     }
 
   }
@@ -67,7 +67,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
     
     try {
 
-      await setupSearch.setupPosts().then(
+      await setupSearch.setupPostsResults().then(
         (_) => pageIsLoadedNotifier.value = true
       );
 

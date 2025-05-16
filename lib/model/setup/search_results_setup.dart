@@ -5,13 +5,13 @@ import 'package:revent/service/query/search/search_accounts_getter.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
 
-class SearchSetup with SearchProviderService {
+class SearchResultsSetup with SearchProviderService {
 
   final String searchText;
 
-  SearchSetup({required this.searchText});
+  SearchResultsSetup({required this.searchText});
 
-  Future<void> setupPosts() async {
+  Future<void> setupPostsResults() async {
 
     await VentDataSetup().setupSearch(
       searchText: searchText
@@ -19,7 +19,7 @@ class SearchSetup with SearchProviderService {
 
   }
 
-  Future<void> setupAccounts() async {
+  Future<void> setupAccountsResults() async {
 
     if(searchAccountsProvider.accounts.usernames.isEmpty) {
 
