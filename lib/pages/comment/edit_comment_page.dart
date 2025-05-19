@@ -56,7 +56,6 @@ class _EditCommentPageState extends State<EditCommentPage> {
       }
 
     } catch (_) {
-      print(_.toString());
       SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
     }
 
