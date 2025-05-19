@@ -14,6 +14,7 @@ class CommentsData {
   bool isCommentLiked;
   bool isCommentLikedByCreator;
   bool isPinned;
+  bool isEdited;
 
   Uint8List pfpData;
 
@@ -26,7 +27,8 @@ class CommentsData {
     this.totalReplies = 0,
     this.isCommentLiked = false,
     this.isCommentLikedByCreator = false,
-    this.isPinned = false
+    this.isPinned = false,
+    this.isEdited = false
   });
 
 }

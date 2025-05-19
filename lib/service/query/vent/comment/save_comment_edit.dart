@@ -24,11 +24,15 @@ class SaveCommentEdit extends BaseQueryService with
     const query = 
     '''
       UPDATE comments_info 
-      SET comment = :new_comment 
+      SET comment = :new_comment, is_edited = :is_edited
       WHERE comment_id = :comment_id 
     ''';
 
-    final param = {'comment_id': commentId};
+    final param = {
+      'new_comment': newComment,
+      'is_edited': true,
+      'comment_id': commentId
+    };
 
     await executeQuery(query, param).then((_) {
       commentsProvider.editComment(

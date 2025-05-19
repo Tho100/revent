@@ -166,6 +166,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
         
         final isCommentLiked = ventComment.comments[commenterIndex].isCommentLiked;
         final isCommentPinned = ventComment.comments[commenterIndex].isPinned;
+        final isCommentEdited = ventComment.comments[commenterIndex].isEdited;
 
         final totalLikes = ventComment.comments[commenterIndex].totalLikes;
         final totalReplies = ventComment.comments[commenterIndex].totalReplies;
@@ -180,6 +181,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
           isCommentLiked: isCommentLiked, 
           isCommentLikedByCreator: widget.isCommentLikedByCreator, 
           isPinned: isCommentPinned,
+          isEdited: isCommentEdited,
           pfpData: widget.pfpData, 
         );
 

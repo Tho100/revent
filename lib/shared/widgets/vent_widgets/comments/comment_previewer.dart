@@ -34,6 +34,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
   final bool isCommentLiked;
   final bool isCommentLikedByCreator;
   final bool isPinned;
+  final bool isEdited;
 
   final Uint8List pfpData;
 
@@ -47,6 +48,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
     required this.isCommentLiked,
     required this.isCommentLikedByCreator,
     required this.isPinned,
+    required this.isEdited,
     required this.pfpData,
     super.key
   });
@@ -126,6 +128,13 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
     
+  }
+
+  Widget _buildLastEdit() {
+    return GestureDetector(
+      onTap: () => SnackBarDialog.errorSnack(message: 'This comment was edited.'),
+      child: Icon(CupertinoIcons.pencil_outline, color: ThemeColor.contentThird, size: 18)
+    );
   }
 
   Widget _buildCommentActionButton() {
@@ -342,6 +351,14 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
         ],
 
         const Spacer(),
+  
+        if(isEdited) ... [
+
+          _buildLastEdit(),
+
+          const SizedBox(width: 20)
+
+        ],
 
         _buildCommentActionButton()
 
