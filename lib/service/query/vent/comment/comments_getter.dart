@@ -23,6 +23,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
         ci.created_at,
         ci.total_likes,
         ci.total_replies, 
+        ci.is_edited,
         upi.profile_picture
       FROM comments_info ci
       JOIN user_profile_info upi 
@@ -69,6 +70,11 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
       commentIds: commentIds,
     );
 
+    final isEdited = extractedData
+      .extractIntColumn('is_edited')
+      .map((value) => value != 0)
+      .toList();
+
     final isPinned = await _commentPinnedState(commentIds: commentIds);
 
     return {
@@ -80,6 +86,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
       'is_liked': isLikedState,
       'is_liked_by_creator': isLikedByCreatorState,
       'is_pinned': isPinned,
+      'is_edited': isEdited,
       'profile_picture': profilePictures,
     };
 

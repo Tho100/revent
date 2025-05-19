@@ -21,18 +21,16 @@ class SaveCommentEdit extends BaseQueryService with
       username: userProvider.user.username, commentText: originalComment
     );
 
-    final dateTimeNow = DateTime.now();
-
     const query = 
     '''
       UPDATE comments_info 
-      SET comment = :new_comment AND last_edit = :last_edit
+      SET comment = :new_comment, is_edited = :is_edited
       WHERE comment_id = :comment_id 
     ''';
 
     final param = {
       'new_comment': newComment,
-      'last_edit': dateTimeNow,
+      'is_edited': true,
       'comment_id': commentId
     };
 
