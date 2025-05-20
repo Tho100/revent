@@ -175,7 +175,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   Future<String> _getSearchResultsBodyText() async {
 
-    return await SearchDataGetter(
+    return await SearchVentBodyGetter(
       title: widget.title, 
       creator: widget.creator
     ).getBodyText();

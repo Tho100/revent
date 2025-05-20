@@ -1,12 +1,12 @@
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class SearchDataGetter extends BaseQueryService {
+class SearchVentBodyGetter extends BaseQueryService {
 
   final String title;
   final String creator;
 
-  SearchDataGetter({
+  SearchVentBodyGetter({
     required this.title, 
     required this.creator
   });
