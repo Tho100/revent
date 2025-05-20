@@ -61,9 +61,8 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   late VentPreviewerWidgets ventPreviewer;
   late VentActionsHandler actionsHandler;
-  late String ventBodyText;
-  
-  late int postId = 0;
+
+  int postId = 0;
   
   void _initializeVentPreviewer() {
     ventPreviewer = VentPreviewerWidgets(
@@ -105,8 +104,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       final isInSearchResults = navigationProvider.currentRoute == AppRoute.searchResults.path;
 
       final body = isInSearchResults
-        ? await _getSearchResultsBodyText()
-        : widget.bodyText;
+        ? await _getSearchResultsBodyText() : widget.bodyText;
 
       NavigatePage.editVentPage(title: widget.title, body: body);
 
@@ -154,7 +152,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   }
 
-  void _initializePostId() async {
+  Future<void> _initializePostId() async {
 
     postId = await PostIdGetter(
       title: widget.title, 
@@ -163,40 +161,38 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   }
 
-  void _initializeBodyText() async {
+  Future<String> _initializeBodyText() async {
 
     final customBodyTextPage = [AppRoute.searchResults.path];
 
-    ventBodyText = customBodyTextPage.contains(navigationProvider.currentRoute)   
-      ? await _getSearchResultsBodyText()
-      : widget.bodyText;
+    return customBodyTextPage.contains(navigationProvider.currentRoute)   
+      ? await _getSearchResultsBodyText() : widget.bodyText;
 
   }
 
   Future<String> _getSearchResultsBodyText() async {
-
-    return await SearchVentBodyGetter(
-      title: widget.title, 
-      creator: widget.creator
-    ).getBodyText();
-
+    return await SearchVentBodyGetter(postId: postId).getBodyText();
   }
 
-  void _navigateToVentPostPage() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => VentPostPage(
-        postId: postId,
-        title: widget.title, 
-        bodyText: ventBodyText, 
-        tags: widget.tags,
-        postTimestamp: widget.postTimestamp,
-        isNsfw: widget.isNsfw,
-        totalLikes: widget.totalLikes,
-        creator: widget.creator, 
-        pfpData: widget.pfpData,
-      )),
-    );
+  void _navigateToVentPostPage() async {
+    
+    await _initializeBodyText().then((bodyText) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => VentPostPage(
+          postId: postId,
+          title: widget.title, 
+          bodyText: bodyText, 
+          tags: widget.tags,
+          postTimestamp: widget.postTimestamp,
+          isNsfw: widget.isNsfw,
+          totalLikes: widget.totalLikes,
+          creator: widget.creator, 
+          pfpData: widget.pfpData,
+        )),
+      );
+    });
+
   }
 
   Widget _disabledActionButtonsWidget() {
@@ -342,8 +338,9 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   void initState() {
     super.initState();
     _initializeVentActionsHandler();
-    _initializePostId();
-    _initializeBodyText();
+    _initializePostId().then(
+      (_) => _initializeBodyText()
+    );
     _initializeVentPreviewer();
   }
 
