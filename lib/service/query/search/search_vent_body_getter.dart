@@ -1,5 +1,5 @@
 import 'package:revent/service/query/general/base_query_service.dart';
-// TODO: Rename this file
+
 class SearchVentBodyGetter extends BaseQueryService {
 
   final int postId;
