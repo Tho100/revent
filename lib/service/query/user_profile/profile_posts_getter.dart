@@ -81,6 +81,9 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
   }
 
+  /// Returns a list of booleans indicating whether each post ID
+  /// has been liked or saved by the current user, based on [stateType].
+
   Future<List<bool>> _ventPostState({
     required List<int> postIds,
     required String stateType,
