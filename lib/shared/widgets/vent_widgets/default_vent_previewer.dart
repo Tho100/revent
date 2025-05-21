@@ -143,22 +143,18 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   }
 
   void _initializeVentActionsHandler() {
-
     actionsHandler = VentActionsHandler(              
       title: widget.title, 
       creator: widget.creator, 
       context: context
     );
-
   }
 
   Future<void> _initializePostId() async {
-
     postId = await PostIdGetter(
       title: widget.title, 
       creator: widget.creator
     ).getPostId();
-
   }
 
   Future<String> _initializeBodyText() async {

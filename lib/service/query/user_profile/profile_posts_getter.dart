@@ -2,10 +2,13 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/service/vent_post_state_service.dart';
 
 class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderService {
 
   final formatPostTimestamp = FormatDate();
+
+  final ventPostState = VentPostStateService();
 
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
@@ -42,11 +45,11 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
     final isPinned = await _ventPinnedState(postIds: postIds);
 
-    final isLikedState = await _ventPostState(
+    final isLikedState = await ventPostState.getVentPostState(
       postIds: postIds, stateType: 'liked'
     );
 
-    final isSavedState = await _ventPostState(
+    final isSavedState = await ventPostState.getVentPostState(
       postIds: postIds, stateType: 'saved'
     );
 
@@ -72,30 +75,6 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     final param = {'username': userProvider.user.username};
 
     final retrievedIds = await executeQuery(query, param);
-
-    final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
-
-    final statePostIds = extractIds.toSet();
-
-    return postIds.map((postId) => statePostIds.contains(postId)).toList();
-
-  }
-
-  Future<List<bool>> _ventPostState({
-    required List<int> postIds,
-    required String stateType,
-  }) async {
-
-    final queryBasedOnType = {
-      'liked': 'SELECT post_id FROM liked_vent_info WHERE liked_by = :username',
-      'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
-    };
-
-    final param = {'username': userProvider.user.username};
-
-    final retrievedIds = await executeQuery(
-      queryBasedOnType[stateType]!, param
-    );
 
     final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
 
