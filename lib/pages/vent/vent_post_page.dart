@@ -8,6 +8,7 @@ import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/helper/text_copy.dart';
+import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
@@ -336,6 +337,32 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
+  Widget _buildTags() {
+
+    final tagList = widget.tags.split(' ');
+
+    return Wrap(
+      spacing: 5,
+      children: tagList.map((tag) {
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => SearchResultsPage(searchText: tag),
+              ),
+            );
+          },
+          child: Text(
+            '#$tag',
+            style: ThemeStyle.ventPostPageTagsStyle,
+          ),
+        );
+      }).toList(),
+    );
+
+  }
+
   Widget _buildPostContent() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -353,10 +380,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
           const SizedBox(height: 8),
 
-          Text(
-            widget.tags.split(' ').map((tags) => '#$tags').join(' '),
-            style: ThemeStyle.ventPostPageTagsStyle
-          ),
+          _buildTags(),
 
           const SizedBox(height: 12),
 
