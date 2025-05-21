@@ -349,7 +349,7 @@ class _VentPostPageState extends State<VentPostPage> with
             Navigator.push(
               context,
               MaterialPageRoute(
-                builder: (_) => SearchResultsPage(searchText: tag),
+                builder: (_) => SearchResultsPage(searchText: "#$tag"),
               ),
             );
           },
