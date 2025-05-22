@@ -23,7 +23,7 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> with UserProfileProviderService {
 
-  final localModel = LocalStorageModel();
+  final localStorage = LocalStorageModel();
 
   Timer? splashScreenTimer;
 
@@ -46,11 +46,26 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
   Future<void> _loadStartupData() async {
 
+    final currentTab = await localStorage.readCurrentHomeTab();
+
     await ProfileDataSetup().setup(username: userProvider.user.username).then(
-      (_) async => await VentDataSetup().setupForYou()
+      (_) async {
+
+        if (currentTab == 'For you') {
+          await VentDataSetup().setupForYou();
+          
+        } else if (currentTab == 'Trending') {
+          await VentDataSetup().setupTrending();
+
+        } else if (currentTab == 'Following') {
+          await VentDataSetup().setupFollowing();
+
+        }
+
+      }
     );
 
-    await localModel.readThemeInformation().then(
+    await localStorage.readThemeInformation().then(
       (theme) => ThemeUpdater(theme: theme).updateTheme()
     );
 
@@ -60,7 +75,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
   void _startTimer() async {
 
-    final localUsername = (await localModel.readLocalAccountInformation())['username']!;
+    final localUsername = (await localStorage.readLocalAccountInformation())['username']!;
 
     if(localUsername.isNotEmpty) {
       splashScreenTimer = Timer(const Duration(milliseconds: 0), 
@@ -80,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
     try {
 
-      final readLocalData = await localModel.readLocalAccountInformation();
+      final readLocalData = await localStorage.readLocalAccountInformation();
 
       final username = readLocalData['username']!;
       final email = readLocalData['email']!;
@@ -90,7 +105,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
         return;
       }
 
-      final socialHandles = await localModel.readLocalSocialHandles();
+      final socialHandles = await localStorage.readLocalSocialHandles();
 
       final userSetup = UserData(
         username: username, 

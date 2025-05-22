@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/query/general/follow_suggestion_getter.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
@@ -30,9 +31,11 @@ class _HomePageState extends State<HomePage> with
   NavigationProviderService,
   FollowSuggestionProviderService {
 
+  final forYouIsLoadedNotifier = ValueNotifier<bool>(false);
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
 
+  final localStorage = LocalStorageModel();
   final ventDataSetup = VentDataSetup();
   final refreshService = RefreshService();
 
@@ -44,9 +47,49 @@ class _HomePageState extends State<HomePage> with
     Tab(text: 'Following')
   ];
 
+  void _initializeCurrentTab() async {
+
+    final currentTab = await localStorage.readCurrentHomeTab();
+
+    final currentTabIndex = homeTabs.indexWhere((tab) => tab.text == currentTab);
+
+    tabController.index = currentTabIndex != -1 ? currentTabIndex : 0;
+
+    if (currentTab == 'For you' && forYouVentProvider.vents.isNotEmpty) {
+      forYouIsLoadedNotifier.value = true;
+
+    } else if (currentTab == 'Trending' && trendingVentProvider.vents.isNotEmpty) {
+      trendingIsLoadedNotifier.value = true;
+
+    } else if (currentTab == 'Following' && followingVentProvider.vents.isNotEmpty) {
+      followingIsLoadedNotifier.value = true;
+
+    }
+
+    navigationProvider.setHomeTabIndex(currentTabIndex);
+
+  }
+
   void _onTabChanged() async {
 
-    if (tabController.index == 1) {
+    if (tabController.index == 0) {
+
+      await localStorage.setupCurrentHomeTab(tab: 'For you');
+
+      if(forYouVentProvider.vents.isNotEmpty) {
+        forYouIsLoadedNotifier.value = true;
+        return;
+      }
+
+      if(!forYouIsLoadedNotifier.value && forYouVentProvider.vents.isEmpty) {
+        await ventDataSetup.setupForYou().then(
+          (_) => forYouIsLoadedNotifier.value = true
+        );
+      }
+
+    } else if (tabController.index == 1) {
+
+      await localStorage.setupCurrentHomeTab(tab: 'Trending');
 
       if(trendingVentProvider.vents.isNotEmpty) {
         trendingIsLoadedNotifier.value = true;
@@ -60,6 +103,8 @@ class _HomePageState extends State<HomePage> with
       }
 
     } else if (tabController.index == 2) {
+
+      await localStorage.setupCurrentHomeTab(tab: 'Following');
 
       if(followingVentProvider.vents.isNotEmpty) {
         followingIsLoadedNotifier.value = true;
@@ -114,7 +159,10 @@ class _HomePageState extends State<HomePage> with
 
     switch (homeTabs[tabController.index].text) {
       case 'For you':
-        await refreshService.refreshForYouVents();
+        forYouIsLoadedNotifier.value = false;
+        await refreshService.refreshForYouVents().then(
+          (_) => forYouIsLoadedNotifier.value = true
+        );
         break;
       case 'Trending':
         trendingIsLoadedNotifier.value = false;
@@ -150,12 +198,23 @@ class _HomePageState extends State<HomePage> with
   }
 
   Widget _buildForYouListView() {
-    return _buildVentListViewBody(
-      onRefresh: () async => await _onTabRefresh(),
-      child: HomeVentListView(
-        provider: Provider.of<VentForYouProvider>(context),
-        showFollowSuggestion: true
-      ),
+    return ValueListenableBuilder(
+      valueListenable: forYouIsLoadedNotifier,
+      builder: (_, isLoaded, __) {
+        
+        if(!isLoaded) {
+          return const PageLoading();
+        }
+
+        return _buildVentListViewBody(
+          onRefresh: () async => await _onTabRefresh(),
+          child: HomeVentListView(
+            provider: Provider.of<VentForYouProvider>(context),
+            showFollowSuggestion: true
+          ),
+        );
+
+      },
     );
   }
 
@@ -242,6 +301,7 @@ class _HomePageState extends State<HomePage> with
   @override
   void initState() {
     super.initState();
+    _initializeCurrentTab();
     _initializeTabController();
     _initializeFollowSuggestion();
   }
@@ -249,6 +309,7 @@ class _HomePageState extends State<HomePage> with
   @override
   void dispose() {
     tabController.dispose();
+    forYouIsLoadedNotifier.dispose();
     followingIsLoadedNotifier.dispose();
     trendingIsLoadedNotifier.dispose();
     super.dispose();

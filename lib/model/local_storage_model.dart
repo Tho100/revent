@@ -8,6 +8,7 @@ class LocalStorageModel {
   final _userThemeFile = 'theme_info.txt';
   final _userSocialHandles = 'socials_info.txt';
   final _searchHistoryFile = 'search_history.txt';
+  final _currentHomeTabFile = 'home_tab.txt';
 
   final _folderName = 'ReventInfos';
 
@@ -261,6 +262,42 @@ class LocalStorageModel {
 
     } catch (_) {
       return {};
+    }
+
+  }
+
+  Future<void> setupCurrentHomeTab({required String tab}) async {
+
+    final localDir = await _readLocalDirectory();
+    
+    final setupFile = File('${localDir.path}/$_currentHomeTabFile');
+
+    if (!await setupFile.exists()) {
+      await setupFile.create();
+    }
+
+    try {
+
+      await setupFile.writeAsString(tab);
+
+    } catch (_) {
+      return;
+    }
+
+  }
+
+  Future<String> readCurrentHomeTab() async {
+  
+    final localDir = await _readLocalDirectory();
+    
+    final setupFile = File('${localDir.path}/$_currentHomeTabFile');
+
+    try {
+
+      return await setupFile.readAsString();
+
+    } catch (_) {
+      return 'For you';
     }
 
   }
