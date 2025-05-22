@@ -710,37 +710,37 @@ class _VentPostPageState extends State<VentPostPage> with
           backgroundColor: ThemeColor.contentPrimary,
           color: ThemeColor.backgroundPrimary,
           onRefresh: () async => await _onPageRefresh(),
-          child: Padding(
-            padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
-            child: ScrollConfiguration(
-              behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
-              child: SingleChildScrollView(
-                physics: AlwaysScrollableScrollPhysics(
-                  parent: commentData.comments.isEmpty 
-                    ? const ClampingScrollPhysics() : const BouncingScrollPhysics()
-                ),
+          child: ScrollConfiguration(
+            behavior: ScrollConfiguration.of(context).copyWith(overscroll: false),
+            child: SingleChildScrollView(
+              physics: AlwaysScrollableScrollPhysics(
+                parent: commentData.comments.isEmpty 
+                  ? const ClampingScrollPhysics() : const BouncingScrollPhysics()
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(top: 15.0, left: 18.0, right: 18.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
+              
                     _buildPostHeaderInfo(),
-        
+                      
                     const SizedBox(height: 16),
-        
+                      
                     _buildPostContent(),
-        
+                      
                     _buildActionButtons(),
-        
+                      
                     const SizedBox(height: 12),
-        
+                      
                     _buildCommentsHeader(commentData.comments.isEmpty),
                     
                     const SizedBox(height: 20),
-        
+                      
                     _buildCommentSectionListView(),
-        
+                      
                     const SizedBox(height: 10),
-
+              
                   ],
                 ),
               ),
