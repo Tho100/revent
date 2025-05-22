@@ -44,25 +44,27 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
     );  
   }
 
-  Future<void> _loadStartupData() async {
+  Future<void> _initializeHomeVents() async {
 
     final currentTab = await localStorage.readCurrentHomeTab();
 
+    if (currentTab == 'For you') {
+      await VentDataSetup().setupForYou();
+      
+    } else if (currentTab == 'Trending') {
+      await VentDataSetup().setupTrending();
+
+    } else if (currentTab == 'Following') {
+      await VentDataSetup().setupFollowing();
+
+    }
+
+  }
+
+  Future<void> _loadStartupData() async {
+
     await ProfileDataSetup().setup(username: userProvider.user.username).then(
-      (_) async {
-
-        if (currentTab == 'For you') {
-          await VentDataSetup().setupForYou();
-          
-        } else if (currentTab == 'Trending') {
-          await VentDataSetup().setupTrending();
-
-        } else if (currentTab == 'Following') {
-          await VentDataSetup().setupFollowing();
-
-        }
-
-      }
+      (_) async => await _initializeHomeVents()
     );
 
     await localStorage.readThemeInformation().then(

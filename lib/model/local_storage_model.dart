@@ -292,13 +292,11 @@ class LocalStorageModel {
     
     final setupFile = File('${localDir.path}/$_currentHomeTabFile');
 
-    try {
-
+    if(await setupFile.exists()) {
       return await setupFile.readAsString();
-
-    } catch (_) {
-      return 'For you';
     }
+
+    return 'For you';
 
   }
 
