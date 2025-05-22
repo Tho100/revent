@@ -132,7 +132,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
   Widget _buildLastEdit() {
     return GestureDetector(
-      onTap: () => SnackBarDialog.errorSnack(message: 'This comment was edited.'),
+      onTap: () => SnackBarDialog.errorSnack(message: 'This comment was edited.'), // TODO: Update to temporarySnack
       child: Icon(CupertinoIcons.pencil_outline, color: ThemeColor.contentThird, size: 18)
     );
   }
