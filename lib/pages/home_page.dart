@@ -72,9 +72,11 @@ class _HomePageState extends State<HomePage> with
 
   void _onTabChanged() async {
 
-    if (tabController.index == 0) {
+    final currentTab = homeTabs[tabController.index].text!;
 
-      await localStorage.setupCurrentHomeTab(tab: 'For you');
+    await localStorage.setupCurrentHomeTab(tab: currentTab);
+
+    if (tabController.index == 0) {
 
       if(forYouVentProvider.vents.isNotEmpty) {
         forYouIsLoadedNotifier.value = true;
@@ -89,8 +91,6 @@ class _HomePageState extends State<HomePage> with
 
     } else if (tabController.index == 1) {
 
-      await localStorage.setupCurrentHomeTab(tab: 'Trending');
-
       if(trendingVentProvider.vents.isNotEmpty) {
         trendingIsLoadedNotifier.value = true;
         return;
@@ -103,8 +103,6 @@ class _HomePageState extends State<HomePage> with
       }
 
     } else if (tabController.index == 2) {
-
-      await localStorage.setupCurrentHomeTab(tab: 'Following');
 
       if(followingVentProvider.vents.isNotEmpty) {
         followingIsLoadedNotifier.value = true;
