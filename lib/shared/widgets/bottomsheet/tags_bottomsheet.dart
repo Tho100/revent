@@ -119,7 +119,7 @@ class BottomsheetTagsSelection with TagsProviderService {
                       child: TextFormField(
                         autofocus: true,
                         maxLines: 1,
-                        maxLength: 45,
+                        maxLength: 48,
                         controller: customTagsController,
                         style: GoogleFonts.inter(
                           color: ThemeColor.contentSecondary,
@@ -141,30 +141,45 @@ class BottomsheetTagsSelection with TagsProviderService {
                         },
                         onChanged: (tagText) {
 
-                          final spacesCount = tagText.split(' ').length - 1;
+                          final rawTags = tagText.split(' ');
 
-                          if (spacesCount > 2) {
+                          List<String> processedTags = [];
 
-                            final validText = tagText.split(' ').take(3).join(' ');
+                          for (var tag in rawTags) {
 
-                            customTagsController.value = TextEditingValue(
-                              text: validText,
-                              selection: TextSelection.collapsed(offset: validText.length),
-                            );
+                            if (processedTags.length >= 3) break;
 
-                          } else {
+                            if (tag.length > 15) {
 
-                            final currentTags = tagText.trim().split(' ').where(
-                              (tag) => tag.isNotEmpty
-                            ).toList();
+                              final chunks = RegExp('.{1,15}').allMatches(tag).map((m) => m.group(0)!);
 
-                            tagsProvider.addTags(currentTags);
+                              for (var chunk in chunks) {
 
-                            chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
-                              return currentTags.contains(chipsTags[index]);
-                            });
+                                if (processedTags.length >= 3) break;
+                                processedTags.add(chunk);
+
+                              }
+
+                            } else {
+                              processedTags.add(tag);
+                            }
+
                           }
 
+                          final validText = processedTags.join(' ');
+
+                          customTagsController.value = TextEditingValue(
+                            text: validText,
+                            selection: TextSelection.collapsed(offset: validText.length),
+                          );
+
+                          final cleanTags = processedTags.where((tag) => tag.isNotEmpty).toList();
+
+                          tagsProvider.addTags(cleanTags);
+
+                          chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
+                            return cleanTags.contains(chipsTags[index]);
+                          });
                         },
 
                       ),
