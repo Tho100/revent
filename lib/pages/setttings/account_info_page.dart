@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/pages/profile_picture_viewer_page.dart';
 import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
+import 'package:revent/shared/widgets/profile_picture.dart';
 
 class AccountInformationPage extends StatefulWidget {
 
@@ -101,15 +104,55 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
     );
   }
 
+  Widget _buildPrimaryInfo() {
+    return Column(
+      children: [
+
+        Padding(
+          padding: const EdgeInsets.only(top: 24.0, bottom: 14.0),
+          child: InkWellEffect(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (_) => ProfilePictureViewer(pfpData: profileProvider.profile.profilePicture))
+              );
+            },
+            child: Hero(
+              tag: 'profile-picture-hero',
+              child: ProfilePictureWidget(
+                pfpData: profileProvider.profile.profilePicture,
+                customEmptyPfpSize: 35,
+                customHeight: 100,
+                customWidth: 100,
+              ),
+            ),
+          ),
+        ),
+
+        Center(
+          child: Text(
+            userProvider.user.username,
+            style: GoogleFonts.inter(
+              color: ThemeColor.contentPrimary,
+              fontWeight: FontWeight.w800,
+              fontSize: 21
+            ),
+          ),
+        ),
+
+      ],
+    );
+  }
+
   Widget _buildBody() {
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-                      
-          BorderedContainer(
-            child: _buildHeaders('Username', userProvider.user.username)
-          ),
+
+          _buildPrimaryInfo(),
+
+          const SizedBox(height: 25),
 
           BorderedContainer(
             child: _buildHeaders('Email', userProvider.user.email)
