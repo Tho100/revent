@@ -50,21 +50,23 @@ class ProfileInfoWidgets {
   }
 
   Widget buildPopularityHeader(String header, int value) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
       children: [
 
-        Text(
-          value.toString(),
-          style: GoogleFonts.inter(
-            color: ThemeColor.contentPrimary,
-            fontWeight: FontWeight.w800,
-            fontSize: 20
+        Padding(
+          padding: const EdgeInsets.only(right: 2.0),
+          child: Text(
+            value.toString(),
+            style: GoogleFonts.inter(
+              color: ThemeColor.contentPrimary,
+              fontWeight: FontWeight.w800,
+              fontSize: 20
+            ),
+            textAlign: TextAlign.start,
           ),
-          textAlign: TextAlign.start,
         ),
 
-        const SizedBox(width: 6),
+        const SizedBox(height: 8),
 
         Padding(
           padding: const EdgeInsets.only(bottom: 2.0),
@@ -84,26 +86,28 @@ class ProfileInfoWidgets {
   }
 
   Widget buildPopularityHeaderNotifier(String header, ValueNotifier notifier) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
+    return Column(
       children: [
 
         ValueListenableBuilder(
           valueListenable: notifier,
           builder: (_, value, __) {
-            return Text(
-              value.toString(),
-              style: GoogleFonts.inter(
-                color: ThemeColor.contentPrimary,
-                fontWeight: FontWeight.w800,
-                fontSize: 20
+            return Padding(
+              padding: const EdgeInsets.only(right: 2.0),
+              child: Text(
+                value.toString(),
+                style: GoogleFonts.inter(
+                  color: ThemeColor.contentPrimary,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 20
+                ),
+                textAlign: TextAlign.start,
               ),
-              textAlign: TextAlign.start,
             );
           },
         ),
 
-        const SizedBox(width: 6),
+        const SizedBox(height: 8),
 
         Padding(
           padding: const EdgeInsets.only(bottom: 2.0),

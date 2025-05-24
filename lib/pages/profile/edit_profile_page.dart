@@ -344,7 +344,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
                       color: ThemeColor.contentPrimary,
                       shape: BoxShape.circle
                     ),
-                    child: Icon(CupertinoIcons.pencil, color: ThemeColor.foregroundPrimary, size: 18.5),
+                    child: Icon(CupertinoIcons.camera, color: ThemeColor.foregroundPrimary, size: 16),
                   ),
                 ),
               ),

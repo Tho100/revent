@@ -14,7 +14,7 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
 
   Future<void> addSocial() async {
 
-    if(userProvider.user.socialHandles[platform]!.isNotEmpty) {
+    if((userProvider.user.socialHandles[platform] ?? '').isNotEmpty) {
       await _updateSocialHandles();
       return;
     }

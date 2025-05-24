@@ -321,7 +321,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
   
-        profileInfoWidgets.buildPopularityHeaderNotifier('vents', postsNotifier),
+        profileInfoWidgets.buildPopularityHeaderNotifier('Vents', postsNotifier),
 
         GestureDetector(
           onTap: () => isPrivateAccount || isBlockedAccount 
@@ -333,7 +333,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
               totalFollowing: followingNotifier.value, 
               isFollowingListHidden: isFollowingListHidden
             ),
-          child: profileInfoWidgets.buildPopularityHeaderNotifier('followers', followersNotifier)
+          child: profileInfoWidgets.buildPopularityHeaderNotifier('Followers', followersNotifier)
         ),
 
         GestureDetector(
@@ -346,7 +346,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
               totalFollowing: followingNotifier.value, 
               isFollowingListHidden: isFollowingListHidden
             ),
-          child: profileInfoWidgets.buildPopularityHeaderNotifier('following', followingNotifier)
+          child: profileInfoWidgets.buildPopularityHeaderNotifier('Following', followingNotifier)
         ),
   
       ],
