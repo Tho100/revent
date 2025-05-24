@@ -172,7 +172,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 
-                profileInfoWidgets.buildPopularityHeader('vents', postsData.myProfile.titles.length),
+                profileInfoWidgets.buildPopularityHeader('Vents', postsData.myProfile.titles.length),
 
                 GestureDetector(
                   onTap: () => NavigatePage.followsPage(
@@ -181,7 +181,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
                     totalFollowers: profileData.profile.followers,
                     totalFollowing: profileData.profile.following
                   ),
-                  child: profileInfoWidgets.buildPopularityHeader('followers', profileData.profile.followers)
+                  child: profileInfoWidgets.buildPopularityHeader('Followers', profileData.profile.followers)
                 ),
           
                 GestureDetector(
@@ -191,7 +191,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
                     totalFollowers: profileData.profile.followers,
                     totalFollowing: profileData.profile.following
                   ),
-                  child: profileInfoWidgets.buildPopularityHeader('following', profileData.profile.following)
+                  child: profileInfoWidgets.buildPopularityHeader('Following', profileData.profile.following)
                 ),
           
               ],
