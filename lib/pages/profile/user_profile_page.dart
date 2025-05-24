@@ -21,6 +21,7 @@ import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/profile/social_links_widget.dart';
+import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
@@ -219,14 +220,31 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
       final follow = !isFollowingNotifier.value;
 
-      await UserActions(username: widget.username).toggleFollowUser(follow: follow).then(
-        (_) => isFollowingNotifier.value = !isFollowingNotifier.value
-      );
+      if (!follow) {
+        CustomAlertDialog.alertDialogCustomOnPress(
+          message: "Unfollow @${widget.username}?", 
+          buttonMessage: "Unfollow", 
+          onPressedEvent: () async {
+            await _toggleFollowUser(follow).then(
+              (_) => Navigator.pop(context)
+            );
+          }
+        );
+        return;
+      }
+
+      await _toggleFollowUser(follow);
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 
+  }
+
+  Future<void> _toggleFollowUser(bool follow) async {
+    await UserActions(username: widget.username).toggleFollowUser(follow: true).then(
+      (_) => isFollowingNotifier.value = !isFollowingNotifier.value
+    );
   }
 
   Widget _buildPronouns() {
