@@ -66,7 +66,7 @@ class ProfileInfoWidgets {
           ),
         ),
 
-        const SizedBox(height: 8),
+        const SizedBox(height: 6),
 
         Padding(
           padding: const EdgeInsets.only(bottom: 2.0),
