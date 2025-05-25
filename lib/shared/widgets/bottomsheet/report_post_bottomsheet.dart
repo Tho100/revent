@@ -4,8 +4,14 @@ import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
+import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 
 class ReportPostBottomsheet {
+
+  void _onReportPressed(BuildContext context, String type) {
+    Navigator.pop(context);
+    CustomAlertDialog.alertDialogTitle('Report Submitted', 'Thank you for making Revent a better place!');
+  }
 
   Future buildBottomsheet({required BuildContext context}) {
     return Bottomsheet().buildBottomSheet(
@@ -30,37 +36,37 @@ class ReportPostBottomsheet {
 
         BottomsheetOptionButton(
           text: 'Spam', 
-          onPressed: () {}
+          onPressed: () => _onReportPressed(context, 'spam')
         ),
 
         BottomsheetOptionButton(
           text: 'Scam or fraud', 
-          onPressed: () {}
+          onPressed: () => _onReportPressed(context, 'scam_fraud')
         ),
 
         BottomsheetOptionButton(
           text: 'Inappropriate content involving minors', 
-          onPressed: () {}
+          onPressed: () => _onReportPressed(context, 'inappropriate')
         ),
 
         BottomsheetOptionButton(
           text: 'Promotion of illegal activity', 
-          onPressed: () {}
+          onPressed: () => _onReportPressed(context, 'illegal_activity')
         ),
 
         BottomsheetOptionButton(
           text: 'Encouraging self-harm or suicide', 
-          onPressed: () {}
+          onPressed: () => _onReportPressed(context, 'self_harm')
         ),
 
         BottomsheetOptionButton(
           text: 'Threats or harassment', 
-          onPressed: () {}
+          onPressed: () => _onReportPressed(context, 'threats')
         ),
 
         BottomsheetOptionButton(
           text: 'Impersonation or identity theft', 
-          onPressed: () {}
+          onPressed: () => _onReportPressed(context, 'identity_theft')
         ),
 
         const SizedBox(height: 25)
