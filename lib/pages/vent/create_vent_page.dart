@@ -50,6 +50,33 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   bool isPostPressed = false;
 
+  void wrapBodyTextSelection({
+    required String left,
+    required String right,
+  }) {
+    final selection = postController.bodyTextController.selection;
+
+    if (!selection.isValid || selection.start == selection.end) {
+      return;
+    }
+
+    final text = postController.bodyTextController.text;
+
+    final selectedText = text.substring(selection.start, selection.end);
+
+    final newText = text.replaceRange(
+      selection.start, selection.end, '$left$selectedText$right'
+    );
+
+    postController.bodyTextController.value = postController.bodyTextController.value.copyWith(
+      text: newText,
+      selection: TextSelection.collapsed(
+        offset: selection.start + left.length + selectedText.length + right.length - left.length - right.length
+      ),
+    );
+
+  }
+
   Future<void> _onPostVentPressed() async {
 
     final ventTitle = postController.titleController.text;
@@ -208,6 +235,45 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     );
   }
 
+  Widget _buildTextFormattingButtons() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0),
+      child: Row(
+        children: [
+          // TODO: Show alert whhen no selection
+          SizedBox(
+            height: 50,
+            width: 35,
+            child: IconButton(
+              icon: Icon(CupertinoIcons.bold, color: ThemeColor.contentPrimary, size: 24),
+              onPressed: () {
+                wrapBodyTextSelection(
+                  left: '**',
+                  right: '**',
+                );
+              },
+            ),
+          ),
+    
+          SizedBox(
+            height: 50,
+            width: 35,
+            child: IconButton(
+              icon: Icon(CupertinoIcons.italic, color: ThemeColor.contentPrimary, size: 24),
+              onPressed: () {
+                wrapBodyTextSelection(
+                  left: '*',
+                  right: '*',
+                );
+              },
+            ),
+          ),
+    
+        ],
+      ),
+    );
+  }
+
   Widget _buildAddTagsButton() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
@@ -253,6 +319,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         child: Row(
           children: [
           
+            _buildTextFormattingButtons(),
+
             const Spacer(),
           
             _buildAddTagsButton(),

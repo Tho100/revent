@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:recase/recase.dart';
 import 'package:revent/app/app_widget_restart.dart';
+import 'package:revent/helper/capitalizer.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';
@@ -109,7 +109,7 @@ class _ThemePageState extends State<ThemePage> {
                     const SizedBox(width: 16),
                           
                     Text(
-                      themes[index].titleCase,
+                      Capitalizer().capitalize(themes[index]),
                       style: GoogleFonts.inter(
                         color: ThemeColor.contentPrimary,
                         fontWeight: FontWeight.w800,

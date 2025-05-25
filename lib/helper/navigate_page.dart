@@ -141,6 +141,8 @@ class NavigatePage {
     Uint8List? pfpData
   }) async {
 
+    // TODO: Fix can't retrieve profile pic
+
     if(username == getIt.userProvider.user.username) {
       myProfilePage();
       return;
