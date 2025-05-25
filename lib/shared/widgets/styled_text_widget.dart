@@ -45,47 +45,196 @@ class StyledTextWidget extends StatelessWidget {
 
   }
 
+  // TODO: Checkout to refactor and improve this code 
+
   List<TextSpan> _buildTextSpans(String text) {
 
-    final words = text.split(' ');
+    final spans = <TextSpan>[];
 
-    const blueTextStyle = TextStyle(
-      color: Colors.blueAccent,       
+    const italicTextStyle = TextStyle(
       fontWeight: FontWeight.w700,
-      fontSize: 14
+      fontStyle: FontStyle.italic,
+      fontSize: 14,
     );
 
-    return words.map((word) {
+    const boldTextStyle = TextStyle(
+      fontWeight: FontWeight.w900,
+      fontSize: 14,
+    );
 
-      if (word.startsWith('@')) {
+    const blueTextStyle = TextStyle(
+      color: Colors.blueAccent,
+      fontWeight: FontWeight.w700,
+      fontSize: 14,
+    );
 
-        final mentioned = word.substring(1);
+    bool isMentionOrUrl(String word) {
+      if (word.startsWith('@')) return true;
+      if (OpenLink(url: word).isValidUrl()) return true;
+      return false;
+    }
 
-        return TextSpan(
-          text: '$word ',
-          style: blueTextStyle,
-          recognizer: TapGestureRecognizer()..onTap = () => NavigatePage.userProfilePage(
-            username: mentioned, 
-          )
-        );
+    int i = 0;
 
-      } else if (OpenLink(url: word).isValidUrl()) {
+    while (i < text.length) {
 
-        return TextSpan(
-          text: '$word ',
-          style: blueTextStyle,
-          recognizer: TapGestureRecognizer()..onTap = () async => await OpenLink(url: word).open()
-        );
+      if (text.startsWith('**', i)) {
+        
+        int end = text.indexOf('**', i + 2);
+
+        if (end == -1) end = text.length;
+
+        final content = text.substring(i + 2, end);
+
+        final words = RegExp(r'(\s+|[^\s]+)').allMatches(content).map((m) => m.group(0)!).toList();
+
+        for (var word in words) {
+
+          if (word.isEmpty) {
+            spans.add(const TextSpan(text: ' '));
+            continue;
+          }
+
+          if (isMentionOrUrl(word)) {
+
+            if (word.startsWith('@')) {
+
+              final mentioned = word.substring(1);
+
+              spans.add(TextSpan(
+                text: word ,
+                style: blueTextStyle,
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => NavigatePage.userProfilePage(username: mentioned),
+              ));
+
+            } else {
+
+              spans.add(TextSpan(
+                text: word,
+                style: blueTextStyle,
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () async => await OpenLink(url: word).open(),
+              ));
+            }
+          } else {
+            spans.add(
+              TextSpan(text: word, style: boldTextStyle)
+            );
+          }
+
+        }
+
+        i = end + 2;
+        
+      } else if (text.startsWith('*', i)) {
+
+        int end = text.indexOf('*', i + 1);
+
+        if (end == -1) end = text.length;
+        final content = text.substring(i + 1, end);
+
+        final words = RegExp(r'(\s+|[^\s]+)').allMatches(content).map((m) => m.group(0)!).toList();
+
+        for (var word in words) {
+
+          if (word.isEmpty) {
+            spans.add(const TextSpan(text: ' '));
+            continue;
+          }
+
+          if (isMentionOrUrl(word)) {
+            
+            if (word.startsWith('@')) {
+
+              final mentioned = word.substring(1);
+
+              spans.add(
+                TextSpan(
+                text: word,
+                style: blueTextStyle,
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () => NavigatePage.userProfilePage(username: mentioned),
+              ));
+
+            } else {
+
+              spans.add(
+                TextSpan(
+                text: word,
+                style: blueTextStyle,
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () async => await OpenLink(url: word).open(),
+              ));
+
+            }
+
+          } else {
+            spans.add(
+              TextSpan(text: word, style: italicTextStyle)
+            );
+          }
+
+        }
+
+        i = end + 1;
 
       } else {
-        return TextSpan(
-          text: '$word ',
-        );
 
+        final nextIndexes = [
+          text.indexOf('**', i),
+          text.indexOf('*', i),
+        ].where((pos) => pos != -1).toList();
+
+        final nextPos = nextIndexes.isEmpty ? text.length : nextIndexes.reduce((a, b) => a < b ? a : b);
+        final chunk = text.substring(i, nextPos);
+
+        final words = RegExp(r'(\s+|[^\s]+)').allMatches(chunk).map((m) => m.group(0)!).toList();
+
+        for (var word in words) {
+          
+          if (word.isEmpty) {
+            spans.add(const TextSpan(text: ' '));
+            continue;
+          }
+
+          if (word.startsWith('@')) {
+
+            final mentioned = word.substring(1);
+
+            spans.add(
+              TextSpan(
+              text: word,
+              style: blueTextStyle,
+              recognizer: TapGestureRecognizer()
+                ..onTap = () => NavigatePage.userProfilePage(username: mentioned),
+            ));
+
+          } else if (OpenLink(url: word).isValidUrl()) {
+
+            spans.add(
+              TextSpan(
+              text: word,
+              style: blueTextStyle,
+              recognizer: TapGestureRecognizer()
+                ..onTap = () async => await OpenLink(url: word).open(),
+            ));
+
+          } else {
+            spans.add(
+              TextSpan(text: word)
+            );
+          }
+
+        }
+
+        i = nextPos;
       }
+      
+    }
 
-    }).toList();
-
+    return spans;
+    
   }
 
 }
