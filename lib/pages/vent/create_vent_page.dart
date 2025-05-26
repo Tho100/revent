@@ -23,6 +23,7 @@ import 'package:revent/service/query/vent/vent_checker.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
+import 'package:revent/shared/widgets/vent_widgets/vent_text_formatting_toolbar.dart';
 
 class CreateVentPage extends StatefulWidget {
 
@@ -49,35 +50,6 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
   );
 
   bool isPostPressed = false;
-
-  void _wrapBodyTextSelection({
-    required String left,
-    required String right,
-  }) {
-
-    final selection = postController.bodyTextController.selection;
-
-    if (!selection.isValid || selection.start == selection.end) {
-      SnackBarDialog.temporarySnack(message: 'No text selected.');
-      return;
-    }
-
-    final text = postController.bodyTextController.text;
-
-    final selectedText = text.substring(selection.start, selection.end);
-
-    final newText = text.replaceRange(
-      selection.start, selection.end, '$left$selectedText$right'
-    );
-
-    postController.bodyTextController.value = postController.bodyTextController.value.copyWith(
-      text: newText,
-      selection: TextSelection.collapsed(
-        offset: selection.start + left.length + selectedText.length + right.length - left.length - right.length
-      ),
-    );
-
-  }
 
   Future<void> _onPostVentPressed() async {
 
@@ -237,35 +209,6 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     );
   }
 
-  Widget _buildTextFormattingButtons() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 12.0),
-      child: Row(
-        children: [
-
-          SizedBox(
-            height: 50,
-            width: 35,
-            child: IconButton(
-              icon: Icon(CupertinoIcons.bold, color: ThemeColor.contentPrimary, size: 24),
-              onPressed: () => _wrapBodyTextSelection(left: '**', right: '**')
-            ),
-          ),
-    
-          SizedBox(
-            height: 50,
-            width: 35,
-            child: IconButton(
-              icon: Icon(CupertinoIcons.italic, color: ThemeColor.contentPrimary, size: 24),
-              onPressed: () => _wrapBodyTextSelection(left: '*', right: '*')
-            ),
-          ),
-    
-        ],
-      ),
-    );
-  }
-
   Widget _buildAddTagsButton() {
     return Padding(
       padding: const EdgeInsets.only(bottom: 4.0),
@@ -311,7 +254,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         child: Row(
           children: [
           
-            _buildTextFormattingButtons(),
+            VentTextFormattingToolbar(controller: postController.bodyTextController),
 
             const Spacer(),
           

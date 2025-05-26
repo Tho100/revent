@@ -17,7 +17,9 @@ import 'package:revent/pages/navigation/my_profile_page.dart';
 import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
+import 'package:revent/service/query/user/user_validator.dart';
 import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class _DockBarNavigationPages {
 
@@ -145,6 +147,13 @@ class NavigatePage {
 
     if(username == getIt.userProvider.user.username) {
       myProfilePage();
+      return;
+    }
+
+    final userExists = await UserValidator().userExists(username: username);
+
+    if (!userExists) {
+      SnackBarDialog.errorSnack(message: 'User does not exist.');
       return;
     }
 
