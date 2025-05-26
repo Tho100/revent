@@ -141,17 +141,17 @@ class NavigatePage {
     Uint8List? pfpData
   }) async {
 
-    // TODO: Fix can't retrieve profile pic
+    username = username.replaceFirst('@', '');
 
     if(username == getIt.userProvider.user.username) {
       myProfilePage();
       return;
     }
 
-    _navigation.setCurrentRoute(AppRoute.userProfile.path);
-
     final profilePicture = 
       pfpData ?? await ProfilePictureGetter().getProfilePictures(username: username);
+
+    _navigation.setCurrentRoute(AppRoute.userProfile.path);
 
     Navigator.push(
       navigatorKey.currentContext!,
