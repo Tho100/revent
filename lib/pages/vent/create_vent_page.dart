@@ -50,13 +50,15 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   bool isPostPressed = false;
 
-  void wrapBodyTextSelection({
+  void _wrapBodyTextSelection({
     required String left,
     required String right,
   }) {
+
     final selection = postController.bodyTextController.selection;
 
     if (!selection.isValid || selection.start == selection.end) {
+      SnackBarDialog.temporarySnack(message: 'No text selected.');
       return;
     }
 
@@ -240,18 +242,13 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       padding: const EdgeInsets.only(left: 12.0),
       child: Row(
         children: [
-          // TODO: Show alert whhen no selection
+
           SizedBox(
             height: 50,
             width: 35,
             child: IconButton(
               icon: Icon(CupertinoIcons.bold, color: ThemeColor.contentPrimary, size: 24),
-              onPressed: () {
-                wrapBodyTextSelection(
-                  left: '**',
-                  right: '**',
-                );
-              },
+              onPressed: () => _wrapBodyTextSelection(left: '**', right: '**')
             ),
           ),
     
@@ -260,12 +257,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
             width: 35,
             child: IconButton(
               icon: Icon(CupertinoIcons.italic, color: ThemeColor.contentPrimary, size: 24),
-              onPressed: () {
-                wrapBodyTextSelection(
-                  left: '*',
-                  right: '*',
-                );
-              },
+              onPressed: () => _wrapBodyTextSelection(left: '*', right: '*')
             ),
           ),
     

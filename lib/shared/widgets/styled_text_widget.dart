@@ -45,7 +45,59 @@ class StyledTextWidget extends StatelessWidget {
 
   }
 
-  // TODO: Checkout to refactor and improve this code 
+  bool _isMentionOrUrl(String word) {
+
+    if(word.startsWith('@')) {
+      return true;
+    }
+
+    if(OpenLink(url: word).isValidUrl()) {
+      return true;
+    }
+
+    return false;
+
+  }
+
+  List<String> _getTextChunks({
+    required String text, 
+    required int index, 
+    required int end, 
+    required int symbolLength
+  }) {
+
+    final regex = RegExp(r'(\s+|[^\s]+)');
+    
+    final content = text.substring(index + symbolLength, end);
+
+    return regex.allMatches(content).map((m) => m.group(0)!).toList();
+
+  }
+
+  Map<String, TextSpan> _blueTextSpan(String text) {
+
+    const blueTextStyle = TextStyle(
+      color: Colors.blueAccent,
+      fontWeight: FontWeight.w700,
+      fontSize: 14,
+    );
+
+    return {
+      'mention': TextSpan(
+        text: text,
+        style: blueTextStyle,
+        recognizer: TapGestureRecognizer()
+          ..onTap = () => NavigatePage.userProfilePage(username: text)
+      ),
+      'link': TextSpan(
+        text: text,
+        style: blueTextStyle,
+        recognizer: TapGestureRecognizer()
+          ..onTap = () async => await OpenLink(url: text).open()
+      )
+    };
+
+  }
 
   List<TextSpan> _buildTextSpans(String text) {
 
@@ -62,18 +114,6 @@ class StyledTextWidget extends StatelessWidget {
       fontSize: 14,
     );
 
-    const blueTextStyle = TextStyle(
-      color: Colors.blueAccent,
-      fontWeight: FontWeight.w700,
-      fontSize: 14,
-    );
-
-    bool isMentionOrUrl(String word) {
-      if (word.startsWith('@')) return true;
-      if (OpenLink(url: word).isValidUrl()) return true;
-      return false;
-    }
-
     int i = 0;
 
     while (i < text.length) {
@@ -84,42 +124,34 @@ class StyledTextWidget extends StatelessWidget {
 
         if (end == -1) end = text.length;
 
-        final content = text.substring(i + 2, end);
+        final textChunks = _getTextChunks(text: text, index: i, end: end, symbolLength: 2);
 
-        final words = RegExp(r'(\s+|[^\s]+)').allMatches(content).map((m) => m.group(0)!).toList();
+        for (var text in textChunks) {
 
-        for (var word in words) {
-
-          if (word.isEmpty) {
+          if (text.isEmpty) {
             spans.add(const TextSpan(text: ' '));
             continue;
           }
 
-          if (isMentionOrUrl(word)) {
+          if (_isMentionOrUrl(text)) {
 
-            if (word.startsWith('@')) {
+            if (text.startsWith('@')) {
 
-              final mentioned = word.substring(1);
-
-              spans.add(TextSpan(
-                text: word ,
-                style: blueTextStyle,
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () => NavigatePage.userProfilePage(username: mentioned),
-              ));
+              spans.add(
+                _blueTextSpan(text)['mention']!
+              );
 
             } else {
 
-              spans.add(TextSpan(
-                text: word,
-                style: blueTextStyle,
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () async => await OpenLink(url: word).open(),
-              ));
+              spans.add(
+                _blueTextSpan(text)['link']!
+              );
+
             }
+
           } else {
             spans.add(
-              TextSpan(text: word, style: boldTextStyle)
+              TextSpan(text: text, style: boldTextStyle)
             );
           }
 
@@ -132,46 +164,35 @@ class StyledTextWidget extends StatelessWidget {
         int end = text.indexOf('*', i + 1);
 
         if (end == -1) end = text.length;
-        final content = text.substring(i + 1, end);
 
-        final words = RegExp(r'(\s+|[^\s]+)').allMatches(content).map((m) => m.group(0)!).toList();
+        final textChunks = _getTextChunks(text: text, index: i, end: end, symbolLength: 1);
 
-        for (var word in words) {
+        for (var text in textChunks) {
 
-          if (word.isEmpty) {
+          if (text.isEmpty) {
             spans.add(const TextSpan(text: ' '));
             continue;
           }
 
-          if (isMentionOrUrl(word)) {
+          if (_isMentionOrUrl(text)) {
             
-            if (word.startsWith('@')) {
-
-              final mentioned = word.substring(1);
+            if (text.startsWith('@')) {
 
               spans.add(
-                TextSpan(
-                text: word,
-                style: blueTextStyle,
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () => NavigatePage.userProfilePage(username: mentioned),
-              ));
+                _blueTextSpan(text)['mention']!
+              );
 
             } else {
 
               spans.add(
-                TextSpan(
-                text: word,
-                style: blueTextStyle,
-                recognizer: TapGestureRecognizer()
-                  ..onTap = () async => await OpenLink(url: word).open(),
-              ));
+                _blueTextSpan(text)['link']!
+              );
 
             }
 
           } else {
             spans.add(
-              TextSpan(text: word, style: italicTextStyle)
+              TextSpan(text: text, style: italicTextStyle)
             );
           }
 
@@ -189,46 +210,37 @@ class StyledTextWidget extends StatelessWidget {
         final nextPos = nextIndexes.isEmpty ? text.length : nextIndexes.reduce((a, b) => a < b ? a : b);
         final chunk = text.substring(i, nextPos);
 
-        final words = RegExp(r'(\s+|[^\s]+)').allMatches(chunk).map((m) => m.group(0)!).toList();
+        final textChunks = RegExp(r'(\s+|[^\s]+)').allMatches(chunk).map((m) => m.group(0)!).toList();
 
-        for (var word in words) {
+        for (var text in textChunks) {
           
-          if (word.isEmpty) {
+          if (text.isEmpty) {
             spans.add(const TextSpan(text: ' '));
             continue;
           }
 
-          if (word.startsWith('@')) {
-
-            final mentioned = word.substring(1);
+          if (text.startsWith('@')) {
 
             spans.add(
-              TextSpan(
-              text: word,
-              style: blueTextStyle,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () => NavigatePage.userProfilePage(username: mentioned),
-            ));
+              _blueTextSpan(text)['mention']!
+            );
 
-          } else if (OpenLink(url: word).isValidUrl()) {
+          } else if (OpenLink(url: text).isValidUrl()) {
 
             spans.add(
-              TextSpan(
-              text: word,
-              style: blueTextStyle,
-              recognizer: TapGestureRecognizer()
-                ..onTap = () async => await OpenLink(url: word).open(),
-            ));
+              _blueTextSpan(text)['link']!
+            );
 
           } else {
             spans.add(
-              TextSpan(text: word)
+              TextSpan(text: text)
             );
           }
 
         }
 
         i = nextPos;
+
       }
       
     }
