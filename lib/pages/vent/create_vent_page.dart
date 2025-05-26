@@ -50,7 +50,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   bool isPostPressed = false;
 
-  void wrapBodyTextSelection({
+  void _wrapBodyTextSelection({
     required String left,
     required String right,
   }) {
@@ -248,12 +248,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
             width: 35,
             child: IconButton(
               icon: Icon(CupertinoIcons.bold, color: ThemeColor.contentPrimary, size: 24),
-              onPressed: () {
-                wrapBodyTextSelection(
-                  left: '**',
-                  right: '**',
-                );
-              },
+              onPressed: () => _wrapBodyTextSelection(left: '**', right: '**')
             ),
           ),
     
@@ -262,12 +257,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
             width: 35,
             child: IconButton(
               icon: Icon(CupertinoIcons.italic, color: ThemeColor.contentPrimary, size: 24),
-              onPressed: () {
-                wrapBodyTextSelection(
-                  left: '*',
-                  right: '*',
-                );
-              },
+              onPressed: () => _wrapBodyTextSelection(left: '*', right: '*')
             ),
           ),
     
