@@ -30,7 +30,7 @@ class EditVentPage extends StatefulWidget {
 class _EditVentPageState extends State<EditVentPage> {
 
   final postController = VentPostController(); 
-
+// TODO: Add text-formatting toolbar
   final isSavedNotifier = ValueNotifier<bool>(true);
 
   void _initializeChangesListener() {
