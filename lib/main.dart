@@ -59,9 +59,11 @@ void main() async {
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
     systemNavigationBarColor: Colors.transparent,
+    statusBarColor: Colors.transparent,
   ));
+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
 
   await dotenv.load(fileName: '.env');
 

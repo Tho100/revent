@@ -316,6 +316,7 @@ class _HomePageState extends State<HomePage> with
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBody: true,
       body: NestedScrollView(
         floatHeaderSlivers: true,
         headerSliverBuilder: (_, __) {

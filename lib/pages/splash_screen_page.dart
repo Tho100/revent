@@ -85,7 +85,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
       );
 
     } else {
-      splashScreenTimer = Timer(const Duration(milliseconds: 2000), 
+      splashScreenTimer = Timer(const Duration(milliseconds: 1700),
         () => _navigateToNextScreen()
       );
       
