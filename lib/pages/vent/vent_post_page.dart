@@ -667,10 +667,10 @@ class _VentPostPageState extends State<VentPostPage> with
 
   Widget _buildAddComment() {
     return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
+      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 22.0),
       child: Row(
         children: [
-
+    
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: enableCommentNotifier,
@@ -689,15 +689,15 @@ class _VentPostPageState extends State<VentPostPage> with
               }
             ),
           ),
-  
+      
           if(userProvider.user.username == widget.creator) ... [
-  
+      
             const SizedBox(width: 12),
-  
+      
             _buildCommentSettingsButton()
-  
+      
           ]
-  
+      
         ],
       ),
     );
