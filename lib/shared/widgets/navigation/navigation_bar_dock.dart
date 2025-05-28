@@ -37,10 +37,10 @@ class NavigationBarDock extends StatelessWidget {
     final selectedNavigationIndexNotifier = ValueNotifier<int>(getNonAddIndex);
 
     return Container(
-      height: 55.5,
+      height: 60,
       margin: const EdgeInsets.only(
-        left: 20,
-        right: 20,
+        left: 10,
+        right: 10,
         bottom: 14
       ),
       child: Row(
@@ -65,12 +65,7 @@ class NavigationBarDock extends StatelessWidget {
 
                     return Container(
                       alignment: Alignment.center, 
-                      margin: const EdgeInsets.only(
-                        top: 7.5, 
-                        bottom: 0, 
-                        left: 12, 
-                        right: 12
-                      ),
+                      margin: const EdgeInsets.only(top: 7.5, bottom: 0),
                       child: IconButton(
                         icon: Icon(icon), 
                         color: iconColor, 
