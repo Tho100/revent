@@ -8,10 +8,12 @@ import 'package:revent/shared/themes/theme_color.dart';
 class StyledTextWidget extends StatelessWidget {
 
   final String text;
+  final bool isPreviewer;
   final bool? isSelectable;
 
   const StyledTextWidget({
     required this.text, 
+    this.isPreviewer = false,
     this.isSelectable = false,
     super.key
   });
@@ -35,6 +37,8 @@ class StyledTextWidget extends StatelessWidget {
 
     } else {
       return RichText(
+        maxLines: isPreviewer ? 3 : null,
+        overflow: isPreviewer ? TextOverflow.ellipsis : TextOverflow.clip,
         text: TextSpan(
           children: _buildTextSpans(text),
           style: textStyle
@@ -76,24 +80,40 @@ class StyledTextWidget extends StatelessWidget {
 
   Map<String, TextSpan> _blueTextSpan(String text) {
 
-    const blueTextStyle = TextStyle(
-      color: Colors.blueAccent,
-      fontWeight: FontWeight.w700,
-      fontSize: 14,
-    );
+    final blueTextStyle = isPreviewer 
+      ? GoogleFonts.inter(
+        color: Colors.blueAccent,
+        fontWeight: FontWeight.w800,
+        fontSize: 14
+      )
+      : const TextStyle(
+        color: Colors.blueAccent,
+        fontWeight: FontWeight.w700,
+        fontSize: 14,
+      );
+
+    TapGestureRecognizer? mentionRecognizer;
+    TapGestureRecognizer? urlRecognizer;
+
+    if (!isPreviewer) {
+
+      mentionRecognizer = TapGestureRecognizer()
+        ..onTap = () => NavigatePage.userProfilePage(username: text);
+
+      urlRecognizer = TapGestureRecognizer()
+        ..onTap = () async => await OpenLink(url: text).open();
+    }
 
     return {
       'mention': TextSpan(
         text: text,
         style: blueTextStyle,
-        recognizer: TapGestureRecognizer()
-          ..onTap = () => NavigatePage.userProfilePage(username: text)
+        recognizer: mentionRecognizer
       ),
       'link': TextSpan(
         text: text,
         style: blueTextStyle,
-        recognizer: TapGestureRecognizer()
-          ..onTap = () async => await OpenLink(url: text).open()
+        recognizer: urlRecognizer
       )
     };
 
@@ -103,16 +123,29 @@ class StyledTextWidget extends StatelessWidget {
 
     final spans = <TextSpan>[];
 
-    const italicTextStyle = TextStyle(
-      fontWeight: FontWeight.w700,
-      fontStyle: FontStyle.italic,
-      fontSize: 14,
-    );
+    final italicTextStyle = isPreviewer
+      ? GoogleFonts.inter(
+        color: ThemeColor.contentSecondary,
+        fontWeight: FontWeight.w800,
+        fontStyle: FontStyle.italic,
+        fontSize: 13
+      )
+      : const TextStyle(
+        fontWeight: FontWeight.w700,
+        fontStyle: FontStyle.italic,
+        fontSize: 14,
+      );
 
-    const boldTextStyle = TextStyle(
-      fontWeight: FontWeight.w900,
-      fontSize: 14,
-    );
+    final boldTextStyle = isPreviewer
+      ? GoogleFonts.inter(
+        color: ThemeColor.contentSecondary,
+        fontWeight: FontWeight.w900,
+        fontSize: 13
+      )  
+      : const TextStyle(
+        fontWeight: FontWeight.w900,
+        fontSize: 14,
+      );
 
     int i = 0;
 
@@ -233,7 +266,16 @@ class StyledTextWidget extends StatelessWidget {
 
           } else {
             spans.add(
-              TextSpan(text: text)
+              TextSpan(
+                text: text, 
+                  style: isPreviewer
+                    ? GoogleFonts.inter(
+                      color: ThemeColor.contentSecondary,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 13
+                    )
+                    : null
+              ),
             );
           }
 

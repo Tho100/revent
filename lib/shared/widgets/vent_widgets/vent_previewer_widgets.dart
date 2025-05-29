@@ -14,6 +14,7 @@ import 'package:revent/shared/widgets/bottomsheet/vent_post_actions.dart';
 import 'package:revent/shared/widgets/buttons/actions_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/styled_text_widget.dart';
 
 class VentPreviewerWidgets {
 
@@ -274,15 +275,17 @@ class VentPreviewerWidgets {
   }
 
   Widget buildBodyText() {
-    return Text(
-      bodyText!,
-      style: GoogleFonts.inter(
+    return StyledTextWidget(
+      isSelectable: false,
+      text: bodyText!,
+      isPreviewer: true,
+      /*style: GoogleFonts.inter(
         color: ThemeColor.contentSecondary,
         fontWeight: FontWeight.w800,
         fontSize: 13
       ),
       overflow: TextOverflow.ellipsis,
-      maxLines: 3
+      maxLines: 3*/
     );
   }
 
