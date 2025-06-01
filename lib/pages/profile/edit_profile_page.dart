@@ -127,7 +127,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     };
 
     controllers.forEach((platform, controller) {
-      controller.text = socialHandles[platform] ?? '';
+      controller.text = socialHandles![platform] ?? '';
     });
 
   }

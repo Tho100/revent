@@ -79,6 +79,10 @@ class BottomsheetSocialLinks {
     );
   }
 
+  bool _isHandleNotEmpty(Map<String, String> handles, String handleType) {
+    return (handles[handleType] ?? '').isNotEmpty;
+  }
+
   Future buildBottomsheet({
     required BuildContext context,
     required Map<String, String> handles
@@ -89,7 +93,7 @@ class BottomsheetSocialLinks {
 
         const BottomsheetHeader(title: 'Social Links'),
 
-        if (handles['instagram']!.isNotEmpty) 
+        if (_isHandleNotEmpty(handles, 'instagram')) 
         _buildSocialButton(
           context: context,
           platform: 'instagram',
@@ -97,7 +101,7 @@ class BottomsheetSocialLinks {
           icon: FontAwesomeIcons.instagram,
         ),
 
-        if (handles['twitter']!.isNotEmpty) 
+        if (_isHandleNotEmpty(handles, 'twitter')) 
         _buildSocialButton(
           context: context,
           platform: 'twitter',
@@ -105,7 +109,7 @@ class BottomsheetSocialLinks {
           icon: FontAwesomeIcons.twitter,
         ),
 
-        if (handles['tiktok']!.isNotEmpty) 
+        if (_isHandleNotEmpty(handles, 'tiktok')) 
         _buildSocialButton(
           context: context,
           platform: 'tiktok',
