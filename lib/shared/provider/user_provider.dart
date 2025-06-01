@@ -5,14 +5,14 @@ class UserData {
   String username;
   String email;
 
-  Map<String, String> socialHandles;
+  Map<String, String>? socialHandles;
 
   String? joinedDate;
 
   UserData({
     required this.username,
     required this.email,
-    required this.socialHandles,
+    this.socialHandles,
     this.joinedDate
   });
 
@@ -31,6 +31,11 @@ class UserProvider extends ChangeNotifier {
 
   void setJoinedDate(String joinedDate) {
     _user.joinedDate = joinedDate;
+    notifyListeners();
+  }
+
+  void setSocialHandles(Map<String, String> socialHandles) {
+    _user.socialHandles = socialHandles;
     notifyListeners();
   }
 

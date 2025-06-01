@@ -1,5 +1,4 @@
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class UserSocials extends BaseQueryService with UserProfileProviderService {
@@ -14,7 +13,7 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
 
   Future<void> addSocial() async {
 
-    if((userProvider.user.socialHandles[platform] ?? '').isNotEmpty) {
+    if((userProvider.user.socialHandles![platform] ?? '').isNotEmpty) {
       await _updateSocialHandles();
       return;
     }
@@ -28,9 +27,7 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
       'username': userProvider.user.username
     };
 
-    await executeQuery(query, params).then(
-      (_) async => await _updateLocalSocialHandles()
-    );
+    await executeQuery(query, params);
 
   }
 
@@ -49,16 +46,8 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
       'username': userProvider.user.username
     };
 
-    await executeQuery(query, params).then(
-      (_) async => await _updateLocalSocialHandles()
-    );
+    await executeQuery(query, params);
 
-  }
-
-  Future<void> _updateLocalSocialHandles() async {
-    await LocalStorageModel().setupLocalSocialHandles(
-      socialHandles: {platform: handle}
-    );
   }
 
 }

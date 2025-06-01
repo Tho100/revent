@@ -5,10 +5,12 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
+import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
+import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/profile/social_links_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -81,9 +83,17 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
   }
 
-  void _initializePostsData() async {
+  void _initializeProfileData() async {
 
     try {
+
+      if((userProvider.user.socialHandles ?? {}).isEmpty) {
+
+        await UserDataGetter().getSocialHandles(username: userProvider.user.username).then(
+          (socialHandles) => userProvider.setSocialHandles(socialHandles)
+        );
+
+      }
 
       await callProfilePosts.setupPosts();
 
@@ -241,7 +251,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
   void initState() {
     super.initState();
     _initializeClasses();
-    _initializePostsData();
+    _initializeProfileData();
   }
 
   @override
@@ -263,10 +273,23 @@ class _MyProfilePageState extends State<MyProfilePage> with
           context: context, 
           customLeading: _buildPrivacyLeadingButton(),
           actions: [
-            SocialLinksWidgets(
-              socialHandles: userProvider.user.socialHandles
-            ).buildSocialLinks(), 
+
+            Consumer<UserProvider>(
+              builder: (_, userData, __) {
+
+                if ((userData.user.socialHandles ?? {}).isEmpty) {
+                  return const SizedBox.shrink();
+                }
+
+                return SocialLinksWidgets(
+                  socialHandles: userData.user.socialHandles!
+                ).buildSocialLinks();
+
+              }
+            ), // TODO: Create separatedfunction for this
+
             _buildSettingsActionButton()
+
           ]
         ).buildAppBar(),
         body: _buildBody(),

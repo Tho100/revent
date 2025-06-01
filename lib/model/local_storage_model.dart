@@ -6,7 +6,6 @@ class LocalStorageModel {
 
   final _userInfoFile = 'info.txt';
   final _userThemeFile = 'theme_info.txt';
-  final _userSocialHandles = 'socials_info.txt';
   final _searchHistoryFile = 'search_history.txt';
   final _currentHomeTabFile = 'home_tab.txt';
 
@@ -212,60 +211,6 @@ class LocalStorageModel {
 
   }
 
-  Future<void> setupLocalSocialHandles({required Map<String, String> socialHandles}) async {
-
-    final localDir = await _readLocalDirectory();
-    
-    final setupFile = File('${localDir.path}/$_userSocialHandles');
-
-    try {
-
-      final existingHandles = await readLocalSocialHandles();
-
-      existingHandles.addAll(socialHandles);
-
-      final filteredHandles = existingHandles.entries
-        .map((entry) => '${entry.key} ${entry.value}')
-        .join('\n');
-
-      await setupFile.writeAsString(filteredHandles);
-
-    } catch (_) {
-      return;
-    }
-
-  }
-
-  Future<Map<String, String>> readLocalSocialHandles() async {
-
-    final localDir = await _readLocalDirectory();
-    
-    final setupFile = File('${localDir.path}/$_userSocialHandles');
-
-    if (!await setupFile.exists()) return {};
-    
-    try {
-
-      final content = await setupFile.readAsString();
-      
-      final socialHandles = {
-        for (var line in content.split('\n'))
-          if (line.trim().isNotEmpty)
-            line.split(' ')[0]: line.split(' ').sublist(1).join(' ')
-      };
-
-      return {
-        'instagram': socialHandles['instagram'] ?? '',
-        'twitter': socialHandles['twitter'] ?? '',
-        'tiktok': socialHandles['tiktok'] ?? '',
-      };
-
-    } catch (_) {
-      return {};
-    }
-
-  }
-
   Future<void> setupCurrentHomeTab({required String tab}) async {
 
     final localDir = await _readLocalDirectory();
@@ -306,7 +251,6 @@ class LocalStorageModel {
 
     final fileNames = [
       _userInfoFile,
-      _userSocialHandles,
       _userThemeFile
     ];
 

@@ -107,13 +107,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
         return;
       }
 
-      final socialHandles = await localStorage.readLocalSocialHandles();
-
-      final userSetup = UserData(
-        username: username, 
-        email: email, 
-        socialHandles: socialHandles
-      );
+      final userSetup = UserData(username: username, email: email);
 
       userProvider.setUser(userSetup);
 

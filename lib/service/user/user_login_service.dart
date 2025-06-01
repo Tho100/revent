@@ -90,9 +90,7 @@ class UserLoginService {
       } 
     );
 
-    await localStorage.setupLocalSocialHandles(socialHandles: socialHandles).then(
-      (_) => getIt.userProvider.setUser(userSetup)
-    );
+    getIt.userProvider.setUser(userSetup);
 
     await ProfileDataSetup().setup(username: username);
 
