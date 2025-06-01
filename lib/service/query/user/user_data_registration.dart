@@ -41,7 +41,7 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
       }
     });
 
-    await localStorageModel.setupLocalAccountInformation(
+    await localStorageModel.setupAccountInformation(
       username: userProvider.user.username, email: userProvider.user.email
     );
 

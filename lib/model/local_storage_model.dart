@@ -158,7 +158,7 @@ class LocalStorageModel {
 
   }
 
-  Future<Map<String, String>> readLocalAccountInformation() async {
+  Future<Map<String, String>> readAccountInformation() async {
 
     String username = '';
     String email = '';
@@ -189,7 +189,7 @@ class LocalStorageModel {
 
   }
 
-  Future<void> setupLocalAccountInformation({
+  Future<void> setupAccountInformation({
     required String username, 
     required String email, 
   }) async {

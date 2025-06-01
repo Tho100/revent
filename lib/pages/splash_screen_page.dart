@@ -77,7 +77,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
   void _startTimer() async {
 
-    final localUsername = (await localStorage.readLocalAccountInformation())['username']!;
+    final localUsername = (await localStorage.readAccountInformation())['username']!;
 
     if(localUsername.isNotEmpty) {
       splashScreenTimer = Timer(const Duration(milliseconds: 0), 
@@ -97,7 +97,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
     try {
 
-      final readLocalData = await localStorage.readLocalAccountInformation();
+      final readLocalData = await localStorage.readAccountInformation();
 
       final username = readLocalData['username']!;
       final email = readLocalData['email']!;

@@ -60,13 +60,13 @@ class UserLoginService {
 
   Future<void> _setAutoLoginData({required bool isRememberMeChecked}) async {
 
-    final localUserInfo = (await localStorage.readLocalAccountInformation())['username']!;
+    final localUserInfo = (await localStorage.readAccountInformation())['username']!;
 
     if(localUserInfo.isEmpty && isRememberMeChecked) {
 
       final userData = getIt.userProvider.user;
 
-      await localStorage.setupLocalAccountInformation(
+      await localStorage.setupAccountInformation(
         username: userData.username, email: userData.email
       );
 
