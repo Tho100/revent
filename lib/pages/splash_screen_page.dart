@@ -41,15 +41,15 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
           )
         )
       )
-    );  
+    );
   }
 
   Future<void> _initializeHomeVents() async {
 
     final currentTab = await localStorage.readCurrentHomeTab();
 
-    if (currentTab == 'For you') {
-      await VentDataSetup().setupForYou();
+    if (currentTab == 'Latest') {
+      await VentDataSetup().setupLatest();
       
     } else if (currentTab == 'Trending') {
       await VentDataSetup().setupTrending();

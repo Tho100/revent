@@ -8,7 +8,7 @@ import 'package:revent/service/query/general/follow_suggestion_getter.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
-import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
@@ -31,7 +31,7 @@ class _HomePageState extends State<HomePage> with
   NavigationProviderService,
   FollowSuggestionProviderService {
 
-  final forYouIsLoadedNotifier = ValueNotifier<bool>(false);
+  final latestIsLoadedNotifier = ValueNotifier<bool>(false);
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -42,7 +42,7 @@ class _HomePageState extends State<HomePage> with
   late TabController tabController;
 
   final homeTabs = const [
-    Tab(text: 'For you'),
+    Tab(text: 'Latest'),
     Tab(text: 'Trending'),
     Tab(text: 'Following')
   ];
@@ -55,8 +55,8 @@ class _HomePageState extends State<HomePage> with
 
     tabController.index = currentTabIndex != -1 ? currentTabIndex : 0;
 
-    if (currentTab == 'For you' && forYouVentProvider.vents.isNotEmpty) {
-      forYouIsLoadedNotifier.value = true;
+    if (currentTab == 'Latest' && latestVentProvider.vents.isNotEmpty) {
+      latestIsLoadedNotifier.value = true;
 
     } else if (currentTab == 'Trending' && trendingVentProvider.vents.isNotEmpty) {
       trendingIsLoadedNotifier.value = true;
@@ -78,14 +78,14 @@ class _HomePageState extends State<HomePage> with
 
     if (tabController.index == 0) {
 
-      if(forYouVentProvider.vents.isNotEmpty) {
-        forYouIsLoadedNotifier.value = true;
+      if(latestVentProvider.vents.isNotEmpty) {
+        latestIsLoadedNotifier.value = true;
         return;
       }
 
-      if(!forYouIsLoadedNotifier.value && forYouVentProvider.vents.isEmpty) {
-        await ventDataSetup.setupForYou().then(
-          (_) => forYouIsLoadedNotifier.value = true
+      if(!latestIsLoadedNotifier.value && latestVentProvider.vents.isEmpty) {
+        await ventDataSetup.setupLatest().then(
+          (_) => latestIsLoadedNotifier.value = true
         );
       }
 
@@ -156,10 +156,10 @@ class _HomePageState extends State<HomePage> with
   Future<void> _onTabRefresh() async {
 
     switch (homeTabs[tabController.index].text) {
-      case 'For you':
-        forYouIsLoadedNotifier.value = false;
-        await refreshService.refreshForYouVents().then(
-          (_) => forYouIsLoadedNotifier.value = true
+      case 'Latest':
+        latestIsLoadedNotifier.value = false;
+        await refreshService.refreshLatestVents().then(
+          (_) => latestIsLoadedNotifier.value = true
         );
         break;
       case 'Trending':
@@ -195,9 +195,9 @@ class _HomePageState extends State<HomePage> with
     );
   }
 
-  Widget _buildForYouListView() {
+  Widget _buildLatestListView() {
     return ValueListenableBuilder(
-      valueListenable: forYouIsLoadedNotifier,
+      valueListenable: latestIsLoadedNotifier,
       builder: (_, isLoaded, __) {
         
         if(!isLoaded) {
@@ -207,7 +207,7 @@ class _HomePageState extends State<HomePage> with
         return _buildVentListViewBody(
           onRefresh: () async => await _onTabRefresh(),
           child: HomeVentListView(
-            provider: Provider.of<VentForYouProvider>(context),
+            provider: Provider.of<VentLatestProvider>(context),
             showFollowSuggestion: true
           ),
         );
@@ -261,7 +261,7 @@ class _HomePageState extends State<HomePage> with
     return TabBarView(
       controller: tabController,
       children: [
-        _buildForYouListView(), 
+        _buildLatestListView(), 
         _buildTrendingListView(),
         _buildFollowingListView(),           
       ],
@@ -307,7 +307,7 @@ class _HomePageState extends State<HomePage> with
   @override
   void dispose() {
     tabController.dispose();
-    forYouIsLoadedNotifier.dispose();
+    latestIsLoadedNotifier.dispose();
     followingIsLoadedNotifier.dispose();
     trendingIsLoadedNotifier.dispose();
     super.dispose();

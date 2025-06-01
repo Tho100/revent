@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class VentForYouData {
+class VentLatestData {
 
   String title;
   String bodyText;
@@ -19,7 +19,7 @@ class VentForYouData {
   bool isPostSaved;
   bool isNsfw;
 
-  VentForYouData({
+  VentLatestData({
     required this.title,
     required this.bodyText,
     required this.tags,
@@ -35,18 +35,18 @@ class VentForYouData {
 
 }
 
-class VentForYouProvider extends ChangeNotifier {
+class VentLatestProvider extends ChangeNotifier {
 
-  List<VentForYouData> _vents = [];
+  List<VentLatestData> _vents = [];
 
-  List<VentForYouData> get vents => _vents;
+  List<VentLatestData> get vents => _vents;
 
-  void setVents(List<VentForYouData> vents) {
+  void setVents(List<VentLatestData> vents) {
     _vents = vents;
     notifyListeners();
   }
 
-  void addVent(VentForYouData vent) {
+  void addVent(VentLatestData vent) {
     _vents.insert(0, vent);
     notifyListeners();
   }

@@ -14,7 +14,7 @@ import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
-import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
 mixin UserProfileProviderService {
@@ -26,7 +26,7 @@ mixin UserProfileProviderService {
 
 mixin VentProviderService {
 
-  VentForYouProvider get forYouVentProvider => getIt<VentForYouProvider>();
+  VentLatestProvider get latestVentProvider => getIt<VentLatestProvider>();
   VentTrendingProvider get trendingVentProvider => getIt<VentTrendingProvider>();
   VentFollowingProvider get followingVentProvider => getIt<VentFollowingProvider>();
   ActiveVentProvider get activeVentProvider => getIt<ActiveVentProvider>();
