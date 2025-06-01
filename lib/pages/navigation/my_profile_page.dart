@@ -228,6 +228,22 @@ class _MyProfilePageState extends State<MyProfilePage> with
     );
   }
 
+  Widget _buildSocialLinks() {
+    return Consumer<UserProvider>(
+      builder: (_, userData, __) {
+
+        if ((userData.user.socialHandles ?? {}).isEmpty) {
+          return const SizedBox.shrink();
+        }
+
+        return SocialLinksWidgets(
+          socialHandles: userData.user.socialHandles!
+        ).buildSocialLinks();
+
+      }
+    );
+  }
+
   Widget _buildSettingsActionButton() {
     return IconButton(
       icon: Icon(CupertinoIcons.bars, size: 28, color: ThemeColor.contentPrimary),
@@ -273,23 +289,8 @@ class _MyProfilePageState extends State<MyProfilePage> with
           context: context, 
           customLeading: _buildPrivacyLeadingButton(),
           actions: [
-
-            Consumer<UserProvider>(
-              builder: (_, userData, __) {
-
-                if ((userData.user.socialHandles ?? {}).isEmpty) {
-                  return const SizedBox.shrink();
-                }
-
-                return SocialLinksWidgets(
-                  socialHandles: userData.user.socialHandles!
-                ).buildSocialLinks();
-
-              }
-            ), // TODO: Create separatedfunction for this
-
+            _buildSocialLinks(),
             _buildSettingsActionButton()
-
           ]
         ).buildAppBar(),
         body: _buildBody(),
