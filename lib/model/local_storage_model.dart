@@ -296,7 +296,7 @@ class LocalStorageModel {
       return await setupFile.readAsString();
     }
 
-    return 'For you';
+    return 'Latest';
 
   }
 

@@ -10,7 +10,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
   
   final ventPostState = VentPostStateService();
 
-  Future<Map<String, dynamic>> getForYouVentsData() async {
+  Future<Map<String, dynamic>> getLatestVentsData() async {
 
     const query = '''
       SELECT 
@@ -58,7 +58,7 @@ class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
     const query = '''
       SELECT 
-        vi.post_id, vi.title, vi.body_text, vi.creator, vi.created_at, vi.tags, vi.total_likes, vi.total_comments, vi.marked_nsfw
+        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM vent_info vi
       INNER JOIN user_follows_info ufi 
           ON ufi.following = vi.creator

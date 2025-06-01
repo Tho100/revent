@@ -52,7 +52,7 @@ class UserLoginService {
     await _setUserProfileData(email: email);
     await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
 
-    await VentDataSetup().setupForYou()
+    await VentDataSetup().setupLatest()
       .then((_) => NavigatePage.homePage()
     ); 
 

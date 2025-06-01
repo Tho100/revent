@@ -3,7 +3,7 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 
 class CreateNewItem extends BaseQueryService with UserProfileProviderService, TagsProviderService {
 
@@ -71,8 +71,8 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
     final formattedTimestamp = FormatDate().formatPostTimestamp(DateTime.now());
 
-    final newVent = VentForYouData(
-      title: title, 
+    final newVent = VentLatestData(
+      title: title,
       bodyText: body, 
       tags: tags,
       isNsfw: markedNsfw,
@@ -81,7 +81,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
       profilePic: getIt.profileProvider.profile.profilePicture,
     );
     
-    getIt.ventForYouProvider.addVent(newVent);
+    getIt.ventLatestProvider.addVent(newVent);
 
   }
 

@@ -7,7 +7,7 @@ import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/service/query/vent/vent_data_getter.dart';
-import 'package:revent/shared/provider/vent/vent_for_you_provider.dart';
+import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
 class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedProviderService {
@@ -141,12 +141,12 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   }
 
-  Future<void> setupForYou() async {
-    await _setupVents<VentForYouData>(
-      dataGetter: () => VentDataGetter().getForYouVentsData(),
-      setVents: forYouVentProvider.setVents,
+  Future<void> setupLatest() async {
+    await _setupVents<VentLatestData>(
+      dataGetter: () => VentDataGetter().getLatestVentsData(),
+      setVents: latestVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
-          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentForYouData(
+          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentLatestData(
         title: title,
         bodyText: bodyText,
         tags: tags,

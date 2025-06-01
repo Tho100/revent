@@ -21,10 +21,10 @@ class RefreshService with
     await setupMethod();
   }
 
-  Future<void> refreshForYouVents() async {
+  Future<void> refreshLatestVents() async {
     await _refreshVentsData(
-      ventProvider: forYouVentProvider,
-      setupMethod: () => VentDataSetup().setupForYou(),
+      ventProvider: latestVentProvider,
+      setupMethod: () => VentDataSetup().setupLatest(),
     );
   }
 
