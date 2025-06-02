@@ -65,7 +65,7 @@ class NavigationBarDock extends StatelessWidget {
 
                     return Container(
                       alignment: Alignment.center, 
-                      margin: const EdgeInsets.only(top: 7.5, bottom: 0),
+                      margin: const EdgeInsets.only(top: 3.5),
                       child: IconButton(
                         icon: Icon(icon), 
                         color: iconColor, 
