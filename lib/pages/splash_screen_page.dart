@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:revent/service/query/notification/post_notification_getter.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/main.dart';
@@ -11,6 +12,8 @@ import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/themes/app_theme.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
 
@@ -58,6 +61,24 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
       await VentDataSetup().setupFollowing();
 
     }
+
+    await _initializeNotifications();
+
+  }
+
+  Future<void> _initializeNotifications() async {
+
+    final prefs = await SharedPreferences.getInstance();
+
+    final hasNewNotification = await VentPostNotificationGetter().notifyNewNotification();
+
+    if (hasNewNotification) {
+      await prefs.setBool('hasUnreadNotifications', true);
+    }
+
+    final showBadge = prefs.getBool('hasUnreadNotifications') ?? false;
+
+    // TODO: Show badges
 
   }
 
