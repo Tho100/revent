@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
 class NavigationBarDock extends StatelessWidget {
@@ -66,16 +68,50 @@ class NavigationBarDock extends StatelessWidget {
                     return Container(
                       alignment: Alignment.center, 
                       margin: const EdgeInsets.only(top: 3.5),
-                      child: IconButton(
-                        icon: Icon(icon), 
-                        color: iconColor, 
-                        iconSize: 28,
-                        onPressed: () {
-                          if(index != 2) {
-                            selectedNavigationIndexNotifier.value = index;
-                          }
-                          _onNavigationButtonPressed(index);
-                        }
+                      child: Consumer<NavigationProvider>(
+                        builder: (_, navigation, __) {
+                          return Stack(
+                            children: [
+                        
+                              IconButton(
+                                icon: Icon(icon), 
+                                color: iconColor, 
+                                iconSize: 28,
+                                onPressed: () {
+                                  if(index != 2) {
+                                    selectedNavigationIndexNotifier.value = index;
+                                  }
+                                  _onNavigationButtonPressed(index);
+                                }
+                              ),
+                        
+                              if (index == 3 && navigation.showNotificationBadge)
+                              Positioned(
+                                top: 9,
+                                right: 12,
+                                child: Container(
+                                  width: 14,
+                                  height: 14,
+                                  decoration: const BoxDecoration(
+                                    color: Colors.black,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: Center(
+                                    child: Container(
+                                      width: 10,
+                                      height: 10,
+                                      decoration: BoxDecoration(
+                                        color: ThemeColor.alert,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              )
+
+                            ],
+                          );
+                        },
                       ),
                     );
                   },

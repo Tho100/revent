@@ -9,11 +9,15 @@ class NavigationProvider extends ChangeNotifier {
 
   String _currentRoute = AppRoute.home.path;
 
+  bool _showNotificationBadge = false;
+
   int get currentPageIndex => _currentPageIndex;
   int get homeTabIndex => _homeTabIndex;
   int get profileTabIndex => _profileTabIndex;
 
   String get currentRoute => _currentRoute; 
+
+  bool get showNotificationBadge => _showNotificationBadge; 
 
   void setCurrentRoute(String route) {
     _currentRoute = route;
@@ -29,6 +33,11 @@ class NavigationProvider extends ChangeNotifier {
   
   void setProfileTabIndex(int index) {
     _profileTabIndex = index;
+  }
+
+  void setBadgeVisible(bool showBadge) {
+    _showNotificationBadge = showBadge;
+    notifyListeners();
   }
 
 }
