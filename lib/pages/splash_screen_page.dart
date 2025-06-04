@@ -24,7 +24,8 @@ class SplashScreen extends StatefulWidget {
 
 }
 
-class _SplashScreenState extends State<SplashScreen> with UserProfileProviderService {
+class _SplashScreenState extends State<SplashScreen> with 
+  UserProfileProviderService, NavigationProviderService {
 
   final localStorage = LocalStorageModel();
 
@@ -78,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
     final showBadge = prefs.getBool('hasUnreadNotifications') ?? false;
 
-    // TODO: Show badges
+    navigationProvider.setBadgeVisible(showBadge);
 
   }
 
