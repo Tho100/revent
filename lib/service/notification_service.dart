@@ -1,9 +1,10 @@
 import 'dart:convert';
 
+import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/notification/post_notification_getter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NotificationService {
+class NotificationService with NavigationProviderService {
 
   Future<bool> notifyNewNotification() async {
 
@@ -32,6 +33,29 @@ class NotificationService {
     }
 
     return shouldNotify;
+
+  }
+
+
+  Future<void> markNotificationAsRead() async {
+    
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setBool('hasUnreadNotifications', false);
+
+    final currentLikes = await VentPostNotificationGetter().getPostLikes();
+    final postIds = currentLikes['post_id']!;
+    final likeCounts = currentLikes['like_count']!;
+
+    final newCache = <String, int>{};
+    
+    for (int i = 0; i < postIds.length; i++) {
+      newCache[postIds[i].toString()] = likeCounts[i];
+    }
+
+    await prefs.setString('post_like_cache', jsonEncode(newCache)).then(
+      (_) => navigationProvider.setBadgeVisible(false)
+    );
 
   }
 

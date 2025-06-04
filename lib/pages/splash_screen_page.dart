@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:quick_actions/quick_actions.dart';
 import 'package:revent/service/notification_service.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/helper/providers_service.dart';
@@ -45,6 +46,27 @@ class _SplashScreenState extends State<SplashScreen> with
         )
       )
     );
+  }
+
+  Future<void> _initializeQuickActions() async {
+
+    const quickActions = QuickActions();
+    
+    quickActions.initialize((String actionType) {
+
+      if(actionType == 'new_vent') {
+        NavigatePage.createVentPage();
+      } 
+  
+    });
+
+    quickActions.setShortcutItems([
+      const ShortcutItem(
+        type: 'new_vent',
+        localizedTitle: 'New Vent',
+      )
+    ]);
+
   }
 
   Future<void> _initializeHomeVents() async {
@@ -135,6 +157,8 @@ class _SplashScreenState extends State<SplashScreen> with
       await _loadStartupData().then(
         (_) => NavigatePage.homePage()
       );
+      
+      await _initializeQuickActions();
 
     } catch (_) {
       NavigatePage.mainScreenPage();
