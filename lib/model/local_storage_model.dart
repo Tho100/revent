@@ -8,7 +8,6 @@ class LocalStorageModel {
   final _userThemeFile = 'theme_info.txt';
   final _searchHistoryFile = 'search_history.txt';
   final _currentHomeTabFile = 'home_tab.txt';
-  final _notificationFile = 'notification.txt';
 
   final _folderName = 'ReventInfos';
 
@@ -243,40 +242,6 @@ class LocalStorageModel {
     }
 
     return 'Latest';
-
-  }
-
-  Future<void> setupNotificationReadStatus({required bool isRead}) async {
-
-    final localDir = await _readLocalDirectory();
-    
-    final setupFile = File('${localDir.path}/$_notificationFile');
-
-    if (!await setupFile.exists()) {
-      await setupFile.create();
-    }
-
-    try {
-
-      await setupFile.writeAsString(isRead.toString());
-
-    } catch (_) {
-      return;
-    }
-
-  }
-
-  Future<bool> readNotificationReadStatus() async {
-  
-    final localDir = await _readLocalDirectory();
-    
-    final setupFile = File('${localDir.path}/$_notificationFile');
-
-    if(await setupFile.exists()) {
-      return await setupFile.readAsString() as bool;
-    }
-
-    return true;
 
   }
 

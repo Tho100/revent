@@ -33,11 +33,14 @@ class MainScreenPage extends StatelessWidget {
   }
 
   Widget _buildLogo() {
-    return Image.asset(
-      'assets/images/albert_icon.png',
-      width: 85,
-      height: 85,
-      fit: BoxFit.contain,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(20),
+      child: Image.asset(
+        'assets/images/albert_icon.png',
+        width: 85,
+        height: 85,
+        fit: BoxFit.contain,
+      ),
     );
   }
 

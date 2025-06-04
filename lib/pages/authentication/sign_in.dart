@@ -102,6 +102,7 @@ class _SignInPageState extends State<SignInPage> {
             builder: (_, value, __) {
               return Checkbox(
                 value: value,
+                checkColor: Colors.white,
                 onChanged: (checkedValue) {
                   isRememberMeCheckedNotifier.value = checkedValue ?? true;
                 },

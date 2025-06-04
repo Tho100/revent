@@ -1,46 +1,13 @@
-import 'dart:convert';
-
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class VentPostNotificationGetter extends BaseQueryService with UserProfileProviderService {
 
-  final formatPostTimestamp = FormatDate();
-
-  Future<bool> notifyNewNotification() async {
-
-    final currentLikes = await getPostLikes();
-
-    final prefs = await SharedPreferences.getInstance();
-
-    final storedLikesJson = prefs.getString('post_like_cache') ?? '{}';
-    final storedLikes = jsonDecode(storedLikesJson);
-
-    bool shouldNotify = false;
-
-    final postIds = currentLikes['post_id']!;
-    final likeCounts = currentLikes['like_count']!;
-
-    for (int i = 0; i < postIds.length; i++) {
-      final postId = postIds[i].toString();
-      final newCount = likeCounts[i];
-
-      final oldCount = storedLikes[postId]?.toInt() ?? 0;
-
-      if (newCount != oldCount) {
-        shouldNotify = true;
-        break;
-      }
-    }
-
-    return shouldNotify;
-
-  }
-
   Future<Map<String, List<dynamic>>> getPostLikes() async {
+
+    final formatPostTimestamp = FormatDate();
 
     const query = 
     '''
