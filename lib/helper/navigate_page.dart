@@ -5,7 +5,6 @@ import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
 import 'package:revent/pages/vent/create_vent_page.dart';
