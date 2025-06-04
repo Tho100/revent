@@ -110,6 +110,8 @@ class MainScreenPage extends StatelessWidget {
         
         _buildBottomContainer(context)
 
+        // TODO: Add some space on the bottom
+        
       ],
     );
   }
