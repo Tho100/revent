@@ -13,7 +13,6 @@ import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/themes/app_theme.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/model/setup/vent_data_setup.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
 
@@ -84,23 +83,7 @@ class _SplashScreenState extends State<SplashScreen> with
 
     }
 
-    await _initializeNotifications();
-
-  }
-
-  Future<void> _initializeNotifications() async {
-
-    final prefs = await SharedPreferences.getInstance();
-
-    final hasNewNotification = await NotificationService().notifyNewNotification();
-
-    if (hasNewNotification) {
-      await prefs.setBool('hasUnreadNotifications', true);
-    }
-
-    final showBadge = prefs.getBool('hasUnreadNotifications') ?? false;
-
-    navigationProvider.setBadgeVisible(showBadge);
+    await NotificationService().initializeNotifications();
 
   }
 
