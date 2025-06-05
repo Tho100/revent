@@ -92,8 +92,8 @@ class NavigationBarDock extends StatelessWidget {
                                 child: Container(
                                   width: 14,
                                   height: 14,
-                                  decoration: const BoxDecoration(
-                                    color: Colors.black,
+                                  decoration:  BoxDecoration(
+                                    color: ThemeColor.backgroundPrimary,
                                     shape: BoxShape.circle,
                                   ),
                                   child: Center(

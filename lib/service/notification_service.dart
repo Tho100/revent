@@ -73,8 +73,6 @@ class NotificationService with NavigationProviderService {
 
     }
 
-    print(storedLikes);
-
     return shouldNotify;
 
   }
