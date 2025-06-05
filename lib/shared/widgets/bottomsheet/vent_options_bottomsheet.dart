@@ -91,7 +91,7 @@ class BottomsheetVentOptions {
           icon: CupertinoIcons.archivebox,
           onToggled: () {
             commentNotifier.value = false;
-            archiveNotifier.value = false;
+            archiveNotifier.value = false; // TODO: Remove this to fix
           }
         ),
 

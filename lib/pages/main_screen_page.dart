@@ -108,9 +108,9 @@ class MainScreenPage extends StatelessWidget {
       
         const Spacer(),
         
-        _buildBottomContainer(context)
+        _buildBottomContainer(context),
 
-        // TODO: Add some space on the bottom
+        const SizedBox(height: 15),
         
       ],
     );
