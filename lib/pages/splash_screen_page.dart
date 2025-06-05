@@ -152,7 +152,7 @@ class _SplashScreenState extends State<SplashScreen> with
 
       final userSetup = UserData(username: username, email: email);
 
-      userProvider.setUser(userSetup);
+      userProvider.setUser(userSetup);      
 
       await _loadStartupData().then(
         (_) => NavigatePage.homePage()
