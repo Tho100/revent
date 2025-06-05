@@ -285,7 +285,7 @@ class VentPreviewerWidgets {
         fontSize: 13
       ),
       overflow: TextOverflow.ellipsis,
-      maxLines: 3*/
+      maxLines: 3*/ // TODO: Remove this comment
     );
   }
 
