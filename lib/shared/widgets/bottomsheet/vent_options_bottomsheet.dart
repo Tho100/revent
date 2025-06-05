@@ -89,10 +89,7 @@ class BottomsheetVentOptions {
           notifier: archiveNotifier,
           text: 'Archive Vent',
           icon: CupertinoIcons.archivebox,
-          onToggled: () {
-            commentNotifier.value = false;
-            archiveNotifier.value = false; // TODO: Remove this to fix
-          }
+          onToggled: () => commentNotifier.value = false
         ),
 
         Divider(color: ThemeColor.divider),
