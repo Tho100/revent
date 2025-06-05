@@ -12,7 +12,6 @@ class VentPostNotificationGetter extends BaseQueryService with UserProfileProvid
     const query = 
     '''
       SELECT 
-        vi.post_id,
         vi.title, 
         vi.creator, 
         lvi.liked_at, 
@@ -31,7 +30,6 @@ class VentPostNotificationGetter extends BaseQueryService with UserProfileProvid
 
     final extractedData = ExtractData(rowsData: results);
 
-    final postIds = extractedData.extractIntColumn('post_id');
     final titles = extractedData.extractStringColumn('title');
     final likeCount = extractedData.extractIntColumn('like_count');
 
@@ -41,7 +39,6 @@ class VentPostNotificationGetter extends BaseQueryService with UserProfileProvid
       .toList();
 
     return {
-      'post_id': postIds,
       'title': titles,
       'like_count': likeCount,
       'liked_at': likedAt
