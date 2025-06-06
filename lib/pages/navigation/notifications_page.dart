@@ -57,7 +57,7 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
       children: [
 
         Text(
-          'Your post received $likes likes',
+          likes == 1 ? 'Someone liked your post' : 'Your post received $likes likes',
           style: GoogleFonts.inter(
             color: ThemeColor.contentPrimary,
             fontWeight: FontWeight.w800,
