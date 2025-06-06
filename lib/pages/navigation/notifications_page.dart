@@ -9,7 +9,7 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/service/notification_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
-import 'package:revent/service/query/search/search_vent_body_getter.dart';
+import 'package:revent/service/query/vent/vent_data_getter.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
