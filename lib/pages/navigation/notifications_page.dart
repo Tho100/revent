@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/notification_service.dart';
@@ -24,6 +25,8 @@ class NotificationsPage extends StatefulWidget {
 class _NotificationsPageState extends State<NotificationsPage> with NavigationProviderService {
 
   final notificationNotifier = ValueNotifier<Map<String, List<dynamic>>>({});
+
+  final formatTimestamp = FormatDate();
 
   void _initializeData() async {
 
@@ -135,9 +138,16 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
       valueListenable: notificationNotifier,
       builder: (_, data, __) {
 
-        final titles = data.keys.toList();
-        final likes = data.values.map((entry) => entry[0] as int).toList();
-        final likedAt = data.values.map((entry) => entry[1].toString()).toList();
+        final sortedEntries = data.entries.toList()
+        ..sort((a, b) {
+          final aTime = formatTimestamp.convertRelativeTimestampToDateTime(b.value[1]);
+          final bTime = formatTimestamp.convertRelativeTimestampToDateTime(a.value[1]);
+          return aTime.compareTo(bTime);
+        });
+
+        final titles = sortedEntries.map((e) => e.key).toList();
+        final likes = sortedEntries.map((e) => e.value[0] as int).toList();
+        final likedAt = sortedEntries.map((e) => e.value[1].toString()).toList();
 
         return _buildNotificationListView(titles, likes, likedAt);
 
