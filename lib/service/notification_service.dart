@@ -32,11 +32,12 @@ class NotificationService with NavigationProviderService {
 
     final titles = currentLikes['title']!;
     final likeCounts = currentLikes['like_count']!;
+    final likedAt = currentLikes['liked_at']!;
 
-    final newCache = <String, int>{};
+    final newCache = <String, List<dynamic>>{};
     
     for (int i = 0; i < titles.length; i++) {
-      newCache[titles[i]] = likeCounts[i];
+      newCache[titles[i]] = [likeCounts[i], likedAt[i]];
     }
 
     await prefs.setString('post_like_cache', jsonEncode(newCache)).then(
@@ -64,7 +65,7 @@ class NotificationService with NavigationProviderService {
       final title = titles[i];
       final newCount = likeCounts[i];
 
-      final oldCount = storedLikes[title]?.toInt() ?? 0;
+      final oldCount = storedLikes[title][0]?.toInt() ?? 0;
 
       if (newCount != oldCount) {
         shouldNotify = true;

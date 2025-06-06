@@ -23,7 +23,7 @@ class NotificationsPage extends StatefulWidget {
 
 class _NotificationsPageState extends State<NotificationsPage> with NavigationProviderService {
 
-  final notificationNotifier = ValueNotifier<Map<String, int>>({});
+  final notificationNotifier = ValueNotifier<Map<String, List<dynamic>>>({});
 
   void _initializeData() async {
 
@@ -33,7 +33,7 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
     final storedLikes = jsonDecode(storedLikesJson);
 
     if (storedLikes is Map) {
-      notificationNotifier.value = Map<String, int>.from(storedLikes);
+      notificationNotifier.value = Map<String, List<dynamic>>.from(storedLikes);
     }
 
   }
@@ -50,7 +50,7 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
     );
   }
 
-  Widget _buildMainInfo(String title, int likes) {
+  Widget _buildMainInfo(String title, int likes, String likedAt) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -65,24 +65,41 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
           ),
         ),
 
-        const SizedBox(height: 2),
+        const SizedBox(height: 8),
 
-        Text(
-          title,
-          style: GoogleFonts.inter(
-            color: ThemeColor.contentSecondary,
-            fontWeight: FontWeight.w700,
-            fontSize: 14
-          ),
-          maxLines: 1,
+        Row(
+          children: [
+
+            Text(
+              title,
+              style: GoogleFonts.inter(
+                color: ThemeColor.contentSecondary,
+                fontWeight: FontWeight.w700,
+                fontSize: 14
+              ),
+              maxLines: 1,
+            ),
+
+            const SizedBox(width: 6),
+
+            Text(
+              likedAt,
+              style: GoogleFonts.inter(
+                color: ThemeColor.contentThird,
+                fontWeight: FontWeight.w700,
+                fontSize: 13
+              ),
+            ),
+
+          ],
         ),
 
       ],
     );
   }
 
-  Widget _buildNotificationListView(List<String> titlesData, List<int> likesData) {
-    return ListView.builder(
+  Widget _buildNotificationListView(List<String> titlesData, List<int> likesData, List<String> timestamp) {
+    return ListView.builder( // TODO: Reverse the list
       itemCount: titlesData.length,
       itemBuilder: (_, index) {
         return Padding(
@@ -96,7 +113,7 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
 
                 const SizedBox(width: 12),
         
-                _buildMainInfo(titlesData[index], likesData[index]),
+                _buildMainInfo(titlesData[index], likesData[index], timestamp[index]),
 
                 const Spacer(),
 
@@ -117,9 +134,13 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
     return ValueListenableBuilder(
       valueListenable: notificationNotifier,
       builder: (_, data, __) {
+
         final titles = data.keys.toList();
-        final likes = data.values.toList();
-        return _buildNotificationListView(titles, likes);
+        final likes = data.values.map((entry) => entry[0] as int).toList();
+        final likedAt = data.values.map((entry) => entry[1].toString()).toList();
+
+        return _buildNotificationListView(titles, likes, likedAt);
+
       },
     );
   }
