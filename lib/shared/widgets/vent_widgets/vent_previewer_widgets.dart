@@ -278,14 +278,7 @@ class VentPreviewerWidgets {
     return StyledTextWidget(
       isSelectable: false,
       text: bodyText!,
-      isPreviewer: true,
-      /*style: GoogleFonts.inter(
-        color: ThemeColor.contentSecondary,
-        fontWeight: FontWeight.w800,
-        fontSize: 13
-      ),
-      overflow: TextOverflow.ellipsis,
-      maxLines: 3*/ // TODO: Remove this comment
+      isPreviewer: true
     );
   }
 
