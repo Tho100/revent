@@ -9,7 +9,7 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/service/notification_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
-import 'package:revent/service/query/search/search_vent_body_getter.dart';
+import 'package:revent/service/query/vent/vent_data_getter.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
@@ -51,7 +51,15 @@ class _NotificationsPageState extends State<NotificationsPage> with
     
     final postId = await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
-    final bodyText = await SearchVentBodyGetter(postId: postId).getBodyText();
+    final ventDataGetter = VentDataGetter(postId: postId);
+
+    final bodyText = await ventDataGetter.getBodyText();
+    final metadata = await ventDataGetter.getMetadata();
+
+    final tags = metadata['tags'];
+    final totalLikes = metadata['total_likes'];
+    final postTimestamp = metadata['post_timestamp'];
+    final isNsfw = metadata['is_nsfw'];
 
     if (context.mounted) {
       Navigator.push(
@@ -60,10 +68,10 @@ class _NotificationsPageState extends State<NotificationsPage> with
           title: title, 
           postId: postId,
           bodyText: bodyText, 
-          tags: '',
-          postTimestamp: '',
-          isNsfw: false,
-          totalLikes: 0,
+          tags: tags,
+          postTimestamp: postTimestamp,
+          isNsfw: isNsfw,
+          totalLikes: totalLikes,
           creator: userProvider.user.username, 
           pfpData: profileProvider.profile.profilePicture,
         )),

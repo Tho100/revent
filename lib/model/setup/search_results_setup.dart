@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/search/search_accounts_getter.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
-import 'package:revent/model/setup/vent_data_setup.dart';
+import 'package:revent/model/setup/vents_setup.dart';
 
 class SearchResultsSetup with SearchProviderService {
 
@@ -13,7 +13,7 @@ class SearchResultsSetup with SearchProviderService {
 
   Future<void> setupPostsResults() async {
 
-    await VentDataSetup().setupSearch(
+    await VentsSetup().setupSearch(
       searchText: searchText
     );
 

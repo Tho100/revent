@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/providers_service.dart';
-import 'package:revent/model/setup/vent_data_setup.dart';
+import 'package:revent/model/setup/vents_setup.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -31,7 +31,7 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
 
     try {
 
-      await VentDataSetup().setupSaved().then(
+      await VentsSetup().setupSaved().then(
         (_) => isPageLoadedNotifier.value = true
       );
 
