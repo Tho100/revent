@@ -19,9 +19,11 @@ class VentPostNotificationGetter extends BaseQueryService with UserProfileProvid
       FROM vent_info vi
       INNER JOIN liked_vent_info lvi ON vi.post_id = lvi.post_id 
       WHERE vi.creator = :creator
-      GROUP BY vi.post_id HAVING like_count = 1 
+      GROUP BY vi.post_id 
+      HAVING like_count = 1 
         OR like_count = 5 
-        OR like_count >= 10;
+        OR like_count >= 10
+      ORDER BY lvi.liked_at ASC
     ''';
 
     final param = {'creator': userProvider.user.username};

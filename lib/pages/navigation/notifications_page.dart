@@ -99,7 +99,7 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
   }
 
   Widget _buildNotificationListView(List<String> titlesData, List<int> likesData, List<String> timestamp) {
-    return ListView.builder( // TODO: Reverse the list
+    return ListView.builder(
       itemCount: titlesData.length,
       itemBuilder: (_, index) {
         return Padding(
