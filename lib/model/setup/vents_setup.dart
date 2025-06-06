@@ -10,7 +10,7 @@ import 'package:revent/service/query/vent/vents_getter.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
-class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedProviderService {
+class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProviderService {
 
   /// Processes raw vent info map by extracting fields and 
   /// asynchronously fetching profile picture for each creator

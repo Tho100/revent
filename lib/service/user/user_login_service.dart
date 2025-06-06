@@ -11,7 +11,7 @@ import 'package:revent/security/hash_model.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
-import 'package:revent/model/setup/vent_data_setup.dart';
+import 'package:revent/model/setup/vents_setup.dart';
 
 class UserLoginService {
 
@@ -53,7 +53,7 @@ class UserLoginService {
     await _setUserProfileData(email: email);
     await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
 
-    await VentDataSetup().setupLatest().then(
+    await VentsSetup().setupLatest().then(
       (_) => NavigatePage.homePage()
     ); 
 

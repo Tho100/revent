@@ -12,7 +12,7 @@ import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/themes/app_theme.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/model/setup/vent_data_setup.dart';
+import 'package:revent/model/setup/vents_setup.dart';
 
 class SplashScreen extends StatefulWidget {
 
@@ -73,13 +73,13 @@ class _SplashScreenState extends State<SplashScreen> with
     final currentTab = await localStorage.readCurrentHomeTab();
 
     if (currentTab == 'Latest') {
-      await VentDataSetup().setupLatest();
+      await VentsSetup().setupLatest();
       
     } else if (currentTab == 'Trending') {
-      await VentDataSetup().setupTrending();
+      await VentsSetup().setupTrending();
 
     } else if (currentTab == 'Following') {
-      await VentDataSetup().setupFollowing();
+      await VentsSetup().setupFollowing();
 
     }
 

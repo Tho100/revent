@@ -11,7 +11,7 @@ import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/model/setup/vent_data_setup.dart';
+import 'package:revent/model/setup/vents_setup.dart';
 import 'package:revent/shared/widgets/custom_tab_bar.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/vent_widgets/home_vent_listview.dart';
@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> with
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
 
   final localStorage = LocalStorageModel();
-  final ventDataSetup = VentDataSetup();
+  final ventDataSetup = VentsSetup();
   final refreshService = RefreshService();
 
   late TabController tabController;

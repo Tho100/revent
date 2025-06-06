@@ -4,7 +4,7 @@ import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/model/setup/replies_setup.dart';
 import 'package:revent/model/setup/comments_setup.dart';
-import 'package:revent/model/setup/vent_data_setup.dart';
+import 'package:revent/model/setup/vents_setup.dart';
 
 class RefreshService with 
   VentProviderService, 
@@ -24,21 +24,21 @@ class RefreshService with
   Future<void> refreshLatestVents() async {
     await _refreshVentsData(
       ventProvider: latestVentProvider,
-      setupMethod: () => VentDataSetup().setupLatest(),
+      setupMethod: () => VentsSetup().setupLatest(),
     );
   }
 
   Future<void> refreshTrendingVents() async {
     await _refreshVentsData(
       ventProvider: trendingVentProvider,
-      setupMethod: () => VentDataSetup().setupTrending(),
+      setupMethod: () => VentsSetup().setupTrending(),
     );
   }
 
   Future<void> refreshFollowingVents() async {
     await _refreshVentsData(
       ventProvider: followingVentProvider,
-      setupMethod: () => VentDataSetup().setupFollowing(),
+      setupMethod: () => VentsSetup().setupFollowing(),
     );
   }
 
