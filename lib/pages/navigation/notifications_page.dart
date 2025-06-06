@@ -51,7 +51,15 @@ class _NotificationsPageState extends State<NotificationsPage> with
     
     final postId = await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
-    final bodyText = await SearchVentBodyGetter(postId: postId).getBodyText();
+    final ventDataGetter = VentDataGetter(postId: postId);
+
+    final bodyText = await ventDataGetter.getBodyText();
+    final metadata = await ventDataGetter.getMetadata();
+
+    final tags = metadata['tags'];
+    final totalLikes = metadata['total_likes'];
+    final postTimestamp = metadata['post_timestamp'];
+    final isNsfw = metadata['is_nsfw'];
 
     if (context.mounted) {
       Navigator.push(
@@ -60,10 +68,10 @@ class _NotificationsPageState extends State<NotificationsPage> with
           title: title, 
           postId: postId,
           bodyText: bodyText, 
-          tags: '',
-          postTimestamp: '',
-          isNsfw: false,
-          totalLikes: 0,
+          tags: tags,
+          postTimestamp: postTimestamp,
+          isNsfw: isNsfw,
+          totalLikes: totalLikes,
           creator: userProvider.user.username, 
           pfpData: profileProvider.profile.profilePicture,
         )),

@@ -167,7 +167,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   }
 
   Future<String> _getSearchResultsBodyText() async {
-    return await SearchVentBodyGetter(postId: postId).getBodyText();
+    return await VentDataGetter(postId: postId).getBodyText();
   }
 
   void _navigateToVentPostPage() async {

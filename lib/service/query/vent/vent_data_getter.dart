@@ -3,7 +3,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/vent_post_state_service.dart';
-// TODO: Rename to HomeVentsDataGetter
+// TODO: Rename to VentsGetter
 class VentDataGetter extends BaseQueryService with UserProfileProviderService {
 
   final formatPostTimestamp = FormatDate();
