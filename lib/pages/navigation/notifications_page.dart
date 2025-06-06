@@ -6,8 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/service/notification_service.dart';
+import 'package:revent/service/query/general/post_id_getter.dart';
+import 'package:revent/service/query/search/search_vent_body_getter.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
@@ -22,7 +26,9 @@ class NotificationsPage extends StatefulWidget {
 
 }
 
-class _NotificationsPageState extends State<NotificationsPage> with NavigationProviderService {
+class _NotificationsPageState extends State<NotificationsPage> with 
+  NavigationProviderService, 
+  UserProfileProviderService {
 
   final notificationNotifier = ValueNotifier<Map<String, List<dynamic>>>({});
 
@@ -37,6 +43,31 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
 
     if (storedLikes is Map) {
       notificationNotifier.value = Map<String, List<dynamic>>.from(storedLikes);
+    }
+
+  }
+
+  Future<void> _navigateToPost({required String title}) async {
+    
+    final postId = await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
+
+    final bodyText = await SearchVentBodyGetter(postId: postId).getBodyText();
+
+    if (context.mounted) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (_) => VentPostPage(
+          title: title, 
+          postId: postId,
+          bodyText: bodyText, 
+          tags: '',
+          postTimestamp: '',
+          isNsfw: false,
+          totalLikes: 0,
+          creator: userProvider.user.username, 
+          pfpData: profileProvider.profile.profilePicture,
+        )),
+      );
     }
 
   }
@@ -102,34 +133,43 @@ class _NotificationsPageState extends State<NotificationsPage> with NavigationPr
   }
 
   Widget _buildNotificationListView(List<String> titlesData, List<int> likesData, List<String> timestamp) {
-    return ListView.builder(
-      itemCount: titlesData.length,
-      itemBuilder: (_, index) {
-        return Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: SizedBox(
-            height: 50,
-            child: Row(
-              children: [
-        
-                _buildHeart(),
-
-                const SizedBox(width: 12),
-        
-                _buildMainInfo(titlesData[index], likesData[index], timestamp[index]),
-
-                const Spacer(),
-
-                Padding(
-                  padding: const EdgeInsets.only(right: 4.0),
-                  child: Icon(Icons.arrow_forward_ios, color: ThemeColor.contentThird, size: 18),
-                )
-        
-              ],
+    return Padding(
+      padding: const EdgeInsets.only(top: 12.0),
+      child: ListView.builder(
+        itemCount: titlesData.length,
+        itemBuilder: (_, index) {
+          return InkWellEffect(
+            onPressed: () async => await _navigateToPost(title: titlesData[index]),
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Container(
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25)
+                ),
+                child: Row(
+                  children: [
+    
+                    _buildHeart(),
+            
+                    const SizedBox(width: 12),
+                    
+                    _buildMainInfo(titlesData[index], likesData[index], timestamp[index]),
+            
+                    const Spacer(),
+            
+                    Padding(
+                      padding: const EdgeInsets.only(right: 4.0),
+                      child: Icon(Icons.arrow_forward_ios, color: ThemeColor.contentThird, size: 18),
+                    )
+                    
+                  ],
+                ),
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

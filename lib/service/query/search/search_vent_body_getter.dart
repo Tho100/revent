@@ -3,7 +3,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 class SearchVentBodyGetter extends BaseQueryService {
 
   final int postId;
-
+// TODO: Put on vent-query and name it 'VentDataGetter' with those funcutions: bodyText, metadataInfo (Tags, timestamp, totalLikes)
   SearchVentBodyGetter({required this.postId});
 
   Future<String> getBodyText() async {
