@@ -6,7 +6,7 @@ import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
-import 'package:revent/service/query/vent/vent_data_getter.dart';
+import 'package:revent/service/query/vent/vents_getter.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
@@ -143,7 +143,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   Future<void> setupLatest() async {
     await _setupVents<VentLatestData>(
-      dataGetter: () => VentDataGetter().getLatestVentsData(),
+      dataGetter: () => VentsGetter().getLatestVentsData(),
       setVents: latestVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentLatestData(
@@ -164,7 +164,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   Future<void> setupTrending() async {
     await _setupVents<VentTrendingData>(
-      dataGetter: () => VentDataGetter().getTrendingVentsData(),
+      dataGetter: () => VentsGetter().getTrendingVentsData(),
       setVents: trendingVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentTrendingData(
@@ -185,7 +185,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   Future<void> setupFollowing() async {
     await _setupVents<VentFollowingData>(
-      dataGetter: () => VentDataGetter().getFollowingVentsData(),
+      dataGetter: () => VentsGetter().getFollowingVentsData(),
       setVents: followingVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentFollowingData(
@@ -206,7 +206,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   Future<void> setupSearch({required String searchText}) async {
     await _setupVents<SearchVents>(
-      dataGetter: () => VentDataGetter().getSearchVentsData(
+      dataGetter: () => VentsGetter().getSearchVentsData(
         searchText: searchText,
       ),
       setVents: searchPostsProvider.setVents,
@@ -228,7 +228,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   Future<void> setupLiked() async {
     await _setupVents<LikedVentData>(
-      dataGetter: () => VentDataGetter().getLikedVentsData(),
+      dataGetter: () => VentsGetter().getLikedVentsData(),
       setVents: likedVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => LikedVentData(
@@ -249,7 +249,7 @@ class VentDataSetup with VentProviderService, SearchProviderService, LikedSavedP
 
   Future<void> setupSaved() async {
     await _setupVents<SavedVentData>(
-      dataGetter: () => VentDataGetter().getSavedVentsData(),
+      dataGetter: () => VentsGetter().getSavedVentsData(),
       setVents: savedVentProvider.setVents,
       ventBuilder: (title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => SavedVentData(
