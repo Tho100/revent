@@ -159,7 +159,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
       }
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Profiles not loaded.');// TODO: Update to Failed to load profiles.
+      SnackBarDialog.errorSnack(message: 'Failed to load profiles.');
     }
 
   }
