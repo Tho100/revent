@@ -164,28 +164,12 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
   }
 
-  Widget _buildEmptyPage() {
+  Widget _buildEmptyFollowsList() {
     return ValueListenableBuilder(
       valueListenable: emptyPageMessageNotifier,
       builder: (_, message, __) {
         return NoContentMessage().customMessage(message: message);
       }
-    );
-  }
-
-  Widget _buildAccountProfile({
-    required int index,
-    required String actionText,
-    required String username,
-    required Uint8List pfpData,
-  }) {
-    return AccountProfileWidget(
-      customText: actionText,
-      username: username,
-      pfpData: pfpData,
-      onPressed: () async => await _onFollowPressed(
-        index, username, actionText == 'Follow' ? true : false
-      )
     );
   }
 
@@ -197,7 +181,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
         builder: (_, followsData, __) {
           
           if (followsData.isEmpty) {
-            return _buildEmptyPage();
+            return _buildEmptyFollowsList();
           }
 
           return ValueListenableBuilder(
@@ -222,11 +206,18 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
                   final userProfileData = followsData[index];
                   final actionText = text[index];
 
-                  return _buildAccountProfile(
-                    index: index, 
-                    actionText: actionText, 
-                    username: userProfileData.username, 
-                    pfpData: userProfileData.profilePic
+                  final username = userProfileData.username;
+                  final pfpData = userProfileData.profilePic;
+
+                  final isFollow = actionText == 'Follow' ? true : false;
+                  
+                  return AccountProfileWidget(
+                    customText: actionText,
+                    username: username,
+                    pfpData: pfpData,
+                    onPressed: () async => await _onFollowPressed(
+                      index, username, isFollow
+                    )
                   );
 
                 },
