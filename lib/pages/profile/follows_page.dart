@@ -159,12 +159,12 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
       }
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Profiles not loaded.');
+      SnackBarDialog.errorSnack(message: 'Failed to load profiles.');
     }
 
   }
 
-  Widget _buildEmptyPage() {
+  Widget _buildEmptyFollowsList() {
     return ValueListenableBuilder(
       valueListenable: emptyPageMessageNotifier,
       builder: (_, message, __) {
@@ -181,7 +181,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
         builder: (_, followsData, __) {
           
           if (followsData.isEmpty) {
-            return _buildEmptyPage();
+            return _buildEmptyFollowsList();
           }
 
           return ValueListenableBuilder(
@@ -203,19 +203,23 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
                     return const PageLoading();
                   }
 
-                  final followsUserData = followsData[index];
-                  final currentText = text[index];
+                  final userProfileData = followsData[index];
+                  final actionText = text[index];
 
+                  final username = userProfileData.username;
+                  final pfpData = userProfileData.profilePic;
+
+                  final isFollow = actionText == 'Follow' ? true : false;
+                  
                   return AccountProfileWidget(
-                    customText: currentText,
-                    username: followsUserData.username,
-                    pfpData: followsUserData.profilePic,
-                    onPressed: () async {
-                      currentText == 'Follow' 
-                        ? await _onFollowPressed(index, followsUserData.username, true) 
-                        : await _onFollowPressed(index, followsUserData.username, false);
-                    },
+                    customText: actionText,
+                    username: username,
+                    pfpData: pfpData,
+                    onPressed: () async => await _onFollowPressed(
+                      index, username, isFollow
+                    )
                   );
+
                 },
               );
             },

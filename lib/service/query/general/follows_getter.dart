@@ -19,7 +19,7 @@ class FollowsGetter extends BaseQueryService with UserProfileProviderService {
 
     final getFollowProfilesQuery = 
     '''
-      SELECT 
+      SELECT DISTINCT
         ufi.$columnName AS username,
         upi.profile_picture AS profile_picture,
         CASE 
