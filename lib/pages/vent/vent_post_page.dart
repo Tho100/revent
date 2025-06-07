@@ -666,29 +666,33 @@ class _VentPostPageState extends State<VentPostPage> with
   }
 
   Widget _buildAddComment() {
+    return Expanded(
+      child: ValueListenableBuilder(
+        valueListenable: enableCommentNotifier,
+        builder: (_, isCommentEnabled, __) {
+          return isCommentEnabled 
+            ? BottomInputBar(
+                hintText: 'Add a comment...', 
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (_) => const PostCommentPage())
+                  );
+                }
+              )
+            : const SizedBox.shrink();
+        }
+      ),
+    );
+  }
+
+  Widget _buildBottomWidgets() {
     return Padding(
       padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 25.0),
       child: Row(
         children: [
     
-          Expanded(
-            child: ValueListenableBuilder(
-              valueListenable: enableCommentNotifier,
-              builder: (_, isCommentEnabled, __) {
-                return isCommentEnabled 
-                  ? BottomInputBar(
-                      hintText: 'Add a comment...', 
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(builder: (_) => const PostCommentPage())
-                        );
-                      }
-                    )
-                  : const SizedBox.shrink();
-              }
-            ),
-          ),
+          _buildAddComment(),
       
           if(userProvider.user.username == widget.creator) ... [
       
@@ -788,7 +792,7 @@ class _VentPostPageState extends State<VentPostPage> with
         actions: [_buildVentOptionButton()]
       ).buildAppBar(),
       body: _buildBody(),  
-      bottomNavigationBar: _buildAddComment()
+      bottomNavigationBar: _buildBottomWidgets()
     );
   }
 
