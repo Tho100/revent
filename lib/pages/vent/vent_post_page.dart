@@ -667,7 +667,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   Widget _buildAddComment() {
     return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 22.0),
+      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 25.0),
       child: Row(
         children: [
     
