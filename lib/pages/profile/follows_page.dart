@@ -159,7 +159,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
       }
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Profiles not loaded.');
+      SnackBarDialog.errorSnack(message: 'Profiles not loaded.');// TODO: Update to Failed to load profiles.
     }
 
   }
@@ -170,6 +170,22 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
       builder: (_, message, __) {
         return NoContentMessage().customMessage(message: message);
       }
+    );
+  }
+
+  Widget _buildAccountProfile({
+    required int index,
+    required String actionText,
+    required String username,
+    required Uint8List pfpData,
+  }) {
+    return AccountProfileWidget(
+      customText: actionText,
+      username: username,
+      pfpData: pfpData,
+      onPressed: () async => await _onFollowPressed(
+        index, username, actionText == 'Follow' ? true : false
+      )
     );
   }
 
@@ -203,19 +219,16 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
                     return const PageLoading();
                   }
 
-                  final followsUserData = followsData[index];
-                  final currentText = text[index];
+                  final userProfileData = followsData[index];
+                  final actionText = text[index];
 
-                  return AccountProfileWidget(
-                    customText: currentText,
-                    username: followsUserData.username,
-                    pfpData: followsUserData.profilePic,
-                    onPressed: () async {
-                      currentText == 'Follow' 
-                        ? await _onFollowPressed(index, followsUserData.username, true) 
-                        : await _onFollowPressed(index, followsUserData.username, false);
-                    },
+                  return _buildAccountProfile(
+                    index: index, 
+                    actionText: actionText, 
+                    username: userProfileData.username, 
+                    pfpData: userProfileData.profilePic
                   );
+
                 },
               );
             },
