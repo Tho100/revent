@@ -110,7 +110,7 @@ class MainScreenPage extends StatelessWidget {
         
         _buildBottomContainer(context),
 
-        const SizedBox(height: 15),
+        const SizedBox(height: 20),
         
       ],
     );
