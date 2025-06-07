@@ -43,7 +43,7 @@ class NavigationBarDock extends StatelessWidget {
       margin: const EdgeInsets.only(
         left: 10,
         right: 10,
-        bottom: 14
+        bottom: 20
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
