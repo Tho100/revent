@@ -8,7 +8,7 @@ import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/save_vent_edit.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/vent_widgets/vent_text_formatting_toolbar.dart';
+import 'package:revent/shared/widgets/text_formatting_toolbar.dart';
 
 class EditVentPage extends StatefulWidget {
 
@@ -134,7 +134,7 @@ class _EditVentPageState extends State<EditVentPage> {
       padding: MediaQuery.of(context).viewInsets,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 8.0),
-        child: VentTextFormattingToolbar(controller: postController.bodyTextController),
+        child: TextFormattingToolbar(controller: postController.bodyTextController),
       )
     );
   }
