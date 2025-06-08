@@ -8,6 +8,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/vent/comment/reply/reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
+import 'package:revent/shared/widgets/text_formatting_toolbar.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -183,6 +184,17 @@ class _PostReplyPageState extends State<PostReplyPage> {
     );
   }
 
+  Widget _buildTextFormattingToolbar() {
+    return Padding(
+      padding: MediaQuery.of(context).viewInsets,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: TextFormattingToolbar(controller: replyController),
+      )
+    );
+  }
+
+
   Widget _buildActionButton() {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -230,6 +242,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
           },
         ).buildAppBar(),
         body: _buildBody(),
+        bottomNavigationBar: _buildTextFormattingToolbar(),
       ),
     );
   }
