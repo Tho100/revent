@@ -53,7 +53,9 @@ class SettingsPage extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context, 
-                      MaterialPageRoute(builder: (_) => const AccountInformationPage())
+                      MaterialPageRoute(
+                        builder: (_) => const AccountInformationPage()
+                      )
                     );
                   }
                 ),
@@ -63,7 +65,7 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Privacy', 
                   icon: CupertinoIcons.lock,
-                  onPressed: () {
+                  onPressed: () { // TODO: Create a function for this
                     Navigator.push(
                       context, 
                       MaterialPageRoute(builder: (_) => const PrivacyPage())

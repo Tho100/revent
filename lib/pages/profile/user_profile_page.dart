@@ -102,13 +102,13 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   void _onTabChanged() async {
 
-    if(tabController.index == 1) {
+    if (tabController.index == 1) {
 
-      if(isSavedPostsHidden) {
+      if (isSavedPostsHidden) {
         SnackBarDialog.temporarySnack(message: 'Saved posts hidden.');
       }
 
-      if(!isSavedPostsHidden) {
+      if (!isSavedPostsHidden) {
         await callProfilePosts.setupSaved();
       }
 
@@ -122,7 +122,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Future<String> _loadJoinedDate() async {
 
-    if(joinedDate.isEmpty) {
+    if (joinedDate.isEmpty) {
 
       final getJoinedDate = await UserDataGetter().getJoinedDate(
         username: widget.username
@@ -175,7 +175,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
       isBlockedAccount = await UserBlockGetter(username: widget.username).getIsAccountBlocked();
 
-      if(isBlockedAccount) {
+      if (isBlockedAccount) {
         setState(() {});
         await _setPlaceholderAccountData();
         return;
@@ -183,7 +183,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
       await _loadPrivacySettings();
 
-      if(isPrivateAccount) {
+      if (isPrivateAccount) {
         await _setPlaceholderAccountData();
         return;
       }

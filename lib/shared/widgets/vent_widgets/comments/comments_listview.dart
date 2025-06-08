@@ -29,13 +29,15 @@ class CommentsListView extends StatelessWidget {
       onTap: () {
         Navigator.push(
           navigatorKey.currentContext!,
-          MaterialPageRoute(builder: (_) => RepliesPage(
-            commentedBy: commentedBy, 
-            comment: comment, 
-            commentTimestamp: commentTimestamp, 
-            isCommentLikedByCreator: isCommentLikedByCreator, 
-            pfpData: pfpData, 
-          ))
+          MaterialPageRoute(
+            builder: (_) => RepliesPage(
+              commentedBy: commentedBy, 
+              comment: comment, 
+              commentTimestamp: commentTimestamp, 
+              isCommentLikedByCreator: isCommentLikedByCreator, 
+              pfpData: pfpData, 
+            )
+          )
         );
       },
       child: Container(

@@ -44,7 +44,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
       final replyText = replyController.text;
 
-      if(replyText.isNotEmpty) {
+      if (replyText.isNotEmpty) {
 
         await ReplyActions(
           repliedBy: getIt.userProvider.user.username,
@@ -204,7 +204,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
   Future<bool> _onClosePage() async {
 
-    if(replyController.text.isNotEmpty) {
+    if (replyController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardReply, 
       );
@@ -231,8 +231,8 @@ class _PostReplyPageState extends State<PostReplyPage> {
           enableCenter: false,
           actions: [_buildActionButton()],
           customBackOnPressed: () async {
-            if(await _onClosePage()) {
-              if(context.mounted) {
+            if (await _onClosePage()) {
+              if (context.mounted) {
                 Navigator.pop(context);
               }
             }

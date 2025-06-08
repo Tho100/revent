@@ -117,7 +117,7 @@ class ProfileBodyWidgets extends StatelessWidget {
 
   Widget _buildBodyOnCondition() {
 
-    if(isBlockedAccount!) {
+    if (isBlockedAccount!) {
       return _buildBlockedAccountMessage();
 
     } else if (isPrivateAccount!) {

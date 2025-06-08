@@ -197,7 +197,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
       
           const SizedBox(width: 25),
 
-          if(isReplyLikedByCreator)
+          if (isReplyLikedByCreator)
           _buildLikedByCreator()
       
         ],

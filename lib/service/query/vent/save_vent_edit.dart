@@ -77,7 +77,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
 
     final formatTimeStamp = FormatDate().formatPostTimestamp(dateTimeNow);
 
-    if(!isFromArchive) {
+    if (!isFromArchive) {
       activeVentProvider.setLastEdit(formatTimeStamp);
     }
 

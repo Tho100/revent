@@ -45,7 +45,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
 
       final newCommentText = commentController.text;
 
-      if(newCommentText.isNotEmpty) {
+      if (newCommentText.isNotEmpty) {
 
         await SaveCommentEdit(
           originalComment: widget.originalComment, 

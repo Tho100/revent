@@ -12,7 +12,7 @@ class UserDataGetter extends BaseQueryService with UserProfileProviderService {
     
     final results = await executeQuery(query, param);
 
-    if(results.rows.isEmpty) {
+    if (results.rows.isEmpty) {
       return null;
     }
 

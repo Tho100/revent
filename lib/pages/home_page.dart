@@ -78,12 +78,12 @@ class _HomePageState extends State<HomePage> with
 
     if (tabController.index == 0) {
 
-      if(latestVentProvider.vents.isNotEmpty) {
+      if (latestVentProvider.vents.isNotEmpty) {
         latestIsLoadedNotifier.value = true;
         return;
       }
 
-      if(!latestIsLoadedNotifier.value && latestVentProvider.vents.isEmpty) {
+      if (!latestIsLoadedNotifier.value && latestVentProvider.vents.isEmpty) {
         await ventDataSetup.setupLatest().then(
           (_) => latestIsLoadedNotifier.value = true
         );
@@ -91,12 +91,12 @@ class _HomePageState extends State<HomePage> with
 
     } else if (tabController.index == 1) {
 
-      if(trendingVentProvider.vents.isNotEmpty) {
+      if (trendingVentProvider.vents.isNotEmpty) {
         trendingIsLoadedNotifier.value = true;
         return;
       }
 
-      if(!trendingIsLoadedNotifier.value && trendingVentProvider.vents.isEmpty) {
+      if (!trendingIsLoadedNotifier.value && trendingVentProvider.vents.isEmpty) {
         await ventDataSetup.setupTrending().then(
           (_) => trendingIsLoadedNotifier.value = true
         );
@@ -104,12 +104,12 @@ class _HomePageState extends State<HomePage> with
 
     } else if (tabController.index == 2) {
 
-      if(followingVentProvider.vents.isNotEmpty) {
+      if (followingVentProvider.vents.isNotEmpty) {
         followingIsLoadedNotifier.value = true;
         return;
       }
 
-      if(!followingIsLoadedNotifier.value && followingVentProvider.vents.isEmpty) {
+      if (!followingIsLoadedNotifier.value && followingVentProvider.vents.isEmpty) {
         await ventDataSetup.setupFollowing().then(
           (_) => followingIsLoadedNotifier.value = true
         );
@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> with
 
   void _initializeFollowSuggestion() async {
 
-    if(followSuggestionProvider.suggestions.isEmpty) {
+    if (followSuggestionProvider.suggestions.isEmpty) {
 
       final followSuggestions = await FollowSuggestionGetter().getSuggestion();
 
@@ -200,7 +200,7 @@ class _HomePageState extends State<HomePage> with
       valueListenable: latestIsLoadedNotifier,
       builder: (_, isLoaded, __) {
         
-        if(!isLoaded) {
+        if (!isLoaded) {
           return const PageLoading();
         }
 
@@ -221,7 +221,7 @@ class _HomePageState extends State<HomePage> with
       valueListenable: trendingIsLoadedNotifier,
       builder: (_, isLoaded, __) {
 
-        if(!isLoaded) {
+        if (!isLoaded) {
           return const PageLoading();
         }
 
@@ -242,7 +242,7 @@ class _HomePageState extends State<HomePage> with
       valueListenable: followingIsLoadedNotifier,
       builder: (_, isLoaded, __) {
 
-        if(!isLoaded) {
+        if (!isLoaded) {
           return const PageLoading();
         }
 

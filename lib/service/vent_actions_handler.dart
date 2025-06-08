@@ -38,7 +38,7 @@ class VentActionsHandler {
 
     try {
 
-      if(creator == getIt.userProvider.user.username) {
+      if (creator == getIt.userProvider.user.username) {
         _showTemporarySnack("You can't like your own post.");
         return;
       }
@@ -120,7 +120,7 @@ class VentActionsHandler {
 
     try {
 
-      if(getIt.profilePostsProvider.myProfile.isPinned.contains(true)) {
+      if (getIt.profilePostsProvider.myProfile.isPinned.contains(true)) {
         _closeScreens(1);
         _showTemporarySnack('You already have pinned post.');
         return;

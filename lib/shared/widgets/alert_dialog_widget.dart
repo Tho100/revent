@@ -68,7 +68,7 @@ class AlertDialogWidget extends StatelessWidget {
               ),
             ),
 
-            if(content.isNotEmpty) ... [
+            if (content.isNotEmpty) ... [
 
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 15.0),

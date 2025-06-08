@@ -10,7 +10,7 @@ class ProfilePictureGetter extends BaseQueryService {
 
   Future<Uint8List> getProfilePictures({String? username}) async {
     
-    if(username == getIt.userProvider.user.username) {
+    if (username == getIt.userProvider.user.username) {
       return getIt.profileProvider.profile.profilePicture;
     }
 

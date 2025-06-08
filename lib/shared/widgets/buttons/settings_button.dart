@@ -41,7 +41,7 @@ class SettingsButton extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
 
-                      if(icon != null) ... [
+                      if (icon != null) ... [
 
                         Icon(icon, color: makeRed == true ? ThemeColor.alert: ThemeColor.contentPrimary, size: 21),
 
@@ -61,7 +61,7 @@ class SettingsButton extends StatelessWidget {
 
                       const Spacer(),
 
-                      if(!hideCaret!)
+                      if (!hideCaret!)
                       Icon(
                         Icons.arrow_forward_ios, 
                         color: makeRed == true ? ThemeColor.alert : ThemeColor.contentThird, 

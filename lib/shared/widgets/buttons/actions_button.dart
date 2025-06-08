@@ -18,19 +18,19 @@ class ActionsButton {
     Color? backgroundColor;
     Color? borderColor;
 
-    if(isLiked! || isSaved!) {
+    if (isLiked! || isSaved!) {
       borderColor = ThemeColor.backgroundPrimary; 
     }
 
-    if(isLiked) {
+    if (isLiked) {
       backgroundColor = ThemeColor.likedColor;
     } 
 
-    if(isSaved!) {
+    if (isSaved!) {
       backgroundColor = ThemeColor.contentPrimary;
     }
 
-    if(!isSaved && !isLiked) {
+    if (!isSaved && !isLiked) {
       backgroundColor = ThemeColor.backgroundPrimary;
       borderColor = ThemeColor.divider;
     }

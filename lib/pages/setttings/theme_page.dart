@@ -51,7 +51,7 @@ class _ThemePageState extends State<ThemePage> {
 
     final selectedTheme = themes[themeIndex];
 
-    if(selectedTheme == currentTheme) {
+    if (selectedTheme == currentTheme) {
       return;
     }
 
@@ -67,7 +67,7 @@ class _ThemePageState extends State<ThemePage> {
       
     currentTheme = selectedTheme;
 
-    if(context.mounted) {
+    if (context.mounted) {
       RestartAppWidget.restartApp(context);
     }
 

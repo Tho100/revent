@@ -26,7 +26,9 @@ class SecurityPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const ChangePasswordPage())
+                        MaterialPageRoute(
+                          builder: (_) => const ChangePasswordPage()
+                        )
                       );
                     }
                   ),
@@ -50,7 +52,9 @@ class SecurityPage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (_) => const DeactivateAccountPage())
+                  MaterialPageRoute(
+                    builder: (_) => const DeactivateAccountPage()
+                  )
                 );
               }
             ),

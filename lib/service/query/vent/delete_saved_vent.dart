@@ -36,7 +36,7 @@ class DeleteSavedVent extends BaseQueryService {
     final ventIndex = currentProvider['vent_index'];    
     final ventData = currentProvider['vent_data'];    
 
-    if(ventIndex != -1) {
+    if (ventIndex != -1) {
       ventData.deleteVent(ventIndex);
     }
 

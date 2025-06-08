@@ -56,13 +56,13 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
       itemCount: savedData.titles.length + 1,
       builder: (_, index) {
 
-        if(index == 0) {
+        if (index == 0) {
           return const SizedBox(height: 10);
         }
 
         final adjustedIndex = index - 1;
 
-        if(index >= 0) {
+        if (index >= 0) {
           return KeyedSubtree(
             key: ValueKey('${savedData.titles[adjustedIndex]}/${savedData.creator[adjustedIndex]}'),
             child: _buildPreviewer(savedData, adjustedIndex),

@@ -49,7 +49,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
       final newBodyText = postController.bodyTextController.text;
 
-      if(widget.isArchive) {
+      if (widget.isArchive) {
 
         await SaveVentEdit(
           title: widget.title, 
@@ -67,7 +67,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
       SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
 
-      if(context.mounted) {
+      if (context.mounted) {
         Navigator.pop(context);
       }
 
@@ -138,7 +138,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
   Future<bool> _onClosePage() async {
 
-    if(postController.bodyTextController.text != widget.body) {
+    if (postController.bodyTextController.text != widget.body) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardEdit,
       );
@@ -172,8 +172,8 @@ class _EditVentPageState extends State<EditVentPage> {
           actions: [_buildSaveChangesButton()],
           title: 'Edit Post',
           customBackOnPressed: () async {
-            if(await _onClosePage()) {
-              if(context.mounted) {
+            if (await _onClosePage()) {
+              if (context.mounted) {
                 Navigator.pop(context);
               }
             }

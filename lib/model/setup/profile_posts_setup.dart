@@ -19,7 +19,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
     final isMyProfile = profileType == ProfileType.myProfile.value;
 
-    if(type == 'posts') {
+    if (type == 'posts') {
 
       return isMyProfile 
         ? profilePostsProvider.myProfile.titles.isEmpty 
@@ -41,7 +41,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
     final isDataEmpty = _isDataEmpty('posts');
 
-    if(isDataEmpty) {
+    if (isDataEmpty) {
 
       final getPostsData = await ProfilePostsDataGetter().getPosts(
         username: username
@@ -84,7 +84,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
     final isDataEmpty = _isDataEmpty('saved');
 
-    if(isDataEmpty) {
+    if (isDataEmpty) {
 
       final getPostsData = await ProfileSavedDataGetter().getSaved(
         username: username, isMyProfile: profileType == ProfileType.myProfile.value

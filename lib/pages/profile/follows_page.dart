@@ -123,7 +123,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
     try {
 
-      if(page == 'Following' && widget.isFollowingListHidden) {
+      if (page == 'Following' && widget.isFollowingListHidden) {
         followersTabNotLoaded = false;
         emptyPageMessageNotifier.value = 'Following list is hidden.';
         return;

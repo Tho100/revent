@@ -41,7 +41,9 @@ class _SearchPageState extends State<SearchPage> {
           onPressed: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (_) => const MainSearchPage())
+              MaterialPageRoute(
+                builder: (_) => const MainSearchPage()
+              )
             );
           },
           child: Row(
@@ -82,7 +84,9 @@ class _SearchPageState extends State<SearchPage> {
         await LocalStorageModel().addSearchHistory(text: '#$label').then((_) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => SearchResultsPage(searchText: "#$label"))
+            MaterialPageRoute(
+              builder: (_) => SearchResultsPage(searchText: "#$label")
+            )
           );
         });
       },

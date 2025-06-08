@@ -129,7 +129,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     final profile = _profileData[profileKey];
 
-    if(profile != null) {
+    if (profile != null) {
 
       profile.isPostLiked[index] = isUserLikedPost 
         ? false
@@ -151,7 +151,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     final profile = _profileData[profileKey];
 
-    if(profile != null) {
+    if (profile != null) {
 
       profile.isPostSaved[index] = isUserSavedPost 
         ? false

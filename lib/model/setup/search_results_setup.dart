@@ -21,7 +21,7 @@ class SearchResultsSetup with SearchProviderService {
 
   Future<void> setupAccountsResults() async {
 
-    if(searchAccountsProvider.accounts.usernames.isEmpty) {
+    if (searchAccountsProvider.accounts.usernames.isEmpty) {
 
       final accountsData = await SearchAccountsGetter().getAccounts(searchText: searchText);
 

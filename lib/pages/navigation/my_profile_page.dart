@@ -73,7 +73,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
   void _onTabChanged() async {
 
-    if(tabController.index == 1) {
+    if (tabController.index == 1) {
       await callProfilePosts.setupSaved();
     }
 
@@ -87,7 +87,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
     try {
 
-      if((userProvider.user.socialHandles ?? {}).isEmpty) {
+      if ((userProvider.user.socialHandles ?? {}).isEmpty) {
 
         await UserDataGetter().getSocialHandles(username: userProvider.user.username).then(
           (socialHandles) => userProvider.setSocialHandles(socialHandles)
@@ -166,7 +166,9 @@ class _MyProfilePageState extends State<MyProfilePage> with
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => const EditProfilePage())
+            MaterialPageRoute(
+              builder: (_) => const EditProfilePage()
+            )
           );
         }
       ),
@@ -257,7 +259,9 @@ class _MyProfilePageState extends State<MyProfilePage> with
       onPressed: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (_) => const PrivacyPage())
+          MaterialPageRoute(
+            builder: (_) => const PrivacyPage()
+          )
         );
       }
     );

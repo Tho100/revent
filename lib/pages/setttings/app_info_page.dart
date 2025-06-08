@@ -33,7 +33,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
 
     final tempDir = await getTemporaryDirectory();
 
-    if(tempDir.existsSync()) {
+    if (tempDir.existsSync()) {
       await tempDir.delete(recursive: true);
     }
 
@@ -163,7 +163,9 @@ class _AppInfoPageState extends State<AppInfoPage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const TermAndConditionsPage())
+                        MaterialPageRoute(
+                          builder: (_) => const TermAndConditionsPage()
+                        )
                       );
                     }
                   ),
@@ -175,7 +177,9 @@ class _AppInfoPageState extends State<AppInfoPage> {
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (_) => const PrivacyPolicyPage())
+                        MaterialPageRoute(
+                          builder: (_) => const PrivacyPolicyPage()
+                        )
                       );
                     }
                   ),
