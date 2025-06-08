@@ -227,7 +227,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
 
   Widget _buildAddReply() {
     return Padding(
-      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 18.0),
+      padding: const EdgeInsets.only(left: 18.0, right: 18.0, bottom: 25.0),
       child: BottomInputBar(
         hintText: 'Reply to @${widget.commentedBy}', 
         onPressed: () {
