@@ -254,7 +254,10 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         child: Row(
           children: [
           
-            TextFormattingToolbar(controller: postController.bodyTextController),
+            TextFormattingToolbar(
+              controller: postController.bodyTextController, 
+              customBottomPadding: 0
+            ),
 
             const Spacer(),
           

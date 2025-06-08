@@ -132,10 +132,7 @@ class _EditVentPageState extends State<EditVentPage> {
   Widget _buildTextFormattingToolbar() {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: TextFormattingToolbar(controller: postController.bodyTextController),
-      )
+      child: TextFormattingToolbar(controller: postController.bodyTextController),
     );
   }
 

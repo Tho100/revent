@@ -188,10 +188,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
   Widget _buildTextFormattingToolbar() {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: TextFormattingToolbar(controller: commentController),
-      )
+      child: TextFormattingToolbar(controller: commentController),
     );
   }
 
