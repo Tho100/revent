@@ -33,7 +33,7 @@ class UserProfileActions {
 
     final joinedDate = await loadJoinedDate();
 
-    if(context.mounted) {
+    if (context.mounted) {
       BottomsheetAboutProfile().buildBottomsheet(
         context: context,
         username: username,

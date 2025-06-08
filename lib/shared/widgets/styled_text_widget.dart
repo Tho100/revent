@@ -51,11 +51,11 @@ class StyledTextWidget extends StatelessWidget {
 
   bool _isMentionOrUrl(String word) {
 
-    if(word.startsWith('@')) {
+    if (word.startsWith('@')) {
       return true;
     }
 
-    if(OpenLink(url: word).isValidUrl()) {
+    if (OpenLink(url: word).isValidUrl()) {
       return true;
     }
 

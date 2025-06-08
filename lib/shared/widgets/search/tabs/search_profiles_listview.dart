@@ -18,7 +18,7 @@ class SearchProfilesListView extends StatelessWidget {
         itemCount: accountsData.usernames.length + 1,
         itemBuilder: (_, index) {
 
-          if(index == 0) {
+          if (index == 0) {
             return const SizedBox(height: 20);
           }
 
@@ -27,7 +27,7 @@ class SearchProfilesListView extends StatelessWidget {
           final username = accountsData.usernames[adjustedIndex];
           final pfpData = accountsData.profilePictures[adjustedIndex];
 
-          if(index >= 0) {
+          if (index >= 0) {
             return AccountProfileWidget(
               username: username,
               pfpData: pfpData,

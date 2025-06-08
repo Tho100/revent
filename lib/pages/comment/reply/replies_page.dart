@@ -233,10 +233,11 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
         onPressed: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (_) => PostReplyPage(
-              comment: widget.comment, 
-              commentedBy: widget.commentedBy, 
-              commenterPfp: widget.pfpData
+            MaterialPageRoute(
+              builder: (_) => PostReplyPage(
+                comment: widget.comment, 
+                commentedBy: widget.commentedBy, 
+                commenterPfp: widget.pfpData
               )
             )
           );

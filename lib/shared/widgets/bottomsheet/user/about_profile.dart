@@ -77,7 +77,7 @@ class BottomsheetAboutProfile {
                   
                   _buildHeaders('Name', username),
                   
-                  if(pronouns.isNotEmpty)
+                  if (pronouns.isNotEmpty)
                   _buildHeaders('Pronouns', pronouns),
 
                   _buildHeaders('Joined', joinedDate),

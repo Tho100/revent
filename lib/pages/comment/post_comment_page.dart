@@ -37,13 +37,13 @@ class _PostCommentPageState extends State<PostCommentPage> with
 
       final commentText = commentController.text;
 
-      if(commentText.isNotEmpty) {
+      if (commentText.isNotEmpty) {
 
         final commentIndex = commentsProvider.comments.indexWhere(
           (comment) => comment.comment == commentText && comment.commentedBy == userProvider.user.username
         );
 
-        if(commentIndex != -1) {
+        if (commentIndex != -1) {
           CustomAlertDialog.alertDialogTitle("Post Failed", 'You have already posted similar comment');
           return;
         } 
@@ -188,10 +188,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
   Widget _buildTextFormattingToolbar() {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: TextFormattingToolbar(controller: commentController),
-      )
+      child: TextFormattingToolbar(controller: commentController),
     );
   }
 
@@ -232,7 +229,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
 
   Future<bool> _onClosePage() async {
 
-    if(commentController.text.isNotEmpty) {
+    if (commentController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardComment, 
       );
@@ -259,8 +256,8 @@ class _PostCommentPageState extends State<PostCommentPage> with
           enableCenter: false,
           actions: [_buildActionButton()],
           customBackOnPressed: () async {
-            if(await _onClosePage()) {
-              if(context.mounted) {
+            if (await _onClosePage()) {
+              if (context.mounted) {
                 Navigator.pop(context);
               }
             }

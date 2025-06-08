@@ -64,17 +64,19 @@ class _NotificationsPageState extends State<NotificationsPage> with
     if (context.mounted) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => VentPostPage(
-          title: title, 
-          postId: postId,
-          bodyText: bodyText, 
-          tags: tags,
-          postTimestamp: postTimestamp,
-          isNsfw: isNsfw,
-          totalLikes: totalLikes,
-          creator: userProvider.user.username, 
-          pfpData: profileProvider.profile.profilePicture,
-        )),
+        MaterialPageRoute(
+          builder: (_) => VentPostPage(
+            title: title, 
+            postId: postId,
+            bodyText: bodyText, 
+            tags: tags,
+            postTimestamp: postTimestamp,
+            isNsfw: isNsfw,
+            totalLikes: totalLikes,
+            creator: userProvider.user.username, 
+            pfpData: profileProvider.profile.profilePicture,
+          )
+        ),
       );
     }
 
@@ -144,6 +146,9 @@ class _NotificationsPageState extends State<NotificationsPage> with
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
         itemCount: titlesData.length,
         itemBuilder: (_, index) {
           return InkWellEffect(

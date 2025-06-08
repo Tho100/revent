@@ -34,7 +34,9 @@ class ProfileInfoWidgets {
       onPressed: () {
         Navigator.push(
           navigatorKey.currentContext!,
-          MaterialPageRoute(builder: (_) => ProfilePictureViewer(pfpData: pfpData))
+          MaterialPageRoute(
+            builder: (_) => ProfilePictureViewer(pfpData: pfpData)
+          )
         );
       },
       child: Hero(

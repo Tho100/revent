@@ -58,17 +58,17 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
     final tags = tagsProvider.selectedTags.isEmpty ? '' : tagsProvider.selectedTags.join(' ');
 
-    if(ventTitle.isEmpty) {
+    if (ventTitle.isEmpty) {
       CustomAlertDialog.alertDialog('Please enter post title');
       return;
     }
 
-    if(ventTitle.length < 5) {
+    if (ventTitle.length < 5) {
       CustomAlertDialog.alertDialog('Title must be at least 5 characters');
       return;
     }
 
-    if(isPostPressed) {
+    if (isPostPressed) {
       return;
     }
 
@@ -76,12 +76,12 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
       final isVentAlreadyExists = await VentChecker(title: ventTitle).isVentExists();
 
-      if(isVentAlreadyExists) {
+      if (isVentAlreadyExists) {
         CustomAlertDialog.alertDialog('Post with similar title already exists');
         return;
       }
 
-      if(archiveVentNotifier.value) {
+      if (archiveVentNotifier.value) {
         await _createArchiveVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
         return;
       }
@@ -102,7 +102,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     required String tags
   }) async {
 
-    if(context.mounted) {
+    if (context.mounted) {
       loading.startLoading(context: context);
     }
 
@@ -116,7 +116,9 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => const ArchivedVentPage())
+        MaterialPageRoute(
+          builder: (_) => const ArchivedVentPage()
+        )
       );
 
     });
@@ -129,7 +131,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     required String tags
   }) async {
 
-    if(context.mounted) {
+    if (context.mounted) {
       loading.startLoading(context: context);
     }
 
@@ -144,7 +146,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
       Navigator.pop(context);        
 
-      if(getIt.navigationProvider.currentPageIndex != 0) {
+      if (getIt.navigationProvider.currentPageIndex != 0) {
         NavigatePage.homePage();
       }
 
@@ -183,7 +185,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     return Consumer<TagsProvider>(
       builder: (_, tagsProvider, __) {
 
-        if(tagsProvider.selectedTags.isEmpty) {
+        if (tagsProvider.selectedTags.isEmpty) {
           return const SizedBox.shrink();
         }
 
@@ -254,7 +256,10 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         child: Row(
           children: [
           
-            TextFormattingToolbar(controller: postController.bodyTextController),
+            TextFormattingToolbar(
+              controller: postController.bodyTextController, 
+              customBottomPadding: 0
+            ),
 
             const Spacer(),
           
@@ -282,7 +287,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<bool> _onClosePage() async {
 
-    if(postController.bodyTextController.text.isNotEmpty || postController.titleController.text.isNotEmpty) {
+    if (postController.bodyTextController.text.isNotEmpty || postController.titleController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardPost, 
       );
@@ -315,8 +320,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
           title: 'New Vent',
           actions: [_buildPostButton()],
           customBackOnPressed: () async {
-            if(await _onClosePage()) {
-              if(context.mounted) {
+            if (await _onClosePage()) {
+              if (context.mounted) {
                 Navigator.pop(context);
               }
             }

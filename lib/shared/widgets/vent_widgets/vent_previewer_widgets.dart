@@ -70,7 +70,7 @@ class VentPreviewerWidgets {
 
     dynamic profileData;
 
-    if(navigation.currentRoute == AppRoute.myProfile.path) {
+    if (navigation.currentRoute == AppRoute.myProfile.path) {
       profileData = ventData.myProfile;
 
     } else if (navigation.currentRoute == AppRoute.userProfile.path) {
@@ -81,7 +81,7 @@ class VentPreviewerWidgets {
     int totalLikes = 0;
     bool isLiked = false;
 
-    if(RouteHelper.isOnProfile) {
+    if (RouteHelper.isOnProfile) {
       totalLikes = profileData.totalLikes.length > 0 ? profileData.totalLikes[safeVentIndex] : 0;
       isLiked = profileData.totalLikes.length > 0 ? profileData.isPostLiked[safeVentIndex] : false;
 
@@ -104,7 +104,7 @@ class VentPreviewerWidgets {
 
     dynamic profileData;
 
-    if(navigation.currentRoute == AppRoute.myProfile.path) {
+    if (navigation.currentRoute == AppRoute.myProfile.path) {
       profileData = ventData.myProfile;
 
     } else if (navigation.currentRoute == AppRoute.userProfile.path) {
@@ -112,7 +112,7 @@ class VentPreviewerWidgets {
 
     }
 
-    if(RouteHelper.isOnProfile) {
+    if (RouteHelper.isOnProfile) {
       return profileData.isPostSaved.length > 0 ? profileData.isPostSaved[safeVentIndex] : false;
     } 
 

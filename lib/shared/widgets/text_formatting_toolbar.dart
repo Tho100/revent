@@ -7,8 +7,11 @@ class TextFormattingToolbar extends StatelessWidget {
 
   final TextEditingController controller;
 
+  final double customBottomPadding;
+
   const TextFormattingToolbar({
     required this.controller, 
+    this.customBottomPadding = 8.0,
     super.key
   });
 
@@ -41,7 +44,7 @@ class TextFormattingToolbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0),
+      padding: EdgeInsets.only(left: 12.0, bottom: customBottomPadding),
       child: Row(
         children: [
     

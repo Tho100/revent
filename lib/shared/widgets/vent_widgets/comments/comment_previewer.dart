@@ -64,7 +64,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
         (_) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
       );
 
-      if(isOnRepliesPage) {
+      if (isOnRepliesPage) {
         Navigator.pop(navigatorKey.currentContext!);
       }
 
@@ -152,7 +152,8 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
             Navigator.pop(navigatorKey.currentContext!);
             Navigator.push(
               navigatorKey.currentContext!, 
-              MaterialPageRoute(builder: (_) => EditCommentPage(originalComment: comment)
+              MaterialPageRoute(
+                builder: (_) => EditCommentPage(originalComment: comment)
               )
             );
           },
@@ -280,13 +281,15 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
             onPressed: () {
               Navigator.push(
                 navigatorKey.currentContext!,
-                MaterialPageRoute(builder: (_) => RepliesPage(
-                  commentedBy: commentedBy, 
-                  comment: comment, 
-                  commentTimestamp: commentTimestamp, 
-                  isCommentLikedByCreator: isCommentLikedByCreator, 
-                  pfpData: pfpData, 
-                ))
+                MaterialPageRoute(
+                  builder: (_) => RepliesPage(
+                    commentedBy: commentedBy, 
+                    comment: comment, 
+                    commentTimestamp: commentTimestamp, 
+                    isCommentLikedByCreator: isCommentLikedByCreator, 
+                    pfpData: pfpData, 
+                  )
+                )
               );
             },
             icon: Icon(CupertinoIcons.chat_bubble, color:ThemeColor.contentSecondary, size: 18),
@@ -307,7 +310,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
           const SizedBox(width: 25),
 
-          if(isCommentLikedByCreator)
+          if (isCommentLikedByCreator)
           _buildLikedByCreator()
       
         ],
@@ -342,7 +345,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
           ),
         ),
 
-        if(isPinned) ... [
+        if (isPinned) ... [
 
           const SizedBox(width: 6),
 
@@ -352,7 +355,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
         const Spacer(),
   
-        if(isEdited) ... [
+        if (isEdited) ... [
 
           _buildLastEdit(),
 

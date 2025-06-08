@@ -34,6 +34,18 @@ class SettingsPage extends StatelessWidget {
     getIt.savedVentProvider.clearVents();
   }
 
+  void _navigateToPage({
+    required BuildContext context,
+    required Widget classPage
+  }) {
+    Navigator.push(
+      context, 
+      MaterialPageRoute(
+        builder: (_) => classPage
+      )
+    );
+  }
+
   Widget _buildBody(BuildContext context) {
 
     const buttonGap = 14.0;
@@ -50,12 +62,10 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Account Information', 
                   icon: CupertinoIcons.person,
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (_) => const AccountInformationPage())
-                    );
-                  }
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const AccountInformationPage()
+                  )
                 ),
                   
                 const SizedBox(height: buttonGap),
@@ -63,12 +73,10 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Privacy', 
                   icon: CupertinoIcons.lock,
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (_) => const PrivacyPage())
-                    );
-                  }
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const PrivacyPage()
+                  )
                 ),
                   
                 const SizedBox(height: buttonGap),
@@ -76,12 +84,10 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Security', 
                   icon: CupertinoIcons.shield,
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (_) => const SecurityPage())
-                    );
-                  }
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const SecurityPage()
+                  )
                 ),
           
                 const SizedBox(height: buttonGap),
@@ -89,12 +95,10 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Blocked', 
                   icon: CupertinoIcons.clear_circled,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const BlockedAccountsPage())
-                    );
-                  }
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const BlockedAccountsPage()
+                  )
                 ),
           
                 const SizedBox(height: buttonGap),
@@ -102,12 +106,10 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Liked', 
                   icon: CupertinoIcons.heart,
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (_) => const LikedPage())
-                    );
-                  }
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const LikedPage()
+                  )
                 ),
                   
                 const SizedBox(height: buttonGap),
@@ -115,12 +117,10 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Saved', 
                   icon: CupertinoIcons.bookmark,
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (_) => const SavedPage())
-                    );
-                  }
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const SavedPage()
+                  )
                 ),
           
                 const SizedBox(height: buttonGap),
@@ -128,12 +128,10 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Archive', 
                   icon: CupertinoIcons.archivebox,
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const ArchivedVentPage())
-                    );
-                  }
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const ArchivedVentPage()
+                  )
                 ),
           
                 const SizedBox(height: buttonGap),
@@ -141,12 +139,10 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Theme', 
                   icon: CupertinoIcons.paintbrush,
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (_) => const ThemePage())
-                    );
-                  }
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const ThemePage()
+                  )
                 ),
 
                 const SizedBox(height: buttonGap),
@@ -154,12 +150,10 @@ class SettingsPage extends StatelessWidget {
                 SettingsButton(
                   text: 'Info', 
                   icon: CupertinoIcons.info,
-                  onPressed: () {
-                    Navigator.push(
-                      context, 
-                      MaterialPageRoute(builder: (_) => const AppInfoPage())
-                    );
-                  }
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const AppInfoPage()
+                  )
                 ),
               ],
             ),

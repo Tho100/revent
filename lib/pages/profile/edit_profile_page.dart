@@ -155,7 +155,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     bioController.text = profileProvider.profile.bio;
     bioController.addListener(_enforceBioMaxLines);
 
-    if(profileProvider.profile.pronouns.isNotEmpty) {
+    if (profileProvider.profile.pronouns.isNotEmpty) {
       pronounController.text = profileProvider.profile.pronouns;
     }
 
@@ -301,7 +301,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _pronounsChipsOnSelected(String pronouns) {
 
-    if(pronouns.isEmpty) {
+    if (pronouns.isEmpty) {
       pronounController.text = '';
       return;
     }

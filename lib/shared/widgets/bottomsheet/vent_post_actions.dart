@@ -25,56 +25,56 @@ class BottomsheetVentPostActions with UserProfileProviderService {
 
         const BottomsheetHeader(title: 'Post Options'),
 
-        if(unSaveOnPressed != null)
+        if (unSaveOnPressed != null)
         BottomsheetOptionButton(
           text: 'Unsave Post',
           icon: CupertinoIcons.bookmark_fill,
           onPressed: unSaveOnPressed
         ),
 
-        if(userProvider.user.username == creator && editOnPressed != null)
+        if (userProvider.user.username == creator && editOnPressed != null)
         BottomsheetOptionButton(
           text: 'Edit Post',
           icon: CupertinoIcons.square_pencil,
           onPressed: editOnPressed
         ),
 
-        if(copyOnPressed != null)
+        if (copyOnPressed != null)
         BottomsheetOptionButton(
           text: 'Copy Body',
           icon: CupertinoIcons.doc_on_doc,
           onPressed: copyOnPressed
         ),
 
-        if(userProvider.user.username == creator && unPinOnPressed != null)
+        if (userProvider.user.username == creator && unPinOnPressed != null)
         BottomsheetOptionButton(
           text: 'Unpin Post',
           icon: CupertinoIcons.pin_slash, 
           onPressed: unPinOnPressed
         ),
 
-        if(userProvider.user.username == creator && pinOnPressed != null)
+        if (userProvider.user.username == creator && pinOnPressed != null)
         BottomsheetOptionButton(
           text: 'Pin Post', 
           icon: CupertinoIcons.pin, 
           onPressed: pinOnPressed
         ),
 
-        if(userProvider.user.username != creator && reportOnPressed != null)
+        if (userProvider.user.username != creator && reportOnPressed != null)
         BottomsheetOptionButton(
           text: 'Report Post',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
-        if(userProvider.user.username != creator && blockOnPressed != null)
+        if (userProvider.user.username != creator && blockOnPressed != null)
         BottomsheetOptionButton(
           text: 'Block @$creator',
           icon: CupertinoIcons.clear_circled,
           onPressed: blockOnPressed
         ),
 
-        if(userProvider.user.username == creator && deleteOnPressed != null)
+        if (userProvider.user.username == creator && deleteOnPressed != null)
         BottomsheetOptionButton(
           text: 'Delete Post',
           icon: CupertinoIcons.trash,

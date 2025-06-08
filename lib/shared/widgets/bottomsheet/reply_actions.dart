@@ -26,21 +26,21 @@ class BottomsheetReplyActions with UserProfileProviderService {
           onPressed: copyOnPressed
         ),
 
-        if(userProvider.user.username != repliedBy)
+        if (userProvider.user.username != repliedBy)
         BottomsheetOptionButton(
           text: 'Report Reply',
           icon: CupertinoIcons.flag,
           onPressed: reportOnPressed
         ),
 
-        if(userProvider.user.username == repliedBy)
+        if (userProvider.user.username == repliedBy)
         BottomsheetOptionButton(
           text: 'Delete Reply',
           icon: CupertinoIcons.trash,
           onPressed: deleteOnPressed
         ),
 
-        if(userProvider.user.username != repliedBy)
+        if (userProvider.user.username != repliedBy)
         BottomsheetOptionButton(
           text: 'Block @$repliedBy',
           icon: CupertinoIcons.clear_circled,

@@ -87,7 +87,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
     final ventIndex = currentProvider['vent_index'];    
     final ventData = currentProvider['vent_data'];    
 
-    if(ventIndex != -1) {
+    if (ventIndex != -1) {
       ventData.deleteVent(ventIndex);
     }
 

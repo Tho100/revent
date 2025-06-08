@@ -44,12 +44,12 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
       final newPasswordInput = authController.newPasswordController.text;
       final newPasswordInputHash = hashingModel.computeHash(newPasswordInput);
 
-      if(newPasswordInput == currentPasswordInput) {
+      if (newPasswordInput == currentPasswordInput) {
         CustomAlertDialog.alertDialog("New password can't be the same as the old one");
         return;
       }
 
-      if(currentPasswordHash == currentPasswordInputHash) {
+      if (currentPasswordHash == currentPasswordInputHash) {
 
         await userAuth.updateAccountAuth(
           username: userProvider.user.username, 

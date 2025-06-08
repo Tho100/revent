@@ -110,7 +110,7 @@ class _VentPostPageState extends State<VentPostPage> with
       ? commentSettings.toggleComment(isEnableComment: 1)
       : commentSettings.toggleComment(isEnableComment: 0);
 
-    if(!enableCommentNotifier.value) {
+    if (!enableCommentNotifier.value) {
       commentsProvider.deleteComments();
     }
 
@@ -140,7 +140,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
     try {
 
-      if(!enableCommentNotifier.value) {
+      if (!enableCommentNotifier.value) {
         return;
       }
 
@@ -156,7 +156,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   void _copyBodyText() async {
 
-    if(widget.bodyText.isEmpty) {
+    if (widget.bodyText.isEmpty) {
       SnackBarDialog.temporarySnack(message: 'Nothing to copy.');
       return;
     }
@@ -171,7 +171,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
     try {
 
-      if(!enableCommentNotifier.value) {
+      if (!enableCommentNotifier.value) {
         return;
       }
 
@@ -206,7 +206,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
     dynamic totalLikes, isVentLiked;
 
-    if(RouteHelper.isOnProfile) {
+    if (RouteHelper.isOnProfile) {
 
       final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile.path;
 
@@ -239,7 +239,7 @@ class _VentPostPageState extends State<VentPostPage> with
     final ventIndex = currentProvider['vent_index'];
     final ventData = currentProvider['vent_data'];
 
-    if(RouteHelper.isOnProfile) {
+    if (RouteHelper.isOnProfile) {
 
       final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile.path;
 
@@ -261,7 +261,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
         final lastEdit = data.ventData.lastEdit;
 
-        if(lastEdit != '') {
+        if (lastEdit != '') {
           return GestureDetector(
             onTap: () => SnackBarDialog.temporarySnack(
               message: 'Post was edited ${lastEdit == 'Just now' ? 'just now' : '$lastEdit ago'}.'
@@ -368,7 +368,7 @@ class _VentPostPageState extends State<VentPostPage> with
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
-        if(widget.isNsfw)
+        if (widget.isNsfw)
         const NsfwWidget(),
 
         SelectableText(
@@ -376,7 +376,7 @@ class _VentPostPageState extends State<VentPostPage> with
           style: ThemeStyle.ventPostPageTitleStyle
         ),
 
-        if(widget.tags.isNotEmpty) ... [
+        if (widget.tags.isNotEmpty) ... [
 
           const SizedBox(height: 8),
 
@@ -575,7 +575,7 @@ class _VentPostPageState extends State<VentPostPage> with
   
         const SizedBox(height: 2),
   
-        if(!isCommentEmpty)
+        if (!isCommentEmpty)
         ValueListenableBuilder(
           valueListenable: enableCommentNotifier,
           builder: (_, isCommentEnabled, __) {
@@ -605,7 +605,7 @@ class _VentPostPageState extends State<VentPostPage> with
           }
         ),
 
-        if(!isCommentEmpty)
+        if (!isCommentEmpty)
         Column(
           children: [
             
@@ -676,7 +676,9 @@ class _VentPostPageState extends State<VentPostPage> with
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (_) => const PostCommentPage())
+                    MaterialPageRoute(
+                      builder: (_) => const PostCommentPage()
+                    )
                   );
                 }
               )
@@ -694,7 +696,7 @@ class _VentPostPageState extends State<VentPostPage> with
     
           _buildAddComment(),
       
-          if(userProvider.user.username == widget.creator) ... [
+          if (userProvider.user.username == widget.creator) ... [
       
             const SizedBox(width: 12),
       

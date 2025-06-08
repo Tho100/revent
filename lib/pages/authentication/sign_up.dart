@@ -58,12 +58,12 @@ class _SignUpPageState extends State<SignUpPage> {
     final emailInput = authController.emailController.text;
     final authInput = authController.passwordController.text;
 
-    if(emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
+    if (emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
       CustomAlertDialog.alertDialog('Please fill all the fields');
       return;
     }
 
-    if(!InputValidator().validUsernameFormat(usernameInput)) {
+    if (!InputValidator().validUsernameFormat(usernameInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Username is invalid');
       return;
     }

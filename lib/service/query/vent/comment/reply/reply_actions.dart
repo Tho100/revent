@@ -176,7 +176,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
     required bool isUserLikedComment,
   }) {
 
-    if(index != -1) {
+    if (index != -1) {
       repliesProvider.likeReply(index, isUserLikedComment);
     }
 
@@ -206,7 +206,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
       (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
     );
 
-    if(index != -1) {
+    if (index != -1) {
       repliesProvider.deleteReply(index);
     }
 

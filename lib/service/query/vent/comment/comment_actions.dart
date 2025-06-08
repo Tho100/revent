@@ -59,7 +59,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
       (comment) => comment.commentedBy == username && comment.comment == commentText
     );
 
-    if(index != -1) {
+    if (index != -1) {
       commentsProvider.deleteComment(index);
     }
 
@@ -162,7 +162,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
     required bool isUserLikedComment,
   }) {
 
-    if(index != -1) {
+    if (index != -1) {
       commentsProvider.likeComment(index, isUserLikedComment);
     }
 

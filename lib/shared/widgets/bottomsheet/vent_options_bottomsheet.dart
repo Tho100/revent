@@ -49,7 +49,7 @@ class BottomsheetVentOptions {
 
                   notifier.value = !isToggled;
 
-                  if(onToggled != null) {
+                  if (onToggled != null) {
                     onToggled();
                   }
 

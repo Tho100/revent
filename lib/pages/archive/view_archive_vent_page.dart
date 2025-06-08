@@ -110,7 +110,7 @@ class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderServic
           style: ThemeStyle.ventPostPageTitleStyle
         ),
         
-        if(tags.isNotEmpty) ... [
+        if (tags.isNotEmpty) ... [
 
           const SizedBox(height: 8),
 

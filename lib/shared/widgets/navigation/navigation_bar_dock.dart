@@ -78,7 +78,7 @@ class NavigationBarDock extends StatelessWidget {
                                 color: iconColor, 
                                 iconSize: 28,
                                 onPressed: () {
-                                  if(index != 2) {
+                                  if (index != 2) {
                                     selectedNavigationIndexNotifier.value = index;
                                   }
                                   _onNavigationButtonPressed(index);

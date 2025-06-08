@@ -21,7 +21,7 @@ class SocialLinksWidgets {
       child: Row(
         children: [
     
-          if(socialHandles.containsKey('tiktok') &&
+          if (socialHandles.containsKey('tiktok') &&
             socialHandles['tiktok']?.isNotEmpty == true)
           _buildSocialLinksIcon(
             'tiktok', 
@@ -29,7 +29,7 @@ class SocialLinksWidgets {
             FontAwesomeIcons.tiktok, 19
           ),
     
-          if(socialHandles.containsKey('twitter') &&
+          if (socialHandles.containsKey('twitter') &&
             socialHandles['twitter']?.isNotEmpty == true)
           _buildSocialLinksIcon(
             'twitter', 
@@ -37,7 +37,7 @@ class SocialLinksWidgets {
             FontAwesomeIcons.twitter, 21
           ),
     
-          if(socialHandles.containsKey('instagram') &&
+          if (socialHandles.containsKey('instagram') &&
             socialHandles['instagram']?.isNotEmpty == true)
           _buildSocialLinksIcon(
             'instagram', 

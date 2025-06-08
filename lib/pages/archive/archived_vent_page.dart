@@ -83,13 +83,15 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => ViewArchiveVentPage(
-        title: title, 
-        tags: tags,
-        bodyText: bodyText, 
-        lastEdit: lastEdit,
-        postTimestamp: postTimestamp
-      )),
+      MaterialPageRoute(
+        builder: (_) => ViewArchiveVentPage(
+          title: title, 
+          tags: tags,
+          bodyText: bodyText, 
+          lastEdit: lastEdit,
+          postTimestamp: postTimestamp
+        )
+      ),
     );
 
   }
@@ -192,7 +194,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       
           ventPreviewer.buildTitle(),
 
-          if(tags.isNotEmpty) ... [
+          if (tags.isNotEmpty) ... [
 
             const SizedBox(height: 8),
 

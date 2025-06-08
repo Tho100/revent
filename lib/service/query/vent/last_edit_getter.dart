@@ -27,7 +27,7 @@ class LastEditGetter extends BaseQueryService with VentProviderService {
 
     final results = await executeQuery(query, params);
 
-    if(results.rows.isEmpty || results.rows.last.assoc()['last_edit'] == null) {
+    if (results.rows.isEmpty || results.rows.last.assoc()['last_edit'] == null) {
       return '';
     }
 

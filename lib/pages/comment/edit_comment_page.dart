@@ -45,7 +45,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
 
       final newCommentText = commentController.text;
 
-      if(newCommentText.isNotEmpty) {
+      if (newCommentText.isNotEmpty) {
 
         await SaveCommentEdit(
           originalComment: widget.originalComment, 
@@ -99,13 +99,9 @@ class _EditCommentPageState extends State<EditCommentPage> {
   Widget _buildTextFormattingToolbar() {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 8.0),
-        child: TextFormattingToolbar(controller: commentController),
-      )
+      child: TextFormattingToolbar(controller: commentController),
     );
   }
-
 
   Widget _buildSaveChangesButton() {
     return ValueListenableBuilder(

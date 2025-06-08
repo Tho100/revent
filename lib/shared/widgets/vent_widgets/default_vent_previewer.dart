@@ -171,21 +171,23 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   }
 
   void _navigateToVentPostPage() async {
-    
+
     await _initializeBodyText().then((bodyText) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (_) => VentPostPage(
-          postId: postId,
-          title: widget.title, 
-          bodyText: bodyText, 
-          tags: widget.tags,
-          postTimestamp: widget.postTimestamp,
-          isNsfw: widget.isNsfw,
-          totalLikes: widget.totalLikes,
-          creator: widget.creator, 
-          pfpData: widget.pfpData,
-        )),
+        MaterialPageRoute(
+          builder: (_) => VentPostPage(
+            postId: postId,
+            title: widget.title, 
+            bodyText: bodyText, 
+            tags: widget.tags,
+            postTimestamp: widget.postTimestamp,
+            isNsfw: widget.isNsfw,
+            totalLikes: widget.totalLikes,
+            creator: widget.creator, 
+            pfpData: widget.pfpData,
+          )
+        ),
       );
     });
 
@@ -239,7 +241,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
     return ventPreviewer.buildMainContainer(
       children: [
 
-        if(widget.isPinned!) ... [
+        if (widget.isPinned!) ... [
 
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -283,12 +285,12 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   
         const SizedBox(height: 12),
   
-        if(widget.isNsfw) 
+        if (widget.isNsfw) 
         const NsfwWidget(),
 
         ventPreviewer.buildTitle(),
 
-        if(widget.tags.isNotEmpty) ... [
+        if (widget.tags.isNotEmpty) ... [
 
           const SizedBox(height: 8),
 

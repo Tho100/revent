@@ -26,7 +26,8 @@ class _DockBarNavigationPages {
   static void searchPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      PageRouteBuilder(pageBuilder: (_, __, ___) => const SearchPage(),
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => const SearchPage(),
         transitionDuration: const Duration(microseconds: 0)
       ),
     );
@@ -35,7 +36,8 @@ class _DockBarNavigationPages {
   static void notificationsPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      PageRouteBuilder(pageBuilder: (_, __, ___) => const NotificationsPage(),
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => const NotificationsPage(),
         transitionDuration: const Duration(microseconds: 0)
       ),
     );
@@ -44,7 +46,8 @@ class _DockBarNavigationPages {
   static void myProfilePage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      PageRouteBuilder(pageBuilder: (_, __, ___) => const MyProfilePage(),
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => const MyProfilePage(),
         transitionDuration: const Duration(microseconds: 0)
       ),
     );
@@ -59,7 +62,9 @@ class NavigatePage {
   static void mainScreenPage() {
     Navigator.pushReplacement(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const MainScreenPage()),
+      MaterialPageRoute(
+        builder: (_) => const MainScreenPage()
+      ),
     );
   }
 
@@ -68,7 +73,8 @@ class NavigatePage {
     _navigation.setCurrentRoute(AppRoute.home.path);
     Navigator.pushAndRemoveUntil(
       navigatorKey.currentContext!,
-      PageRouteBuilder(pageBuilder: (_, __, ___) => const HomePage(), 
+      PageRouteBuilder(
+        pageBuilder: (_, __, ___) => const HomePage(), 
         transitionDuration: const Duration(microseconds: 0)
       ),
       (route) => false,
@@ -94,14 +100,18 @@ class NavigatePage {
   static void settingsPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const SettingsPage()),
+      MaterialPageRoute(
+        builder: (_) => const SettingsPage()
+      ),
     );
   }
 
   static void createVentPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const CreateVentPage()),
+      MaterialPageRoute(
+        builder: (_) => const CreateVentPage()
+      ),
     );
   }
 
@@ -114,27 +124,33 @@ class NavigatePage {
   }) {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => FollowsPage(
-        pageType: pageType, 
-        username: username, 
-        totalFollowers: totalFollowers, 
-        totalFollowing: totalFollowing, 
-        isFollowingListHidden: isFollowingListHidden!
-      )),
+      MaterialPageRoute(
+        builder: (_) => FollowsPage(
+          pageType: pageType, 
+          username: username, 
+          totalFollowers: totalFollowers, 
+          totalFollowing: totalFollowing, 
+          isFollowingListHidden: isFollowingListHidden!
+        )
+      ),
     );
   }
 
   static void signUpPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const SignUpPage()),
+      MaterialPageRoute(
+        builder: (_) => const SignUpPage()
+      ),
     );
   }
 
   static void signInPage() {
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => const SignInPage()),
+      MaterialPageRoute(
+        builder: (_) => const SignInPage()
+      ),
     );
   }
 
@@ -145,7 +161,7 @@ class NavigatePage {
 
     username = username.replaceFirst('@', '');
 
-    if(username == getIt.userProvider.user.username) {
+    if (username == getIt.userProvider.user.username) {
       myProfilePage();
       return;
     }
@@ -164,7 +180,12 @@ class NavigatePage {
 
     Navigator.push(
       navigatorKey.currentContext!,
-      MaterialPageRoute(builder: (_) => UserProfilePage(username: username, pfpData: profilePicture))
+      MaterialPageRoute(
+        builder: (_) => UserProfilePage(
+          username: username, 
+          pfpData: profilePicture
+        )
+      )
     );
 
   }
@@ -176,7 +197,9 @@ class NavigatePage {
   }) {
     Navigator.push(
       navigatorKey.currentContext!, 
-      MaterialPageRoute(builder: (_) => EditVentPage(title: title, body: body, isArchive: isArchive!))
+      MaterialPageRoute(
+        builder: (_) => EditVentPage(title: title, body: body, isArchive: isArchive!)
+      )
     );
   }
 

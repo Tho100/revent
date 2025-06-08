@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> with
     
     quickActions.initialize((String actionType) {
 
-      if(actionType == 'new_vent') {
+      if (actionType == 'new_vent') {
         NavigatePage.createVentPage();
       } 
   
@@ -105,7 +105,7 @@ class _SplashScreenState extends State<SplashScreen> with
 
     final localUsername = (await localStorage.readAccountInformation())['username']!;
 
-    if(localUsername.isNotEmpty) {
+    if (localUsername.isNotEmpty) {
       splashScreenTimer = Timer(const Duration(milliseconds: 0), 
         () => _navigateToNextScreen()
       );
@@ -128,7 +128,7 @@ class _SplashScreenState extends State<SplashScreen> with
       final username = readLocalData['username']!;
       final email = readLocalData['email']!;
 
-      if(username.isEmpty) {
+      if (username.isEmpty) {
         NavigatePage.mainScreenPage();
         return;
       }

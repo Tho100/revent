@@ -91,7 +91,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
           valueListenable: pageIsLoadedNotifier,
           builder: (_, isLoaded, __) {
       
-            if(!isLoaded) {
+            if (!isLoaded) {
               return const SizedBox(
                 height: 300,
                 child: PageLoading(),
@@ -125,7 +125,9 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
               _clearSearchDataOnClose();
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => const MainSearchPage())
+                MaterialPageRoute(
+                  builder: (_) => const MainSearchPage()
+                )
               );
             },
             child: Stack(

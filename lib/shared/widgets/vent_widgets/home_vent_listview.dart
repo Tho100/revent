@@ -86,7 +86,7 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
           itemCount: ventDataList.length + (widget.showFollowSuggestion! ? 1 : 0),
           builder: (_, index) {
       
-            if(suggestionData.suggestions.isNotEmpty) {
+            if (suggestionData.suggestions.isNotEmpty) {
       
               if (index == 5 && widget.showFollowSuggestion!) {
                 return _buildFollowSuggestion();

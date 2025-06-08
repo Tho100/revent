@@ -23,7 +23,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
 
   Future<String> _loadJoinedDate() async {
 
-    if(userProvider.user.joinedDate == null) {
+    if (userProvider.user.joinedDate == null) {
 
       final getJoinedDate = await UserDataGetter().getJoinedDate(
         username: userProvider.user.username
@@ -114,7 +114,9 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (_) => ProfilePictureViewer(pfpData: profileProvider.profile.profilePicture))
+                MaterialPageRoute(
+                  builder: (_) => ProfilePictureViewer(pfpData: profileProvider.profile.profilePicture)
+                )
               );
             },
             child: Hero(

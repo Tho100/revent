@@ -44,11 +44,16 @@ class _MainSearchPageState extends State<MainSearchPage> {
   }
 
   void _goToSearchResults({required String searchText}) {
+
     Navigator.pop(context);
+
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => SearchResultsPage(searchText: searchText))
+      MaterialPageRoute(
+        builder: (_) => SearchResultsPage(searchText: searchText)
+      )
     );
+    
   }
 
   Widget _buildSearchBar() {

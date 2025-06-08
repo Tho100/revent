@@ -41,12 +41,12 @@ class UserLoginService {
       
     final isAuthMatched = HashingModel().computeHash(auth) == authenticationInformation;
 
-    if(!isAuthMatched) {
+    if (!isAuthMatched) {
       CustomAlertDialog.alertDialog('Password is incorrect');
       return;
     }
 
-    if(context.mounted) {
+    if (context.mounted) {
       SpinnerLoading().startLoading(context: context);
     }
       
@@ -65,7 +65,7 @@ class UserLoginService {
 
     final localUserInfo = (await localStorage.readAccountInformation())['username']!;
 
-    if(localUserInfo.isEmpty && isRememberMeChecked) {
+    if (localUserInfo.isEmpty && isRememberMeChecked) {
 
       final userData = getIt.userProvider.user;
 

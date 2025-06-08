@@ -62,9 +62,9 @@ class CurrentProviderService {
     BuildContext? context
   }) {
 
-    if(type == 'home') {
+    if (type == 'home') {
 
-      if(navigation.homeTabIndex == 0) {
+      if (navigation.homeTabIndex == 0) {
         return realTime 
           ? Provider.of<VentLatestProvider>(context!) : getIt.ventLatestProvider;
 
@@ -80,7 +80,7 @@ class CurrentProviderService {
 
     } else if (type == 'profile') {
 
-      if(navigation.profileTabIndex == 0) {
+      if (navigation.profileTabIndex == 0) {
         return realTime 
           ? Provider.of<ProfilePostsProvider>(context!) : getIt.profilePostsProvider;
 
@@ -110,7 +110,7 @@ class CurrentProviderService {
 
     dynamic ventData;
 
-    if(navigation.currentRoute == AppRoute.home.path) {
+    if (navigation.currentRoute == AppRoute.home.path) {
       ventData = _returnProvider(type: 'home', realTime: false);
 
     } else if (RouteHelper.isOnProfile) {
@@ -139,7 +139,7 @@ class CurrentProviderService {
 
     dynamic ventData;
 
-    if(navigation.currentRoute == AppRoute.home.path) {
+    if (navigation.currentRoute == AppRoute.home.path) {
       ventData = _returnProvider(type: 'home', realTime: true, context: context);
 
     } else if (RouteHelper.isOnProfile) {

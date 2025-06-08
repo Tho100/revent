@@ -88,13 +88,13 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
       itemCount: postsData.titles.length + 1,
       builder: (_, index) {
 
-        if(index == 0) {
+        if (index == 0) {
           return const SizedBox(height: 10);
         }
 
         final adjustedIndex = index - 1;
 
-        if(index >= 0) {
+        if (index >= 0) {
           return KeyedSubtree(
             key: ValueKey('${postsData.titles[adjustedIndex]}/${widget.username}'),
             child: _buildPreviewer(postsData, adjustedIndex)
