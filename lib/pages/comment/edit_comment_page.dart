@@ -3,6 +3,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/text_formatting_toolbar.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/comment/save_comment_edit.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -95,6 +96,17 @@ class _EditCommentPageState extends State<EditCommentPage> {
     );
   }
 
+  Widget _buildTextFormattingToolbar() {
+    return Padding(
+      padding: MediaQuery.of(context).viewInsets,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: TextFormattingToolbar(controller: commentController),
+      )
+    );
+  }
+
+
   Widget _buildSaveChangesButton() {
     return ValueListenableBuilder(
       valueListenable: isSavedNotifier,
@@ -130,6 +142,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
         title: 'Edit Comment'
       ).buildAppBar(),
       body: _buildBody(),
+      bottomNavigationBar: _buildTextFormattingToolbar(),
     );
   }
 

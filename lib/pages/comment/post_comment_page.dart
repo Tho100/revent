@@ -6,6 +6,7 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/styled_text_widget.dart';
+import 'package:revent/shared/widgets/text_formatting_toolbar.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/vent_actions.dart';
@@ -184,6 +185,16 @@ class _PostCommentPageState extends State<PostCommentPage> with
     );
   }
 
+  Widget _buildTextFormattingToolbar() {
+    return Padding(
+      padding: MediaQuery.of(context).viewInsets,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 8.0),
+        child: TextFormattingToolbar(controller: commentController),
+      )
+    );
+  }
+
   Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0, left: 16.0, right: 16.0),
@@ -256,6 +267,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
           },
         ).buildAppBar(),
         body: _buildBody(),
+        bottomNavigationBar: _buildTextFormattingToolbar(),
       ),
     );
   }
