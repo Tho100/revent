@@ -146,6 +146,9 @@ class _NotificationsPageState extends State<NotificationsPage> with
     return Padding(
       padding: const EdgeInsets.only(top: 12.0),
       child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
         itemCount: titlesData.length,
         itemBuilder: (_, index) {
           return InkWellEffect(
