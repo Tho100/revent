@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
-class VentTextFormattingToolbar extends StatelessWidget {
+class TextFormattingToolbar extends StatelessWidget {
 
   final TextEditingController controller;
 
-  const VentTextFormattingToolbar({
+  const TextFormattingToolbar({
     required this.controller, 
     super.key
   });
 
-  void _wrapBodyTextSelection({required String symbol}) {
+  void _wrapTextSelection({required String symbol}) {
 
     final selection = controller.selection;
 
@@ -50,7 +50,7 @@ class VentTextFormattingToolbar extends StatelessWidget {
             width: 35,
             child: IconButton(
               icon: Icon(CupertinoIcons.bold, color: ThemeColor.contentPrimary, size: 24),
-              onPressed: () => _wrapBodyTextSelection(symbol: '**')
+              onPressed: () => _wrapTextSelection(symbol: '**')
             ),
           ),
       
@@ -59,7 +59,7 @@ class VentTextFormattingToolbar extends StatelessWidget {
             width: 35,
             child: IconButton(
               icon: Icon(CupertinoIcons.italic, color: ThemeColor.contentPrimary, size: 24),
-              onPressed: () => _wrapBodyTextSelection(symbol: '*')
+              onPressed: () => _wrapTextSelection(symbol: '*')
             ),
           ),
       

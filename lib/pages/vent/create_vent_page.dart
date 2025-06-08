@@ -23,7 +23,7 @@ import 'package:revent/service/query/vent/vent_checker.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
-import 'package:revent/shared/widgets/vent_widgets/vent_text_formatting_toolbar.dart';
+import 'package:revent/shared/widgets/text_formatting_toolbar.dart';
 
 class CreateVentPage extends StatefulWidget {
 
@@ -254,7 +254,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         child: Row(
           children: [
           
-            VentTextFormattingToolbar(controller: postController.bodyTextController),
+            TextFormattingToolbar(controller: postController.bodyTextController),
 
             const Spacer(),
           
