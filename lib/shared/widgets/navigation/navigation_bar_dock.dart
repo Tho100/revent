@@ -1,35 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
 class NavigationBarDock extends StatelessWidget {
 
-  final VoidCallback homeOnPressed;
-  final VoidCallback searchOnPressed;
-  final VoidCallback createOnPressed;
-  final VoidCallback notificationOnPressed;
-  final VoidCallback profileOnPressed;
-
-  final int currentIndex;
-
-  NavigationBarDock({
-    required this.homeOnPressed, 
-    required this.searchOnPressed,
-    required this.createOnPressed, 
-    required this.notificationOnPressed,
-    required this.profileOnPressed,
-    required this.currentIndex,
-    super.key
-  });
+  NavigationBarDock({super.key});
   
-  final navIcons = [
+  final _navigationIcons = [
     CupertinoIcons.home, 
     CupertinoIcons.search, 
     CupertinoIcons.add, 
     CupertinoIcons.bell,
     CupertinoIcons.person
+  ];
+
+  final _navigationActions = [
+    NavigatePage.homePage,
+    NavigatePage.searchPage,
+    NavigatePage.createVentPage,
+    NavigatePage.notificationsPage,
+    NavigatePage.myProfilePage,
   ];
 
   @override
@@ -39,7 +32,7 @@ class NavigationBarDock extends StatelessWidget {
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: navIcons.asMap().entries.map((entry) {
+        children: _navigationIcons.asMap().entries.map((entry) {
 
           final index = entry.key;
           final icon = entry.value;
@@ -107,22 +100,8 @@ class NavigationBarDock extends StatelessWidget {
   }
 
   void _onNavigationButtonPressed(int index) {
-    switch (index) {
-      case 0:
-        homeOnPressed();
-        break;
-      case 1:
-        searchOnPressed();
-        break;
-      case 2:
-        createOnPressed();
-        break;
-      case 3:
-        notificationOnPressed();
-        break;
-      case 4:
-        profileOnPressed();
-        break;
+    if (index >= 0 && index < _navigationActions.length) {
+      _navigationActions[index]();
     }
   }
 

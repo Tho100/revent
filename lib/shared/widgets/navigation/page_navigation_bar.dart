@@ -10,12 +10,7 @@ class PageNavigationBar extends StatelessWidget with NavigationProviderService {
   @override
   Widget build(BuildContext context) {
     return NavigationBarDock(
-      homeOnPressed: () => NavigatePage.homePage(),
-      searchOnPressed: () => NavigatePage.searchPage(),
-      createOnPressed: () => NavigatePage.createVentPage(),
-      notificationOnPressed: () => NavigatePage.notificationsPage(),
-      profileOnPressed: () => NavigatePage.myProfilePage(),
-      currentIndex: navigationProvider.currentPageIndex,
+// TODO: Remove this class
     );
   }
 

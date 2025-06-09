@@ -7,6 +7,7 @@ import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/query/general/follow_suggestion_getter.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
+import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 import 'package:revent/shared/provider/vent/vent_following_provider.dart';
@@ -323,7 +324,7 @@ class _HomePageState extends State<HomePage> with
         },
         body: _buildTabBarTabs()
       ),
-      bottomNavigationBar: PageNavigationBar()
+      bottomNavigationBar: NavigationBarDock()
     );
   }
 
