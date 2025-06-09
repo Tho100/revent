@@ -82,7 +82,7 @@ class NavigatePage {
   }
 
   static void searchPage() {
-    _navigation.setPageIndex(1); // TODO: Use enums instead of hardcoded indexing
+    _navigation.setPageIndex(1);
     _DockBarNavigationPages.searchPage();
   }
 
