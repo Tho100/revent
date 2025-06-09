@@ -97,21 +97,24 @@ class NavigatePage {
     _DockBarNavigationPages.myProfilePage();
   }
 
-  static void settingsPage() {
+  static void _navigateToPage({required Widget classPage}) {
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(
-        builder: (_) => const SettingsPage()
-      ),
+        builder: (_) => classPage
+      )
+    );
+  }
+
+  static void settingsPage() {
+    _navigateToPage(
+      classPage: const SettingsPage()
     );
   }
 
   static void createVentPage() {
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (_) => const CreateVentPage()
-      ),
+    _navigateToPage(
+      classPage: const CreateVentPage()
     );
   }
 
@@ -120,37 +123,28 @@ class NavigatePage {
     required String username,
     required int totalFollowers,
     required int totalFollowing,
-    bool? isFollowingListHidden = false          
+    bool isFollowingListHidden = false          
   }) {
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (_) => FollowsPage(
-          pageType: pageType, 
-          username: username, 
-          totalFollowers: totalFollowers, 
-          totalFollowing: totalFollowing, 
-          isFollowingListHidden: isFollowingListHidden!
-        )
-      ),
+    _navigateToPage(
+      classPage: FollowsPage(
+        pageType: pageType, 
+        username: username, 
+        totalFollowers: totalFollowers, 
+        totalFollowing: totalFollowing, 
+        isFollowingListHidden: isFollowingListHidden
+      )
     );
   }
 
   static void signUpPage() {
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (_) => const SignUpPage()
-      ),
+    _navigateToPage(
+      classPage: const SignUpPage()
     );
   }
 
   static void signInPage() {
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (_) => const SignInPage()
-      ),
+    _navigateToPage(
+      classPage: const SignInPage()
     );
   }
 
@@ -178,27 +172,25 @@ class NavigatePage {
 
     _navigation.setCurrentRoute(AppRoute.userProfile.path);
 
-    Navigator.push(
-      navigatorKey.currentContext!,
-      MaterialPageRoute(
-        builder: (_) => UserProfilePage(
-          username: username, 
-          pfpData: profilePicture
-        )
+    _navigateToPage(
+      classPage: UserProfilePage(
+        username: username, 
+        pfpData: profilePicture
       )
     );
 
   }
-
+ 
   static void editVentPage({
     required String title, 
     required String body,
-    bool? isArchive = false
+    bool isArchive = false
   }) {
-    Navigator.push(
-      navigatorKey.currentContext!, 
-      MaterialPageRoute(
-        builder: (_) => EditVentPage(title: title, body: body, isArchive: isArchive!)
+    _navigateToPage(
+      classPage: EditVentPage(
+        title: title, 
+        body: body, 
+        isArchive: isArchive
       )
     );
   }

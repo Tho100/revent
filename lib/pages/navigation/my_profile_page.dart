@@ -12,10 +12,10 @@ import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/privacy_page.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 import 'package:revent/shared/widgets/profile/social_links_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
-import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/provider/profile/profile_provider.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
 import 'package:revent/shared/themes/theme_style.dart';
@@ -298,7 +298,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
           ]
         ).buildAppBar(),
         body: _buildBody(),
-        bottomNavigationBar: PageNavigationBar()
+        bottomNavigationBar: NavigationBarDock()
       ),
     );
   }

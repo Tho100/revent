@@ -12,8 +12,8 @@ import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/query/vent/vent_data_getter.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/navigation/page_navigation_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -236,7 +236,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
           actions: [NavigationPagesWidgets.profilePictureLeading()]
         ).buildNavigationAppBar(),
         body: _buildBody(),
-        bottomNavigationBar: PageNavigationBar()
+        bottomNavigationBar: NavigationBarDock()
       ),
     );
   }
