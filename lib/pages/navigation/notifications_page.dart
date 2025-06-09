@@ -36,7 +36,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
   final notificationService = NotificationService();
   final formatTimestamp = FormatDate();
 
-  void _initializeData() async { // TODO: Rename to intiailzieNotificationsData
+  void _initializeNotificationData() async {
 
     final prefs = await SharedPreferences.getInstance();
 
@@ -89,7 +89,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
     notificationNotifier.value.clear();
 
     await notificationService.initializeNotifications().then(
-      (_) => _initializeData()
+      (_) => _initializeNotificationData()
     );
 
     await notificationService.markNotificationAsRead();
@@ -229,8 +229,8 @@ class _NotificationsPageState extends State<NotificationsPage> with
   @override
   void initState() {
     super.initState();
-    _initializeData();
-    NotificationService().markNotificationAsRead();
+    _initializeNotificationData();
+    notificationService.markNotificationAsRead();
   }
 
   @override
