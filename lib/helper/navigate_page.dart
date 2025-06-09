@@ -123,7 +123,7 @@ class NavigatePage {
     required String username,
     required int totalFollowers,
     required int totalFollowing,
-    bool? isFollowingListHidden = false          
+    bool isFollowingListHidden = false          
   }) {
     _navigateToPage(
       classPage: FollowsPage(
@@ -131,7 +131,7 @@ class NavigatePage {
         username: username, 
         totalFollowers: totalFollowers, 
         totalFollowing: totalFollowing, 
-        isFollowingListHidden: isFollowingListHidden! // TODO: use ?? false
+        isFollowingListHidden: isFollowingListHidden
       )
     );
   }
@@ -184,13 +184,13 @@ class NavigatePage {
   static void editVentPage({
     required String title, 
     required String body,
-    bool? isArchive = false
+    bool isArchive = false
   }) {
     _navigateToPage(
       classPage: EditVentPage(
         title: title, 
         body: body, 
-        isArchive: isArchive!
+        isArchive: isArchive
       )
     );
   }
