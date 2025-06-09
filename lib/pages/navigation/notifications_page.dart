@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -32,9 +33,10 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
   final notificationNotifier = ValueNotifier<Map<String, List<dynamic>>>({});
 
+  final notificationService = NotificationService();
   final formatTimestamp = FormatDate();
 
-  void _initializeData() async {
+  void _initializeData() async { // TODO: Rename to intiailzieNotificationsData
 
     final prefs = await SharedPreferences.getInstance();
 
@@ -79,6 +81,18 @@ class _NotificationsPageState extends State<NotificationsPage> with
         ),
       );
     }
+
+  }
+
+  Future<void> _refreshNotifications() async {
+
+    notificationNotifier.value.clear();
+
+    await notificationService.initializeNotifications().then(
+      (_) => _initializeData()
+    );
+
+    await notificationService.markNotificationAsRead();
 
   }
 
@@ -143,45 +157,49 @@ class _NotificationsPageState extends State<NotificationsPage> with
   }
 
   Widget _buildNotificationListView(List<String> titlesData, List<int> likesData, List<String> timestamp) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 12.0),
-      child: ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
-        itemCount: titlesData.length,
-        itemBuilder: (_, index) {
-          return InkWellEffect(
-            onPressed: () async => await _navigateToPost(title: titlesData[index]),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25)
-                ),
-                child: Row(
-                  children: [
-    
-                    _buildHeart(),
-            
-                    const SizedBox(width: 12),
-                    
-                    _buildMainInfo(titlesData[index], likesData[index], timestamp[index]),
-            
-                    const Spacer(),
-            
-                    Padding(
-                      padding: const EdgeInsets.only(right: 4.0),
-                      child: Icon(Icons.arrow_forward_ios, color: ThemeColor.contentThird, size: 18),
-                    )
-                    
-                  ],
+    return RefreshIndicator(
+      backgroundColor: ThemeColor.contentPrimary,
+      onRefresh: () async => await _refreshNotifications(),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12.0),
+        child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics(),
+          ),
+          itemCount: titlesData.length,
+          itemBuilder: (_, index) {
+            return InkWellEffect(
+              onPressed: () async => await _navigateToPost(title: titlesData[index]),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25)
+                  ),
+                  child: Row(
+                    children: [
+      
+                      _buildHeart(),
+              
+                      const SizedBox(width: 12),
+                      
+                      _buildMainInfo(titlesData[index], likesData[index], timestamp[index]),
+              
+                      const Spacer(),
+              
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Icon(Icons.arrow_forward_ios, color: ThemeColor.contentThird, size: 18),
+                      )
+                      
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
