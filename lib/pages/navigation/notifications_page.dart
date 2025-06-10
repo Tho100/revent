@@ -194,13 +194,16 @@ class _NotificationsPageState extends State<NotificationsPage> with
     required List<String> timestamp,
     required List<String> types
   }) {
-    return RefreshIndicator( // TODO: Update foreground color of the refresh
+    return RefreshIndicator(
+      color: ThemeColor.backgroundPrimary,
       backgroundColor: ThemeColor.contentPrimary,
       onRefresh: () async => await _refreshNotifications(),
       child: Padding(
         padding: const EdgeInsets.only(top: 12.0),
         child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics()
+          ),
           itemCount: notificationSubjects.length,
           itemBuilder: (_, index) {
 
