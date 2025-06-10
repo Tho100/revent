@@ -194,7 +194,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
     required List<String> timestamp,
     required List<String> types
   }) {
-    return RefreshIndicator(
+    return RefreshIndicator( // TODO: Update foreground color of the refresh
       backgroundColor: ThemeColor.contentPrimary,
       onRefresh: () async => await _refreshNotifications(),
       child: Padding(

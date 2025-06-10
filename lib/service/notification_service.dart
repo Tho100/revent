@@ -61,7 +61,6 @@ class NotificationService with NavigationProviderService {
   }
 
   Future<bool> _notifyNewNotification() async {
-
     final currentLikes = await VentPostNotificationGetter().getPostLikes();
     final currentFollowers = await NewFollowerNotificationGetter().getFollowers();
 
@@ -79,11 +78,13 @@ class NotificationService with NavigationProviderService {
     final likeCounts = currentLikes['like_count']!;
 
     for (int i = 0; i < titles.length; i++) {
-
+      
       final title = titles[i];
       final newCount = likeCounts[i];
 
-      final oldCount = storedLikes[title][0]?.toInt() ?? 0;
+      final storedLikeEntry = storedLikes[title];
+      final oldCount = (storedLikeEntry is List && storedLikeEntry.isNotEmpty)
+        ? (storedLikeEntry[0] as num?)?.toInt() ?? 0 : 0; 
 
       if (newCount != oldCount) {
         shouldNotify = true;
