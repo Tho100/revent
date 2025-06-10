@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
@@ -32,18 +33,34 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
   final notificationNotifier = ValueNotifier<Map<String, List<dynamic>>>({});
 
+  final notificationService = NotificationService();
   final formatTimestamp = FormatDate();
 
-  void _initializeData() async {
+  void _initializeNotificationData() async {
 
     final prefs = await SharedPreferences.getInstance();
 
     final storedLikesJson = prefs.getString('post_like_cache') ?? '{}';
+    final storedFollowersJson = prefs.getString('followers_cache') ?? '{}';
+
     final storedLikes = jsonDecode(storedLikesJson);
+    final storedFollowers = jsonDecode(storedFollowersJson);
+
+    final Map<String, List<dynamic>> combined = {};
 
     if (storedLikes is Map) {
-      notificationNotifier.value = Map<String, List<dynamic>>.from(storedLikes);
+      storedLikes.forEach((title, data) {
+        combined[title] = [data[0], data[1], 'like'];
+      });
     }
+
+    if (storedFollowers is Map) {
+      storedFollowers.forEach((username, data) {
+        combined[username] = [0, data[0], 'follow'];
+      });
+    }
+
+    notificationNotifier.value = combined;
 
   }
 
@@ -82,7 +99,19 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
   }
 
-  Widget _buildHeart() {
+  Future<void> _refreshNotifications() async {
+
+    notificationNotifier.value.clear();
+
+    await notificationService.initializeNotifications().then(
+      (_) => _initializeNotificationData()
+    );
+
+    await notificationService.markNotificationAsRead();
+
+  }
+
+  Widget _buildPostLiked() {
     return Container(
       width: 45,
       height: 45,
@@ -94,18 +123,32 @@ class _NotificationsPageState extends State<NotificationsPage> with
     );
   }
 
-  Widget _buildMainInfo(String title, int likes, String likedAt) {
+  Widget _buildNewFollower() {
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        color: Colors.blueAccent
+      ),
+      child: const Icon(CupertinoIcons.person_add, color: Colors.white),
+    );
+  }
+
+  Widget _buildMainInfo(String title, int likes, String likedAt, {String type = 'like'}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
 
         Text(
-          likes == 1 ? 'Someone liked your post' : 'Your post received $likes likes',
+          type == 'follow'
+            ? '$title followed you'
+            : (likes == 1 ? 'Someone liked your post' : 'Your post received $likes likes'),
           style: GoogleFonts.inter(
             color: ThemeColor.contentPrimary,
             fontWeight: FontWeight.w800,
-            fontSize: 16
+            fontSize: 16,
           ),
         ),
 
@@ -115,23 +158,23 @@ class _NotificationsPageState extends State<NotificationsPage> with
           children: [
 
             Text(
-              title,
+              type == 'follow' ? '' : title,
               style: GoogleFonts.inter(
                 color: ThemeColor.contentSecondary,
                 fontWeight: FontWeight.w700,
-                fontSize: 14
+                fontSize: 14,
               ),
               maxLines: 1,
             ),
 
-            const SizedBox(width: 6),
+            if (type != 'follow') const SizedBox(width: 6),
 
             Text(
               likedAt,
               style: GoogleFonts.inter(
                 color: ThemeColor.contentThird,
                 fontWeight: FontWeight.w700,
-                fontSize: 13
+                fontSize: 13,
               ),
             ),
 
@@ -141,47 +184,66 @@ class _NotificationsPageState extends State<NotificationsPage> with
       ],
     );
   }
+// TODO: Refactor this codebase
+  Widget _buildNotificationListView(
+    List<String> titlesData,
+    List<int> likesData,
+    List<String> timestamp,
+    List<String> types
+  ) {
+    return RefreshIndicator(
+      backgroundColor: ThemeColor.contentPrimary,
+      onRefresh: () async => await _refreshNotifications(),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 12.0),
+        child: ListView.builder(
+          physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+          itemCount: titlesData.length,
+          itemBuilder: (_, index) {
 
-  Widget _buildNotificationListView(List<String> titlesData, List<int> likesData, List<String> timestamp) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 12.0),
-      child: ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(
-          parent: BouncingScrollPhysics(),
-        ),
-        itemCount: titlesData.length,
-        itemBuilder: (_, index) {
-          return InkWellEffect(
-            onPressed: () async => await _navigateToPost(title: titlesData[index]),
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Container(
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25)
-                ),
-                child: Row(
-                  children: [
-    
-                    _buildHeart(),
-            
-                    const SizedBox(width: 12),
-                    
-                    _buildMainInfo(titlesData[index], likesData[index], timestamp[index]),
-            
-                    const Spacer(),
-            
-                    Padding(
-                      padding: const EdgeInsets.only(right: 4.0),
-                      child: Icon(Icons.arrow_forward_ios, color: ThemeColor.contentThird, size: 18),
-                    )
-                    
-                  ],
+            final type = types[index];
+
+            return InkWellEffect(
+              onPressed: () async { // TODO: bring user to profile when [type] is follower
+                if (type == 'like') {
+                  await _navigateToPost(title: titlesData[index]);
+                }
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Container(
+                  height: 50,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(25),
+                  ),
+                  child: Row(
+                    children: [
+
+                      type == 'like' ? _buildPostLiked() : _buildNewFollower(),
+
+                      const SizedBox(width: 12),
+
+                      _buildMainInfo(
+                        titlesData[index],
+                        likesData[index],
+                        timestamp[index],
+                        type: type,
+                      ),
+
+                      const Spacer(),
+
+                      Padding(
+                        padding: const EdgeInsets.only(right: 4.0),
+                        child: Icon(Icons.arrow_forward_ios, color: ThemeColor.contentThird, size: 18),
+                      ),
+
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
@@ -192,17 +254,18 @@ class _NotificationsPageState extends State<NotificationsPage> with
       builder: (_, data, __) {
 
         final sortedEntries = data.entries.toList()
-        ..sort((a, b) {
-          final aTime = formatTimestamp.convertRelativeTimestampToDateTime(b.value[1]);
-          final bTime = formatTimestamp.convertRelativeTimestampToDateTime(a.value[1]);
-          return aTime.compareTo(bTime);
-        });
+          ..sort((a, b) {
+            final aTime = formatTimestamp.convertRelativeTimestampToDateTime(b.value[1]);
+            final bTime = formatTimestamp.convertRelativeTimestampToDateTime(a.value[1]);
+            return aTime.compareTo(bTime);
+          });
 
         final titles = sortedEntries.map((e) => e.key).toList();
         final likes = sortedEntries.map((e) => e.value[0] as int).toList();
         final likedAt = sortedEntries.map((e) => e.value[1].toString()).toList();
+        final types = sortedEntries.map((e) => e.value.length > 2 ? e.value[2].toString() : 'like').toList();
 
-        return _buildNotificationListView(titles, likes, likedAt);
+        return _buildNotificationListView(titles, likes, likedAt, types);
 
       },
     );
@@ -211,8 +274,8 @@ class _NotificationsPageState extends State<NotificationsPage> with
   @override
   void initState() {
     super.initState();
-    _initializeData();
-    NotificationService().markNotificationAsRead();
+    _initializeNotificationData();
+    notificationService.markNotificationAsRead();
   }
 
   @override
