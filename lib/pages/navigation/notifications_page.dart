@@ -36,6 +36,9 @@ class _NotificationsPageState extends State<NotificationsPage> with
   final notificationService = NotificationService();
   final formatTimestamp = FormatDate();
 
+  final likedPostType = 'liked_post';
+  final newFollowerType = 'new_follower';
+
   void _initializeNotificationData() async {
 
     final prefs = await SharedPreferences.getInstance();
@@ -50,13 +53,13 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
     if (storedLikes is Map) {
       storedLikes.forEach((title, data) {
-        combined[title] = [data[0], data[1], 'like'];
+        combined[title] = [data[0], data[1], likedPostType];
       });
     }
 
     if (storedFollowers is Map) {
       storedFollowers.forEach((username, data) {
-        combined[username] = [0, data[0], 'follow'];
+        combined[username] = [0, data[0], newFollowerType];
       });
     }
 
@@ -64,7 +67,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
   }
 
-  Future<void> _navigateToPost({required String title}) async {
+  Future<void> _navigateToLikedPost({required String title}) async {
     
     final postId = await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
@@ -135,16 +138,16 @@ class _NotificationsPageState extends State<NotificationsPage> with
     );
   }
 
-  Widget _buildMainInfo(String title, int likes, String likedAt, {String type = 'like'}) {
+  Widget _buildMainInfo(String notificationSubject, int likes, String timestamp, {String type = 'like'}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
 
         Text(
-          type == 'follow'
-            ? '$title followed you'
-            : (likes == 1 ? 'Someone liked your post' : 'Your post received $likes likes'),
+          type == newFollowerType
+            ? '$notificationSubject followed you'
+            : likes == 1 ? 'Someone liked your post' : 'Your post received $likes likes',
           style: GoogleFonts.inter(
             color: ThemeColor.contentPrimary,
             fontWeight: FontWeight.w800,
@@ -158,7 +161,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
           children: [
 
             Text(
-              type == 'follow' ? '' : title,
+              type == newFollowerType ? '' : notificationSubject,
               style: GoogleFonts.inter(
                 color: ThemeColor.contentSecondary,
                 fontWeight: FontWeight.w700,
@@ -167,10 +170,10 @@ class _NotificationsPageState extends State<NotificationsPage> with
               maxLines: 1,
             ),
 
-            if (type != 'follow') const SizedBox(width: 6),
+            if (type != newFollowerType) const SizedBox(width: 6),
 
             Text(
-              likedAt,
+              timestamp,
               style: GoogleFonts.inter(
                 color: ThemeColor.contentThird,
                 fontWeight: FontWeight.w700,
@@ -184,13 +187,13 @@ class _NotificationsPageState extends State<NotificationsPage> with
       ],
     );
   }
-// TODO: Refactor this codebase
-  Widget _buildNotificationListView(
-    List<String> titlesData,
-    List<int> likesData,
-    List<String> timestamp,
-    List<String> types
-  ) {
+
+  Widget _buildNotificationListView({
+    required List<String> notificationSubjects,
+    required List<int> likesData,
+    required List<String> timestamp,
+    required List<String> types
+  }) {
     return RefreshIndicator(
       backgroundColor: ThemeColor.contentPrimary,
       onRefresh: () async => await _refreshNotifications(),
@@ -198,15 +201,15 @@ class _NotificationsPageState extends State<NotificationsPage> with
         padding: const EdgeInsets.only(top: 12.0),
         child: ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
-          itemCount: titlesData.length,
+          itemCount: notificationSubjects.length,
           itemBuilder: (_, index) {
 
             final type = types[index];
 
             return InkWellEffect(
-              onPressed: () async { // TODO: bring user to profile when [type] is follower
-                if (type == 'like') {
-                  await _navigateToPost(title: titlesData[index]);
+              onPressed: () async {  // TODO: bring user to profile when [type] is follower
+                if (type == likedPostType) {
+                  await _navigateToLikedPost(title: notificationSubjects[index]);
                 }
               },
               child: Padding(
@@ -219,12 +222,14 @@ class _NotificationsPageState extends State<NotificationsPage> with
                   child: Row(
                     children: [
 
-                      type == 'like' ? _buildPostLiked() : _buildNewFollower(),
+                      type == likedPostType 
+                        ? _buildPostLiked() 
+                        : _buildNewFollower(),
 
                       const SizedBox(width: 12),
 
                       _buildMainInfo(
-                        titlesData[index],
+                        notificationSubjects[index],
                         likesData[index],
                         timestamp[index],
                         type: type,
@@ -258,14 +263,23 @@ class _NotificationsPageState extends State<NotificationsPage> with
             final aTime = formatTimestamp.convertRelativeTimestampToDateTime(b.value[1]);
             final bTime = formatTimestamp.convertRelativeTimestampToDateTime(a.value[1]);
             return aTime.compareTo(bTime);
-          });
+          }
+        );
 
-        final titles = sortedEntries.map((e) => e.key).toList();
+        final notificationSubjects = sortedEntries.map((e) => e.key).toList();
+        final notificationTimestamp = sortedEntries.map((e) => e.value[1].toString()).toList();
         final likes = sortedEntries.map((e) => e.value[0] as int).toList();
-        final likedAt = sortedEntries.map((e) => e.value[1].toString()).toList();
-        final types = sortedEntries.map((e) => e.value.length > 2 ? e.value[2].toString() : 'like').toList();
 
-        return _buildNotificationListView(titles, likes, likedAt, types);
+        final types = sortedEntries.map(
+          (e) => e.value.length > 2 ? e.value[2].toString() : likedPostType
+        ).toList();
+
+        return _buildNotificationListView(
+          notificationSubjects: notificationSubjects, 
+          timestamp: notificationTimestamp, 
+          likesData: likes, 
+          types: types
+        );
 
       },
     );
