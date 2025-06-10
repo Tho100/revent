@@ -201,7 +201,9 @@ class _NotificationsPageState extends State<NotificationsPage> with
       child: Padding(
         padding: const EdgeInsets.only(top: 12.0),
         child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(parent: BouncingScrollPhysics()),
+          physics: const AlwaysScrollableScrollPhysics(
+            parent: BouncingScrollPhysics()
+          ),
           itemCount: notificationSubjects.length,
           itemBuilder: (_, index) {
 

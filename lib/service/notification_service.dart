@@ -7,6 +7,10 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService with NavigationProviderService {
 
+  final _likedPostCacheName = 'post_like_cache';
+  final _followersCacheName = 'followers_cache';
+  final _unreadCacheName = 'has_unread_notifications';
+
   Future<void> initializeNotifications() async {
 
     final prefs = await SharedPreferences.getInstance();
@@ -14,10 +18,10 @@ class NotificationService with NavigationProviderService {
     final hasNewNotification = await _notifyNewNotification();
 
     if (hasNewNotification) {
-      await prefs.setBool('hasUnreadNotifications', true);
+      await prefs.setBool(_unreadCacheName, true);
     }
 
-    final showBadge = prefs.getBool('hasUnreadNotifications') ?? false;
+    final showBadge = prefs.getBool(_unreadCacheName) ?? false;
 
     navigationProvider.setBadgeVisible(showBadge);
 
@@ -27,7 +31,7 @@ class NotificationService with NavigationProviderService {
     
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setBool('hasUnreadNotifications', false);
+    await prefs.setBool(_unreadCacheName, false);
 
     final currentLikes = await VentPostNotificationGetter().getPostLikes();
     final currentFollowers = await NewFollowerNotificationGetter().getFollowers();
@@ -50,26 +54,43 @@ class NotificationService with NavigationProviderService {
       followersCache[followers[i]] = [followedAt[i]];
     }
 
-    await prefs.setString('post_like_cache', jsonEncode(postLikesCache)).then(
-      (_) => navigationProvider.setBadgeVisible(false)
+    await _initializeCache(
+      prefs: prefs, 
+      cacheName: _likedPostCacheName, 
+      cacheData: postLikesCache
     );
-// TODO: Create separated _initializeCache(String cacheName, Map<String, List<dynamic>>) function to simplify thhis
-    await prefs.setString('followers_cache', jsonEncode(followersCache)).then(
+
+    await _initializeCache(
+      prefs: prefs, 
+      cacheName: _followersCacheName, 
+      cacheData: followersCache
+    );
+
+  }
+
+  Future<void> _initializeCache({
+    required SharedPreferences prefs,
+    required String cacheName, 
+    required Map<String, List<dynamic>> cacheData
+  }) async {
+
+    await prefs.setString(cacheName, jsonEncode(cacheData)).then(
       (_) => navigationProvider.setBadgeVisible(false)
     );
 
   }
 
   Future<bool> _notifyNewNotification() async {
+
     final currentLikes = await VentPostNotificationGetter().getPostLikes();
     final currentFollowers = await NewFollowerNotificationGetter().getFollowers();
 
     final prefs = await SharedPreferences.getInstance();
 
-    final storedLikesJson = prefs.getString('post_like_cache') ?? '{}';
+    final storedLikesJson = prefs.getString(_likedPostCacheName) ?? '{}';
     final storedLikes = jsonDecode(storedLikesJson);
 
-    final storedFollowersJson = prefs.getString('followers_cache') ?? '{}';
+    final storedFollowersJson = prefs.getString(_followersCacheName) ?? '{}';
     final storedFollowers = jsonDecode(storedFollowersJson);
 
     bool shouldNotify = false;
