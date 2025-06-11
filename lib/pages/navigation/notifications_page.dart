@@ -158,7 +158,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
             ConstrainedBox(
               constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.65,
+                maxWidth: MediaQuery.of(context).size.width * 0.45,
               ),
               child: Text(
                 type == newFollowerType ? '' : notificationSubject,
