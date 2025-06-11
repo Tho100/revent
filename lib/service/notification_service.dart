@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:revent/helper/cache_helper.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/notification/follower_notification_getter.dart';
 import 'package:revent/service/query/notification/post_notification_getter.dart';
@@ -7,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService with NavigationProviderService {
 
-  final _likedPostCacheName = 'post_like_cache';
-  final _followersCacheName = 'followers_cache';
+  final _cacheHelper = CacheHelper();
+
   final _unreadCacheName = 'has_unread_notifications';
 
   Future<void> initializeNotifications() async {
@@ -54,28 +53,9 @@ class NotificationService with NavigationProviderService {
       followersCache[followers[i]] = [followedAt[i]];
     }
 
-    await _initializeCache(
-      prefs: prefs, 
-      cacheName: _likedPostCacheName, 
-      cacheData: postLikesCache
-    );
-
-    await _initializeCache(
-      prefs: prefs, 
-      cacheName: _followersCacheName, 
-      cacheData: followersCache
-    );
-
-  }
-
-  Future<void> _initializeCache({
-    required SharedPreferences prefs,
-    required String cacheName, 
-    required Map<String, List<dynamic>> cacheData
-  }) async {
-
-    await prefs.setString(cacheName, jsonEncode(cacheData)).then(
-      (_) => navigationProvider.setBadgeVisible(false)
+    await _cacheHelper.initializeCache(
+      likesPostCache: postLikesCache, 
+      followersCache: followersCache
     );
 
   }
@@ -85,13 +65,10 @@ class NotificationService with NavigationProviderService {
     final currentLikes = await VentPostNotificationGetter().getPostLikes();
     final currentFollowers = await NewFollowerNotificationGetter().getFollowers();
 
-    final prefs = await SharedPreferences.getInstance();
+    final caches = await CacheHelper().getNotificationCache();
 
-    final storedLikesJson = prefs.getString(_likedPostCacheName) ?? '{}';
-    final storedLikes = jsonDecode(storedLikesJson);
-
-    final storedFollowersJson = prefs.getString(_followersCacheName) ?? '{}';
-    final storedFollowers = jsonDecode(storedFollowersJson);
+    final storedLikes = caches['post_likes_cache'];
+    final storedFollowers = caches['followers_cache'];
 
     bool shouldNotify = false;
 

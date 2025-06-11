@@ -1,9 +1,8 @@
 
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/helper/cache_helper.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/providers_service.dart';
@@ -16,7 +15,6 @@ import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationsPage extends StatefulWidget {
 
@@ -41,15 +39,12 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
   void _initializeNotificationData() async {
 
-    final prefs = await SharedPreferences.getInstance();
+    final caches = await CacheHelper().getNotificationCache();
 
-    final storedLikesJson = prefs.getString('post_like_cache') ?? '{}';
-    final storedFollowersJson = prefs.getString('followers_cache') ?? '{}';
+    final storedLikes = caches['post_likes_cache'];
+    final storedFollowers = caches['followers_cache'];
 
-    final storedLikes = jsonDecode(storedLikesJson);
-    final storedFollowers = jsonDecode(storedFollowersJson);
-
-    final Map<String, List<dynamic>> combined = {};
+    final Map<String, List<dynamic>> combined = {}; 
 
     if (storedLikes is Map) {
       storedLikes.forEach((title, data) {
