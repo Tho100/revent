@@ -217,10 +217,15 @@ class _NotificationsPageState extends State<NotificationsPage> with
             final type = types[index];
 
             return InkWellEffect(
-              onPressed: () async {  // TODO: bring user to profile when [type] is follower
+              onPressed: () async { 
+
                 if (type == likedPostType) {
                   await _navigateToLikedPost(title: notificationSubjects[index]);
+                  
+                } else if (type == newFollowerType) {
+                  NavigatePage.userProfilePage(username: notificationSubjects[index]);
                 }
+
               },
               child: Padding(
                 padding: const EdgeInsets.all(20.0),
