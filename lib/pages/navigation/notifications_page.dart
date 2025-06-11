@@ -158,19 +158,25 @@ class _NotificationsPageState extends State<NotificationsPage> with
         const SizedBox(height: 8),
 
         Row(
+          mainAxisSize: MainAxisSize.min,
           children: [
 
-            Text(
-              type == newFollowerType ? '' : notificationSubject,
-              style: GoogleFonts.inter(
-                color: ThemeColor.contentSecondary,
-                fontWeight: FontWeight.w700,
-                fontSize: 14,
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxWidth: MediaQuery.of(context).size.width * 0.65,
               ),
-              maxLines: 1,
+              child: Text(
+                type == newFollowerType ? '' : notificationSubject,
+                style: GoogleFonts.inter(
+                  color: ThemeColor.contentSecondary,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
 
-            if (type != newFollowerType) const SizedBox(width: 6),
+            if (type == likedPostType) const SizedBox(width: 6),
 
             Text(
               timestamp,
@@ -182,6 +188,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
             ),
 
           ],
+
         ),
 
       ],
