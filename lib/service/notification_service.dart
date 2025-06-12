@@ -74,6 +74,7 @@ class NotificationService with NavigationProviderService {
 
     final titles = currentLikes['title']!;
     final likeCounts = currentLikes['like_count']!;
+    final likedAt = currentLikes['liked_at']!;
 
     for (int i = 0; i < titles.length; i++) {
       
@@ -86,16 +87,34 @@ class NotificationService with NavigationProviderService {
 
       if (newCount != oldCount) {
         shouldNotify = true;
+        storedLikes[title] = [newCount, likedAt[i]];
         break;
       }
 
     }
 
-    final previousFollowerCount = storedFollowers.keys.length;
-    final currentFollowerCount = currentFollowers['followers']?.length ?? 0;
+    final newFollowers = currentFollowers['followers']!;
+    final followedAt = currentFollowers['followed_at']!;
 
-    if (currentFollowerCount > previousFollowerCount) {
+    final previousFollowerKeys = storedFollowers.keys.toSet();
+    final currentFollowerKeys = newFollowers.toSet();
+
+    final detectedNewFollowers = currentFollowerKeys.difference(previousFollowerKeys);
+
+    if (detectedNewFollowers.isNotEmpty) {
+
       shouldNotify = true;
+
+      for (int i = 0; i < newFollowers.length; i++) {
+
+        final follower = newFollowers[i];
+
+        if (detectedNewFollowers.contains(follower)) {
+          storedFollowers[follower] = [followedAt[i]];
+        }
+
+      }
+
     }
 
     return shouldNotify;
