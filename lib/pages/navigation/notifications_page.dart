@@ -109,7 +109,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
   }
 
-  Widget _buildPostLiked() {
+  Widget _buildPostLikedBadge() {
     return Container(
       width: 45,
       height: 45,
@@ -121,7 +121,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
     );
   }
 
-  Widget _buildNewFollower() {
+  Widget _buildNewFollowerBadge() {
     return Container(
       width: 45,
       height: 45,
@@ -233,8 +233,8 @@ class _NotificationsPageState extends State<NotificationsPage> with
                     children: [
 
                       type == likedPostType 
-                        ? _buildPostLiked() 
-                        : _buildNewFollower(),
+                        ? _buildPostLikedBadge() 
+                        : _buildNewFollowerBadge(),
 
                       const SizedBox(width: 12),
 
