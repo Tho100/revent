@@ -32,7 +32,7 @@ class LastEditGetter extends BaseQueryService with VentProviderService {
     }
 
     final lastEditTimeStamp = results.rows.last.assoc()['last_edit']!;
-
+    // TODO: Folow formatting convention
     final formattedTimeStamp = FormatDate().formatPostTimestamp(DateTime.parse(lastEditTimeStamp));
 
     return formattedTimeStamp;

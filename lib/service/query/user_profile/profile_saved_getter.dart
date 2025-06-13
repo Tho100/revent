@@ -12,8 +12,6 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     required bool isMyProfile
   }) async {
 
-    final formatPostTimestamp = FormatDate();
-
     const query = '''
       SELECT 
         vi.post_id,
@@ -54,10 +52,9 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     final totalComments = extractData.extractIntColumn('total_comments');
     final totalLikes = extractData.extractIntColumn('total_likes');
 
-    final postTimestamp = extractData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
+    final postTimestamp = FormatDate().formatToPostDate(
+      data: extractData, columnName: 'created_at'
+    );
 
     final profilePicture = extractData
       .extractStringColumn('profile_picture')

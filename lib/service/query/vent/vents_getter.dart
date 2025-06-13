@@ -188,12 +188,9 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final totalLikes = extractedData.extractIntColumn('total_likes');
     final totalComments = extractedData.extractIntColumn('total_comments');
 
-    final formatPostTimestamp = FormatDate();
-  // TODO: Create a separated helper class function for post timestamp formatting
-    final postTimestamp = extractedData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
+    final postTimestamp = FormatDate().formatToPostDate(
+      data: extractedData, columnName: 'created_at'
+    );
 
     final isNsfw = extractedData.extractIntColumn('marked_nsfw')
       .map((isNsfw) => isNsfw != 0).toList();

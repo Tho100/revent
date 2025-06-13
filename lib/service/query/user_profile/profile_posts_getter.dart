@@ -8,9 +8,6 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
-    final formatPostTimestamp = FormatDate();
-    final ventPostState = VentPostStateService();    
-
     const query = 
     '''
       SELECT post_id, title, body_text, tags, created_at, total_likes, total_comments, marked_nsfw 
@@ -23,26 +20,27 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
     final retrievedInfo = await executeQuery(query, param);
 
-    final extractData = ExtractData(rowsData: retrievedInfo);
+    final extractedData = ExtractData(rowsData: retrievedInfo);
     
-    final postIds = extractData.extractIntColumn('post_id');
-    final title = extractData.extractStringColumn('title');
-    final bodyText = extractData.extractStringColumn('body_text');
-    final tags = extractData.extractStringColumn('tags');
+    final postIds = extractedData.extractIntColumn('post_id');
+    final title = extractedData.extractStringColumn('title');
+    final bodyText = extractedData.extractStringColumn('body_text');
+    final tags = extractedData.extractStringColumn('tags');
 
-    final totalLikes = extractData.extractIntColumn('total_likes');
-    final totalComments = extractData.extractIntColumn('total_comments');
+    final totalLikes = extractedData.extractIntColumn('total_likes');
+    final totalComments = extractedData.extractIntColumn('total_comments');
 
-    final postTimestamp = extractData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
+    final postTimestamp = FormatDate().formatToPostDate(
+      data: extractedData, columnName: 'created_at'
+    );
 
-    final isNsfw = extractData.extractIntColumn('marked_nsfw')
+    final isNsfw = extractedData.extractIntColumn('marked_nsfw')
       .map((isNsfw) => isNsfw != 0)
       .toList();
 
     final isPinned = await _ventPinnedState(postIds: postIds);
+
+    final ventPostState = VentPostStateService();    
 
     final isLikedState = await ventPostState.getVentPostState(
       postIds: postIds, stateType: 'liked'

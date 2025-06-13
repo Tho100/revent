@@ -17,12 +17,9 @@ class NewFollowerNotificationGetter extends BaseQueryService with UserProfilePro
 
     final followers = extractedData.extractStringColumn('follower');
 
-    final formatPostTimestamp = FormatDate();
-
-    final followedAt = extractedData
-      .extractStringColumn('followed_at')
-      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
+    final followedAt = FormatDate().formatToPostDate(
+      data: extractedData, columnName: 'followed_at'
+    );
 
     return {
       'followers': followers,

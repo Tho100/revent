@@ -8,8 +8,6 @@ import 'package:revent/service/query/general/comment_id_getter.dart';
 
 class CommentsGetter extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
-  final formatTimestamp = FormatDate();
-
   Future<Map<String, List<dynamic>>> getComments() async {
 
     final commentIds = await CommentIdGetter().getAllCommentsId();
@@ -51,10 +49,9 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
     final totalLikes = extractedData.extractIntColumn('total_likes');
     final totalReplies = extractedData.extractIntColumn('total_replies');
 
-    final commentTimestamp = extractedData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
+    final commentTimestamp = FormatDate().formatToPostDate(
+      data: extractedData, columnName: 'created_at'
+    );
 
     final profilePictures = extractedData.extractStringColumn('profile_picture')
       .map((pfp) => base64Decode(pfp))
