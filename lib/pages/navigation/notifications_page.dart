@@ -32,7 +32,6 @@ class _NotificationsPageState extends State<NotificationsPage> with
   final notificationNotifier = ValueNotifier<Map<String, List<dynamic>>>({});
 
   final notificationService = NotificationService();
-  final formatTimestamp = FormatDate();
 
   final likedPostType = 'liked_post';
   final newFollowerType = 'new_follower';
@@ -267,6 +266,8 @@ class _NotificationsPageState extends State<NotificationsPage> with
     return ValueListenableBuilder(
       valueListenable: notificationNotifier,
       builder: (_, data, __) {
+
+        final formatTimestamp = FormatDate();
 
         final sortedEntries = data.entries.toList()
           ..sort((a, b) {

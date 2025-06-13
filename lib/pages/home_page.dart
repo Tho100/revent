@@ -36,8 +36,6 @@ class _HomePageState extends State<HomePage> with
   final trendingIsLoadedNotifier = ValueNotifier<bool>(false);
 
   final localStorage = LocalStorageModel();
-  final ventDataSetup = VentsSetup();
-  final refreshService = RefreshService();
 
   late TabController tabController;
 
@@ -75,6 +73,8 @@ class _HomePageState extends State<HomePage> with
     final currentTab = homeTabs[tabController.index].text!;
 
     await localStorage.setupCurrentHomeTab(tab: currentTab);
+
+    final ventDataSetup = VentsSetup();
 
     if (tabController.index == 0) {
 
@@ -154,6 +154,8 @@ class _HomePageState extends State<HomePage> with
   }
 
   Future<void> _onTabRefresh() async {
+
+    final refreshService = RefreshService();
 
     switch (homeTabs[tabController.index].text) {
       case 'Latest':
