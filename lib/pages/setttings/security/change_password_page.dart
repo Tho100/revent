@@ -27,16 +27,17 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
   final currentPasswordNotifier = ValueNotifier<bool>(false);
   final newPasswordNotifier = ValueNotifier<bool>(false);
 
-  final userAuth = UserAuthService();
-  final hashingModel = HashingModel();
-
   Future<void> _onUpdatePasswordPressed() async {
 
     try {
 
+      final userAuth = UserAuthService();
+
       final currentPasswordHash = await userAuth.getAccountAuthentication(
         username: userProvider.user.username
       );
+
+      final hashingModel = HashingModel();
 
       final currentPasswordInput = authController.currentPasswordController.text;
       final currentPasswordInputHash = hashingModel.computeHash(currentPasswordInput);
