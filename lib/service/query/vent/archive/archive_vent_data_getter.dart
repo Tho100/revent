@@ -10,9 +10,9 @@ class ArchiveVentDataGetter extends BaseQueryService {
 
     final param = {'username': username};
 
-    final retrievedInfo = await executeQuery(query, param);
+    final results = await executeQuery(query, param);
 
-    final extractData = ExtractData(rowsData: retrievedInfo);
+    final extractData = ExtractData(rowsData: results);
     
     final title = extractData.extractStringColumn('title');
     final tags = extractData.extractStringColumn('tags');
@@ -42,9 +42,11 @@ class ArchiveVentDataGetter extends BaseQueryService {
       'creator': creator
     };
 
-    final results = await executeQuery(query, params); // TODO: use extrractdata
+    final results = await executeQuery(query, params); 
 
-    return results.rows.last.assoc()['body_text']!;
+    final extractedData = ExtractData(rowsData: results); 
+
+    return extractedData.extractStringColumn('body_text')[0];
 
   }
 
