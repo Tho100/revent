@@ -22,8 +22,6 @@ class VentDataGetter extends BaseQueryService {
 
   Future<Map<String, dynamic>> getMetadata() async {
 
-    final formatPostTimestamp = FormatDate();
-
     const query = 
     '''
       SELECT tags, total_likes, created_at, marked_nsfw 
@@ -41,12 +39,12 @@ class VentDataGetter extends BaseQueryService {
     final totalLikes = extractedData.extractIntColumn('total_likes');
 
     final isNsfw = extractedData.extractIntColumn('marked_nsfw')
-      .map((isNsfw) => isNsfw != 0).toList();
-
-    final postTimestamp = extractedData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
+      .map((isNsfw) => isNsfw != 0)
       .toList();
+
+    final postTimestamp = FormatDate().formatToPostDate(
+      data: extractedData, columnName: 'created_at'
+    );
 
     return {
       'tags': tags[0],

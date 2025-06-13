@@ -4,25 +4,22 @@ import 'package:revent/helper/format_date.dart';
 
 class ArchiveVentDataGetter extends BaseQueryService {
 
-  final formatPostTimestamp = FormatDate();
-
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
     const query = 'SELECT title, created_at, tags FROM archive_vent_info WHERE creator = :username';
 
     final param = {'username': username};
 
-    final retrievedInfo = await executeQuery(query, param);
+    final results = await executeQuery(query, param);
 
-    final extractData = ExtractData(rowsData: retrievedInfo);
+    final extractData = ExtractData(rowsData: results);
     
     final title = extractData.extractStringColumn('title');
     final tags = extractData.extractStringColumn('tags');
 
-    final postTimestamp = extractData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
+    final postTimestamp = FormatDate().formatToPostDate(
+      data: extractData, columnName: 'created_at'
+    );
 
     return {
       'title': title,
@@ -45,9 +42,11 @@ class ArchiveVentDataGetter extends BaseQueryService {
       'creator': creator
     };
 
-    final results = await executeQuery(query, params);
+    final results = await executeQuery(query, params); 
 
-    return results.rows.last.assoc()['body_text']!;
+    final extractedData = ExtractData(rowsData: results); 
+
+    return extractedData.extractStringColumn('body_text')[0];
 
   }
 

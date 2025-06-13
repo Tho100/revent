@@ -19,8 +19,7 @@ class UserLoginService {
 
   UserLoginService({required this.context});
 
-  final userDataGetter = UserDataGetter();
-  final localStorage = LocalStorageModel();
+  final _userDataGetter = UserDataGetter();
 
   Future<void> login({
     required String email, 
@@ -28,7 +27,7 @@ class UserLoginService {
     required bool isRememberMeChecked
   }) async {
 
-    final username = await userDataGetter.getUsername(email: email);
+    final username = await _userDataGetter.getUsername(email: email);
 
     if (username == null) {
       CustomAlertDialog.alertDialog('Account not found');
@@ -63,6 +62,8 @@ class UserLoginService {
 
   Future<void> _setAutoLoginData({required bool isRememberMeChecked}) async {
 
+    final localStorage = LocalStorageModel();
+
     final localUserInfo = (await localStorage.readAccountInformation())['username']!;
 
     if (localUserInfo.isEmpty && isRememberMeChecked) {
@@ -79,9 +80,9 @@ class UserLoginService {
 
   Future<void> _setUserProfileData({required String email}) async {
 
-    final username = await userDataGetter.getUsername(email: email) ?? '';
+    final username = await _userDataGetter.getUsername(email: email) ?? '';
     
-    final socialHandles = await userDataGetter.getSocialHandles(username: username);
+    final socialHandles = await _userDataGetter.getSocialHandles(username: username);
 
     final userSetup = UserData(
       username: username, 

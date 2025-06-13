@@ -12,8 +12,6 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
 
   RepliesGetter({required this.commentId});
 
-  final formatTimestamp = FormatDate();
-
   Future<Map<String, List<dynamic>>> getReplies() async {
 
     final repliesIds = await ReplyIdGetter(commentId: commentId).getAllRepliesId();
@@ -47,10 +45,9 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
     final repliedBy = extractedData.extractStringColumn('replied_by');
     final totalLikes = extractedData.extractIntColumn('total_likes');
 
-    final replyTimestamp = extractedData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
+    final replyTimestamp = FormatDate().formatToPostDate(
+      data: extractedData, columnName: 'created_at'
+    );
 
     final profilePictures = extractedData.extractStringColumn('profile_picture')
       .map((pfp) => base64Decode(pfp))

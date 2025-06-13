@@ -6,10 +6,6 @@ import 'package:revent/service/vent_post_state_service.dart';
 
 class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
-  final formatPostTimestamp = FormatDate();
-  
-  final ventPostState = VentPostStateService();
-
   Future<Map<String, dynamic>> getLatestVentsData() async {
 
     const query = '''
@@ -192,13 +188,14 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final totalLikes = extractedData.extractIntColumn('total_likes');
     final totalComments = extractedData.extractIntColumn('total_comments');
 
-    final postTimestamp = extractedData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
+    final postTimestamp = FormatDate().formatToPostDate(
+      data: extractedData, columnName: 'created_at'
+    );
 
     final isNsfw = extractedData.extractIntColumn('marked_nsfw')
       .map((isNsfw) => isNsfw != 0).toList();
+
+    final ventPostState = VentPostStateService();
 
     final isLikedState = await ventPostState.getVentPostState(
       postIds: postIds, stateType: 'liked'

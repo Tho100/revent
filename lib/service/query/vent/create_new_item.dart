@@ -67,9 +67,11 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
   }
 
-  void _addVent({required bool markedNsfw}) {
+  void _addVent({required bool markedNsfw}) { 
 
-    final formattedTimestamp = FormatDate().formatPostTimestamp(DateTime.now());
+    final formattedTimestamp = FormatDate().formatPostTimestamp(
+      DateTime.now()
+    );
 
     final newVent = VentLatestData(
       title: title,

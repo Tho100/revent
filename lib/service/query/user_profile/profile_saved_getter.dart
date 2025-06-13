@@ -7,8 +7,6 @@ import 'package:revent/helper/format_date.dart';
 
 class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderService {
 
-  final formatPostTimestamp = FormatDate();
-
   Future<Map<String, List<dynamic>>> getSaved({
     required String username, 
     required bool isMyProfile
@@ -54,10 +52,9 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     final totalComments = extractData.extractIntColumn('total_comments');
     final totalLikes = extractData.extractIntColumn('total_likes');
 
-    final postTimestamp = extractData
-      .extractStringColumn('created_at')
-      .map((timestamp) => formatPostTimestamp.formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
+    final postTimestamp = FormatDate().formatToPostDate(
+      data: extractData, columnName: 'created_at'
+    );
 
     final profilePicture = extractData
       .extractStringColumn('profile_picture')
