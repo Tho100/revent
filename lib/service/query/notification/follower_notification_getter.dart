@@ -7,8 +7,6 @@ class NewFollowerNotificationGetter extends BaseQueryService with UserProfilePro
 
   Future<Map<String, List<String>>> getFollowers() async {
 
-    final formatPostTimestamp = FormatDate();
-
     const query = 'SELECT follower, followed_at FROM user_follows_info WHERE following = :username';
 
     final param = {'username': userProvider.user.username};
@@ -18,6 +16,8 @@ class NewFollowerNotificationGetter extends BaseQueryService with UserProfilePro
     final extractedData = ExtractData(rowsData: results);
 
     final followers = extractedData.extractStringColumn('follower');
+
+    final formatPostTimestamp = FormatDate();
 
     final followedAt = extractedData
       .extractStringColumn('followed_at')

@@ -7,8 +7,6 @@ class VentPostNotificationGetter extends BaseQueryService with UserProfileProvid
 
   Future<Map<String, List<dynamic>>> getPostLikes() async {
 
-    final formatPostTimestamp = FormatDate();
-
     const query = 
     '''
       SELECT 
@@ -31,6 +29,8 @@ class VentPostNotificationGetter extends BaseQueryService with UserProfileProvid
 
     final titles = extractedData.extractStringColumn('title');
     final likeCount = extractedData.extractIntColumn('like_count');
+
+    final formatPostTimestamp = FormatDate();
 
     final likedAt = extractedData
       .extractStringColumn('liked_at')

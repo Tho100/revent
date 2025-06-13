@@ -6,11 +6,10 @@ import 'package:revent/service/vent_post_state_service.dart';
 
 class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderService {
 
-  final formatPostTimestamp = FormatDate();
-
-  final ventPostState = VentPostStateService();
-
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
+
+    final formatPostTimestamp = FormatDate();
+    final ventPostState = VentPostStateService();    
 
     const query = 
     '''

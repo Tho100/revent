@@ -6,8 +6,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService with NavigationProviderService {
 
-  final _cacheHelper = CacheHelper();
-
   final _unreadCacheName = 'has_unread_notifications';
 
   Future<void> initializeNotifications() async {
@@ -27,7 +25,7 @@ class NotificationService with NavigationProviderService {
   }
 
   Future<void> markNotificationAsRead() async {
-    
+
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool(_unreadCacheName, false);
@@ -53,7 +51,7 @@ class NotificationService with NavigationProviderService {
       followersCache[followers[i]] = [followedAt[i]];
     }
 
-    await _cacheHelper.initializeCache(
+    await CacheHelper().initializeCache(
       likesPostCache: postLikesCache, 
       followersCache: followersCache
     );

@@ -22,7 +22,7 @@ class CurrentProviderService {
     this.creator,
   });
 
-  final navigation = getIt.navigationProvider;
+  final _navigation = getIt.navigationProvider;
 
   Map<String, dynamic> _resolveVentData({
     required dynamic ventData,
@@ -33,7 +33,7 @@ class CurrentProviderService {
 
     if (isProfileRoute) {
 
-      final profileData = navigation.currentRoute == AppRoute.myProfile.path
+      final profileData = _navigation.currentRoute == AppRoute.myProfile.path
         ? ventData.myProfile
         : ventData.userProfile;
 
@@ -64,15 +64,15 @@ class CurrentProviderService {
 
     if (type == 'home') {
 
-      if (navigation.homeTabIndex == 0) {
+      if (_navigation.homeTabIndex == 0) {
         return realTime 
           ? Provider.of<VentLatestProvider>(context!) : getIt.ventLatestProvider;
 
-      } else if (navigation.homeTabIndex == 1) {
+      } else if (_navigation.homeTabIndex == 1) {
         return realTime 
           ? Provider.of<VentTrendingProvider>(context!) : getIt.ventTrendingProvider;
         
-      } else if (navigation.homeTabIndex == 2) {
+      } else if (_navigation.homeTabIndex == 2) {
         return realTime 
           ? Provider.of<VentFollowingProvider>(context!) : getIt.ventFollowingProvider;
 
@@ -80,11 +80,11 @@ class CurrentProviderService {
 
     } else if (type == 'profile') {
 
-      if (navigation.profileTabIndex == 0) {
+      if (_navigation.profileTabIndex == 0) {
         return realTime 
           ? Provider.of<ProfilePostsProvider>(context!) : getIt.profilePostsProvider;
 
-      } else if (navigation.profileTabIndex == 1) {
+      } else if (_navigation.profileTabIndex == 1) {
         return realTime 
           ? Provider.of<ProfileSavedProvider>(context!) : getIt.profileSavedProvider;
 
@@ -110,19 +110,19 @@ class CurrentProviderService {
 
     dynamic ventData;
 
-    if (navigation.currentRoute == AppRoute.home.path) {
+    if (_navigation.currentRoute == AppRoute.home.path) {
       ventData = _returnProvider(type: 'home', realTime: false);
 
     } else if (RouteHelper.isOnProfile) {
       ventData = _returnProvider(type: 'profile', realTime: false);
 
-    } else if (navigation.currentRoute == AppRoute.searchResults.path) {
+    } else if (_navigation.currentRoute == AppRoute.searchResults.path) {
       ventData = _returnProvider(type: 'search', realTime: false);
 
-    } else if (navigation.currentRoute == AppRoute.likedPosts.path) {
+    } else if (_navigation.currentRoute == AppRoute.likedPosts.path) {
       ventData = _returnProvider(type: 'liked', realTime: false);
 
-    } else if (navigation.currentRoute == AppRoute.savedPosts.path) {
+    } else if (_navigation.currentRoute == AppRoute.savedPosts.path) {
       ventData = _returnProvider(type: 'saved', realTime: false);
 
     }
@@ -139,19 +139,19 @@ class CurrentProviderService {
 
     dynamic ventData;
 
-    if (navigation.currentRoute == AppRoute.home.path) {
+    if (_navigation.currentRoute == AppRoute.home.path) {
       ventData = _returnProvider(type: 'home', realTime: true, context: context);
 
     } else if (RouteHelper.isOnProfile) {
       ventData = _returnProvider(type: 'profile', realTime: true, context: context);
 
-    } else if (navigation.currentRoute == AppRoute.searchResults.path) {
+    } else if (_navigation.currentRoute == AppRoute.searchResults.path) {
       ventData = _returnProvider(type: 'search', realTime: true, context: context);
 
-    } else if (navigation.currentRoute == AppRoute.likedPosts.path) {
+    } else if (_navigation.currentRoute == AppRoute.likedPosts.path) {
       ventData = _returnProvider(type: 'liked', realTime: true, context: context);
 
-    } else if (navigation.currentRoute == AppRoute.savedPosts.path) {
+    } else if (_navigation.currentRoute == AppRoute.savedPosts.path) {
       ventData = _returnProvider(type: 'saved', realTime: true, context: context);
 
     }

@@ -2,11 +2,11 @@ import 'package:intl/intl.dart';
 
 class FormatDate {
 
-  final now = DateTime.now();
+  final _dateNow = DateTime.now();
 
   String formatPostTimestamp(DateTime createdAt) {
 
-    final difference = now.difference(createdAt);
+    final difference = _dateNow.difference(createdAt);
 
     if (difference.inMinutes < 1) {
       return 'Just now';
@@ -66,26 +66,26 @@ class FormatDate {
   DateTime convertRelativeTimestampToDateTime(String timestamp) {
 
     if (timestamp == 'Just now') {
-      return now;
+      return _dateNow;
 
     } else if (timestamp.endsWith('m')) {
-      return now.subtract(Duration(minutes: int.parse(timestamp.replaceAll('m', ''))));
+      return _dateNow.subtract(Duration(minutes: int.parse(timestamp.replaceAll('m', ''))));
 
     } else if (timestamp.endsWith('h')) {
-      return now.subtract(Duration(hours: int.parse(timestamp.replaceAll('h', ''))));
+      return _dateNow.subtract(Duration(hours: int.parse(timestamp.replaceAll('h', ''))));
 
     } else if (timestamp.endsWith('d')) {
-      return now.subtract(Duration(days: int.parse(timestamp.replaceAll('d', ''))));
+      return _dateNow.subtract(Duration(days: int.parse(timestamp.replaceAll('d', ''))));
 
     } else if (timestamp.endsWith('mo')) {
-      return now.subtract(Duration(days: int.parse(timestamp.replaceAll('mo', '')) * 30));
+      return _dateNow.subtract(Duration(days: int.parse(timestamp.replaceAll('mo', '')) * 30));
 
     } else if (timestamp.endsWith('y')) {
-      return now.subtract(Duration(days: int.parse(timestamp.replaceAll('y', '')) * 365));
+      return _dateNow.subtract(Duration(days: int.parse(timestamp.replaceAll('y', '')) * 365));
 
     }
 
-    return now;
+    return _dateNow;
 
   }
 

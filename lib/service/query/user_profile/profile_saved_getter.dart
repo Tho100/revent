@@ -7,12 +7,12 @@ import 'package:revent/helper/format_date.dart';
 
 class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderService {
 
-  final formatPostTimestamp = FormatDate();
-
   Future<Map<String, List<dynamic>>> getSaved({
     required String username, 
     required bool isMyProfile
   }) async {
+
+    final formatPostTimestamp = FormatDate();
 
     const query = '''
       SELECT 
