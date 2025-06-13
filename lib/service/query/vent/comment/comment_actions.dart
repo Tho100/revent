@@ -14,8 +14,6 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
     required this.commentText,
   });
 
-  final activeVent = getIt.activeVentProvider.ventData;
-
   Future<Map<String, int>> _getIdInfo() async {
 
     final commentId = await CommentIdGetter().getCommentId(

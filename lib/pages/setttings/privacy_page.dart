@@ -24,7 +24,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
   final hideFollowingListNotifier = ValueNotifier<bool>(false);
   final hideSavedPostNotifier = ValueNotifier<bool>(false);
 
-  final userPrivacyHandler = UserPrivacyHandler();
+  final _userPrivacyHandler = UserPrivacyHandler();
 
   void _loadCurrentOptions() async {
 
@@ -41,24 +41,24 @@ class _PrivacyPageState extends State<PrivacyPage> {
   Future<void> _onPrivateAccountPressed() async {
 
     privateAccountNotifier.value 
-      ? userPrivacyHandler.privateAccount(isMakePrivate: 1)
-      : userPrivacyHandler.privateAccount(isMakePrivate: 0);
+      ? _userPrivacyHandler.privateAccount(isMakePrivate: 1)
+      : _userPrivacyHandler.privateAccount(isMakePrivate: 0);
 
   }
 
   Future<void> _onHideFollowingPressed() async {
 
     hideFollowingListNotifier.value 
-      ? userPrivacyHandler.hideFollowingList(isHideFollowingList: 1)
-      : userPrivacyHandler.hideFollowingList(isHideFollowingList: 0);
+      ? _userPrivacyHandler.hideFollowingList(isHideFollowingList: 1)
+      : _userPrivacyHandler.hideFollowingList(isHideFollowingList: 0);
 
   }
 
   Future<void> _onHideSavedPostsPressed() async {
 
     hideSavedPostNotifier.value 
-      ? userPrivacyHandler.hideSavedPosts(isHideSavedPosts: 1)
-      : userPrivacyHandler.hideSavedPosts(isHideSavedPosts: 0);
+      ? _userPrivacyHandler.hideSavedPosts(isHideSavedPosts: 1)
+      : _userPrivacyHandler.hideSavedPosts(isHideSavedPosts: 0);
 
   }
 
