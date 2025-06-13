@@ -11,8 +11,8 @@ Do read: [Dart](https://dart.dev/effective-dart/style) 'Effect Dart: Style' styl
 
 Example:
 
-`/services/notification_service.dart
-/models/comment_filter.dart`
+`/services/notification_service.dart`
+`/models/comment_filter.dart`
 
 ## Naming
 
@@ -30,15 +30,15 @@ Example:
 
 Example:
 
-`void func() {
+```void func() {
   print("Hello");
-}`
+}```
 
 - Opening braces go on the same line, nested block must be indented by one level.
 
 Example:
 
-`// OK
+```// OK
 if (isActive) {
   doSomething();
 } else {
@@ -50,11 +50,11 @@ if (isActive)
 {
 doSomething();
 }
-`
+```
 
 However if the `if` statement has multiples lines within the braces then do add one extra line after it and before the condition is finish, for example:
 
-`// OK
+```// OK
 if (condition) {
 
     //
@@ -68,13 +68,13 @@ if (condition) {
     //
     //
     //
-}`
+}```
 
 - Align parameters with line if there's multiples of them (More than 1)
 
 Example:
 
-// OK
+```// OK
 void ({
     required String name, 
     required String email
@@ -85,6 +85,6 @@ void ({
 // BAD
 void ({required String name, required String email}) {
 
-}
+}```
 
 ## Commenting
