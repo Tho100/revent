@@ -12,7 +12,7 @@ Available on:
 Revent - Just like many other social platforms has similarities, such as:
 
 - Create a Text Based Post (With formatting tools available like *italic* & **bold**)
-- Tags to Categorize Post (e.g #story, #life, #jokes)
+- Tags to Categorize Post (e.g **#story #life #jokes**)
 
 ## Development
 
