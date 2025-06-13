@@ -9,7 +9,7 @@ Available on:
 
 ## Features 
 
-Revent - Just like many other social platforms has similarities, such as:
+Revent has it's own unique features such as:
 
 - Create a Text Based Post (With formatting tools available like *italic* & **bold**)
 - Tags to Categorize Post (e.g **#story #life #jokes**)
