@@ -45,6 +45,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
       final newPasswordInput = authController.newPasswordController.text;
       final newPasswordInputHash = hashingModel.computeHash(newPasswordInput);
 
+      if (newPasswordInput.isEmpty || currentPasswordInput.isEmpty) {
+        CustomAlertDialog.alertDialog("Please fill in both password fields.");
+        return;
+      }
+
       if (newPasswordInput == currentPasswordInput) {
         CustomAlertDialog.alertDialog("New password can't be the same as the old one");
         return;
@@ -55,7 +60,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
         await userAuth.updateAccountAuth(
           username: userProvider.user.username, 
           newPasswordHash: newPasswordInputHash
-        ).then((_) => CustomAlertDialog.alertDialogTitle('Password updated', 'Your account password has been updated'));
+        ).then(
+          (_) => CustomAlertDialog.alertDialogTitle('Password Updated', 'Your account password has been updated')
+        );
 
       } else {
         CustomAlertDialog.alertDialog('Password is incorrect');
