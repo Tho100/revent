@@ -39,10 +39,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
 
       final hashingModel = HashingModel();
 
-      final currentPasswordInput = authController.currentPasswordController.text;
+      final currentPasswordInput = authController.currentPasswordController.text.trim();
       final currentPasswordInputHash = hashingModel.computeHash(currentPasswordInput);
 
-      final newPasswordInput = authController.newPasswordController.text;
+      final newPasswordInput = authController.newPasswordController.text.trim();
       final newPasswordInputHash = hashingModel.computeHash(newPasswordInput);
 
       if (newPasswordInput.isEmpty || currentPasswordInput.isEmpty) {
@@ -55,19 +55,19 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
         return;
       }
 
-      if (currentPasswordHash == currentPasswordInputHash) {
+      final passwordMatched = currentPasswordHash == currentPasswordInputHash;
 
-        await userAuth.updateAccountAuth(
-          username: userProvider.user.username, 
-          newPasswordHash: newPasswordInputHash
-        ).then(
-          (_) => CustomAlertDialog.alertDialogTitle('Password Updated', 'Your account password has been updated')
-        );
-
-      } else {
+      if (!passwordMatched) {
         CustomAlertDialog.alertDialog('Password is incorrect');
-
+        return;
       }
+
+      await userAuth.updateAccountAuth(
+        username: userProvider.user.username, 
+        newPasswordHash: newPasswordInputHash
+      ).then(
+        (_) => CustomAlertDialog.alertDialogTitle('Password Updated', 'Your account password has been updated')
+      );
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
