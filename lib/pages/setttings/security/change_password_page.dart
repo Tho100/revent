@@ -55,7 +55,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
         await userAuth.updateAccountAuth(
           username: userProvider.user.username, 
           newPasswordHash: newPasswordInputHash
-        ).then((_) => CustomAlertDialog.alertDialogTitle('Password updated', 'Your account password has been updated'));
+        ).then(
+          (_) => CustomAlertDialog.alertDialogTitle('Password Updated', 'Your account password has been updated')
+        );
 
       } else {
         CustomAlertDialog.alertDialog('Password is incorrect');
