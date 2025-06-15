@@ -15,10 +15,9 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
       ? activeVentProvider.ventData.postId 
       : await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
-    await _deleteVentInfo(postId: postId).then((_) async {
-      await _deleteComments(postId: postId);
-      await _updateTotalPosts();
-    });
+    await _deleteVentInfo(postId: postId)
+      .then((_) => _deleteComments(postId: postId))
+      .then((_) => _updateTotalPosts());
 
     _removeVent();
 

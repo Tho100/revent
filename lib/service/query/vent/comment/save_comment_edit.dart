@@ -34,11 +34,9 @@ class SaveCommentEdit extends BaseQueryService with
       'comment_id': commentId
     };
 
-    await executeQuery(query, param).then((_) {
-      commentsProvider.editComment(
-        userProvider.user.username, newComment, originalComment
-      );
-    });
+    await executeQuery(query, param).then(
+      (_) => commentsProvider.editComment(userProvider.user.username, newComment, originalComment)
+    );
 
   }
 
