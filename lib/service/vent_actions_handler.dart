@@ -55,12 +55,10 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteVent(title: title).delete().then(
-        (_) {
-          _showTemporarySnack('Post deleted.');
-          _closeScreens(1);
-        }
-      );
+      await DeleteVent(title: title).delete();
+
+      _showTemporarySnack('Post deleted.');
+      _closeScreens(1);
 
     } catch (_) {
       _showErrorSnack('Delete failed.');
@@ -72,12 +70,10 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteArchiveVent(title: title).delete().then(
-        (_) {
-          _showTemporarySnack('Archive post deleted.');
-          _closeScreens(2);
-        }
-      );
+      await DeleteArchiveVent(title: title).delete();
+
+      _showTemporarySnack('Archive post deleted.');
+      _closeScreens(2);
 
     } catch (_) {
       _showErrorSnack('Archive delete failed.');
@@ -89,12 +85,10 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteSavedVent(title: title, creator: creator).delete().then(
-        (_) {
-          _showTemporarySnack('Removed post from saved.');
-          _closeScreens(1);
-        }
-      );
+      await DeleteSavedVent(title: title, creator: creator).delete();
+        
+      _showTemporarySnack('Removed post from saved.');
+      _closeScreens(1);
 
     } catch (_) {
       _showErrorSnack('Unsave failed.');
@@ -126,13 +120,11 @@ class VentActionsHandler {
         return;
       }
 
-      await PinVent(title: title).pin().then(
-        (_) {
-          _showTemporarySnack('Pinned post.');
-          _closeScreens(1);
-        }
-      );
+      await PinVent(title: title).pin();
 
+      _showTemporarySnack('Pinned post.');
+      _closeScreens(1);
+    
     } catch (_) {
       _showErrorSnack('Pin failed.');
     }
@@ -143,12 +135,10 @@ class VentActionsHandler {
 
     try {
 
-      await PinVent(title: title).pin().then(
-        (_) {
-          _showTemporarySnack('Removed post from pinnned.');
-          _closeScreens(1);
-        }
-      );
+      await PinVent(title: title).pin();
+      
+      _showTemporarySnack('Removed post from pinnned.');
+      _closeScreens(1);
 
     } catch (_) {
       _showErrorSnack('Unpin failed.');

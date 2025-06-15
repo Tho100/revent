@@ -47,7 +47,9 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
       for(int i=0; i<queries.length; i++) {
         await txn.execute(queries[i], params[i]);
       }
-    }).then((_) => _removeComment());
+    }).then(
+      (_) => _removeComment()
+    );
 
   }
 

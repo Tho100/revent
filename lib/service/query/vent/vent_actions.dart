@@ -139,7 +139,7 @@ class VentActions extends BaseQueryService with
     };
 
     await executeQuery(insertCommentQuery, commentsParams).then(
-      (_) async => await _updateTotalComments(postId: postId)
+      (_) => _updateTotalComments(postId: postId)
     );
 
     _addComment(comment: comment);

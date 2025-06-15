@@ -42,7 +42,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
     };
 
     await executeQuery(query, params).then(
-      (_) async => await _updateRepliesInfo(commentId: commentId)
+      (_) => _updateRepliesInfo(commentId: commentId)
     );
     
     _addReply();

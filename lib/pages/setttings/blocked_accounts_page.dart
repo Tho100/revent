@@ -52,11 +52,15 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
 
   }
 
+  void _removeFromBlockedList(String username) {
+    blockedAccountsData.value = List.from(blockedAccountsData.value)..removeWhere(
+      (data) => data.username == username
+    );
+  }
+
   Future<void> _onUnblockPressed({required String username}) async {
     await UserActions(username: username).blockUser(block: false).then(
-      (_) => blockedAccountsData.value = List.from(blockedAccountsData.value)..removeWhere(
-        (data) => data.username == username
-      )
+      (_) => _removeFromBlockedList(username)
     );
   }
 

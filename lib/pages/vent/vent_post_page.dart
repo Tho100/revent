@@ -176,10 +176,10 @@ class _VentPostPageState extends State<VentPostPage> with
       }
 
       await RefreshService().refreshVentPost().then(
-      (_) {
-        commentsFilter.filterCommentToBest();
-        filterTextNotifier.value = 'Best';
-      });
+        (_) => commentsFilter.filterCommentToBest()
+      );
+      
+      filterTextNotifier.value = 'Best';
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
