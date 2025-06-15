@@ -96,6 +96,24 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
+  Future<void> _initializeComments() async {
+
+    try {
+
+      if (!enableCommentNotifier.value) {
+        return;
+      }
+
+      await CommentsSetup().setup().then(
+        (_) => commentsFilter.filterCommentToBest()
+      );
+
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: 'Comments not loaded.');
+    }
+
+  }
+
   Future<void> _loadCommentsSettings() async {
 
     final currentOptions = await commentSettings.getCurrentOptions();
@@ -136,24 +154,6 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  void _initializeComments() async {
-
-    try {
-
-      if (!enableCommentNotifier.value) {
-        return;
-      }
-
-      await CommentsSetup().setup().then(
-        (_) => commentsFilter.filterCommentToBest()
-      );
-
-    } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Comments not loaded.');
-    }
-
-  }
-
   void _copyBodyText() async {
 
     if (widget.bodyText.isEmpty) {
@@ -176,10 +176,10 @@ class _VentPostPageState extends State<VentPostPage> with
       }
 
       await RefreshService().refreshVentPost().then(
-      (_) {
-        commentsFilter.filterCommentToBest();
-        filterTextNotifier.value = 'Best';
-      });
+        (_) => commentsFilter.filterCommentToBest()
+      );
+      
+      filterTextNotifier.value = 'Best';
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
@@ -435,11 +435,9 @@ class _VentPostPageState extends State<VentPostPage> with
           message: 'Block @${widget.creator}?', 
           buttonMessage: 'Block', 
           onPressedEvent: () async {
-            await UserActions(username: widget.creator).blockUser().then((_) {
-                Navigator.pop(context);
-                Navigator.pop(context);
-              }
-            );
+            await UserActions(username: widget.creator).blockUser()
+              .then((_) => Navigator.pop(context))
+              .then((_) => Navigator.pop(context));
           }
         );
       },
@@ -770,10 +768,9 @@ class _VentPostPageState extends State<VentPostPage> with
       )
     );
     _initializeVentActionsHandler();
-    _loadCommentsSettings().then((_) {
-      _initializeComments();
-      _loadLastEdit();
-    });
+    _loadCommentsSettings()
+      .then((_) => _initializeComments())
+      .then((_) => _loadLastEdit());
   }
 
   @override

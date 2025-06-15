@@ -90,7 +90,7 @@ class _SplashScreenState extends State<SplashScreen> with
   Future<void> _loadStartupData() async {
 
     await ProfileDataSetup().setup(username: userProvider.user.username).then(
-      (_) async => await _initializeHomeVents()
+      (_) => _initializeHomeVents()
     );
 
     await localStorage.readThemeInformation().then(

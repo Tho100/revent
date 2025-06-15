@@ -28,7 +28,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
     };
 
     await executeQuery(query, params).then(
-      (_) async => await _updateLastEdit(isFromArchive: false, postId: postId)
+      (_) => _updateLastEdit(isFromArchive: false, postId: postId)
     );
 
     activeVentProvider.setBody(newBody);
@@ -47,7 +47,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
     };
 
     await executeQuery(query, params).then(
-      (_) async => await _updateLastEdit(isFromArchive: true)
+      (_) => _updateLastEdit(isFromArchive: true)
     );
 
     activeVentProvider.setBody(newBody);

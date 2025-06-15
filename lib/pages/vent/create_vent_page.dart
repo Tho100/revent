@@ -106,13 +106,15 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       loading.startLoading(context: context);
     }
 
-    await CreateNewItem(title: title, body: bodyText, tags: tags).newArchiveVent().then((_) {
+    await CreateNewItem(title: title, body: bodyText, tags: tags).newArchiveVent();
 
-      loading.stopLoading();
+    loading.stopLoading();
 
-      SnackBarDialog.temporarySnack(message: 'Vent archived.');
-      
-      Navigator.pop(context);
+    SnackBarDialog.temporarySnack(message: 'Vent archived.');
+    
+    if(context.mounted) {
+
+      Navigator.pop(context);        
 
       Navigator.push(
         context,
@@ -121,7 +123,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         )
       );
 
-    });
+    }
 
   }
 
@@ -138,19 +140,19 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     await CreateNewItem(title: title, body: bodyText, tags: tags).newVent(
       markedNsfw: markAsNsfwNotifier.value,
       allowCommenting: allowCommentingNotifier.value
-    ).then((_) {
+    );
 
-      loading.stopLoading();
+    loading.stopLoading();
 
-      SnackBarDialog.temporarySnack(message: 'Vent posted.');
+    SnackBarDialog.temporarySnack(message: 'Vent posted.');
 
+    if(context.mounted) {
       Navigator.pop(context);        
+    }
 
-      if (getIt.navigationProvider.currentPageIndex != 0) {
-        NavigatePage.homePage();
-      }
-
-    });
+    if (getIt.navigationProvider.currentPageIndex != 0) {
+      NavigatePage.homePage();
+    }
 
   }  
 

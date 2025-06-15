@@ -22,11 +22,8 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
     required bool allowCommenting,
   }) async {
 
-    await _insertVentInfo(
-      markedNsfw: markedNsfw,
-      allowCommenting: allowCommenting
-    ).then(
-      (_) async => await _updateTotalPosts()
+    await _insertVentInfo(markedNsfw: markedNsfw, allowCommenting: allowCommenting).then(
+      (_) => _updateTotalPosts()
     );
     
     _addVent(markedNsfw: markedNsfw);

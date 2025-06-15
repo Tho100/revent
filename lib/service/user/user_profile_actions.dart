@@ -55,10 +55,9 @@ class UserProfileActions {
   }
 
   Future<void> _confirmBlockUser(String username) async {
-    await UserActions(username: username).blockUser().then((_) {
-      Navigator.pop(context);
-      Navigator.pop(context);
-    });
+    await UserActions(username: username).blockUser()
+      .then((_) => Navigator.pop(context))
+      .then((_) => Navigator.pop(context));
   }
 
   void _onReportPressed() {

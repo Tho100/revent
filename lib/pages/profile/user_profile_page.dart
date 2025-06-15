@@ -221,6 +221,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       final follow = !isFollowingNotifier.value;
 
       if (!follow) {
+        
         CustomAlertDialog.alertDialogCustomOnPress(
           message: "Unfollow @${widget.username}?", 
           buttonMessage: "Unfollow", 
@@ -230,7 +231,9 @@ class _UserProfilePageState extends State<UserProfilePage> with
             );
           }
         );
+
         return;
+
       }
 
       await _toggleFollowUser(follow);
