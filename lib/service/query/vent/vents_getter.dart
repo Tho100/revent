@@ -179,10 +179,6 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final title = extractedData.extractStringColumn('title');
     final creator = extractedData.extractStringColumn('creator');
 
-    final bodyText = excludeBodyText
-      ? List.generate(title.length, (_) => '')
-      : extractedData.extractStringColumn('body_text');
-
     final tags = extractedData.extractStringColumn('tags');
     
     final totalLikes = extractedData.extractIntColumn('total_likes');
@@ -194,6 +190,12 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
     final isNsfw = extractedData.extractIntColumn('marked_nsfw')
       .map((isNsfw) => isNsfw != 0).toList();
+
+    final rawBodyText = extractedData.extractStringColumn('body_text');
+
+    final bodyText = excludeBodyText
+      ? List.generate(title.length, (_) => '')
+      : List.generate(title.length, (index) => isNsfw[index] ? '' : rawBodyText[index]);
 
     final ventPostState = VentPostStateService();
 
