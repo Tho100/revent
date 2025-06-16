@@ -161,6 +161,7 @@ class LocalStorageModel {
 
     String username = '';
     String email = '';
+    String joinedDate = '';
 
     final localDir = await _readLocalDirectory();
 
@@ -175,6 +176,7 @@ class LocalStorageModel {
         if (lines.length >= 2) {
           username = lines[0];
           email = lines[1];
+          joinedDate = lines[2];
         }
 
       }
@@ -184,6 +186,7 @@ class LocalStorageModel {
     return {
       'username': username, 
       'email': email, 
+      'joined_date': joinedDate
     };
 
   }
@@ -203,7 +206,13 @@ class LocalStorageModel {
 
     try {
 
-      await setupFile.writeAsString('$username\n$email');
+      final acccountCreationDate = DateTime.now().toUtc();
+      
+      final formattedCreationDate = acccountCreationDate
+        .toIso8601String()
+        .replaceFirst('T', ' ').split('.').first;
+
+      await setupFile.writeAsString('$username\n$email\n$formattedCreationDate');
 
     } catch (_) {
       return;

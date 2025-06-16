@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/providers_service.dart';
+import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/pages/profile_picture_viewer_page.dart';
-import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
+
+
+
+
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
@@ -25,11 +29,9 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
 
     if (userProvider.user.joinedDate == null) {
 
-      final getJoinedDate = await UserDataGetter().getJoinedDate(
-        username: userProvider.user.username
-      );
-
-      final formattedJoinedDate = FormatDate().formatLongDate(getJoinedDate);
+      final joinedDate = (await LocalStorageModel().readAccountInformation())['joined_date']!;
+          
+      final formattedJoinedDate = FormatDate().formatLongDate(joinedDate);
 
       userProvider.setJoinedDate(formattedJoinedDate);
 
