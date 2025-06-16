@@ -102,6 +102,7 @@ class StyledTextWidget extends StatelessWidget {
 
       urlRecognizer = TapGestureRecognizer()
         ..onTap = () async => await OpenLink(url: text).open();
+        
     }
 
     return {

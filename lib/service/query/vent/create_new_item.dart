@@ -72,7 +72,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService, Ta
 
     final newVent = VentLatestData(
       title: title,
-      bodyText: body, 
+      bodyText: markedNsfw ? '' : body, 
       tags: tags,
       isNsfw: markedNsfw,
       creator: userProvider.user.username, 

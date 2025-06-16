@@ -104,7 +104,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       final isInSearchResults = navigationProvider.currentRoute == AppRoute.searchResults.path;
 
       final body = isInSearchResults
-        ? await _getSearchResultsBodyText() : widget.bodyText;
+        ? await _getVentBodyText() : widget.bodyText;
 
       NavigatePage.editVentPage(title: widget.title, body: body);
 
@@ -159,14 +159,16 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   Future<String> _initializeBodyText() async {
 
-    final customBodyTextPage = [AppRoute.searchResults.path];
+    final getBodyTextOnCondition = 
+      navigationProvider.currentRoute == AppRoute.searchResults.path ||
+      widget.isNsfw;
 
-    return customBodyTextPage.contains(navigationProvider.currentRoute)   
-      ? await _getSearchResultsBodyText() : widget.bodyText;
+    return getBodyTextOnCondition
+      ? await _getVentBodyText() : widget.bodyText;
 
   }
 
-  Future<String> _getSearchResultsBodyText() async {
+  Future<String> _getVentBodyText() async {
     return await VentDataGetter(postId: postId).getBodyText();
   }
 
