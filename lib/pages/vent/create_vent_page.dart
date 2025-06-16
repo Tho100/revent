@@ -13,6 +13,7 @@ import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
 import 'package:revent/shared/widgets/bottomsheet/tags_bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/vent_options_bottomsheet.dart';
+import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -167,6 +168,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
             child: postTextFields.buildTitleField(titleController: postController.titleController),
           ),   
 
+          _buildNsfwTag(),
+
           _buildSelectedTags(),
         
           const SizedBox(height: 4),
@@ -180,6 +183,27 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
             
         ],
       ),
+    );
+  }
+
+  Widget _buildNsfwTag() {
+    return ValueListenableBuilder(
+      valueListenable: markAsNsfwNotifier, 
+      builder: (_, isNsfw, __) {
+
+        if (isNsfw) {
+          return const Align(
+            alignment: Alignment.centerLeft,
+            child: Padding(
+              padding: EdgeInsets.only(left: 17.0, bottom: 4.0),
+              child: NsfwWidget(),
+            ),
+          );
+        }
+
+        return const SizedBox.shrink();
+
+      } 
     );
   }
 
