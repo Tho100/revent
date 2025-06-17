@@ -3,9 +3,12 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:revent/global/app_keys.dart';
+import 'package:revent/pages/profile_picture_viewer_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
+import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
 class BottomsheetAboutProfile {
@@ -59,13 +62,23 @@ class BottomsheetAboutProfile {
   }
 
   Widget _buildProfilePicture(Uint8List pfpData) {
-    return Hero(
-      tag: 'profile-picture-hero',
-      child: ProfilePictureWidget(
-        pfpData: pfpData,
-        customHeight: 100,
-        customWidth: 100,
-        customEmptyPfpSize: 40,
+    return InkWellEffect(
+      onPressed: () {
+        Navigator.push(
+          navigatorKey.currentContext!,
+          MaterialPageRoute(
+            builder: (_) => ProfilePictureViewer(pfpData: pfpData)
+          )
+        );
+      },
+      child: Hero(
+        tag: 'profile-picture-hero',
+        child: ProfilePictureWidget(
+          pfpData: pfpData,
+          customHeight: 100,
+          customWidth: 100,
+          customEmptyPfpSize: 40,
+        ),
       ),
     );
   }
