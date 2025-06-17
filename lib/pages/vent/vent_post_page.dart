@@ -761,7 +761,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
       final isViewPost = await CustomAlertDialog.nsfwWarningDialog();
 
-      if (isViewPost) { // TODO: First do TODO, then checkout to refactor and improve this code
+      if (isViewPost) { // TODO: Improve this code
         
         activeVentProvider.setVentData(
           ActiveVentData(

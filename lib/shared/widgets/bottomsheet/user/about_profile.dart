@@ -59,11 +59,14 @@ class BottomsheetAboutProfile {
   }
 
   Widget _buildProfilePicture(Uint8List pfpData) {
-    return ProfilePictureWidget(
-      pfpData: pfpData, // TODO: Add hero 
-      customHeight: 100,
-      customWidth: 100,
-      customEmptyPfpSize: 40,
+    return Hero(
+      tag: 'profile-picture-hero',
+      child: ProfilePictureWidget(
+        pfpData: pfpData,
+        customHeight: 100,
+        customWidth: 100,
+        customEmptyPfpSize: 40,
+      ),
     );
   }
 
