@@ -82,6 +82,45 @@ class _VentPostPageState extends State<VentPostPage> with
 
   late VentActionsHandler actionsHandler;
 
+  void _loadVentInfo() {
+
+    activeVentProvider.setVentData(
+      ActiveVentData(
+        postId: widget.postId,
+        title: widget.title, 
+        creator: widget.creator, 
+        body: widget.bodyText,
+        creatorPfp: widget.pfpData
+      )
+    );
+
+    _initializeVentActionsHandler();
+
+    _loadCommentsSettings()
+      .then((_) => _initializeComments())
+      .then((_) => _loadLastEdit());
+
+  }
+
+  void _showNsfwConfirmationDialog() async {
+
+    if (widget.isNsfw) {
+
+      final isViewPost = await CustomAlertDialog.nsfwWarningDialog();
+
+      if (isViewPost) {
+        _loadVentInfo();
+      } 
+
+      return;
+
+    }
+
+    _loadVentInfo();
+
+  }
+
+
   void _initializeVentActionsHandler() {
     actionsHandler = VentActionsHandler(              
       title: widget.title, 
@@ -753,52 +792,6 @@ class _VentPostPageState extends State<VentPostPage> with
         );
       },
     );
-  }
-
-  void _showNsfwConfirmationDialog() async {
-
-    if (widget.isNsfw) {
-
-      final isViewPost = await CustomAlertDialog.nsfwWarningDialog();
-
-      if (isViewPost) { // TODO: Improve this code
-        
-        activeVentProvider.setVentData(
-          ActiveVentData(
-            postId: widget.postId,
-            title: widget.title, 
-            creator: widget.creator, 
-            body: widget.bodyText,
-            creatorPfp: widget.pfpData
-          )
-        );
-
-        _initializeVentActionsHandler();
-        _loadCommentsSettings()
-          .then((_) => _initializeComments())
-          .then((_) => _loadLastEdit());
-
-      }
-
-      return;
-
-    }
-
-    activeVentProvider.setVentData(
-      ActiveVentData(
-        postId: widget.postId,
-        title: widget.title, 
-        creator: widget.creator, 
-        body: widget.bodyText,
-        creatorPfp: widget.pfpData
-      )
-    );
-
-    _initializeVentActionsHandler();
-    _loadCommentsSettings()
-      .then((_) => _initializeComments())
-      .then((_) => _loadLastEdit());
-
   }
 
   @override
