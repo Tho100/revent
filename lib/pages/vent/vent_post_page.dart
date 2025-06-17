@@ -755,9 +755,35 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  @override
-  void initState() {
-    super.initState();
+  void _showNsfwConfirmationDialog() async {
+
+    if (widget.isNsfw) {
+
+      final isViewPost = await CustomAlertDialog.nsfwWarningDialog();
+
+      if (isViewPost) { // TODO: Improve this code
+        
+        activeVentProvider.setVentData(
+          ActiveVentData(
+            postId: widget.postId,
+            title: widget.title, 
+            creator: widget.creator, 
+            body: widget.bodyText,
+            creatorPfp: widget.pfpData
+          )
+        );
+
+        _initializeVentActionsHandler();
+        _loadCommentsSettings()
+          .then((_) => _initializeComments())
+          .then((_) => _loadLastEdit());
+
+      }
+
+      return;
+
+    }
+
     activeVentProvider.setVentData(
       ActiveVentData(
         postId: widget.postId,
@@ -767,10 +793,20 @@ class _VentPostPageState extends State<VentPostPage> with
         creatorPfp: widget.pfpData
       )
     );
+
     _initializeVentActionsHandler();
     _loadCommentsSettings()
       .then((_) => _initializeComments())
       .then((_) => _loadLastEdit());
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _showNsfwConfirmationDialog();
+    });
   }
 
   @override

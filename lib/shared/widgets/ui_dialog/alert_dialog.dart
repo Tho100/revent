@@ -174,4 +174,57 @@ class CustomAlertDialog {
     );
   }
 
+  static Future<bool> nsfwWarningDialog() async {
+    return await showDialog(
+      context: navigatorKey.currentContext!,
+      barrierColor: ThemeColor.barrier,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertDialogWidget(
+          isMultipleActions: true,
+          title: 'NSFW Content Warning',
+          content: 'View anyway?',
+          actions: Column(
+            children: [
+
+              _roundedActionButton(
+                TextButton(
+                  onPressed: () {
+                    Navigator.of(context).pop(false);
+                    Navigator.of(context).pop(false);
+                  },
+                  style: ThemeStyle.dialogBtnStyle,
+                  child: Text(
+                    'Go Back',
+                    style: GoogleFonts.inter(
+                      color: ThemeColor.alert,
+                      fontWeight: FontWeight.w800,
+                      fontSize: 15
+                    )
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 4),
+
+              Divider(color: ThemeColor.divider, height: 1),
+
+              _roundedActionButton(
+                TextButton(
+                  onPressed: () => Navigator.of(context).pop(true),
+                  style: ThemeStyle.dialogBtnStyle,
+                  child: Text(
+                    'View Post',
+                    style: ThemeStyle.dialogBtnTextStyle
+                  ),
+                ),
+              ),
+
+            ]
+          ),
+        );
+      },
+    );
+  }
+
 }
