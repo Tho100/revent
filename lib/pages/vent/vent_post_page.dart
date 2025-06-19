@@ -177,7 +177,7 @@ class _VentPostPageState extends State<VentPostPage> with
     
     switch (filter) {
       case == 'Best':
-      commentsFilter.filterCommentToBest();
+        commentsFilter.filterCommentToBest();
         break;
       case == 'Latest':
         commentsFilter.filterCommentToLatest();
