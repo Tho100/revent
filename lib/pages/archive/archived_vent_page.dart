@@ -2,12 +2,14 @@
 
 import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/archive/view_archive_vent_page.dart';
+import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
@@ -209,16 +211,43 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     );
   }
 
+  Widget _buildTotalPost(List<_ArchivedVentsData> archiveData) {
+
+    final postText = archiveData.length == 1 
+      ? "You have 1 archived post." 
+      : "You have ${archiveData.length} archived posts.";
+
+    return Text(
+      postText,
+      style: GoogleFonts.inter(
+        color: ThemeColor.contentThird,
+        fontWeight: FontWeight.w800,
+        fontSize: 14
+      )
+    );
+
+  }
+
   Widget _buildListView(List<_ArchivedVentsData> archiveData) {
     return DynamicHeightGridView(
       physics: const AlwaysScrollableScrollPhysics(
         parent: BouncingScrollPhysics()
       ),
       crossAxisCount: 1,
-      itemCount: archiveData.length,
+      itemCount: archiveData.length + 1,
       builder: (_, index) {
           
-        final ventsData = archiveData[index];
+        if (index == 0) {
+          return Align(
+            alignment: Alignment.topLeft,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
+              child: _buildTotalPost(archiveData),
+            ),
+          );
+        }
+
+        final ventsData = archiveData[index - 1];
 
         return _buildVentPreview(ventsData.title, ventsData.tags, ventsData.postTimestamp);
 
@@ -228,7 +257,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
   
   Widget _buildVentList() {
     return Padding(
-      padding: const EdgeInsets.only(left: 12.0, right: 12.0, top: 15),
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: ValueListenableBuilder(
         valueListenable: isPageLoadedNotifier,
         builder: (_, isLoaded, __) {
