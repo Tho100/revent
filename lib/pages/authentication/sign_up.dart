@@ -123,6 +123,7 @@ class _SignUpPageState extends State<SignUpPage> {
           MainTextField(
             hintText: 'Enter your email address', 
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.emailAddress,
             inputFormatters: InputFormatters().noSpaces(),
             controller: authController.emailController,
           ),

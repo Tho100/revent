@@ -146,6 +146,7 @@ class _SignInPageState extends State<SignInPage> {
           MainTextField(
             hintText: 'Enter your email address', 
             textInputAction: TextInputAction.next,
+            keyboardType: TextInputType.emailAddress,
             inputFormatters: InputFormatters().noSpaces(),
             controller: authController.emailController
           ),
