@@ -191,11 +191,11 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final isNsfw = extractedData.extractIntColumn('marked_nsfw')
       .map((isNsfw) => isNsfw != 0).toList();
 
-    final rawBodyText = extractedData.extractStringColumn('body_text');
-
     final bodyText = excludeBodyText
       ? List.generate(title.length, (_) => '')
-      : List.generate(title.length, (index) => isNsfw[index] ? '' : rawBodyText[index]);
+      : List.generate(
+        title.length, (index) => isNsfw[index] ? '' : extractedData.extractStringColumn('body_text')[index]
+      );
 
     final ventPostState = VentPostStateService();
 
