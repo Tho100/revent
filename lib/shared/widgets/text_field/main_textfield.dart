@@ -13,6 +13,7 @@ class MainTextField extends StatelessWidget {
   final bool? autoFocus;
   final bool? readOnly;
   final TextInputAction? textInputAction;
+  final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
   final void Function(String)? onFieldSubmitted;
 
@@ -24,6 +25,7 @@ class MainTextField extends StatelessWidget {
     this.autoFocus,
     this.readOnly,
     this.textInputAction,
+    this.keyboardType,
     this.inputFormatters,
     this.onFieldSubmitted,
     super.key
@@ -39,6 +41,7 @@ class MainTextField extends StatelessWidget {
       autofocus: autoFocus ?? false,
       onFieldSubmitted: onFieldSubmitted,
       textInputAction: textInputAction,
+      keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       decoration: ThemeStyle.txtFieldStye(hintText: hintText!),
       style: GoogleFonts.inter(
