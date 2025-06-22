@@ -176,13 +176,13 @@ class _VentPostPageState extends State<VentPostPage> with
   void _onFilterPressed({required String filter}) {
     
     switch (filter) {
-      case == 'Best':
+      case 'Best':
         commentsFilter.filterCommentToBest();
         break;
-      case == 'Latest':
+      case 'Latest':
         commentsFilter.filterCommentToLatest();
         break;
-      case == 'Oldest':
+      case 'Oldest':
         commentsFilter.filterCommentToOldest();
         break;
     }

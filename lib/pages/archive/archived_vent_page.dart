@@ -176,10 +176,10 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
   void _onFilterPressed({required String filter}) { 
     
     switch (filter) {
-      case == 'Latest':
+      case 'Latest':
         _sortArchivedVentsToLatest();
         break;
-      case == 'Oldest':
+      case 'Oldest':
         _sortArchivedVentsToOldest();
         break;
     }
