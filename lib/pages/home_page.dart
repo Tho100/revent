@@ -157,7 +157,9 @@ class _HomePageState extends State<HomePage> with
 
     final refreshService = RefreshService();
 
-    switch (homeTabs[tabController.index].text) {
+    final currentTab = homeTabs[tabController.index].text;
+
+    switch (currentTab) {
       case 'Latest':
         latestIsLoadedNotifier.value = false;
         await refreshService.refreshLatestVents().then(
