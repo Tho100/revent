@@ -54,16 +54,16 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   void _onSortPostsPressed(String filter) {
     
     switch (filter) {
-      case == 'Best':
+      case 'Best':
         searchPostsFilter.filterPostsToBest();
         break;
-      case == 'Latest':
+      case 'Latest':
         searchPostsFilter.filterPostsToLatest();
         break;
-      case == 'Oldest':
+      case 'Oldest':
         searchPostsFilter.filterPostsToOldest();
         break;
-      case == 'Controversial':
+      case 'Controversial':
         searchPostsFilter.filterToControversial();
         break;
     }
@@ -77,20 +77,20 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   void _timeFilterNotifier(String filter) {
     
     switch (filter) {
-      case == 'All Time':
+      case 'All Time':
         searchPostsFilter.filterPostsByTimestamp('All Time');
         searchPostsFilter.filterPostsToBest();
         break;
-      case == 'Past Year':
+      case 'Past Year':
         searchPostsFilter.filterPostsByTimestamp('Past Year');
         break;
-      case == 'Past Month':
+      case 'Past Month':
         searchPostsFilter.filterPostsByTimestamp('Past Month');
         break;
-      case == 'Past Week':
+      case 'Past Week':
         searchPostsFilter.filterPostsByTimestamp('Past Week');
         break;
-      case == 'Today':
+      case 'Today':
         searchPostsFilter.filterPostsByTimestamp('Today');
         break;
     }
