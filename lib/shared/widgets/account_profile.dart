@@ -57,13 +57,16 @@ class AccountProfileWidget extends StatelessWidget {
           
                 const Spacer(),
 
-                if (!hideActionButton! && username != getIt.userProvider.user.username)
+                if (!hideActionButton! && username != getIt.userProvider.user.username) 
                 SubButton(
                   customHeight: 40,
                   text: customText ?? 'Follow',
+                  outlined: customText == 'Following',
+                  customForeground: customText == 'Following' 
+                    ? ThemeColor.contentPrimary : ThemeColor.foregroundPrimary,
                   onPressed: onPressed ?? () {}
                 ),
-          
+
               ],
             ),
         ),
