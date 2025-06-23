@@ -135,7 +135,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
         } 
 
         profileActionTextNotifier.value = List.generate(
-          followersData.value.length, (index) => followersData.value[index].isFollowed ? 'Unfollow' : 'Follow' 
+          followersData.value.length, (index) => followersData.value[index].isFollowed ? 'Following' : 'Follow' 
         );
 
         emptyPageMessageNotifier.value = followersData.value.isEmpty
@@ -149,7 +149,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
         } 
 
         profileActionTextNotifier.value = List.generate(
-          followingData.value.length, (index) => followingData.value[index].isFollowed ? 'Unfollow' : 'Follow' 
+          followingData.value.length, (index) => followingData.value[index].isFollowed ? 'Following' : 'Follow' 
         );
 
         emptyPageMessageNotifier.value = followingData.value.isEmpty
