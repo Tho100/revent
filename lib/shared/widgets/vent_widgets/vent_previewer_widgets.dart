@@ -14,7 +14,7 @@ import 'package:revent/shared/widgets/bottomsheet/vents/vent_post_actions.dart';
 import 'package:revent/shared/widgets/buttons/actions_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
-import 'package:revent/shared/widgets/styled_text_widget.dart';
+import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 
 class VentPreviewerWidgets {
 

@@ -13,7 +13,7 @@ import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/vent/comment/pin_comment.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/shared/widgets/styled_text_widget.dart';
+import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/comment/comment_actions.dart';
