@@ -10,7 +10,7 @@ import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 
-class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderService {
+class ViewArchivedVentPage extends StatelessWidget with UserProfileProviderService {
 
   final String title;
   final String tags;
@@ -18,7 +18,7 @@ class ViewArchiveVentPage extends StatelessWidget with UserProfileProviderServic
   final String postTimestamp;
   final String lastEdit;
 
-  const ViewArchiveVentPage({
+  const ViewArchivedVentPage({
     required this.title,
     required this.tags,
     required this.bodyText,

@@ -10,9 +10,9 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/pages/archive/view_archive_vent_page.dart';
+import 'package:revent/pages/archive/view_archived_vent_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/bottomsheet/archive_vents_filter_bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/archived_filter_bottomsheet.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
@@ -92,7 +92,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     Navigator.push(
       navigatorKey.currentContext!,
       MaterialPageRoute(
-        builder: (_) => ViewArchiveVentPage(
+        builder: (_) => ViewArchivedVentPage(
           title: title, 
           tags: tags,
           bodyText: bodyText, 
@@ -278,7 +278,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       height: 35,
       child: InkWellEffect(
         onPressed: () {
-          BottomsheetArchiveVentsFilter().buildBottomsheet(
+          BottomsheetArchivedFilter().buildBottomsheet(
             context: context, 
             currentFilter: filterTextNotifier.value,
             latestOnPressed: () => _onFilterPressed(filter: 'Latest'),
