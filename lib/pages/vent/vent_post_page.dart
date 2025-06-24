@@ -24,7 +24,7 @@ import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottom_input_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/report_post_bottomsheet.dart';
 import 'package:revent/shared/widgets/nsfw_widget.dart';
-import 'package:revent/shared/widgets/styled_text_widget.dart';
+import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/model/setup/comments_setup.dart';

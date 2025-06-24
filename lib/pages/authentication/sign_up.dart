@@ -10,7 +10,7 @@ import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/single_text_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/buttons/underlined_button.dart';
-import 'package:revent/shared/widgets/header_text.dart';
+import 'package:revent/shared/widgets/text/header_text.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
 import 'package:revent/shared/widgets/text_field/main_textfield.dart';

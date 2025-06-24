@@ -5,7 +5,7 @@ import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 
-class BottomsheetArchiveVentsFilter {
+class BottomsheetArchivedFilter {
 
   Widget _buildOptionButton({
     required String text,

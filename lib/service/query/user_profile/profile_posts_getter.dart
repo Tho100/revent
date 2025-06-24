@@ -2,7 +2,7 @@ import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/service/vent_post_state_service.dart';
+import 'package:revent/service/query/vent/vent_post_state_service.dart';
 
 class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderService {
 
