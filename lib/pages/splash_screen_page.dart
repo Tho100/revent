@@ -23,8 +23,7 @@ class SplashScreen extends StatefulWidget {
 
 }
 
-class _SplashScreenState extends State<SplashScreen> with 
-  UserProfileProviderService, NavigationProviderService {
+class _SplashScreenState extends State<SplashScreen> with UserProfileProviderService {
 
   final localStorage = LocalStorageModel();
 
