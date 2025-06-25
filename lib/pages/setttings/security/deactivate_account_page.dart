@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';

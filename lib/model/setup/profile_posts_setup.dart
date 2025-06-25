@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:revent/global/profile_type.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/user_profile/profile_posts_getter.dart';
 import 'package:revent/service/query/user_profile/profile_saved_getter.dart';
 

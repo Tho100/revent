@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';

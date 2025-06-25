@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/service/query/general/follow_suggestion_getter.dart';

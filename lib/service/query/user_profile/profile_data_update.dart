@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService {

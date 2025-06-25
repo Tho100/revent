@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/search/search_accounts_getter.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
 import 'package:revent/model/setup/vents_setup.dart';

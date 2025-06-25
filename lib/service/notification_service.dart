@@ -1,5 +1,5 @@
 import 'package:revent/helper/cache_helper.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/notification/follower_notification_getter.dart';
 import 'package:revent/service/query/notification/post_notification_getter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
