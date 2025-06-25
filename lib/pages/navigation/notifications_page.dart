@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/cache_helper.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/service/notification_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';

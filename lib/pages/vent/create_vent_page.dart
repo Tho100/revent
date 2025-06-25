@@ -7,7 +7,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/post_tags.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/archive/archived_vent_page.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';

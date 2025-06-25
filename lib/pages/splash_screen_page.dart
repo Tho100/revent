@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:revent/service/notification_service.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -23,8 +23,7 @@ class SplashScreen extends StatefulWidget {
 
 }
 
-class _SplashScreenState extends State<SplashScreen> with 
-  UserProfileProviderService, NavigationProviderService {
+class _SplashScreenState extends State<SplashScreen> with UserProfileProviderService {
 
   final localStorage = LocalStorageModel();
 

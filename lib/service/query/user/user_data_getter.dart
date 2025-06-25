@@ -1,8 +1,7 @@
 import 'package:revent/helper/extract_data.dart';
-import 'package:revent/helper/providers_service.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
-class UserDataGetter extends BaseQueryService with UserProfileProviderService {
+class UserDataGetter extends BaseQueryService {
 
   Future<String?> getUsername({required String email}) async {
 

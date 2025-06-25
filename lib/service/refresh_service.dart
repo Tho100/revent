@@ -1,5 +1,5 @@
 import 'package:revent/global/profile_type.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/model/setup/replies_setup.dart';

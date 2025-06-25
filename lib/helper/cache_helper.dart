@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper with NavigationProviderService {

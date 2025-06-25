@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
-import 'package:revent/helper/providers_service.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/service/query/user/user_data_getter.dart';
 import 'package:revent/service/refresh_service.dart';
