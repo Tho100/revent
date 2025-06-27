@@ -1,5 +1,6 @@
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/helper/nsfw_converter.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class VentDataGetter extends BaseQueryService {
@@ -38,9 +39,9 @@ class VentDataGetter extends BaseQueryService {
     final tags = extractedData.extractStringColumn('tags');
     final totalLikes = extractedData.extractIntColumn('total_likes');
 
-    final isNsfw = extractedData.extractIntColumn('marked_nsfw')
-      .map((isNsfw) => isNsfw != 0)
-      .toList();
+    final isNsfw = NsfwConverter.convertToBools(
+      extractedData.extractIntColumn('marked_nsfw')
+    );
 
     final postTimestamp = FormatDate().formatToPostDate(
       data: extractedData, columnName: 'created_at'
