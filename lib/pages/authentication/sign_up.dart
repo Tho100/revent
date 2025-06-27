@@ -63,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    if (!InputValidator.validUsernameFormat(usernameInput)) {
+    if (!InputValidator.validateUsernameFormat(usernameInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Username is invalid');
       return;
     }
@@ -73,7 +73,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    if (!InputValidator.validEmailFormat(emailInput)) {
+    if (!InputValidator.validateEmailFormat(emailInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Email address is not valid');
       return;
     }
