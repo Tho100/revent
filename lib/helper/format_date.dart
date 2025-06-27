@@ -89,7 +89,7 @@ class FormatDate {
     return _dateNow;
 
   }
-  
+
   List<String> formatToPostDate({
     required ExtractData data, 
     required String columnName

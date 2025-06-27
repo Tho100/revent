@@ -63,7 +63,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    if (!InputValidator().validUsernameFormat(usernameInput)) {
+    if (!InputValidator.validUsernameFormat(usernameInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Username is invalid');
       return;
     }
@@ -73,7 +73,7 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    if (!InputValidator().validEmailFormat(emailInput)) {
+    if (!InputValidator.validEmailFormat(emailInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Email address is not valid');
       return;
     }
@@ -114,7 +114,7 @@ class _SignUpPageState extends State<SignUpPage> {
             hintText: 'Enter a username', 
             maxLength: 24,
             textInputAction: TextInputAction.next,
-            inputFormatters: InputFormatters().usernameFormatter(),
+            inputFormatters: InputFormatters.usernameFormatter(),
             controller: authController.usernameController,
           ),
 
@@ -124,7 +124,7 @@ class _SignUpPageState extends State<SignUpPage> {
             hintText: 'Enter your email address', 
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
-            inputFormatters: InputFormatters().noSpaces(),
+            inputFormatters: InputFormatters.noSpaces(),
             controller: authController.emailController,
           ),
 

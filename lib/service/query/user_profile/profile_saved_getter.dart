@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:revent/helper/nsfw_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -61,10 +62,10 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
       .map((pfpBase64) => base64Decode(pfpBase64))
       .toList();
 
-    final isNsfw = extractData.extractIntColumn('marked_nsfw')
-      .map((isNsfw) => isNsfw != 0)
-      .toList();
-
+    final isNsfw = NsfwConverter.convertToBools(
+      extractData.extractIntColumn('marked_nsfw')
+    );
+    
     final isLikedState = await _ventPostLikeState(
       postIds: postIds, stateType: 'liked'
     );

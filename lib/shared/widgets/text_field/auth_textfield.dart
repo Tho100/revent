@@ -19,7 +19,7 @@ class AuthTextField {
             color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w700,
           ),
-          inputFormatters: InputFormatters().noSpaces(),
+          inputFormatters: InputFormatters.noSpaces(),
           controller: controller,
           obscureText: !value,
           decoration: ThemeStyle.txtFieldStye(
