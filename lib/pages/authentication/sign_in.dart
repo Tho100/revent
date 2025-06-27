@@ -52,7 +52,7 @@ class _SignInPageState extends State<SignInPage> {
     final authInput = authController.passwordController.text;
     final emailInput = authController.emailController.text;
 
-    if (!InputValidator().validEmailFormat(emailInput)) {
+    if (!InputValidator.validEmailFormat(emailInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, 'Email address is not valid');
       return;
     }
@@ -147,7 +147,7 @@ class _SignInPageState extends State<SignInPage> {
             hintText: 'Enter your email address', 
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
-            inputFormatters: InputFormatters().noSpaces(),
+            inputFormatters: InputFormatters.noSpaces(),
             controller: authController.emailController
           ),
 

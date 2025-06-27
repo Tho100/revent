@@ -5,7 +5,7 @@ class InputValidator {
   /// - A domain name after the '@'
   /// - At least one '.' in the domain part.
 
-  bool validEmailFormat(String email) {
+  static bool validEmailFormat(String email) {
     return RegExp(r"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+(\.[a-zA-Z]+)+$")
       .hasMatch(email);
   }
@@ -15,7 +15,7 @@ class InputValidator {
   /// - No consecutive dots (e.g., '..' is invalid)
   /// - Cannot start or end with a dot.
 
-  bool validUsernameFormat(String username) {
+  static bool validUsernameFormat(String username) {
     return RegExp(r'^(?!.*\.\.)(?!^\.)[a-zA-Z0-9._]+(?<!\.)$')
       .hasMatch(username);
   }

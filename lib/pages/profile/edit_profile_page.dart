@@ -206,7 +206,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _selectProfilePicture() async {
 
-    final isProfileSelected = await ProfilePictureModel().createProfilePicture(context);
+    final isProfileSelected = await ProfilePictureModel.createProfilePicture(context);
 
     if (isProfileSelected) {
       profilePicNotifier.value = profileProvider.profile.profilePicture;
@@ -456,7 +456,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
           hintText: "What are your pronouns?",
           maxLines: 1,
           maxLength: 14,
-          inputFormatters: InputFormatters().noSpaces()
+          inputFormatters: InputFormatters.noSpaces()
         ),
         
         const SizedBox(height: 14),

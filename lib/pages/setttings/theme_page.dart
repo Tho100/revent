@@ -109,7 +109,7 @@ class _ThemePageState extends State<ThemePage> {
                     const SizedBox(width: 16),
                           
                     Text(
-                      Capitalizer().capitalize(themes[index]),
+                      Capitalizer.capitalize(themes[index]),
                       style: GoogleFonts.inter(
                         color: ThemeColor.contentPrimary,
                         fontWeight: FontWeight.w800,
