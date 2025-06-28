@@ -82,7 +82,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         : await ventChecker.isVentExists();
 
       if (isVentAlreadyExists) {
-        CustomAlertDialog.alertDialog('Post with similar title already exists');
+        CustomAlertDialog.alertDialog("You already have a post with this title");
         return;
       }
 
