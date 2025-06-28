@@ -23,4 +23,19 @@ class VentChecker extends BaseQueryService {
 
   }
 
+  Future<bool> isArchivedVentExists() async {
+
+    const query = 'SELECT 1 FROM archive_vent_info WHERE creator = :creator AND title = :title';
+
+    final param = {
+      'title': title,
+      'creator': getIt.userProvider.user.username
+    };
+
+    final results = await executeQuery(query, param);
+
+    return results.rows.isNotEmpty;
+
+  }
+
 }
