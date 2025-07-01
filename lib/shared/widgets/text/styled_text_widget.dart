@@ -124,6 +124,8 @@ class StyledTextWidget extends StatelessWidget {
 
     final spans = <TextSpan>[];
 
+    // TODO: Create separated variable to store symbols
+
     final italicTextStyle = isPreviewer
       ? GoogleFonts.inter(
         color: ThemeColor.contentSecondary,
@@ -147,6 +149,19 @@ class StyledTextWidget extends StatelessWidget {
         fontWeight: FontWeight.w900,
         fontSize: 14,
       );
+
+    final strikeTextStyle = isPreviewer
+    ? GoogleFonts.inter(
+      color: ThemeColor.contentSecondary,
+      fontWeight: FontWeight.w800,
+      decoration: TextDecoration.lineThrough,
+      fontSize: 13
+    )  
+    : const TextStyle(
+      fontWeight: FontWeight.w700,
+      decoration: TextDecoration.lineThrough,
+      fontSize: 14,
+    );
 
     int i = 0;
 
@@ -234,11 +249,53 @@ class StyledTextWidget extends StatelessWidget {
 
         i = end + 1;
 
+      } else if (text.startsWith('~~', i)) {
+
+        int end = text.indexOf('~~', i + 2);
+
+        if (end == -1) end = text.length;
+
+        final textChunks = _getTextChunks(text: text, index: i, end: end, symbolLength: 2);
+
+        for (var text in textChunks) {
+
+          if (text.isEmpty) {
+            spans.add(const TextSpan(text: ' '));
+            continue;
+          }
+
+          if (_isMentionOrUrl(text)) {
+            
+            if (text.startsWith('@')) {
+
+              spans.add(
+                _blueTextSpan(text)['mention']!
+              );
+
+            } else {
+
+              spans.add(
+                _blueTextSpan(text)['link']!
+              );
+
+            }
+
+          } else {
+            spans.add(
+              TextSpan(text: text, style: strikeTextStyle)
+            );
+          }
+
+        }
+
+        i = end + 2;
+
       } else {
 
         final nextIndexes = [
           text.indexOf('**', i),
           text.indexOf('*', i),
+          text.indexOf('~~', i),
         ].where((pos) => pos != -1).toList();
 
         final nextPos = nextIndexes.isEmpty ? text.length : nextIndexes.reduce((a, b) => a < b ? a : b);

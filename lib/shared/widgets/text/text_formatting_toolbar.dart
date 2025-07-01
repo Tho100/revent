@@ -66,6 +66,15 @@ class TextFormattingToolbar extends StatelessWidget {
             ),
           ),
       
+          SizedBox(
+            height: 50,
+            width: 35,
+            child: IconButton(
+              icon: Icon(CupertinoIcons.strikethrough, color: ThemeColor.contentPrimary, size: 24),
+              onPressed: () => _wrapTextSelection(symbol: '~~')
+            ),
+          ),
+
         ],
       ),
     );
