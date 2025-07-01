@@ -124,8 +124,6 @@ class StyledTextWidget extends StatelessWidget {
 
     final spans = <TextSpan>[];
 
-    // TODO: Create separated variable to store symbols
-
     final italicTextStyle = isPreviewer
       ? GoogleFonts.inter(
         color: ThemeColor.contentSecondary,
@@ -163,13 +161,17 @@ class StyledTextWidget extends StatelessWidget {
       fontSize: 14,
     );
 
+    const boldMarker = '**';
+    const italicMarker = '*';
+    const strikeMarker = '~~';
+
     int i = 0;
 
     while (i < text.length) {
 
-      if (text.startsWith('**', i)) {
+      if (text.startsWith(boldMarker, i)) {
         
-        int end = text.indexOf('**', i + 2);
+        int end = text.indexOf(boldMarker, i + 2);
 
         if (end == -1) end = text.length;
 
@@ -208,9 +210,9 @@ class StyledTextWidget extends StatelessWidget {
 
         i = end + 2;
         
-      } else if (text.startsWith('*', i)) {
+      } else if (text.startsWith(italicMarker, i)) {
 
-        int end = text.indexOf('*', i + 1);
+        int end = text.indexOf(italicMarker, i + 1);
 
         if (end == -1) end = text.length;
 
@@ -249,9 +251,9 @@ class StyledTextWidget extends StatelessWidget {
 
         i = end + 1;
 
-      } else if (text.startsWith('~~', i)) {
+      } else if (text.startsWith(strikeMarker, i)) {
 
-        int end = text.indexOf('~~', i + 2);
+        int end = text.indexOf(strikeMarker, i + 2);
 
         if (end == -1) end = text.length;
 
