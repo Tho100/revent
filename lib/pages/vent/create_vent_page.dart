@@ -40,8 +40,6 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
   final postController = VentPostController(); 
   final postTextFields = PostTextField();
 
-  final loading = SpinnerLoading();
-
   final allowCommentingNotifier = ValueNotifier<bool>(true);
   final archiveVentNotifier = ValueNotifier<bool>(false);
   final markAsNsfwNotifier = ValueNotifier<bool>(false);
@@ -106,9 +104,11 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     required String bodyText,
     required String tags
   }) async {
+    
+    final loading = SpinnerLoading(context: context);
 
     if (context.mounted) {
-      loading.startLoading(context: context);
+      loading.startLoading();
     }
 
     await CreateNewItem(title: title, body: bodyText, tags: tags).newArchiveVent();
@@ -138,8 +138,10 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     required String tags
   }) async {
 
+    final loading = SpinnerLoading(context: context);
+
     if (context.mounted) {
-      loading.startLoading(context: context);
+      loading.startLoading();
     }
 
     await CreateNewItem(title: title, body: bodyText, tags: tags).newVent(

@@ -76,9 +76,8 @@ class _SignUpPageState extends State<SignUpPage> {
       return;
     }
 
-    SingleTextLoading().startLoading(
+    SingleTextLoading(context: context).startLoading(
       title: 'Creating account...', 
-      context: context
     );
 
     await _registerUser(

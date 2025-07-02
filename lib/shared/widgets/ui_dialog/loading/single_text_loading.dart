@@ -7,28 +7,24 @@ class SingleTextLoading {
 
   late String title;
   late BuildContext context;
+
+  SingleTextLoading({required this.context});
   
-  Future<void> startLoading({
-    required String title,
-    required BuildContext context
-  }) {
+  Future<void> startLoading({required String title}) {
 
     this.title = title;
-    this.context = context;
 
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (_) => _buildLoadingDialog(context),
+      builder: (_) => _buildLoadingDialog(),
     );
 
   }
 
-  void stopLoading() {
-    Navigator.pop(context);
-  }
+  void stopLoading() => Navigator.pop(context);
 
-  AlertDialog _buildLoadingDialog(BuildContext context) {
+  AlertDialog _buildLoadingDialog() {
     return AlertDialog(
       backgroundColor: ThemeColor.backgroundPrimary,
       shape: RoundedRectangleBorder(

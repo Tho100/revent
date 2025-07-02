@@ -24,11 +24,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
 
   bool _isObscureText = false;
 
-  void _toggleVisibility() {
-    setState(
-      () => _isObscureText = !_isObscureText
-    );
-  }
+  void _toggleObscureText() => setState(() => _isObscureText = !_isObscureText);
 
   @override
   Widget build(BuildContext context) {
@@ -44,12 +40,13 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         hintText: widget.hintText,
         customSuffix: IconButton(
           icon: Icon(
-            _isObscureText ? Icons.visibility : Icons.visibility_off,
+            _isObscureText ? Icons.visibility : Icons.visibility_off, 
             color: ThemeColor.contentThird,
           ),
-          onPressed: _toggleVisibility,
+          onPressed: _toggleObscureText,
         ),
       ),
     );
   }
+
 }

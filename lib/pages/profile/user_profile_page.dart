@@ -114,9 +114,9 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
     }
 
-    setState(() { 
-      navigationProvider.setProfileTabIndex(tabController.index);
-    });
+    setState(
+      () => navigationProvider.setProfileTabIndex(tabController.index)
+    );
 
   }
 
