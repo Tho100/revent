@@ -25,8 +25,6 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
 
   final authController = SecurityAuthController();
 
-  final currentPasswordNotifier = ValueNotifier<bool>(false);
-
   void _deactivateAccountConfirmationDialog() {
     CustomAlertDialog.alertDialogCustomOnPress(
       message: AlertMessages.deactivateAccount, 
@@ -106,7 +104,6 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
   @override
   void dispose() {
     authController.dispose();
-    currentPasswordNotifier.dispose();
     super.dispose();
   }
 

@@ -27,7 +27,6 @@ class _SignInPageState extends State<SignInPage> {
 
   final authController = AuthController();
 
-  final visiblePasswordNotifier = ValueNotifier<bool>(false);
   final isRememberMeCheckedNotifier = ValueNotifier<bool>(true); 
 
   Future<void> _loginUser({
@@ -188,7 +187,6 @@ class _SignInPageState extends State<SignInPage> {
   @override
   void dispose() {
     authController.dispose();
-    visiblePasswordNotifier.dispose();
     isRememberMeCheckedNotifier.dispose();
     super.dispose();
   }

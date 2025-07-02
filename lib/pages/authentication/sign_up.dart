@@ -28,8 +28,6 @@ class _SignUpPageState extends State<SignUpPage> {
 
   final authController = AuthController();
 
-  final visiblePasswordNotifier = ValueNotifier<bool>(false);
-
   Future<void> _registerUser({
     required String username,
     required String email,
@@ -161,7 +159,6 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     authController.dispose();
-    visiblePasswordNotifier.dispose();
     super.dispose();
   }
 

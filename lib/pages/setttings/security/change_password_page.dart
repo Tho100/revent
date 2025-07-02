@@ -24,9 +24,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
 
   final authController = SecurityAuthController();
 
-  final currentPasswordNotifier = ValueNotifier<bool>(false);
-  final newPasswordNotifier = ValueNotifier<bool>(false);
-
   Future<void> _onUpdatePasswordPressed() async {
 
     try {
@@ -124,8 +121,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
   @override
   void dispose() {
     authController.dispose();
-    newPasswordNotifier.dispose();
-    currentPasswordNotifier.dispose();
     super.dispose();
   }
 
