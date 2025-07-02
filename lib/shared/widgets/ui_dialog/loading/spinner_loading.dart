@@ -6,26 +6,22 @@ import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 class SpinnerLoading {
 
   late BuildContext context;
-  
-  Future<void> startLoading({
-    required BuildContext context
-  }) {
 
-    this.context = context;
+  SpinnerLoading({required this.context});
+  
+  Future<void> startLoading() {
 
     return showDialog<void>(
       context: context,
       barrierDismissible: false,
-      builder: (_) => _buildLoadingDialog(context),
+      builder: (_) => _buildLoadingDialog(),
     );
 
   }
 
-  void stopLoading() {
-    Navigator.pop(context);
-  }
+  void stopLoading() => Navigator.pop(context);
 
-  AlertDialog _buildLoadingDialog(BuildContext context) {
+  AlertDialog _buildLoadingDialog() {
     return AlertDialog(
       backgroundColor: ThemeColor.backgroundPrimary,
       shape: RoundedRectangleBorder(

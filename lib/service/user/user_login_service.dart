@@ -46,7 +46,7 @@ class UserLoginService {
     }
 
     if (context.mounted) {
-      SpinnerLoading().startLoading(context: context);
+      SpinnerLoading(context: context).startLoading();
     }
       
     await _setUserProfileData(email: email);
