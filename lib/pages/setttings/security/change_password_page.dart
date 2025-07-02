@@ -93,18 +93,16 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
           
           const SizedBox(height: 10),
 
-          AuthTextField().passwordTextField(
+          AuthTextField(
             hintText: 'Enter your current password',
             controller: authController.currentPasswordController, 
-            visibility: currentPasswordNotifier
           ),
 
           const SizedBox(height: 15),
 
-          AuthTextField().passwordTextField(
+          AuthTextField(
             hintText: 'Enter a new password',
             controller: authController.newPasswordController, 
-            visibility: newPasswordNotifier
           ),
 
           const SizedBox(height: 30),

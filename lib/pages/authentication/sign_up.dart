@@ -130,10 +130,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
           const SizedBox(height: 15),
 
-          AuthTextField().passwordTextField(
+          AuthTextField(
             hintText: 'Enter a password',
             controller: authController.passwordController, 
-            visibility: visiblePasswordNotifier,
           ),
 
           const SizedBox(height: 30),

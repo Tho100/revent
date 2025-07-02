@@ -82,10 +82,9 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
           
           const SizedBox(height: 35),
 
-          AuthTextField().passwordTextField(
+          AuthTextField(
             hintText: 'Enter your password',
             controller: authController.currentPasswordController, 
-            visibility: currentPasswordNotifier
           ),
 
           const SizedBox(height: 30),

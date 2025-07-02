@@ -153,10 +153,9 @@ class _SignInPageState extends State<SignInPage> {
 
           const SizedBox(height: 15),
 
-          AuthTextField().passwordTextField(
+          AuthTextField(
             hintText: 'Enter your password',
             controller: authController.passwordController, 
-            visibility: visiblePasswordNotifier
           ),
 
           const SizedBox(height: 15),
