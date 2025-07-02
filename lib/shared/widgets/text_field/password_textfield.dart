@@ -24,11 +24,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
 
   bool _isObscureText = false;
 
-  void _toggleObscureText() {
-    setState(
-      () => _isObscureText = !_isObscureText
-    );
-  }
+  void _toggleObscureText() => setState(() => _isObscureText = !_isObscureText);
 
   @override
   Widget build(BuildContext context) {
