@@ -4,23 +4,23 @@ import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 
-class AuthTextField extends StatefulWidget { // TODO: Rename to passwordtextfield
+class PasswordTextField extends StatefulWidget {
 
   final TextEditingController controller;
   final String hintText;
 
-  const AuthTextField({
+  const PasswordTextField({
     super.key,
     required this.controller,
     required this.hintText,
   });
 
   @override
-  State<AuthTextField> createState() => _AuthPasswordFieldState();
+  State<PasswordTextField> createState() => _PasswordTextFieldState();
   
 }
 
-class _AuthPasswordFieldState extends State<AuthTextField> {
+class _PasswordTextFieldState extends State<PasswordTextField> {
 
   bool _isObscureText = false;
 

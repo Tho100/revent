@@ -9,7 +9,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/text/header_text.dart';
-import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
+import 'package:revent/shared/widgets/text_field/password_textfield.dart';
 
 class ChangePasswordPage extends StatefulWidget {
 
@@ -90,14 +90,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
           
           const SizedBox(height: 10),
 
-          AuthTextField(
+          PasswordTextField(
             hintText: 'Enter your current password',
             controller: authController.currentPasswordController, 
           ),
 
           const SizedBox(height: 15),
 
-          AuthTextField(
+          PasswordTextField(
             hintText: 'Enter a new password',
             controller: authController.newPasswordController, 
           ),

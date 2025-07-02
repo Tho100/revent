@@ -12,7 +12,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/buttons/underlined_button.dart';
 import 'package:revent/shared/widgets/text/header_text.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
-import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
+import 'package:revent/shared/widgets/text_field/password_textfield.dart';
 import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -128,7 +128,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
           const SizedBox(height: 15),
 
-          AuthTextField(
+          PasswordTextField(
             hintText: 'Enter a password',
             controller: authController.passwordController, 
           ),
