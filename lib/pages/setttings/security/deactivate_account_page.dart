@@ -10,7 +10,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/text/header_text.dart';
-import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
+import 'package:revent/shared/widgets/text_field/password_textfield.dart';
 
 class DeactivateAccountPage extends StatefulWidget {
 
@@ -24,8 +24,6 @@ class DeactivateAccountPage extends StatefulWidget {
 class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProfileProviderService {
 
   final authController = SecurityAuthController();
-
-  final currentPasswordNotifier = ValueNotifier<bool>(false);
 
   void _deactivateAccountConfirmationDialog() {
     CustomAlertDialog.alertDialogCustomOnPress(
@@ -82,10 +80,9 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
           
           const SizedBox(height: 35),
 
-          AuthTextField().passwordTextField(
+          PasswordTextField(
             hintText: 'Enter your password',
             controller: authController.currentPasswordController, 
-            visibility: currentPasswordNotifier
           ),
 
           const SizedBox(height: 30),
@@ -107,7 +104,6 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
   @override
   void dispose() {
     authController.dispose();
-    currentPasswordNotifier.dispose();
     super.dispose();
   }
 

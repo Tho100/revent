@@ -9,7 +9,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/text/header_text.dart';
-import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
+import 'package:revent/shared/widgets/text_field/password_textfield.dart';
 
 class ChangePasswordPage extends StatefulWidget {
 
@@ -23,9 +23,6 @@ class ChangePasswordPage extends StatefulWidget {
 class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfileProviderService {
 
   final authController = SecurityAuthController();
-
-  final currentPasswordNotifier = ValueNotifier<bool>(false);
-  final newPasswordNotifier = ValueNotifier<bool>(false);
 
   Future<void> _onUpdatePasswordPressed() async {
 
@@ -93,18 +90,16 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
           
           const SizedBox(height: 10),
 
-          AuthTextField().passwordTextField(
+          PasswordTextField(
             hintText: 'Enter your current password',
             controller: authController.currentPasswordController, 
-            visibility: currentPasswordNotifier
           ),
 
           const SizedBox(height: 15),
 
-          AuthTextField().passwordTextField(
+          PasswordTextField(
             hintText: 'Enter a new password',
             controller: authController.newPasswordController, 
-            visibility: newPasswordNotifier
           ),
 
           const SizedBox(height: 30),
@@ -126,8 +121,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
   @override
   void dispose() {
     authController.dispose();
-    newPasswordNotifier.dispose();
-    currentPasswordNotifier.dispose();
     super.dispose();
   }
 

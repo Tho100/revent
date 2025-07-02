@@ -12,7 +12,7 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/buttons/underlined_button.dart';
 import 'package:revent/shared/widgets/text/header_text.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
-import 'package:revent/shared/widgets/text_field/auth_textfield.dart';
+import 'package:revent/shared/widgets/text_field/password_textfield.dart';
 import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -27,8 +27,6 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> {
 
   final authController = AuthController();
-
-  final visiblePasswordNotifier = ValueNotifier<bool>(false);
 
   Future<void> _registerUser({
     required String username,
@@ -130,10 +128,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
           const SizedBox(height: 15),
 
-          AuthTextField().passwordTextField(
+          PasswordTextField(
             hintText: 'Enter a password',
             controller: authController.passwordController, 
-            visibility: visiblePasswordNotifier,
           ),
 
           const SizedBox(height: 30),
@@ -162,7 +159,6 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   void dispose() {
     authController.dispose();
-    visiblePasswordNotifier.dispose();
     super.dispose();
   }
 
