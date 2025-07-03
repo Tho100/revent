@@ -124,17 +124,15 @@ class VentActions extends BaseQueryService with
   }
 
   Future<void> sendComment({required String comment}) async {
-
+// TODO: make this transactional
     final postId = activeVentProvider.ventData.postId;
       
     const insertCommentQuery = 
-      'INSERT INTO comments_info (commented_by, comment, total_likes, total_replies, post_id) VALUES (:commented_by, :comment, :total_likes, :total_replies, :post_id)'; 
+      'INSERT INTO comments_info (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)'; 
       
     final commentsParams = {
       'commented_by': userProvider.user.username,
       'comment': comment,
-      'total_likes': 0,
-      'total_replies': 0,
       'post_id': postId
     };
 

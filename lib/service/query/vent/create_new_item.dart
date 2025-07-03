@@ -34,7 +34,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
   }) async {
 
     const queries = [
-      'INSERT INTO vent_info (creator, title, body_text, tags, marked_nsfw, comment_enabled, total_likes, total_comments) VALUES (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled, :total_likes, :total_comments)',
+      'INSERT INTO vent_info (creator, title, body_text, tags, marked_nsfw, comment_enabled) VALUES (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)',
       'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username'
     ];
 
@@ -46,8 +46,6 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
         'tags': tags,
         'marked_nsfw': markedNsfw,
         'comment_enabled': allowCommenting,
-        'total_likes': 0,
-        'total_comments': 0,
       },
       {'username': userProvider.user.username}
     ];
