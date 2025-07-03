@@ -22,45 +22,41 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
     required bool allowCommenting,
   }) async {
 
-    await _insertVentInfo(markedNsfw: markedNsfw, allowCommenting: allowCommenting).then(
-      (_) => _updateTotalPosts()
+    await _createVentTransaction(markedNsfw: markedNsfw, allowCommenting: allowCommenting).then(
+      (_) => _addVent(markedNsfw: markedNsfw)
     );
     
-    _addVent(markedNsfw: markedNsfw);
-
   }
 
-  Future<void> _insertVentInfo({
+  Future<void> _createVentTransaction({
     required bool markedNsfw,
     required bool allowCommenting
   }) async {
 
-    const insertVentInfoQuery = 
-      'INSERT INTO vent_info (creator, title, body_text, tags, marked_nsfw, comment_enabled, total_likes, total_comments) VALUES (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled, :total_likes, :total_comments)';
+    const queries = [
+      'INSERT INTO vent_info (creator, title, body_text, tags, marked_nsfw, comment_enabled) VALUES (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)',
+      'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username'
+    ];
 
-    final params = {
-      'creator': userProvider.user.username,
-      'title': title,
-      'body_text': body,
-      'tags': tags,
-      'marked_nsfw': markedNsfw,
-      'comment_enabled': allowCommenting,
-      'total_likes': 0,
-      'total_comments': 0,
-    };
+    final params = [
+      {
+        'creator': userProvider.user.username,
+        'title': title,
+        'body_text': body,
+        'tags': tags,
+        'marked_nsfw': markedNsfw,
+        'comment_enabled': allowCommenting,
+      },
+      {'username': userProvider.user.username}
+    ];
 
-    await executeQuery(insertVentInfoQuery, params);
+    final conn = await connection();
 
-  }
-
-  Future<void> _updateTotalPosts() async {
-
-    const updateTotalPostsQuery = 
-      'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username';
-
-    final param = {'username': userProvider.user.username};
-
-    await executeQuery(updateTotalPostsQuery, param);
+    await conn.transactional((txn) async {
+      for (int i=0; i<queries.length; i++) {
+        await txn.execute(queries[i], params[i]);
+      }
+    });
 
   }
 
