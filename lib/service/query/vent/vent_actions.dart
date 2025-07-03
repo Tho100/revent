@@ -124,34 +124,38 @@ class VentActions extends BaseQueryService with
   }
 
   Future<void> sendComment({required String comment}) async {
-// TODO: make this transactional
-    final postId = activeVentProvider.ventData.postId;
-      
-    const insertCommentQuery = 
-      'INSERT INTO comments_info (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)'; 
-      
-    final commentsParams = {
-      'commented_by': userProvider.user.username,
-      'comment': comment,
-      'post_id': postId
-    };
 
-    await executeQuery(insertCommentQuery, commentsParams).then(
-      (_) => _updateTotalComments(postId: postId)
+    await _createCommentTransaction(comment).then(
+      (_) => _addComment(comment: comment)
     );
-
-    _addComment(comment: comment);
 
   }
 
-  Future<void> _updateTotalComments({required int postId}) async {
+  Future<void> _createCommentTransaction(String comment) async {
 
-    const updateTotalCommentsQuery = 
-      'UPDATE vent_info SET total_comments = total_comments + 1 WHERE post_id = :post_id'; 
-      
-    final param = {'post_id': postId};
+    final postId = activeVentProvider.ventData.postId;
+  
+    final queries = [
+      'INSERT INTO comments_info (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)',
+      'UPDATE vent_info SET total_comments = total_comments + 1 WHERE post_id = :post_id'
+    ];
 
-    await executeQuery(updateTotalCommentsQuery, param);
+    final params = [
+      {
+        'commented_by': userProvider.user.username,
+        'comment': comment,
+        'post_id': postId
+      },
+      {'post_id': postId}
+    ];
+
+    final conn = await connection();
+
+    await conn.transactional((txn) async {
+      for (int i=0; i<queries.length; i++) {
+        await txn.execute(queries[i], params[i]);
+      }
+    });
 
   }
 

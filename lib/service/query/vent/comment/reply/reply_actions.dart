@@ -28,41 +28,41 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
   }
 
   Future<void> sendReply() async {
-   // TODO: make this transactional
+
+    await _createReplyTransaction().then(
+      (_) => _addReply()
+    );
+
+  }
+
+  Future<void> _createReplyTransaction() async {
+
     final commentId = await _getCommentId();
 
-    const query = 
-      'INSERT INTO comment_replies_info (reply, comment_id, replied_by) VALUES (:reply, :comment_id, :replied_by)';
+    final queries = [
+      'INSERT INTO comment_replies_info (reply, comment_id, replied_by) VALUES (:reply, :comment_id, :replied_by)',
+      'UPDATE comments_info SET total_replies = total_replies + 1 WHERE comment_id = :comment_id'
+    ];
 
-    final params = {
-      'reply': replyText,
-      'comment_id': commentId,
-      'replied_by': repliedBy,
-    };
+    final params = [
+      {
+        'reply': replyText,
+        'comment_id': commentId,
+        'replied_by': repliedBy,
+      },
+      {'comment_id': commentId}
+    ];
 
-    await executeQuery(query, params).then(
-      (_) => _updateRepliesInfo(commentId: commentId)
-    );
-    
-    _addReply();
+    final conn = await connection();
 
-  }
-
-  Future<void> _updateRepliesInfo({required int commentId}) async {
-
-    const query = 
-    '''
-      UPDATE comments_info 
-      SET total_replies = total_replies + 1 
-      WHERE comment_id = :comment_id
-    ''';
-
-    final param = {'comment_id': commentId};
-
-    await executeQuery(query, param);
+    await conn.transactional((txn) async {
+      for (int i=0; i<queries.length; i++) {
+        await txn.execute(queries[i], params[i]);
+      }
+    });
 
   }
-  
+
   void _addReply() {
 
     final now = DateTime.now();
