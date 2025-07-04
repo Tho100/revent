@@ -187,11 +187,21 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
       commentId: commentId
     ).getReplyId(username: repliedBy, replyText: replyText);
 
-    const query = 'DELETE FROM comment_replies_info WHERE reply_id = :reply_id';
+    final conn = await connection();
 
-    final params = {'reply_id': replyId};
+    await conn.transactional((txn) async {
 
-    await executeQuery(query, params).then(
+      await txn.execute(
+        'DELETE FROM comment_replies_info WHERE reply_id = :reply_id',
+        {'reply_id': replyId}
+      );
+
+      await txn.execute(
+        'UPDATE comments_info SET total_replies = total_replies - 1 WHERE comment_id = :comment_id',
+        {'comment_id': commentId}
+      );
+
+    }).then(
       (_) => _removeComment()
     );
 
