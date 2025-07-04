@@ -55,7 +55,9 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
         repliedBy: repliedBy, 
         commentText: comment, 
         commentedBy: commentedBy
-      ).delete();
+      ).delete().then(
+        (_) => SnackBarDialog.temporarySnack(message: 'Reply deleted.')
+      );
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);

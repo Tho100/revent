@@ -130,7 +130,7 @@ class VentActions extends BaseQueryService with
     );
 
   }
-
+  // TODO: Move this function to CommentAction
   Future<void> _createCommentTransaction(String comment) async {
 
     final postId = activeVentProvider.ventData.postId;
