@@ -35,8 +35,8 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
 
     await conn.transactional((txn) async {
      
-      await txn.execute(
-        'DELETE FROM comments_info WHERE comment_id = :comment_id AND post_id = :post_id',
+      await txn.execute( // TODO: Also delete comment likes, see delete_vent deleteComments function
+        'DELETE FROM comments_info WHERE comment_id = :comment_id AND post_id = :post_id ',
         {
           'post_id': idInfo['post_id'], 
           'comment_id': idInfo['comment_id']
@@ -44,7 +44,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
       );
 
       await txn.execute(
-        'DELETE FROM comments_info WHERE comment_id = :comment_id AND post_id = :post_id',
+        'UPDATE vent_info SET total_comments = total_comments - 1 WHERE post_id = :post_id',
         {'post_id': idInfo['post_id']}
       );
 
