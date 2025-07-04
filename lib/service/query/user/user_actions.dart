@@ -11,26 +11,30 @@ class UserActions extends BaseQueryService with UserProfileProviderService {
     
     final operationSymbol = follow ? '+' : '-'; 
 
-    final queries = [
-      'UPDATE user_profile_info SET following = following $operationSymbol 1 WHERE username = :username',
-      'UPDATE user_profile_info SET followers = followers $operationSymbol 1 WHERE username = :username',
-      follow 
-        ? 'INSERT INTO user_follows_info (follower, following) VALUES (:follower, :following)'
-        : 'DELETE FROM user_follows_info WHERE following = :following AND follower = :follower'
-    ];
-
-    final params = [
-      {'username': userProvider.user.username},
-      {'username': username},
-      {'follower': userProvider.user.username, 'following': username}
-    ];
-
     final conn = await connection();
 
     await conn.transactional((txn) async {
-      for(int i=0; i<queries.length; i++) {
-        await txn.execute(queries[i], params[i]);
-      }
+      
+      await txn.execute(
+        'UPDATE user_profile_info SET following = following $operationSymbol 1 WHERE username = :username',
+        {'username': userProvider.user.username}
+      );
+      
+      await txn.execute(
+        'UPDATE user_profile_info SET followers = followers $operationSymbol 1 WHERE username = :username',
+        {'username': username}
+      );
+
+      await txn.execute(
+        follow 
+          ? 'INSERT INTO user_follows_info (follower, following) VALUES (:follower, :following)'
+          : 'DELETE FROM user_follows_info WHERE following = :following AND follower = :follower',
+        {
+          'follower': userProvider.user.username, 
+          'following': username
+        }
+      );
+
     });
     
   }
