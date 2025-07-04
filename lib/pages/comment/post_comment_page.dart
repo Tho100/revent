@@ -60,7 +60,6 @@ class _PostCommentPageState extends State<PostCommentPage> with
       }
 
     } catch (_) {
-      print(_.toString());
       SnackBarDialog.errorSnack(message: 'Comment failed.');
     }
 
