@@ -33,29 +33,27 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
     required bool allowCommenting
   }) async {
 
-    const queries = [
-      'INSERT INTO vent_info (creator, title, body_text, tags, marked_nsfw, comment_enabled) VALUES (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)',
-      'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username'
-    ];
-
-    final params = [
-      {
-        'creator': userProvider.user.username,
-        'title': title,
-        'body_text': body,
-        'tags': tags,
-        'marked_nsfw': markedNsfw,
-        'comment_enabled': allowCommenting,
-      },
-      {'username': userProvider.user.username}
-    ];
-
     final conn = await connection();
 
     await conn.transactional((txn) async {
-      for (int i=0; i<queries.length; i++) {
-        await txn.execute(queries[i], params[i]);
-      }
+
+      await txn.execute(
+        'INSERT INTO vent_info (creator, title, body_text, tags, marked_nsfw, comment_enabled) VALUES (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)',
+        {
+          'creator': userProvider.user.username,
+          'title': title,
+          'body_text': body,
+          'tags': tags,
+          'marked_nsfw': markedNsfw,
+          'comment_enabled': allowCommenting,
+        }
+      );
+
+      await txn.execute(
+        'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username',
+        {'username': userProvider.user.username}
+      );
+
     });
 
   }

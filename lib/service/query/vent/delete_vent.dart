@@ -53,25 +53,26 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
 
   Future<void> _deleteComments({required int postId}) async {
 
-    final queries = [
-      '''
-        DELETE comments_likes_info
-          FROM comments_likes_info
-        INNER JOIN comments_info
-          ON comments_likes_info.comment_id = comments_info.comment_id
-        WHERE comments_info.post_id = post_id
-      ''',
-      'DELETE FROM comments_info WHERE post_id = :post_id'
-    ];
-
-    final param = {'post_id': postId};
-
     final conn = await connection();
 
     await conn.transactional((txn) async {
-      for(int i=0; i<queries.length; i++) {
-        await txn.execute(queries[i], param);
-      }
+      
+      await txn.execute(
+        '''
+          DELETE comments_likes_info
+            FROM comments_likes_info
+          INNER JOIN comments_info
+            ON comments_likes_info.comment_id = comments_info.comment_id
+          WHERE comments_info.post_id = post_id
+        ''',
+        {'post_id': postId}
+      );
+
+      await txn.execute(
+        'DELETE FROM comments_info WHERE post_id = :post_id',
+        {'post_id': postId}
+      );
+
     });
 
   }

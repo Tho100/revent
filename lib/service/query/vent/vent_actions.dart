@@ -134,27 +134,25 @@ class VentActions extends BaseQueryService with
   Future<void> _createCommentTransaction(String comment) async {
 
     final postId = activeVentProvider.ventData.postId;
-  
-    final queries = [
-      'INSERT INTO comments_info (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)',
-      'UPDATE vent_info SET total_comments = total_comments + 1 WHERE post_id = :post_id'
-    ];
-
-    final params = [
-      {
-        'commented_by': userProvider.user.username,
-        'comment': comment,
-        'post_id': postId
-      },
-      {'post_id': postId}
-    ];
 
     final conn = await connection();
 
     await conn.transactional((txn) async {
-      for (int i=0; i<queries.length; i++) {
-        await txn.execute(queries[i], params[i]);
-      }
+
+      await txn.execute(
+        'INSERT INTO comments_info (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)',
+        {
+          'commented_by': userProvider.user.username,
+          'comment': comment,
+          'post_id': postId
+        },
+      );
+
+      await txn.execute(
+        'UPDATE vent_info SET total_comments = total_comments + 1 WHERE post_id = :post_id',
+        {'post_id': postId}
+      );
+
     });
 
   }

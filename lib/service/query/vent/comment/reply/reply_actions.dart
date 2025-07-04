@@ -39,26 +39,24 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
 
     final commentId = await _getCommentId();
 
-    final queries = [
-      'INSERT INTO comment_replies_info (reply, comment_id, replied_by) VALUES (:reply, :comment_id, :replied_by)',
-      'UPDATE comments_info SET total_replies = total_replies + 1 WHERE comment_id = :comment_id'
-    ];
-
-    final params = [
-      {
-        'reply': replyText,
-        'comment_id': commentId,
-        'replied_by': repliedBy,
-      },
-      {'comment_id': commentId}
-    ];
-
     final conn = await connection();
 
     await conn.transactional((txn) async {
-      for (int i=0; i<queries.length; i++) {
-        await txn.execute(queries[i], params[i]);
-      }
+      
+      await txn.execute(
+        'INSERT INTO comment_replies_info (reply, comment_id, replied_by) VALUES (:reply, :comment_id, :replied_by)',
+        {
+          'reply': replyText,
+          'comment_id': commentId,
+          'replied_by': repliedBy,
+        },
+      );
+
+      await txn.execute(
+        'UPDATE comments_info SET total_replies = total_replies + 1 WHERE comment_id = :comment_id',
+        {'comment_id': commentId}
+      );
+
     });
 
   }
