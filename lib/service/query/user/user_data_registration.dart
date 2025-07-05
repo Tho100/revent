@@ -4,7 +4,7 @@ import 'package:revent/model/local_storage_model.dart';
 
 class UserDataRegistration extends BaseQueryService with UserProfileProviderService { 
 
-  Future<void> registerUser({required String? hashPassword}) async {
+  Future<void> registerUser({required String? passwordHash}) async {
 
     final conn = await connection();
 
@@ -15,12 +15,17 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
         {
           'username': userProvider.user.username,
           'email': userProvider.user.email,
-          'password': hashPassword,
+          'password': passwordHash,
         }
       );
 
       await txn.execute(
-        'INSERT INTO user_profile_info (bio, followers, following, posts, profile_picture, username) VALUES (:bio, :followers, :following, :posts, :profile_pic, :username)',
+        '''
+          INSERT INTO user_profile_info 
+            (bio, followers, following, posts, profile_picture, username) 
+          VALUES 
+            (:bio, :followers, :following, :posts, :profile_pic, :username)
+        ''',
         {
           'bio': '',
           'followers': 0,

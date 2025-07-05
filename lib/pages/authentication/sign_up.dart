@@ -40,7 +40,7 @@ class _SignUpPageState extends State<SignUpPage> {
       
       await UserRegistrationService(context: context).register(
         username: username,
-        hashPassword: authHash,
+        passwordHash: authHash,
         email: email,
       );
 
