@@ -27,6 +27,32 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
 
   }
 
+  Future<void> createCommentTransaction() async {
+
+    final postId = activeVentProvider.ventData.postId;
+
+    final conn = await connection();
+
+    await conn.transactional((txn) async {
+
+      await txn.execute(
+        'INSERT INTO comments_info (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)',
+        {
+          'commented_by': username,
+          'comment': commentText,
+          'post_id': postId
+        },
+      );
+
+      await txn.execute(
+        'UPDATE vent_info SET total_comments = total_comments + 1 WHERE post_id = :post_id',
+        {'post_id': postId}
+      );
+
+    });
+
+  }
+
   Future<void> delete() async {
 
     final idInfo = await _getIdInfo();

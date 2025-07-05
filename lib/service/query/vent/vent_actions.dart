@@ -1,4 +1,5 @@
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -125,35 +126,12 @@ class VentActions extends BaseQueryService with
 
   Future<void> sendComment({required String comment}) async {
 
-    await _createCommentTransaction(comment).then(
+    await CommentActions(
+      commentText: comment, 
+      username: userProvider.user.username
+    ).createCommentTransaction().then(
       (_) => _addComment(comment: comment)
     );
-
-  }
-  // TODO: Move this function to CommentAction
-  Future<void> _createCommentTransaction(String comment) async {
-
-    final postId = activeVentProvider.ventData.postId;
-
-    final conn = await connection();
-
-    await conn.transactional((txn) async {
-
-      await txn.execute(
-        'INSERT INTO comments_info (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)',
-        {
-          'commented_by': userProvider.user.username,
-          'comment': comment,
-          'post_id': postId
-        },
-      );
-
-      await txn.execute(
-        'UPDATE vent_info SET total_comments = total_comments + 1 WHERE post_id = :post_id',
-        {'post_id': postId}
-      );
-
-    });
 
   }
 
