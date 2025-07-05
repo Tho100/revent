@@ -27,6 +27,32 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
 
   }
 
+  Future<void> createCommentTransaction() async {
+
+    final postId = activeVentProvider.ventData.postId;
+
+    final conn = await connection();
+
+    await conn.transactional((txn) async {
+
+      await txn.execute(
+        'INSERT INTO comments_info (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)',
+        {
+          'commented_by': username,
+          'comment': commentText,
+          'post_id': postId
+        },
+      );
+
+      await txn.execute(
+        'UPDATE vent_info SET total_comments = total_comments + 1 WHERE post_id = :post_id',
+        {'post_id': postId}
+      );
+
+    });
+
+  }
+
   Future<void> delete() async {
 
     final idInfo = await _getIdInfo();
@@ -35,7 +61,18 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
 
     await conn.transactional((txn) async {
      
-      await txn.execute( // TODO: Also delete comment likes, see delete_vent deleteComments function
+      await txn.execute(
+        '''
+          DELETE comments_likes_info
+            FROM comments_likes_info
+          INNER JOIN comments_info
+            ON comments_likes_info.comment_id = comments_info.comment_id
+          WHERE comments_info.post_id = :post_id
+        ''',
+        {'post_id': idInfo['post_id']}
+      );
+
+      await txn.execute(
         'DELETE FROM comments_info WHERE comment_id = :comment_id AND post_id = :post_id ',
         {
           'post_id': idInfo['post_id'], 

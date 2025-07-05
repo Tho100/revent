@@ -63,7 +63,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
             FROM comments_likes_info
           INNER JOIN comments_info
             ON comments_likes_info.comment_id = comments_info.comment_id
-          WHERE comments_info.post_id = post_id
+          WHERE comments_info.post_id = :post_id
         ''',
         {'post_id': postId}
       );
