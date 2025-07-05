@@ -18,7 +18,7 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
   Future<void> register({
     required String username,
     required String email,
-    required String hashPassword,
+    required String passwordHash,
   }) async {
 
     final userValidator = await UserRegistrationValidator(
@@ -38,7 +38,7 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
 
     _setupUserProfileData(username: username, email: email);
 
-    await UserDataRegistration().registerUser(hashPassword: hashPassword);
+    await UserDataRegistration().registerUser(passwordHash: passwordHash);
     
     await VentsSetup().setupLatest()
       .then((_) => NavigatePage.homePage()

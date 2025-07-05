@@ -38,7 +38,12 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
     await conn.transactional((txn) async {
 
       await txn.execute(
-        'INSERT INTO vent_info (creator, title, body_text, tags, marked_nsfw, comment_enabled) VALUES (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)',
+        '''
+          INSERT INTO vent_info 
+            (creator, title, body_text, tags, marked_nsfw, comment_enabled) 
+          VALUES 
+          (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)
+        ''',
         {
           'creator': userProvider.user.username,
           'title': title,
