@@ -15,48 +15,21 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
       ? activeVentProvider.ventData.postId 
       : await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
-    await _deleteVentInfo(postId: postId)
-      .then((_) => _deleteComments(postId: postId))
-      .then((_) => _updateTotalPosts());
-
-    _removeVent();
-
-  }
-
-  Future<void> _deleteVentInfo({required int postId}) async {
-
-    const query =
-    '''
-      DELETE vi, lvi, svi
-      FROM vent_info vi
-        LEFT JOIN liked_vent_info lvi ON lvi.post_id = vi.post_id
-        LEFT JOIN saved_vent_info svi ON svi.post_id = vi.post_id
-      WHERE vi.post_id = :post_id
-    ''';
-
-    final param = {'post_id': postId};
-
-    await executeQuery(query, param);
-
-  }
- 
-  Future<void> _updateTotalPosts() async {
-
-    const updateTotalPostsQuery = 
-      'UPDATE user_profile_info SET posts = posts - 1 WHERE username = :username';
-
-    final param = {'username': userProvider.user.username};
-
-    await executeQuery(updateTotalPostsQuery, param);
-
-  }
-
-  Future<void> _deleteComments({required int postId}) async {
-
     final conn = await connection();
 
     await conn.transactional((txn) async {
       
+      await txn.execute(
+        '''
+          DELETE vi, lvi, svi
+          FROM vent_info vi
+            LEFT JOIN liked_vent_info lvi ON lvi.post_id = vi.post_id
+            LEFT JOIN saved_vent_info svi ON svi.post_id = vi.post_id
+          WHERE vi.post_id = :post_id
+        ''',
+        {'post_id': postId}
+      );
+
       await txn.execute(
         '''
           DELETE comments_likes_info
@@ -73,7 +46,14 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
         {'post_id': postId}
       );
 
-    });
+      await txn.execute(
+        'UPDATE user_profile_info SET posts = posts - 1 WHERE username = :username',
+        {'username': userProvider.user.username}
+      );
+
+    }).then(
+      (_) => _removeVent()
+    );
 
   }
 
