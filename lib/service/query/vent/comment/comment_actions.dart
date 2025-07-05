@@ -61,7 +61,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
 
     await conn.transactional((txn) async {
      
-      await txn.execute( // TODO: Delete comment-likes when user deleted their comment
+      await txn.execute(
         '''
           DELETE comments_likes_info
             FROM comments_likes_info
