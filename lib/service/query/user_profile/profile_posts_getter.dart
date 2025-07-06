@@ -1,4 +1,4 @@
-import 'package:revent/helper/nsfw_converter.dart';
+import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -35,7 +35,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       data: extractedData, columnName: 'created_at'
     );
 
-    final isNsfw = NsfwConverter.convertToBools(
+    final isNsfw = DataConverter.convertToBools(
       extractedData.extractIntColumn('marked_nsfw')
     );
 

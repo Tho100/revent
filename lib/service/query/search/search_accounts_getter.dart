@@ -1,5 +1,5 @@
 import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/helper/profile_picture_converter.dart';
+import 'package:revent/helper/data_converter.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -28,7 +28,7 @@ class SearchAccountsGetter extends BaseQueryService {
 
     final usernames = extractedData.extractStringColumn('username');
 
-    final profilePictures = ProfilePictureConverter.convertToPfp(
+    final profilePictures = DataConverter.convertToPfp(
       extractedData.extractStringColumn('profile_picture')
     );
     
