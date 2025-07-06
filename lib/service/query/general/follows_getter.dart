@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:revent/helper/profile_picture_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -48,10 +47,9 @@ class FollowsGetter extends BaseQueryService with UserProfileProviderService {
 
     final followProfileUsernames = extractedProfiles.extractStringColumn('username');
 
-    final profilePictures = extractedProfiles
-      .extractStringColumn('profile_picture')
-      .map((pfp) => base64Decode(pfp))
-      .toList();
+    final profilePictures = ProfilePictureConverter.convertToPfp(
+      extractedProfiles.extractStringColumn('profile_picture')
+    );
     
     final isFollowed = extractedProfiles
       .extractIntColumn('is_followed')

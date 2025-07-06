@@ -45,7 +45,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
       
       await txn.execute(
         '''
-          INSERT INTO comment_replies_info 
+          INSERT INTO comment_replies_info
             (reply, comment_id, replied_by) 
           VALUES 
           (:reply, :comment_id, :replied_by)

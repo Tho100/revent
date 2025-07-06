@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/helper/profile_picture_converter.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -32,14 +31,13 @@ class UserBlockGetter extends BaseQueryService {
 
     final usernames = extractedData.extractStringColumn('username');
 
-    final profilePic = extractedData
-      .extractStringColumn('profile_picture')
-      .map((pfp) => base64Decode(pfp))
-      .toList();
-
+    final profilePictures = ProfilePictureConverter.convertToPfp(
+      extractedData.extractStringColumn('profile_picture')
+    );
+    
     return {
       'username': usernames,
-      'profile_pic': profilePic
+      'profile_pic': profilePictures
     };
 
   }
