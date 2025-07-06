@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -53,9 +52,9 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
       data: extractedData, columnName: 'created_at'
     );
 
-    final profilePictures = extractedData.extractStringColumn('profile_picture')
-      .map((pfp) => base64Decode(pfp))
-      .toList();
+    final profilePictures = DataConverter.convertToPfp(
+      extractedData.extractStringColumn('profile_picture')
+    );
 
     final isLikedState = await _commentLikedState(
       isLikedByCreator: false,
