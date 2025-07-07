@@ -45,43 +45,34 @@ class VentActions extends BaseQueryService with
       'liked_by': userProvider.user.username,
     };
 
-    final isUserLikedPost = await _isUserLikedPost(
+    final isPostAlreadyLiked = await _isUserLikedPost(
       likesInfoParams: likesInfoParams,
       likesInfoParameterQuery: likesInfoParameterQuery
     );
 
-    await _updateVentLikes(
-      postId: postId, 
-      isUserLikedPost: isUserLikedPost
+    final conn = await connection();
+
+    await conn.transactional((txn) async {
+
+      await txn.execute(
+        '''
+          UPDATE vent_info 
+          SET total_likes = total_likes ${isPostAlreadyLiked ? '-' : '+'} 1 
+          WHERE post_id = :post_id
+        ''',
+        {'post_id': postId}
+      );
+
+      await txn.execute(
+        isPostAlreadyLiked 
+          ? 'DELETE FROM liked_vent_info $likesInfoParameterQuery'
+          : 'INSERT INTO liked_vent_info (post_id, liked_by) VALUES (:post_id, :liked_by)',
+        likesInfoParams
+      );
+
+    }).then(
+      (_) => _updatePostLikeValue(isPostAlreadyLiked: isPostAlreadyLiked)
     );
-
-    await _updateLikesInfo(
-      isUserLikedPost: isUserLikedPost,
-      likesInfoParams: likesInfoParams,
-      likesInfoParameterQuery: likesInfoParameterQuery
-    );
-
-    _updatePostLikeValue(isUserLikedPost: isUserLikedPost);
-
-  }
-
-  Future<void> _updateVentLikes({
-    required int postId,
-    required bool isUserLikedPost
-  }) async {
-
-    final operationSymbol = isUserLikedPost ? '-' : '+';
-
-    final updateLikeValueQuery = 
-    '''
-      UPDATE vent_info 
-      SET total_likes = total_likes $operationSymbol 1 
-      WHERE post_id = :post_id
-    ''';
-
-    final param = {'post_id': postId};
-
-    await executeQuery(updateLikeValueQuery, param);
 
   }
 
@@ -99,28 +90,14 @@ class VentActions extends BaseQueryService with
 
   }
 
-  Future<void> _updateLikesInfo({
-    required bool isUserLikedPost,
-    required Map<String, dynamic> likesInfoParams,
-    required String likesInfoParameterQuery,
-  }) async {
-
-    final query = isUserLikedPost 
-      ? 'DELETE FROM liked_vent_info $likesInfoParameterQuery'
-      : 'INSERT INTO liked_vent_info (post_id, liked_by) VALUES (:post_id, :liked_by)';
-
-    await executeQuery(query, likesInfoParams);
-
-  }
-
-  void _updatePostLikeValue({required bool isUserLikedPost}) {
+  void _updatePostLikeValue({required bool isPostAlreadyLiked}) {
 
     final currentProvider = _getVentProvider();
 
     final index = currentProvider['vent_index'];
     final ventData = currentProvider['vent_data'];
 
-    ventData.likeVent(index, isUserLikedPost);
+    ventData.likeVent(index, isPostAlreadyLiked);
 
   }
 
