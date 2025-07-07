@@ -38,7 +38,7 @@ class VentActions extends BaseQueryService with
       ? activeVentProvider.ventData.postId
       : await PostIdGetter(title: title, creator: creator).getPostId();
 
-    const likesInfoParameterQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
+    const likesInfoQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
 
     final likesInfoParams = {
       'post_id': postId,
@@ -47,7 +47,7 @@ class VentActions extends BaseQueryService with
 
     final isPostAlreadyLiked = await _isUserLikedPost(
       likesInfoParams: likesInfoParams,
-      likesInfoParameterQuery: likesInfoParameterQuery
+      likesInfoQuery: likesInfoQuery
     );
 
     final conn = await connection();
@@ -65,7 +65,7 @@ class VentActions extends BaseQueryService with
 
       await txn.execute(
         isPostAlreadyLiked 
-          ? 'DELETE FROM liked_vent_info $likesInfoParameterQuery'
+          ? 'DELETE FROM liked_vent_info $likesInfoQuery'
           : 'INSERT INTO liked_vent_info (post_id, liked_by) VALUES (:post_id, :liked_by)',
         likesInfoParams
       );
@@ -78,11 +78,11 @@ class VentActions extends BaseQueryService with
 
   Future<bool> _isUserLikedPost({
     required Map<String, dynamic> likesInfoParams,
-    required String likesInfoParameterQuery  
+    required String likesInfoQuery  
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 FROM liked_vent_info $likesInfoParameterQuery';
+      'SELECT 1 FROM liked_vent_info $likesInfoQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
