@@ -17,6 +17,7 @@ import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
+import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -57,7 +58,11 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
   final filterTextNotifier = ValueNotifier<String>('Latest');
 
+  final searchArchiveController = TextEditingController();
+
   ValueNotifier<List<_ArchivedVentsData>> archivedVentsData = ValueNotifier([]);
+
+  List<_ArchivedVentsData> _allArchivedVents = [];
 
   Future<String> _getBodyText(String title) async {
 
@@ -125,6 +130,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
         );
       });
 
+      _allArchivedVents = archivedVentsData.value;
+
       isPageLoadedNotifier.value = true;
 
     } catch (_) {
@@ -190,6 +197,28 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   }
 
+  void _searchArchive({required String searchText}) {
+
+    final query = searchText.trim().toLowerCase();
+
+    if (query.isNotEmpty) {
+      
+      final filteredList = _allArchivedVents.where((vent) {
+        return vent.title.toLowerCase().contains(query);
+      }).toList();
+
+      if (filteredList.isNotEmpty) {
+        archivedVentsData.value = filteredList;
+      } 
+
+    } else {
+
+      archivedVentsData.value = List.from(_allArchivedVents);
+
+    }
+
+  }
+
   Widget _buildVentPreview(String title, String tags, String postTimestamp) {
 
     final ventPreviewer = VentPreviewerWidgets(
@@ -252,6 +281,18 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
           const SizedBox(height: 8),
     
         ],
+      ),
+    );
+  }
+
+  Widget _buildSearchBar() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * .92,
+      height: 67,
+      child: MainTextField(
+        controller: searchArchiveController,
+        hintText: 'Search archive...',
+        onChange: (searchText) => _searchArchive(searchText: searchText)
       ),
     );
   }
@@ -328,19 +369,29 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
           
         if (index == 0) {
           return Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10.0, top: 10, bottom: 8),
-            child: Row(
+            padding: const EdgeInsets.only(left: 10, right: 10.0, top: 10, bottom: 5),
+            child: Column(
               children: [
+
+                _buildSearchBar(),
+
+                const SizedBox(height: 10),
+
+                Row(
+                  children: [
           
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: _buildTotalPost(archiveData),
+                    Align(
+                      alignment: Alignment.topLeft,
+                      child: _buildTotalPost(archiveData),
+                    ),
+          
+                    const Spacer(),
+          
+                    _buildPostsFilterButton()
+          
+                  ],
                 ),
-          
-                const Spacer(),
-          
-                _buildPostsFilterButton()
-          
+
               ],
             ),
           );
@@ -396,6 +447,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     archivedVentsData.dispose();
     isPageLoadedNotifier.dispose();
     filterTextNotifier.dispose();
+    searchArchiveController.dispose();
     activeVentProvider.clearData();
     super.dispose();
   }

@@ -15,6 +15,7 @@ class MainTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final void Function(String)? onChange;
   final void Function(String)? onFieldSubmitted;
 
   const MainTextField({
@@ -27,6 +28,7 @@ class MainTextField extends StatelessWidget {
     this.textInputAction,
     this.keyboardType,
     this.inputFormatters,
+    this.onChange,
     this.onFieldSubmitted,
     super.key
   });
@@ -39,6 +41,7 @@ class MainTextField extends StatelessWidget {
       maxLines: maxLines,
       readOnly: readOnly ?? false,
       autofocus: autoFocus ?? false,
+      onChanged: onChange,
       onFieldSubmitted: onFieldSubmitted,
       textInputAction: textInputAction,
       keyboardType: keyboardType,
