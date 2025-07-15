@@ -297,11 +297,11 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     );
   }
 
-  Widget _buildTotalPost(List<_ArchivedVentsData> archiveData) {
+  Widget _buildTotalPost(int postCounts) {
 
-    final postText = archiveData.length == 1 
+    final postText = postCounts == 1 
       ? "You have 1 archived post." 
-      : "You have ${archiveData.length} archived posts.";
+      : "You have $postCounts archived posts.";
 
     return Text(
       postText,
@@ -358,6 +358,36 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     );
   }
 
+  Widget _buildHeaderWidgets({required int postCounts}) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 10, right: 10.0, top: 10, bottom: 5),
+      child: Column(
+        children: [
+
+          _buildSearchBar(),
+
+          const SizedBox(height: 10),
+
+          Row(
+            children: [
+    
+              Align(
+                alignment: Alignment.topLeft,
+                child: _buildTotalPost(postCounts),
+              ),
+    
+              const Spacer(),
+    
+              _buildPostsFilterButton()
+    
+            ],
+          ),
+
+        ],
+      ),
+    );
+  }
+
   Widget _buildListView(List<_ArchivedVentsData> archiveData) {
     return DynamicHeightGridView(
       physics: const AlwaysScrollableScrollPhysics(
@@ -368,33 +398,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       builder: (_, index) {
           
         if (index == 0) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10.0, top: 10, bottom: 5),
-            child: Column(
-              children: [
-
-                _buildSearchBar(),
-
-                const SizedBox(height: 10),
-
-                Row(
-                  children: [
-          
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: _buildTotalPost(archiveData),
-                    ),
-          
-                    const Spacer(),
-          
-                    _buildPostsFilterButton()
-          
-                  ],
-                ),
-
-              ],
-            ),
-          );
+          return _buildHeaderWidgets(postCounts: archiveData.length);
         }
 
         final ventsData = archiveData[index - 1];
