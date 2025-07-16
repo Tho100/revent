@@ -57,7 +57,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     bioController.dispose();
     pronounController.dispose();
 
-    for (var socials in socialControllers) {
+    for (final socials in socialControllers) {
       socials.dispose();
     }
 
@@ -99,7 +99,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     });
 
 
-    for (var i = 0; i < socialControllers.length; i++) {
+    for (int i = 0; i < socialControllers.length; i++) {
       socialControllers[i].addListener(() {
 
           final currentText = socialControllers[i].text;

@@ -177,7 +177,7 @@ class StyledTextWidget extends StatelessWidget {
 
         final textChunks = _getTextChunks(text: text, index: i, end: end, symbolLength: 2);
 
-        for (var text in textChunks) {
+        for (final text in textChunks) {
 
           if (text.isEmpty) {
             spans.add(const TextSpan(text: ' '));
@@ -218,7 +218,7 @@ class StyledTextWidget extends StatelessWidget {
 
         final textChunks = _getTextChunks(text: text, index: i, end: end, symbolLength: 1);
 
-        for (var text in textChunks) {
+        for (final text in textChunks) {
 
           if (text.isEmpty) {
             spans.add(const TextSpan(text: ' '));
@@ -259,7 +259,7 @@ class StyledTextWidget extends StatelessWidget {
 
         final textChunks = _getTextChunks(text: text, index: i, end: end, symbolLength: 2);
 
-        for (var text in textChunks) {
+        for (final text in textChunks) {
 
           if (text.isEmpty) {
             spans.add(const TextSpan(text: ' '));
@@ -305,7 +305,7 @@ class StyledTextWidget extends StatelessWidget {
 
         final textChunks = RegExp(r'(\s+|[^\s]+)').allMatches(chunk).map((m) => m.group(0)!).toList();
 
-        for (var text in textChunks) {
+        for (final text in textChunks) {
           
           if (text.isEmpty) {
             spans.add(const TextSpan(text: ' '));
