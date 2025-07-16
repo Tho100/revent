@@ -145,7 +145,7 @@ class BottomsheetTagsSelection with TagsProviderService {
 
                           List<String> processedTags = [];
 
-                          for (var tag in rawTags) {
+                          for (final tag in rawTags) {
 
                             if (processedTags.length >= 3) break;
 
@@ -153,7 +153,7 @@ class BottomsheetTagsSelection with TagsProviderService {
 
                               final chunks = RegExp('.{1,15}').allMatches(tag).map((m) => m.group(0)!);
 
-                              for (var chunk in chunks) {
+                              for (final chunk in chunks) {
 
                                 if (processedTags.length >= 3) break;
                                 processedTags.add(chunk);

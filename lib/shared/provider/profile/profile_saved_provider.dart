@@ -105,7 +105,7 @@ class ProfileSavedProvider extends ChangeNotifier {
   }
 
   void clearPostsData() {
-    for (var profile in _profileData.values) {
+    for (final profile in _profileData.values) {
       profile.clear();
     }
 
