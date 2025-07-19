@@ -31,13 +31,12 @@ class FormatDate {
 
   }
 
-  int parseFormattedTimestamp(String timestamp) {
+  static int parseFormattedTimestamp(String timestamp) {
 
     if (timestamp.endsWith('m')) {
       return int.parse(timestamp.replaceAll('m', ''));
       
     } else if (timestamp.endsWith('h')) {
-
       return int.parse(timestamp.replaceAll('h', '')) * 60; 
 
     } else if (timestamp.endsWith('d')) {
@@ -55,7 +54,7 @@ class FormatDate {
 
   }
 
-  String formatLongDate(String timestamp) {
+  static String formatLongDate(String timestamp) {
 
     final parsedDate = DateTime.parse(timestamp);
     final formattedDate = DateFormat('MMMM d yyyy').format(parsedDate);
@@ -98,6 +97,33 @@ class FormatDate {
       .extractStringColumn(columnName)
       .map((timestamp) => formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();
+  }
+
+  static Duration formatTimestampToDuration(String timestamp) {
+
+    final regex = RegExp(r'(\d+)(mo|[hdmy])');
+    final match = regex.firstMatch(timestamp);
+
+    if (match == null) return Duration.zero;
+
+    final value = int.parse(match.group(1)!);
+    final unit = match.group(2);
+
+    switch (unit) {
+      case 'm':
+        return Duration(minutes: value);
+      case 'h':
+        return Duration(hours: value);
+      case 'd':
+        return Duration(days: value);
+      case 'mo':
+        return Duration(days: value * 30);
+      case 'y':
+        return Duration(days: value * 365);
+      default:
+        return Duration.zero;
+    }
+
   }
 
 }

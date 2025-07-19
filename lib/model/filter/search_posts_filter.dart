@@ -3,8 +3,6 @@ import 'package:revent/shared/provider_mixins.dart';
 
 class SearchPostsFilter with SearchProviderService {
 
-  final _formatTimestamp = FormatDate();
-
   void filterPostsToBest() {
 
     final sortedVents = searchPostsProvider.vents
@@ -19,8 +17,8 @@ class SearchPostsFilter with SearchProviderService {
 
     final sortedVents = searchPostsProvider.vents
       .toList()
-      ..sort((a, b) => _formatTimestamp.parseFormattedTimestamp(b.postTimestamp)
-        .compareTo(_formatTimestamp.parseFormattedTimestamp(a.postTimestamp)));
+      ..sort((a, b) => FormatDate.parseFormattedTimestamp(b.postTimestamp)
+        .compareTo(FormatDate.parseFormattedTimestamp(a.postTimestamp)));
 
     searchPostsProvider.setFilteredVents(sortedVents);
 
@@ -30,8 +28,8 @@ class SearchPostsFilter with SearchProviderService {
 
     final sortedVents = searchPostsProvider.vents
       .toList()
-      ..sort((a, b) => _formatTimestamp.parseFormattedTimestamp(a.postTimestamp)
-        .compareTo(_formatTimestamp.parseFormattedTimestamp(b.postTimestamp)));
+      ..sort((a, b) => FormatDate.parseFormattedTimestamp(a.postTimestamp)
+        .compareTo(FormatDate.parseFormattedTimestamp(b.postTimestamp)));
 
     searchPostsProvider.setFilteredVents(sortedVents);
 
@@ -73,7 +71,7 @@ class SearchPostsFilter with SearchProviderService {
     }
 
     final filteredPosts = searchPostsProvider.vents.where((post) {
-      final postDate = _formatTimestamp.convertRelativeTimestampToDateTime(post.postTimestamp);
+      final postDate = FormatDate().convertRelativeTimestampToDateTime(post.postTimestamp);
       return postDate.isAfter(threshold);
     }).toList();
 

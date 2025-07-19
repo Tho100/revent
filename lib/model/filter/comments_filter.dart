@@ -3,8 +3,6 @@ import 'package:revent/shared/provider_mixins.dart';
 
 class CommentsFilter with CommentsProviderService {
 
-  final _formatTimestamp = FormatDate();
-
   void filterCommentToBest() {
 
     final sortedComments = commentsProvider.comments
@@ -25,8 +23,8 @@ class CommentsFilter with CommentsProviderService {
 
     final sortedComments = commentsProvider.comments
       .toList()
-      ..sort((a, b) => _formatTimestamp.parseFormattedTimestamp(a.commentTimestamp)
-        .compareTo(_formatTimestamp.parseFormattedTimestamp(b.commentTimestamp)));
+      ..sort((a, b) => FormatDate.parseFormattedTimestamp(a.commentTimestamp)
+        .compareTo(FormatDate.parseFormattedTimestamp(b.commentTimestamp)));
 
     commentsProvider.setComments(sortedComments);
 
@@ -36,8 +34,8 @@ class CommentsFilter with CommentsProviderService {
 
     final sortedComments = commentsProvider.comments
       .toList()
-      ..sort((a, b) => _formatTimestamp.parseFormattedTimestamp(b.commentTimestamp)
-        .compareTo(_formatTimestamp.parseFormattedTimestamp(a.commentTimestamp)));
+      ..sort((a, b) => FormatDate.parseFormattedTimestamp(b.commentTimestamp)
+        .compareTo(FormatDate.parseFormattedTimestamp(a.commentTimestamp)));
 
     commentsProvider.setComments(sortedComments);
 
