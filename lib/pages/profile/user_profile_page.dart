@@ -128,7 +128,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
         username: widget.username
       );
 
-      final formattedJoinedDate = FormatDate().formatLongDate(getJoinedDate);
+      final formattedJoinedDate = FormatDate.formatLongDate(getJoinedDate);
 
       joinedDate = formattedJoinedDate;
 

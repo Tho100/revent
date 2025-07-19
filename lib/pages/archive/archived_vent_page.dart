@@ -53,7 +53,6 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
   VentProviderService {
 
   final archiveDataGetter = ArchiveVentDataGetter();
-  final formatDate = FormatDate();
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
   final filterTextNotifier = ValueNotifier<String>('Latest');
@@ -162,8 +161,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
     final sortedList = archivedVentsData.value
       .toList()
-      ..sort((a, b) => formatDate.parseFormattedTimestamp(b.postTimestamp)
-        .compareTo(formatDate.parseFormattedTimestamp(a.postTimestamp)));
+      ..sort((a, b) => FormatDate.parseFormattedTimestamp(b.postTimestamp)
+        .compareTo(FormatDate.parseFormattedTimestamp(a.postTimestamp)));
 
     archivedVentsData.value = sortedList;
 
@@ -173,8 +172,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
     final sortedList = archivedVentsData.value
       .toList()
-      ..sort((a, b) => formatDate.parseFormattedTimestamp(a.postTimestamp)
-        .compareTo(formatDate.parseFormattedTimestamp(b.postTimestamp)));
+      ..sort((a, b) => FormatDate.parseFormattedTimestamp(a.postTimestamp)
+        .compareTo(FormatDate.parseFormattedTimestamp(b.postTimestamp)));
 
     archivedVentsData.value = sortedList;
 

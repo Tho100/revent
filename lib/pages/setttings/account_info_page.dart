@@ -31,7 +31,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
 
       final joinedDate = (await LocalStorageModel().readAccountInformation())['joined_date']!;
           
-      final formattedJoinedDate = FormatDate().formatLongDate(joinedDate);
+      final formattedJoinedDate = FormatDate.formatLongDate(joinedDate);
 
       userProvider.setJoinedDate(formattedJoinedDate);
 
