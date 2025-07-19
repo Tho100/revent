@@ -108,6 +108,38 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
   }
 
+  Map<String, List<int>> _groupIndicesByTime(List<String> timestampList) {
+
+    Map<String, List<int>> groups = {
+      'Today': [],
+      'Last Week': [],
+      'Last Month': [],
+      'Last Year': [],
+      'Earlier': [],
+    };
+
+    for (int i = 0; i < timestampList.length; i++) {
+
+      final timestamp = timestampList[i];
+      final duration = FormatDate.formatTimestampToDuration(timestamp);
+
+      if (duration.inHours < 24) {
+        groups['Today']!.add(i);
+      } else if (duration.inDays < 7) {
+        groups['Last Week']!.add(i);
+      } else if (duration.inDays < 31) {
+        groups['Last Month']!.add(i);
+      } else if (duration.inDays < 366) {
+        groups['Last Year']!.add(i);
+      } else {
+        groups['Earlier']!.add(i);
+      }
+    }
+
+    return groups;
+
+  }
+
   Widget _buildPostLikedBadge() {
     return Container(
       width: 45,
@@ -187,64 +219,6 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
       ],
     );
-  }
-
-  Map<String, List<int>> _groupIndicesByTime(List<String> timestampList) {
-
-    Map<String, List<int>> groups = {
-      'Today': [],
-      'Last Week': [],
-      'Last Month': [],
-      'Last Year': [],
-      'Earlier': [],
-    };
-
-    for (int i = 0; i < timestampList.length; i++) {
-      final ts = timestampList[i];
-      final duration = _parseRelativeTimestampToDuration(ts);
-
-      if (duration.inHours < 24) {
-        groups['Today']!.add(i);
-      } else if (duration.inDays < 7) {
-        groups['Last Week']!.add(i);
-      } else if (duration.inDays < 31) {
-        groups['Last Month']!.add(i);
-      } else if (duration.inDays < 366) {
-        groups['Last Year']!.add(i);
-      } else {
-        groups['Earlier']!.add(i);
-      }
-    }
-
-    return groups;
-
-  }
-  // TODO: Put this into FormatDate
-  Duration _parseRelativeTimestampToDuration(String ts) {
-
-    final regex = RegExp(r'(\d+)(mo|[hdmy])');
-    final match = regex.firstMatch(ts);
-
-    if (match == null) return Duration.zero;
-
-    final value = int.parse(match.group(1)!);
-    final unit = match.group(2);
-
-    switch (unit) {
-      case 'm':
-        return Duration(minutes: value);
-      case 'h':
-        return Duration(hours: value);
-      case 'd':
-        return Duration(days: value);
-      case 'mo':
-        return Duration(days: value * 30);
-      case 'y':
-        return Duration(days: value * 365);
-      default:
-        return Duration.zero;
-    }
-
   }
 
   Widget _buildNotificationListView({
