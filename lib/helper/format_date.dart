@@ -30,8 +30,8 @@ class FormatDate {
     }
 
   }
-  // TODO: Make this static
-  int parseFormattedTimestamp(String timestamp) {
+
+  static int parseFormattedTimestamp(String timestamp) {
 
     if (timestamp.endsWith('m')) {
       return int.parse(timestamp.replaceAll('m', ''));
@@ -53,8 +53,8 @@ class FormatDate {
     return 0; 
 
   }
-  // TODO: make this static
-  String formatLongDate(String timestamp) {
+
+  static String formatLongDate(String timestamp) {
 
     final parsedDate = DateTime.parse(timestamp);
     final formattedDate = DateFormat('MMMM d yyyy').format(parsedDate);
