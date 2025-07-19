@@ -37,7 +37,7 @@ class FormatDate {
       return int.parse(timestamp.replaceAll('m', ''));
       
     } else if (timestamp.endsWith('h')) {
-
+      // TODO: Remove this unused space
       return int.parse(timestamp.replaceAll('h', '')) * 60; 
 
     } else if (timestamp.endsWith('d')) {

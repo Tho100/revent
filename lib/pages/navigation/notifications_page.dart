@@ -189,78 +189,148 @@ class _NotificationsPageState extends State<NotificationsPage> with
     );
   }
 
+  Map<String, List<int>> _groupIndicesByTime(List<String> timestampList) {
+
+    Map<String, List<int>> groups = {
+      'Today': [],
+      'Last Week': [],
+      'Last Month': [],
+      'Last Year': [],
+      'Earlier': [],
+    };
+
+    for (int i = 0; i < timestampList.length; i++) {
+      final ts = timestampList[i];
+      final duration = _parseRelativeTimestampToDuration(ts);
+
+      if (duration.inHours < 24) {
+        groups['Today']!.add(i);
+      } else if (duration.inDays < 7) {
+        groups['Last Week']!.add(i);
+      } else if (duration.inDays < 31) {
+        groups['Last Month']!.add(i);
+      } else if (duration.inDays < 366) {
+        groups['Last Year']!.add(i);
+      } else {
+        groups['Earlier']!.add(i);
+      }
+    }
+
+    return groups;
+
+  }
+  // TODO: Put this into FormatDate
+  Duration _parseRelativeTimestampToDuration(String ts) {
+
+    final regex = RegExp(r'(\d+)(mo|[hdmy])');
+    final match = regex.firstMatch(ts);
+
+    if (match == null) return Duration.zero;
+
+    final value = int.parse(match.group(1)!);
+    final unit = match.group(2);
+
+    switch (unit) {
+      case 'm':
+        return Duration(minutes: value);
+      case 'h':
+        return Duration(hours: value);
+      case 'd':
+        return Duration(days: value);
+      case 'mo':
+        return Duration(days: value * 30);
+      case 'y':
+        return Duration(days: value * 365);
+      default:
+        return Duration.zero;
+    }
+
+  }
+
   Widget _buildNotificationListView({
     required List<String> notificationSubjects,
     required List<int> likesData,
     required List<String> timestamp,
     required List<String> types
   }) {
+
+    final grouped = _groupIndicesByTime(timestamp);
+
     return RefreshIndicator(
-      color: ThemeColor.backgroundPrimary,
-      backgroundColor: ThemeColor.contentPrimary,
       onRefresh: () async => await _refreshNotifications(),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 12.0),
-        child: ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics()
-          ),
-          itemCount: notificationSubjects.length,
-          itemBuilder: (_, index) {
+      child: ListView(
+        children: grouped.entries
+          .where((entry) => entry.value.isNotEmpty)
+          .map((entry) => Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
 
-            final type = types[index];
-
-            return InkWellEffect(
-              onPressed: () async { 
-
-                if (type == likedPostType) {
-                  await _navigateToLikedPost(title: notificationSubjects[index]);
-                  
-                } else if (type == newFollowerType) {
-                  NavigatePage.userProfilePage(username: notificationSubjects[index]);
-                }
-
-              },
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  height: 50,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Row(
-                    children: [
-
-                      type == likedPostType 
-                        ? _buildPostLikedBadge() 
-                        : _buildNewFollowerBadge(),
-
-                      const SizedBox(width: 12),
-
-                      _buildMainInfo(
-                        notificationSubjects[index],
-                        likesData[index],
-                        timestamp[index],
-                        type: type,
-                      ),
-
-                      const Spacer(),
-
-                      Padding(
-                        padding: const EdgeInsets.only(right: 4.0),
-                        child: Icon(Icons.arrow_forward_ios, color: ThemeColor.contentThird, size: 18),
-                      ),
-
-                    ],
-                  ),
+              Padding(
+                padding: const EdgeInsets.only(left: 25, top: 10),
+                child: Text(
+                  entry.key, 
+                  style: TextStyle(
+                    color: ThemeColor.contentSecondary,
+                    fontWeight: FontWeight.w800, 
+                    fontSize: 18
+                  )
                 ),
               ),
-            );
-          },
+              
+              ...entry.value.map((index) => _buildNotificationTile(
+                notificationSubjects[index],
+                likesData[index],
+                timestamp[index],
+                types[index],
+              )).toList()
+              
+            ],
+          )).toList(),
+      ),
+    );
+  }
+
+  Widget _buildNotificationTile(String subject, int likes, String ts, String type) {
+    return InkWellEffect(
+      onPressed: () async {
+        if (type == likedPostType) {
+          await _navigateToLikedPost(title: subject);
+        } else if (type == newFollowerType) {
+          NavigatePage.userProfilePage(username: subject);
+        }
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          height: 50,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+          ),
+          child: Row(
+            children: [
+
+              type == likedPostType
+                ? _buildPostLikedBadge()
+                : _buildNewFollowerBadge(),
+
+              const SizedBox(width: 12),
+
+              _buildMainInfo(subject, likes, ts, type: type),
+
+              const Spacer(),
+
+              Padding(
+                padding: const EdgeInsets.only(right: 4.0),
+                child: Icon(Icons.arrow_forward_ios, color: ThemeColor.contentThird, size: 18),
+              ),
+
+            ],
+          ),
         ),
       ),
     );
   }
+
 
   Widget _buildBody() {
     return ValueListenableBuilder(
