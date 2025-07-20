@@ -17,7 +17,7 @@ class ThemeUpdater {
         ThemeColor.foregroundPrimary = const Color.fromARGB(255, 12, 12, 12);
 
         ThemeColor.divider = const Color.fromARGB(255, 35, 35, 35);
-        ThemeColor.cursor = const Color.fromARGB(255, 48, 87, 195); // TODO: Try white
+        ThemeColor.cursor = Colors.white;
 
         ThemeColor.contentPrimary = Colors.white;
         ThemeColor.contentSecondary = const Color.fromARGB(255, 212, 212, 212);
@@ -30,7 +30,7 @@ class ThemeUpdater {
         ThemeColor.foregroundPrimary = const Color.fromARGB(255, 215, 215, 215);
 
         ThemeColor.divider = const Color.fromARGB(255, 75, 75, 75);
-        ThemeColor.cursor = const Color.fromARGB(255, 48, 87, 195); // Try black
+        ThemeColor.cursor = Colors.black;
 
         ThemeColor.contentPrimary = Colors.black;
         ThemeColor.contentSecondary = const Color.fromARGB(255, 15, 15, 15);
