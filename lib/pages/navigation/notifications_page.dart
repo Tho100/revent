@@ -43,7 +43,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
     final storedLikes = caches['post_likes_cache'];
     final storedFollowers = caches['followers_cache'];
 
-    final Map<String, List<dynamic>> combined = {}; 
+    Map<String, List<dynamic>> combined = {};
 
     if (storedLikes is Map) {
       storedLikes.forEach((title, data) {
@@ -344,7 +344,6 @@ class _NotificationsPageState extends State<NotificationsPage> with
   void initState() {
     super.initState();
     _initializeNotificationData();
-    notificationService.markNotificationAsRead();
   }
 
   @override
