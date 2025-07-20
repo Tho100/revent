@@ -8,14 +8,24 @@ class NotificationService with NavigationProviderService {
 
   final _unreadCacheName = 'has_unread_notifications';
 
-  Future<void> initializeNotifications() async {
+  Future<void> initializeNotifications({bool isLogin = false}) async {
 
     final prefs = await SharedPreferences.getInstance();
 
-    final hasNewNotification = await _notifyNewNotification();
+    if (isLogin) {
 
-    if (hasNewNotification) {
-      await prefs.setBool(_unreadCacheName, true);
+      await markNotificationAsRead(isLogin: true).then(
+        (showBadge) => prefs.setBool(_unreadCacheName, showBadge)
+      );
+
+    } else {
+
+      final hasNewNotification = await _notifyNewNotification();
+
+      if (hasNewNotification) {
+        await prefs.setBool(_unreadCacheName, true);
+      }
+
     }
 
     final showBadge = prefs.getBool(_unreadCacheName) ?? false;
@@ -24,7 +34,7 @@ class NotificationService with NavigationProviderService {
 
   }
 
-  Future<void> markNotificationAsRead() async {
+  Future<bool> markNotificationAsRead({bool isLogin = false}) async {
 
     final prefs = await SharedPreferences.getInstance();
 
@@ -51,10 +61,20 @@ class NotificationService with NavigationProviderService {
       followersCache[followers[i]] = [followedAt[i]];
     }
 
+    if (isLogin) {
+
+      final hasNotifications = postLikesCache.isNotEmpty || followersCache.isNotEmpty;
+      
+      return hasNotifications;
+      
+    }
+
     await CacheHelper().initializeCache(
       likesPostCache: postLikesCache, 
       followersCache: followersCache
     );
+    
+    return true;
 
   }
 
