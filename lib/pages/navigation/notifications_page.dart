@@ -243,7 +243,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
                 padding: const EdgeInsets.only(left: 25, top: 10),
                 child: Text(
                   entry.key, 
-                  style: TextStyle(
+                  style: TextStyle( // TODO: Update font to inter
                     color: ThemeColor.contentSecondary,
                     fontWeight: FontWeight.w800, 
                     fontSize: 18

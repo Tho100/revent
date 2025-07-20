@@ -16,6 +16,6 @@ class ThemeColor {
   static Color trackSwitch = const Color.fromARGB(255, 75, 75, 75);
 
   static Color barrier = const Color.fromARGB(255, 25, 25, 25).withOpacity(0.7);
-
+  static Color cursor = const Color.fromARGB(255, 48, 87, 195);
 
 }

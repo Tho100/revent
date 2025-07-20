@@ -6,6 +6,9 @@ class GlobalAppTheme {
 
   ThemeData buildAppTheme() {
     return ThemeData(
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: ThemeColor.cursor,
+      ),
       actionIconTheme: ActionIconThemeData(
         backButtonIconBuilder: (_) => const Icon(CupertinoIcons.chevron_back),
       ),
