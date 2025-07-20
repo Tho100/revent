@@ -28,11 +28,12 @@ class _ThemePageState extends State<ThemePage> {
 
   final isSelectedThemeNotifier = ValueNotifier<List<bool>>([]);
 
-  final themes = ['dark', 'light'];
+  final themes = ['dark', 'light', 'pink'];
 
   final themeColor = {
     'dark': Colors.black,
     'light': Colors.white,
+    'pink': const Color.fromARGB(255, 248, 124, 165),
   };
 
   String currentTheme = 'dark';
