@@ -56,7 +56,7 @@ class UserLoginService {
       (_) => NavigatePage.homePage()
     ); 
 
-    await NotificationService().initializeNotifications();
+    await NotificationService().initializeNotifications(isLogin: true);
 
   }
 

@@ -39,4 +39,17 @@ class CacheHelper with NavigationProviderService {
 
   }
 
+  Future<void> clearNotificationCache() async {
+
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove(_likedPostCacheName);
+    await prefs.remove(_followersCacheName);
+    await prefs.remove('has_unread_notifications');
+
+    navigationProvider.setBadgeVisible(false);
+    
+  }
+
+
 }
