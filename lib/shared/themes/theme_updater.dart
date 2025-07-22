@@ -37,6 +37,20 @@ class ThemeUpdater {
         ThemeColor.contentThird = const Color.fromARGB(255, 25, 25, 25);
         ThemeColor.trackSwitch = const Color.fromARGB(255, 35, 35, 35);
 
+      case 'gray':
+
+        ThemeColor.backgroundPrimary = const Color.fromARGB(255, 98, 98, 98);
+        ThemeColor.foregroundPrimary = const Color.fromARGB(255, 12, 12, 12);
+
+        ThemeColor.divider = const Color.fromARGB(255, 142, 142, 142);
+        ThemeColor.cursor = Colors.white;
+
+        ThemeColor.contentPrimary = Colors.white;
+        ThemeColor.contentSecondary = const Color.fromARGB(255, 212, 212, 212);
+        ThemeColor.contentThird = const Color.fromARGB(255, 205, 205, 205);
+        ThemeColor.trackSwitch = const Color.fromARGB(255, 44, 44, 44);
+        ThemeColor.likedColor = const Color.fromARGB(255, 65, 65, 65);
+
       case 'pink':
 
         ThemeColor.backgroundPrimary = const Color.fromARGB(255, 244, 197, 213);
