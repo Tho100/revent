@@ -28,12 +28,16 @@ class _ThemePageState extends State<ThemePage> {
 
   final isSelectedThemeNotifier = ValueNotifier<List<bool>>([]);
 
-  final themes = ['dark', 'light', 'pink'];
+  final themes = ['dark', 'light', 'gray', 'pink', 'blue', 'green'];
 
   final themeColor = {
     'dark': Colors.black,
     'light': Colors.white,
+    'gray': const Color.fromARGB(255, 115, 115, 115),
     'pink': const Color.fromARGB(255, 248, 124, 165),
+    'blue': const Color.fromARGB(255, 99, 135, 255),
+    'green': const Color.fromARGB(255, 83, 232, 130),
+
   };
 
   String currentTheme = 'dark';
@@ -81,7 +85,7 @@ class _ThemePageState extends State<ThemePage> {
 
   Widget _buildThemeListView() {
     return SizedBox(
-      height: 500,
+      height: 500, // TODO: increase the height
       child: ListView.builder(
         itemCount: themes.length,
         itemBuilder: (_, index) {
