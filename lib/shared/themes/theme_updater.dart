@@ -65,6 +65,34 @@ class ThemeUpdater {
         ThemeColor.trackSwitch = const Color.fromARGB(255, 255, 85, 142);
         ThemeColor.likedColor = const Color.fromARGB(255, 255, 85, 142);
 
+      case 'blue':
+
+        ThemeColor.backgroundPrimary = const Color.fromARGB(255, 99, 135, 255);
+        ThemeColor.foregroundPrimary = const Color.fromARGB(255, 215, 215, 215);
+
+        ThemeColor.divider = const Color.fromARGB(255, 40, 48, 159);
+        ThemeColor.cursor = const Color.fromARGB(255, 0, 10, 155);
+
+        ThemeColor.contentPrimary = Colors.black;
+        ThemeColor.contentSecondary = const Color.fromARGB(255, 15, 15, 15);
+        ThemeColor.contentThird = const Color.fromARGB(255, 25, 25, 25);
+        ThemeColor.trackSwitch = const Color.fromARGB(255, 0, 82, 183);
+        ThemeColor.likedColor = const Color.fromARGB(255, 0, 82, 183);
+
+      case 'green':
+
+        ThemeColor.backgroundPrimary = const Color.fromARGB(255, 83, 232, 130);
+        ThemeColor.foregroundPrimary = const Color.fromARGB(255, 215, 215, 215);
+
+        ThemeColor.divider = const Color.fromARGB(255, 23, 104, 49);
+        ThemeColor.cursor = const Color.fromARGB(255, 20, 86, 41);
+
+        ThemeColor.contentPrimary = Colors.black;
+        ThemeColor.contentSecondary = const Color.fromARGB(255, 15, 15, 15);
+        ThemeColor.contentThird = const Color.fromARGB(255, 25, 25, 25);
+        ThemeColor.trackSwitch = const Color.fromARGB(255, 27, 126, 58);
+        ThemeColor.likedColor = const Color.fromARGB(255, 49, 166, 86);
+
     }
 
   }
