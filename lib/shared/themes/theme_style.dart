@@ -26,7 +26,6 @@ class ThemeStyle {
 
   static final profileEmptyBioStyle = TextStyle(
     color: ThemeColor.contentThird,
-    fontStyle: FontStyle.italic,
     fontWeight: FontWeight.w700,
     fontSize: 14
   );
