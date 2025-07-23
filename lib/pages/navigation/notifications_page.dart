@@ -229,7 +229,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
   }) {
 
     final grouped = _groupIndicesByTime(timestamp);
-
+  // TODO: Show message when notification is empty
     return RefreshIndicator(
       onRefresh: () async => await _refreshNotifications(),
       child: ListView(
