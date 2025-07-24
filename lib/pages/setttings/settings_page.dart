@@ -13,6 +13,7 @@ import 'package:revent/pages/setttings/saved_page.dart';
 import 'package:revent/pages/setttings/security_page.dart';
 import 'package:revent/pages/setttings/liked_page.dart';
 import 'package:revent/pages/setttings/theme_page.dart';
+import 'package:revent/pages/setttings/vent_plus_page.dart';
 import 'package:revent/service/user/user_account_manager.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -148,6 +149,17 @@ class SettingsPage extends StatelessWidget {
                 const SizedBox(height: buttonGap),
           
                 SettingsButton(
+                  text: 'Get Vent+', 
+                  icon: CupertinoIcons.sparkles,
+                  onPressed: () => _navigateToPage(
+                    context: context, 
+                    classPage: const VentPlusPage()
+                  )
+                ),
+
+                const SizedBox(height: buttonGap),
+          
+                SettingsButton(
                   text: 'Info', 
                   icon: CupertinoIcons.info,
                   onPressed: () => _navigateToPage(
@@ -155,6 +167,7 @@ class SettingsPage extends StatelessWidget {
                     classPage: const AppInfoPage()
                   )
                 ),
+
               ],
             ),
           ),
