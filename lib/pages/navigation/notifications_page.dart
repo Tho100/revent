@@ -15,6 +15,7 @@ import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
+import 'package:revent/shared/widgets/no_content_message.dart';
 
 class NotificationsPage extends StatefulWidget {
 
@@ -229,7 +230,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
   }) {
 
     final grouped = _groupIndicesByTime(timestamp);
-  // TODO: Show message when notification is empty
+
     return RefreshIndicator(
       onRefresh: () async => await _refreshNotifications(),
       child: ListView(
@@ -321,6 +322,10 @@ class _NotificationsPageState extends State<NotificationsPage> with
           }
         );
 
+        if (sortedEntries.isEmpty) {
+          return _buildNoNotifications();
+        }
+
         final notificationSubjects = sortedEntries.map((e) => e.key).toList();
         final notificationTimestamp = sortedEntries.map((e) => e.value[1].toString()).toList();
         final likes = sortedEntries.map((e) => e.value[0] as int).toList();
@@ -337,6 +342,12 @@ class _NotificationsPageState extends State<NotificationsPage> with
         );
 
       },
+    );
+  }
+
+  Widget _buildNoNotifications() {
+    return NoContentMessage().customMessage(
+      message: 'No new notifications.'
     );
   }
 
