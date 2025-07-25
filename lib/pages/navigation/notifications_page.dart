@@ -126,15 +126,21 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
       if (duration.inHours < 24) {
         groups['Today']!.add(i);
+        
       } else if (duration.inDays < 7) {
         groups['Last Week']!.add(i);
+
       } else if (duration.inDays < 31) {
         groups['Last Month']!.add(i);
+
       } else if (duration.inDays < 366) {
         groups['Last Year']!.add(i);
+
       } else {
         groups['Earlier']!.add(i);
+
       }
+
     }
 
     return groups;
