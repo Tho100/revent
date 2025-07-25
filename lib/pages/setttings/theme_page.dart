@@ -84,72 +84,76 @@ class _ThemePageState extends State<ThemePage> {
 
   }
 
+  Widget _buildThemeSelection(int index) {
+    return BorderedContainer(
+      doubleInternalPadding: true,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: InkWellEffect(
+          onPressed: () => _onUpdateThemePressed(index),
+          child: Row(
+            children: [
+            
+              Container(
+                width: 42,
+                height: 42,
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: ThemeColor.contentPrimary, 
+                    width: 3
+                  ),
+                  shape: BoxShape.circle,
+                  color: themeColor[themes[index]]
+                ),
+              ),
+            
+              const SizedBox(width: 16),
+                    
+              Text(
+                Capitalizer.capitalize(themes[index]),
+                style: GoogleFonts.inter(
+                  color: ThemeColor.contentPrimary,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 17
+                ),
+              ),
+        
+              const Spacer(),
+        
+              ValueListenableBuilder(
+                valueListenable: isSelectedThemeNotifier,
+                builder: (_, isSelected, __) {
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Icon(
+                      isSelected[index] ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
+                      color: isSelected[index] ? ThemeColor.contentPrimary : ThemeColor.contentThird, 
+                      size: 25
+                    ),
+                  );
+                },
+              ),
+            
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildThemeListView() {
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.90,
       child: ListView.builder(
         itemCount: themes.length,
         itemBuilder: (_, index) {
-          return BorderedContainer(
-            doubleInternalPadding: true,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: InkWellEffect(
-                onPressed: () => _onUpdateThemePressed(index),
-                child: Row(
-                  children: [
-                  
-                    Container(
-                      width: 42,
-                      height: 42,
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: ThemeColor.contentPrimary, 
-                          width: 3
-                        ),
-                        shape: BoxShape.circle,
-                        color: themeColor[themes[index]]
-                      ),
-                    ),
-                  
-                    const SizedBox(width: 16),
-                          
-                    Text(
-                      Capitalizer.capitalize(themes[index]),
-                      style: GoogleFonts.inter(
-                        color: ThemeColor.contentPrimary,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 17
-                      ),
-                    ),
-              
-                    const Spacer(),
-              
-                    ValueListenableBuilder(
-                      valueListenable: isSelectedThemeNotifier,
-                      builder: (_, isSelected, __) {
-                        return Padding(
-                          padding: const EdgeInsets.only(right: 16.0),
-                          child: Icon(
-                            isSelected[index] ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
-                            color: isSelected[index] ? ThemeColor.contentPrimary : ThemeColor.contentThird, 
-                            size: 25
-                          ),
-                        );
-                      },
-                    ),
-                  
-                  ],
-                ),
-              ),
-            ),
-          );
+          return _buildThemeSelection(index);
         }
       ),
     );
   }
 
-  Widget _buildBody(BuildContext context) {
+  Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.only(top: 15.0),
       child: _buildThemeListView()
@@ -175,7 +179,7 @@ class _ThemePageState extends State<ThemePage> {
         context: context,
         title: 'Theme'
       ).buildAppBar(),
-      body: _buildBody(context),
+      body: _buildBody(),
     );
   }
 
