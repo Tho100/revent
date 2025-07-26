@@ -13,11 +13,14 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM vent_info vi
-      LEFT JOIN user_blocked_info ubi
-        ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
-      WHERE ubi.blocked_username IS NULL
+      WHERE NOT EXISTS (
+        SELECT 1
+        FROM user_blocked_info ubi
+        WHERE ubi.blocked_by = :blocked_by
+          AND ubi.blocked_username = vi.creator
+      )
       ORDER BY created_at DESC
-      LIMIT 25
+      LIMIT 25;
     ''';
 
     final param = {'blocked_by': userProvider.user.username};
