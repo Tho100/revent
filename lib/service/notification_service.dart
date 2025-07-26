@@ -51,8 +51,10 @@ class NotificationService with NavigationProviderService {
     final followers = currentFollowers['followers']!;
     final followedAt = currentFollowers['followed_at']!;
 
-    final postLikesCache = <String, List<dynamic>>{};
-    final followersCache = <String, List<dynamic>>{};
+    final oldCache = await CacheHelper().getNotificationCache();
+
+    final postLikesCache = Map<String, List<dynamic>>.from(oldCache['post_likes_cache']);
+    final followersCache = Map<String, List<dynamic>>.from(oldCache['followers_cache']);
 
     for (int i = 0; i < titles.length; i++) {
       postLikesCache[titles[i]] = [likeCounts[i], likedAt[i]];
@@ -63,18 +65,15 @@ class NotificationService with NavigationProviderService {
     }
 
     if (isLogin) {
-
       final hasNotifications = postLikesCache.isNotEmpty || followersCache.isNotEmpty;
-      
       return hasNotifications;
-      
     }
 
     await CacheHelper().initializeCache(
-      likesPostCache: postLikesCache, 
-      followersCache: followersCache
+      likesPostCache: postLikesCache,
+      followersCache: followersCache,
     );
-    
+
     return true;
 
   }
