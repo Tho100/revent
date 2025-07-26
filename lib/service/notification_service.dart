@@ -1,12 +1,13 @@
 import 'package:revent/helper/cache_helper.dart';
+import 'package:revent/service/query/general/notifications_getter.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/notification/follower_notification_getter.dart';
-import 'package:revent/service/query/notification/post_notification_getter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService with NavigationProviderService {
 
   final _unreadCacheName = 'has_unread_notifications';
+
+  final notificationsGetter = NotificationsGetter();
 
   Future<void> initializeNotifications({bool isLogin = false}) async {
 
@@ -40,8 +41,8 @@ class NotificationService with NavigationProviderService {
 
     await prefs.setBool(_unreadCacheName, false);
 
-    final currentLikes = await VentPostNotificationGetter().getPostLikes();
-    final currentFollowers = await NewFollowerNotificationGetter().getFollowers();
+    final currentLikes = await notificationsGetter.getPostLikes();
+    final currentFollowers = await notificationsGetter.getFollowers();
 
     final titles = currentLikes['title']!;
     final likeCounts = currentLikes['like_count']!;
@@ -80,8 +81,8 @@ class NotificationService with NavigationProviderService {
 
   Future<bool> _notifyNewNotification() async {
 
-    final currentLikes = await VentPostNotificationGetter().getPostLikes();
-    final currentFollowers = await NewFollowerNotificationGetter().getFollowers();
+    final currentLikes = await notificationsGetter.getPostLikes();
+    final currentFollowers = await notificationsGetter.getFollowers();
 
     final caches = await CacheHelper().getNotificationCache();
 
