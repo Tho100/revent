@@ -1,12 +1,13 @@
 import 'package:revent/helper/cache_helper.dart';
+import 'package:revent/service/query/general/notifications_getter.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/notification/follower_notification_getter.dart';
-import 'package:revent/service/query/notification/post_notification_getter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService with NavigationProviderService {
 
   final _unreadCacheName = 'has_unread_notifications';
+
+  final notificationsGetter = NotificationsGetter();
 
   Future<void> initializeNotifications({bool isLogin = false}) async {
 
@@ -40,8 +41,8 @@ class NotificationService with NavigationProviderService {
 
     await prefs.setBool(_unreadCacheName, false);
 
-    final currentLikes = await VentPostNotificationGetter().getPostLikes();
-    final currentFollowers = await NewFollowerNotificationGetter().getFollowers();
+    final currentLikes = await notificationsGetter.getPostLikes();
+    final currentFollowers = await notificationsGetter.getFollowers();
 
     final titles = currentLikes['title']!;
     final likeCounts = currentLikes['like_count']!;
@@ -50,8 +51,10 @@ class NotificationService with NavigationProviderService {
     final followers = currentFollowers['followers']!;
     final followedAt = currentFollowers['followed_at']!;
 
-    final postLikesCache = <String, List<dynamic>>{};
-    final followersCache = <String, List<dynamic>>{};
+    final oldCache = await CacheHelper().getNotificationCache();
+
+    final postLikesCache = Map<String, List<dynamic>>.from(oldCache['post_likes_cache']);
+    final followersCache = Map<String, List<dynamic>>.from(oldCache['followers_cache']);
 
     for (int i = 0; i < titles.length; i++) {
       postLikesCache[titles[i]] = [likeCounts[i], likedAt[i]];
@@ -62,26 +65,23 @@ class NotificationService with NavigationProviderService {
     }
 
     if (isLogin) {
-
       final hasNotifications = postLikesCache.isNotEmpty || followersCache.isNotEmpty;
-      
       return hasNotifications;
-      
     }
 
     await CacheHelper().initializeCache(
-      likesPostCache: postLikesCache, 
-      followersCache: followersCache
+      likesPostCache: postLikesCache,
+      followersCache: followersCache,
     );
-    
+
     return true;
 
   }
 
   Future<bool> _notifyNewNotification() async {
 
-    final currentLikes = await VentPostNotificationGetter().getPostLikes();
-    final currentFollowers = await NewFollowerNotificationGetter().getFollowers();
+    final currentLikes = await notificationsGetter.getPostLikes();
+    final currentFollowers = await notificationsGetter.getFollowers();
 
     final caches = await CacheHelper().getNotificationCache();
 
