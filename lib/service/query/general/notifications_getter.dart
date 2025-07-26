@@ -44,7 +44,7 @@ class NotificationsGetter extends BaseQueryService with UserProfileProviderServi
       WHERE vi.creator = :creator
       AND vi.created_at >= NOW() - INTERVAL 14 DAY
       GROUP BY vi.post_id 
-      HAVING like_count IN (1, 5, 10, 50, 100);
+      HAVING like_count IN (1, 2, 5, 10, 50, 100);
     ''';
 
     final param = {'creator': userProvider.user.username};
