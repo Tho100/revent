@@ -7,7 +7,7 @@ class NotificationsGetter extends BaseQueryService with UserProfileProviderServi
 
   final formatDate = FormatDate();
 
-  Future<Map<String, List<String>>> getFollowers() async {
+  Future<Map<String, List<String>>> getUserFollowers() async {
 
     const query = 'SELECT follower, followed_at FROM user_follows_info WHERE following = :username';
 
@@ -30,10 +30,10 @@ class NotificationsGetter extends BaseQueryService with UserProfileProviderServi
 
   }
 
-  /// Retrieves posts created by the current user that have received specific 
+  /// Retrieves posts created by the current user that   received specific 
   /// number of likes (1, 2, 5, 10, 50, 100) within the past 14 days.
 
-  Future<Map<String, List<dynamic>>> getPostLikes() async {
+  Future<Map<String, List<dynamic>>> getUserPostsWithRecentLikes() async {
 
     const query = 
     '''

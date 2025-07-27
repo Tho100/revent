@@ -40,8 +40,8 @@ class NotificationService with NavigationProviderService {
 
     await prefs.setBool(CacheNames.unreadCache, false);
 
-    final currentLikes = await notificationsGetter.getPostLikes();
-    final currentFollowers = await notificationsGetter.getFollowers();
+    final currentLikes = await notificationsGetter.getUserPostsWithRecentLikes();
+    final currentFollowers = await notificationsGetter.getUserFollowers();
 
     final titles = currentLikes['title']!;
     final likeCounts = currentLikes['like_count']!;
@@ -79,8 +79,8 @@ class NotificationService with NavigationProviderService {
 
   Future<bool> _notifyNewNotification() async {
 
-    final currentLikes = await notificationsGetter.getPostLikes();
-    final currentFollowers = await notificationsGetter.getFollowers();
+    final currentLikes = await notificationsGetter.getUserPostsWithRecentLikes();
+    final currentFollowers = await notificationsGetter.getUserFollowers();
 
     final caches = await CacheHelper().getNotificationCache();
 
