@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/cache_names.dart';
 import 'package:revent/helper/cache_helper.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -41,8 +42,8 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
     final caches = await CacheHelper().getNotificationCache();
 
-    final storedLikes = caches['post_likes_cache'];
-    final storedFollowers = caches['followers_cache'];
+    final storedLikes = caches[CacheNames.postLikesCache];
+    final storedFollowers = caches[CacheNames.followersCache];
 
     Map<String, List<dynamic>> combined = {};
 

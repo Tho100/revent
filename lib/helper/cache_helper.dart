@@ -1,26 +1,24 @@
 import 'dart:convert';
 
+import 'package:revent/global/cache_names.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper with NavigationProviderService {
 
-  final _likedPostCacheName = 'post_like_cache';
-  final _followersCacheName = 'followers_cache';
-
   Future<Map<String, dynamic>> getNotificationCache() async {
 
     final prefs = await SharedPreferences.getInstance();
 
-    final storedLikesJson = prefs.getString('post_like_cache') ?? '{}';
-    final storedFollowersJson = prefs.getString('followers_cache') ?? '{}';
+    final storedLikesJson = prefs.getString(CacheNames.postLikesCache) ?? '{}';
+    final storedFollowersJson = prefs.getString(CacheNames.followersCache) ?? '{}';
 
     final storedLikes = jsonDecode(storedLikesJson);
     final storedFollowers = jsonDecode(storedFollowersJson);
 
     return {
-      'post_likes_cache': storedLikes,
-      'followers_cache': storedFollowers,
+      CacheNames.postLikesCache: storedLikes,
+      CacheNames.followersCache: storedFollowers,
     };
 
   }
@@ -32,8 +30,8 @@ class CacheHelper with NavigationProviderService {
 
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString(_likedPostCacheName, jsonEncode(likesPostCache));
-    await prefs.setString(_followersCacheName, jsonEncode(followersCache));
+    await prefs.setString(CacheNames.postLikesCache, jsonEncode(likesPostCache));
+    await prefs.setString(CacheNames.followersCache, jsonEncode(followersCache));
 
     navigationProvider.setBadgeVisible(false);
 
@@ -43,9 +41,9 @@ class CacheHelper with NavigationProviderService {
 
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.remove(_likedPostCacheName);
-    await prefs.remove(_followersCacheName);
-    await prefs.remove('has_unread_notifications');
+    await prefs.remove(CacheNames.postLikesCache);
+    await prefs.remove(CacheNames.followersCache);
+    await prefs.remove(CacheNames.unreadCache);
 
     navigationProvider.setBadgeVisible(false);
     

@@ -1,11 +1,10 @@
+import 'package:revent/global/cache_names.dart';
 import 'package:revent/helper/cache_helper.dart';
 import 'package:revent/service/query/general/notifications_getter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NotificationService with NavigationProviderService {
-
-  final _unreadCacheName = 'has_unread_notifications';
 
   final notificationsGetter = NotificationsGetter();
 
@@ -16,7 +15,7 @@ class NotificationService with NavigationProviderService {
     if (isLogin) {
 
       await markNotificationAsRead(isLogin: true).then(
-        (showBadge) => prefs.setBool(_unreadCacheName, showBadge)
+        (showBadge) => prefs.setBool(CacheNames.unreadCache, showBadge)
       );
 
     } else {
@@ -24,12 +23,12 @@ class NotificationService with NavigationProviderService {
       final hasNewNotification = await _notifyNewNotification();
 
       if (hasNewNotification) {
-        await prefs.setBool(_unreadCacheName, true);
+        await prefs.setBool(CacheNames.unreadCache, true);
       }
 
     }
 
-    final showBadge = prefs.getBool(_unreadCacheName) ?? false;
+    final showBadge = prefs.getBool(CacheNames.unreadCache) ?? false;
 
     navigationProvider.setBadgeVisible(showBadge);
 
@@ -39,7 +38,7 @@ class NotificationService with NavigationProviderService {
 
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setBool(_unreadCacheName, false);
+    await prefs.setBool(CacheNames.unreadCache, false);
 
     final currentLikes = await notificationsGetter.getPostLikes();
     final currentFollowers = await notificationsGetter.getFollowers();
@@ -53,8 +52,8 @@ class NotificationService with NavigationProviderService {
 
     final oldCache = await CacheHelper().getNotificationCache();
 
-    final postLikesCache = Map<String, List<dynamic>>.from(oldCache['post_likes_cache']);
-    final followersCache = Map<String, List<dynamic>>.from(oldCache['followers_cache']);
+    final postLikesCache = Map<String, List<dynamic>>.from(oldCache[CacheNames.postLikesCache]);
+    final followersCache = Map<String, List<dynamic>>.from(oldCache[CacheNames.followersCache]);
 
     for (int i = 0; i < titles.length; i++) {
       postLikesCache[titles[i]] = [likeCounts[i], likedAt[i]];
@@ -85,8 +84,8 @@ class NotificationService with NavigationProviderService {
 
     final caches = await CacheHelper().getNotificationCache();
 
-    final storedLikes = caches['post_likes_cache'];
-    final storedFollowers = caches['followers_cache'];
+    final storedLikes = caches[CacheNames.postLikesCache];
+    final storedFollowers = caches[CacheNames.followersCache];
 
     bool shouldNotify = false;
 
