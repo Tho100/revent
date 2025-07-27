@@ -163,7 +163,7 @@ class VentPreviewerWidgets {
           title: title!, 
           creator: creator!, 
           context: context
-        ).savePost(isSaved);
+        ).savePost(isAlreadySaved: isSaved);
       }
     );
   

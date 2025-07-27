@@ -96,7 +96,7 @@ class VentActionsHandler {
 
   }
 
-  Future<void> savePost(bool isAlreadySaved) async {
+  Future<void> savePost({bool isAlreadySaved = false}) async {
 
     try {
 

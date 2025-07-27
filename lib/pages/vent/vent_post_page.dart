@@ -524,7 +524,7 @@ class _VentPostPageState extends State<VentPostPage> with
         final isSaved = _isVentSaved();
         return ActionsButton().buildSaveButton(
           isSaved: isSaved,
-          onPressed: () async => actionsHandler.savePost(isSaved)
+          onPressed: () async => await actionsHandler.savePost(isAlreadySaved: isSaved)
         );
       },
     );
@@ -600,7 +600,7 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  Widget _buildCommentsHeader(bool isCommentEmpty) {
+  Widget _buildCommentsHeader({bool isCommentEmpty = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -776,7 +776,9 @@ class _VentPostPageState extends State<VentPostPage> with
                       
                     const SizedBox(height: 12),
                       
-                    _buildCommentsHeader(commentData.comments.isEmpty),
+                    _buildCommentsHeader(
+                      isCommentEmpty: commentData.comments.isEmpty
+                    ),
                     
                     const SizedBox(height: 20),
                       
