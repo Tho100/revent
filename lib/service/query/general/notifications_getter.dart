@@ -30,6 +30,9 @@ class NotificationsGetter extends BaseQueryService with UserProfileProviderServi
 
   }
 
+  /// Retrieves posts created by the current user that have received specific 
+  /// number of likes (1, 2, 5, 10, 50, 100) within the past 14 days.
+
   Future<Map<String, List<dynamic>>> getPostLikes() async {
 
     const query = 
