@@ -40,7 +40,10 @@ class NotificationService with NavigationProviderService {
 
     await prefs.setBool(CacheNames.unreadCache, false);
 
-    final currentLikes = await notificationsGetter.getUserPostsWithRecentLikes();
+    final currentLikes = isLogin 
+      ? await notificationsGetter.getUserPostsAllTimeLikes()
+      : await notificationsGetter.getUserPostsWithRecentLikes();
+      
     final currentFollowers = await notificationsGetter.getUserFollowers();
 
     final titles = currentLikes['title']!;
