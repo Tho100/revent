@@ -81,8 +81,6 @@ class NotificationsGetter extends BaseQueryService with UserProfileProviderServi
         lvi.liked_at, 
         COUNT(lvi.post_id) AS like_count
       FROM vent_info vi
-
-
       INNER JOIN liked_vent_info lvi ON vi.post_id = lvi.post_id 
       WHERE vi.creator = :creator
       GROUP BY vi.post_id 
