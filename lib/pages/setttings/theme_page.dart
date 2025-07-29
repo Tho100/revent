@@ -94,18 +94,59 @@ class _ThemePageState extends State<ThemePage> {
           child: Row(
             children: [
             
-              Container(
-                width: 42,
-                height: 42,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: ThemeColor.contentPrimary, 
-                    width: 3
+              themes[index] == 'cherry' || themes[index] == 'grape'
+                ? Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: ThemeColor.contentPrimary, 
+                        width: 3
+                      ),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Row(
+                      children: [
+
+                        Container(
+                          width: 18,
+                          height: 42,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(21),
+                              bottomLeft: Radius.circular(21),
+                            ),
+                          ),
+                        ),
+
+                        Container(
+                          width: 18,
+                          height: 38,
+                          decoration: BoxDecoration(
+                            color: themeColor[themes[index]],
+                            borderRadius: const BorderRadius.only(
+                              topRight: Radius.circular(155),
+                              bottomRight: Radius.circular(155),
+                            ),
+                          ),
+                        ),
+
+                      ],
+                    ),
+                  )
+                : Container(
+                    width: 42,
+                    height: 42,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: ThemeColor.contentPrimary, 
+                        width: 3
+                      ),
+                      shape: BoxShape.circle,
+                      color: themeColor[themes[index]]
+                    ),
                   ),
-                  shape: BoxShape.circle,
-                  color: themeColor[themes[index]]
-                ),
-              ),
             
               const SizedBox(width: 16),
                     
