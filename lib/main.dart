@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/app/app_widget_restart.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/pages/splash_screen_page.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
@@ -31,7 +30,19 @@ final globalThemeNotifier = ValueNotifier<ThemeData>(
   GlobalAppTheme().buildAppTheme()
 );
 
-void initializeLocators() {
+void _initializeSystemOverlayStyle() {
+
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.transparent,
+    statusBarColor: Colors.transparent,
+  ));
+
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
+
+}
+
+void _initializeLocators() {
 
   getIt.registerLazySingleton<NavigationProvider>(() => NavigationProvider());
   getIt.registerLazySingleton<UserProvider>(() => UserProvider());
@@ -57,17 +68,11 @@ void main() async {
 
   WidgetsFlutterBinding.ensureInitialized();
 
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-    systemNavigationBarColor: Colors.transparent,
-    statusBarColor: Colors.transparent,
-  ));
+  _initializeSystemOverlayStyle();
 
-  SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
-
-  await dotenv.load(fileName: '.env');
-
-  initializeLocators();
+  await dotenv.load(fileName: '.env').then(
+    (_) => _initializeLocators()
+  );
 
   final providers = [
     ChangeNotifierProvider(create: (_) => getIt<VentLatestProvider>()),
@@ -92,12 +97,9 @@ void main() async {
   runApp(
     MultiProvider(
       providers: providers,
-      child: const RestartAppWidget(
-        child: MainRun(),
-      ),
+      child: const MainRun(),
     ),
   );
-
 
 }
 
