@@ -84,6 +84,49 @@ class _ThemePageState extends State<ThemePage> {
 
   }
 
+  Widget _buildSplitTheme(Color color) {
+    return Container(
+      width: 42,
+      height: 42,
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: ThemeColor.contentPrimary, 
+          width: 3
+        ),
+        shape: BoxShape.circle,
+      ),
+      child: Row(
+        children: [
+
+          Container(
+            width: 18,
+            height: 42,
+            decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(21),
+                bottomLeft: Radius.circular(21),
+              ),
+            ),
+          ),
+
+          Container(
+            width: 18,
+            height: 38,
+            decoration: BoxDecoration(
+              color: color,
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(155),
+                bottomRight: Radius.circular(155),
+              ),
+            ),
+          ),
+
+        ],
+      ),
+    );
+  }
+
   Widget _buildThemeSelection(int index) {
     return BorderedContainer(
       doubleInternalPadding: true,
@@ -95,46 +138,7 @@ class _ThemePageState extends State<ThemePage> {
             children: [
             
               themes[index] == 'cherry' || themes[index] == 'grape'
-                ? Container(
-                    width: 42,
-                    height: 42,
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: ThemeColor.contentPrimary, 
-                        width: 3
-                      ),
-                      shape: BoxShape.circle,
-                    ),
-                    child: Row(
-                      children: [
-
-                        Container(
-                          width: 18,
-                          height: 42,
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(21),
-                              bottomLeft: Radius.circular(21),
-                            ),
-                          ),
-                        ),
-
-                        Container(
-                          width: 18,
-                          height: 38,
-                          decoration: BoxDecoration(
-                            color: themeColor[themes[index]],
-                            borderRadius: const BorderRadius.only(
-                              topRight: Radius.circular(155),
-                              bottomRight: Radius.circular(155),
-                            ),
-                          ),
-                        ),
-
-                      ],
-                    ),
-                  )
+                ? _buildSplitTheme(themeColor[themes[index]]!)
                 : Container(
                     width: 42,
                     height: 42,
