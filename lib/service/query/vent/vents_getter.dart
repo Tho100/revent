@@ -35,17 +35,19 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM vent_info vi
-      LEFT JOIN user_blocked_info ubi
-        ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
-      WHERE 
-        ubi.blocked_username IS NULL
+      WHERE NOT EXISTS (
+        SELECT 1
+        FROM user_blocked_info ubi
+        WHERE ubi.blocked_by = :blocked_by
+          AND ubi.blocked_username = vi.creator
+      )
         AND vi.created_at >= DATE_SUB(NOW(), INTERVAL 16 DAY)
         AND (total_likes >= 5 OR total_comments >= 1)
       ORDER BY 
         (total_likes >= 5 AND total_comments >= 1) ASC, 
         total_likes ASC, 
         created_at DESC
-      LIMIT 25
+      LIMIT 25;
     ''';
 
     final param = {'blocked_by': userProvider.user.username};
@@ -61,12 +63,16 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM vent_info vi
       INNER JOIN user_follows_info ufi 
-          ON ufi.following = vi.creator
-      LEFT JOIN user_blocked_info ubi 
-        ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :username
-      WHERE ufi.follower = :username AND ubi.blocked_username IS NULL
+        ON ufi.following = vi.creator
+      WHERE ufi.follower = :username
+        AND NOT EXISTS (
+          SELECT 1
+          FROM user_blocked_info ubi
+          WHERE ubi.blocked_by = :username
+            AND ubi.blocked_username = vi.creator
+        )
       ORDER BY created_at DESC
-      LIMIT 25
+      LIMIT 25;
     ''';
 
     final param = {'username': userProvider.user.username};
@@ -83,12 +89,17 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       SELECT 
         post_id, title, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM vent_info vi
-      LEFT JOIN user_blocked_info ubi
-        ON vi.creator = ubi.blocked_username AND ubi.blocked_by = :blocked_by
       WHERE 
-        (LOWER(title) LIKE LOWER(:search_text) OR LOWER(body_text) LIKE LOWER(:search_text) OR LOWER(tags) LIKE LOWER(:search_text))
-        AND ubi.blocked_username IS NULL 
-      ORDER BY created_at DESC
+        (LOWER(title) LIKE LOWER(:search_text) 
+        OR LOWER(body_text) LIKE LOWER(:search_text) 
+        OR LOWER(tags) LIKE LOWER(:search_text))
+        AND NOT EXISTS (
+          SELECT 1
+          FROM user_blocked_info ubi
+          WHERE ubi.blocked_by = :blocked_by
+            AND ubi.blocked_username = vi.creator
+        )
+      ORDER BY created_at DESC;
     ''';
 
     final params = {
