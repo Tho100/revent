@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
@@ -16,7 +17,7 @@ class DeleteSavedVent extends BaseQueryService {
 
     final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
-    const query = 'DELETE FROM saved_vent_info WHERE post_id = :post_id';
+    const query = 'DELETE ${TableNames.savedVentInfo} WHERE post_id = :post_id';
 
     final param = {'post_id': postId};
 

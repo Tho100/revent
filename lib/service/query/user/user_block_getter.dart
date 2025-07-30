@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/data_converter.dart';
@@ -17,7 +18,7 @@ class UserBlockGetter extends BaseQueryService {
       SELECT 
         upi.username, 
         upi.profile_picture
-      FROM user_profile_info upi
+      ${TableNames.userProfileInfo} upi
       LEFT JOIN user_blocked_info ubi
         ON ubi.blocked_username = upi.username
       WHERE ubi.blocked_by = :blocked_by
@@ -47,7 +48,7 @@ class UserBlockGetter extends BaseQueryService {
     const query = 
     '''
       SELECT 1 
-      FROM user_blocked_info 
+      ${TableNames.userBlockedInfo} 
       WHERE 
         (blocked_by = :blocked_by AND blocked_username = :blocked_username)
         OR

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -14,7 +15,7 @@ class ProfilePictureGetter extends BaseQueryService {
       return getIt.profileProvider.profile.profilePicture;
     }
 
-    const query = 'SELECT profile_picture FROM user_profile_info WHERE username = :username';
+    const query = 'SELECT profile_picture ${TableNames.userProfileInfo} WHERE username = :username';
 
     final param = {
       'username': username!.isNotEmpty ? username : getIt.userProvider.user.username

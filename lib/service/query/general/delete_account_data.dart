@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class DeleteAccountData extends BaseQueryService {
@@ -9,7 +10,7 @@ class DeleteAccountData extends BaseQueryService {
 
     const query = '''
       DELETE ui, upi, upvi, ufi, usl, vi, svi, avi, lvi, ci, cli, cri, rli, pci, pvi
-      FROM user_information ui
+      ${TableNames.userInfo} ui
         LEFT JOIN user_profile_info upi ON upi.username = ui.username
         LEFT JOIN user_privacy_info pvi ON upvi.username = ui.username
         LEFT JOIN user_follows_info ufi ON ufi.follower = ui.username

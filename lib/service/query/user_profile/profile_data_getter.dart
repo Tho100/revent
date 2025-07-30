@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 
@@ -9,8 +10,8 @@ class ProfileDataGetter extends BaseQueryService {
   }) async {
 
     final query = isMyProfile 
-      ? 'SELECT following, followers, bio, pronouns, profile_picture FROM user_profile_info WHERE username = :username'
-      : 'SELECT following, followers, bio, pronouns FROM user_profile_info WHERE username = :username';
+      ? 'SELECT following, followers, bio, pronouns, profile_picture ${TableNames.userProfileInfo} WHERE username = :username'
+      : 'SELECT following, followers, bio, pronouns ${TableNames.userProfileInfo} WHERE username = :username';
 
     final param = {'username': username};
 

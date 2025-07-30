@@ -1,10 +1,11 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class UserAuthService extends BaseQueryService {
 
   Future<String> getAccountAuthentication({required String username}) async {
 
-    const query = 'SELECT password FROM user_information WHERE username = :username';
+    const query = 'SELECT password ${TableNames.userInfo} WHERE username = :username';
 
     final param = {'username': username};
 

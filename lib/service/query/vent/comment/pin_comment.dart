@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
@@ -33,7 +34,7 @@ class PinComment extends BaseQueryService with UserProfileProviderService, Comme
 
     final commentId = await CommentIdGetter().getCommentId(username: username, commentText: commentText);
 
-    const query = 'DELETE FROM pinned_comments_info WHERE comment_id = :post_id AND pinned_by = :pinned_by';
+    const query = 'DELETE ${TableNames.pinnedCommentsInfo} WHERE comment_id = :post_id AND pinned_by = :pinned_by';
 
     final params = {
       'pinned_by': userProvider.user.username,

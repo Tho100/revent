@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -16,8 +17,8 @@ class UserRegistrationValidator extends BaseQueryService {
     const query = 
     '''
     SELECT
-	    EXISTS (SELECT 1 FROM user_information WHERE username = :username) AS username_exists,
-      EXISTS (SELECT 1 FROM user_information WHERE email = :email) AS email_exists;
+	    EXISTS (SELECT 1 ${TableNames.userInfo} WHERE username = :username) AS username_exists,
+      EXISTS (SELECT 1 ${TableNames.userInfo} WHERE email = :email) AS email_exists;
     ''';
 
     final params = {

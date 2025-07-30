@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -9,7 +10,7 @@ class NotificationsGetter extends BaseQueryService with UserProfileProviderServi
 
   Future<Map<String, List<String>>> getUserFollowers() async {
 
-    const query = 'SELECT follower, followed_at FROM user_follows_info WHERE following = :username';
+    const query = 'SELECT follower, followed_at ${TableNames.userFollowsInfo} WHERE following = :username';
 
     final param = {'username': userProvider.user.username};
 
@@ -42,7 +43,7 @@ class NotificationsGetter extends BaseQueryService with UserProfileProviderServi
         vi.creator, 
         lvi.liked_at, 
         COUNT(lvi.post_id) AS like_count
-      FROM vent_info vi
+      ${TableNames.ventInfo} vi
       INNER JOIN liked_vent_info lvi ON vi.post_id = lvi.post_id 
       WHERE vi.creator = :creator
         AND vi.created_at >= NOW() - INTERVAL 14 DAY
@@ -80,7 +81,7 @@ class NotificationsGetter extends BaseQueryService with UserProfileProviderServi
         vi.creator, 
         lvi.liked_at, 
         COUNT(lvi.post_id) AS like_count
-      FROM vent_info vi
+      ${TableNames.ventInfo} vi
       INNER JOIN liked_vent_info lvi ON vi.post_id = lvi.post_id 
       WHERE vi.creator = :creator
       GROUP BY vi.post_id 

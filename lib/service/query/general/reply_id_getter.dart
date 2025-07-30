@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -14,7 +15,7 @@ class ReplyIdGetter extends BaseQueryService {
 
     const getCommentIdQuery = 
     '''
-      SELECT reply_id FROM comment_replies_info 
+      SELECT reply_id ${TableNames.commentRepliesInfo} 
       WHERE comment_id = :comment_id 
         AND replied_by = :replied_by 
         AND reply = :reply
@@ -34,7 +35,7 @@ class ReplyIdGetter extends BaseQueryService {
 
   Future<List<int>> getAllRepliesId() async {
 
-    const getPostIdQuery = 'SELECT reply_id FROM comment_replies_info WHERE comment_id = :comment_id';
+    const getPostIdQuery = 'SELECT reply_id ${TableNames.commentRepliesInfo} WHERE comment_id = :comment_id';
 
     final param = {'comment_id': commentId};
 

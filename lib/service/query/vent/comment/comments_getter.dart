@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -10,7 +11,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
   Future<Map<String, List<dynamic>>> getComments() async {
 
     final commentIds = await CommentIdGetter().getAllCommentsId();
-
+  // TODO: Improve this query
     const getCommentsQuery = 
     '''
       SELECT 
@@ -22,7 +23,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
         ci.total_replies, 
         ci.is_edited,
         upi.profile_picture
-      FROM comments_info ci
+      ${TableNames.commentsInfo} ci
       JOIN user_profile_info upi 
         ON ci.commented_by = upi.username 
       LEFT JOIN user_blocked_info ubi
@@ -90,7 +91,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
 
   Future<List<bool>> _commentPinnedState({required List<int> commentIds}) async {
 
-    const query = 'SELECT comment_id FROM pinned_comments_info WHERE pinned_by = :username';
+    const query = 'SELECT comment_id ${TableNames.pinnedCommentsInfo} WHERE pinned_by = :username';
 
     final param = {'username': activeVentProvider.ventData.creator};
 
@@ -112,7 +113,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
     const readLikesQuery = 
     '''
       SELECT cli.comment_id
-      FROM comments_likes_info cli
+      ${TableNames.commentsLikesInfo} cli
       JOIN comments_info ci
         ON cli.comment_id = ci.comment_id
       WHERE cli.liked_by = :liked_by AND ci.post_id = :post_id;

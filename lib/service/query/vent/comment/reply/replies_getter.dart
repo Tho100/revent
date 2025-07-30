@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -14,7 +15,7 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
   Future<Map<String, List<dynamic>>> getReplies() async {
 
     final repliesIds = await ReplyIdGetter(commentId: commentId).getAllRepliesId();
-
+// TODO: improve this query
     const getRepliesQuery = 
     '''
       SELECT 
@@ -23,7 +24,7 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
         cri.created_at,
         cri.total_likes, 
         upi.profile_picture 
-      FROM comment_replies_info cri 
+      ${TableNames.commentRepliesInfo} cri 
       JOIN user_profile_info upi
         ON cri.replied_by = upi.username 
       LEFT JOIN user_blocked_info ubi
@@ -85,7 +86,7 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
     const readLikesQuery = 
     '''
       SELECT rli.reply_id
-      FROM replies_likes_info rli
+      ${TableNames.repliesLikesInfo} rli
       JOIN comment_replies_info cpi
         ON rli.reply_id = cpi.reply_id
       WHERE rli.liked_by = :liked_by AND cpi.comment_id = :comment_id

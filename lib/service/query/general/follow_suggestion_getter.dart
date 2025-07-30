@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -17,19 +18,19 @@ class FollowSuggestionGetter extends BaseQueryService with UserProfileProviderSe
       FROM (
         (
           SELECT DISTINCT uf2.following AS username
-          FROM user_follows_info uf1
+          ${TableNames.userFollowsInfo} uf1
           JOIN user_follows_info uf2 
               ON uf1.following = uf2.follower
           WHERE uf1.follower = :username
             AND uf2.following NOT IN (
-                SELECT following FROM user_follows_info WHERE follower = :username
+                SELECT following ${TableNames.userFollowsInfo} WHERE follower = :username
             )
             AND uf2.following != :username
       )
       UNION
       (
         SELECT username
-        FROM user_profile_info 
+        ${TableNames.userProfileInfo} 
           WHERE username != :username
           GROUP BY username
           ORDER BY COUNT(followers)

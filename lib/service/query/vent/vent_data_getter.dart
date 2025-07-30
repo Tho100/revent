@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/data_converter.dart';
@@ -11,7 +12,7 @@ class VentDataGetter extends BaseQueryService {
 
   Future<String> getBodyText() async {
 
-    const query = 'SELECT body_text FROM vent_info WHERE post_id = :post_id';
+    const query = 'SELECT body_text ${TableNames.ventInfo} WHERE post_id = :post_id';
 
     final param = {'post_id': postId};
 
@@ -26,7 +27,7 @@ class VentDataGetter extends BaseQueryService {
     const query = 
     '''
       SELECT tags, total_likes, created_at, marked_nsfw 
-      FROM vent_info 
+      ${TableNames.ventInfo} 
       WHERE post_id = :post_id
     ''';
 

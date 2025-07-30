@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
@@ -22,7 +23,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
       await txn.execute(
         '''
           DELETE vi, lvi, svi
-          FROM vent_info vi
+          ${TableNames.ventInfo} vi
             LEFT JOIN liked_vent_info lvi ON lvi.post_id = vi.post_id
             LEFT JOIN saved_vent_info svi ON svi.post_id = vi.post_id
           WHERE vi.post_id = :post_id
@@ -33,7 +34,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
       await txn.execute(
         '''
           DELETE comments_likes_info
-            FROM comments_likes_info
+            ${TableNames.commentsLikesInfo}
           INNER JOIN comments_info
             ON comments_likes_info.comment_id = comments_info.comment_id
           WHERE comments_info.post_id = :post_id
@@ -42,7 +43,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
       );
 
       await txn.execute(
-        'DELETE FROM comments_info WHERE post_id = :post_id',
+        'DELETE ${TableNames.commentsInfo} WHERE post_id = :post_id',
         {'post_id': postId}
       );
 

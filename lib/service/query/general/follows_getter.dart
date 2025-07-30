@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -24,14 +25,14 @@ class FollowsGetter extends BaseQueryService with UserProfileProviderService {
         CASE 
           WHEN EXISTS (
             SELECT 1 
-            FROM user_follows_info ufi_inner
+            ${TableNames.userFollowsInfo} ufi_inner
             WHERE ufi_inner.follower = :current_user
             AND ufi_inner.following = ufi.$columnName
           )
           THEN 1
           ELSE 0
         END AS is_followed
-      FROM user_follows_info ufi
+      ${TableNames.userFollowsInfo} ufi
       JOIN user_profile_info upi ON ufi.$columnName = upi.username
       WHERE ufi.$oppositeColumn = :username
     ''';

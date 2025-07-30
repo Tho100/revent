@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -151,7 +152,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 FROM replies_likes_info $likesInfoParameterQuery';
+      'SELECT 1 ${TableNames.repliesLikesInfo} $likesInfoParameterQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
@@ -166,7 +167,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE FROM replies_likes_info $likesInfoParameterQuery'
+      ? 'DELETE ${TableNames.repliesLikesInfo} $likesInfoParameterQuery'
       : 'INSERT INTO replies_likes_info (liked_by, reply_id) VALUES (:liked_by, :reply_id)';
 
     await executeQuery(query, likesInfoParams);
@@ -197,7 +198,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
     await conn.transactional((txn) async {
 
       await txn.execute(
-        'DELETE FROM comment_replies_info WHERE reply_id = :reply_id',
+        'DELETE ${TableNames.commentRepliesInfo} WHERE reply_id = :reply_id',
         {'reply_id': replyId}
       );
 

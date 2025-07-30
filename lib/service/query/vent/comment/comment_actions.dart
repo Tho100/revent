@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
@@ -64,7 +65,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
       await txn.execute(
         '''
           DELETE comments_likes_info
-            FROM comments_likes_info
+            ${TableNames.commentsLikesInfo}
           INNER JOIN comments_info
             ON comments_likes_info.comment_id = comments_info.comment_id
           WHERE comments_info.post_id = :post_id
@@ -73,7 +74,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
       );
 
       await txn.execute(
-        'DELETE FROM comments_info WHERE comment_id = :comment_id AND post_id = :post_id ',
+        'DELETE ${TableNames.commentsInfo} WHERE comment_id = :comment_id AND post_id = :post_id ',
         {
           'post_id': idInfo['post_id'], 
           'comment_id': idInfo['comment_id']
@@ -173,7 +174,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 FROM comments_likes_info $likesInfoParameterQuery';
+      'SELECT 1 ${TableNames.commentsLikesInfo} $likesInfoParameterQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
@@ -188,7 +189,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE FROM comments_likes_info $likesInfoParameterQuery'
+      ? 'DELETE ${TableNames.commentsLikesInfo} $likesInfoParameterQuery'
       : 'INSERT INTO comments_likes_info (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
 
     await executeQuery(query, likesInfoParams);

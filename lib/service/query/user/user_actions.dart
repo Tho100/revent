@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -28,7 +29,7 @@ class UserActions extends BaseQueryService with UserProfileProviderService {
       await txn.execute(
         follow 
           ? 'INSERT INTO user_follows_info (follower, following) VALUES (:follower, :following)'
-          : 'DELETE FROM user_follows_info WHERE following = :following AND follower = :follower',
+          : 'DELETE ${TableNames.userFollowsInfo} WHERE following = :following AND follower = :follower',
         {
           'follower': userProvider.user.username, 
           'following': username
@@ -43,7 +44,7 @@ class UserActions extends BaseQueryService with UserProfileProviderService {
 
     final query = block!
       ? 'INSERT INTO user_blocked_info (blocked_username, blocked_by) VALUES (:blocked_username, :blocked_by)'
-      : 'DELETE FROM user_blocked_info WHERE blocked_by = :blocked_by AND blocked_username = :blocked_username';
+      : 'DELETE ${TableNames.userBlockedInfo} WHERE blocked_by = :blocked_by AND blocked_username = :blocked_username';
 
     final params = {
       'blocked_username': username,
