@@ -17,7 +17,7 @@ class PinComment extends BaseQueryService with UserProfileProviderService, Comme
 
     final commentId = await CommentIdGetter().getCommentId(username: username, commentText: commentText);
 
-    const query = 'INSERT INTO pinned_comments_info (pinned_by, comment_id) VALUES (:pinned_by, :comment_id)';
+    const query = 'INSERT INTO ${TableNames.pinnedCommentsInfo} (pinned_by, comment_id) VALUES (:pinned_by, :comment_id)';
 
     final params = {
       'pinned_by': userProvider.user.username,

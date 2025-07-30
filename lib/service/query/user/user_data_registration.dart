@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/model/local_storage_model.dart';
@@ -11,7 +12,7 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
     await conn.transactional((txn) async {
       
       await txn.execute(
-        'INSERT INTO user_information (username, email, password) VALUES (:username, :email, :password)',
+        'INSERT INTO ${TableNames.userInfo} (username, email, password) VALUES (:username, :email, :password)',
         {
           'username': userProvider.user.username,
           'email': userProvider.user.email,
@@ -21,7 +22,7 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
 
       await txn.execute(
         '''
-          INSERT INTO user_profile_info 
+          INSERT INTO ${TableNames.userProfileInfo} 
             (bio, followers, following, posts, profile_picture, username) 
           VALUES 
             (:bio, :followers, :following, :posts, :profile_pic, :username)
@@ -37,7 +38,7 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
       );
 
       await txn.execute(
-        'INSERT INTO user_privacy_info (username) VALUES (:username)',
+        'INSERT INTO ${TableNames.userPrivacyInfo} (username) VALUES (:username)',
         {'username': userProvider.user.username}
       );
 

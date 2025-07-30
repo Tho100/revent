@@ -19,7 +19,7 @@ class UserBlockGetter extends BaseQueryService {
         upi.username, 
         upi.profile_picture
       ${TableNames.userProfileInfo} upi
-      LEFT JOIN user_blocked_info ubi
+      LEFT JOIN ${TableNames.userBlockedInfo} ubi
         ON ubi.blocked_username = upi.username
       WHERE ubi.blocked_by = :blocked_by
     ''';

@@ -24,8 +24,8 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
         '''
           DELETE vi, lvi, svi
           ${TableNames.ventInfo} vi
-            LEFT JOIN liked_vent_info lvi ON lvi.post_id = vi.post_id
-            LEFT JOIN saved_vent_info svi ON svi.post_id = vi.post_id
+            LEFT JOIN ${TableNames.likedVentInfo} lvi ON lvi.post_id = vi.post_id
+            LEFT JOIN ${TableNames.savedVentInfo} svi ON svi.post_id = vi.post_id
           WHERE vi.post_id = :post_id
         ''',
         {'post_id': postId}
@@ -33,11 +33,11 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
 
       await txn.execute(
         '''
-          DELETE comments_likes_info
+          DELETE ${TableNames.commentsLikesInfo}
             ${TableNames.commentsLikesInfo}
-          INNER JOIN comments_info
-            ON comments_likes_info.comment_id = comments_info.comment_id
-          WHERE comments_info.post_id = :post_id
+          INNER JOIN ${TableNames.commentsInfo}
+            ON ${TableNames.commentsLikesInfo}.comment_id = ${TableNames.commentsInfo}.comment_id
+          WHERE ${TableNames.commentsInfo}.post_id = :post_id
         ''',
         {'post_id': postId}
       );
@@ -48,7 +48,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
       );
 
       await txn.execute(
-        'UPDATE user_profile_info SET posts = posts - 1 WHERE username = :username',
+        'UPDATE ${TableNames.userProfileInfo} SET posts = posts - 1 WHERE username = :username',
         {'username': userProvider.user.username}
       );
 

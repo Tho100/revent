@@ -33,7 +33,7 @@ class FollowsGetter extends BaseQueryService with UserProfileProviderService {
           ELSE 0
         END AS is_followed
       ${TableNames.userFollowsInfo} ufi
-      JOIN user_profile_info upi ON ufi.$columnName = upi.username
+      JOIN ${TableNames.userProfileInfo} upi ON ufi.$columnName = upi.username
       WHERE ufi.$oppositeColumn = :username
     ''';
 

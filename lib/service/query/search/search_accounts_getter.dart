@@ -13,7 +13,7 @@ class SearchAccountsGetter extends BaseQueryService {
     '''
       SELECT username, profile_picture 
       ${TableNames.userProfileInfo} upi
-      LEFT JOIN user_blocked_info ubi
+      LEFT JOIN ${TableNames.userBlockedInfo} ubi
         ON upi.username = ubi.blocked_username AND ubi.blocked_by = :blocked_by
       WHERE upi.username LIKE :search_text AND ubi.blocked_username IS NULL
     ''';

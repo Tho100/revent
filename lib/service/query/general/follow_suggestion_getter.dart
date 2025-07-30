@@ -19,7 +19,7 @@ class FollowSuggestionGetter extends BaseQueryService with UserProfileProviderSe
         (
           SELECT DISTINCT uf2.following AS username
           ${TableNames.userFollowsInfo} uf1
-          JOIN user_follows_info uf2 
+          JOIN ${TableNames.userFollowsInfo} uf2 
               ON uf1.following = uf2.follower
           WHERE uf1.follower = :username
             AND uf2.following NOT IN (
@@ -36,7 +36,7 @@ class FollowSuggestionGetter extends BaseQueryService with UserProfileProviderSe
           ORDER BY COUNT(followers)
         )
       ) AS suggested_users
-      JOIN user_profile_info u ON suggested_users.username = u.username
+      JOIN ${TableNames.userProfileInfo} u ON suggested_users.username = u.username
       LIMIT 5;
     ''';
 

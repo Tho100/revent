@@ -46,7 +46,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
       
       await txn.execute(
         '''
-          INSERT INTO comment_replies_info
+          INSERT INTO ${TableNames.commentRepliesInfo}
             (reply, comment_id, replied_by) 
           VALUES 
           (:reply, :comment_id, :replied_by)
@@ -59,7 +59,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
       );
 
       await txn.execute(
-        'UPDATE comments_info SET total_replies = total_replies + 1 WHERE comment_id = :comment_id',
+        'UPDATE ${TableNames.commentsInfo} SET total_replies = total_replies + 1 WHERE comment_id = :comment_id',
         {'comment_id': commentId}
       );
 
@@ -135,7 +135,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
 
     final updateLikeValueQuery = 
     '''
-      UPDATE comment_replies_info 
+      UPDATE ${TableNames.commentRepliesInfo} 
       SET total_likes = total_likes $operationSymbol 1 
       WHERE reply_id = :reply_id
     ''';
@@ -168,7 +168,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
 
     final query = isUserLikedPost 
       ? 'DELETE ${TableNames.repliesLikesInfo} $likesInfoParameterQuery'
-      : 'INSERT INTO replies_likes_info (liked_by, reply_id) VALUES (:liked_by, :reply_id)';
+      : 'INSERT INTO ${TableNames.repliesLikesInfo} (liked_by, reply_id) VALUES (:liked_by, :reply_id)';
 
     await executeQuery(query, likesInfoParams);
 
@@ -203,7 +203,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
       );
 
       await txn.execute(
-        'UPDATE comments_info SET total_replies = total_replies - 1 WHERE comment_id = :comment_id',
+        'UPDATE ${TableNames.commentsInfo} SET total_replies = total_replies - 1 WHERE comment_id = :comment_id',
         {'comment_id': commentId}
       );
 

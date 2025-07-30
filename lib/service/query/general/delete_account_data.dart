@@ -11,20 +11,20 @@ class DeleteAccountData extends BaseQueryService {
     const query = '''
       DELETE ui, upi, upvi, ufi, usl, vi, svi, avi, lvi, ci, cli, cri, rli, pci, pvi
       ${TableNames.userInfo} ui
-        LEFT JOIN user_profile_info upi ON upi.username = ui.username
-        LEFT JOIN user_privacy_info pvi ON upvi.username = ui.username
-        LEFT JOIN user_follows_info ufi ON ufi.follower = ui.username
-        LEFT JOIN user_social_links usl ON ufi.username = ui.username
-        LEFT JOIN vent_info vi ON vi.creator = ui.username
-        LEFT JOIN saved_vent_info svi ON svi.creator = ui.username
-        LEFT JOIN archive_vent_info avi ON avi.creator = ui.username
-        LEFT JOIN liked_vent_info lvi ON lvi.liked_by = ui.username
-        LEFT JOIN comments_info ci ON ci.commented_by = ui.username
-        LEFT JOIN comments_likes_info cli ON cli.liked_by = ui.username
-        LEFT JOIN comment_replies_info cri ON cri.replied_by = ui.username
-        LEFT JOIN replies_likes_info rli ON rli.liked_by = ui.username
-        LEFT JOIN pinned_comments_info pci ON pci.pinned_by = ui.username
-        LEFT JOIN pinned_vent_info pvi ON pvi.pinned_by = ui.username
+        LEFT JOIN ${TableNames.userProfileInfo} upi ON upi.username = ui.username
+        LEFT JOIN ${TableNames.userPrivacyInfo} pvi ON upvi.username = ui.username
+        LEFT JOIN ${TableNames.userFollowsInfo} ufi ON ufi.follower = ui.username
+        LEFT JOIN ${TableNames.userSocialLinks} usl ON ufi.username = ui.username
+        LEFT JOIN ${TableNames.ventInfo} vi ON vi.creator = ui.username
+        LEFT JOIN ${TableNames.savedVentInfo} svi ON svi.creator = ui.username
+        LEFT JOIN ${TableNames.archiveVentInfo} avi ON avi.creator = ui.username
+        LEFT JOIN ${TableNames.likedVentInfo} lvi ON lvi.liked_by = ui.username
+        LEFT JOIN ${TableNames.commentsInfo} ci ON ci.commented_by = ui.username
+        LEFT JOIN ${TableNames.commentsLikesInfo} cli ON cli.liked_by = ui.username
+        LEFT JOIN ${TableNames.commentRepliesInfo} cri ON cri.replied_by = ui.username
+        LEFT JOIN ${TableNames.repliesLikesInfo} rli ON rli.liked_by = ui.username
+        LEFT JOIN ${TableNames.pinnedCommentsInfo} pci ON pci.pinned_by = ui.username
+        LEFT JOIN ${TableNames.pinnedVentInfo} pvi ON pvi.pinned_by = ui.username
       WHERE ui.username = :username
     ''';
 

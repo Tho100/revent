@@ -8,7 +8,7 @@ class CommentSettings extends BaseQueryService with VentProviderService {
   Future<void> toggleComment({required int isEnableComment}) async {
 
     const query = 
-      'UPDATE vent_info SET comment_enabled = :new_value WHERE post_id = :post_id';
+      'UPDATE ${TableNames.ventInfo} SET comment_enabled = :new_value WHERE post_id = :post_id';
 
     final param = {
       'post_id': activeVentProvider.ventData.postId,

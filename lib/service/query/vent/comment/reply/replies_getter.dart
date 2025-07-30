@@ -25,9 +25,9 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
         cri.total_likes, 
         upi.profile_picture 
       ${TableNames.commentRepliesInfo} cri 
-      JOIN user_profile_info upi
+      JOIN ${TableNames.userProfileInfo} upi
         ON cri.replied_by = upi.username 
-      LEFT JOIN user_blocked_info ubi
+      LEFT JOIN ${TableNames.userBlockedInfo} ubi
         ON cri.replied_by = ubi.blocked_username AND ubi.blocked_by = :blocked_by
       WHERE cri.comment_id = :comment_id AND ubi.blocked_username IS NULL
     ''';
@@ -87,7 +87,7 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
     '''
       SELECT rli.reply_id
       ${TableNames.repliesLikesInfo} rli
-      JOIN comment_replies_info cpi
+      JOIN ${TableNames.commentRepliesInfo} cpi
         ON rli.reply_id = cpi.reply_id
       WHERE rli.liked_by = :liked_by AND cpi.comment_id = :comment_id
     ''';

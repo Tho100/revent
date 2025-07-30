@@ -11,7 +11,7 @@ class UserPrivacyActions extends BaseQueryService {
     required String column
   }) async {
 
-    final query = 'UPDATE user_privacy_info SET $column = :new_value WHERE username = :username';
+    final query = 'UPDATE ${TableNames.userPrivacyInfo} SET $column = :new_value WHERE username = :username';
 
     final param = {
       'username': getIt.userProvider.user.username,
@@ -25,7 +25,7 @@ class UserPrivacyActions extends BaseQueryService {
   Future<Map<String, int>> getCurrentOptions({required String username}) async {
 
     const query = 
-    
+
     '''
       SELECT privated_profile, privated_following_list, privated_saved_vents 
       ${TableNames.userPrivacyInfo} 

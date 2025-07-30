@@ -57,7 +57,7 @@ class VentActions extends BaseQueryService with
 
       await txn.execute(
         '''
-          UPDATE vent_info 
+          UPDATE ${TableNames.ventInfo} 
           SET total_likes = total_likes ${isPostAlreadyLiked ? '-' : '+'} 1 
           WHERE post_id = :post_id
         ''',
@@ -67,7 +67,7 @@ class VentActions extends BaseQueryService with
       await txn.execute(
         isPostAlreadyLiked 
           ? 'DELETE ${TableNames.likedVentInfo} $likesInfoQuery'
-          : 'INSERT INTO liked_vent_info (post_id, liked_by) VALUES (:post_id, :liked_by)',
+          : 'INSERT INTO ${TableNames.likedVentInfo} (post_id, liked_by) VALUES (:post_id, :liked_by)',
         likesInfoParams
       );
 
@@ -179,7 +179,7 @@ class VentActions extends BaseQueryService with
 
     final query = isUserSavedPost 
       ? 'DELETE ${TableNames.savedVentInfo} $savedInfoParamsQuery'
-      : 'INSERT INTO saved_vent_info (post_id, saved_by) VALUES (:post_id, :saved_by)';
+      : 'INSERT INTO ${TableNames.savedVentInfo} (post_id, saved_by) VALUES (:post_id, :saved_by)';
 
     await executeQuery(query, savedInfoParams);
 

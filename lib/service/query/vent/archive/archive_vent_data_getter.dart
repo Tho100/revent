@@ -10,7 +10,7 @@ class ArchiveVentDataGetter extends BaseQueryService {
     const query = '''
       SELECT title, created_at, tags 
       FROM 
-        archive_vent_info 
+        ${TableNames.archiveVentInfo} 
       WHERE creator = :username ORDER BY created_at DESC
     ''';
 

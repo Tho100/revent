@@ -13,7 +13,7 @@ class PinVent extends BaseQueryService with UserProfileProviderService, ProfileP
 
     final postId = await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
-    const query = 'INSERT INTO pinned_vent_info (pinned_by, post_id) VALUES (:pinned_by, :post_id)';
+    const query = 'INSERT INTO ${TableNames.pinnedVentInfo} (pinned_by, post_id) VALUES (:pinned_by, :post_id)';
 
     final params = {
       'pinned_by': userProvider.user.username,

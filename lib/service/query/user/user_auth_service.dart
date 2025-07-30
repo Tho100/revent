@@ -20,7 +20,7 @@ class UserAuthService extends BaseQueryService {
     required String newPasswordHash
   }) async {
 
-    const query = 'UPDATE user_information SET password = :new_password WHERE username = :username';
+    const query = 'UPDATE ${TableNames.userInfo} SET password = :new_password WHERE username = :username';
     
     final params = {
       'username': username,

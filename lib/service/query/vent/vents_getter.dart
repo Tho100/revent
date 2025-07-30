@@ -63,7 +63,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
-      INNER JOIN user_follows_info ufi 
+      INNER JOIN ${TableNames.userFollowsInfo} ufi 
         ON ufi.following = vi.creator
       WHERE ufi.follower = :username
         AND NOT EXISTS (
@@ -132,7 +132,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         ${TableNames.ventInfo} vi 
         ON lvi.post_id = vi.post_id
       JOIN 
-        user_profile_info upi
+        ${TableNames.userProfileInfo} upi
         ON vi.creator = upi.username
       WHERE 
         lvi.liked_by = :liked_by
@@ -166,7 +166,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         ${TableNames.ventInfo} vi 
         ON svi.post_id = vi.post_id
       JOIN 
-        user_profile_info upi
+        ${TableNames.userProfileInfo} upi
         ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by

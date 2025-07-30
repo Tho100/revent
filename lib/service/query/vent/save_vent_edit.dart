@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -20,7 +21,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
       : await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
     const query = 
-      'UPDATE vent_info SET body_text = :new_body WHERE post_id = :post_id';
+      'UPDATE ${TableNames.ventInfo} SET body_text = :new_body WHERE post_id = :post_id';
 
     final params = {
       'post_id': postId,
@@ -38,7 +39,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
   Future<void> saveArchive() async {
 
     const query = 
-      'UPDATE archive_vent_info SET body_text = :new_body WHERE title = :title AND creator = :creator';
+      'UPDATE ${TableNames.archiveVentInfo} SET body_text = :new_body WHERE title = :title AND creator = :creator';
 
     final params = {
       'title': title,
@@ -59,8 +60,8 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
     final dateTimeNow = DateTime.now();
 
     final query = isFromArchive 
-      ? 'UPDATE archive_vent_info SET last_edit = :last_edit WHERE title = :title AND creator = :creator'
-      : 'UPDATE vent_info SET last_edit = :last_edit WHERE post_id = :post_id';
+      ? 'UPDATE ${TableNames.archiveVentInfo} SET last_edit = :last_edit WHERE title = :title AND creator = :creator'
+      : 'UPDATE ${TableNames.ventInfo} SET last_edit = :last_edit WHERE post_id = :post_id';
 
     final params = isFromArchive 
       ? {
