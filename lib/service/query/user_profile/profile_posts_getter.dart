@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -12,7 +13,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     const query = 
     '''
       SELECT post_id, title, body_text, tags, created_at, total_likes, total_comments, marked_nsfw 
-      FROM vent_info 
+      FROM ${TableNames.ventInfo} 
       WHERE creator = :username
       ORDER BY created_at DESC
     ''';
@@ -68,7 +69,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
   Future<List<bool>> _ventPinnedState({required List<int> postIds}) async {
 
-    const query = 'SELECT post_id FROM pinned_vent_info WHERE pinned_by = :username';
+    const query = 'SELECT post_id FROM ${TableNames.pinnedVentInfo} WHERE pinned_by = :username';
 
     final param = {'username': userProvider.user.username};
 

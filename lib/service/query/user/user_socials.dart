@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -19,7 +20,7 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
     }
 
     const query = 
-      'INSERT INTO user_social_links (social_handle, platform, username) VALUES (:social_handle, :platform, :username)';
+      'INSERT INTO ${TableNames.userSocialLinks} (social_handle, platform, username) VALUES (:social_handle, :platform, :username)';
 
     final params = {
       'social_handle': handle,
@@ -35,7 +36,7 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
 
     const query = 
     '''
-      UPDATE user_social_links
+      UPDATE ${TableNames.userSocialLinks}
       SET social_handle = :social_handle
       WHERE platform = :platform AND username = :username
     ''';

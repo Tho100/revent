@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
+import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -8,7 +9,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
 
   Future<void> updateBio({required String bioText}) async {
 
-    const query = 'UPDATE user_profile_info SET bio = :bio_value WHERE username = :username';
+    const query = 'UPDATE ${TableNames.userProfileInfo} SET bio = :bio_value WHERE username = :username';
     
     final params = {
       'bio_value': bioText,
@@ -26,7 +27,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
     final toBase64EncodedPfp = const Base64Encoder().convert(picData);
 
     const query = 
-      'UPDATE user_profile_info SET profile_picture = :profile_pic_data WHERE username = :username';
+      'UPDATE ${TableNames.userProfileInfo} SET profile_picture = :profile_pic_data WHERE username = :username';
 
     final params = {
       'profile_pic_data': toBase64EncodedPfp,
@@ -42,7 +43,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
   Future<void> removeProfilePicture() async {
 
     const query = 
-      'UPDATE user_profile_info SET profile_picture = :profile_pic_data WHERE username = :username';
+      'UPDATE ${TableNames.userProfileInfo} SET profile_picture = :profile_pic_data WHERE username = :username';
 
     final params = {
       'profile_pic_data': '',
@@ -57,7 +58,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
 
   Future<void> updatePronouns({required String pronouns}) async {
 
-    const query = 'UPDATE user_profile_info SET pronouns = :pronouns WHERE username = :username';
+    const query = 'UPDATE ${TableNames.userProfileInfo} SET pronouns = :pronouns WHERE username = :username';
 
     final params = {
       'pronouns': pronouns,

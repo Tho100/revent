@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -12,10 +13,10 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     const query = '''
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
-      FROM vent_info vi
+      FROM ${TableNames.ventInfo} vi
       WHERE NOT EXISTS (
         SELECT 1
-        FROM user_blocked_info ubi
+        FROM ${TableNames.userBlockedInfo} ubi
         WHERE ubi.blocked_by = :blocked_by
           AND ubi.blocked_username = vi.creator
       )
@@ -34,10 +35,10 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     const query = '''
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
-      FROM vent_info vi
+      FROM ${TableNames.ventInfo} vi
       WHERE NOT EXISTS (
         SELECT 1
-        FROM user_blocked_info ubi
+        FROM ${TableNames.userBlockedInfo} ubi
         WHERE ubi.blocked_by = :blocked_by
           AND ubi.blocked_username = vi.creator
       )
@@ -61,13 +62,13 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     const query = '''
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
-      FROM vent_info vi
-      INNER JOIN user_follows_info ufi 
+      FROM ${TableNames.ventInfo} vi
+      INNER JOIN ${TableNames.userFollowsInfo} ufi 
         ON ufi.following = vi.creator
       WHERE ufi.follower = :username
         AND NOT EXISTS (
           SELECT 1
-          FROM user_blocked_info ubi
+          FROM ${TableNames.userBlockedInfo} ubi
           WHERE ubi.blocked_by = :username
             AND ubi.blocked_username = vi.creator
         )
@@ -88,14 +89,14 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     const query = '''
       SELECT 
         post_id, title, creator, created_at, tags, total_likes, total_comments, marked_nsfw
-      FROM vent_info vi
+      FROM ${TableNames.ventInfo} vi
       WHERE 
         (LOWER(title) LIKE LOWER(:search_text) 
         OR LOWER(body_text) LIKE LOWER(:search_text) 
         OR LOWER(tags) LIKE LOWER(:search_text))
         AND NOT EXISTS (
           SELECT 1
-          FROM user_blocked_info ubi
+          FROM ${TableNames.userBlockedInfo} ubi
           WHERE ubi.blocked_by = :blocked_by
             AND ubi.blocked_username = vi.creator
         )
@@ -126,12 +127,12 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         vi.marked_nsfw,
         upi.profile_picture
       FROM 
-        liked_vent_info lvi
+        liked_FROM ${TableNames.ventInfo} lvi
       JOIN 
-        vent_info vi 
+        FROM ${TableNames.ventInfo} vi 
         ON lvi.post_id = vi.post_id
       JOIN 
-        user_profile_info upi
+        FROM ${TableNames.userProfileInfo} upi
         ON vi.creator = upi.username
       WHERE 
         lvi.liked_by = :liked_by
@@ -160,12 +161,12 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         vi.marked_nsfw,
         upi.profile_picture
       FROM 
-        saved_vent_info svi
+        saved_FROM ${TableNames.ventInfo} svi
       JOIN 
-        vent_info vi 
+        FROM ${TableNames.ventInfo} vi 
         ON svi.post_id = vi.post_id
       JOIN 
-        user_profile_info upi
+        FROM ${TableNames.userProfileInfo} upi
         ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by

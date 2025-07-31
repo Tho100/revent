@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -11,7 +12,7 @@ class CommentIdGetter extends BaseQueryService with VentProviderService {
 
     const getCommentIdQuery = 
     '''
-      SELECT comment_id FROM comments_info 
+      SELECT comment_id FROM ${TableNames.commentsInfo} 
       WHERE post_id = :post_id 
         AND commented_by = :commented_by 
         AND comment = :comment
@@ -31,7 +32,7 @@ class CommentIdGetter extends BaseQueryService with VentProviderService {
 
   Future<List<int>> getAllCommentsId() async {
 
-    const getPostIdQuery = 'SELECT comment_id FROM comments_info WHERE post_id = :post_id';
+    const getPostIdQuery = 'SELECT comment_id FROM ${TableNames.commentsInfo} WHERE post_id = :post_id';
 
     final param = {'post_id': activeVentProvider.ventData.postId};
 

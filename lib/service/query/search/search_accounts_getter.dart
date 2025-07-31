@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/main.dart';
@@ -11,10 +12,14 @@ class SearchAccountsGetter extends BaseQueryService {
     const query = 
     '''
       SELECT username, profile_picture 
-      FROM user_profile_info upi
-      LEFT JOIN user_blocked_info ubi
-        ON upi.username = ubi.blocked_username AND ubi.blocked_by = :blocked_by
-      WHERE upi.username LIKE :search_text AND ubi.blocked_username IS NULL
+      FROM ${TableNames.userProfileInfo} upi
+      WHERE upi.username LIKE :search_text
+        AND NOT EXISTS (
+          SELECT 1
+          FROM ${TableNames.userBlockedInfo} ubi
+          WHERE ubi.blocked_by = :blocked_by
+            AND ubi.blocked_username = upi.username
+        )
     ''';
 
     final param = {

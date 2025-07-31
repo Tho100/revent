@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -15,8 +16,8 @@ class LastEditGetter extends BaseQueryService with VentProviderService {
   Future<String> _getLastEdit({required bool isFromArchive}) async {
 
     final query = isFromArchive 
-      ? 'SELECT last_edit FROM archive_vent_info WHERE title = :title AND creator = :creator'
-      : 'SELECT last_edit FROM vent_info WHERE post_id = :post_id';
+      ? 'SELECT last_edit FROM ${TableNames.archiveVentInfo} WHERE title = :title AND creator = :creator'
+      : 'SELECT last_edit FROM ${TableNames.ventInfo} WHERE post_id = :post_id';
 
     final params = isFromArchive 
       ? {

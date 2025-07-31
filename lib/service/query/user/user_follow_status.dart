@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -7,7 +8,7 @@ class UserFollowStatus extends BaseQueryService {
   Future<bool> isFollowing({required String username}) async {
 
     const query = 
-      'SELECT 1 FROM user_follows_info WHERE following = :following AND follower = :follower LIMIT 1';
+      'SELECT 1 FROM ${TableNames.userFollowsInfo} WHERE following = :following AND follower = :follower LIMIT 1';
       
     final param = {
       'following': username,

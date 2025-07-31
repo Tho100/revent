@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
@@ -39,7 +40,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
 
       await txn.execute(
         '''
-          INSERT INTO vent_info 
+          INSERT INTO ${TableNames.ventInfo} 
             (creator, title, body_text, tags, marked_nsfw, comment_enabled) 
           VALUES 
           (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)
@@ -55,7 +56,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
       );
 
       await txn.execute(
-        'UPDATE user_profile_info SET posts = posts + 1 WHERE username = :username',
+        'UPDATE ${TableNames.userProfileInfo} SET posts = posts + 1 WHERE username = :username',
         {'username': userProvider.user.username}
       );
 
@@ -85,7 +86,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
 
   Future<void> newArchiveVent() async {
 
-    const insertVentInfoQuery = 'INSERT INTO archive_vent_info (creator, title, body_text, tags) VALUES (:creator, :title, :body_text, :tags)';
+    const insertVentInfoQuery = 'INSERT INTO ${TableNames.archiveVentInfo} (creator, title, body_text, tags) VALUES (:creator, :title, :body_text, :tags)';
 
     final params = {
       'creator': userProvider.user.username,

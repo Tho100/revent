@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -10,7 +11,7 @@ class VentChecker extends BaseQueryService {
 
   Future<bool> isVentExists() async {
 
-    const query = 'SELECT 1 FROM vent_info WHERE creator = :creator AND title = :title';
+    const query = 'SELECT 1 FROM ${TableNames.ventInfo} WHERE creator = :creator AND title = :title';
 
     final param = {
       'title': title,
@@ -25,7 +26,7 @@ class VentChecker extends BaseQueryService {
 
   Future<bool> isArchivedVentExists() async {
 
-    const query = 'SELECT 1 FROM archive_vent_info WHERE creator = :creator AND title = :title';
+    const query = 'SELECT 1 FROM ${TableNames.archiveVentInfo} WHERE creator = :creator AND title = :title';
 
     final param = {
       'title': title,

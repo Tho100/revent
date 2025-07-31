@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -10,7 +11,7 @@ class UserPrivacyActions extends BaseQueryService {
     required String column
   }) async {
 
-    final query = 'UPDATE user_privacy_info SET $column = :new_value WHERE username = :username';
+    final query = 'UPDATE ${TableNames.userPrivacyInfo} SET $column = :new_value WHERE username = :username';
 
     final param = {
       'username': getIt.userProvider.user.username,
@@ -24,9 +25,10 @@ class UserPrivacyActions extends BaseQueryService {
   Future<Map<String, int>> getCurrentOptions({required String username}) async {
 
     const query = 
+
     '''
       SELECT privated_profile, privated_following_list, privated_saved_vents 
-      FROM user_privacy_info 
+      FROM ${TableNames.userPrivacyInfo} 
       WHERE username = :username
     ''';
 

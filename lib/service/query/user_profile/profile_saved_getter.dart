@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -26,12 +27,12 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
         vi.created_at,
         upi.profile_picture
       FROM 
-        saved_vent_info svi
+        FROM ${TableNames.savedVentInfo} svi
       JOIN 
-        vent_info vi 
+        FROM ${TableNames.ventInfo} vi 
         ON svi.post_id = vi.post_id
       JOIN 
-        user_profile_info upi
+        FROM ${TableNames.userProfileInfo} upi
         ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by
@@ -98,8 +99,8 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
   }) async {
 
     final queryBasedOnType = {
-      'liked': 'SELECT post_id FROM liked_vent_info WHERE liked_by = :username',
-      'saved': 'SELECT post_id FROM saved_vent_info WHERE saved_by = :username'
+      'liked': 'SELECT post_id FROM ${TableNames.likedVentInfo} WHERE liked_by = :username',
+      'saved': 'SELECT post_id FROM ${TableNames.savedVentInfo} WHERE saved_by = :username'
     };
 
     final param = {'username': userProvider.user.username};

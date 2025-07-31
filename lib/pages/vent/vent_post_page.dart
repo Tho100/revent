@@ -104,22 +104,18 @@ class _VentPostPageState extends State<VentPostPage> with
 
   void _showNsfwConfirmationDialog() async {
 
-    if (widget.isNsfw) {
-
-      final isViewPost = await CustomAlertDialog.nsfwWarningDialog();
-
-      if (isViewPost) {
-        _loadVentInfo();
-      } 
-
+    if (!widget.isNsfw) {
+      _loadVentInfo();
       return;
-
     }
 
-    _loadVentInfo();
+    final isViewPost = await CustomAlertDialog.nsfwWarningDialog();
+
+    if (isViewPost) {
+      _loadVentInfo();
+    }
 
   }
-
 
   void _initializeVentActionsHandler() {
     actionsHandler = VentActionsHandler(              

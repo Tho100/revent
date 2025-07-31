@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -56,7 +57,7 @@ class VentActions extends BaseQueryService with
 
       await txn.execute(
         '''
-          UPDATE vent_info 
+          UPDATE ${TableNames.ventInfo} 
           SET total_likes = total_likes ${isPostAlreadyLiked ? '-' : '+'} 1 
           WHERE post_id = :post_id
         ''',
@@ -65,8 +66,8 @@ class VentActions extends BaseQueryService with
 
       await txn.execute(
         isPostAlreadyLiked 
-          ? 'DELETE FROM liked_vent_info $likesInfoQuery'
-          : 'INSERT INTO liked_vent_info (post_id, liked_by) VALUES (:post_id, :liked_by)',
+          ? 'DELETE FROM ${TableNames.likedVentInfo} $likesInfoQuery'
+          : 'INSERT INTO ${TableNames.likedVentInfo} (post_id, liked_by) VALUES (:post_id, :liked_by)',
         likesInfoParams
       );
 
@@ -82,7 +83,7 @@ class VentActions extends BaseQueryService with
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 FROM liked_vent_info $likesInfoQuery';
+      'SELECT 1 FROM ${TableNames.likedVentInfo} $likesInfoQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
@@ -162,7 +163,7 @@ class VentActions extends BaseQueryService with
   }) async {
 
     final readSavedInfoQuery = 
-      'SELECT 1 FROM saved_vent_info $savedInfoParamsQuery'; 
+      'SELECT 1 FROM ${TableNames.savedVentInfo} $savedInfoParamsQuery'; 
 
     final savedInfoResults = await executeQuery(readSavedInfoQuery, savedInfoParams);
     
@@ -177,8 +178,8 @@ class VentActions extends BaseQueryService with
   }) async {
 
     final query = isUserSavedPost 
-      ? 'DELETE FROM saved_vent_info $savedInfoParamsQuery'
-      : 'INSERT INTO saved_vent_info (post_id, saved_by) VALUES (:post_id, :saved_by)';
+      ? 'DELETE FROM ${TableNames.savedVentInfo} $savedInfoParamsQuery'
+      : 'INSERT INTO ${TableNames.savedVentInfo} (post_id, saved_by) VALUES (:post_id, :saved_by)';
 
     await executeQuery(query, savedInfoParams);
 

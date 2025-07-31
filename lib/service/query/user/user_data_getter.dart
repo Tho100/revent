@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -5,7 +6,7 @@ class UserDataGetter extends BaseQueryService {
 
   Future<String?> getUsername({required String email}) async {
 
-    const query = 'SELECT username FROM user_information WHERE email = :email';
+    const query = 'SELECT username FROM ${TableNames.userInfo} WHERE email = :email';
 
     final param = {'email': email};
     
@@ -21,7 +22,7 @@ class UserDataGetter extends BaseQueryService {
 
   Future<String> getJoinedDate({required String username}) async {
 
-    const query = 'SELECT created_at FROM user_information WHERE username = :username';
+    const query = 'SELECT created_at FROM ${TableNames.userInfo} WHERE username = :username';
 
     final param = {'username': username};
     
@@ -33,7 +34,7 @@ class UserDataGetter extends BaseQueryService {
 
   Future<Map<String, String>> getSocialHandles({String? username}) async {
 
-    const query = 'SELECT platform, social_handle FROM user_social_links WHERE username = :username';
+    const query = 'SELECT platform, social_handle FROM ${TableNames.userSocialLinks} WHERE username = :username';
 
     final param = {'username': username};
     

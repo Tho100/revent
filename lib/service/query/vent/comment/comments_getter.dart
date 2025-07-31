@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -22,15 +23,17 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
         ci.total_replies, 
         ci.is_edited,
         upi.profile_picture
-      FROM comments_info ci
-      JOIN user_profile_info upi 
+      FROM ${TableNames.commentsInfo} ci
+      JOIN ${TableNames.userProfileInfo} upi 
         ON ci.commented_by = upi.username 
-      LEFT JOIN user_blocked_info ubi
-        ON ci.commented_by = ubi.blocked_username 
-        AND ubi.blocked_by = :blocked_by
       WHERE ci.post_id = :post_id
-        AND ubi.blocked_username IS NULL
-      ORDER BY created_at ASC
+        AND NOT EXISTS (
+          SELECT 1
+          FROM ${TableNames.userBlockedInfo} ubi
+          WHERE ubi.blocked_by = :blocked_by
+            AND ubi.blocked_username = ci.commented_by
+        )
+      ORDER BY ci.created_at ASC;
     ''';
 
     final param = {
@@ -90,7 +93,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
 
   Future<List<bool>> _commentPinnedState({required List<int> commentIds}) async {
 
-    const query = 'SELECT comment_id FROM pinned_comments_info WHERE pinned_by = :username';
+    const query = 'SELECT comment_id FROM ${TableNames.pinnedCommentsInfo} WHERE pinned_by = :username';
 
     final param = {'username': activeVentProvider.ventData.creator};
 
@@ -112,8 +115,8 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
     const readLikesQuery = 
     '''
       SELECT cli.comment_id
-      FROM comments_likes_info cli
-      JOIN comments_info ci
+      FROM ${TableNames.commentsLikesInfo} cli
+      JOIN ${TableNames.commentsInfo} ci
         ON cli.comment_id = ci.comment_id
       WHERE cli.liked_by = :liked_by AND ci.post_id = :post_id;
     ''';

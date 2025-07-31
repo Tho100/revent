@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
@@ -23,7 +24,7 @@ class SaveCommentEdit extends BaseQueryService with
 
     const query = 
     '''
-      UPDATE comments_info 
+      UPDATE ${TableNames.commentsInfo} 
       SET comment = :new_comment, is_edited = :is_edited
       WHERE comment_id = :comment_id 
     ''';

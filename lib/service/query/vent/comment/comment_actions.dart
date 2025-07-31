@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
@@ -36,7 +37,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
     await conn.transactional((txn) async {
 
       await txn.execute(
-        'INSERT INTO comments_info (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)',
+        'INSERT INTO ${TableNames.commentsInfo} (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)',
         {
           'commented_by': username,
           'comment': commentText,
@@ -45,7 +46,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
       );
 
       await txn.execute(
-        'UPDATE vent_info SET total_comments = total_comments + 1 WHERE post_id = :post_id',
+        'UPDATE ${TableNames.ventInfo} SET total_comments = total_comments + 1 WHERE post_id = :post_id',
         {'post_id': postId}
       );
 
@@ -63,17 +64,17 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
      
       await txn.execute(
         '''
-          DELETE comments_likes_info
-            FROM comments_likes_info
-          INNER JOIN comments_info
-            ON comments_likes_info.comment_id = comments_info.comment_id
-          WHERE comments_info.post_id = :post_id
+          DELETE ${TableNames.commentsLikesInfo}
+            FROM ${TableNames.commentsLikesInfo}
+          INNER JOIN ${TableNames.commentsInfo}
+            ON ${TableNames.commentsLikesInfo}.comment_id = FROM ${TableNames.commentsInfo}.comment_id
+          WHERE ${TableNames.commentsInfo}.post_id = :post_id
         ''',
         {'post_id': idInfo['post_id']}
       );
 
       await txn.execute(
-        'DELETE FROM comments_info WHERE comment_id = :comment_id AND post_id = :post_id ',
+        'DELETE FROM ${TableNames.commentsInfo} WHERE comment_id = :comment_id AND post_id = :post_id ',
         {
           'post_id': idInfo['post_id'], 
           'comment_id': idInfo['comment_id']
@@ -81,7 +82,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
       );
 
       await txn.execute(
-        'UPDATE vent_info SET total_comments = total_comments - 1 WHERE post_id = :post_id',
+        'UPDATE ${TableNames.ventInfo} SET total_comments = total_comments - 1 WHERE post_id = :post_id',
         {'post_id': idInfo['post_id']}
       );
 
@@ -153,7 +154,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
 
     final updateLikeValueQuery = 
     '''
-      UPDATE comments_info 
+      UPDATE ${TableNames.commentsInfo} 
       SET total_likes = total_likes $operationSymbol 1 
       WHERE post_id = :post_id AND comment_id = :comment_id 
     ''';
@@ -173,7 +174,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 FROM comments_likes_info $likesInfoParameterQuery';
+      'SELECT 1 FROM ${TableNames.commentsLikesInfo} $likesInfoParameterQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
@@ -188,8 +189,8 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE FROM comments_likes_info $likesInfoParameterQuery'
-      : 'INSERT INTO comments_likes_info (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
+      ? 'DELETE FROM ${TableNames.commentsLikesInfo} $likesInfoParameterQuery'
+      : 'INSERT INTO ${TableNames.commentsLikesInfo} (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
 
     await executeQuery(query, likesInfoParams);
 

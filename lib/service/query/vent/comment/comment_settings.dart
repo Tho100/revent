@@ -1,3 +1,4 @@
+import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -7,7 +8,7 @@ class CommentSettings extends BaseQueryService with VentProviderService {
   Future<void> toggleComment({required int isEnableComment}) async {
 
     const query = 
-      'UPDATE vent_info SET comment_enabled = :new_value WHERE post_id = :post_id';
+      'UPDATE ${TableNames.ventInfo} SET comment_enabled = :new_value WHERE post_id = :post_id';
 
     final param = {
       'post_id': activeVentProvider.ventData.postId,
@@ -21,7 +22,7 @@ class CommentSettings extends BaseQueryService with VentProviderService {
   Future<Map<String, int>> getCurrentOptions() async {
 
     const query = 
-      'SELECT comment_enabled FROM vent_info WHERE post_id = :post_id';
+      'SELECT comment_enabled FROM ${TableNames.ventInfo} WHERE post_id = :post_id';
 
     final param = {'post_id': activeVentProvider.ventData.postId};
 
