@@ -14,8 +14,8 @@ class VentPostStateService extends BaseQueryService with UserProfileProviderServ
   }) async {
 
     final queryBasedOnType = {
-      'liked': 'SELECT post_id ${TableNames.likedVentInfo} WHERE liked_by = :username',
-      'saved': 'SELECT post_id ${TableNames.savedVentInfo} WHERE saved_by = :username'
+      'liked': 'SELECT post_id FROM ${TableNames.likedVentInfo} WHERE liked_by = :username',
+      'saved': 'SELECT post_id FROM ${TableNames.savedVentInfo} WHERE saved_by = :username'
     };
 
     final param = {'username': userProvider.user.username};

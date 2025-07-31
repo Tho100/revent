@@ -30,7 +30,7 @@ class PinVent extends BaseQueryService with UserProfileProviderService, ProfileP
 
     final postId = await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
-    const query = 'DELETE ${TableNames.pinnedVentInfo} WHERE post_id = :post_id AND pinned_by = :pinned_by';
+    const query = 'DELETE FROM ${TableNames.pinnedVentInfo} WHERE post_id = :post_id AND pinned_by = :pinned_by';
 
     final params = {
       'pinned_by': userProvider.user.username,

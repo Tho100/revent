@@ -34,7 +34,7 @@ class PinComment extends BaseQueryService with UserProfileProviderService, Comme
 
     final commentId = await CommentIdGetter().getCommentId(username: username, commentText: commentText);
 
-    const query = 'DELETE ${TableNames.pinnedCommentsInfo} WHERE comment_id = :post_id AND pinned_by = :pinned_by';
+    const query = 'DELETE FROM ${TableNames.pinnedCommentsInfo} WHERE comment_id = :post_id AND pinned_by = :pinned_by';
 
     final params = {
       'pinned_by': userProvider.user.username,

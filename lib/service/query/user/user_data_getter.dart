@@ -6,7 +6,7 @@ class UserDataGetter extends BaseQueryService {
 
   Future<String?> getUsername({required String email}) async {
 
-    const query = 'SELECT username ${TableNames.userInfo} WHERE email = :email';
+    const query = 'SELECT username FROM ${TableNames.userInfo} WHERE email = :email';
 
     final param = {'email': email};
     
@@ -22,7 +22,7 @@ class UserDataGetter extends BaseQueryService {
 
   Future<String> getJoinedDate({required String username}) async {
 
-    const query = 'SELECT created_at ${TableNames.userInfo} WHERE username = :username';
+    const query = 'SELECT created_at FROM ${TableNames.userInfo} WHERE username = :username';
 
     final param = {'username': username};
     
@@ -34,7 +34,7 @@ class UserDataGetter extends BaseQueryService {
 
   Future<Map<String, String>> getSocialHandles({String? username}) async {
 
-    const query = 'SELECT platform, social_handle ${TableNames.userSocialLinks} WHERE username = :username';
+    const query = 'SELECT platform, social_handle FROM ${TableNames.userSocialLinks} WHERE username = :username';
 
     final param = {'username': username};
     

@@ -66,7 +66,7 @@ class VentActions extends BaseQueryService with
 
       await txn.execute(
         isPostAlreadyLiked 
-          ? 'DELETE ${TableNames.likedVentInfo} $likesInfoQuery'
+          ? 'DELETE FROM ${TableNames.likedVentInfo} $likesInfoQuery'
           : 'INSERT INTO ${TableNames.likedVentInfo} (post_id, liked_by) VALUES (:post_id, :liked_by)',
         likesInfoParams
       );
@@ -83,7 +83,7 @@ class VentActions extends BaseQueryService with
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 ${TableNames.likedVentInfo} $likesInfoQuery';
+      'SELECT 1 FROM ${TableNames.likedVentInfo} $likesInfoQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
@@ -163,7 +163,7 @@ class VentActions extends BaseQueryService with
   }) async {
 
     final readSavedInfoQuery = 
-      'SELECT 1 ${TableNames.savedVentInfo} $savedInfoParamsQuery'; 
+      'SELECT 1 FROM ${TableNames.savedVentInfo} $savedInfoParamsQuery'; 
 
     final savedInfoResults = await executeQuery(readSavedInfoQuery, savedInfoParams);
     
@@ -178,7 +178,7 @@ class VentActions extends BaseQueryService with
   }) async {
 
     final query = isUserSavedPost 
-      ? 'DELETE ${TableNames.savedVentInfo} $savedInfoParamsQuery'
+      ? 'DELETE FROM ${TableNames.savedVentInfo} $savedInfoParamsQuery'
       : 'INSERT INTO ${TableNames.savedVentInfo} (post_id, saved_by) VALUES (:post_id, :saved_by)';
 
     await executeQuery(query, savedInfoParams);

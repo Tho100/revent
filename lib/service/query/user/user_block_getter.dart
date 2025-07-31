@@ -18,7 +18,7 @@ class UserBlockGetter extends BaseQueryService {
       SELECT 
         upi.username, 
         upi.profile_picture
-      ${TableNames.userProfileInfo} upi
+      FROM ${TableNames.userProfileInfo} upi
       LEFT JOIN ${TableNames.userBlockedInfo} ubi
         ON ubi.blocked_username = upi.username
       WHERE ubi.blocked_by = :blocked_by
@@ -48,7 +48,7 @@ class UserBlockGetter extends BaseQueryService {
     const query = 
     '''
       SELECT 1 
-      ${TableNames.userBlockedInfo} 
+      FROM ${TableNames.userBlockedInfo} 
       WHERE 
         (blocked_by = :blocked_by AND blocked_username = :blocked_username)
         OR

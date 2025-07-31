@@ -17,7 +17,7 @@ class DeleteSavedVent extends BaseQueryService {
 
     final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
-    const query = 'DELETE ${TableNames.savedVentInfo} WHERE post_id = :post_id';
+    const query = 'DELETE FROM ${TableNames.savedVentInfo} WHERE post_id = :post_id';
 
     final param = {'post_id': postId};
 

@@ -15,7 +15,7 @@ class ProfilePictureGetter extends BaseQueryService {
       return getIt.profileProvider.profile.profilePicture;
     }
 
-    const query = 'SELECT profile_picture ${TableNames.userProfileInfo} WHERE username = :username';
+    const query = 'SELECT profile_picture FROM ${TableNames.userProfileInfo} WHERE username = :username';
 
     final param = {
       'username': username!.isNotEmpty ? username : getIt.userProvider.user.username

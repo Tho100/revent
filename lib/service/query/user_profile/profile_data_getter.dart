@@ -10,8 +10,8 @@ class ProfileDataGetter extends BaseQueryService {
   }) async {
 
     final query = isMyProfile 
-      ? 'SELECT following, followers, bio, pronouns, profile_picture ${TableNames.userProfileInfo} WHERE username = :username'
-      : 'SELECT following, followers, bio, pronouns ${TableNames.userProfileInfo} WHERE username = :username';
+      ? 'SELECT following, followers, bio, pronouns, profile_picture FROM ${TableNames.userProfileInfo} WHERE username = :username'
+      : 'SELECT following, followers, bio, pronouns FROM ${TableNames.userProfileInfo} WHERE username = :username';
 
     final param = {'username': username};
 

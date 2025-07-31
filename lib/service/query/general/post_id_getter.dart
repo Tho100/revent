@@ -14,7 +14,7 @@ class PostIdGetter extends BaseQueryService {
 
   Future<int> getPostId() async {
 
-    const getPostIdQuery = 'SELECT post_id ${TableNames.ventInfo} WHERE title = :title AND creator = :creator';
+    const getPostIdQuery = 'SELECT post_id FROM ${TableNames.ventInfo} WHERE title = :title AND creator = :creator';
 
     final postParams = {
       'title': title,
@@ -29,7 +29,7 @@ class PostIdGetter extends BaseQueryService {
 
   Future<List<int>> getAllProfilePostsId() async {
 
-    const getPostIdQuery = 'SELECT post_id ${TableNames.ventInfo} WHERE creator = :creator';
+    const getPostIdQuery = 'SELECT post_id FROM ${TableNames.ventInfo} WHERE creator = :creator';
 
     final param = {'creator': creator};
 

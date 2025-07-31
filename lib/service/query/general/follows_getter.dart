@@ -25,14 +25,14 @@ class FollowsGetter extends BaseQueryService with UserProfileProviderService {
         CASE 
           WHEN EXISTS (
             SELECT 1 
-            ${TableNames.userFollowsInfo} ufi_inner
+            FROM ${TableNames.userFollowsInfo} ufi_inner
             WHERE ufi_inner.follower = :current_user
             AND ufi_inner.following = ufi.$columnName
           )
           THEN 1
           ELSE 0
         END AS is_followed
-      ${TableNames.userFollowsInfo} ufi
+      FROM ${TableNames.userFollowsInfo} ufi
       JOIN ${TableNames.userProfileInfo} upi ON ufi.$columnName = upi.username
       WHERE ufi.$oppositeColumn = :username
     ''';

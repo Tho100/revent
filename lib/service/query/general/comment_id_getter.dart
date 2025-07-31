@@ -12,7 +12,7 @@ class CommentIdGetter extends BaseQueryService with VentProviderService {
 
     const getCommentIdQuery = 
     '''
-      SELECT comment_id ${TableNames.commentsInfo} 
+      SELECT comment_id FROM ${TableNames.commentsInfo} 
       WHERE post_id = :post_id 
         AND commented_by = :commented_by 
         AND comment = :comment
@@ -32,7 +32,7 @@ class CommentIdGetter extends BaseQueryService with VentProviderService {
 
   Future<List<int>> getAllCommentsId() async {
 
-    const getPostIdQuery = 'SELECT comment_id ${TableNames.commentsInfo} WHERE post_id = :post_id';
+    const getPostIdQuery = 'SELECT comment_id FROM ${TableNames.commentsInfo} WHERE post_id = :post_id';
 
     final param = {'post_id': activeVentProvider.ventData.postId};
 

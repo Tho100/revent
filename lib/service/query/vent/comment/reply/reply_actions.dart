@@ -152,7 +152,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 ${TableNames.repliesLikesInfo} $likesInfoParameterQuery';
+      'SELECT 1 FROM ${TableNames.repliesLikesInfo} $likesInfoParameterQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
@@ -167,7 +167,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE ${TableNames.repliesLikesInfo} $likesInfoParameterQuery'
+      ? 'DELETE FROM ${TableNames.repliesLikesInfo} $likesInfoParameterQuery'
       : 'INSERT INTO ${TableNames.repliesLikesInfo} (liked_by, reply_id) VALUES (:liked_by, :reply_id)';
 
     await executeQuery(query, likesInfoParams);
@@ -198,7 +198,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
     await conn.transactional((txn) async {
 
       await txn.execute(
-        'DELETE ${TableNames.commentRepliesInfo} WHERE reply_id = :reply_id',
+        'DELETE FROM ${TableNames.commentRepliesInfo} WHERE reply_id = :reply_id',
         {'reply_id': replyId}
       );
 

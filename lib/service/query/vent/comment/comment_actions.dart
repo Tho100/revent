@@ -65,16 +65,16 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
       await txn.execute(
         '''
           DELETE ${TableNames.commentsLikesInfo}
-            ${TableNames.commentsLikesInfo}
+            FROM ${TableNames.commentsLikesInfo}
           INNER JOIN ${TableNames.commentsInfo}
-            ON ${TableNames.commentsLikesInfo}.comment_id = ${TableNames.commentsInfo}.comment_id
+            ON ${TableNames.commentsLikesInfo}.comment_id = FROM ${TableNames.commentsInfo}.comment_id
           WHERE ${TableNames.commentsInfo}.post_id = :post_id
         ''',
         {'post_id': idInfo['post_id']}
       );
 
       await txn.execute(
-        'DELETE ${TableNames.commentsInfo} WHERE comment_id = :comment_id AND post_id = :post_id ',
+        'DELETE FROM ${TableNames.commentsInfo} WHERE comment_id = :comment_id AND post_id = :post_id ',
         {
           'post_id': idInfo['post_id'], 
           'comment_id': idInfo['comment_id']
@@ -174,7 +174,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
   }) async {
 
     final readLikesInfoQuery = 
-      'SELECT 1 ${TableNames.commentsLikesInfo} $likesInfoParameterQuery';
+      'SELECT 1 FROM ${TableNames.commentsLikesInfo} $likesInfoParameterQuery';
 
     final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
 
@@ -189,7 +189,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE ${TableNames.commentsLikesInfo} $likesInfoParameterQuery'
+      ? 'DELETE FROM ${TableNames.commentsLikesInfo} $likesInfoParameterQuery'
       : 'INSERT INTO ${TableNames.commentsLikesInfo} (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
 
     await executeQuery(query, likesInfoParams);

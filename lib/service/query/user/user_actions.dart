@@ -29,7 +29,7 @@ class UserActions extends BaseQueryService with UserProfileProviderService {
       await txn.execute(
         follow 
           ? 'INSERT INTO ${TableNames.userFollowsInfo} (follower, following) VALUES (:follower, :following)'
-          : 'DELETE ${TableNames.userFollowsInfo} WHERE following = :following AND follower = :follower',
+          : 'DELETE FROM ${TableNames.userFollowsInfo} WHERE following = :following AND follower = :follower',
         {
           'follower': userProvider.user.username, 
           'following': username
@@ -44,7 +44,7 @@ class UserActions extends BaseQueryService with UserProfileProviderService {
 
     final query = block!
       ? 'INSERT INTO ${TableNames.userBlockedInfo} (blocked_username, blocked_by) VALUES (:blocked_username, :blocked_by)'
-      : 'DELETE ${TableNames.userBlockedInfo} WHERE blocked_by = :blocked_by AND blocked_username = :blocked_username';
+      : 'DELETE FROM ${TableNames.userBlockedInfo} WHERE blocked_by = :blocked_by AND blocked_username = :blocked_username';
 
     final params = {
       'blocked_username': username,

@@ -10,7 +10,7 @@ class ArchiveVentDataGetter extends BaseQueryService {
     const query = '''
       SELECT title, created_at, tags 
       FROM 
-        ${TableNames.archiveVentInfo} 
+        FROM ${TableNames.archiveVentInfo} 
       WHERE creator = :username ORDER BY created_at DESC
     ''';
 
@@ -41,7 +41,7 @@ class ArchiveVentDataGetter extends BaseQueryService {
   }) async {
 
     const query = 
-      'SELECT body_text ${TableNames.archiveVentInfo} WHERE title = :title AND creator = :creator';
+      'SELECT body_text FROM ${TableNames.archiveVentInfo} WHERE title = :title AND creator = :creator';
       
     final params = {
       'title': title,

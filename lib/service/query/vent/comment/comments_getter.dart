@@ -11,7 +11,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
   Future<Map<String, List<dynamic>>> getComments() async {
 
     final commentIds = await CommentIdGetter().getAllCommentsId();
-  // TODO: Improve this query
+
     const getCommentsQuery = 
     '''
       SELECT 
@@ -23,15 +23,17 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
         ci.total_replies, 
         ci.is_edited,
         upi.profile_picture
-      ${TableNames.commentsInfo} ci
+      FROM ${TableNames.commentsInfo} ci
       JOIN ${TableNames.userProfileInfo} upi 
         ON ci.commented_by = upi.username 
-      LEFT JOIN ${TableNames.userBlockedInfo} ubi
-        ON ci.commented_by = ubi.blocked_username 
-        AND ubi.blocked_by = :blocked_by
       WHERE ci.post_id = :post_id
-        AND ubi.blocked_username IS NULL
-      ORDER BY created_at ASC
+        AND NOT EXISTS (
+          SELECT 1
+          FROM ${TableNames.userBlockedInfo} ubi
+          WHERE ubi.blocked_by = :blocked_by
+            AND ubi.blocked_username = ci.commented_by
+        )
+      ORDER BY ci.created_at ASC;
     ''';
 
     final param = {
@@ -91,7 +93,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
 
   Future<List<bool>> _commentPinnedState({required List<int> commentIds}) async {
 
-    const query = 'SELECT comment_id ${TableNames.pinnedCommentsInfo} WHERE pinned_by = :username';
+    const query = 'SELECT comment_id FROM ${TableNames.pinnedCommentsInfo} WHERE pinned_by = :username';
 
     final param = {'username': activeVentProvider.ventData.creator};
 
@@ -113,7 +115,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
     const readLikesQuery = 
     '''
       SELECT cli.comment_id
-      ${TableNames.commentsLikesInfo} cli
+      FROM ${TableNames.commentsLikesInfo} cli
       JOIN ${TableNames.commentsInfo} ci
         ON cli.comment_id = ci.comment_id
       WHERE cli.liked_by = :liked_by AND ci.post_id = :post_id;

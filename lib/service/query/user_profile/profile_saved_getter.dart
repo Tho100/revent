@@ -27,12 +27,12 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
         vi.created_at,
         upi.profile_picture
       FROM 
-        ${TableNames.savedVentInfo} svi
+        FROM ${TableNames.savedVentInfo} svi
       JOIN 
-        ${TableNames.ventInfo} vi 
+        FROM ${TableNames.ventInfo} vi 
         ON svi.post_id = vi.post_id
       JOIN 
-        ${TableNames.userProfileInfo} upi
+        FROM ${TableNames.userProfileInfo} upi
         ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by
@@ -99,8 +99,8 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
   }) async {
 
     final queryBasedOnType = {
-      'liked': 'SELECT post_id ${TableNames.likedVentInfo} WHERE liked_by = :username',
-      'saved': 'SELECT post_id ${TableNames.savedVentInfo} WHERE saved_by = :username'
+      'liked': 'SELECT post_id FROM ${TableNames.likedVentInfo} WHERE liked_by = :username',
+      'saved': 'SELECT post_id FROM ${TableNames.savedVentInfo} WHERE saved_by = :username'
     };
 
     final param = {'username': userProvider.user.username};

@@ -8,14 +8,18 @@ import 'package:revent/helper/extract_data.dart';
 class SearchAccountsGetter extends BaseQueryService {
 
   Future<Map<String, List<dynamic>>> getAccounts({required String searchText}) async {
-// TODO: Improve this query
+
     const query = 
     '''
       SELECT username, profile_picture 
-      ${TableNames.userProfileInfo} upi
-      LEFT JOIN ${TableNames.userBlockedInfo} ubi
-        ON upi.username = ubi.blocked_username AND ubi.blocked_by = :blocked_by
-      WHERE upi.username LIKE :search_text AND ubi.blocked_username IS NULL
+      FROM ${TableNames.userProfileInfo} upi
+      WHERE upi.username LIKE :search_text
+        AND NOT EXISTS (
+          SELECT 1
+          FROM ${TableNames.userBlockedInfo} ubi
+          WHERE ubi.blocked_by = :blocked_by
+            AND ubi.blocked_username = upi.username
+        )
     ''';
 
     final param = {

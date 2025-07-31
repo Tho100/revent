@@ -8,7 +8,7 @@ class UserFollowStatus extends BaseQueryService {
   Future<bool> isFollowing({required String username}) async {
 
     const query = 
-      'SELECT 1 ${TableNames.userFollowsInfo} WHERE following = :following AND follower = :follower LIMIT 1';
+      'SELECT 1 FROM ${TableNames.userFollowsInfo} WHERE following = :following AND follower = :follower LIMIT 1';
       
     final param = {
       'following': username,

@@ -50,6 +50,7 @@ class UserLoginService {
     }
       
     await _setUserProfileData(email: email);
+
     await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
 
     await VentsSetup().setupLatest().then(

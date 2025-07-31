@@ -16,7 +16,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       FROM ${TableNames.ventInfo} vi
       WHERE NOT EXISTS (
         SELECT 1
-        ${TableNames.userBlockedInfo} ubi
+        FROM ${TableNames.userBlockedInfo} ubi
         WHERE ubi.blocked_by = :blocked_by
           AND ubi.blocked_username = vi.creator
       )
@@ -38,7 +38,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       FROM ${TableNames.ventInfo} vi
       WHERE NOT EXISTS (
         SELECT 1
-        ${TableNames.userBlockedInfo} ubi
+        FROM ${TableNames.userBlockedInfo} ubi
         WHERE ubi.blocked_by = :blocked_by
           AND ubi.blocked_username = vi.creator
       )
@@ -68,7 +68,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       WHERE ufi.follower = :username
         AND NOT EXISTS (
           SELECT 1
-          ${TableNames.userBlockedInfo} ubi
+          FROM ${TableNames.userBlockedInfo} ubi
           WHERE ubi.blocked_by = :username
             AND ubi.blocked_username = vi.creator
         )
@@ -96,7 +96,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         OR LOWER(tags) LIKE LOWER(:search_text))
         AND NOT EXISTS (
           SELECT 1
-          ${TableNames.userBlockedInfo} ubi
+          FROM ${TableNames.userBlockedInfo} ubi
           WHERE ubi.blocked_by = :blocked_by
             AND ubi.blocked_username = vi.creator
         )
@@ -127,12 +127,12 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         vi.marked_nsfw,
         upi.profile_picture
       FROM 
-        liked_${TableNames.ventInfo} lvi
+        liked_FROM ${TableNames.ventInfo} lvi
       JOIN 
-        ${TableNames.ventInfo} vi 
+        FROM ${TableNames.ventInfo} vi 
         ON lvi.post_id = vi.post_id
       JOIN 
-        ${TableNames.userProfileInfo} upi
+        FROM ${TableNames.userProfileInfo} upi
         ON vi.creator = upi.username
       WHERE 
         lvi.liked_by = :liked_by
@@ -161,12 +161,12 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         vi.marked_nsfw,
         upi.profile_picture
       FROM 
-        saved_${TableNames.ventInfo} svi
+        saved_FROM ${TableNames.ventInfo} svi
       JOIN 
-        ${TableNames.ventInfo} vi 
+        FROM ${TableNames.ventInfo} vi 
         ON svi.post_id = vi.post_id
       JOIN 
-        ${TableNames.userProfileInfo} upi
+        FROM ${TableNames.userProfileInfo} upi
         ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by

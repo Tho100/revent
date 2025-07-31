@@ -15,7 +15,7 @@ class ReplyIdGetter extends BaseQueryService {
 
     const getCommentIdQuery = 
     '''
-      SELECT reply_id ${TableNames.commentRepliesInfo} 
+      SELECT reply_id FROM ${TableNames.commentRepliesInfo} 
       WHERE comment_id = :comment_id 
         AND replied_by = :replied_by 
         AND reply = :reply
@@ -35,7 +35,7 @@ class ReplyIdGetter extends BaseQueryService {
 
   Future<List<int>> getAllRepliesId() async {
 
-    const getPostIdQuery = 'SELECT reply_id ${TableNames.commentRepliesInfo} WHERE comment_id = :comment_id';
+    const getPostIdQuery = 'SELECT reply_id FROM ${TableNames.commentRepliesInfo} WHERE comment_id = :comment_id';
 
     final param = {'comment_id': commentId};
 

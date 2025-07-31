@@ -13,7 +13,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     const query = 
     '''
       SELECT post_id, title, body_text, tags, created_at, total_likes, total_comments, marked_nsfw 
-      ${TableNames.ventInfo} 
+      FROM ${TableNames.ventInfo} 
       WHERE creator = :username
       ORDER BY created_at DESC
     ''';
@@ -69,7 +69,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
   Future<List<bool>> _ventPinnedState({required List<int> postIds}) async {
 
-    const query = 'SELECT post_id ${TableNames.pinnedVentInfo} WHERE pinned_by = :username';
+    const query = 'SELECT post_id FROM ${TableNames.pinnedVentInfo} WHERE pinned_by = :username';
 
     final param = {'username': userProvider.user.username};
 

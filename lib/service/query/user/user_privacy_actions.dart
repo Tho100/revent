@@ -28,7 +28,7 @@ class UserPrivacyActions extends BaseQueryService {
 
     '''
       SELECT privated_profile, privated_following_list, privated_saved_vents 
-      ${TableNames.userPrivacyInfo} 
+      FROM ${TableNames.userPrivacyInfo} 
       WHERE username = :username
     ''';
 

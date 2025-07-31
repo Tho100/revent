@@ -10,7 +10,7 @@ class DeleteAccountData extends BaseQueryService {
 
     const query = '''
       DELETE ui, upi, upvi, ufi, usl, vi, svi, avi, lvi, ci, cli, cri, rli, pci, pvi
-      ${TableNames.userInfo} ui
+      FROM ${TableNames.userInfo} ui
         LEFT JOIN ${TableNames.userProfileInfo} upi ON upi.username = ui.username
         LEFT JOIN ${TableNames.userPrivacyInfo} pvi ON upvi.username = ui.username
         LEFT JOIN ${TableNames.userFollowsInfo} ufi ON ufi.follower = ui.username

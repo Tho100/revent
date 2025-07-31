@@ -17,8 +17,8 @@ class UserRegistrationValidator extends BaseQueryService {
     const query = 
     '''
     SELECT
-	    EXISTS (SELECT 1 ${TableNames.userInfo} WHERE username = :username) AS username_exists,
-      EXISTS (SELECT 1 ${TableNames.userInfo} WHERE email = :email) AS email_exists;
+	    EXISTS (SELECT 1 FROM ${TableNames.userInfo} WHERE username = :username) AS username_exists,
+      EXISTS (SELECT 1 FROM ${TableNames.userInfo} WHERE email = :email) AS email_exists;
     ''';
 
     final params = {

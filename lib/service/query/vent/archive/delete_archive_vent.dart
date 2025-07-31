@@ -11,7 +11,7 @@ class DeleteArchiveVent extends BaseQueryService {
 
   Future<void> delete() async {
 
-    const query = 'DELETE ${TableNames.archiveVentInfo} WHERE title = :title AND creator = :creator';
+    const query = 'DELETE FROM ${TableNames.archiveVentInfo} WHERE title = :title AND creator = :creator';
 
     final params = {
       'title': title,

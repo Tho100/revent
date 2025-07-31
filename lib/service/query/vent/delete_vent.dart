@@ -23,7 +23,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
       await txn.execute(
         '''
           DELETE vi, lvi, svi
-          ${TableNames.ventInfo} vi
+          FROM ${TableNames.ventInfo} vi
             LEFT JOIN ${TableNames.likedVentInfo} lvi ON lvi.post_id = vi.post_id
             LEFT JOIN ${TableNames.savedVentInfo} svi ON svi.post_id = vi.post_id
           WHERE vi.post_id = :post_id
@@ -34,16 +34,16 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
       await txn.execute(
         '''
           DELETE ${TableNames.commentsLikesInfo}
-            ${TableNames.commentsLikesInfo}
+            FROM ${TableNames.commentsLikesInfo}
           INNER JOIN ${TableNames.commentsInfo}
-            ON ${TableNames.commentsLikesInfo}.comment_id = ${TableNames.commentsInfo}.comment_id
+            ON ${TableNames.commentsLikesInfo}.comment_id = FROM ${TableNames.commentsInfo}.comment_id
           WHERE ${TableNames.commentsInfo}.post_id = :post_id
         ''',
         {'post_id': postId}
       );
 
       await txn.execute(
-        'DELETE ${TableNames.commentsInfo} WHERE post_id = :post_id',
+        'DELETE FROM ${TableNames.commentsInfo} WHERE post_id = :post_id',
         {'post_id': postId}
       );
 

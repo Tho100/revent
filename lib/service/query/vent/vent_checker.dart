@@ -11,7 +11,7 @@ class VentChecker extends BaseQueryService {
 
   Future<bool> isVentExists() async {
 
-    const query = 'SELECT 1 ${TableNames.ventInfo} WHERE creator = :creator AND title = :title';
+    const query = 'SELECT 1 FROM ${TableNames.ventInfo} WHERE creator = :creator AND title = :title';
 
     final param = {
       'title': title,
@@ -26,7 +26,7 @@ class VentChecker extends BaseQueryService {
 
   Future<bool> isArchivedVentExists() async {
 
-    const query = 'SELECT 1 ${TableNames.archiveVentInfo} WHERE creator = :creator AND title = :title';
+    const query = 'SELECT 1 FROM ${TableNames.archiveVentInfo} WHERE creator = :creator AND title = :title';
 
     final param = {
       'title': title,

@@ -12,7 +12,7 @@ class VentDataGetter extends BaseQueryService {
 
   Future<String> getBodyText() async {
 
-    const query = 'SELECT body_text ${TableNames.ventInfo} WHERE post_id = :post_id';
+    const query = 'SELECT body_text FROM ${TableNames.ventInfo} WHERE post_id = :post_id';
 
     final param = {'post_id': postId};
 
@@ -27,7 +27,7 @@ class VentDataGetter extends BaseQueryService {
     const query = 
     '''
       SELECT tags, total_likes, created_at, marked_nsfw 
-      ${TableNames.ventInfo} 
+      FROM ${TableNames.ventInfo} 
       WHERE post_id = :post_id
     ''';
 

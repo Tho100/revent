@@ -18,19 +18,19 @@ class FollowSuggestionGetter extends BaseQueryService with UserProfileProviderSe
       FROM (
         (
           SELECT DISTINCT uf2.following AS username
-          ${TableNames.userFollowsInfo} uf1
+          FROM ${TableNames.userFollowsInfo} uf1
           JOIN ${TableNames.userFollowsInfo} uf2 
               ON uf1.following = uf2.follower
           WHERE uf1.follower = :username
             AND uf2.following NOT IN (
-                SELECT following ${TableNames.userFollowsInfo} WHERE follower = :username
+                SELECT following FROM ${TableNames.userFollowsInfo} WHERE follower = :username
             )
             AND uf2.following != :username
       )
       UNION
       (
         SELECT username
-        ${TableNames.userProfileInfo} 
+        FROM ${TableNames.userProfileInfo} 
           WHERE username != :username
           GROUP BY username
           ORDER BY COUNT(followers)

@@ -22,7 +22,7 @@ class CommentSettings extends BaseQueryService with VentProviderService {
   Future<Map<String, int>> getCurrentOptions() async {
 
     const query = 
-      'SELECT comment_enabled ${TableNames.ventInfo} WHERE post_id = :post_id';
+      'SELECT comment_enabled FROM ${TableNames.ventInfo} WHERE post_id = :post_id';
 
     final param = {'post_id': activeVentProvider.ventData.postId};
 

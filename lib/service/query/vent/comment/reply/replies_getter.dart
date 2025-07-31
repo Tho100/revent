@@ -15,7 +15,7 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
   Future<Map<String, List<dynamic>>> getReplies() async {
 
     final repliesIds = await ReplyIdGetter(commentId: commentId).getAllRepliesId();
-// TODO: improve this query
+
     const getRepliesQuery = 
     '''
       SELECT 
@@ -24,12 +24,16 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
         cri.created_at,
         cri.total_likes, 
         upi.profile_picture 
-      ${TableNames.commentRepliesInfo} cri 
+      FROM ${TableNames.commentRepliesInfo} cri 
       JOIN ${TableNames.userProfileInfo} upi
         ON cri.replied_by = upi.username 
-      LEFT JOIN ${TableNames.userBlockedInfo} ubi
-        ON cri.replied_by = ubi.blocked_username AND ubi.blocked_by = :blocked_by
-      WHERE cri.comment_id = :comment_id AND ubi.blocked_username IS NULL
+      WHERE cri.comment_id = :comment_id 
+        AND NOT EXISTS (
+          SELECT 1
+          FROM ${TableNames.userBlockedInfo} ubi
+          WHERE ubi.blocked_by = :blocked_by 
+            AND ubi.blocked_username = cri.replied_by    
+        )
     ''';
 
     final param = {
@@ -86,7 +90,7 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
     const readLikesQuery = 
     '''
       SELECT rli.reply_id
-      ${TableNames.repliesLikesInfo} rli
+      FROM ${TableNames.repliesLikesInfo} rli
       JOIN ${TableNames.commentRepliesInfo} cpi
         ON rli.reply_id = cpi.reply_id
       WHERE rli.liked_by = :liked_by AND cpi.comment_id = :comment_id

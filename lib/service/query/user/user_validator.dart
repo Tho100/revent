@@ -5,7 +5,7 @@ class UserValidator extends BaseQueryService {
 
   Future<bool> userExists({required String username}) async {
 
-    const query = 'SELECT 1 ${TableNames.userInfo} WHERE username = :username';
+    const query = 'SELECT 1 FROM ${TableNames.userInfo} WHERE username = :username';
 
     final param = {'username': username};
 
