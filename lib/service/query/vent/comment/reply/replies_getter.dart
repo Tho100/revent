@@ -31,8 +31,9 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
         AND NOT EXISTS (
           SELECT 1
           FROM ${TableNames.userBlockedInfo} ubi
-          WHERE ubi.blocked_by = :blocked_by 
-            AND ubi.blocked_username = cri.replied_by    
+          WHERE 
+            ubi.blocked_by = :blocked_by AND 
+            ubi.blocked_username = cri.replied_by    
         )
     ''';
 
