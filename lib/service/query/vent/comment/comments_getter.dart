@@ -30,8 +30,9 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
         AND NOT EXISTS (
           SELECT 1
           FROM ${TableNames.userBlockedInfo} ubi
-          WHERE ubi.blocked_by = :blocked_by
-            AND ubi.blocked_username = ci.commented_by
+          WHERE 
+            ubi.blocked_by = :blocked_by AND 
+            ubi.blocked_username = ci.commented_by
         )
       ORDER BY ci.created_at ASC;
     ''';

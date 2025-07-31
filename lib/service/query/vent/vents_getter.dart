@@ -69,8 +69,9 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         AND NOT EXISTS (
           SELECT 1
           FROM ${TableNames.userBlockedInfo} ubi
-          WHERE ubi.blocked_by = :username
-            AND ubi.blocked_username = vi.creator
+          WHERE 
+            ubi.blocked_by = :username AND 
+            ubi.blocked_username = vi.creator
         )
       ORDER BY created_at DESC
       LIMIT 25;
@@ -97,8 +98,9 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         AND NOT EXISTS (
           SELECT 1
           FROM ${TableNames.userBlockedInfo} ubi
-          WHERE ubi.blocked_by = :blocked_by
-            AND ubi.blocked_username = vi.creator
+          WHERE 
+            ubi.blocked_by = :blocked_by AND 
+            ubi.blocked_username = vi.creator
         )
       ORDER BY created_at DESC;
     ''';
