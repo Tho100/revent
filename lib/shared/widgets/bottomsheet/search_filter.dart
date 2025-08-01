@@ -1,49 +1,9 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_filter_button..dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 
 class BottomsheetSearchFilter {
-
-  Widget _buildOptionButton({
-    required String text,
-    required bool isCurrentlySelected,
-    required VoidCallback onPressed,
-    IconData? icon
-  }) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ThemeStyle.btnBottomsheetBgStyle,
-      child: Row(
-        children: [
-
-          if (icon != null)
-          Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
-
-          SizedBox(width: icon != null ? 15 : 10),
-
-          Text(
-            text,
-            style: ThemeStyle.btnBottomsheetTextStyle
-          ),
-
-          const Spacer(),
-
-          Padding(
-            padding: const EdgeInsets.only(right: 16.0),
-            child: Icon(
-              isCurrentlySelected ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
-              color: isCurrentlySelected ? ThemeColor.contentPrimary : ThemeColor.contentThird, 
-              size: 20
-            ),
-          ),
-
-        ],
-      )
-    );
-  }
 
   Future buildSortOptionsBottomsheet({
     required BuildContext context,
@@ -59,28 +19,28 @@ class BottomsheetSearchFilter {
 
         const BottomsheetHeader(title: 'Sort Posts'),
         
-        _buildOptionButton(
+        BottomsheetFilterButton(
           text: 'Best',
           isCurrentlySelected: currentFilter == 'Best',
           icon: CupertinoIcons.star,
           onPressed: bestOnPressed
         ),
 
-        _buildOptionButton(
+        BottomsheetFilterButton(
           text: 'Latest',
           isCurrentlySelected: currentFilter == 'Latest',
           icon: CupertinoIcons.bolt,
           onPressed: latestOnPressed
         ),
 
-        _buildOptionButton(
+        BottomsheetFilterButton(
           text: 'Oldest',
           isCurrentlySelected: currentFilter == 'Oldest',
           icon: CupertinoIcons.clock,
           onPressed: oldestOnPressed
         ),
 
-        _buildOptionButton(
+        BottomsheetFilterButton(
           text: 'Controversial',
           isCurrentlySelected: currentFilter == 'Controversial',
           icon: CupertinoIcons.flame,
@@ -108,31 +68,31 @@ class BottomsheetSearchFilter {
 
         const BottomsheetHeader(title: 'Sort by Date'),
 
-        _buildOptionButton(
+        BottomsheetFilterButton(
           text: 'All Time',
           isCurrentlySelected: currentFilter == 'All Time',
           onPressed: allTimeOnPressed
         ),
 
-        _buildOptionButton(
+        BottomsheetFilterButton(
           text: 'Past Year',
           isCurrentlySelected: currentFilter == 'Past Year',
           onPressed: pastYearOnPressed
         ),
 
-        _buildOptionButton(
+        BottomsheetFilterButton(
           text: 'Past Month',
           isCurrentlySelected: currentFilter == 'Past Month',
           onPressed: pastMonthOnPressed
         ),
 
-        _buildOptionButton(
+        BottomsheetFilterButton(
           text: 'Past Week',
           isCurrentlySelected: currentFilter == 'Past Week',
           onPressed: pastWeekOnPressed
         ),
 
-        _buildOptionButton(
+        BottomsheetFilterButton(
           text: 'Today',
           isCurrentlySelected: currentFilter == 'Today',
           onPressed: todayOnPressed
