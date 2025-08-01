@@ -34,10 +34,20 @@ class _AppInfoPageState extends State<AppInfoPage> {
     final tempDir = await getTemporaryDirectory();
 
     if (tempDir.existsSync()) {
-      await tempDir.delete(recursive: true);
+
+      final files = tempDir.listSync();
+      
+      for (var file in files) {
+        await file.delete(recursive: true);
+      }
+
     }
 
-    SnackBarDialog.temporarySnack(message: "Freed up ${cacheSizeInMb.toDouble().toStringAsFixed(2)}Mb.");
+    final afterClearMb = await AppCache().cacheSizeInMb();
+
+    final clearedMb = cacheSizeInMb - afterClearMb;
+
+    SnackBarDialog.temporarySnack(message: "Freed up ${clearedMb.toDouble().toStringAsFixed(2)}Mb.");
 
     _initializeCacheSize();
 
