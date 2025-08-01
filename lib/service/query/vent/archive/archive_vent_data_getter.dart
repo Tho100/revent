@@ -6,11 +6,11 @@ import 'package:revent/helper/format_date.dart';
 class ArchiveVentDataGetter extends BaseQueryService {
 
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
-// TODO: Fix this query 'Fix can't load archived vents'
+
     const query = '''
-      SELECT title, created_at, tags 
-      FROM 
-        FROM ${TableNames.archiveVentInfo} 
+      SELECT 
+        title, created_at, tags 
+      FROM ${TableNames.archiveVentInfo} 
       WHERE creator = :username ORDER BY created_at DESC
     ''';
 
