@@ -100,7 +100,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
   }
 
-  void _startTimer() async {
+  void _initializeSplashScreenTimer() async {
 
     final localUsername = (await localStorage.readAccountInformation())['username']!;
 
@@ -151,7 +151,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
   @override
   void initState() {
     super.initState();
-    _startTimer();
+    _initializeSplashScreenTimer();
   }
 
   @override
