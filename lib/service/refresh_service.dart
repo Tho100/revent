@@ -50,7 +50,7 @@ class RefreshService with
 
     await ProfileDataSetup().setup(username: userData.username);
 
-    final callProfilePosts = ProfilePostsSetup(
+    final profilePostsSetup = ProfilePostsSetup(
       profileType: ProfileType.myProfile.value,
       username: userData.username
     );
@@ -58,8 +58,8 @@ class RefreshService with
     profilePostsProvider.myProfile.clear();
     profileSavedProvider.myProfile.clear();
 
-    await callProfilePosts.setupPosts();
-    await callProfilePosts.setupSaved();
+    await profilePostsSetup.setupPosts();
+    await profilePostsSetup.setupSaved();
 
   }
 

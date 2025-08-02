@@ -25,7 +25,7 @@ class AccountInformationPage extends StatefulWidget {
 
 class _AccountInformationPageState extends State<AccountInformationPage> with UserProfileProviderService {
 
-  Future<String> _loadJoinedDate() async {
+  Future<String> _initializeJoinDate() async {
 
     if (userProvider.user.joinedDate == null) {
 
@@ -89,7 +89,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
 
   Widget _buildJoinedDate() {
     return FutureBuilder<String>(
-      future: _loadJoinedDate(),
+      future: _initializeJoinDate(),
       builder: (_, snapshot) {
 
         if (snapshot.connectionState == ConnectionState.waiting) {

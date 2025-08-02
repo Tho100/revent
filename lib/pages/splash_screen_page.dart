@@ -86,7 +86,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
   }
 
-  Future<void> _loadStartupData() async {
+  Future<void> _initializedStartupData() async {
 
     await ProfileDataSetup().setup(username: userProvider.user.username).then(
       (_) => _initializeHomeVents()
@@ -122,10 +122,10 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
     try {
 
-      final readLocalData = await localStorage.readAccountInformation();
+      final localData = await localStorage.readAccountInformation();
 
-      final username = readLocalData['username']!;
-      final email = readLocalData['email']!;
+      final username = localData['username']!;
+      final email = localData['email']!;
 
       if (username.isEmpty) {
         NavigatePage.mainScreenPage();
@@ -136,7 +136,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
       userProvider.setUser(userSetup);      
 
-      await _loadStartupData().then(
+      await _initializedStartupData().then(
         (_) => NavigatePage.homePage()
       );
       

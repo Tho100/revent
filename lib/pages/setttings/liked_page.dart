@@ -27,7 +27,7 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
-  Future<void> _loadLikedVentsData() async {
+  Future<void> _initializeLikedVentsData() async {
 
     try {
 
@@ -142,7 +142,7 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
   @override
   void initState() {
     super.initState();
-    _loadLikedVentsData();
+    _initializeLikedVentsData();
     navigationProvider.setCurrentRoute(AppRoute.likedPosts.path);
   }
 

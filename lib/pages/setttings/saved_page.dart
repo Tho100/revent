@@ -27,7 +27,7 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
-  Future<void> _loadSavedVentsData() async {
+  Future<void> _initializeSavedVentsData() async {
 
     try {
 
@@ -142,7 +142,7 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
   @override
   void initState() {
     super.initState();
-    _loadSavedVentsData();
+    _initializeSavedVentsData();
     navigationProvider.setCurrentRoute(AppRoute.savedPosts.path);
   }
 

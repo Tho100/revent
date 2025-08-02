@@ -108,7 +108,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   }
 
-  Future<void> _loadArchiveVentsData() async {
+  Future<void> _initializeArchiveVentsData() async {
 
     try {
 
@@ -442,7 +442,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
   @override
   void initState() {
     super.initState();
-    _loadArchiveVentsData();
+    _initializeArchiveVentsData();
   }
 
   @override
