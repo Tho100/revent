@@ -16,9 +16,11 @@ class DataConverter {
   /// Each non-zero integer is interpreted as [True], zero as [False].
   /// 
   /// [nsfwMarks] A list of integers representing NSFW flags.
- 
-  static List<bool> convertToBools(List<int> nsfwMarks) {
+ // TODO: Make it more general e.g name rename the parameter to values
+  static List<bool> convertToBools(List<int> nsfwMarks) {    
     return nsfwMarks.map((isNsfw) => isNsfw != 0).toList();
   }
+
+  static int convertBoolToInt(bool value) => value ? 1 : 0;
 
 }

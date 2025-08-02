@@ -6,7 +6,7 @@ import 'package:revent/helper/extract_data.dart';
 
 class UserPrivacyActions extends BaseQueryService {
 
-  Future<void> updatePrivacyData({
+  Future<void> updatePrivacyOption({
     required int value, 
     required String column
   }) async {
@@ -22,10 +22,9 @@ class UserPrivacyActions extends BaseQueryService {
 
   }
 
-  Future<Map<String, int>> getCurrentOptions({required String username}) async {
+  Future<Map<String, int>> getCurrentPrivacyOptions({required String username}) async {
 
     const query = 
-
     '''
       SELECT privated_profile, privated_following_list, privated_saved_vents 
       FROM ${TableNames.userPrivacyInfo} 

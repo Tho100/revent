@@ -146,7 +146,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Future<void> _initializePrivacySettings() async {
 
-    final privacyOptions = await UserPrivacyActions().getCurrentOptions(
+    final privacyOptions = await UserPrivacyActions().getCurrentPrivacyOptions(
       username: widget.username
     );
 
