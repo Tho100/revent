@@ -108,7 +108,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
 
     final idInfo = await _getIdInfo();
 
-    const likesInfoParameterQuery = 
+    const likesInfoQueryParams = 
       'WHERE comment_id = :comment_id AND liked_by = :liked_by';
 
     final likesInfoParams = {
@@ -117,8 +117,8 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
     };
 
     final isUserLikedComment = await _isUserLikedComment(
-      likesInfoParams: likesInfoParams,
-      likesInfoParameterQuery: likesInfoParameterQuery
+      likesInfoQueryParams: likesInfoQueryParams,
+      likesInfoParams: likesInfoParams
     );
 
     await _updateCommentLikes(
@@ -130,7 +130,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
     await _updateLikesInfo(
       isUserLikedPost: isUserLikedComment,
       likesInfoParams: likesInfoParams,
-      likesInfoParameterQuery: likesInfoParameterQuery
+      likesInfoQueryParams: likesInfoQueryParams
     );
 
     final index = commentsProvider.comments.indexWhere(
@@ -169,14 +169,14 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
   }
 
   Future<bool> _isUserLikedComment({
-    required Map<String, dynamic> likesInfoParams,
-    required String likesInfoParameterQuery  
+    required String likesInfoQueryParams,
+    required Map<String, dynamic> likesInfoParams
   }) async {
 
-    final readLikesInfoQuery = 
-      'SELECT 1 FROM ${TableNames.commentsLikesInfo} $likesInfoParameterQuery';
+    final getLikesInfoQuery = 
+      'SELECT 1 FROM ${TableNames.commentsLikesInfo} $likesInfoQueryParams';
 
-    final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
+    final likesInfoResults = await executeQuery(getLikesInfoQuery, likesInfoParams);
 
     return likesInfoResults.rows.isNotEmpty;
 
@@ -185,11 +185,11 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
   Future<void> _updateLikesInfo({
     required bool isUserLikedPost,
     required Map<String, dynamic> likesInfoParams,
-    required String likesInfoParameterQuery,
+    required String likesInfoQueryParams,
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE FROM ${TableNames.commentsLikesInfo} $likesInfoParameterQuery'
+      ? 'DELETE FROM ${TableNames.commentsLikesInfo} $likesInfoQueryParams'
       : 'INSERT INTO ${TableNames.commentsLikesInfo} (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
 
     await executeQuery(query, likesInfoParams);

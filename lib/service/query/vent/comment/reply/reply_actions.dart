@@ -91,7 +91,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
       commentId: commentId
     ).getReplyId(username: repliedBy, replyText: replyText);
 
-    const likesInfoParameterQuery = 
+    const likesInfoQueryParams = 
       'WHERE reply_id = :reply_id AND liked_by = :liked_by';
 
     final likesInfoParams = {
@@ -100,8 +100,8 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
     };
 
     final isUserLikedReply = await _isUserLikedReply(
-      likesInfoParams: likesInfoParams,
-      likesInfoParameterQuery: likesInfoParameterQuery
+      likesInfoQueryParams: likesInfoQueryParams,
+      likesInfoParams: likesInfoParams
     );
 
     await _updateReplyLikes(
@@ -112,7 +112,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
     await _updateLikesInfo(
       isUserLikedPost: isUserLikedReply,
       likesInfoParams: likesInfoParams,
-      likesInfoParameterQuery: likesInfoParameterQuery
+      likesInfoQueryParams: likesInfoQueryParams
     );
 
     final index = repliesProvider.replies.indexWhere(
@@ -147,14 +147,14 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
   }
 
   Future<bool> _isUserLikedReply({
-    required Map<String, dynamic> likesInfoParams,
-    required String likesInfoParameterQuery  
+    required String likesInfoQueryParams,
+    required Map<String, dynamic> likesInfoParams
   }) async {
 
-    final readLikesInfoQuery = 
-      'SELECT 1 FROM ${TableNames.repliesLikesInfo} $likesInfoParameterQuery';
+    final getLikesInfoQuery = 
+      'SELECT 1 FROM ${TableNames.repliesLikesInfo} $likesInfoQueryParams';
 
-    final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
+    final likesInfoResults = await executeQuery(getLikesInfoQuery, likesInfoParams);
 
     return likesInfoResults.rows.isNotEmpty;
 
@@ -163,11 +163,11 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
   Future<void> _updateLikesInfo({
     required bool isUserLikedPost,
     required Map<String, dynamic> likesInfoParams,
-    required String likesInfoParameterQuery,
+    required String likesInfoQueryParams,
   }) async {
 
     final query = isUserLikedPost 
-      ? 'DELETE FROM ${TableNames.repliesLikesInfo} $likesInfoParameterQuery'
+      ? 'DELETE FROM ${TableNames.repliesLikesInfo} $likesInfoQueryParams'
       : 'INSERT INTO ${TableNames.repliesLikesInfo} (liked_by, reply_id) VALUES (:liked_by, :reply_id)';
 
     await executeQuery(query, likesInfoParams);

@@ -39,7 +39,7 @@ class VentActions extends BaseQueryService with
       ? activeVentProvider.ventData.postId
       : await PostIdGetter(title: title, creator: creator).getPostId();
 
-    const likesInfoQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
+    const likesInfoParameterQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
 
     final likesInfoParams = {
       'post_id': postId,
@@ -48,7 +48,7 @@ class VentActions extends BaseQueryService with
 
     final isPostAlreadyLiked = await _isUserLikedPost(
       likesInfoParams: likesInfoParams,
-      likesInfoQuery: likesInfoQuery
+      likesInfoParameterQuery: likesInfoParameterQuery
     );
 
     final conn = await connection();
@@ -66,7 +66,7 @@ class VentActions extends BaseQueryService with
 
       await txn.execute(
         isPostAlreadyLiked 
-          ? 'DELETE FROM ${TableNames.likedVentInfo} $likesInfoQuery'
+          ? 'DELETE FROM ${TableNames.likedVentInfo} $likesInfoParameterQuery'
           : 'INSERT INTO ${TableNames.likedVentInfo} (post_id, liked_by) VALUES (:post_id, :liked_by)',
         likesInfoParams
       );
@@ -79,13 +79,13 @@ class VentActions extends BaseQueryService with
 
   Future<bool> _isUserLikedPost({
     required Map<String, dynamic> likesInfoParams,
-    required String likesInfoQuery  
+    required String likesInfoParameterQuery  
   }) async {
 
-    final readLikesInfoQuery = 
-      'SELECT 1 FROM ${TableNames.likedVentInfo} $likesInfoQuery';
+    final getLikesInfoQuery = 
+      'SELECT 1 FROM ${TableNames.likedVentInfo} $likesInfoParameterQuery';
 
-    final likesInfoResults = await executeQuery(readLikesInfoQuery, likesInfoParams);
+    final likesInfoResults = await executeQuery(getLikesInfoQuery, likesInfoParams);
 
     return likesInfoResults.rows.isNotEmpty;
 
@@ -135,7 +135,7 @@ class VentActions extends BaseQueryService with
       ? activeVentProvider.ventData.postId
       : await PostIdGetter(title: title, creator: creator).getPostId();
 
-    const savedInfoParamsQuery = 'WHERE post_id = :post_id AND saved_by = :saved_by';
+    const savedInfoQueryParams = 'WHERE post_id = :post_id AND saved_by = :saved_by';
 
     final savedInfoParams = {
       'post_id': postId,
@@ -143,13 +143,13 @@ class VentActions extends BaseQueryService with
     };
 
     final isUserSavedPost = await _isUserSavedPost(
-      savedInfoParamsQuery: savedInfoParamsQuery, 
+      savedInfoQueryParams: savedInfoQueryParams, 
       savedInfoParams: savedInfoParams
     );
 
     await _updateSavedInfo(
       isUserSavedPost: isUserSavedPost, 
-      savedInfoParamsQuery: savedInfoParamsQuery, 
+      savedInfoQueryParams: savedInfoQueryParams, 
       savedInfoParams: savedInfoParams
     );
 
@@ -158,14 +158,14 @@ class VentActions extends BaseQueryService with
   }
 
   Future<bool> _isUserSavedPost({
-    required String savedInfoParamsQuery,
-    required Map<String, dynamic> savedInfoParams,
+    required String savedInfoQueryParams,
+    required Map<String, dynamic> savedInfoParams
   }) async {
 
-    final readSavedInfoQuery = 
-      'SELECT 1 FROM ${TableNames.savedVentInfo} $savedInfoParamsQuery'; 
+    final getSavedInfoQuery = 
+      'SELECT 1 FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'; 
 
-    final savedInfoResults = await executeQuery(readSavedInfoQuery, savedInfoParams);
+    final savedInfoResults = await executeQuery(getSavedInfoQuery, savedInfoParams);
     
     return savedInfoResults.rows.isNotEmpty;
 
@@ -173,12 +173,12 @@ class VentActions extends BaseQueryService with
 
   Future<void> _updateSavedInfo({
     required bool isUserSavedPost,
-    required String savedInfoParamsQuery,
+    required String savedInfoQueryParams,
     required Map<String, dynamic> savedInfoParams,
   }) async {
 
     final query = isUserSavedPost 
-      ? 'DELETE FROM ${TableNames.savedVentInfo} $savedInfoParamsQuery'
+      ? 'DELETE FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'
       : 'INSERT INTO ${TableNames.savedVentInfo} (post_id, saved_by) VALUES (:post_id, :saved_by)';
 
     await executeQuery(query, savedInfoParams);
