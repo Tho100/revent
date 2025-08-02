@@ -5,7 +5,7 @@ import 'package:revent/helper/format_date.dart';
 
 class ArchiveVentDataGetter extends BaseQueryService {
 
-  Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
+  Future<Map<String, List<dynamic>>> getMetadata({required String username}) async {
 
     const query = '''
       SELECT 

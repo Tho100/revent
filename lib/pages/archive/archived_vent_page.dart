@@ -112,7 +112,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
     try {
 
-      final archiveVentsInfo = await archiveDataGetter.getPosts(
+      final archiveVentsInfo = await archiveDataGetter.getMetadata(
         username: userProvider.user.username
       );
 
