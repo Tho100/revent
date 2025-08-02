@@ -26,7 +26,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   final _userPrivacyHandler = UserPrivacyHandler();
 
-  void _loadCurrentOptions() async {
+  void _initializeCurrentOptions() async {
 
     final currentOptions = await UserPrivacyActions().getCurrentOptions(
       username: getIt.userProvider.user.username
@@ -168,7 +168,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
   @override
   void initState() {
     super.initState();
-    _loadCurrentOptions();
+    _initializeCurrentOptions();
   }
 
   @override

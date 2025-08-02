@@ -39,14 +39,14 @@ class _MyProfilePageState extends State<MyProfilePage> with
   UserProfileProviderService,
   NavigationProviderService {
 
-  late ProfilePostsSetup callProfilePosts;
+  late ProfilePostsSetup profilePostsSetup;
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
 
   void _initializeClasses() {
 
-    callProfilePosts = ProfilePostsSetup(
+    profilePostsSetup = ProfilePostsSetup(
       profileType: ProfileType.myProfile.value,
       username: userProvider.user.username
     );
@@ -74,7 +74,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
   void _onTabChanged() async {
 
     if (tabController.index == 1) {
-      await callProfilePosts.setupSaved();
+      await profilePostsSetup.setupSaved();
     }
 
     setState(() {
@@ -95,7 +95,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
       }
 
-      await callProfilePosts.setupPosts();
+      await profilePostsSetup.setupPosts();
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);

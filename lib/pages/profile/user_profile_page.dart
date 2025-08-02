@@ -60,7 +60,11 @@ class _UserProfilePageState extends State<UserProfilePage> with
   final isFollowingNotifier = ValueNotifier<bool>(false);
   final socialHandlesNotifier = ValueNotifier<Map<String, String>>({});
 
-  late ProfilePostsSetup callProfilePosts;
+  final profileDataGetter = ProfileDataGetter();
+  final userDataGetter = UserDataGetter();
+  final userFollowStatus = UserFollowStatus();
+
+  late ProfilePostsSetup profilePostsSetup;
   late ProfileInfoWidgets profileInfoWidgets;
   late ProfileTabBarWidgets tabBarWidgets;
   late TabController tabController;
@@ -74,7 +78,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   void _initializeClasses() async {
     
-    callProfilePosts = ProfilePostsSetup(
+    profilePostsSetup = ProfilePostsSetup(
       profileType: ProfileType.userProfile.value,
       username: widget.username,
     );
@@ -109,7 +113,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       }
 
       if (!isSavedPostsHidden) {
-        await callProfilePosts.setupSaved();
+        await profilePostsSetup.setupSaved();
       }
 
     }
@@ -120,11 +124,11 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   }
 
-  Future<String> _loadJoinedDate() async {
+  Future<String> _initializeJoinDate() async {
 
     if (joinedDate.isEmpty) {
 
-      final getJoinedDate = await UserDataGetter().getJoinedDate(
+      final getJoinedDate = await userDataGetter.getJoinedDate(
         username: widget.username
       );
 
@@ -140,36 +144,49 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   }
 
-  Future<void> _loadPrivacySettings() async {
+  Future<void> _initializePrivacySettings() async {
 
-    final getCurrentOptions = await UserPrivacyActions().getCurrentOptions(
+    final privacyOptions = await UserPrivacyActions().getCurrentOptions(
       username: widget.username
     );
 
-    isPrivateAccount = getCurrentOptions['account'] != 0;
-    isFollowingListHidden = getCurrentOptions['following'] != 0;
-    isSavedPostsHidden = getCurrentOptions['saved'] != 0;
+    isPrivateAccount = privacyOptions['account'] != 0;
+    isFollowingListHidden = privacyOptions['following'] != 0;
+    isSavedPostsHidden = privacyOptions['saved'] != 0;
 
   }
 
-  Future<void> _setPlaceholderAccountData() async {
+  Future<void> _initializeRestrictedView() async {
 
-    final getProfileData = await ProfileDataGetter().getProfileData(
+    final profileData = await profileDataGetter.getProfileData(
       isMyProfile: false, username: widget.username
     );
         
-    followersNotifier.value = getProfileData['followers']; 
-    followingNotifier.value = getProfileData['following'];
-    bioNotifier.value = isBlockedAccount ? '' : getProfileData['bio'];
-    pronounsNotifier.value =  isBlockedAccount ? '' : getProfileData['pronouns'];
+    followersNotifier.value = profileData['followers']; 
+    followingNotifier.value = profileData['following'];
+    bioNotifier.value = isBlockedAccount ? '' : profileData['bio'];
+    pronounsNotifier.value =  isBlockedAccount ? '' : profileData['pronouns'];
 
-    isFollowingNotifier.value = await UserFollowStatus().isFollowing(username: widget.username);
+    isFollowingNotifier.value = await userFollowStatus.isFollowing(username: widget.username);
     
     postsNotifier.value = 0;
 
   }
 
-  Future<void> _initializeProfileData() async {
+  Future<void> _initializeBasicProfileInfo() async {
+
+    final profileData = await profileDataGetter.getProfileData(
+      isMyProfile: false, username: widget.username
+    );
+        
+    followersNotifier.value = profileData['followers']; 
+    followingNotifier.value = profileData['following'];
+    bioNotifier.value =  profileData['bio'];
+    pronounsNotifier.value =  profileData['pronouns'];
+
+  }
+
+  Future<void> _initializeCompleteProfileData() async {
 
     try {
 
@@ -177,36 +194,28 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
       if (isBlockedAccount) {
         setState(() {});
-        await _setPlaceholderAccountData();
+        await _initializeRestrictedView();
         return;
       }
 
-      await _loadPrivacySettings();
+      await _initializePrivacySettings();
 
       if (isPrivateAccount) {
-        await _setPlaceholderAccountData();
+        await _initializeRestrictedView();
         return;
       }
 
-      final getProfileData = await ProfileDataGetter().getProfileData(
-        isMyProfile: false, username: widget.username
-      );
-          
-      followersNotifier.value = getProfileData['followers']; 
-      followingNotifier.value = getProfileData['following'];
-      bioNotifier.value =  getProfileData['bio'];
-      pronounsNotifier.value =  getProfileData['pronouns'];
+      _initializeBasicProfileInfo();
 
       profilePostsProvider.userProfile.clear();
       profileSavedProvider.userProfile.clear();
 
-      await callProfilePosts.setupPosts();
+      await profilePostsSetup.setupPosts();
       
       postsNotifier.value = profilePostsProvider.userProfile.titles.length;
 
-      isFollowingNotifier.value = await UserFollowStatus().isFollowing(username: widget.username);
-      
-      socialHandlesNotifier.value = await UserDataGetter().getSocialHandles(username: widget.username);
+      isFollowingNotifier.value = await userFollowStatus.isFollowing(username: widget.username);
+      socialHandlesNotifier.value = await userDataGetter.getSocialHandles(username: widget.username);
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
@@ -379,7 +388,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       valueListenable: pronounsNotifier,
       builder: (_, pronouns, __) {
         return ProfileBodyWidgets(
-          onRefresh: () async => await _initializeProfileData(),
+          onRefresh: () async => await _initializeCompleteProfileData(),
           tabBarWidgets: tabBarWidgets,
           profileInfoWidgets: profileInfoWidgets, 
           pronounsWidget: _buildPronouns(),
@@ -401,7 +410,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
           username: widget.username, 
           pronouns: pronounsNotifier.value, 
           pfpData: widget.pfpData, 
-          loadJoinedDate: _loadJoinedDate
+          loadJoinedDate: _initializeJoinDate
         );
       }
     );
@@ -422,7 +431,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
   void initState() {
     super.initState();
     _initializeClasses();
-    _initializeProfileData();
+    _initializeCompleteProfileData();
   }
 
   @override

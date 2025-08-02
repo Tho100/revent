@@ -78,7 +78,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
       if (!tabController.indexIsChanging) { 
         final currentPage = tabController.index == 0 ? 'Followers' : 'Following';
-        await _loadFollowsData(page: currentPage);
+        await _initializeFollowsData(page: currentPage);
       }
 
     });
@@ -117,7 +117,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
   }
 
-  Future<void> _loadFollowsData({required String page}) async {
+  Future<void> _initializeFollowsData({required String page}) async {
 
     try {
 
@@ -252,7 +252,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
   @override
   void initState() {
     super.initState();
-    _loadFollowsData(page: widget.pageType);
+    _initializeFollowsData(page: widget.pageType);
     _initializeTabController();
   }
 

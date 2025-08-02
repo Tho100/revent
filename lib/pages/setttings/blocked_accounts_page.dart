@@ -34,7 +34,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
 
   final ValueNotifier<List<_BlockedAccountsData>> blockedAccountsData = ValueNotifier([]);
 
-  Future<void> _loadBlockedAccounts() async {
+  Future<void> _initializeBlockedAccounts() async {
 
     final blockedAccountsInfo = await UserBlockGetter(
       username: getIt.userProvider.user.username
@@ -107,7 +107,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
   @override
   void initState() {
     super.initState();
-    _loadBlockedAccounts();
+    _initializeBlockedAccounts();
   }
 
   @override

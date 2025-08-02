@@ -108,11 +108,11 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   }
 
-  Future<void> _loadArchiveVentsData() async {
+  Future<void> _initializeArchiveVentsData() async {
 
     try {
 
-      final archiveVentsInfo = await archiveDataGetter.getPosts(
+      final archiveVentsInfo = await archiveDataGetter.getMetadata(
         username: userProvider.user.username
       );
 
@@ -442,7 +442,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
   @override
   void initState() {
     super.initState();
-    _loadArchiveVentsData();
+    _initializeArchiveVentsData();
   }
 
   @override

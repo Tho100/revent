@@ -319,7 +319,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<bool> _onClosePage() async {
 
-    if (postController.bodyTextController.text.isNotEmpty || postController.titleController.text.isNotEmpty) {
+    if (postController.bodyTextController.text.isNotEmpty ||  postController.titleController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardPost, 
       );

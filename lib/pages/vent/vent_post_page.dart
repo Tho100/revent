@@ -82,7 +82,22 @@ class _VentPostPageState extends State<VentPostPage> with
 
   late VentActionsHandler actionsHandler;
 
-  void _loadVentInfo() {
+  void _showNsfwConfirmationDialog() async {
+
+    if (!widget.isNsfw) {
+      _initializeVentInfo();
+      return;
+    }
+
+    final isViewPost = await CustomAlertDialog.nsfwWarningDialog();
+
+    if (isViewPost) {
+      _initializeVentInfo();
+    }
+
+  }
+
+  void _initializeVentInfo() {
 
     activeVentProvider.setVentData(
       ActiveVentData(
@@ -96,24 +111,9 @@ class _VentPostPageState extends State<VentPostPage> with
 
     _initializeVentActionsHandler();
 
-    _loadCommentsSettings()
+    _initializeCommentsSettings()
       .then((_) => _initializeComments())
-      .then((_) => _loadLastEdit());
-
-  }
-
-  void _showNsfwConfirmationDialog() async {
-
-    if (!widget.isNsfw) {
-      _loadVentInfo();
-      return;
-    }
-
-    final isViewPost = await CustomAlertDialog.nsfwWarningDialog();
-
-    if (isViewPost) {
-      _loadVentInfo();
-    }
+      .then((_) => _initializeLastEdit());
 
   }
 
@@ -125,7 +125,7 @@ class _VentPostPageState extends State<VentPostPage> with
     );
   }
 
-  Future<void> _loadLastEdit() async {
+  Future<void> _initializeLastEdit() async {
     await LastEditGetter().getLastEdit().then(
       (lastEdit) => activeVentProvider.setLastEdit(lastEdit)
     );
@@ -149,7 +149,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  Future<void> _loadCommentsSettings() async {
+  Future<void> _initializeCommentsSettings() async {
 
     final currentOptions = await commentSettings.getCurrentOptions();
 
