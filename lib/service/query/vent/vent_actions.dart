@@ -33,13 +33,19 @@ class VentActions extends BaseQueryService with
 
   }
 
-  Future<void> likePost() async {
+  Future<int> _getPostId() async {
 
-    final postId = activeVentProvider.ventData.postId != 0
+    return activeVentProvider.ventData.postId != 0 
       ? activeVentProvider.ventData.postId
       : await PostIdGetter(title: title, creator: creator).getPostId();
 
-    const likesInfoParameterQuery = 'WHERE post_id = :post_id AND liked_by = :liked_by';
+  }
+
+  Future<void> likePost() async {
+
+    final postId = await _getPostId();
+
+    const likesInfoQueryParams = 'WHERE post_id = :post_id AND liked_by = :liked_by';
 
     final likesInfoParams = {
       'post_id': postId,
@@ -48,7 +54,7 @@ class VentActions extends BaseQueryService with
 
     final isPostAlreadyLiked = await _isUserLikedPost(
       likesInfoParams: likesInfoParams,
-      likesInfoParameterQuery: likesInfoParameterQuery
+      likesInfoQueryParams: likesInfoQueryParams
     );
 
     final conn = await connection();
@@ -66,7 +72,7 @@ class VentActions extends BaseQueryService with
 
       await txn.execute(
         isPostAlreadyLiked 
-          ? 'DELETE FROM ${TableNames.likedVentInfo} $likesInfoParameterQuery'
+          ? 'DELETE FROM ${TableNames.likedVentInfo} $likesInfoQueryParams'
           : 'INSERT INTO ${TableNames.likedVentInfo} (post_id, liked_by) VALUES (:post_id, :liked_by)',
         likesInfoParams
       );
@@ -79,11 +85,11 @@ class VentActions extends BaseQueryService with
 
   Future<bool> _isUserLikedPost({
     required Map<String, dynamic> likesInfoParams,
-    required String likesInfoParameterQuery  
+    required String likesInfoQueryParams
   }) async {
 
     final getLikesInfoQuery = 
-      'SELECT 1 FROM ${TableNames.likedVentInfo} $likesInfoParameterQuery';
+      'SELECT 1 FROM ${TableNames.likedVentInfo} $likesInfoQueryParams';
 
     final likesInfoResults = await executeQuery(getLikesInfoQuery, likesInfoParams);
 
@@ -102,6 +108,71 @@ class VentActions extends BaseQueryService with
 
   }
 
+  Future<void> savePost() async {
+
+    final postId = await _getPostId();
+
+    const savedInfoQueryParams = 'WHERE post_id = :post_id AND saved_by = :saved_by';
+
+    final savedInfoParams = {
+      'post_id': postId,
+      'saved_by': userProvider.user.username
+    };
+
+    final isUserSavedPost = await _isUserSavedPost(
+      savedInfoQueryParams: savedInfoQueryParams, 
+      savedInfoParams: savedInfoParams
+    );
+
+    await _updatePostSavedInfo(
+      isUserSavedPost: isUserSavedPost, 
+      savedInfoQueryParams: savedInfoQueryParams, 
+      savedInfoParams: savedInfoParams
+    );
+
+    _updatePostSavedValue(isUserSavedPost: isUserSavedPost);
+
+  }
+
+  Future<bool> _isUserSavedPost({
+    required String savedInfoQueryParams,
+    required Map<String, dynamic> savedInfoParams
+  }) async {
+
+    final getSavedInfoQuery = 
+      'SELECT 1 FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'; 
+
+    final savedInfoResults = await executeQuery(getSavedInfoQuery, savedInfoParams);
+    
+    return savedInfoResults.rows.isNotEmpty;
+
+  }
+
+  Future<void> _updatePostSavedInfo({
+    required bool isUserSavedPost,
+    required String savedInfoQueryParams,
+    required Map<String, dynamic> savedInfoParams,
+  }) async {
+
+    final query = isUserSavedPost 
+      ? 'DELETE FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'
+      : 'INSERT INTO ${TableNames.savedVentInfo} (post_id, saved_by) VALUES (:post_id, :saved_by)';
+
+    await executeQuery(query, savedInfoParams);
+
+  }
+
+  void _updatePostSavedValue({required bool isUserSavedPost}) {
+
+    final currentProvider = _getVentProvider();
+
+    final index = currentProvider['vent_index'];
+    final ventData = currentProvider['vent_data'];
+
+    ventData.saveVent(index, isUserSavedPost);
+
+  }
+  
   Future<void> sendComment({required String comment}) async {
 
     await CommentActions(
@@ -129,71 +200,4 @@ class VentActions extends BaseQueryService with
 
   }
 
-  Future<void> savePost() async {
-
-    final postId = activeVentProvider.ventData.postId != 0 
-      ? activeVentProvider.ventData.postId
-      : await PostIdGetter(title: title, creator: creator).getPostId();
-
-    const savedInfoQueryParams = 'WHERE post_id = :post_id AND saved_by = :saved_by';
-
-    final savedInfoParams = {
-      'post_id': postId,
-      'saved_by': userProvider.user.username
-    };
-
-    final isUserSavedPost = await _isUserSavedPost(
-      savedInfoQueryParams: savedInfoQueryParams, 
-      savedInfoParams: savedInfoParams
-    );
-
-    await _updateSavedInfo(
-      isUserSavedPost: isUserSavedPost, 
-      savedInfoQueryParams: savedInfoQueryParams, 
-      savedInfoParams: savedInfoParams
-    );
-
-    _updatePostSavedValue(isUserSavedPost: isUserSavedPost);
-
-  }
-
-  Future<bool> _isUserSavedPost({
-    required String savedInfoQueryParams,
-    required Map<String, dynamic> savedInfoParams
-  }) async {
-
-    final getSavedInfoQuery = 
-      'SELECT 1 FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'; 
-
-    final savedInfoResults = await executeQuery(getSavedInfoQuery, savedInfoParams);
-    
-    return savedInfoResults.rows.isNotEmpty;
-
-  }
-
-  Future<void> _updateSavedInfo({
-    required bool isUserSavedPost,
-    required String savedInfoQueryParams,
-    required Map<String, dynamic> savedInfoParams,
-  }) async {
-
-    final query = isUserSavedPost 
-      ? 'DELETE FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'
-      : 'INSERT INTO ${TableNames.savedVentInfo} (post_id, saved_by) VALUES (:post_id, :saved_by)';
-
-    await executeQuery(query, savedInfoParams);
-
-  }
-
-  void _updatePostSavedValue({required bool isUserSavedPost}) {
-
-    final currentProvider = _getVentProvider();
-
-    final index = currentProvider['vent_index'];
-    final ventData = currentProvider['vent_data'];
-
-    ventData.saveVent(index, isUserSavedPost);
-
-  }
-  
 }
