@@ -4,7 +4,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 
-VentLatestData _dummyVentData() {
+VentLatestData _dummyVentData({
+  int? totalLikes = 0, 
+  bool? isPostSaved = false
+}) {
   return VentLatestData(
     title: '', 
     bodyText: '', 
@@ -12,7 +15,8 @@ VentLatestData _dummyVentData() {
     postTimestamp: '', 
     creator: '', 
     profilePic: Uint8List(0),
-    totalLikes: 0
+    totalLikes: totalLikes!,
+    isPostSaved: isPostSaved!
   );
 }
 
@@ -31,27 +35,51 @@ void main() {
 
   group('Vent Like/Dislike', () {
 
-    test('Like count increment test', () {
+    test('Should increment totalLikes wen user likes a post', () {
 
       const isUserLikedPost = false;
 
       ventProvider.setVents([_dummyVentData()]);
-
       ventProvider.likeVent(postIndex, isUserLikedPost);    
 
       expect(ventProvider.vents[postIndex].totalLikes, equals(1));
 
     });
 
-    test('Like count decrement test', () {
+    test('Should decrement totalLikes wen user unlikes a post', () {
 
       const isUserLikedPost = true;
 
       ventProvider.setVents([_dummyVentData()]);
-
       ventProvider.likeVent(postIndex, isUserLikedPost);    
 
       expect(ventProvider.vents[postIndex].totalLikes, equals(-1));
+
+    });
+
+  });
+
+  group('Vent Save/Unsave', () {
+
+    test('Should set isPostSaved to true when user saves a post', () {
+
+      const isUserSavedPost = false;
+
+      ventProvider.setVents([_dummyVentData(isPostSaved: isUserSavedPost)]);
+      ventProvider.saveVent(postIndex, isUserSavedPost);
+
+      expect(ventProvider.vents[postIndex].isPostSaved, equals(true));
+
+    });
+
+    test('Should set isPostSaved to false when user unsaves a post', () {
+
+      const isUserSavedPost = true;
+
+      ventProvider.setVents([_dummyVentData(isPostSaved: isUserSavedPost)]);
+      ventProvider.saveVent(postIndex, isUserSavedPost);
+
+      expect(ventProvider.vents[postIndex].isPostSaved, equals(false));
 
     });
 
