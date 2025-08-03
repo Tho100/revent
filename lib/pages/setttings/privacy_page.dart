@@ -24,7 +24,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
   final hideFollowingListNotifier = ValueNotifier<bool>(false);
   final hideSavedPostNotifier = ValueNotifier<bool>(false);
 
-  final _userPrivacyHandler = UserPrivacyHandler();
+  final userPrivacyHandler = UserPrivacyHandler();
 
   void _initializeCurrentOptions() async {
 
@@ -38,29 +38,14 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   }
 
-  Future<void> _onPrivateAccountPressed() async {
+  Future<void> _onPrivateAccountPressed() async
+    => await userPrivacyHandler.privateAccount(makePrivate: privateAccountNotifier.value);
 
-    privateAccountNotifier.value 
-      ? _userPrivacyHandler.privateAccount(makePrivate: true)
-      : _userPrivacyHandler.privateAccount(makePrivate: false);
+  Future<void> _onHideFollowingPressed() async
+    => await userPrivacyHandler.hideFollowingList(hideFollowingList: hideFollowingListNotifier.value);
 
-  }
-
-  Future<void> _onHideFollowingPressed() async {
-
-    hideFollowingListNotifier.value 
-      ? _userPrivacyHandler.hideFollowingList(hideFollowingList: true)
-      : _userPrivacyHandler.hideFollowingList(hideFollowingList: false);
-
-  }
-
-  Future<void> _onHideSavedPostsPressed() async {
-
-    hideSavedPostNotifier.value 
-      ? _userPrivacyHandler.hideSavedPosts(hideSavedPosts: true)
-      : _userPrivacyHandler.hideSavedPosts(hideSavedPosts: false);
-
-  }
+  Future<void> _onHideSavedPostsPressed() async
+    => await userPrivacyHandler.hideSavedPosts(hideSavedPosts: hideSavedPostNotifier.value);
 
   Widget _buildSwitch(ValueNotifier notifier, VoidCallback onToggled, String text, String description) {
     return Padding(

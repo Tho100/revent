@@ -159,9 +159,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   Future<void> _onToggleCommentsPressed() async {
 
-    enableCommentNotifier.value 
-      ? commentSettings.toggleComment(isEnableComment: 1)
-      : commentSettings.toggleComment(isEnableComment: 0);
+    await commentSettings.toggleComment(enableComment: enableCommentNotifier.value);
 
     if (!enableCommentNotifier.value) {
       commentsProvider.deleteComments();
