@@ -8,7 +8,8 @@ class DeleteAccountData extends BaseQueryService {
 
   Future<void> delete({required String username}) async {
 
-    const query = '''
+    const query = 
+    '''
       DELETE ui, upi, upvi, ufi, usl, vi, svi, avi, lvi, ci, cli, cri, rli, pci, pvi
       FROM ${TableNames.userInfo} ui
         LEFT JOIN ${TableNames.userProfileInfo} upi ON upi.username = ui.username

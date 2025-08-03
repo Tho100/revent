@@ -10,7 +10,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getLatestVentsData() async {
 
-    const query = '''
+    const query = 
+    '''
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
@@ -32,7 +33,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getTrendingVentsData() async {
 
-    const query = '''
+    const query = 
+    '''
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
@@ -59,7 +61,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getFollowingVentsData() async {
 
-    const query = '''
+    const query = 
+    '''
       SELECT 
         post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
@@ -87,7 +90,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
     final cleanSearchText = searchText?.replaceAll(RegExp(r'[^\w\s]'), '') ?? '';
 
-    const query = '''
+    const query = 
+    '''
       SELECT 
         post_id, title, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
@@ -116,7 +120,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getLikedVentsData() async {
 
-    const query = '''
+    const query = 
+    '''
       SELECT 
         vi.post_id,
         vi.title,
@@ -150,7 +155,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getSavedVentsData() async {
 
-    const query = '''
+    const query = 
+    '''
       SELECT 
         vi.post_id,
         vi.title,

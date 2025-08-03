@@ -87,12 +87,12 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
   Future<void> newArchiveVent() async {
 
     const insertVentInfoQuery = 
-      '''
-        INSERT INTO ${TableNames.archiveVentInfo} 
-          (creator, title, body_text, tags) 
-        VALUES 
-          (:creator, :title, :body_text, :tags)
-      ''';
+    '''
+      INSERT INTO ${TableNames.archiveVentInfo} 
+        (creator, title, body_text, tags) 
+      VALUES 
+        (:creator, :title, :body_text, :tags)
+    ''';
 
     final params = {
       'creator': userProvider.user.username,
