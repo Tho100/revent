@@ -79,7 +79,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
   void _initializeClasses() async {
     
     profilePostsSetup = ProfilePostsSetup(
-      profileType: ProfileType.userProfile.value,
+      profileType: ProfileType.userProfile,
       username: widget.username,
     );
 

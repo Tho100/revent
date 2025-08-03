@@ -7,7 +7,7 @@ import 'package:revent/service/query/user_profile/profile_saved_getter.dart';
 
 class ProfilePostsSetup with ProfilePostsProviderService {
 
-  final String profileType;
+  final ProfileType profileType;
   final String username;
 
   ProfilePostsSetup({
@@ -17,7 +17,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
   bool _isDataEmpty(String type) {
 
-    final isMyProfile = profileType == ProfileType.myProfile.value;
+    final isMyProfile = profileType == ProfileType.myProfile;
 
     if (type == 'posts') {
 
@@ -87,7 +87,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
     if (isDataEmpty) {
 
       final getPostsData = await ProfileSavedDataGetter().getSaved(
-        username: username, isMyProfile: profileType == ProfileType.myProfile.value
+        username: username, isMyProfile: profileType == ProfileType.myProfile
       );
 
       final creator = getPostsData['creator'] as List<String>;
