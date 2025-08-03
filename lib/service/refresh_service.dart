@@ -51,7 +51,7 @@ class RefreshService with
     await ProfileDataSetup().setup(username: userData.username);
 
     final profilePostsSetup = ProfilePostsSetup(
-      profileType: ProfileType.myProfile.value,
+      profileType: ProfileType.myProfile,
       username: userData.username
     );
 

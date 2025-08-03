@@ -47,7 +47,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
   void _initializeClasses() {
 
     profilePostsSetup = ProfilePostsSetup(
-      profileType: ProfileType.myProfile.value,
+      profileType: ProfileType.myProfile,
       username: userProvider.user.username
     );
 

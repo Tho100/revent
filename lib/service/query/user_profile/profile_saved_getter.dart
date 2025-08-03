@@ -14,7 +14,8 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     required bool isMyProfile
   }) async {
 
-    const query = '''
+    const query = 
+    '''
       SELECT 
         vi.post_id,
         vi.title,

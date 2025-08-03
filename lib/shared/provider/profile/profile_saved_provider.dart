@@ -41,65 +41,65 @@ class ProfileSavedData {
 
 class ProfileSavedProvider extends ChangeNotifier {
 
-  final Map<String, ProfileSavedData> _profileData = {
-    ProfileType.myProfile.value: ProfileSavedData(),
-    ProfileType.userProfile.value: ProfileSavedData(),
+  final Map<ProfileType, ProfileSavedData> _profileData = {
+    ProfileType.myProfile: ProfileSavedData(),
+    ProfileType.userProfile: ProfileSavedData(),
   };
 
-  ProfileSavedData get myProfile => _profileData[ProfileType.myProfile.value]!;
-  ProfileSavedData get userProfile => _profileData[ProfileType.userProfile.value]!;
+  ProfileSavedData get myProfile => _profileData[ProfileType.myProfile]!;
+  ProfileSavedData get userProfile => _profileData[ProfileType.userProfile]!;
 
-  void setCreator(String profileKey, List<String> creator) {
+  void setCreator(ProfileType profileKey, List<String> creator) {
     _profileData[profileKey]?.creator = creator;
     notifyListeners();
   }
 
-  void setProfilePicture(String profileKey, List<Uint8List> pfpData) {
+  void setProfilePicture(ProfileType profileKey, List<Uint8List> pfpData) {
     _profileData[profileKey]?.pfpData = pfpData;
     notifyListeners();
   }
 
-  void setTitles(String profileKey, List<String> titles) {
+  void setTitles(ProfileType profileKey, List<String> titles) {
     _profileData[profileKey]?.titles = titles;
     notifyListeners();
   }
 
-  void setBodyText(String profileKey, List<String> bodyText) {
+  void setBodyText(ProfileType profileKey, List<String> bodyText) {
     _profileData[profileKey]?.bodyText = bodyText;
     notifyListeners();
   }
 
-  void setTotalLikes(String profileKey, List<int> totalLikes) {
+  void setTotalLikes(ProfileType profileKey, List<int> totalLikes) {
     _profileData[profileKey]?.totalLikes = totalLikes;
     notifyListeners();
   }
 
-  void setTotalComments(String profileKey, List<int> totalComments) {
+  void setTotalComments(ProfileType profileKey, List<int> totalComments) {
     _profileData[profileKey]?.totalComments = totalComments;
     notifyListeners();
   }
 
-  void setPostTimestamp(String profileKey, List<String> postTimestamp) {
+  void setPostTimestamp(ProfileType profileKey, List<String> postTimestamp) {
     _profileData[profileKey]?.postTimestamp = postTimestamp;
     notifyListeners();
   }
 
-  void setTags(String profileKey, List<String> tags) {
+  void setTags(ProfileType profileKey, List<String> tags) {
     _profileData[profileKey]?.tags = tags;
     notifyListeners();
   }
 
-  void setIsNsfw(String profileKey, List<bool> isNsfw) {
+  void setIsNsfw(ProfileType profileKey, List<bool> isNsfw) {
     _profileData[profileKey]?.isNsfw = isNsfw;
     notifyListeners(); 
   }
 
-  void setIsPostLiked(String profileKey, List<bool> isPostLiked) {
+  void setIsPostLiked(ProfileType profileKey, List<bool> isPostLiked) {
     _profileData[profileKey]?.isPostLiked = isPostLiked;
     notifyListeners(); 
   }
 
-  void setIsPostSaved(String profileKey, List<bool> isPostSaved) {
+  void setIsPostSaved(ProfileType profileKey, List<bool> isPostSaved) {
     _profileData[profileKey]?.isPostSaved = isPostSaved;
     notifyListeners(); 
   }
@@ -114,7 +114,7 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   void deleteVent(int index) {
 
-    final profile = _profileData[ProfileType.myProfile.value];
+    final profile = _profileData[ProfileType.myProfile];
 
     if (profile != null) {
 
@@ -176,13 +176,13 @@ class ProfileSavedProvider extends ChangeNotifier {
     
   }
 
-  String _getCurrentProfileKey() {
+  ProfileType _getCurrentProfileKey() {
 
     final navigation = getIt.navigationProvider;
 
     return navigation.currentRoute == AppRoute.myProfile.path
-      ? ProfileType.myProfile.value
-      : ProfileType.userProfile.value;
+      ? ProfileType.myProfile
+      : ProfileType.userProfile;
 
   }
 

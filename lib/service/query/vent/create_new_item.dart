@@ -43,7 +43,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
           INSERT INTO ${TableNames.ventInfo} 
             (creator, title, body_text, tags, marked_nsfw, comment_enabled) 
           VALUES 
-          (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)
+            (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)
         ''',
         {
           'creator': userProvider.user.username,
@@ -86,7 +86,13 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
 
   Future<void> newArchiveVent() async {
 
-    const insertVentInfoQuery = 'INSERT INTO ${TableNames.archiveVentInfo} (creator, title, body_text, tags) VALUES (:creator, :title, :body_text, :tags)';
+    const insertVentInfoQuery = 
+    '''
+      INSERT INTO ${TableNames.archiveVentInfo} 
+        (creator, title, body_text, tags) 
+      VALUES 
+        (:creator, :title, :body_text, :tags)
+    ''';
 
     final params = {
       'creator': userProvider.user.username,

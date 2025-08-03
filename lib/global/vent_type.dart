@@ -1,0 +1,4 @@
+enum VentType { 
+  archived, 
+  nonArchived 
+}

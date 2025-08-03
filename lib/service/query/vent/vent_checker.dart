@@ -1,9 +1,8 @@
 import 'package:revent/global/table_names.dart';
+import 'package:revent/global/vent_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-
-enum _VentType { archived, nonArchived }
 
 class VentChecker extends BaseQueryService {
   
@@ -11,9 +10,9 @@ class VentChecker extends BaseQueryService {
 
   VentChecker({required this.title});
 
-  Future<bool> _isVentExists({required _VentType type}) async {
+  Future<bool> _isVentExists({required VentType type}) async {
 
-    final table = type == _VentType.archived 
+    final table = type == VentType.archived 
       ? TableNames.archiveVentInfo : TableNames.ventInfo;
 
     final query = 'SELECT 1 FROM $table WHERE creator = :creator AND title = :title';
@@ -29,7 +28,7 @@ class VentChecker extends BaseQueryService {
 
   }
 
-  Future<bool> isVentExists() async => _isVentExists(type: _VentType.nonArchived);
-  Future<bool> isArchivedVentExists() async => _isVentExists(type: _VentType.archived);
+  Future<bool> isVentExists() async => _isVentExists(type: VentType.nonArchived);
+  Future<bool> isArchivedVentExists() async => _isVentExists(type: VentType.archived);
   
 }

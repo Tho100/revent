@@ -7,7 +7,8 @@ class ArchiveVentDataGetter extends BaseQueryService {
 
   Future<Map<String, List<dynamic>>> getMetadata({required String username}) async {
 
-    const query = '''
+    const query = 
+    '''
       SELECT 
         title, created_at, tags 
       FROM ${TableNames.archiveVentInfo} 

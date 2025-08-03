@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
+import 'package:revent/global/vent_type.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/vent_actions_handler.dart';
@@ -235,7 +236,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
         final bodyText = await _getBodyText(title);
 
         NavigatePage.editVentPage(
-          title: title, body: bodyText, isArchive: true
+          title: title, body: bodyText, ventType: VentType.archived
         );
 
       },

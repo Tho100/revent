@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/vent_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
@@ -187,13 +188,13 @@ class NavigatePage {
   static void editVentPage({
     required String title, 
     required String body,
-    bool isArchive = false
+    VentType ventType = VentType.nonArchived
   }) {
     _navigateToPage(
       classPage: EditVentPage(
         title: title, 
         body: body, 
-        isArchive: isArchive
+        ventType: ventType
       )
     );
   }

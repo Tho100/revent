@@ -1,25 +1,18 @@
 import 'package:revent/global/table_names.dart';
+import 'package:revent/global/vent_type.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class LastEditGetter extends BaseQueryService with VentProviderService {
 
-  Future<String> getLastEdit() async {
-    return await _getLastEdit(isFromArchive: false);
-  }
+  Future<String> _getLastEdit({required VentType type}) async {
 
-  Future<String> getLastEditArchive() async {
-    return await _getLastEdit(isFromArchive: true);
-  }
-
-  Future<String> _getLastEdit({required bool isFromArchive}) async {
-
-    final query = isFromArchive 
+    final query = type == VentType.archived 
       ? 'SELECT last_edit FROM ${TableNames.archiveVentInfo} WHERE title = :title AND creator = :creator'
       : 'SELECT last_edit FROM ${TableNames.ventInfo} WHERE post_id = :post_id';
 
-    final params = isFromArchive 
+    final params = type == VentType.archived
       ? {
         'title': activeVentProvider.ventData.title, 
         'creator': activeVentProvider.ventData.creator
@@ -41,5 +34,8 @@ class LastEditGetter extends BaseQueryService with VentProviderService {
     return formattedTimeStamp;
 
   }
+
+  Future<String> getLastEdit() async => await _getLastEdit(type: VentType.nonArchived);
+  Future<String> getLastEditArchive() async => await _getLastEdit(type: VentType.archived);
 
 }
