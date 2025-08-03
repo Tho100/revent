@@ -35,7 +35,7 @@ void main() {
 
   group('Vent Like/Dislike', () {
 
-    test('Should increment totalLikes wen user likes a post', () {
+    test('Should increment totalLikes when user likes a post', () {
 
       const isUserLikedPost = false;
 
@@ -46,7 +46,7 @@ void main() {
 
     });
 
-    test('Should decrement totalLikes wen user unlikes a post', () {
+    test('Should decrement totalLikes when user unlikes a post', () {
 
       const isUserLikedPost = true;
 
