@@ -22,7 +22,11 @@ VentLatestData _dummyVentData({
 
 void main() {
 
-  final ventProvider = VentLatestProvider();  
+  late VentLatestProvider ventProvider;
+
+  setUp(() {
+    ventProvider = VentLatestProvider();
+  });
 
   group('Vent Create/Delete', () {
 
@@ -36,6 +40,7 @@ void main() {
 
     test('Should have less than 1 vents when user deleted a post', () {
 
+      ventProvider.addVent(_dummyVentData());
       ventProvider.deleteVent(0);
 
       expect(ventProvider.vents.length, lessThan(1));
@@ -43,6 +48,5 @@ void main() {
     });
 
   });
-
 
 }
