@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
-import 'package:revent/main.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 
 VentLatestData _dummyVentData({
@@ -24,14 +23,11 @@ void main() {
 
   late VentLatestProvider ventProvider;
 
-  const postIndex = 0;
-
   setUp(() {
-    getIt.reset();
-    getIt.registerLazySingleton<VentLatestProvider>(() => VentLatestProvider());
-    ventProvider = getIt<VentLatestProvider>();
-    ventProvider.setVents([_dummyVentData()]);
+    ventProvider = VentLatestProvider();
   });
+
+  const postIndex = 0;
 
   group('Vent Like/Dislike', () {
 
