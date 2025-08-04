@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:revent/helper/test_helper.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 

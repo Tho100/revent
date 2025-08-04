@@ -1,4 +1,4 @@
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:revent/helper/test_helper.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 
@@ -44,7 +44,7 @@ void main() {
 
       const isUserSavedPost = false;
 
-      ventProvider.setVents([TestHelper.dummyVentData(isPostSaved: isUserSavedPost)]);
+      ventProvider.setVents([TestHelper.dummyVentData()]);
       ventProvider.saveVent(postIndex, isUserSavedPost);
 
       expect(ventProvider.vents[postIndex].isPostSaved, equals(true));
