@@ -25,7 +25,7 @@ void main() {
   late VentLatestProvider ventProvider;
 
   const postIndex = 0;
-
+// TODO: remove these and use final ventProvider = VentLatestProvider();  
   setUp(() {
     getIt.reset();
     getIt.registerLazySingleton<VentLatestProvider>(() => VentLatestProvider());
