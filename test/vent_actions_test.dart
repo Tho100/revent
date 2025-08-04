@@ -1,23 +1,6 @@
-import 'dart:typed_data';
-
 import 'package:flutter_test/flutter_test.dart';
+import 'package:revent/helper/test_helper.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
-
-VentLatestData _dummyVentData({
-  int? totalLikes = 0, 
-  bool? isPostSaved = false
-}) {
-  return VentLatestData(
-    title: '', 
-    bodyText: '', 
-    tags: '', 
-    postTimestamp: '', 
-    creator: '', 
-    profilePic: Uint8List(0),
-    totalLikes: totalLikes!,
-    isPostSaved: isPostSaved!
-  );
-}
 
 void main() {
 
@@ -35,7 +18,7 @@ void main() {
 
       const isUserLikedPost = false;
 
-      ventProvider.setVents([_dummyVentData()]);
+      ventProvider.setVents([TestHelper.dummyVentData()]);
       ventProvider.likeVent(postIndex, isUserLikedPost);    
 
       expect(ventProvider.vents[postIndex].totalLikes, equals(1));
@@ -46,7 +29,7 @@ void main() {
 
       const isUserLikedPost = true;
 
-      ventProvider.setVents([_dummyVentData()]);
+      ventProvider.setVents([TestHelper.dummyVentData()]);
       ventProvider.likeVent(postIndex, isUserLikedPost);    
 
       expect(ventProvider.vents[postIndex].totalLikes, equals(-1));
@@ -61,7 +44,7 @@ void main() {
 
       const isUserSavedPost = false;
 
-      ventProvider.setVents([_dummyVentData(isPostSaved: isUserSavedPost)]);
+      ventProvider.setVents([TestHelper.dummyVentData(isPostSaved: isUserSavedPost)]);
       ventProvider.saveVent(postIndex, isUserSavedPost);
 
       expect(ventProvider.vents[postIndex].isPostSaved, equals(true));
@@ -72,7 +55,7 @@ void main() {
 
       const isUserSavedPost = true;
 
-      ventProvider.setVents([_dummyVentData(isPostSaved: isUserSavedPost)]);
+      ventProvider.setVents([TestHelper.dummyVentData()]);
       ventProvider.saveVent(postIndex, isUserSavedPost);
 
       expect(ventProvider.vents[postIndex].isPostSaved, equals(false));
