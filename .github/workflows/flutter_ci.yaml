@@ -20,6 +20,9 @@ jobs:
           flutter-version: '3.13.8'
           channel: 'stable'
 
+      - name: Create dummy .env
+        run: echo "DUMMY_KEY=null" > .env
+
       - name: Install dependencies
         run: flutter pub get
 
