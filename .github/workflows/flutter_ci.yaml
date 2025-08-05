@@ -28,11 +28,3 @@ jobs:
 
       - name: Run tests
         run: flutter test
-
-      # Optional: Enforce code formatting
-      # - name: Check formatting
-      #   run: flutter format --set-exit-if-changed .
-
-      # Optional: Build apk/web/etc (good for release pipeline)
-      # - name: Build APK
-      #   run: flutter build apk --release
