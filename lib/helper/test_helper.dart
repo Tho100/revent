@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 
 class TestHelper {
@@ -17,6 +18,15 @@ class TestHelper {
       profilePic: Uint8List(0),
       totalLikes: totalLikes!,
       isPostSaved: isPostSaved!
+    );
+  }
+
+  static CommentsData dummyCommentData() {
+    return CommentsData(
+      commentedBy: '', 
+      comment: '', 
+      commentTimestamp: '', 
+      pfpData: Uint8List(0),
     );
   }
 
