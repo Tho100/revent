@@ -10,7 +10,6 @@ void main() {
     ventProvider = VentLatestProvider();
   });
   
-
   group('Vent Create/Delete', () {
 
     test('Should have more than 0 vents when user created a post', () {

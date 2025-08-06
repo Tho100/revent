@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:revent/shared/provider/vent/comments_provider.dart';
+import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 
 class TestHelper {
@@ -26,6 +27,15 @@ class TestHelper {
       commentedBy: '', 
       comment: '', 
       commentTimestamp: '', 
+      pfpData: Uint8List(0),
+    );
+  }
+
+  static ReplyData dummyReplyData() {
+    return ReplyData(
+      repliedBy: '', 
+      reply: '', 
+      replyTimestamp: '', 
       pfpData: Uint8List(0),
     );
   }
