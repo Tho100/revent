@@ -27,7 +27,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   final searchPostsFilter = SearchPostsFilter();
 
-  Widget _buildVentPreview(SearchVents ventData) {
+  Widget _buildVentPreview(SearchVentsData ventData) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.5),
       child: DefaultVentPreviewer(
@@ -172,7 +172,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     );
   }
 
-  Widget _buildListView(List<SearchVents> ventDataList) {
+  Widget _buildListView(List<SearchVentsData> ventDataList) {
     return DynamicHeightGridView(
       key: UniqueKey(),
       physics: const AlwaysScrollableScrollPhysics(

@@ -205,13 +205,13 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
   }
 
   Future<void> setupSearch({required String searchText}) async {
-    await _setupVents<SearchVents>(
+    await _setupVents<SearchVentsData>(
       dataGetter: () => VentsGetter().getSearchVentsData(
         searchText: searchText,
       ),
       setVents: searchPostsProvider.setVents,
       ventBuilder: (title, _, tags, postTimestamp, creator,
-          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => SearchVents(
+          profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => SearchVentsData(
         title: title,
         tags: tags,
         postTimestamp: postTimestamp,

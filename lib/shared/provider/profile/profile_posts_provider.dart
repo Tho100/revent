@@ -200,18 +200,12 @@ class ProfilePostsProvider extends ChangeNotifier {
 
   }
 
-  List<T> _reorderList<T>(List<T> list, List<int> order) {
-    return order.map((index) => list[index]).toList();
-  }
+  List<T> _reorderList<T>(List<T> list, List<int> order) => order.map((index) => list[index]).toList();
 
   ProfileType _getCurrentProfileKey() {
-
-    final navigation = getIt.navigationProvider;
-
-    return navigation.currentRoute == AppRoute.myProfile.path
+    return getIt.navigationProvider.currentRoute == AppRoute.myProfile.path
       ? ProfileType.myProfile
       : ProfileType.userProfile;
-
   }
 
 }

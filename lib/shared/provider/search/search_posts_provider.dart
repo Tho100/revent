@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class SearchVents {
+class SearchVentsData {
 
   String title;
   String tags;
@@ -18,7 +18,7 @@ class SearchVents {
   bool isPostSaved;
   bool isNsfw;
 
-  SearchVents({
+  SearchVentsData({
     required this.title,
     required this.tags,
     required this.postTimestamp,
@@ -35,19 +35,19 @@ class SearchVents {
 
 class SearchPostsProvider extends ChangeNotifier {
 
-  List<SearchVents> _vents = [];
-  List<SearchVents> _filteredVents = [];
+  List<SearchVentsData> _vents = [];
+  List<SearchVentsData> _filteredVents = [];
 
-  List<SearchVents> get vents => _vents;
-  List<SearchVents> get filteredVents => _filteredVents;
+  List<SearchVentsData> get vents => _vents;
+  List<SearchVentsData> get filteredVents => _filteredVents;
 
-  void setVents(List<SearchVents> vents) {
+  void setVents(List<SearchVentsData> vents) {
     _vents = vents;
     _filteredVents = vents;
     notifyListeners();
   }
 
-  void setFilteredVents(List<SearchVents> vents) {
+  void setFilteredVents(List<SearchVentsData> vents) {
     _filteredVents = vents;
     notifyListeners(); 
   }
