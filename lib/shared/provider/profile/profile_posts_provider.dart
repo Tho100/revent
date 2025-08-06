@@ -182,7 +182,7 @@ class ProfilePostsProvider extends ChangeNotifier {
         }
       }
 
-      List<int> finalOrder = [...pinnedIndices, ...nonPinnedIndices];
+      final finalOrder = [...pinnedIndices, ...nonPinnedIndices];
 
       profile.titles = _reorderList(profile.titles, finalOrder);
       profile.bodyText = _reorderList(profile.bodyText, finalOrder);
