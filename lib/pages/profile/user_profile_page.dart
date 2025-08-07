@@ -437,7 +437,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
   @override
   void dispose() {
     navigationProvider.setProfileTabIndex(0);
-    navigationProvider.setCurrentRoute(AppRoute.home.path);
+    navigationProvider.setCurrentRoute(AppRoute.home);
     followersNotifier.dispose();
     followingNotifier.dispose();
     postsNotifier.dispose();

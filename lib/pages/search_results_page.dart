@@ -170,7 +170,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
     super.initState();
     _initializeClasses();
     _initializeSearchPosts();
-    navigationProvider.setCurrentRoute(AppRoute.searchResults.path);
+    navigationProvider.setCurrentRoute(AppRoute.searchResults);
   }
 
   @override

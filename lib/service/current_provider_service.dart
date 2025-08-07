@@ -33,7 +33,7 @@ class CurrentProviderService {
 
     if (isProfileRoute) {
 
-      final profileData = _navigation.currentRoute == AppRoute.myProfile.path
+      final profileData = _navigation.currentRoute == AppRoute.myProfile
         ? ventData.myProfile
         : ventData.userProfile;
 
@@ -110,19 +110,19 @@ class CurrentProviderService {
 
     dynamic ventData;
 
-    if (_navigation.currentRoute == AppRoute.home.path) {
+    if (_navigation.currentRoute == AppRoute.home) {
       ventData = _returnProvider(type: 'home', realTime: false);
 
     } else if (RouteHelper.isOnProfile) {
       ventData = _returnProvider(type: 'profile', realTime: false);
 
-    } else if (_navigation.currentRoute == AppRoute.searchResults.path) {
+    } else if (_navigation.currentRoute == AppRoute.searchResults) {
       ventData = _returnProvider(type: 'search', realTime: false);
 
-    } else if (_navigation.currentRoute == AppRoute.likedPosts.path) {
+    } else if (_navigation.currentRoute == AppRoute.profileLikedPosts) {
       ventData = _returnProvider(type: 'liked', realTime: false);
 
-    } else if (_navigation.currentRoute == AppRoute.savedPosts.path) {
+    } else if (_navigation.currentRoute == AppRoute.profileSavedPosts) {
       ventData = _returnProvider(type: 'saved', realTime: false);
 
     }
@@ -139,19 +139,19 @@ class CurrentProviderService {
 
     dynamic ventData;
 
-    if (_navigation.currentRoute == AppRoute.home.path) {
+    if (_navigation.currentRoute == AppRoute.home) {
       ventData = _returnProvider(type: 'home', realTime: true, context: context);
 
     } else if (RouteHelper.isOnProfile) {
       ventData = _returnProvider(type: 'profile', realTime: true, context: context);
 
-    } else if (_navigation.currentRoute == AppRoute.searchResults.path) {
+    } else if (_navigation.currentRoute == AppRoute.searchResults) {
       ventData = _returnProvider(type: 'search', realTime: true, context: context);
 
-    } else if (_navigation.currentRoute == AppRoute.likedPosts.path) {
+    } else if (_navigation.currentRoute == AppRoute.profileLikedPosts) {
       ventData = _returnProvider(type: 'liked', realTime: true, context: context);
 
-    } else if (_navigation.currentRoute == AppRoute.savedPosts.path) {
+    } else if (_navigation.currentRoute == AppRoute.profileSavedPosts) {
       ventData = _returnProvider(type: 'saved', realTime: true, context: context);
 
     }

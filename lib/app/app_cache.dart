@@ -21,11 +21,14 @@ class AppCache {
 
     if (file is File) {
       return file.lengthSync();
+    } 
+    
+    if (file is Directory) {
 
-    } else if (file is Directory) {
       int sum = 0;
 
       final children = file.listSync();
+      
       for (FileSystemEntity child in children) {
         sum += _processCacheSize(child);
       }

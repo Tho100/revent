@@ -72,7 +72,7 @@ class NavigatePage {
 
   static void homePage() {
     _navigation.setPageIndex(0);
-    _navigation.setCurrentRoute(AppRoute.home.path);
+    _navigation.setCurrentRoute(AppRoute.home);
     Navigator.pushAndRemoveUntil(
       navigatorKey.currentContext!,
       PageRouteBuilder(
@@ -97,7 +97,7 @@ class NavigatePage {
 
   static void myProfilePage() {
     _navigation.setPageIndex(4);
-    _navigation.setCurrentRoute(AppRoute.myProfile.path);
+    _navigation.setCurrentRoute(AppRoute.myProfile);
     _DockBarNavigationPages.myProfilePage();
   }
 
@@ -174,7 +174,7 @@ class NavigatePage {
     final profilePicture = 
       pfpData ?? await ProfilePictureGetter().getProfilePictures(username: username);
 
-    _navigation.setCurrentRoute(AppRoute.userProfile.path);
+    _navigation.setCurrentRoute(AppRoute.userProfile);
 
     _navigateToPage(
       classPage: UserProfilePage(

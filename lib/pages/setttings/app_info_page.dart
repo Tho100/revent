@@ -37,7 +37,7 @@ class _AppInfoPageState extends State<AppInfoPage> {
 
       final files = tempDir.listSync();
       
-      for (var file in files) {
+      for (final file in files) {
         await file.delete(recursive: true);
       }
 
