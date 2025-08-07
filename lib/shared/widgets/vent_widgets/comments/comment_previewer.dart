@@ -61,7 +61,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
         username: commentedBy, 
         commentText: comment, 
       ).delete().then(
-        (_) => SnackBarDialog.temporarySnack(message: 'Comment deleted.')
+        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.commentDeleted)
       );
 
       if (isOnRepliesPage) {
@@ -80,7 +80,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
       for (final comment in commentsProvider.comments) {
         if (comment.isPinned) {
-          SnackBarDialog.temporarySnack(message: 'You already have a pinned comment.');
+          SnackBarDialog.temporarySnack(message: AlertMessages.pinnedCommentExists);
           return;
         }
       }
@@ -89,7 +89,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
         username: commentedBy, 
         commentText: comment, 
       ).pin().then(
-        (_) => SnackBarDialog.temporarySnack(message: 'Pinned Comment.')
+        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.commentPinned)
       );
 
     } catch (_) {
@@ -106,7 +106,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
         username: commentedBy, 
         commentText: comment, 
       ).unpin().then(
-        (_) => SnackBarDialog.temporarySnack(message: 'Removed comment from pinned.')
+        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.unpinnedComment)
       );
 
     } catch (_) {
@@ -132,7 +132,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
   Widget _buildLastEdit() {
     return GestureDetector(
-      onTap: () => SnackBarDialog.temporarySnack(message: 'This comment was edited.'),
+      onTap: () => SnackBarDialog.temporarySnack(message: AlertMessages.editedComment),
       child: Icon(CupertinoIcons.pencil_outline, color: ThemeColor.contentThird, size: 18)
     );
   }

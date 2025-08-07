@@ -210,7 +210,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     if (isProfileSelected) {
       profilePicNotifier.value = profileProvider.profile.profilePicture;
-      SnackBarDialog.temporarySnack(message: 'Avatar updated.');
+      SnackBarDialog.temporarySnack(message: AlertMessages.avatarUpdated);
     }
 
   }

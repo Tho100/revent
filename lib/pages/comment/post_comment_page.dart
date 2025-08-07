@@ -55,12 +55,12 @@ class _PostCommentPageState extends State<PostCommentPage> with
           (_) => Navigator.pop(context)
         );
 
-        SnackBarDialog.temporarySnack(message: 'Comment posted.');
+        SnackBarDialog.temporarySnack(message: AlertMessages.commentPosted);
 
       }
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Comment failed.');
+      SnackBarDialog.errorSnack(message: AlertMessages.commentFailed);
     }
 
   }

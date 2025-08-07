@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
@@ -60,7 +61,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
       await RepliesSetup().setup(commentId: commentId);
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Replies not loaded.');
+      SnackBarDialog.errorSnack(message: AlertMessages.repliesFailedToLoad);
     }
 
   }
