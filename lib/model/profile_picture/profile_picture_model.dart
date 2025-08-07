@@ -6,7 +6,7 @@ import 'package:revent/model/profile_picture/profile_picture_picker.dart';
 
 class ProfilePictureModel {
 
-  static Future<bool> createProfilePicture(BuildContext context) async {
+  static Future<bool> createProfilePicture({required BuildContext context}) async {
 
     try {
 

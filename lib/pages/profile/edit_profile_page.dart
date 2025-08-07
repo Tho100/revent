@@ -206,7 +206,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _selectProfilePicture() async {
 
-    final isProfileSelected = await ProfilePictureModel.createProfilePicture(context);
+    final isProfileSelected = await ProfilePictureModel.createProfilePicture(context: context);
 
     if (isProfileSelected) {
       profilePicNotifier.value = profileProvider.profile.profilePicture;
