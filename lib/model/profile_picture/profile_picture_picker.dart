@@ -22,9 +22,9 @@ class ProfilePicturePicker {
     tabsTexts: TabsTexts(
       videoText: '',
       photoText: '',
-      noImagesFounded: 'Gallery is empty',
-      acceptAllPermissions: 'Permission denied',
-      clearImagesText: 'Clear selections',
+      noImagesFounded: 'Gallery Is Empty',
+      acceptAllPermissions: 'Permission Denied',
+      clearImagesText: 'Clear Selections',
     ),
     maximumSelection: 1,
       appTheme: AppTheme(
