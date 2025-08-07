@@ -203,7 +203,7 @@ class ProfilePostsProvider extends ChangeNotifier {
   List<T> _reorderList<T>(List<T> list, List<int> order) => order.map((index) => list[index]).toList();
 
   ProfileType _getCurrentProfileKey() {
-    return getIt.navigationProvider.currentRoute == AppRoute.myProfile.path
+    return getIt.navigationProvider.currentRoute == AppRoute.myProfile
       ? ProfileType.myProfile
       : ProfileType.userProfile;
   }

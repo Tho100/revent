@@ -70,10 +70,10 @@ class VentPreviewerWidgets {
 
     dynamic profileData;
 
-    if (navigation.currentRoute == AppRoute.myProfile.path) {
+    if (navigation.currentRoute == AppRoute.myProfile) {
       profileData = ventData.myProfile;
 
-    } else if (navigation.currentRoute == AppRoute.userProfile.path) {
+    } else if (navigation.currentRoute == AppRoute.userProfile) {
       profileData = ventData.userProfile;
 
     }
@@ -104,10 +104,10 @@ class VentPreviewerWidgets {
 
     dynamic profileData;
 
-    if (navigation.currentRoute == AppRoute.myProfile.path) {
+    if (navigation.currentRoute == AppRoute.myProfile) {
       profileData = ventData.myProfile;
 
-    } else if (navigation.currentRoute == AppRoute.userProfile.path) {
+    } else if (navigation.currentRoute == AppRoute.userProfile) {
       profileData = ventData.userProfile;
 
     }

@@ -143,13 +143,13 @@ class _SavedPageState extends State<SavedPage> with NavigationProviderService {
   void initState() {
     super.initState();
     _initializeSavedVentsData();
-    navigationProvider.setCurrentRoute(AppRoute.savedPosts.path);
+    navigationProvider.setCurrentRoute(AppRoute.profileSavedPosts);
   }
 
   @override
   void dispose() {
     isPageLoadedNotifier.dispose();
-    navigationProvider.setCurrentRoute(AppRoute.myProfile.path);
+    navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
   

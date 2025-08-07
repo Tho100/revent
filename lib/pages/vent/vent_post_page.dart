@@ -241,7 +241,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
     if (RouteHelper.isOnProfile) {
 
-      final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile.path;
+      final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile;
 
       totalLikes = isMyProfile
         ? ventData.myProfile.totalLikes[ventIndex]
@@ -274,7 +274,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
     if (RouteHelper.isOnProfile) {
 
-      final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile.path;
+      final isMyProfile = navigationProvider.currentRoute == AppRoute.myProfile;
 
       return isMyProfile 
         ? ventData.myProfile.isPostSaved[ventIndex]

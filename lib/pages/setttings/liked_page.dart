@@ -143,13 +143,13 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
   void initState() {
     super.initState();
     _initializeLikedVentsData();
-    navigationProvider.setCurrentRoute(AppRoute.likedPosts.path);
+    navigationProvider.setCurrentRoute(AppRoute.profileLikedPosts);
   }
 
   @override
   void dispose() {
     isPageLoadedNotifier.dispose();
-    navigationProvider.setCurrentRoute(AppRoute.myProfile.path);
+    navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
   

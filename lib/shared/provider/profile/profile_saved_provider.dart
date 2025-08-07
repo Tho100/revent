@@ -177,7 +177,7 @@ class ProfileSavedProvider extends ChangeNotifier {
   }
 
   ProfileType _getCurrentProfileKey() {
-    return getIt.navigationProvider.currentRoute == AppRoute.myProfile.path
+    return getIt.navigationProvider.currentRoute == AppRoute.myProfile
       ? ProfileType.myProfile
       : ProfileType.userProfile;
   }
