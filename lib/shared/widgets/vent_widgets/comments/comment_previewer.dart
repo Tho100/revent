@@ -65,7 +65,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
       );
 
       if (isOnRepliesPage) {
-        Navigator.pop(navigatorKey.currentContext!);
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
       }
 
     } catch (_) {
@@ -143,15 +143,15 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
       height: 25,
       child: IconButton(
         onPressed: () => BottomsheetCommentActions().buildBottomsheet(
-          context: navigatorKey.currentContext!, 
+          context: AppKeys.navigatorKey.currentContext!, 
           commenter: commentedBy, 
           commentIndex: commentsProvider.comments.indexWhere(
             (mainComment) => mainComment.commentedBy == commentedBy && mainComment.comment == comment
           ),
           editOnPressed: () {
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
             Navigator.push(
-              navigatorKey.currentContext!, 
+              AppKeys.navigatorKey.currentContext!, 
               MaterialPageRoute(
                 builder: (_) => EditCommentPage(originalComment: comment)
               )
@@ -159,36 +159,36 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
           },
           pinOnPressed: () async {
             await _onPinPressed();
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
           },
           unPinOnPressed: () async {
             await _onUnpinPressed();
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
           },
           copyOnPressed: () {
             TextCopy(text: comment).copy().then(
               (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
             );
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
           }, 
           reportOnPressed: () {
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
           }, 
           blockOnPressed: () {
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
             CustomAlertDialog.alertDialogCustomOnPress(
               message: 'Block @$commentedBy?', 
               buttonMessage: 'Block', 
               onPressedEvent: () async {
                 await UserActions(username: commentedBy).blockUser().then(
-                  (_) => Navigator.pop(navigatorKey.currentContext!)
+                  (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
                 );
               }
             );
           },
           deleteOnPressed: () async {  
             await _onDeletePressed();
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
           }
         ),
         icon: Transform.translate(
@@ -280,7 +280,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
           IconButton(
             onPressed: () {
               Navigator.push(
-                navigatorKey.currentContext!,
+                AppKeys.navigatorKey.currentContext!,
                 MaterialPageRoute(
                   builder: (_) => RepliesPage(
                     commentedBy: commentedBy, 

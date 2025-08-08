@@ -14,7 +14,7 @@ class SocialLinksWidgets {
     return GestureDetector(
       onTap: () {
         BottomsheetSocialLinks().buildBottomsheet(
-          context: navigatorKey.currentContext!, 
+          context: AppKeys.navigatorKey.currentContext!, 
           handles: socialHandles
         );
       },

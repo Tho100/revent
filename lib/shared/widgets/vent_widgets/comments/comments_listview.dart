@@ -28,7 +28,7 @@ class CommentsListView extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-          navigatorKey.currentContext!,
+          AppKeys.navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (_) => RepliesPage(
               commentedBy: commentedBy, 

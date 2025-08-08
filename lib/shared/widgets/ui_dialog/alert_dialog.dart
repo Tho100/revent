@@ -24,7 +24,7 @@ class CustomAlertDialog {
   static Future alertDialog(String title) {
     return showDialog(
       barrierDismissible: false,
-      context: navigatorKey.currentContext!,
+      context: AppKeys.navigatorKey.currentContext!,
       barrierColor: ThemeColor.barrier, 
       builder: (context) {
         return AlertDialogWidget(
@@ -47,7 +47,7 @@ class CustomAlertDialog {
   
   static Future alertDialogTitle(String title, String messages) {
     return showDialog(
-      context: navigatorKey.currentContext!,
+      context: AppKeys.navigatorKey.currentContext!,
       barrierColor: ThemeColor.barrier,
       builder: (BuildContext context) {
         return AlertDialogWidget(
@@ -74,7 +74,7 @@ class CustomAlertDialog {
     required VoidCallback onPressedEvent,    
   }) {
     return showDialog(
-      context: navigatorKey.currentContext!,
+      context: AppKeys.navigatorKey.currentContext!,
       barrierColor: ThemeColor.barrier,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -126,7 +126,7 @@ class CustomAlertDialog {
 
   static Future<bool> alertDialogDiscardConfirmation({required String message}) async {
     return await showDialog(
-      context: navigatorKey.currentContext!,
+      context: AppKeys.navigatorKey.currentContext!,
       barrierColor: ThemeColor.barrier,
       barrierDismissible: false,
       builder: (BuildContext context) {
@@ -176,7 +176,7 @@ class CustomAlertDialog {
 
   static Future<bool> nsfwWarningDialog() async {
     return await showDialog(
-      context: navigatorKey.currentContext!,
+      context: AppKeys.navigatorKey.currentContext!,
       barrierColor: ThemeColor.barrier,
       barrierDismissible: false,
       builder: (BuildContext context) {

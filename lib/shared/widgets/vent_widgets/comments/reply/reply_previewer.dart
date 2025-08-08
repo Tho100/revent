@@ -88,32 +88,32 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
       height: 25,
       child: IconButton(
         onPressed: () => BottomsheetReplyActions().buildBottomsheet(
-          context: navigatorKey.currentContext!, 
+          context: AppKeys.navigatorKey.currentContext!, 
           repliedBy: repliedBy, 
           copyOnPressed: () {
             TextCopy(text: reply).copy().then(
               (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
             );          
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
           }, 
           reportOnPressed: () {
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
           }, 
           blockOnPressed: () {
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
             CustomAlertDialog.alertDialogCustomOnPress(
               message: 'Block @$repliedBy?', 
               buttonMessage: 'Block', 
               onPressedEvent: () async {
                 await UserActions(username: repliedBy).blockUser().then(
-                  (_) => Navigator.pop(navigatorKey.currentContext!)
+                  (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
                 );
               }
             );
           },
           deleteOnPressed: () async {  
             await _onDeletePressed();
-            Navigator.pop(navigatorKey.currentContext!);
+            Navigator.pop(AppKeys.navigatorKey.currentContext!);
           }
         ),
         icon: Transform.translate(

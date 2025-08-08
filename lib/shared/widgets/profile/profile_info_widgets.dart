@@ -33,7 +33,7 @@ class ProfileInfoWidgets {
     return InkWellEffect(
       onPressed: () {
         Navigator.push(
-          navigatorKey.currentContext!,
+          AppKeys.navigatorKey.currentContext!,
           MaterialPageRoute(
             builder: (_) => ProfilePictureViewer(pfpData: pfpData)
           )

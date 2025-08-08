@@ -437,7 +437,7 @@ class _VentPostPageState extends State<VentPostPage> with
   Widget _buildVentOptionButton() {
 
     final ventPreviewer = VentPreviewerWidgets(
-      context: navigatorKey.currentContext!,
+      context: AppKeys.navigatorKey.currentContext!,
       title: widget.title,
       creator: widget.creator,
       editOnPressed: () {
