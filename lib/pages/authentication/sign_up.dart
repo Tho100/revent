@@ -57,22 +57,22 @@ class _SignUpPageState extends State<SignUpPage> {
     final authInput = authController.passwordController.text;
 
     if (emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
-      CustomAlertDialog.alertDialog('Please fill all the fields');
+      CustomAlertDialog.alertDialog(AlertMessages.registrationFieldsEmpty);
       return;
     }
 
     if (!InputValidator.validateUsernameFormat(usernameInput)) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Username is invalid');
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, AlertMessages.invalidUsername);
       return;
     }
 
     if (authInput.length <= 5) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Password must be at least 6 characters');
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, AlertMessages.invalidPasswordLength);
       return;
     }
 
     if (!InputValidator.validateEmailFormat(emailInput)) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, 'Email address is not valid');
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, AlertMessages.invalidEmailAddr);
       return;
     }
 

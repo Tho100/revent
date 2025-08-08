@@ -44,7 +44,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
         );
 
         if (commentIndex != -1) {
-          CustomAlertDialog.alertDialogTitle("Post Failed", 'You have already posted similar comment');
+          CustomAlertDialog.alertDialogTitle(AlertMessages.postFailed, AlertMessages.similarCommentFound);
           return;
         } 
 

@@ -1,6 +1,7 @@
 class AlertMessages {
 
-  /// Alert-Dialog messages must be in capitalized.
+  /// Alert-Dialog messages title must be in capitalized,
+  /// the sub-messagge OR single-message dialog must starts with only the initial capitalized.
   /// 
   /// Snack-Dialog messages must starts with only the initial capitalzed.
 
@@ -8,6 +9,10 @@ class AlertMessages {
 
   static const failedSignUp = 'Sign Up Failed';
   static const failedSignIn = 'Sign In Failed';
+
+  static const postFailed = 'Post Failed';
+
+  static const passwordUpdated = 'Password Updated';
 
   static const deletePost = 'Delete Post?';
 
@@ -18,6 +23,28 @@ class AlertMessages {
 
   static const signOut = 'Confirm Sign Out?';
   static const deactivateAccount = 'Deactivate Account?';
+
+  static const registrationFieldsEmpty = 'Please fill all the fields';
+
+  static const invalidUsername = 'Username is invalid';
+
+  static const emptyEmailAddr = 'Please enter your email address';
+  static const invalidEmailAddr = 'Email address is invalid';
+
+  static const emptyPassword = 'Please enter your password';
+  static const incorrectPassword = 'Password is incorrect';
+  static const invalidPasswordLength = 'Password must be at least 6 characters';
+  static const emptyPasswordFields = 'Please fill in both password fields';
+  static const passwordHasBeenUpdated = 'Your account password has been updated';
+  static const matchingPasswordFields = "New password can't be the same as the old one";
+
+  static const emptyVentTitle = 'Please enter post title';
+  static const invalidVentTtitleLength = 'Title must be at least 5 characters';
+  static const ventTitleAlreadyExists = 'You already have a post with this title';
+  
+  static const similarCommentFound = 'You have already posted similar comment';
+
+  static const accountNotFound = 'Account not found';
 
   /// Snack-Dialog messages
 

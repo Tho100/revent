@@ -76,7 +76,7 @@ class _ThemePageState extends State<ThemePage> {
     if (context.mounted) {
       RestartAppWidget.restartApp(context);
     }
-
+    
     CustomAlertDialog.alertDialogTitle(
       'Theme Updated',
       'Restart the app to see full changes.', 

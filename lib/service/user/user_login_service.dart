@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/notification_service.dart';
@@ -30,7 +31,7 @@ class UserLoginService {
     final username = await _userDataGetter.getUsername(email: email);
 
     if (username == null) {
-      CustomAlertDialog.alertDialog('Account not found');
+      CustomAlertDialog.alertDialog(AlertMessages.accountNotFound);
       return;
     }
 
@@ -41,7 +42,7 @@ class UserLoginService {
     final isAuthMatched = HashingModel().computeHash(auth) == authenticationInformation;
 
     if (!isAuthMatched) {
-      CustomAlertDialog.alertDialog('Password is incorrect');
+      CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);
       return;
     }
 

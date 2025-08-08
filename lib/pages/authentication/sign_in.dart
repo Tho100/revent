@@ -52,17 +52,17 @@ class _SignInPageState extends State<SignInPage> {
     final emailInput = authController.emailController.text;
 
     if (emailInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, 'Please enter your email address');
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, AlertMessages.emptyEmailAddr);
       return;
     }
 
     if (!InputValidator.validateEmailFormat(emailInput)) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, 'Email address is not valid');
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, AlertMessages.invalidEmailAddr);
       return;
     }
 
     if (authInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, 'Please enter your password');              
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignIn, AlertMessages.emptyPassword);              
       return;
     }
 
