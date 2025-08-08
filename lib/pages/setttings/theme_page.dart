@@ -78,7 +78,7 @@ class _ThemePageState extends State<ThemePage> {
       RestartAppWidget.restartApp(context);
     }
 
-    CustomAlertDialog.alertDialogTitle(AlertMessages.themeUpdated, AlertMessages.restartAppTheme);
+    CustomAlertDialog.alertDialogTitle(AlertMessages.themeUpdatedTitle, AlertMessages.restartAppTheme);
 
   }
 

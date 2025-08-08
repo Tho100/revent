@@ -62,17 +62,17 @@ class _SignUpPageState extends State<SignUpPage> {
     }
 
     if (!InputValidator.validateUsernameFormat(usernameInput)) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, AlertMessages.invalidUsername);
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, AlertMessages.invalidUsername);
       return;
     }
 
     if (authInput.length <= 5) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, AlertMessages.invalidPasswordLength);
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, AlertMessages.invalidPasswordLength);
       return;
     }
 
     if (!InputValidator.validateEmailFormat(emailInput)) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, AlertMessages.invalidEmailAddr);
+      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, AlertMessages.invalidEmailAddr);
       return;
     }
 

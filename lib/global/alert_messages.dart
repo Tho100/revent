@@ -10,10 +10,8 @@ class AlertMessages {
   //
 
   // Sign in/up & account
-  static const failedSignUp = 'Sign Up Failed';
-  static const failedSignIn = 'Sign In Failed';
-  static const signOut = 'Confirm Sign Out?';
-  static const deactivateAccount = 'Deactivate Account?';
+  static const failedSignUpTitle = 'Sign Up Failed';
+  static const failedSignInTitle = 'Sign In Failed';
   static const accountNotFound = 'Account not found';
 
   // Registration fields
@@ -31,13 +29,13 @@ class AlertMessages {
   static const emptyPasswordFields = 'Please fill in both password fields';
   static const passwordHasBeenUpdated = 'Your account password has been updated';
   static const matchingPasswordFields = "New password can't be the same as the old one";
-  static const passwordUpdated = 'Password Updated';
+  static const passwordUpdatedTitle = 'Password Updated';
 
   // Vent/post validation
   static const emptyVentTitle = 'Please enter post title';
   static const invalidVentTtitleLength = 'Title must be at least 5 characters';
   static const ventTitleAlreadyExists = 'You already have a post with this title';
-  static const postFailed = 'Post Failed';
+  static const postFailedTitle = 'Post Failed';
 
   // Comment/reply validation
   static const similarCommentFound = 'You have already posted similar comment';
@@ -48,9 +46,11 @@ class AlertMessages {
   static const discardComment = 'Discard Comment?';
   static const discardReply = 'Discard Reply?';
   static const discardEdit = 'Discard Edit?';
+  static const confirmSignOut = 'Confirm Sign Out?';
+  static const deactivateAccount = 'Deactivate Account?';
 
   // Themes
-  static const themeUpdated = 'Theme Updated';
+  static const themeUpdatedTitle = 'Theme Updated';
   static const restartAppTheme = 'Restart the app to see full changes';
 
   //

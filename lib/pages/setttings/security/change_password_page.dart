@@ -64,7 +64,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
         newPasswordHash: newPasswordInputHash
       ).then(
         (_) => CustomAlertDialog.alertDialogTitle(
-          AlertMessages.passwordUpdated, AlertMessages.passwordHasBeenUpdated
+          AlertMessages.passwordUpdatedTitle, AlertMessages.passwordHasBeenUpdated
         )
       );
 

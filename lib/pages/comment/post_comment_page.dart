@@ -44,7 +44,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
         );
 
         if (commentIndex != -1) {
-          CustomAlertDialog.alertDialogTitle(AlertMessages.postFailed, AlertMessages.similarCommentFound);
+          CustomAlertDialog.alertDialogTitle(AlertMessages.postFailedTitle, AlertMessages.similarCommentFound);
           return;
         } 
 

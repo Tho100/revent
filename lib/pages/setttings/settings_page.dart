@@ -180,7 +180,7 @@ class SettingsPage extends StatelessWidget {
               hideCaret: true,
               onPressed: () {
                 CustomAlertDialog.alertDialogCustomOnPress(
-                  message: AlertMessages.signOut, 
+                  message: AlertMessages.confirmSignOut, 
                   buttonMessage: 'Sign Out', 
                   onPressedEvent: () async => await _onConfirmSignOutPressed()
                 );
