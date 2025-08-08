@@ -95,7 +95,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     final lastEdit = await _getLastEdit(title);
 
     Navigator.push(
-      navigatorKey.currentContext!,
+      AppKeys.navigatorKey.currentContext!,
       MaterialPageRoute(
         builder: (_) => ViewArchivedVentPage(
           title: title, 
@@ -231,7 +231,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       navigateVentPostPageOnPressed: () => _navigateViewArchiveVentPage(title, tags, postTimestamp),
       editOnPressed: () async {
 
-        Navigator.pop(navigatorKey.currentContext!);
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
         
         final bodyText = await _getBodyText(title);
 

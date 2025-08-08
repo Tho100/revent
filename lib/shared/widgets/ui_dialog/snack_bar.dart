@@ -8,7 +8,7 @@ class SnackBarDialog {
   static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> temporarySnack({
     required String message
   }) {
-    return scaffoldMessengerKey.currentState!.showSnackBar(
+    return AppKeys.scaffoldMessengerKey.currentState!.showSnackBar(
       SnackBar(
         shape: const StadiumBorder(),
         behavior: SnackBarBehavior.floating,
@@ -41,7 +41,7 @@ class SnackBarDialog {
   static ScaffoldFeatureController<SnackBar, SnackBarClosedReason> errorSnack({
     required String message
   }) {
-    return scaffoldMessengerKey.currentState!.showSnackBar(
+    return AppKeys.scaffoldMessengerKey.currentState!.showSnackBar(
       SnackBar(
         shape: const StadiumBorder(),
         behavior: SnackBarBehavior.floating,

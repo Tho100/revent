@@ -28,7 +28,7 @@ class _DockBarNavigationPages {
 
   static void searchPage() {
     Navigator.push(
-      navigatorKey.currentContext!,
+      AppKeys.navigatorKey.currentContext!,
       PageRouteBuilder(
         pageBuilder: (_, __, ___) => const SearchPage(),
         transitionDuration: const Duration(microseconds: 0)
@@ -38,7 +38,7 @@ class _DockBarNavigationPages {
 
   static void notificationsPage() {
     Navigator.push(
-      navigatorKey.currentContext!,
+      AppKeys.navigatorKey.currentContext!,
       PageRouteBuilder(
         pageBuilder: (_, __, ___) => const NotificationsPage(),
         transitionDuration: const Duration(microseconds: 0)
@@ -48,7 +48,7 @@ class _DockBarNavigationPages {
 
   static void myProfilePage() {
     Navigator.push(
-      navigatorKey.currentContext!,
+      AppKeys.navigatorKey.currentContext!,
       PageRouteBuilder(
         pageBuilder: (_, __, ___) => const MyProfilePage(),
         transitionDuration: const Duration(microseconds: 0)
@@ -64,7 +64,7 @@ class NavigatePage {
 
   static void mainScreenPage() {
     Navigator.pushReplacement(
-      navigatorKey.currentContext!,
+      AppKeys.navigatorKey.currentContext!,
       MaterialPageRoute(
         builder: (_) => const MainScreenPage()
       ),
@@ -75,7 +75,7 @@ class NavigatePage {
     _navigation.setPageIndex(0);
     _navigation.setCurrentRoute(AppRoute.home);
     Navigator.pushAndRemoveUntil(
-      navigatorKey.currentContext!,
+      AppKeys.navigatorKey.currentContext!,
       PageRouteBuilder(
         pageBuilder: (_, __, ___) => const HomePage(), 
         transitionDuration: const Duration(microseconds: 0)
@@ -104,7 +104,7 @@ class NavigatePage {
 
   static void _navigateToPage({required Widget classPage}) {
     Navigator.push(
-      navigatorKey.currentContext!,
+      AppKeys.navigatorKey.currentContext!,
       MaterialPageRoute(
         builder: (_) => classPage
       )

@@ -114,8 +114,8 @@ class MainRun extends StatelessWidget {
       builder: (_, themeData, __) {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
-          navigatorKey: navigatorKey,
-          scaffoldMessengerKey: scaffoldMessengerKey,
+          navigatorKey: AppKeys.navigatorKey,
+          scaffoldMessengerKey: AppKeys.scaffoldMessengerKey,
           theme: themeData,
           home: const SplashScreen()
         );
