@@ -109,7 +109,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     if (tabController.index == 1) {
 
       if (isSavedPostsHidden) {
-        SnackBarDialog.temporarySnack(message: 'Saved posts hidden.');
+        SnackBarDialog.temporarySnack(message: AlertMessages.followingHidden);
       }
 
       if (!isSavedPostsHidden) {
@@ -368,7 +368,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
         GestureDetector(
           onTap: () => isPrivateAccount || isBlockedAccount || isFollowingListHidden
-            ? (isFollowingListHidden ? SnackBarDialog.temporarySnack(message: 'Following is hidden.') : null) 
+            ? (isFollowingListHidden ? SnackBarDialog.temporarySnack(message: AlertMessages.followingHidden) : null) 
             : NavigatePage.followsPage(
               pageType: 'Following', 
               username: widget.username, 

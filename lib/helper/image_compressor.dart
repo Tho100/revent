@@ -8,7 +8,7 @@ class ImageCompressor {
     required int quality,
   }) async {
 
-    File? compressedFile = await _processImageCompression(path: path, quality: quality);
+    final compressedFile = await _processImageCompression(path: path, quality: quality);
 
     return await compressedFile.readAsBytes();
 

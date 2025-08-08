@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/global/vent_type.dart';
@@ -167,7 +168,7 @@ class NavigatePage {
     final userExists = await UserValidator().userExists(username: username);
 
     if (!userExists) {
-      SnackBarDialog.errorSnack(message: 'User does not exist.');
+      SnackBarDialog.errorSnack(message: AlertMessages.userNotFound);
       return;
     }
 

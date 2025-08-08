@@ -6,24 +6,23 @@ import 'package:revent/model/profile_picture/profile_picture_picker.dart';
 
 class ProfilePictureModel {
 
-  static Future<bool> createProfilePicture(BuildContext context) async {
+  static Future<bool> createProfilePicture({required BuildContext context}) async {
 
     try {
 
-      String fileName = "";
+      String fileName = '';
 
       final pickedImages = await ProfilePicturePicker().imagePicker(context);
 
       for(final filesPath in pickedImages!.selectedFiles) {
 
-        final pathToString = filesPath.selectedFile.toString()
-          .split(" ").last.replaceAll("'", "");
+        final pathToString = filesPath.selectedFile.toString().split(' ').last.replaceAll("'", '');
         
-        fileName = pathToString.split("/")
-          .last.replaceAll("'", "");
+        fileName = pathToString.split('/').last.replaceAll("'", '');
 
-        final compressedImage = await ImageCompressor
-          .compressedByteImage(path: pathToString, quality: 18);
+        final compressedImage = await ImageCompressor.compressedByteImage(
+          path: pathToString, quality: 18
+        );
 
         final decodedImage = Uint8List.fromList(compressedImage);
 

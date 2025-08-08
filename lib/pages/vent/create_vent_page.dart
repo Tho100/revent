@@ -58,12 +58,12 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
     final tags = tagsProvider.selectedTags.isEmpty ? '' : tagsProvider.selectedTags.join(' ');
 
     if (ventTitle.isEmpty) {
-      CustomAlertDialog.alertDialog('Please enter post title');
+      CustomAlertDialog.alertDialog(AlertMessages.emptyVentTitle);
       return;
     }
 
     if (ventTitle.length < 5) {
-      CustomAlertDialog.alertDialog('Title must be at least 5 characters');
+      CustomAlertDialog.alertDialog(AlertMessages.invalidVentTtitleLength);
       return;
     }
 
@@ -80,7 +80,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         : await ventChecker.isVentExists();
 
       if (isVentAlreadyExists) {
-        CustomAlertDialog.alertDialog("You already have a post with this title");
+        CustomAlertDialog.alertDialog(AlertMessages.ventTitleAlreadyExists);
         return;
       }
 
@@ -94,7 +94,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
       isPostPressed = true;
         
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Vent post failed.');
+      SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);
     }
 
   }
@@ -115,7 +115,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
     loading.stopLoading();
 
-    SnackBarDialog.temporarySnack(message: 'Vent archived.');
+    SnackBarDialog.temporarySnack(message: AlertMessages.ventArchived);
     
     if(context.mounted) {
 
@@ -151,7 +151,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
     loading.stopLoading();
 
-    SnackBarDialog.temporarySnack(message: 'Vent posted.');
+    SnackBarDialog.temporarySnack(message: AlertMessages.ventPosted);
 
     if(context.mounted) {
       Navigator.pop(context);        

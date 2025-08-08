@@ -135,7 +135,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       isPageLoadedNotifier.value = true;
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Failed to load archives.');
+      SnackBarDialog.errorSnack(message: AlertMessages.archivesFailedToLoad);
     }
 
   }

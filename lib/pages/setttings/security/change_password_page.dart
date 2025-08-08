@@ -43,19 +43,19 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
       final newPasswordInputHash = hashingModel.computeHash(newPasswordInput);
 
       if (newPasswordInput.isEmpty || currentPasswordInput.isEmpty) {
-        CustomAlertDialog.alertDialog("Please fill in both password fields.");
+        CustomAlertDialog.alertDialog(AlertMessages.emptyPasswordFields);
         return;
       }
 
       if (newPasswordInput == currentPasswordInput) {
-        CustomAlertDialog.alertDialog("New password can't be the same as the old one");
+        CustomAlertDialog.alertDialog(AlertMessages.matchingPasswordFields);
         return;
       }
 
       final passwordMatched = currentPasswordHash == currentPasswordInputHash;
 
       if (!passwordMatched) {
-        CustomAlertDialog.alertDialog('Password is incorrect');
+        CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);
         return;
       }
 
@@ -63,7 +63,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
         username: userProvider.user.username, 
         newPasswordHash: newPasswordInputHash
       ).then(
-        (_) => CustomAlertDialog.alertDialogTitle('Password Updated', 'Your account password has been updated')
+        (_) => CustomAlertDialog.alertDialogTitle(
+          AlertMessages.passwordUpdatedTitle, AlertMessages.passwordHasBeenUpdated
+        )
       );
 
     } catch (_) {

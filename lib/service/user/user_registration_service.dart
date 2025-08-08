@@ -53,7 +53,7 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
       Navigator.pop(context);
 
       WidgetsBinding.instance.addPostFrameCallback(
-        (_) => CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUp, alertMessage)
+        (_) => CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, alertMessage)
       );
 
       return true;

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_widget_restart.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/capitalizer.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/main.dart';
@@ -77,10 +78,7 @@ class _ThemePageState extends State<ThemePage> {
       RestartAppWidget.restartApp(context);
     }
 
-    CustomAlertDialog.alertDialogTitle(
-      'Theme Updated',
-      'Restart the app to see full changes.', 
-    );
+    CustomAlertDialog.alertDialogTitle(AlertMessages.themeUpdatedTitle, AlertMessages.restartAppTheme);
 
   }
 

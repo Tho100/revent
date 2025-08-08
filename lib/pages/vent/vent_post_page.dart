@@ -144,7 +144,7 @@ class _VentPostPageState extends State<VentPostPage> with
       );
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: 'Comments not loaded.');
+      SnackBarDialog.errorSnack(message: AlertMessages.commentsFailedToLoad);
     }
 
   }
@@ -190,7 +190,7 @@ class _VentPostPageState extends State<VentPostPage> with
   void _copyBodyText() async {
 
     if (widget.bodyText.isEmpty) {
-      SnackBarDialog.temporarySnack(message: 'Nothing to copy.');
+      SnackBarDialog.temporarySnack(message: AlertMessages.nothingToCopy);
       return;
     }
 
