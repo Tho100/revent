@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
@@ -37,6 +38,16 @@ class TestHelper {
       reply: '', 
       replyTimestamp: '', 
       pfpData: Uint8List(0),
+    );
+  }
+
+  static UserData dummyProfile({
+    required String username, 
+    required String email
+  }) {
+    return UserData(
+      username: username, 
+      email: email
     );
   }
 
