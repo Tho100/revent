@@ -46,7 +46,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
       );
 
       final currentPasswordInput = authController.currentPasswordController.text;
-      final currentPasswordInputHash = HashingModel().computeHash(currentPasswordInput);
+      final currentPasswordInputHash = HashingModel.computeHash(currentPasswordInput);
 
       if (currentPasswordHash != currentPasswordInputHash) {
         CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);

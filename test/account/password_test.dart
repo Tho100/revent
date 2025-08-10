@@ -17,7 +17,7 @@ void main() {
 
     test('Should return true when pass hashed successfully', () {
 
-      final passHash = HashingModel().computeHash(pass);
+      final passHash = HashingModel.computeHash(pass);
 
       // Hash value for [pass] "abc123"
       const expectedHash = '6ca13d52ca70c883e0f0bb101e425a89e8624de51db2d2392593af6a84118090'; 
@@ -28,8 +28,8 @@ void main() {
 
     test('Different inputs produce different hashes', () {
 
-      final hash1 = HashingModel().computeHash('one');
-      final hash2 = HashingModel().computeHash('two');
+      final hash1 = HashingModel.computeHash('one');
+      final hash2 = HashingModel.computeHash('two');
       
       expect(hash1 != hash2, true);
 
