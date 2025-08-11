@@ -6,6 +6,10 @@ class InputFormatters {
     return [FilteringTextInputFormatter.deny(RegExp(r'\s'))];
   }
 
+  static List<TextInputFormatter> noEmojis() {
+    return [FilteringTextInputFormatter.allow(RegExp(r'[ -~]'))];
+  }
+
   static List<TextInputFormatter> onlyLetters() {
     return [FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z]'))];
   }
@@ -14,6 +18,13 @@ class InputFormatters {
     return [
       ...noSpaces(), 
       FilteringTextInputFormatter.allow(RegExp(r'[a-zA-Z0-9._]'))
+    ];
+  }
+
+  static List<TextInputFormatter> passwordFormatter() {
+    return [
+      ...noSpaces(), 
+      ...noEmojis()
     ];
   }
 
