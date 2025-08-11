@@ -9,6 +9,7 @@ import 'package:revent/model/setup/vents_setup.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -23,20 +24,51 @@ class LikedPage extends StatefulWidget {
   
 }
 
-class _LikedPageState extends State<LikedPage> with NavigationProviderService {
+class _LikedPageState extends State<LikedPage> with 
+  NavigationProviderService, 
+  LikedSavedProviderService {
+
+// TODO: Try to create separated controller class specifically for search
+  final searchLikedController = TextEditingController();
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
+
+  List<LikedVentData> _allLikedVents = [];
 
   Future<void> _initializeLikedVentsData() async {
 
     try {
 
       await VentsSetup().setupLiked().then(
-        (_) => isPageLoadedNotifier.value = true
+        (_) => _allLikedVents = likedVentProvider.vents
       );
+
+      isPageLoadedNotifier.value = true;
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.postsFailedToLoad);
+    }
+
+  }
+
+  void _searchLikedVents({required String searchText}) {
+
+    final query = searchText.trim().toLowerCase();
+
+    if (query.isNotEmpty) {
+      
+      final filteredList = _allLikedVents.where((vent) {
+        return vent.title.toLowerCase().contains(query);
+      }).toList();
+
+      if (filteredList.isNotEmpty) {
+        likedVentProvider.setVents(filteredList);
+      } 
+
+    } else {
+
+      likedVentProvider.setVents(_allLikedVents);
+
     }
 
   }
@@ -58,19 +90,40 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
     );  
   }
 
+  Widget _buildSearchBar() {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * .92,
+      height: 67,
+      child: MainTextField(
+        controller: searchLikedController,
+        hintText: 'Search vents...',
+        onChange: (searchText) => _searchLikedVents(searchText: searchText)
+      ),
+    );
+  }
+// TODO: Improve this codebase by creating separated functions called headerWidgets for the searchbar/totalPost (Along with saved-page)
   Widget _buildTotalPost(List<LikedVentData> likedVentData) {
 
     final postText = likedVentData.length == 1 
       ? "You liked 1 post." 
       : "You liked ${likedVentData.length} posts.";
 
-    return Text(
-      postText,
-      style: GoogleFonts.inter(
-        color: ThemeColor.contentThird,
-        fontWeight: FontWeight.w800,
-        fontSize: 14
-      )
+    return Column(
+      children: [
+
+        _buildSearchBar(),
+
+        const SizedBox(height: 15),
+
+        Text(
+          postText,
+          style: GoogleFonts.inter(
+            color: ThemeColor.contentThird,
+            fontWeight: FontWeight.w800,
+            fontSize: 14
+          )
+        ),
+      ],
     );
 
   }
@@ -97,8 +150,14 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
         final adjustedIndex = index - 1;
 
         if (adjustedIndex >= 0 && adjustedIndex < likedVentData.length) {
+
           final vents = likedVentData[adjustedIndex];
-          return _buildVentPreviewer(vents);
+
+          return KeyedSubtree(
+            key: ValueKey('${likedVentData[adjustedIndex].title}/${likedVentData[adjustedIndex].creator}'),
+            child: _buildVentPreviewer(vents)
+          );
+
         }
 
         return const SizedBox.shrink();
@@ -149,6 +208,7 @@ class _LikedPageState extends State<LikedPage> with NavigationProviderService {
   @override
   void dispose() {
     isPageLoadedNotifier.dispose();
+    searchLikedController.dispose();
     navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
