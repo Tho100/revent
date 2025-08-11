@@ -134,17 +134,18 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         vi.marked_nsfw,
         upi.profile_picture
       FROM 
-        liked_FROM ${TableNames.ventInfo} lvi
+        ${TableNames.likedVentInfo} AS lvi
       JOIN 
-        FROM ${TableNames.ventInfo} vi 
-        ON lvi.post_id = vi.post_id
+        ${TableNames.ventInfo} AS vi 
+          ON lvi.post_id = vi.post_id
       JOIN 
-        FROM ${TableNames.userProfileInfo} upi
-        ON vi.creator = upi.username
+        ${TableNames.userProfileInfo} AS upi
+          ON vi.creator = upi.username
       WHERE 
         lvi.liked_by = :liked_by
-      ORDER BY created_at DESC
-      LIMIT 25
+      ORDER BY 
+        vi.created_at DESC
+      LIMIT 25;
     ''';
 
     final param = {'liked_by': userProvider.user.username};
@@ -152,7 +153,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     return _fetchVentsData(query, params: param);
 
   }
-
+// TODO: Fixed these queries (the liked is correct one)
   Future<Map<String, dynamic>> getSavedVentsData() async {
 
     const query = 

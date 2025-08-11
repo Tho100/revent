@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AuthController {
-
+  // TODO: Make this controller static
   final usernameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
