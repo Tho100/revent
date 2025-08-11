@@ -39,7 +39,7 @@ class UserLoginService {
       username: username
     );
       
-    final isAuthMatched = HashingModel().computeHash(auth) == authenticationInformation;
+    final isAuthMatched = HashingModel.computeHash(auth) == authenticationInformation;
 
     if (!isAuthMatched) {
       CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);

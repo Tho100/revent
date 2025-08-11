@@ -34,13 +34,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
         username: userProvider.user.username
       );
 
-      final hashingModel = HashingModel();
-
       final currentPasswordInput = authController.currentPasswordController.text.trim();
-      final currentPasswordInputHash = hashingModel.computeHash(currentPasswordInput);
+      final currentPasswordInputHash = HashingModel.computeHash(currentPasswordInput);
 
       final newPasswordInput = authController.newPasswordController.text.trim();
-      final newPasswordInputHash = hashingModel.computeHash(newPasswordInput);
+      final newPasswordInputHash = HashingModel.computeHash(newPasswordInput);
 
       if (newPasswordInput.isEmpty || currentPasswordInput.isEmpty) {
         CustomAlertDialog.alertDialog(AlertMessages.emptyPasswordFields);
