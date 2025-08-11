@@ -33,6 +33,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
         color: ThemeColor.contentSecondary,
         fontWeight: FontWeight.w700,
       ),
+      keyboardType: TextInputType.visiblePassword,
       inputFormatters: InputFormatters.passwordFormatter(),
       controller: widget.controller,
       obscureText: !_isObscureText,
