@@ -101,7 +101,7 @@ class _LikedPageState extends State<LikedPage> with
       ),
     );
   }
-// TODO: Improve this codebase by creating separated functions called headerWidgets for the searchbar/totalPost
+// TODO: Improve this codebase by creating separated functions called headerWidgets for the searchbar/totalPost (Along with saved-page)
   Widget _buildTotalPost(List<LikedVentData> likedVentData) {
 
     final postText = likedVentData.length == 1 
