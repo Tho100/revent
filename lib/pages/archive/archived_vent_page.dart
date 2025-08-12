@@ -195,8 +195,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     Navigator.pop(context);
 
   }
-// TODO: Rename to _searchArchivedVents
-  void _searchArchive({required String searchText}) {
+
+  void _searchArchivedVents({required String searchText}) {
 
     final query = searchText.trim().toLowerCase();
 
@@ -291,7 +291,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       child: MainTextField(
         controller: GeneralSearchController.searchController,
         hintText: 'Search archive...',
-        onChange: (searchText) => _searchArchive(searchText: searchText)
+        onChange: (searchText) => _searchArchivedVents(searchText: searchText)
       ),
     );
   }
