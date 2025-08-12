@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/controllers/search_controller.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/pages/search_results_page.dart';
@@ -18,8 +19,6 @@ class MainSearchPage extends StatefulWidget {
 }
 
 class _MainSearchPageState extends State<MainSearchPage> {
-
-  final searchController = TextEditingController();
 
   final searchHistoryNotifier = ValueNotifier<List<String>>([]);
 
@@ -63,7 +62,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
         child: TextFormField(
           autofocus: true,
           maxLines: 1,
-          controller: searchController,
+          controller: GeneralSearchController.searchController,
           style: GoogleFonts.inter(
             color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w700,
@@ -230,7 +229,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
   @override
   void dispose() {
-    searchController.dispose();
+    GeneralSearchController.searchController.dispose();
     searchHistoryNotifier.dispose();
     super.dispose();
   }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/controllers/search_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/setup/vents_setup.dart';
@@ -27,9 +28,6 @@ class LikedPage extends StatefulWidget {
 class _LikedPageState extends State<LikedPage> with 
   NavigationProviderService, 
   LikedSavedProviderService {
-
-// TODO: Try to create separated controller class specifically for search
-  final searchLikedController = TextEditingController();
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -95,7 +93,7 @@ class _LikedPageState extends State<LikedPage> with
       width: MediaQuery.of(context).size.width * .92,
       height: 67,
       child: MainTextField(
-        controller: searchLikedController,
+        controller: GeneralSearchController.searchController,
         hintText: 'Search vents...',
         onChange: (searchText) => _searchLikedVents(searchText: searchText)
       ),
@@ -216,8 +214,8 @@ class _LikedPageState extends State<LikedPage> with
 
   @override
   void dispose() {
+    GeneralSearchController.searchController.dispose();
     isPageLoadedNotifier.dispose();
-    searchLikedController.dispose();
     navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
