@@ -101,31 +101,46 @@ class _LikedPageState extends State<LikedPage> with
       ),
     );
   }
-// TODO: Improve this codebase by creating separated functions called headerWidgets for the searchbar/totalPost (Along with saved-page)
-  Widget _buildTotalPost(List<LikedVentData> likedVentData) {
 
-    final postText = likedVentData.length == 1 
-      ? "You liked 1 post." 
-      : "You liked ${likedVentData.length} posts.";
+  Widget _buildTotalPost() {
+    return Consumer<LikedVentProvider>(
+      builder: (_, likedVentData,  __) {
 
-    return Column(
-      children: [
+        final postText = likedVentData.vents.length == 1 
+          ? "You liked 1 post." 
+          : "You liked ${likedVentData.vents.length} posts.";
 
-        _buildSearchBar(),
-
-        const SizedBox(height: 15),
-
-        Text(
+        return Text(
           postText,
           style: GoogleFonts.inter(
             color: ThemeColor.contentThird,
             fontWeight: FontWeight.w800,
             fontSize: 14
           )
-        ),
-      ],
+        );
+        
+      },
     );
+  }
 
+  Widget _buildHeaderWidgets() {
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
+        child: Column(
+          children: [
+
+            _buildSearchBar(),
+
+            const SizedBox(height: 15),
+
+            _buildTotalPost()
+
+          ],
+        )
+      )
+    );
   }
 
   Widget _buildListView(List<LikedVentData> likedVentData) {
@@ -138,13 +153,7 @@ class _LikedPageState extends State<LikedPage> with
       builder: (_, index) {
 
         if (index == 0) {
-          return Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
-              child: _buildTotalPost(likedVentData),
-            ),
-          );
+          return _buildHeaderWidgets();
         }
 
         final adjustedIndex = index - 1;
