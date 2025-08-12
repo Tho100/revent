@@ -96,7 +96,7 @@ class _SavedPageState extends State<SavedPage> with
       child: MainTextField(
         controller: searchSavedController,
         hintText: 'Search vents...',
-        onChange: (searchText) => _searchLikedVents(searchText: searchText)
+        onChange: (searchText) => _searchSavedVents(searchText: searchText)
       ),
     );
   }

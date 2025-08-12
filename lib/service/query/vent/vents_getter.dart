@@ -153,7 +153,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     return _fetchVentsData(query, params: param);
 
   }
-// TODO: Fixed these queries (the liked is correct one)
+
   Future<Map<String, dynamic>> getSavedVentsData() async {
 
     const query = 
@@ -170,13 +170,13 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         vi.marked_nsfw,
         upi.profile_picture
       FROM 
-        saved_FROM ${TableNames.ventInfo} svi
+        ${TableNames.ventInfo} AS svi
       JOIN 
-        FROM ${TableNames.ventInfo} vi 
-        ON svi.post_id = vi.post_id
+        ${TableNames.ventInfo} AS vi 
+          ON svi.post_id = vi.post_id
       JOIN 
-        FROM ${TableNames.userProfileInfo} upi
-        ON vi.creator = upi.username
+        ${TableNames.userProfileInfo} AS upi
+          ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by
       ORDER BY created_at DESC
