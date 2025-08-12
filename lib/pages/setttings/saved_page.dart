@@ -50,7 +50,7 @@ class _SavedPageState extends State<SavedPage> with
 
   }
 
-  void _searchLikedVents({required String searchText}) {
+  void _searchSavedVents({required String searchText}) {
 
     final query = searchText.trim().toLowerCase();
 
