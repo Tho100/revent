@@ -26,8 +26,6 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> {
 
-  final authController = AuthController();
-
   Future<void> _registerUser({
     required String username,
     required String email,
@@ -52,9 +50,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future<void> _processRegistration() async {
 
-    final usernameInput = authController.usernameController.text;
-    final emailInput = authController.emailController.text;
-    final authInput = authController.passwordController.text;
+    final usernameInput = AuthController.usernameController.text;
+    final emailInput = AuthController.emailController.text;
+    final authInput = AuthController.passwordController.text;
 
     if (emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
       CustomAlertDialog.alertDialog(AlertMessages.registrationFieldsEmpty);
@@ -112,7 +110,7 @@ class _SignUpPageState extends State<SignUpPage> {
             maxLength: 24,
             textInputAction: TextInputAction.next,
             inputFormatters: InputFormatters.usernameFormatter(),
-            controller: authController.usernameController,
+            controller: AuthController.usernameController,
           ),
 
           const SizedBox(height: 15),
@@ -122,14 +120,14 @@ class _SignUpPageState extends State<SignUpPage> {
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             inputFormatters: InputFormatters.noSpaces(),
-            controller: authController.emailController,
+            controller: AuthController.emailController,
           ),
 
           const SizedBox(height: 15),
 
           PasswordTextField(
             hintText: 'Enter a password',
-            controller: authController.passwordController, 
+            controller: AuthController.passwordController, 
           ),
 
           const SizedBox(height: 30),
@@ -157,7 +155,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    authController.dispose();
+    AuthController.dispose();
     super.dispose();
   }
 

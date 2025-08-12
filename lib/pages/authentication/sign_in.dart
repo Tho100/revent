@@ -25,8 +25,6 @@ class SignInPage extends StatefulWidget {
 
 class _SignInPageState extends State<SignInPage> {
 
-  final authController = AuthController();
-
   final isRememberMeCheckedNotifier = ValueNotifier<bool>(true); 
 
   Future<void> _loginUser({
@@ -48,8 +46,8 @@ class _SignInPageState extends State<SignInPage> {
   
   Future<void> _processLogin() async {
 
-    final authInput = authController.passwordController.text;
-    final emailInput = authController.emailController.text;
+    final authInput = AuthController.passwordController.text;
+    final emailInput = AuthController.emailController.text;
 
     if (emailInput.isEmpty) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignInTitle, AlertMessages.emptyEmailAddr);
@@ -147,14 +145,14 @@ class _SignInPageState extends State<SignInPage> {
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             inputFormatters: InputFormatters.noSpaces(),
-            controller: authController.emailController
+            controller: AuthController.emailController
           ),
 
           const SizedBox(height: 15),
 
           PasswordTextField(
             hintText: 'Enter your password',
-            controller: authController.passwordController, 
+            controller: AuthController.passwordController, 
           ),
 
           const SizedBox(height: 15),
@@ -186,7 +184,7 @@ class _SignInPageState extends State<SignInPage> {
 
   @override
   void dispose() {
-    authController.dispose();
+    AuthController.dispose();
     isRememberMeCheckedNotifier.dispose();
     super.dispose();
   }

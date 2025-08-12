@@ -1,11 +1,11 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 class VentPostController {
 
-  final titleController = TextEditingController();
-  final bodyTextController = TextEditingController();
+  static final titleController = TextEditingController();
+  static final bodyTextController = TextEditingController();
 
-  void dispose() {
+  static void dispose() {
     titleController.dispose();
     bodyTextController.dispose();
   }

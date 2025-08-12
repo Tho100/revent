@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/controllers/search_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/setup/vents_setup.dart';
@@ -27,9 +28,6 @@ class LikedPage extends StatefulWidget {
 class _LikedPageState extends State<LikedPage> with 
   NavigationProviderService, 
   LikedSavedProviderService {
-
-// TODO: Try to create separated controller class specifically for search
-  final searchLikedController = TextEditingController();
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -95,37 +93,52 @@ class _LikedPageState extends State<LikedPage> with
       width: MediaQuery.of(context).size.width * .92,
       height: 67,
       child: MainTextField(
-        controller: searchLikedController,
+        controller: GeneralSearchController.searchController,
         hintText: 'Search vents...',
         onChange: (searchText) => _searchLikedVents(searchText: searchText)
       ),
     );
   }
-// TODO: Improve this codebase by creating separated functions called headerWidgets for the searchbar/totalPost (Along with saved-page)
-  Widget _buildTotalPost(List<LikedVentData> likedVentData) {
 
-    final postText = likedVentData.length == 1 
-      ? "You liked 1 post." 
-      : "You liked ${likedVentData.length} posts.";
+  Widget _buildTotalPost() {
+    return Consumer<LikedVentProvider>(
+      builder: (_, likedVentData,  __) {
 
-    return Column(
-      children: [
+        final postText = likedVentData.vents.length == 1 
+          ? "You liked 1 post." 
+          : "You liked ${likedVentData.vents.length} posts.";
 
-        _buildSearchBar(),
-
-        const SizedBox(height: 15),
-
-        Text(
+        return Text(
           postText,
           style: GoogleFonts.inter(
             color: ThemeColor.contentThird,
             fontWeight: FontWeight.w800,
             fontSize: 14
           )
-        ),
-      ],
+        );
+        
+      },
     );
+  }
 
+  Widget _buildHeaderWidgets() {
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
+        child: Column(
+          children: [
+
+            _buildSearchBar(),
+
+            const SizedBox(height: 15),
+
+            _buildTotalPost()
+
+          ],
+        )
+      )
+    );
   }
 
   Widget _buildListView(List<LikedVentData> likedVentData) {
@@ -138,13 +151,7 @@ class _LikedPageState extends State<LikedPage> with
       builder: (_, index) {
 
         if (index == 0) {
-          return Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
-              child: _buildTotalPost(likedVentData),
-            ),
-          );
+          return _buildHeaderWidgets();
         }
 
         final adjustedIndex = index - 1;
@@ -207,8 +214,8 @@ class _LikedPageState extends State<LikedPage> with
 
   @override
   void dispose() {
+    GeneralSearchController.searchController.dispose();
     isPageLoadedNotifier.dispose();
-    searchLikedController.dispose();
     navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }

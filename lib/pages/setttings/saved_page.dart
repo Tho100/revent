@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/controllers/search_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/setup/vents_setup.dart';
@@ -28,8 +29,6 @@ class _SavedPageState extends State<SavedPage> with
   NavigationProviderService,
   LikedSavedProviderService {
 
-  final searchSavedController = TextEditingController();
-
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
   List<SavedVentData> _allSavedVents = [];
@@ -50,7 +49,7 @@ class _SavedPageState extends State<SavedPage> with
 
   }
 
-  void _searchLikedVents({required String searchText}) {
+  void _searchSavedVents({required String searchText}) {
 
     final query = searchText.trim().toLowerCase();
 
@@ -94,37 +93,52 @@ class _SavedPageState extends State<SavedPage> with
       width: MediaQuery.of(context).size.width * .92,
       height: 67,
       child: MainTextField(
-        controller: searchSavedController,
+        controller: GeneralSearchController.searchController,
         hintText: 'Search vents...',
-        onChange: (searchText) => _searchLikedVents(searchText: searchText)
+        onChange: (searchText) => _searchSavedVents(searchText: searchText)
       ),
     );
   }
 
-  Widget _buildTotalPost(List<SavedVentData> savedVentData) {
+  Widget _buildTotalPost() {
+    return Consumer<SavedVentProvider>(
+      builder: (_, savedVentData, __) {
 
-    final postText = savedVentData.length == 1 
-      ? "You saved 1 post." 
-      : "You saved ${savedVentData.length} posts.";
+        final postText = savedVentData.vents.length == 1 
+          ? "You saved 1 post." 
+          : "You saved ${savedVentData.vents.length} posts.";
 
-    return Column(
-      children: [
-
-        _buildSearchBar(),
-
-        const SizedBox(height: 15),
-
-        Text(
+        return Text(
           postText,
           style: GoogleFonts.inter(
             color: ThemeColor.contentThird,
             fontWeight: FontWeight.w800,
             fontSize: 14
           )
-        ),
-      ],
-    );
+        );
 
+      },
+    );
+  }
+
+  Widget _buildHeaderWidgets() {
+    return Align(
+      alignment: Alignment.center,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
+        child: Column(
+          children: [
+
+            _buildSearchBar(),
+
+            const SizedBox(height: 15),
+
+            _buildTotalPost()
+
+          ],
+        )
+      )
+    );
   }
 
   Widget _buildListView(List<SavedVentData> savedVentData) {
@@ -137,13 +151,7 @@ class _SavedPageState extends State<SavedPage> with
       builder: (_, index) {
 
         if (index == 0) {
-          return Align(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
-              child: _buildTotalPost(savedVentData),
-            ),
-          );
+          return _buildHeaderWidgets();
         }
 
         final adjustedIndex = index - 1;
@@ -206,8 +214,8 @@ class _SavedPageState extends State<SavedPage> with
 
   @override
   void dispose() {
+    GeneralSearchController.searchController.dispose();
     isPageLoadedNotifier.dispose();
-    searchSavedController.dispose();
     navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }

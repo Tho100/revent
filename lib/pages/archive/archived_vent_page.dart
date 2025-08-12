@@ -4,6 +4,7 @@ import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/controllers/search_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/global/vent_type.dart';
@@ -57,8 +58,6 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
   final filterTextNotifier = ValueNotifier<String>('Latest');
-
-  final searchArchiveController = TextEditingController();
 
   ValueNotifier<List<_ArchivedVentsData>> archivedVentsData = ValueNotifier([]);
 
@@ -196,8 +195,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     Navigator.pop(context);
 
   }
-// TODO: Rename to _searchArchivedVents
-  void _searchArchive({required String searchText}) {
+
+  void _searchArchivedVents({required String searchText}) {
 
     final query = searchText.trim().toLowerCase();
 
@@ -290,9 +289,9 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       width: MediaQuery.of(context).size.width * .92,
       height: 67,
       child: MainTextField(
-        controller: searchArchiveController,
+        controller: GeneralSearchController.searchController,
         hintText: 'Search archive...',
-        onChange: (searchText) => _searchArchive(searchText: searchText)
+        onChange: (searchText) => _searchArchivedVents(searchText: searchText)
       ),
     );
   }
@@ -448,10 +447,10 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   @override
   void dispose() {
+    GeneralSearchController.searchController.dispose();
     archivedVentsData.dispose();
     isPageLoadedNotifier.dispose();
     filterTextNotifier.dispose();
-    searchArchiveController.dispose();
     activeVentProvider.clearData();
     super.dispose();
   }
