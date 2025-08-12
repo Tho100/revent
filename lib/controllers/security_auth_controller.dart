@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class SecurityAuthController {
 
-  final currentPasswordController = TextEditingController();
-  final newPasswordController = TextEditingController();
+  static final currentPasswordController = TextEditingController();
+  static final newPasswordController = TextEditingController();
 
-  void dispose() {
+  static void dispose() {
     currentPasswordController.dispose();
     newPasswordController.dispose();
   }

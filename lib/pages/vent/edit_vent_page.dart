@@ -31,14 +31,12 @@ class EditVentPage extends StatefulWidget {
 
 class _EditVentPageState extends State<EditVentPage> {
 
-  final postController = VentPostController(); 
-
   final isSavedNotifier = ValueNotifier<bool>(true);
 
   void _initializeChangesListener() {
 
-    postController.bodyTextController.addListener(() {
-      final hasChanged = postController.bodyTextController.text != widget.body;
+    VentPostController.bodyTextController.addListener(() {
+      final hasChanged = VentPostController.bodyTextController.text != widget.body;
       isSavedNotifier.value = hasChanged ? false : true;
     });
 
@@ -48,7 +46,7 @@ class _EditVentPageState extends State<EditVentPage> {
 
     try {
 
-      final newBodyText = postController.bodyTextController.text;
+      final newBodyText = VentPostController.bodyTextController.text;
 
       if (widget.ventType == VentType.archived) {
 
@@ -108,7 +106,7 @@ class _EditVentPageState extends State<EditVentPage> {
             Padding(
               padding: const EdgeInsets.only(left: 17.0, right: 14.0),
               child: PostTextField().buildBodyField(
-                bodyController: postController.bodyTextController, autoFocus: true
+                bodyController: VentPostController.bodyTextController, autoFocus: true
               ),
             ),
               
@@ -133,13 +131,13 @@ class _EditVentPageState extends State<EditVentPage> {
   Widget _buildTextFormattingToolbar() {
     return Padding(
       padding: MediaQuery.of(context).viewInsets,
-      child: TextFormattingToolbar(controller: postController.bodyTextController),
+      child: TextFormattingToolbar(controller: VentPostController.bodyTextController),
     );
   }
 
   Future<bool> _onClosePage() async {
 
-    if (postController.bodyTextController.text != widget.body) {
+    if (VentPostController.bodyTextController.text != widget.body) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardEdit,
       );
@@ -152,13 +150,13 @@ class _EditVentPageState extends State<EditVentPage> {
   @override
   void initState() {
     super.initState();
-    postController.bodyTextController.text = widget.body;
+    VentPostController.bodyTextController.text = widget.body;
     _initializeChangesListener();
   }
 
   @override
   void dispose() {
-    postController.dispose();
+    VentPostController.dispose();
     isSavedNotifier.dispose();
     super.dispose();
   }

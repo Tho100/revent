@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class AuthController {
-  // TODO: Make this controller static
-  final usernameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
 
-  void dispose() {
+  static final usernameController = TextEditingController();
+  static final emailController = TextEditingController();
+  static final passwordController = TextEditingController();
+
+  static void dispose() {
     usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();

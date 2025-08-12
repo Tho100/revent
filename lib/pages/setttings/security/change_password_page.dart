@@ -22,8 +22,6 @@ class ChangePasswordPage extends StatefulWidget {
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfileProviderService {
 
-  final authController = SecurityAuthController();
-
   Future<void> _onUpdatePasswordPressed() async {
 
     try {
@@ -34,10 +32,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
         username: userProvider.user.username
       );
 
-      final currentPasswordInput = authController.currentPasswordController.text.trim();
+      final currentPasswordInput = SecurityAuthController.currentPasswordController.text.trim();
       final currentPasswordInputHash = HashingModel.computeHash(currentPasswordInput);
 
-      final newPasswordInput = authController.newPasswordController.text.trim();
+      final newPasswordInput = SecurityAuthController.newPasswordController.text.trim();
       final newPasswordInputHash = HashingModel.computeHash(newPasswordInput);
 
       if (newPasswordInput.isEmpty || currentPasswordInput.isEmpty) {
@@ -92,14 +90,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
 
           PasswordTextField(
             hintText: 'Enter your current password',
-            controller: authController.currentPasswordController, 
+            controller: SecurityAuthController.currentPasswordController, 
           ),
 
           const SizedBox(height: 15),
 
           PasswordTextField(
             hintText: 'Enter a new password',
-            controller: authController.newPasswordController, 
+            controller: SecurityAuthController.newPasswordController, 
           ),
 
           const SizedBox(height: 30),
@@ -120,7 +118,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with UserProfil
 
   @override
   void dispose() {
-    authController.dispose();
+    SecurityAuthController.dispose();
     super.dispose();
   }
 
