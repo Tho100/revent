@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart'; // TODO: Import widgets instead
+import 'package:flutter/widgets.dart';
 
 class AuthController {
 
