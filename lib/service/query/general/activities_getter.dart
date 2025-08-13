@@ -4,7 +4,7 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class NotificationsGetter extends BaseQueryService with UserProfileProviderService {
+class ActivitiesGetter extends BaseQueryService with UserProfileProviderService {
 
   final formatDate = FormatDate();
 

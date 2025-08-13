@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:quick_actions/quick_actions.dart';
-import 'package:revent/service/notification_service.dart';
+import 'package:revent/service/activity_service.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
     }
 
-    await NotificationService().initializeNotifications();
+    await ActivityService().initializeActivities();
 
   }
 

@@ -17,7 +17,7 @@ class UserAccountManager with UserProfileProviderService, ProfilePostsProviderSe
     await localModel.deleteAllSearchHistory();
     await localModel.deleteLocalData();
     
-    await CacheHelper().clearNotificationCache();
+    await CacheHelper().clearActivityCache();
 
   }
 

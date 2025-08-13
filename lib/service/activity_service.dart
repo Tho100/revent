@@ -1,28 +1,28 @@
 import 'package:revent/global/cache_names.dart';
 import 'package:revent/helper/cache_helper.dart';
-import 'package:revent/service/query/general/notifications_getter.dart';
+import 'package:revent/service/query/general/activities_getter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class NotificationService with NavigationProviderService {
+class ActivityService with NavigationProviderService {
 
-  final notificationsGetter = NotificationsGetter();
+  final activitiesGetter = ActivitiesGetter();
 
-  Future<void> initializeNotifications({bool isLogin = false}) async {
+  Future<void> initializeActivities({bool isLogin = false}) async {
 
     final prefs = await SharedPreferences.getInstance();
 
     if (isLogin) {
 
-      await markNotificationAsRead(isLogin: true).then(
+      await markActivityAsRead(isLogin: true).then(
         (showBadge) => prefs.setBool(CacheNames.unreadCache, showBadge)
       );
 
     } else {
 
-      final hasNewNotification = await _notifyNewNotification();
+      final hasNewActivity = await _notifyNewActivity();
 
-      if (hasNewNotification) {
+      if (hasNewActivity) {
         await prefs.setBool(CacheNames.unreadCache, true);
       }
 
@@ -34,17 +34,17 @@ class NotificationService with NavigationProviderService {
 
   }
 
-  Future<bool> markNotificationAsRead({bool isLogin = false}) async {
+  Future<bool> markActivityAsRead({bool isLogin = false}) async {
 
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool(CacheNames.unreadCache, false);
 
     final currentLikes = isLogin 
-      ? await notificationsGetter.getUserPostsAllTimeLikes()
-      : await notificationsGetter.getUserPostsWithRecentLikes();
+      ? await activitiesGetter.getUserPostsAllTimeLikes()
+      : await activitiesGetter.getUserPostsWithRecentLikes();
       
-    final currentFollowers = await notificationsGetter.getUserFollowers();
+    final currentFollowers = await activitiesGetter.getUserFollowers();
 
     final titles = currentLikes['title']!;
     final likeCounts = currentLikes['like_count']!;
@@ -53,7 +53,7 @@ class NotificationService with NavigationProviderService {
     final followers = currentFollowers['followers']!;
     final followedAt = currentFollowers['followed_at']!;
 
-    final oldCache = await CacheHelper().getNotificationCache();
+    final oldCache = await CacheHelper().getActivityCache();
 
     final postLikesCache = Map<String, List<dynamic>>.from(oldCache[CacheNames.postLikesCache]);
     final followersCache = Map<String, List<dynamic>>.from(oldCache[CacheNames.followersCache]);
@@ -67,8 +67,8 @@ class NotificationService with NavigationProviderService {
     }
 
     if (isLogin) {
-      final hasNotifications = postLikesCache.isNotEmpty || followersCache.isNotEmpty;
-      return hasNotifications;
+      final hasActivities = postLikesCache.isNotEmpty || followersCache.isNotEmpty;
+      return hasActivities;
     }
 
     await CacheHelper().initializeCache(
@@ -80,12 +80,12 @@ class NotificationService with NavigationProviderService {
 
   }
 
-  Future<bool> _notifyNewNotification() async {
+  Future<bool> _notifyNewActivity() async {
 
-    final currentLikes = await notificationsGetter.getUserPostsWithRecentLikes();
-    final currentFollowers = await notificationsGetter.getUserFollowers();
+    final currentLikes = await activitiesGetter.getUserPostsWithRecentLikes();
+    final currentFollowers = await activitiesGetter.getUserFollowers();
 
-    final caches = await CacheHelper().getNotificationCache();
+    final caches = await CacheHelper().getActivityCache();
 
     final storedLikes = caches[CacheNames.postLikesCache];
     final storedFollowers = caches[CacheNames.followersCache];
