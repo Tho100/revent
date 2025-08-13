@@ -9,7 +9,7 @@ class NavigationProvider extends ChangeNotifier {
 
   AppRoute _currentRoute = AppRoute.home;
 
-  bool _showNotificationBadge = false;
+  bool _showActivityBadge = false;
 
   int get currentPageIndex => _currentPageIndex;
   int get homeTabIndex => _homeTabIndex;
@@ -17,7 +17,7 @@ class NavigationProvider extends ChangeNotifier {
 
   AppRoute get currentRoute => _currentRoute; 
 
-  bool get showNotificationBadge => _showNotificationBadge; 
+  bool get showActivityBadge => _showActivityBadge; 
 
   void setCurrentRoute(AppRoute route) {
     _currentRoute = route;
@@ -36,7 +36,7 @@ class NavigationProvider extends ChangeNotifier {
   }
 
   void setBadgeVisible(bool showBadge) {
-    _showNotificationBadge = showBadge;
+    _showActivityBadge = showBadge;
     notifyListeners();
   }
 

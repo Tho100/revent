@@ -8,7 +8,7 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
-import 'package:revent/service/notification_service.dart';
+import 'package:revent/service/activity_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/query/vent/vent_data_getter.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -18,29 +18,29 @@ import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 
-class NotificationsPage extends StatefulWidget {
+class ActivityPage extends StatefulWidget {
 
-  const NotificationsPage({super.key});
+  const ActivityPage({super.key});
 
   @override
-  State<NotificationsPage> createState() => _NotificationsPageState();
+  State<ActivityPage> createState() => _ActivityPageState();
 
 }
 
-class _NotificationsPageState extends State<NotificationsPage> with 
+class _ActivityPageState extends State<ActivityPage> with 
   NavigationProviderService, 
   UserProfileProviderService {
 
-  final notificationNotifier = ValueNotifier<Map<String, List<dynamic>>>({});
+  final activityNotifier = ValueNotifier<Map<String, List<dynamic>>>({});
 
-  final notificationService = NotificationService();
+  final activityService = ActivityService();
 
   final likedPostType = 'liked_post';
   final newFollowerType = 'new_follower';
 
-  void _initializeNotificationData() async {
+  void _initializeActivityData() async {
 
-    final caches = await CacheHelper().getNotificationCache();
+    final caches = await CacheHelper().getActivityCache();
 
     final storedLikes = caches[CacheNames.postLikesCache];
     final storedFollowers = caches[CacheNames.followersCache];
@@ -59,7 +59,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
       });
     }
 
-    notificationNotifier.value = combined;
+    activityNotifier.value = combined;
 
   }
 
@@ -98,15 +98,15 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
   }
 
-  Future<void> _refreshNotifications() async {
+  Future<void> _refreshActivites() async {
 
-    notificationNotifier.value.clear();
+    activityNotifier.value.clear();
 
-    await notificationService.initializeNotifications().then(
-      (_) => _initializeNotificationData()
+    await activityService.initializeActivities().then(
+      (_) => _initializeActivityData()
     );
 
-    await notificationService.markNotificationAsRead();
+    await activityService.markActivityAsRead();
 
   }
 
@@ -172,7 +172,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
     );
   }
 
-  Widget _buildMainInfo(String notificationSubject, int likes, String timestamp, {String type = 'like'}) {
+  Widget _buildMainInfo(String activitySubject, int likes, String timestamp, {String type = 'like'}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisAlignment: MainAxisAlignment.center,
@@ -180,7 +180,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
         Text(
           type == newFollowerType
-            ? '$notificationSubject followed you'
+            ? '$activitySubject followed you'
             : likes == 1 ? 'Someone liked your post' : 'Your post received $likes likes',
           style: GoogleFonts.inter(
             color: ThemeColor.contentPrimary,
@@ -200,7 +200,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
                 maxWidth: MediaQuery.of(context).size.width * 0.45,
               ),
               child: Text(
-                type == newFollowerType ? '' : notificationSubject,
+                type == newFollowerType ? '' : activitySubject,
                 style: GoogleFonts.inter(
                   color: ThemeColor.contentSecondary,
                   fontWeight: FontWeight.w700,
@@ -229,9 +229,9 @@ class _NotificationsPageState extends State<NotificationsPage> with
     );
   }
 
-  Widget _buildNotificationListView({
-    required List<String> notificationSubjects,
-    required List<int> likesData,
+  Widget _buildActivityListView({
+    required List<String> subjects,
+    required List<int> likes,
     required List<String> timestamp,
     required List<String> types
   }) {
@@ -239,7 +239,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
     final grouped = _groupIndicesByTime(timestamp);
 
     return RefreshIndicator(
-      onRefresh: () async => await _refreshNotifications(),
+      onRefresh: () async => await _refreshActivites(),
       child: ListView(
         children: grouped.entries
           .where((entry) => entry.value.isNotEmpty)
@@ -259,9 +259,9 @@ class _NotificationsPageState extends State<NotificationsPage> with
                 ),
               ),
               
-              ...entry.value.map((index) => _buildNotificationTile(
-                notificationSubjects[index],
-                likesData[index],
+              ...entry.value.map((index) => _buildActivityTile(
+                subjects[index],
+                likes[index],
                 timestamp[index],
                 types[index],
               )).toList()
@@ -272,7 +272,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
     );
   }
 
-  Widget _buildNotificationTile(String subject, int likes, String ts, String type) {
+  Widget _buildActivityTile(String subject, int likes, String ts, String type) {
     return InkWellEffect(
       onPressed: () async {
         if (type == likedPostType) {
@@ -316,7 +316,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
 
   Widget _buildBody() {
     return ValueListenableBuilder(
-      valueListenable: notificationNotifier,
+      valueListenable: activityNotifier,
       builder: (_, data, __) {
 
         final formatTimestamp = FormatDate();
@@ -330,21 +330,21 @@ class _NotificationsPageState extends State<NotificationsPage> with
         );
 
         if (sortedEntries.isEmpty) {
-          return _buildNoNotifications();
+          return _buildNoActivity();
         }
 
-        final notificationSubjects = sortedEntries.map((e) => e.key).toList();
-        final notificationTimestamp = sortedEntries.map((e) => e.value[1].toString()).toList();
+        final subjects = sortedEntries.map((e) => e.key).toList();
+        final timestamp = sortedEntries.map((e) => e.value[1].toString()).toList();
         final likes = sortedEntries.map((e) => e.value[0] as int).toList();
 
         final types = sortedEntries.map(
           (e) => e.value.length > 2 ? e.value[2].toString() : likedPostType
         ).toList();
 
-        return _buildNotificationListView(
-          notificationSubjects: notificationSubjects, 
-          timestamp: notificationTimestamp, 
-          likesData: likes, 
+        return _buildActivityListView(
+          subjects: subjects, 
+          timestamp: timestamp, 
+          likes: likes, 
           types: types
         );
 
@@ -352,21 +352,21 @@ class _NotificationsPageState extends State<NotificationsPage> with
     );
   }
 
-  Widget _buildNoNotifications() {
+  Widget _buildNoActivity() {
     return NoContentMessage().customMessage(
-      message: 'No new notifications.'
+      message: 'No new activity.'
     );
   }
 
   @override
   void initState() {
     super.initState();
-    _initializeNotificationData();
+    _initializeActivityData();
   }
 
   @override
   void dispose() {
-    notificationNotifier.dispose();
+    activityNotifier.dispose();
     super.dispose();
   }
 
@@ -379,7 +379,7 @@ class _NotificationsPageState extends State<NotificationsPage> with
       },
       child: Scaffold(
         appBar: CustomAppBar(
-          title: 'Notifications',
+          title: 'Activity',
           customBackOnPressed: () => NavigatePage.homePage(),
           context: context,
           actions: [NavigationPagesWidgets.profilePictureLeading()]

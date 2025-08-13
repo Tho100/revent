@@ -14,12 +14,12 @@ import 'package:revent/pages/vent/edit_vent_page.dart';
 import 'package:revent/pages/profile/follows_page.dart';
 import 'package:revent/pages/home_page.dart';
 import 'package:revent/pages/main_screen_page.dart';
-import 'package:revent/pages/navigation/notifications_page.dart';
+import 'package:revent/pages/navigation/activity_page.dart';
 import 'package:revent/pages/navigation/my_profile_page.dart';
 import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
-import 'package:revent/service/notification_service.dart';
+import 'package:revent/service/activity_service.dart';
 import 'package:revent/service/query/user/user_validator.dart';
 import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -36,11 +36,11 @@ class _DockBarNavigationPages {
     );
   }
 
-  static void notificationsPage() {
+  static void activityPage() {
     Navigator.push(
       AppKeys.navigatorKey.currentContext!,
       PageRouteBuilder(
-        pageBuilder: (_, __, ___) => const NotificationsPage(),
+        pageBuilder: (_, __, ___) => const ActivityPage(),
         transitionDuration: const Duration(microseconds: 0)
       ),
     );
@@ -89,10 +89,10 @@ class NavigatePage {
     _DockBarNavigationPages.searchPage();
   }
 
-  static void notificationsPage() async {
-    await NotificationService().markNotificationAsRead().then((_) {
+  static void activityPage() async {
+    await ActivityService().initializeActivities().then((_) {
       _navigation.setPageIndex(3);
-      _DockBarNavigationPages.notificationsPage();
+      _DockBarNavigationPages.activityPage();
     });
   }
 

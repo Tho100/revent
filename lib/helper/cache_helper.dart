@@ -6,7 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class CacheHelper with NavigationProviderService {
 
-  Future<Map<String, dynamic>> getNotificationCache() async {
+  Future<Map<String, dynamic>> getActivityCache() async {
 
     final prefs = await SharedPreferences.getInstance();
 
@@ -37,7 +37,7 @@ class CacheHelper with NavigationProviderService {
 
   }
 
-  Future<void> clearNotificationCache() async {
+  Future<void> clearActivityCache() async {
 
     final prefs = await SharedPreferences.getInstance();
 

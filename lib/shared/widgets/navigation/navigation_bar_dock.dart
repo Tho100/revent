@@ -13,7 +13,7 @@ class NavigationBarDock extends StatelessWidget {
     CupertinoIcons.home, 
     CupertinoIcons.search, 
     CupertinoIcons.add, 
-    CupertinoIcons.bell,
+    CupertinoIcons.heart,
     CupertinoIcons.person
   ];
 
@@ -21,7 +21,7 @@ class NavigationBarDock extends StatelessWidget {
     NavigatePage.homePage,
     NavigatePage.searchPage,
     NavigatePage.createVentPage,
-    NavigatePage.notificationsPage,
+    NavigatePage.activityPage,
     NavigatePage.myProfilePage,
   ];
 
@@ -65,7 +65,7 @@ class NavigationBarDock extends StatelessWidget {
                       },
                     ),
 
-                    if (index == 3 && navigation.showNotificationBadge)
+                    if (index == 3 && navigation.showActivityBadge)
                     Positioned(
                       top: 9,
                       right: 12,
