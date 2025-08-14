@@ -21,7 +21,9 @@ class DeactivateAccountPage extends StatefulWidget {
 
 }
 
-class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProfileProviderService {
+class _DeleteAccountPageState extends State<DeactivateAccountPage> with 
+  UserProfileProviderService,
+  SecurityAuthController {
 
   void _deactivateAccountConfirmationDialog() {
     CustomAlertDialog.alertDialogCustomOnPress(
@@ -43,7 +45,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
         username: userProvider.user.username
       );
 
-      final currentPasswordInput = SecurityAuthController.currentPasswordController.text;
+      final currentPasswordInput = currentPasswordController.text;
       final currentPasswordInputHash = HashingModel.computeHash(currentPasswordInput);
 
       if (currentPasswordHash != currentPasswordInputHash) {
@@ -80,7 +82,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
 
           PasswordTextField(
             hintText: 'Enter your password',
-            controller: SecurityAuthController.currentPasswordController, 
+            controller: currentPasswordController, 
           ),
 
           const SizedBox(height: 30),
@@ -101,7 +103,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with UserProf
 
   @override
   void dispose() {
-    SecurityAuthController.dispose();
+    disposeControllers();
     super.dispose();
   }
 

@@ -27,7 +27,8 @@ class LikedPage extends StatefulWidget {
 
 class _LikedPageState extends State<LikedPage> with 
   NavigationProviderService, 
-  LikedSavedProviderService {
+  LikedSavedProviderService,
+  GeneralSearchController {
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -93,7 +94,7 @@ class _LikedPageState extends State<LikedPage> with
       width: MediaQuery.of(context).size.width * .92,
       height: 67,
       child: MainTextField(
-        controller: GeneralSearchController.searchController,
+        controller: searchController,
         hintText: 'Search vents...',
         onChange: (searchText) => _searchLikedVents(searchText: searchText)
       ),
@@ -214,7 +215,7 @@ class _LikedPageState extends State<LikedPage> with
 
   @override
   void dispose() {
-    GeneralSearchController.searchController.dispose();
+    disposeControllers();
     isPageLoadedNotifier.dispose();
     navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();

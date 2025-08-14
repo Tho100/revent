@@ -1,12 +1,12 @@
 import 'package:flutter/widgets.dart';
 
-class AuthController {
+mixin AuthController {
 
-  static final usernameController = TextEditingController();
-  static final emailController = TextEditingController();
-  static final passwordController = TextEditingController();
+  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  static void dispose() {
+  void disposeControllers() {
     usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();

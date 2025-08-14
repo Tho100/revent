@@ -18,7 +18,7 @@ class MainSearchPage extends StatefulWidget {
 
 }
 
-class _MainSearchPageState extends State<MainSearchPage> {
+class _MainSearchPageState extends State<MainSearchPage> with GeneralSearchController {
 
   final searchHistoryNotifier = ValueNotifier<List<String>>([]);
 
@@ -62,7 +62,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
         child: TextFormField(
           autofocus: true,
           maxLines: 1,
-          controller: GeneralSearchController.searchController,
+          controller: searchController,
           style: GoogleFonts.inter(
             color: ThemeColor.contentSecondary,
             fontWeight: FontWeight.w700,
@@ -229,7 +229,7 @@ class _MainSearchPageState extends State<MainSearchPage> {
 
   @override
   void dispose() {
-    GeneralSearchController.searchController.dispose();
+    disposeControllers();
     searchHistoryNotifier.dispose();
     super.dispose();
   }

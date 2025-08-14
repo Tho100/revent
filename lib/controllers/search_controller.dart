@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
 
-class GeneralSearchController {
+mixin GeneralSearchController {
 
-  static final searchController = TextEditingController();
+  final searchController = TextEditingController();
 
-  static void dispose() {
+  void disposeControllers() {
     searchController.dispose();
   }
 

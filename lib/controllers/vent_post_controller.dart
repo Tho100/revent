@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 
-class VentPostController {
+mixin VentPostController {
 
-  static final titleController = TextEditingController();
-  static final bodyTextController = TextEditingController();
+  final titleController = TextEditingController();
+  final bodyTextController = TextEditingController();
 
-  static void dispose() {
+  void disposeControllers() {
     titleController.dispose();
     bodyTextController.dispose();
   }

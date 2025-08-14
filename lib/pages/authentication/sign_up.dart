@@ -24,7 +24,7 @@ class SignUpPage extends StatefulWidget {
 
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends State<SignUpPage> with AuthController {
 
   Future<void> _registerUser({
     required String username,
@@ -50,9 +50,9 @@ class _SignUpPageState extends State<SignUpPage> {
 
   Future<void> _processRegistration() async {
 
-    final usernameInput = AuthController.usernameController.text;
-    final emailInput = AuthController.emailController.text;
-    final authInput = AuthController.passwordController.text;
+    final usernameInput = usernameController.text;
+    final emailInput = emailController.text;
+    final authInput = passwordController.text;
 
     if (emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
       CustomAlertDialog.alertDialog(AlertMessages.registrationFieldsEmpty);
@@ -110,7 +110,7 @@ class _SignUpPageState extends State<SignUpPage> {
             maxLength: 24,
             textInputAction: TextInputAction.next,
             inputFormatters: InputFormatters.usernameFormatter(),
-            controller: AuthController.usernameController,
+            controller: usernameController,
           ),
 
           const SizedBox(height: 15),
@@ -120,14 +120,14 @@ class _SignUpPageState extends State<SignUpPage> {
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             inputFormatters: InputFormatters.noSpaces(),
-            controller: AuthController.emailController,
+            controller: emailController,
           ),
 
           const SizedBox(height: 15),
 
           PasswordTextField(
             hintText: 'Enter a password',
-            controller: AuthController.passwordController, 
+            controller: passwordController, 
           ),
 
           const SizedBox(height: 30),
@@ -155,7 +155,7 @@ class _SignUpPageState extends State<SignUpPage> {
 
   @override
   void dispose() {
-    AuthController.dispose();
+    disposeControllers();
     super.dispose();
   }
 

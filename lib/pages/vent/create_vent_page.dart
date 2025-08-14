@@ -35,7 +35,10 @@ class CreateVentPage extends StatefulWidget {
 
 }
 
-class _CreateVentPageState extends State<CreateVentPage> with TagsProviderService {
+class _CreateVentPageState extends State<CreateVentPage> with 
+  TagsProviderService,
+  VentPostController {
+    
   final postTextFields = PostTextField();
 
   final allowCommentingNotifier = ValueNotifier<bool>(true);
@@ -50,8 +53,8 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<void> _onPostVentPressed() async {
 
-    final ventTitle = VentPostController.titleController.text;
-    final ventBodyText = VentPostController.bodyTextController.text;
+    final ventTitle = titleController.text;
+    final ventBodyText = bodyTextController.text;
 
     final tags = tagsProvider.selectedTags.isEmpty ? '' : tagsProvider.selectedTags.join(' ');
 
@@ -169,7 +172,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
         
           Padding(
             padding: const EdgeInsets.only(left: 16.0, right: 12.0),
-            child: postTextFields.buildTitleField(titleController: VentPostController.titleController),
+            child: postTextFields.buildTitleField(titleController: titleController),
           ),   
 
           _buildNsfwTag(),
@@ -180,7 +183,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
           Padding(
             padding: const EdgeInsets.only(left: 17.0, right: 14.0),
-            child: postTextFields.buildBodyField(bodyController: VentPostController.bodyTextController),
+            child: postTextFields.buildBodyField(bodyController: bodyTextController),
           ),
 
           const SizedBox(height: 18)
@@ -287,7 +290,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
           children: [
           
             TextFormattingToolbar(
-              controller: VentPostController.bodyTextController, 
+              controller: bodyTextController, 
               customBottomPadding: 0
             ),
 
@@ -317,7 +320,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   Future<bool> _onClosePage() async {
 
-    if (VentPostController.bodyTextController.text.isNotEmpty || VentPostController.titleController.text.isNotEmpty) {
+    if (bodyTextController.text.isNotEmpty || titleController.text.isNotEmpty) {
       return await CustomAlertDialog.alertDialogDiscardConfirmation(
         message: AlertMessages.discardPost, 
       );
@@ -329,7 +332,7 @@ class _CreateVentPageState extends State<CreateVentPage> with TagsProviderServic
 
   @override
   void dispose() {
-    VentPostController.dispose();
+    disposeControllers();
     allowCommentingNotifier.dispose();
     archiveVentNotifier.dispose();
     markAsNsfwNotifier.dispose();
