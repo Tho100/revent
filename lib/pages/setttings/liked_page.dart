@@ -95,7 +95,7 @@ class _LikedPageState extends State<LikedPage> with
       height: 67,
       child: MainTextField(
         controller: searchController,
-        hintText: 'Search vents...',
+        hintText: 'Search in liked...',
         onChange: (searchText) => _searchLikedVents(searchText: searchText)
       ),
     );

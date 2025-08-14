@@ -95,7 +95,7 @@ class _SavedPageState extends State<SavedPage> with
       height: 67,
       child: MainTextField(
         controller: searchController,
-        hintText: 'Search vents...',
+        hintText: 'Search in saved...',
         onChange: (searchText) => _searchSavedVents(searchText: searchText)
       ),
     );
