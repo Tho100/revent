@@ -27,7 +27,8 @@ class SavedPage extends StatefulWidget {
 
 class _SavedPageState extends State<SavedPage> with 
   NavigationProviderService,
-  LikedSavedProviderService {
+  LikedSavedProviderService,
+  GeneralSearchController {
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
 
@@ -93,8 +94,8 @@ class _SavedPageState extends State<SavedPage> with
       width: MediaQuery.of(context).size.width * .92,
       height: 67,
       child: MainTextField(
-        controller: GeneralSearchController.searchController,
-        hintText: 'Search vents...',
+        controller: searchController,
+        hintText: 'Search in saved...',
         onChange: (searchText) => _searchSavedVents(searchText: searchText)
       ),
     );
@@ -214,7 +215,7 @@ class _SavedPageState extends State<SavedPage> with
 
   @override
   void dispose() {
-    GeneralSearchController.searchController.dispose();
+    disposeControllers();
     isPageLoadedNotifier.dispose();
     navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();

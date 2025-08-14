@@ -52,7 +52,8 @@ class ArchivedVentPage extends StatefulWidget {
 
 class _ArchivedVentPageState extends State<ArchivedVentPage> with 
   UserProfileProviderService, 
-  VentProviderService {
+  VentProviderService,
+  GeneralSearchController {
 
   final archiveDataGetter = ArchiveVentDataGetter();
 
@@ -289,7 +290,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       width: MediaQuery.of(context).size.width * .92,
       height: 67,
       child: MainTextField(
-        controller: GeneralSearchController.searchController,
+        controller: searchController,
         hintText: 'Search archive...',
         onChange: (searchText) => _searchArchivedVents(searchText: searchText)
       ),
@@ -447,7 +448,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   @override
   void dispose() {
-    GeneralSearchController.searchController.dispose();
+    disposeControllers();
     archivedVentsData.dispose();
     isPageLoadedNotifier.dispose();
     filterTextNotifier.dispose();

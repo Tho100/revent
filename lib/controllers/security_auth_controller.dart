@@ -1,11 +1,11 @@
 import 'package:flutter/widgets.dart';
 
-class SecurityAuthController {
+mixin SecurityAuthController {
 
-  static final currentPasswordController = TextEditingController();
-  static final newPasswordController = TextEditingController();
+  final currentPasswordController = TextEditingController();
+  final newPasswordController = TextEditingController();
 
-  static void dispose() {
+  void disposeControllers() {
     currentPasswordController.dispose();
     newPasswordController.dispose();
   }

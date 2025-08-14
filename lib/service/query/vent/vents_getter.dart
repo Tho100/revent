@@ -21,7 +21,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         WHERE ubi.blocked_by = :blocked_by
           AND ubi.blocked_username = vi.creator
       )
-      ORDER BY created_at DESC
+      ORDER BY vi.created_at DESC
       LIMIT 25;
     ''';
 
@@ -47,9 +47,9 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         AND vi.created_at >= DATE_SUB(NOW(), INTERVAL 16 DAY)
         AND (total_likes >= 5 OR total_comments >= 1)
       ORDER BY 
-        (total_likes >= 5 AND total_comments >= 1) ASC, 
-        total_likes ASC, 
-        created_at DESC
+        (vi.total_likes >= 5 AND vi.total_comments >= 1) ASC, 
+        vi.total_likes ASC, 
+        vi.created_at DESC
       LIMIT 25;
     ''';
 
@@ -76,7 +76,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
             ubi.blocked_by = :username AND 
             ubi.blocked_username = vi.creator
         )
-      ORDER BY created_at DESC
+      ORDER BY vi.created_at DESC
       LIMIT 25;
     ''';
 
@@ -106,7 +106,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
             ubi.blocked_by = :blocked_by AND 
             ubi.blocked_username = vi.creator
         )
-      ORDER BY created_at DESC;
+      ORDER BY vi.created_at DESC;
     ''';
 
     final params = {
@@ -170,7 +170,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         vi.marked_nsfw,
         upi.profile_picture
       FROM 
-        ${TableNames.ventInfo} AS svi
+        ${TableNames.savedVentInfo} AS svi
       JOIN 
         ${TableNames.ventInfo} AS vi 
           ON svi.post_id = vi.post_id
@@ -179,7 +179,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
           ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by
-      ORDER BY created_at DESC
+      ORDER BY 
+        vi.created_at DESC
       LIMIT 25
     ''';
 

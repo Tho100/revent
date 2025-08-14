@@ -37,8 +37,8 @@ class MainScreenPage extends StatelessWidget {
       borderRadius: BorderRadius.circular(20),
       child: Image.asset(
         'assets/images/albert_icon.png',
-        width: 85,
-        height: 85,
+        width: 100,
+        height: 100,
         fit: BoxFit.contain,
       ),
     );
@@ -58,7 +58,7 @@ class MainScreenPage extends StatelessWidget {
 
   Widget _buildSubText() {
     return Text(
-      'Share your thoughts, stories, and more!',
+      'A place to share your thoughts.',
       style: GoogleFonts.inter(
         color: ThemeColor.contentThird,
         fontSize: 16,
@@ -88,13 +88,15 @@ class MainScreenPage extends StatelessWidget {
     return Column(
       children: [
 
-        const SizedBox(height: 45),
+        const SizedBox(height: 10),
         
+        const Spacer(),
+
         _buildPaddedWidget(
           child: _buildLogo()
         ),
         
-        const SizedBox(height: 10),
+        const SizedBox(height: 15),
 
         _buildPaddedWidget(
           child: _buildHeaderText()
@@ -110,7 +112,7 @@ class MainScreenPage extends StatelessWidget {
         
         _buildBottomContainer(context),
 
-        const SizedBox(height: 20),
+        const SizedBox(height: 45),
         
       ],
     );
