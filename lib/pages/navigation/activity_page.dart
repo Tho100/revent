@@ -239,6 +239,8 @@ class _ActivityPageState extends State<ActivityPage> with
     final grouped = _groupIndicesByTime(timestamp);
 
     return RefreshIndicator(
+      backgroundColor: ThemeColor.contentPrimary,
+      color: ThemeColor.backgroundPrimary,
       onRefresh: () async => await _refreshActivites(),
       child: ListView(
         children: grouped.entries
