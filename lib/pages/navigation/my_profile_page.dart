@@ -218,19 +218,15 @@ class _MyProfilePageState extends State<MyProfilePage> with
     );
   }
 
-  Widget _buildBody() { // TODO: Remove this consumer
-    return Consumer<ProfileProvider>(
-      builder: (_, profileData, __) {
-        return ProfileBodyWidgets(
-          onRefresh: () async => await RefreshService().refreshMyProfile(),
-          tabBarWidgets: tabBarWidgets, 
-          profileInfoWidgets: profileInfoWidgets, 
-          pronounsWidget: _buildPronouns(), 
-          bioWidget: _buildBio(), 
-          userActionButtonWidget: _buildEditProfileButton(), 
-          popularityWidget: _popularityWidgets()
-        );
-      }
+  Widget _buildBody() {
+    return ProfileBodyWidgets(
+      onRefresh: () async => await RefreshService().refreshMyProfile(),
+      tabBarWidgets: tabBarWidgets, 
+      profileInfoWidgets: profileInfoWidgets, 
+      pronounsWidget: _buildPronouns(), 
+      bioWidget: _buildBio(), 
+      userActionButtonWidget: _buildEditProfileButton(), 
+      popularityWidget: _popularityWidgets()
     );
   }
 
