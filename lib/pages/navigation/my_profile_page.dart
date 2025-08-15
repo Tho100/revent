@@ -104,21 +104,25 @@ class _MyProfilePageState extends State<MyProfilePage> with
   }
 
   Widget _buildPronouns() {
-    return Consumer<ProfileProvider>(
-      builder: (_, profileData, __) {
-        final bottomPadding = profileData.profile.pronouns.isNotEmpty ? 11.0 : 0.0;
-        final topPadding = profileData.profile.pronouns.isNotEmpty ? 5.0 : 0.0;
+    return Selector<ProfileProvider, String>(
+      selector: (_, profileData) => profileData.profile.pronouns,
+      builder: (_, pronouns, __) {
+
+        final bottomPadding = pronouns.isNotEmpty ? 11.0 : 0.0;
+        final topPadding = pronouns.isNotEmpty ? 5.0 : 0.0;
+
         return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
           child: SizedBox(
             width: MediaQuery.of(context).size.width * 0.65,
             child: Text(
-              profileData.profile.pronouns,
+              pronouns,
               style: ThemeStyle.profilePronounsStyle,
               textAlign: TextAlign.start,
             ),
           ),
         );
+
       },
     );
   }
@@ -214,7 +218,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
     );
   }
 
-  Widget _buildBody() {
+  Widget _buildBody() { // TODO: Remove this consumer
     return Consumer<ProfileProvider>(
       builder: (_, profileData, __) {
         return ProfileBodyWidgets(
@@ -231,18 +235,19 @@ class _MyProfilePageState extends State<MyProfilePage> with
   }
 
   Widget _buildSocialLinks() {
-    return Consumer<UserProvider>(
-      builder: (_, userData, __) {
+    return Selector<UserProvider, Map<String, String>?>(
+      selector: (_, userData) => userData.user.socialHandles,
+      builder: (_, socialHandles, __) {
 
-        if ((userData.user.socialHandles ?? {}).isEmpty) {
+        if ((socialHandles ?? {}).isEmpty) {
           return const SizedBox.shrink();
         }
 
         return SocialLinksWidgets(
-          socialHandles: userData.user.socialHandles!
+          socialHandles: socialHandles!
         ).buildSocialLinks();
 
-      }
+      },
     );
   }
 

@@ -102,8 +102,9 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   }
 
   Widget _totalSearchResults() {
-    return Consumer<SearchPostsProvider>(
-      builder: (_, posts, __) {
+    return Selector<SearchPostsProvider, int>(
+      selector: (_, searchPostsData) => searchPostsData.vents.length,
+      builder: (_, totalVents, __) {
         return Padding(
           padding: const EdgeInsets.only(left: 12.0, top: 2.0),
           child: RichText(
@@ -115,7 +116,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
               children: [
       
                 TextSpan(
-                  text: '${posts.vents.length.toString()}   ',
+                  text: '${totalVents.toString()}   ',
                   style: TextStyle(color: ThemeColor.contentPrimary),
                 ),
       

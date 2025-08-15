@@ -102,12 +102,13 @@ class _LikedPageState extends State<LikedPage> with
   }
 
   Widget _buildTotalPost() {
-    return Consumer<LikedVentProvider>(
-      builder: (_, likedVentData,  __) {
-
-        final postText = likedVentData.vents.length == 1 
+    return Selector<LikedVentProvider, int>(
+      selector: (_, likedVentData) => likedVentData.vents.length,
+      builder: (_, ventCount, __) {
+        
+        final postText = ventCount == 1 
           ? "You liked 1 post." 
-          : "You liked ${likedVentData.vents.length} posts.";
+          : "You liked $ventCount posts.";
 
         return Text(
           postText,
@@ -117,7 +118,7 @@ class _LikedPageState extends State<LikedPage> with
             fontSize: 14
           )
         );
-        
+
       },
     );
   }

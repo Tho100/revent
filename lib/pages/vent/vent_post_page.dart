@@ -289,11 +289,10 @@ class _VentPostPageState extends State<VentPostPage> with
   }
 
   Widget _buildLastEdit() {
-    return Consumer<ActiveVentProvider>(
-      builder: (_, data, __) {
-
-        final lastEdit = data.ventData.lastEdit;
-
+    return Selector<ActiveVentProvider, String?>(
+      selector: (_, activeVentData) => activeVentData.ventData.lastEdit,
+      builder: (_, lastEdit, __) {
+        
         if (lastEdit != '') {
           return GestureDetector(
             onTap: () => SnackBarDialog.temporarySnack(
@@ -421,10 +420,11 @@ class _VentPostPageState extends State<VentPostPage> with
         
         const SizedBox(height: 10),
 
-        Consumer<ActiveVentProvider>(
-          builder: (_, data, __) {
+        Selector<ActiveVentProvider, String>(
+          selector: (_, activeVentData) => activeVentData.ventData.body,
+          builder: (_, bodyText, __) {
             return StyledTextWidget(
-              text: data.ventData.body,
+              text: bodyText,
               isSelectable: true,
             );
           },
@@ -503,10 +503,11 @@ class _VentPostPageState extends State<VentPostPage> with
   }
 
   Widget _buildCommentButton() {
-    return Consumer<CommentsProvider>(
-      builder: (_, commentsData, __) {
+    return Selector<CommentsProvider, int>(
+      selector: (_, commentsData) => commentsData.comments.length,
+      builder: (_, totalComments, __) {
         return ActionsButton().buildCommentsButton(
-          value: commentsData.comments.length
+          value: totalComments
         );
       },
     );

@@ -102,12 +102,13 @@ class _SavedPageState extends State<SavedPage> with
   }
 
   Widget _buildTotalPost() {
-    return Consumer<SavedVentProvider>(
-      builder: (_, savedVentData, __) {
-
-        final postText = savedVentData.vents.length == 1 
+    return Selector<SavedVentProvider, int>(
+      selector: (_, savedVentData) => savedVentData.vents.length,
+      builder: (_, ventCount, __) {
+        
+        final postText = ventCount == 1 
           ? "You saved 1 post." 
-          : "You saved ${savedVentData.vents.length} posts.";
+          : "You saved $ventCount posts.";
 
         return Text(
           postText,

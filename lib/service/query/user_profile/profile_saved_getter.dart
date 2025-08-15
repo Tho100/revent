@@ -13,6 +13,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     required String username, 
     required bool isMyProfile
   }) async {
+// TODO: problem: Cant load profiles saved posts, fix this query
 
     const query = 
     '''
