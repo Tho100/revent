@@ -215,8 +215,9 @@ class _CreateVentPageState extends State<CreateVentPage> with
   }
 
   Widget _buildSelectedTags() {
-    return Consumer<TagsProvider>(
-      builder: (_, tagsProvider, __) {
+    return Selector<TagsProvider, List<String>>( 
+      selector: (_, tagsData) => tagsData.selectedTags,
+      builder: (_, selectedTags, __) {
 
         if (tagsProvider.selectedTags.isEmpty) {
           return const SizedBox.shrink();
@@ -240,7 +241,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
           ),
         );
 
-      }
+      },
     );
   }
 

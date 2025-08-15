@@ -28,12 +28,12 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
         vi.created_at,
         upi.profile_picture
       FROM 
-        FROM ${TableNames.savedVentInfo} svi
+        ${TableNames.savedVentInfo} svi
       JOIN 
-        FROM ${TableNames.ventInfo} vi 
+        ${TableNames.ventInfo} vi 
         ON svi.post_id = vi.post_id
       JOIN 
-        FROM ${TableNames.userProfileInfo} upi
+        ${TableNames.userProfileInfo} upi
         ON vi.creator = upi.username
       WHERE 
         svi.saved_by = :saved_by

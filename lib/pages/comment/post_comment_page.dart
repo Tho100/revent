@@ -133,10 +133,11 @@ class _PostCommentPageState extends State<PostCommentPage> with
 
                   const SizedBox(height: 10),
 
-                  Consumer<ActiveVentProvider>(
-                    builder: (_, data, __) {
+                  Selector<ActiveVentProvider, String>(
+                    selector: (_, activeVentData) => activeVentData.ventData.body,
+                    builder: (_, bodyText, __) {
                       return StyledTextWidget(
-                        text: data.ventData.body,
+                        text: bodyText,
                         isSelectable: true,
                       );
                     },

@@ -9,6 +9,7 @@ class MainButton extends StatelessWidget {
   final double? customWidth;
   final double? customHeight;
   final double? customFontSize;
+  final bool enabled;
 
   const MainButton({
     required this.text, 
@@ -16,6 +17,7 @@ class MainButton extends StatelessWidget {
     this.customWidth,
     this.customHeight,
     this.customFontSize,
+    this.enabled = true,
     super.key
   });
 
@@ -25,8 +27,9 @@ class MainButton extends StatelessWidget {
       height: customHeight ?? 68,
       width: customWidth ?? MediaQuery.of(context).size.width * 0.87,
       child: ElevatedButton(
-        onPressed: onPressed,
+        onPressed: enabled ? onPressed : null,
         style: ElevatedButton.styleFrom(
+          disabledBackgroundColor: ThemeColor.contentThird,
           backgroundColor: ThemeColor.contentPrimary,
           foregroundColor: ThemeColor.contentThird,
           elevation: 0,

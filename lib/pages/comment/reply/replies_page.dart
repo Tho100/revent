@@ -134,15 +134,16 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
 
                   const SizedBox(height: 10),
 
-                  Consumer<ActiveVentProvider>(
-                    builder: (_, data, __) {
+                  Selector<ActiveVentProvider, String>(
+                    selector: (_, activeVentData) => activeVentData.ventData.body,
+                    builder: (_, bodyText, __) {
                       return StyledTextWidget(
-                        text: data.ventData.body,
+                        text: bodyText,
                         isSelectable: true,
                       );
                     },
                   ),
-
+                  
                   activeVentProvider.ventData.body.isNotEmpty 
                     ? const SizedBox(height: 30)
                     : const SizedBox.shrink()
