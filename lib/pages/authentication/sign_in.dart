@@ -62,18 +62,8 @@ class _SignInPageState extends State<SignInPage> with AuthController {
     final authInput = passwordController.text;
     final emailInput = emailController.text;
 
-    if (emailInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignInTitle, AlertMessages.emptyEmailAddr);
-      return;
-    }
-
     if (!InputValidator.validateEmailFormat(emailInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignInTitle, AlertMessages.invalidEmailAddr);
-      return;
-    }
-
-    if (authInput.isEmpty) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignInTitle, AlertMessages.emptyPassword);              
       return;
     }
 

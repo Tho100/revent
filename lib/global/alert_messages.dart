@@ -15,12 +15,9 @@ class AlertMessages {
   static const accountNotFound = 'Account not found';
 
   // Registration fields
-  static const registrationFieldsEmpty = 'Please fill all the fields';
   static const invalidUsername = 'Username is invalid';
-
-  // Email validation
-  static const emptyEmailAddr = 'Please enter your email address';
   static const invalidEmailAddr = 'Email address is invalid';
+  static const emptyEmailAddr = 'Please enter your email address';
 
   // Password validation
   static const emptyPassword = 'Please enter your password';

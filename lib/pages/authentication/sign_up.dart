@@ -68,11 +68,6 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
     final usernameInput = usernameController.text;
     final emailInput = emailController.text;
     final authInput = passwordController.text;
-// TODO: Remove this dialog
-    if (emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
-      CustomAlertDialog.alertDialog(AlertMessages.registrationFieldsEmpty);
-      return;
-    }
 
     if (!InputValidator.validateUsernameFormat(usernameInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, AlertMessages.invalidUsername);
