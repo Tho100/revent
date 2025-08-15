@@ -26,6 +26,21 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> with AuthController {
 
+  final isSignUpButtonEnabledNotifier = ValueNotifier<bool>(false);
+
+  void _checkFormFilled() {
+
+    final isFilled = 
+      usernameController.text.trim().isNotEmpty &&
+      emailController.text.trim().isNotEmpty &&
+      passwordController.text.trim().isNotEmpty;
+
+    if (isFilled != isSignUpButtonEnabledNotifier.value) {
+      isSignUpButtonEnabledNotifier.value = isFilled;
+    } 
+
+  }
+
   Future<void> _registerUser({
     required String username,
     required String email,
@@ -53,7 +68,7 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
     final usernameInput = usernameController.text;
     final emailInput = emailController.text;
     final authInput = passwordController.text;
-
+// TODO: Remove this dialog
     if (emailInput.isEmpty || usernameInput.isEmpty || authInput.isEmpty) {
       CustomAlertDialog.alertDialog(AlertMessages.registrationFieldsEmpty);
       return;
@@ -132,12 +147,18 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
 
           const SizedBox(height: 30),
 
-          MainButton(
-            text: 'Sign Up',
-            customFontSize: 17,
-            onPressed: () async { 
-              FocusScope.of(context).unfocus(); 
-              await _processRegistration();
+          ValueListenableBuilder(
+            valueListenable: isSignUpButtonEnabledNotifier,
+            builder: (_, isEnabled, __) {
+              return MainButton(
+                enabled: isEnabled,
+                text: 'Sign Up',
+                customFontSize: 17,
+                onPressed: () async { 
+                  FocusScope.of(context).unfocus(); 
+                  await _processRegistration();
+                },
+              );
             },
           ),
 
@@ -154,8 +175,17 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
   }
 
   @override
+  void initState() {
+    super.initState();
+    usernameController.addListener(_checkFormFilled);
+    emailController.addListener(_checkFormFilled);
+    passwordController.addListener(_checkFormFilled);
+  }
+
+  @override
   void dispose() {
     disposeControllers();
+    isSignUpButtonEnabledNotifier.dispose();
     super.dispose();
   }
 

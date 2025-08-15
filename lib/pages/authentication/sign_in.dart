@@ -26,6 +26,19 @@ class SignInPage extends StatefulWidget {
 class _SignInPageState extends State<SignInPage> with AuthController {
 
   final isRememberMeCheckedNotifier = ValueNotifier<bool>(true); 
+  final isSignInButtonEnabledNotifier = ValueNotifier<bool>(false);
+
+  void _checkFormFilled() {
+
+    final isFilled = 
+      emailController.text.trim().isNotEmpty &&
+      passwordController.text.trim().isNotEmpty;
+
+    if (isFilled != isSignInButtonEnabledNotifier.value) {
+      isSignInButtonEnabledNotifier.value = isFilled;
+    } 
+
+  }
 
   Future<void> _loginUser({
     required String email,
@@ -161,13 +174,19 @@ class _SignInPageState extends State<SignInPage> with AuthController {
 
           const SizedBox(height: 30),
 
-          MainButton(
-            text: 'Sign In',
-            customFontSize: 17,
-            onPressed: () async {
-              FocusScope.of(context).unfocus(); 
-              await _processLogin();
-            }
+          ValueListenableBuilder(
+            valueListenable: isSignInButtonEnabledNotifier,
+            builder: (_, isEnabled, __) {
+              return  MainButton(
+                enabled: isEnabled,
+                text: 'Sign In',
+                customFontSize: 17,
+                onPressed: () async {
+                  FocusScope.of(context).unfocus(); 
+                  await _processLogin();
+                },
+              );
+            },
           ),
 
           const Spacer(),
@@ -183,9 +202,17 @@ class _SignInPageState extends State<SignInPage> with AuthController {
   }
 
   @override
+  void initState() {
+    super.initState();
+    emailController.addListener(_checkFormFilled);
+    passwordController.addListener(_checkFormFilled);
+  }
+
+  @override
   void dispose() {
     disposeControllers();
     isRememberMeCheckedNotifier.dispose();
+    isSignInButtonEnabledNotifier.dispose();
     super.dispose();
   }
 
