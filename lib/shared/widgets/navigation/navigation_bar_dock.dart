@@ -68,7 +68,7 @@ class NavigationBarDock extends StatelessWidget {
                     if (index == 3 && navigation.showActivityBadge)
                     Positioned(
                       top: 9,
-                      right: 12,
+                      right: 8,
                       child: Container(
                         width: 14,
                         height: 14,
