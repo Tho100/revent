@@ -62,7 +62,13 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
       );
 
     } catch (_) {
+      
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+
     }
     
   }
