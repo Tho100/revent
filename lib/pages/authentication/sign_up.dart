@@ -35,10 +35,14 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
       emailController.text.trim().isNotEmpty &&
       passwordController.text.trim().isNotEmpty;
 
-    if (isFilled != isSignUpButtonEnabledNotifier.value) {
-      isSignUpButtonEnabledNotifier.value = isFilled;
-    } 
+    final isValid = InputValidator.validateEmailFormat(emailController.text);
 
+    final shouldEnable = isFilled && isValid;
+
+    if (shouldEnable != isSignUpButtonEnabledNotifier.value) {
+      isSignUpButtonEnabledNotifier.value = shouldEnable;
+    }
+    
   }
 
   Future<void> _registerUser({
