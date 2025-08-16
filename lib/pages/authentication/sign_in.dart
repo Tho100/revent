@@ -34,9 +34,13 @@ class _SignInPageState extends State<SignInPage> with AuthController {
       emailController.text.trim().isNotEmpty &&
       passwordController.text.trim().isNotEmpty;
 
-    if (isFilled != isSignInButtonEnabledNotifier.value) {
-      isSignInButtonEnabledNotifier.value = isFilled;
-    } 
+    final isValid = InputValidator.validateEmailFormat(emailController.text);
+
+    final shouldEnable = isFilled && isValid;
+
+    if (shouldEnable != isSignInButtonEnabledNotifier.value) {
+      isSignInButtonEnabledNotifier.value = shouldEnable;
+    }
 
   }
 
