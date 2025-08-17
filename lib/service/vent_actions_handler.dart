@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/vent/pin_vent.dart';
@@ -33,20 +34,20 @@ class VentActionsHandler {
       Navigator.pop(context);
     }
   }
-// TODO: Put those messages in alert-message
+
   Future<void> likePost() async {
 
     try {
 
       if (creator == getIt.userProvider.user.username) {
-        _showTemporarySnack("You can't like your own post.");
+        _showTemporarySnack(AlertMessages.cantLikeOwnPost);
         return;
       }
 
       await VentActions(title: title, creator: creator).likePost();
 
     } catch (_) {
-      _showErrorSnack('Like failed.');
+      _showErrorSnack(AlertMessages.likePostFailed);
     }
 
   }
@@ -57,11 +58,11 @@ class VentActionsHandler {
 
       await DeleteVent(title: title).delete();
 
-      _showTemporarySnack('Post deleted.');
+      _showTemporarySnack(AlertMessages.postDeleted);
       _closeScreens(1);
 
     } catch (_) {
-      _showErrorSnack('Delete failed.');
+      _showErrorSnack(AlertMessages.deletePostFailed);
     }
 
   }
@@ -72,11 +73,11 @@ class VentActionsHandler {
 
       await DeleteVaultVent(title: title).delete();
 
-      _showTemporarySnack('Vault post deleted.');
+      _showTemporarySnack(AlertMessages.vaultPostDeleted);
       _closeScreens(2);
 
     } catch (_) {
-      _showErrorSnack('Vault delete failed.');
+      _showErrorSnack(AlertMessages.deleteVaultPostFailed);
     }
 
   }
@@ -87,11 +88,11 @@ class VentActionsHandler {
 
       await DeleteSavedVent(title: title, creator: creator).delete();
         
-      _showTemporarySnack('Removed post from saved.');
+      _showTemporarySnack(AlertMessages.removedSavedPost);
       _closeScreens(1);
 
     } catch (_) {
-      _showErrorSnack('Unsave failed.');
+      _showErrorSnack(AlertMessages.unsavePostfailed);
     }
 
   }
@@ -101,11 +102,11 @@ class VentActionsHandler {
     try {
 
       await VentActions(title: title, creator: creator).savePost().then(
-        (_) => _showTemporarySnack(isAlreadySaved ? 'Removed post from saved.' : 'Post saved.')
+        (_) => _showTemporarySnack(isAlreadySaved ? AlertMessages.removedSavedPost : AlertMessages.postSaved)
       );
 
     } catch (_) {
-      _showErrorSnack('Save failed.');
+      _showErrorSnack(AlertMessages.savePostFailed);
     }
 
   }
@@ -114,19 +115,21 @@ class VentActionsHandler {
 
     try {
 
-      if (getIt.profilePostsProvider.myProfile.isPinned.contains(true)) {
+      final pinnedPostExists = getIt.profilePostsProvider.myProfile.isPinned.contains(true);
+
+      if (pinnedPostExists) {
         _closeScreens(1);
-        _showTemporarySnack('You already have pinned post.');
+        _showTemporarySnack(AlertMessages.pinnedPostExists);
         return;
       }
 
       await PinVent(title: title).pin();
 
-      _showTemporarySnack('Pinned post.');
+      _showTemporarySnack(AlertMessages.pinnedPost);
       _closeScreens(1);
     
     } catch (_) {
-      _showErrorSnack('Pin failed.');
+      _showErrorSnack(AlertMessages.pinPostFailed);
     }
 
   }
@@ -137,11 +140,11 @@ class VentActionsHandler {
 
       await PinVent(title: title).pin();
       
-      _showTemporarySnack('Removed post from pinnned.');
+      _showTemporarySnack(AlertMessages.removedPinnedPost);
       _closeScreens(1);
 
     } catch (_) {
-      _showErrorSnack('Unpin failed.');
+      _showErrorSnack(AlertMessages.unpinPostFailed);
     }
 
   }

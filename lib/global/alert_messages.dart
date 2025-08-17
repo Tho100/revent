@@ -31,7 +31,7 @@ class AlertMessages {
   // Vent/post validation
   static const emptyVentTitle = 'Please enter post title';
   static const invalidVentTtitleLength = 'Title must be at least 5 characters';
-  static const ventTitleAlreadyExists = 'You already have a post with this title';
+  static const ventTitleAlreadyExists = 'You already have a post with this title'; // TODO: Rename to ventTitleExists
   static const postFailedTitle = 'Post Failed';
 
   // Comment/reply validation
@@ -95,5 +95,24 @@ class AlertMessages {
   // Privacy settings
   static const savedPostsHidden = 'Saved posts hidden.';
   static const followingHidden = 'Following is hidden.';
+
+  // Vent actions
+  static const postDeleted = 'Post deleted.';
+  static const vaultPostDeleted = 'Vault post deleted.';
+  static const removedSavedPost = 'Removed post from saved.';
+  static const removedPinnedPost = 'Removed post from pinned.';
+  static const postSaved = 'Post saved.';
+  static const pinnedPost = 'Pinned post.';
+  static const pinnedPostExists = 'You already have a pinned post.';
+  static const cantLikeOwnPost = "You can't like your own post.";
+
+  // Vent actions failed
+  static const likePostFailed = 'Like failed.';
+  static const savePostFailed = 'Save failed.';
+  static const pinPostFailed = 'Pin failed.';
+  static const unsavePostfailed = 'Unsave failed.';
+  static const unpinPostFailed = 'Unpin failed';
+  static const deletePostFailed = 'Delete failed.';
+  static const deleteVaultPostFailed = 'Vault delete failed.';
 
 }
