@@ -29,9 +29,9 @@ class AlertMessages {
   static const passwordUpdatedTitle = 'Password Updated';
 
   // Vent/post validation
-  static const emptyVentTitle = 'Please enter post title';
-  static const invalidVentTtitleLength = 'Title must be at least 5 characters';
-  static const ventTitleAlreadyExists = 'You already have a post with this title'; // TODO: Rename to ventTitleExists
+  static const emptyPostTitle = 'Please enter post title';
+  static const invalidPostTtitleLength = 'Title must be at least 5 characters';
+  static const postTitleExists = 'You already have a post with this title';
   static const postFailedTitle = 'Post Failed';
 
   // Comment/reply validation
