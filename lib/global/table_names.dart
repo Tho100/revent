@@ -1,7 +1,7 @@
 class TableNames {
 
   static const ventInfo = 'vent_info';
-  static const archiveVentInfo = 'archive_vent_info';
+  static const vaultVentInfo = 'vault_vent_info';
   static const likedVentInfo = 'liked_vent_info';
   static const savedVentInfo = 'saved_vent_info';
   static const pinnedVentInfo = 'pinned_vent_info';

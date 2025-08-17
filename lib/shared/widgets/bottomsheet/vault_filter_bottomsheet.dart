@@ -3,7 +3,7 @@ import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomshee
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_filter_button.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 
-class BottomsheetArchivedFilter {
+class BottomsheetVaultFilter {
 
   Future buildBottomsheet({
     required BuildContext context,

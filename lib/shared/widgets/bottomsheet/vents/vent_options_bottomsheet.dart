@@ -69,7 +69,7 @@ class BottomsheetVentOptions {
   Future buildBottomsheet({
     required BuildContext context,
     required ValueNotifier commentNotifier,
-    required ValueNotifier archiveNotifier,
+    required ValueNotifier vaultNotifier,
     required ValueNotifier markNsfwNotifier,
   }) {
     return Bottomsheet().buildBottomSheet(
@@ -82,12 +82,12 @@ class BottomsheetVentOptions {
           notifier: commentNotifier,
           text: 'Allow Commenting',
           icon: CupertinoIcons.chat_bubble,
-          onToggled: () => archiveNotifier.value = false
+          onToggled: () => vaultNotifier.value = false
         ),
 
         _buildOptionButton(
-          notifier: archiveNotifier,
-          text: 'Archive Vent',
+          notifier: vaultNotifier,
+          text: 'Vault Vent',
           icon: CupertinoIcons.archivebox,
           onToggled: () {
             markNsfwNotifier.value = false;
@@ -103,7 +103,7 @@ class BottomsheetVentOptions {
           notifier: markNsfwNotifier,
           text: 'Mark as NSFW',
           isNSFW: true,
-          onToggled: () => archiveNotifier.value = false
+          onToggled: () => vaultNotifier.value = false
         ),
 
         const SizedBox(height: 20)

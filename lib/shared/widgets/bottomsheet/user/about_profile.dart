@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:revent/global/app_keys.dart';
+import 'package:revent/helper/format_date.dart';
 import 'package:revent/pages/profile_picture_viewer_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
@@ -21,31 +23,55 @@ class BottomsheetAboutProfile {
 
   }
 
+  String _getTimeAgoDate(String originalDate) {
+
+    final parsedDate = DateFormat('MMMM d yyyy').parse(originalDate);
+
+    return FormatDate().formatPostTimestamp(parsedDate);
+
+  }
+
   Widget _buildHeaders(String header, String value) {
-    return Column(
-      children: [
-        
-        Text(
-          header,
-          style: GoogleFonts.inter(
-            color: ThemeColor.contentThird,
-            fontSize: 15,
-            fontWeight: FontWeight.w700,
+    return Padding(
+      padding: const EdgeInsets.only(left: 14.0),
+      child: Row(
+        children: [
+
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              const SizedBox(height: 8),
+              
+              Text(
+                header,
+                style: GoogleFonts.inter(
+                  color: ThemeColor.contentThird,
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                ),
+              ),
+    
+              const SizedBox(height: 8),
+    
+              Text(
+                value,
+                style: GoogleFonts.inter(
+                  color: ThemeColor.contentPrimary,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                ),
+              ),
+    
+              const SizedBox(height: 8),
+    
+            ],
           ),
-        ),
-  
-        const SizedBox(height: 8),
-  
-        Text(
-          value,
-          style: GoogleFonts.inter(
-            color: ThemeColor.contentPrimary,
-            fontSize: 18,
-            fontWeight: FontWeight.w800,
-          ),
-        ),
-      
-      ],
+
+          const Spacer(),
+
+        ],
+      ),
     );
   }
 
@@ -96,52 +122,52 @@ class BottomsheetAboutProfile {
 
         const BottomsheetHeader(title: 'About Profile'),
 
-        Padding(
-          padding: const EdgeInsets.only(top: 12.0),
-          child: Column(
-            children: [
-              
-              _buildProfilePicture(pfpData),
-              
-              const SizedBox(height: 16),
-              
-              _buildUsername(username),
-              
-              const SizedBox(height: 35),
-              
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                child: Row(
-                  children: [
-              
-                    if (pronouns.isNotEmpty)
-                    Expanded(
-                      child: _buildHeaders('Pronouns', pronouns),
-                    ),
-              
-                    const SizedBox(width: 25),
-              
-                    Container(
-                      width: 1,
-                      height: 32,
-                      color: ThemeColor.divider,
-                    ),
-              
-                    const SizedBox(width: 25),
-              
-                    Expanded(
-                      child: _buildHeaders('Joined', _shortenDate(joinedDate)),
-                    ),
-                    
-                  ],
-                ),
-              ),
+        Column(
+          children: [
+            
+            _buildProfilePicture(pfpData),
+            
+            const SizedBox(height: 16),
+            
+            _buildUsername(username),
+            
+            const SizedBox(height: 35),
+            
+            BorderedContainer(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
 
-            ],
-          ),
+                  _buildHeaders('Joined', _shortenDate(joinedDate)),
+
+                  Padding(
+                    padding: const EdgeInsets.only(left: 14.0),
+                    child: Text(
+                      '${_getTimeAgoDate(joinedDate)} ago',
+                      style: GoogleFonts.inter(
+                        color: ThemeColor.contentSecondary,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 13
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 5),
+
+                ],
+              )
+            ),
+              
+            if (pronouns.isNotEmpty)
+            BorderedContainer(
+              child: _buildHeaders('Pronouns', pronouns)
+            ),
+
+          ],
+          
         ),
                 
-        const SizedBox(height: 65),
+        const SizedBox(height: 35),
 
       ]
     );

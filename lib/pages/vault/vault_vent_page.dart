@@ -12,9 +12,9 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/pages/archive/view_archived_vent_page.dart';
+import 'package:revent/pages/vault/vault_vent_viewer_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/bottomsheet/archived_filter_bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/vault_filter_bottomsheet.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/service/query/vent/last_edit_getter.dart';
@@ -23,17 +23,17 @@ import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/archive/archive_vent_data_getter.dart';
+import 'package:revent/service/query/vent/vault/vault_vent_data_getter.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
-class _ArchivedVentsData {
+class _VaultVentsData {
   
   final String title;
   final String tags;
   final String postTimestamp;
 
-  _ArchivedVentsData({
+  _VaultVentsData({
     required this.title,
     required this.tags,
     required this.postTimestamp
@@ -41,32 +41,32 @@ class _ArchivedVentsData {
 
 }
 
-class ArchivedVentPage extends StatefulWidget {
+class VaultVentPage extends StatefulWidget {
 
-  const ArchivedVentPage({super.key});
+  const VaultVentPage({super.key});
 
   @override
-  State<ArchivedVentPage> createState() => _ArchivedVentPageState();
+  State<VaultVentPage> createState() => _VaultVentPageVentPageState();
   
 }
 
-class _ArchivedVentPageState extends State<ArchivedVentPage> with 
+class _VaultVentPageVentPageState extends State<VaultVentPage> with 
   UserProfileProviderService, 
   VentProviderService,
   GeneralSearchController {
 
-  final archiveDataGetter = ArchiveVentDataGetter();
+  final vaultDataGetter = VaultVentDataGetter();
 
   final isPageLoadedNotifier = ValueNotifier<bool>(false);
   final filterTextNotifier = ValueNotifier<String>('Latest');
 
-  ValueNotifier<List<_ArchivedVentsData>> archivedVentsData = ValueNotifier([]);
+  ValueNotifier<List<_VaultVentsData>> vaultVentsData = ValueNotifier([]);
 
-  List<_ArchivedVentsData> _allArchivedVents = [];
+  List<_VaultVentsData> allVaultVents = [];
 
   Future<String> _getBodyText(String title) async {
 
-    return await archiveDataGetter.getBodyText(
+    return await vaultDataGetter.getBodyText(
       title: title, 
       creator: userProvider.user.username
     );
@@ -85,11 +85,11 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       )
     );
 
-    return await LastEditGetter().getLastEditArchive();
+    return await LastEditGetter().getLastEditVault();
 
   }
 
-  void _navigateViewArchiveVentPage(String title, String tags, String postTimestamp) async {
+  void _navigateViewVaultVentPage(String title, String tags, String postTimestamp) async {
 
     final bodyText = await _getBodyText(title);
     final lastEdit = await _getLastEdit(title);
@@ -97,7 +97,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     Navigator.push(
       AppKeys.navigatorKey.currentContext!,
       MaterialPageRoute(
-        builder: (_) => ViewArchivedVentPage(
+        builder: (_) => VaultVentViewerPage(
           title: title, 
           tags: tags,
           bodyText: bodyText, 
@@ -109,85 +109,85 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   }
 
-  Future<void> _initializeArchiveVentsData() async {
+  Future<void> _initializeVaultVentsData() async {
 
     try {
 
-      final archiveVentsInfo = await archiveDataGetter.getMetadata(
+      final vaultVentsInfo = await vaultDataGetter.getMetadata(
         username: userProvider.user.username
       );
 
-      final titles = archiveVentsInfo['title'] as List<String>;
-      final tags = archiveVentsInfo['tags'] as List<String>;
+      final titles = vaultVentsInfo['title'] as List<String>;
+      final tags = vaultVentsInfo['tags'] as List<String>;
 
-      final postTimestamp = archiveVentsInfo['post_timestamp'] as List<String>;
+      final postTimestamp = vaultVentsInfo['post_timestamp'] as List<String>;
 
-      archivedVentsData.value = List.generate(titles.length, (index) {
-        return _ArchivedVentsData(
+      vaultVentsData.value = List.generate(titles.length, (index) {
+        return _VaultVentsData(
           title: titles[index],
           tags: tags[index],
           postTimestamp: postTimestamp[index],
         );
       });
 
-      _allArchivedVents = archivedVentsData.value;
+      allVaultVents = vaultVentsData.value;
 
       isPageLoadedNotifier.value = true;
 
     } catch (_) {
-      SnackBarDialog.errorSnack(message: AlertMessages.archivesFailedToLoad);
+      SnackBarDialog.errorSnack(message: AlertMessages.vaultFailedToLoad);
     }
 
   }
 
-  void _onDeleteArchive(String title) async {
+  void _removeVentFromList(String title) {
+    vaultVentsData.value = vaultVentsData.value
+      .where((vent) => vent.title != title)
+      .toList();
+  }
+
+  void _sortVaultVentsToOldest() {
+
+    final sortedList = vaultVentsData.value
+      .toList()
+      ..sort((a, b) => FormatDate.parseFormattedTimestamp(b.postTimestamp)
+        .compareTo(FormatDate.parseFormattedTimestamp(a.postTimestamp)));
+
+    vaultVentsData.value = sortedList;
+
+  }
+
+  void _sortVaultVentsToLatest() {
+
+    final sortedList = vaultVentsData.value
+      .toList()
+      ..sort((a, b) => FormatDate.parseFormattedTimestamp(a.postTimestamp)
+        .compareTo(FormatDate.parseFormattedTimestamp(b.postTimestamp)));
+
+    vaultVentsData.value = sortedList;
+
+  }
+
+  void _onDeleteVaultPressed(String title) async {
 
     await VentActionsHandler(
       title: title, 
       creator: userProvider.user.username, 
       context: context
-    ).deleteArchivedPost().then(
+    ).deleteVaultPost().then(
       (_) => _removeVentFromList(title)
     );
 
   } 
 
-  void _removeVentFromList(String title) {
-    archivedVentsData.value = archivedVentsData.value
-      .where((vent) => vent.title != title)
-      .toList();
-  }
-
-  void _sortArchivedVentsToOldest() {
-
-    final sortedList = archivedVentsData.value
-      .toList()
-      ..sort((a, b) => FormatDate.parseFormattedTimestamp(b.postTimestamp)
-        .compareTo(FormatDate.parseFormattedTimestamp(a.postTimestamp)));
-
-    archivedVentsData.value = sortedList;
-
-  }
-
-  void _sortArchivedVentsToLatest() {
-
-    final sortedList = archivedVentsData.value
-      .toList()
-      ..sort((a, b) => FormatDate.parseFormattedTimestamp(a.postTimestamp)
-        .compareTo(FormatDate.parseFormattedTimestamp(b.postTimestamp)));
-
-    archivedVentsData.value = sortedList;
-
-  }
-
   void _onFilterPressed({required String filter}) { 
     
     switch (filter) {
       case 'Latest':
-        _sortArchivedVentsToLatest();
+        _sortVaultVentsToLatest();
         break;
       case 'Oldest':
-        _sortArchivedVentsToOldest();
+        _sortVaultVentsToOldest();
         break;
     }
 
@@ -197,23 +197,23 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
 
   }
 
-  void _searchArchivedVents({required String searchText}) {
+  void _searchVaultVents({required String searchText}) {
 
     final query = searchText.trim().toLowerCase();
 
     if (query.isNotEmpty) {
       
-      final filteredList = _allArchivedVents.where((vent) {
+      final filteredList = allVaultVents.where((vent) {
         return vent.title.toLowerCase().contains(query);
       }).toList();
 
       if (filteredList.isNotEmpty) {
-        archivedVentsData.value = filteredList;
+        vaultVentsData.value = filteredList;
       } 
 
     } else {
 
-      archivedVentsData.value = List.from(_allArchivedVents);
+      vaultVentsData.value = List.from(allVaultVents);
 
     }
 
@@ -228,7 +228,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       creator: userProvider.user.username,
       pfpData: profileProvider.profile.profilePicture,
       postTimestamp: postTimestamp,
-      navigateVentPostPageOnPressed: () => _navigateViewArchiveVentPage(title, tags, postTimestamp),
+      navigateVentPostPageOnPressed: () => _navigateViewVaultVentPage(title, tags, postTimestamp),
       editOnPressed: () async {
 
         Navigator.pop(AppKeys.navigatorKey.currentContext!);
@@ -236,7 +236,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
         final bodyText = await _getBodyText(title);
 
         NavigatePage.editVentPage(
-          title: title, body: bodyText, ventType: VentType.archived
+          title: title, body: bodyText, ventType: VentType.vault
         );
 
       },
@@ -244,7 +244,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
         CustomAlertDialog.alertDialogCustomOnPress(
           message: AlertMessages.deletePost, 
           buttonMessage: 'Delete',
-          onPressedEvent: () => _onDeleteArchive(title)
+          onPressedEvent: () => _onDeleteVaultPressed(title)
         );
       },
     );
@@ -291,8 +291,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       height: 67,
       child: MainTextField(
         controller: searchController,
-        hintText: 'Search archive...',
-        onChange: (searchText) => _searchArchivedVents(searchText: searchText)
+        hintText: 'Search in vault...',
+        onChange: (searchText) => _searchVaultVents(searchText: searchText)
       ),
     );
   }
@@ -300,8 +300,8 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
   Widget _buildTotalPost(int postCounts) {
 
     final postText = postCounts == 1 
-      ? "You have 1 archived post." 
-      : "You have $postCounts archived posts.";
+      ? "You have 1 vault post." 
+      : "You have $postCounts vault posts.";
 
     return Text(
       postText,
@@ -319,7 +319,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
       height: 35,
       child: InkWellEffect(
         onPressed: () {
-          BottomsheetArchivedFilter().buildBottomsheet(
+          BottomsheetVaultFilter().buildBottomsheet(
             context: context, 
             currentFilter: filterTextNotifier.value,
             latestOnPressed: () => _onFilterPressed(filter: 'Latest'),
@@ -388,20 +388,20 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     );
   }
 
-  Widget _buildListView(List<_ArchivedVentsData> archiveData) {
+  Widget _buildListView(List<_VaultVentsData> vaultData) {
     return DynamicHeightGridView(
       physics: const AlwaysScrollableScrollPhysics(
         parent: BouncingScrollPhysics()
       ),
       crossAxisCount: 1,
-      itemCount: archiveData.length + 1,
+      itemCount: vaultData.length + 1,
       builder: (_, index) {
           
         if (index == 0) {
-          return _buildHeaderWidgets(postCounts: archiveData.length);
+          return _buildHeaderWidgets(postCounts: vaultData.length);
         }
 
-        final ventsData = archiveData[index - 1];
+        final ventsData = vaultData[index - 1];
 
         return _buildVentPreview(ventsData.title, ventsData.tags, ventsData.postTimestamp);
 
@@ -421,11 +421,11 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
           }
 
           return ValueListenableBuilder(
-            valueListenable: archivedVentsData,
-            builder: (_, archiveData, __) { 
-              return archiveData.isEmpty 
-                ? _buildNoArchivedPosts()
-                : _buildListView(archiveData);
+            valueListenable: vaultVentsData,
+            builder: (_, vaultData, __) { 
+              return vaultData.isEmpty 
+                ? _buildNoVaultPosts()
+                : _buildListView(vaultData);
             },
           );
           
@@ -434,22 +434,22 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     );
   }
 
-  Widget _buildNoArchivedPosts() {
+  Widget _buildNoVaultPosts() {
     return NoContentMessage().customMessage(
-      message: 'Your archive is empty.'
+      message: 'Your vault is empty.'
     );
   }
 
   @override
   void initState() {
     super.initState();
-    _initializeArchiveVentsData();
+    _initializeVaultVentsData();
   }
 
   @override
   void dispose() {
     disposeControllers();
-    archivedVentsData.dispose();
+    vaultVentsData.dispose();
     isPageLoadedNotifier.dispose();
     filterTextNotifier.dispose();
     activeVentProvider.clearData();
@@ -461,7 +461,7 @@ class _ArchivedVentPageState extends State<ArchivedVentPage> with
     return Scaffold(
       appBar: CustomAppBar(
         context: context, 
-        title: 'Archive'
+        title: 'Vault'
       ).buildAppBar(),
       body: _buildVentList(),
     );

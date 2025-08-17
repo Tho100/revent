@@ -3,7 +3,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/vent/pin_vent.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/archive/delete_archive_vent.dart';
+import 'package:revent/service/query/vent/vault/delete_vault_vent.dart';
 import 'package:revent/service/query/vent/delete_saved_vent.dart';
 import 'package:revent/service/query/vent/delete_vent.dart';
 import 'package:revent/service/query/vent/vent_actions.dart';
@@ -33,7 +33,7 @@ class VentActionsHandler {
       Navigator.pop(context);
     }
   }
-
+// TODO: Put those messages in alert-message
   Future<void> likePost() async {
 
     try {
@@ -66,17 +66,17 @@ class VentActionsHandler {
 
   }
 
-  Future<void> deleteArchivedPost() async {
+  Future<void> deleteVaultPost() async {
 
     try {
 
-      await DeleteArchiveVent(title: title).delete();
+      await DeleteVaultVent(title: title).delete();
 
-      _showTemporarySnack('Archive post deleted.');
+      _showTemporarySnack('Vault post deleted.');
       _closeScreens(2);
 
     } catch (_) {
-      _showErrorSnack('Archive delete failed.');
+      _showErrorSnack('Vault delete failed.');
     }
 
   }

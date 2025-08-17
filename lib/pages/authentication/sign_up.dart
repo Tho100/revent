@@ -7,7 +7,7 @@ import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/helper/input_validator.dart';
 import 'package:revent/security/hash_model.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
-import 'package:revent/shared/widgets/ui_dialog/loading/single_text_loading.dart';
+import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/buttons/underlined_button.dart';
 import 'package:revent/shared/widgets/text/header_text.dart';
@@ -62,7 +62,13 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
       );
 
     } catch (_) {
+      
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+
     }
     
   }
@@ -88,9 +94,7 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
       return;
     }
 
-    SingleTextLoading(context: context).startLoading(
-      title: 'Creating account...', 
-    );
+    SpinnerLoading(context: context).startLoading();
 
     await _registerUser(
       username: usernameInput, 

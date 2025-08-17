@@ -3,7 +3,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
-class ArchiveVentDataGetter extends BaseQueryService {
+class VaultVentDataGetter extends BaseQueryService {
 
   Future<Map<String, List<dynamic>>> getMetadata({required String username}) async {
 
@@ -11,7 +11,7 @@ class ArchiveVentDataGetter extends BaseQueryService {
     '''
       SELECT 
         title, created_at, tags 
-      FROM ${TableNames.archiveVentInfo} 
+      FROM ${TableNames.vaultVentInfo} 
       WHERE creator = :username ORDER BY created_at DESC
     ''';
 
@@ -42,7 +42,7 @@ class ArchiveVentDataGetter extends BaseQueryService {
   }) async {
 
     const query = 
-      'SELECT body_text FROM ${TableNames.archiveVentInfo} WHERE title = :title AND creator = :creator';
+      'SELECT body_text FROM ${TableNames.vaultVentInfo} WHERE title = :title AND creator = :creator';
       
     final params = {
       'title': title,

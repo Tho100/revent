@@ -1,4 +1,4 @@
 enum VentType { 
-  archived, 
-  nonArchived 
+  vault, 
+  nonVault 
 }
