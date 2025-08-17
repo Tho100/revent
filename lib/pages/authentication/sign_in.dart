@@ -115,7 +115,7 @@ class _SignInPageState extends State<SignInPage> with AuthController {
           ),
 
           Text(
-            'Remember Me',
+            'Remember me',
             style: GoogleFonts.inter(
               color: ThemeColor.contentSecondary,
               fontWeight: FontWeight.w800,
