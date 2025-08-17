@@ -109,6 +109,31 @@ class BottomsheetAboutProfile {
     );
   }
 
+  Widget _buildJoinedDate(String joinedDate) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+
+        _buildHeaders('Joined', _shortenDate(joinedDate)),
+
+        Padding(
+          padding: const EdgeInsets.only(left: 14.0),
+          child: Text(
+            '${_getTimeAgoDate(joinedDate)} ago',
+            style: GoogleFonts.inter(
+              color: ThemeColor.contentSecondary,
+              fontWeight: FontWeight.w800,
+              fontSize: 13
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 5),
+
+      ],
+    );
+  }
+
   Future buildBottomsheet({
     required BuildContext context,
     required String username,
@@ -134,28 +159,7 @@ class BottomsheetAboutProfile {
             const SizedBox(height: 35),
             
             BorderedContainer(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-
-                  _buildHeaders('Joined', _shortenDate(joinedDate)),
-
-                  Padding(
-                    padding: const EdgeInsets.only(left: 14.0),
-                    child: Text(
-                      '${_getTimeAgoDate(joinedDate)} ago',
-                      style: GoogleFonts.inter(
-                        color: ThemeColor.contentSecondary,
-                        fontWeight: FontWeight.w800,
-                        fontSize: 13
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 5),
-
-                ],
-              )
+              child: _buildJoinedDate(joinedDate)
             ),
               
             if (pronouns.isNotEmpty)

@@ -59,12 +59,12 @@ class _CreateVentPageState extends State<CreateVentPage> with
     final tags = tagsProvider.selectedTags.isEmpty ? '' : tagsProvider.selectedTags.join(' ');
 
     if (ventTitle.isEmpty) {
-      CustomAlertDialog.alertDialog(AlertMessages.emptyVentTitle);
+      CustomAlertDialog.alertDialog(AlertMessages.emptyPostTitle);
       return;
     }
 
     if (ventTitle.length < 5) {
-      CustomAlertDialog.alertDialog(AlertMessages.invalidVentTtitleLength);
+      CustomAlertDialog.alertDialog(AlertMessages.invalidPostTtitleLength);
       return;
     }
 
@@ -81,7 +81,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
         : await ventChecker.isVentExists();
 
       if (isVentAlreadyExists) {
-        CustomAlertDialog.alertDialog(AlertMessages.ventTitleAlreadyExists);
+        CustomAlertDialog.alertDialog(AlertMessages.postTitleExists);
         return;
       }
 
