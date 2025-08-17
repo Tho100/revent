@@ -48,12 +48,12 @@ class _EditVentPageState extends State<EditVentPage> with VentPostController {
 
       final newBodyText = bodyTextController.text;
 
-      if (widget.ventType == VentType.archived) {
+      if (widget.ventType == VentType.vault) {
 
         await SaveVentEdit(
           title: widget.title, 
           newBody: newBodyText, 
-        ).saveArchive();
+        ).saveVault();
 
       } else {
 

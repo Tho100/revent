@@ -189,7 +189,7 @@ class NavigatePage {
   static void editVentPage({
     required String title, 
     required String body,
-    VentType ventType = VentType.nonArchived
+    VentType ventType = VentType.nonVault
   }) {
     _navigateToPage(
       classPage: EditVentPage(

@@ -4,7 +4,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 class DeleteAccountData extends BaseQueryService {
 
   /// Delete all stored information for [username] on account deletion
-  /// including non-archived/archived posts, comments, pinned-comment, etc.
+  /// including non-vault/vault posts, comments, pinned-comment, etc.
 
   Future<void> delete({required String username}) async {
 
@@ -18,7 +18,7 @@ class DeleteAccountData extends BaseQueryService {
         LEFT JOIN ${TableNames.userSocialLinks} usl ON ufi.username = ui.username
         LEFT JOIN ${TableNames.ventInfo} vi ON vi.creator = ui.username
         LEFT JOIN ${TableNames.savedVentInfo} svi ON svi.creator = ui.username
-        LEFT JOIN ${TableNames.archiveVentInfo} avi ON avi.creator = ui.username
+        LEFT JOIN ${TableNames.vaultVentInfo} avi ON avi.creator = ui.username
         LEFT JOIN ${TableNames.likedVentInfo} lvi ON lvi.liked_by = ui.username
         LEFT JOIN ${TableNames.commentsInfo} ci ON ci.commented_by = ui.username
         LEFT JOIN ${TableNames.commentsLikesInfo} cli ON cli.liked_by = ui.username

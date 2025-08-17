@@ -8,11 +8,11 @@ class LastEditGetter extends BaseQueryService with VentProviderService {
 
   Future<String> _getLastEdit({required VentType type}) async {
 
-    final query = type == VentType.archived 
-      ? 'SELECT last_edit FROM ${TableNames.archiveVentInfo} WHERE title = :title AND creator = :creator'
+    final query = type == VentType.vault 
+      ? 'SELECT last_edit FROM ${TableNames.vaultVentInfo} WHERE title = :title AND creator = :creator'
       : 'SELECT last_edit FROM ${TableNames.ventInfo} WHERE post_id = :post_id';
 
-    final params = type == VentType.archived
+    final params = type == VentType.vault
       ? {
         'title': activeVentProvider.ventData.title, 
         'creator': activeVentProvider.ventData.creator
@@ -35,7 +35,7 @@ class LastEditGetter extends BaseQueryService with VentProviderService {
 
   }
 
-  Future<String> getLastEdit() async => await _getLastEdit(type: VentType.nonArchived);
-  Future<String> getLastEditArchive() async => await _getLastEdit(type: VentType.archived);
+  Future<String> getLastEdit() async => await _getLastEdit(type: VentType.nonVault);
+  Future<String> getLastEditVault() async => await _getLastEdit(type: VentType.vault);
 
 }

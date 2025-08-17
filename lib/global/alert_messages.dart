@@ -64,13 +64,13 @@ class AlertMessages {
 
   // Load failures
   static const postsFailedToLoad = 'Posts not loaded.';
-  static const archivesFailedToLoad = 'Archives not loaded.';
+  static const vaultFailedToLoad = 'Vault not loaded.';
   static const repliesFailedToLoad = 'Replies not loaded.';
   static const commentsFailedToLoad = 'Comments not loaded.';
   static const profilesFailedToLoad = 'Failed to load profiles.';
 
   // Vents
-  static const ventArchived = 'Vent archived.';
+  static const ventVaulted = 'Vent added to vault.';
   static const ventPosted = 'Vent posted.';
   static const ventPostFailed = 'Vent post failed.';
 

@@ -4,7 +4,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
-import 'package:revent/pages/archive/archived_vent_page.dart';
+import 'package:revent/pages/vault/vault_vent_page.dart';
 import 'package:revent/pages/setttings/blocked_accounts_page.dart';
 import 'package:revent/pages/setttings/account_info_page.dart';
 import 'package:revent/pages/setttings/app_info_page.dart';
@@ -127,11 +127,11 @@ class SettingsPage extends StatelessWidget {
                 const SizedBox(height: buttonGap),
                 
                 SettingsButton(
-                  text: 'Archive', 
+                  text: 'Vault', 
                   icon: CupertinoIcons.archivebox,
                   onPressed: () => _navigateToPage(
                     context: context, 
-                    classPage: const ArchivedVentPage()
+                    classPage: const VaultVentPage()
                   )
                 ),
           

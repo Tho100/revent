@@ -9,7 +9,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
-import 'package:revent/pages/archive/archived_vent_page.dart';
+import 'package:revent/pages/vault/vault_vent_page.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
 import 'package:revent/shared/widgets/bottomsheet/tags_bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/vents/vent_options_bottomsheet.dart';
@@ -42,7 +42,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
   final postTextFields = PostTextField();
 
   final allowCommentingNotifier = ValueNotifier<bool>(true);
-  final archiveVentNotifier = ValueNotifier<bool>(false);
+  final vaultVentNotifier = ValueNotifier<bool>(false);
   final markAsNsfwNotifier = ValueNotifier<bool>(false);
 
   final chipsSelectedNotifier = ValueNotifier<List<bool>>(
@@ -76,8 +76,8 @@ class _CreateVentPageState extends State<CreateVentPage> with
 
       final ventChecker = VentChecker(title: ventTitle);
 
-      final isVentAlreadyExists = archiveVentNotifier.value 
-        ? await ventChecker.isArchivedVentExists()
+      final isVentAlreadyExists = vaultVentNotifier.value 
+        ? await ventChecker.isVaultVentExists()
         : await ventChecker.isVentExists();
 
       if (isVentAlreadyExists) {
@@ -85,8 +85,8 @@ class _CreateVentPageState extends State<CreateVentPage> with
         return;
       }
 
-      if (archiveVentNotifier.value) {
-        await _createArchiveVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
+      if (vaultVentNotifier.value) {
+        await _createVaultVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
         return;
       }
 
@@ -100,7 +100,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
 
   }
 
-  Future<void> _createArchiveVent({
+  Future<void> _createVaultVent({
     required String title,
     required String bodyText,
     required String tags
@@ -112,11 +112,11 @@ class _CreateVentPageState extends State<CreateVentPage> with
       loading.startLoading();
     }
 
-    await CreateNewItem(title: title, body: bodyText, tags: tags).newArchiveVent();
+    await CreateNewItem(title: title, body: bodyText, tags: tags).newVaultVent();
 
     loading.stopLoading();
 
-    SnackBarDialog.temporarySnack(message: AlertMessages.ventArchived);
+    SnackBarDialog.temporarySnack(message: AlertMessages.ventVaulted);
     
     if(context.mounted) {
 
@@ -125,7 +125,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (_) => const ArchivedVentPage()
+          builder: (_) => const VaultVentPage()
         )
       );
 
@@ -274,7 +274,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
           BottomsheetVentOptions().buildBottomsheet(
             context: context,
             commentNotifier: allowCommentingNotifier,
-            archiveNotifier: archiveVentNotifier,
+            vaultNotifier: vaultVentNotifier,
             markNsfwNotifier: markAsNsfwNotifier,
           );
         }
@@ -335,7 +335,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
   void dispose() {
     disposeControllers();
     allowCommentingNotifier.dispose();
-    archiveVentNotifier.dispose();
+    vaultVentNotifier.dispose();
     markAsNsfwNotifier.dispose();
     chipsSelectedNotifier.dispose();
     tagsProvider.selectedTags.clear();

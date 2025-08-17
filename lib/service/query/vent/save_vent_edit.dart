@@ -29,17 +29,17 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
     };
 
     await executeQuery(query, params).then(
-      (_) => _updateLastEdit(isFromArchive: false, postId: postId)
+      (_) => _updateLastEdit(isFromVault: false, postId: postId)
     );
 
     activeVentProvider.setBody(newBody);
 
   }
 
-  Future<void> saveArchive() async {
+  Future<void> saveVault() async {
 
     const query = 
-      'UPDATE ${TableNames.archiveVentInfo} SET body_text = :new_body WHERE title = :title AND creator = :creator';
+      'UPDATE ${TableNames.vaultVentInfo} SET body_text = :new_body WHERE title = :title AND creator = :creator';
 
     final params = {
       'title': title,
@@ -48,22 +48,22 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
     };
 
     await executeQuery(query, params).then(
-      (_) => _updateLastEdit(isFromArchive: true)
+      (_) => _updateLastEdit(isFromVault: true)
     );
 
     activeVentProvider.setBody(newBody);
 
   }
 
-  Future<void> _updateLastEdit({required bool isFromArchive, int? postId}) async {
+  Future<void> _updateLastEdit({required bool isFromVault, int? postId}) async {
 
     final dateTimeNow = DateTime.now();
 
-    final query = isFromArchive 
-      ? 'UPDATE ${TableNames.archiveVentInfo} SET last_edit = :last_edit WHERE title = :title AND creator = :creator'
+    final query = isFromVault 
+      ? 'UPDATE ${TableNames.vaultVentInfo} SET last_edit = :last_edit WHERE title = :title AND creator = :creator'
       : 'UPDATE ${TableNames.ventInfo} SET last_edit = :last_edit WHERE post_id = :post_id';
 
-    final params = isFromArchive 
+    final params = isFromVault 
       ? {
         'title': title,
         'creator': userProvider.user.username,
@@ -78,7 +78,7 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
 
     final formatTimeStamp = FormatDate().formatPostTimestamp(dateTimeNow);
 
-    if (!isFromArchive) {
+    if (!isFromVault) {
       activeVentProvider.setLastEdit(formatTimeStamp);
     }
 

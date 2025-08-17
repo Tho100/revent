@@ -12,8 +12,8 @@ class VentChecker extends BaseQueryService {
 
   Future<bool> _isVentExists({required VentType type}) async {
 
-    final table = type == VentType.archived 
-      ? TableNames.archiveVentInfo : TableNames.ventInfo;
+    final table = type == VentType.vault 
+      ? TableNames.vaultVentInfo : TableNames.ventInfo;
 
     final query = 'SELECT 1 FROM $table WHERE creator = :creator AND title = :title';
 
@@ -28,7 +28,7 @@ class VentChecker extends BaseQueryService {
 
   }
 
-  Future<bool> isVentExists() async => _isVentExists(type: VentType.nonArchived);
-  Future<bool> isArchivedVentExists() async => _isVentExists(type: VentType.archived);
+  Future<bool> isVentExists() async => _isVentExists(type: VentType.nonVault);
+  Future<bool> isVaultVentExists() async => _isVentExists(type: VentType.vault);
   
 }
