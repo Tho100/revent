@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/model/country_picker_model.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/user/user_socials.dart';
 import 'package:revent/service/query/user_profile/profile_data_update.dart';
@@ -28,8 +29,11 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> with UserProfileProviderService {
 
+  final profileDataUpdate = ProfileDataUpdate();
+
   final bioController = TextEditingController();
   final pronounController = TextEditingController();
+  final countryController = TextEditingController();
 
   final socialControllers = [
     TextEditingController(),
@@ -39,6 +43,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
   final pronounsSelectedNotifier = ValueNotifier<List<bool>>([]);
+  final countrySelectedNotifier = ValueNotifier<String>('');
 
   final isSavedNotifier = ValueNotifier<bool>(true);
 
@@ -46,16 +51,19 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   bool isBioChanges = false;
   bool isPronounsChanges = false;
+  bool isCountryChanges = false;
   bool isSocialChanges = false;
 
   late String initialBio;
   late String initialPronouns;
+  late String initialCountry;
   late List<String> initialSocials;
 
   void _disposeControllers() {
 
     bioController.dispose();
     pronounController.dispose();
+    countryController.dispose();
 
     for (final socials in socialControllers) {
       socials.dispose();
@@ -81,6 +89,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void _initializeTextFields() {
     initialBio = bioController.text;
     initialPronouns = pronounController.text;
+    initialCountry = countryController.text;
     initialSocials = socialControllers.map((c) => c.text).toList();
   }
 
@@ -98,6 +107,11 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       if (hasChanged) isSavedNotifier.value = false;
     });
 
+    countryController.addListener(() {
+      final hasChanged = countryController.text != initialPronouns;
+      isCountryChanges = hasChanged;
+      if (hasChanged) isSavedNotifier.value = false;
+    });
 
     for (int i = 0; i < socialControllers.length; i++) {
       socialControllers[i].addListener(() {
@@ -159,6 +173,11 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       pronounController.text = profileProvider.profile.pronouns;
     }
 
+    if (profileProvider.profile.country.isNotEmpty) {
+      countryController.text = profileProvider.profile.country;
+    }
+
+
   }
 
   Future<void> _onSaveChangesPressed() async {
@@ -179,6 +198,13 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       }
     }
 
+    if (isCountryChanges) {
+      if (!await _saveCountry()) {
+        isSavedNotifier.value = false;
+        allSaved = false;
+      }
+    }
+
     if (isSocialChanges) {
       if (!await _saveSocialLinks()) {
         isSavedNotifier.value = false;
@@ -190,10 +216,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
       initialBio = bioController.text;
       initialPronouns = pronounController.text;
+      
       initialSocials = socialControllers.map((c) => c.text).toList();
 
       isBioChanges = false;
       isPronounsChanges = false;
+      isCountryChanges = false;
       isSocialChanges = false;
 
       isSavedNotifier.value = true;
@@ -230,11 +258,22 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       },
       removeAvatarOnPressed: () async {
         Navigator.pop(context);
-        await ProfileDataUpdate().removeProfilePicture().then(
+        await profileDataUpdate.removeProfilePicture().then(
           (_) => profilePicNotifier.value = profileProvider.profile.profilePicture
         );
       }
     );
+
+  }
+
+  void _onChangeCountryPressed() async {
+  
+    final selectedCountry = await CountryPickerModel(context: context).startCountryPicker();
+
+    if (selectedCountry.isNotEmpty) {
+      countrySelectedNotifier.value = selectedCountry;
+      countryController.text = selectedCountry;
+    }
 
   }
 
@@ -271,7 +310,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     try {
 
-      await ProfileDataUpdate().updateBio(bioText: bioController.text);
+      await profileDataUpdate.updateBio(bioText: bioController.text);
 
       return true;
 
@@ -288,7 +327,22 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
       final pronouns = pronounController.text;
 
-      await ProfileDataUpdate().updatePronouns(pronouns: pronouns);
+      await profileDataUpdate.updatePronouns(pronouns: pronouns);
+
+      return true;
+
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
+      return false;
+    }
+
+  }
+
+  Future<bool> _saveCountry() async {
+
+    try {
+
+      await profileDataUpdate.updateCountry(country: countrySelectedNotifier.value);
 
       return true;
 
@@ -487,6 +541,35 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     );
   }
 
+  Widget _buildCountry() {
+    return _buildProfileEditingWidget(
+      header: 'Country', 
+      children: [
+
+        InkWellEffect(
+          onPressed: _onChangeCountryPressed,
+          child: AbsorbPointer(
+            child: ValueListenableBuilder(
+              valueListenable: countrySelectedNotifier,
+              builder: (_, country, __) {
+                return MainTextField(
+                  controller: countryController, 
+                  readOnly: true,
+                  hintText: country.isNotEmpty ? country : "Select your country",
+                  maxLines: 1,
+                  maxLength: 14,
+                );
+              },
+            ),
+          ),
+        ),
+
+        const SizedBox(height: 12),
+
+      ]
+    );
+  }
+
   Widget _buildSocialHeader(String platform, IconData platformIcon, TextEditingController controller) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -599,6 +682,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         
               _buildBio(),
         
+              const SizedBox(height: 30),
+
+              _buildCountry(),
+
               const SizedBox(height: 30),
 
               _buildSocialLinks(),

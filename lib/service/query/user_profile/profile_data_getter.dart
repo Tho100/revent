@@ -10,7 +10,7 @@ class ProfileDataGetter extends BaseQueryService {
   }) async {
 
     final query = isMyProfile 
-      ? 'SELECT following, followers, bio, pronouns, profile_picture FROM ${TableNames.userProfileInfo} WHERE username = :username'
+      ? 'SELECT following, followers, bio, pronouns, country, profile_picture FROM ${TableNames.userProfileInfo} WHERE username = :username'
       : 'SELECT following, followers, bio, pronouns FROM ${TableNames.userProfileInfo} WHERE username = :username';
 
     final param = {'username': username};
@@ -24,12 +24,14 @@ class ProfileDataGetter extends BaseQueryService {
     
     final bio = extractData.extractStringColumn('bio')[0];
     final pronouns = extractData.extractStringColumn('pronouns')[0];
+    final country = extractData.extractStringColumn('country')[0];
 
     final results = {
       'followers': followers, 
       'following': following, 
       'bio': bio,
-      'pronouns': pronouns
+      'pronouns': pronouns,
+      'country': country,
     };
 
     if (isMyProfile) {

@@ -12,6 +12,7 @@ class ProfileDataSetup with UserProfileProviderService {
     required int following,
     required String bio,
     required String pronouns,
+    required String country,
     required String profilePicBase64,
   }) {
 
@@ -22,6 +23,7 @@ class ProfileDataSetup with UserProfileProviderService {
     final profileData = ProfileData(
       bio: bio, 
       pronouns: pronouns, 
+      country: country,
       profilePicture: profilePicture, 
       followers: followers, 
       following: following
@@ -42,6 +44,7 @@ class ProfileDataSetup with UserProfileProviderService {
       following: getProfileData['following'], 
       bio: getProfileData['bio'], 
       pronouns: getProfileData['pronouns'],
+      country: getProfileData['country'],
       profilePicBase64: getProfileData['profile_pic']
     );
 
