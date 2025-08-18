@@ -108,7 +108,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     });
 
     countryController.addListener(() {
-      final hasChanged = countryController.text != initialPronouns;
+      final hasChanged = countryController.text != initialCountry;
       isCountryChanges = hasChanged;
       if (hasChanged) isSavedNotifier.value = false;
     });
@@ -216,6 +216,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
       initialBio = bioController.text;
       initialPronouns = pronounController.text;
+      initialCountry = countryController.text;
       
       initialSocials = socialControllers.map((c) => c.text).toList();
 
