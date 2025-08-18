@@ -71,4 +71,19 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
 
   }
 
+  Future<void> updateCountry({required String country}) async {
+
+    const query = 'UPDATE ${TableNames.userProfileInfo} SET country = :country_value WHERE username = :username';
+    
+    final params = {
+      'country_value': country,
+      'username': userProvider.user.username
+    };
+
+    await executeQuery(query, params).then(
+      (_) => profileProvider.profile.country = country
+    );
+
+  }
+
 }

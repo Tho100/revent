@@ -6,6 +6,7 @@ class ProfileData {
 
   String bio;
   String pronouns;
+  String country;
 
   Uint8List profilePicture;
 
@@ -15,6 +16,7 @@ class ProfileData {
   ProfileData({
     required this.bio,
     required this.pronouns,
+    required this.country,
     required this.profilePicture,
     required this.followers,
     required this.following,
@@ -27,6 +29,7 @@ class ProfileProvider extends ChangeNotifier {
   ProfileData _profile = ProfileData(
     bio: '', 
     pronouns: '', 
+    country: '',
     profilePicture: Uint8List(0), 
     followers: 0, 
     following: 0
@@ -42,6 +45,7 @@ class ProfileProvider extends ChangeNotifier {
   void clearProfileData() {
     _profile.bio = '';
     _profile.pronouns = ''; 
+    _profile.country = '';
     _profile.profilePicture = Uint8List(0); 
     _profile.followers = 0;
     _profile.following = 0;
