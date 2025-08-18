@@ -16,8 +16,8 @@ class CountryPickerModel {
     final completer = Completer<String>();
 
     showCountryPicker(
-      context: context, // TODO: Put this inside its own organized function as List<String>
-      exclude: ['AI', 'AX', 'AS', 'BQ', 'BZ', 'BM', 'BL', 'AW', 'IO', 'KY', 'FO', 'CK', 'VG', 'FK', 'MQ', 'SH', 'ST', 'MF', 'PM', 'VC', 'GF', 'GP', 'GS', 'GI', 'NC', 'YT', 'EH', 'WF', 'KP', 'CC', 'CX', 'HM', 'AC', 'FM', 'NF', 'MP', 'MS', 'VI', 'TC', 'RE', 'GU', 'JE', 'CV', 'KM', 'PF', 'FJ', 'NU', 'SJ', 'TV', 'VU', 'TK', 'DJ', 'GG', 'GD', 'GN', 'GW', 'SB', 'IM', 'NI'],
+      context: context,
+      exclude: _excludedCountriesList(),
       onSelect: (Country country) => completer.complete(country.name),
       useSafeArea: true,
       showSearch: false,
@@ -40,6 +40,15 @@ class CountryPickerModel {
 
     return completer.future;
 
+  }
+
+  List<String> _excludedCountriesList() {
+    return [
+      'AI', 'AX', 'AS', 'AW', 'BQ', 'BZ', 'BM', 'BL', 'IO', 'KY', 'FO', 'CK', 'VG', 'FK', 'MQ', 'SH', 'ST', 
+      'MF', 'PM', 'VC', 'GF', 'GP', 'GS', 'GI', 'NC', 'YT', 'EH', 'WF', 'KP', 'CC', 'CX', 'HM', 'AC', 'FM', 
+      'NF', 'MP', 'MS', 'VI', 'TC', 'RE', 'GU', 'JE', 'CV', 'KM', 'PF', 'FJ', 'NU', 'SJ', 'TV', 'VU', 'TK', 
+      'DJ', 'GG', 'GD', 'GN', 'GW', 'SB', 'IM', 'NI'
+    ];
   }
 
 }
