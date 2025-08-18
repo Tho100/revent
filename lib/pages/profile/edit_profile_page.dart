@@ -29,6 +29,8 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> with UserProfileProviderService {
 
+  final profileDataUpdate = ProfileDataUpdate();
+
   final bioController = TextEditingController();
   final pronounController = TextEditingController();
   final countryController = TextEditingController();
@@ -256,7 +258,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       },
       removeAvatarOnPressed: () async {
         Navigator.pop(context);
-        await ProfileDataUpdate().removeProfilePicture().then(
+        await profileDataUpdate.removeProfilePicture().then(
           (_) => profilePicNotifier.value = profileProvider.profile.profilePicture
         );
       }
@@ -308,7 +310,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     try {
 
-      await ProfileDataUpdate().updateBio(bioText: bioController.text);
+      await profileDataUpdate.updateBio(bioText: bioController.text);
 
       return true;
 
@@ -325,7 +327,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
       final pronouns = pronounController.text;
 
-      await ProfileDataUpdate().updatePronouns(pronouns: pronouns);
+      await profileDataUpdate.updatePronouns(pronouns: pronouns);
 
       return true;
 
@@ -337,10 +339,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   }
 
   Future<bool> _saveCountry() async {
-// TODO: Create separated variable to initialize ProfileDataUpdate class
+
     try {
 
-      await ProfileDataUpdate().updateCountry(country: countrySelectedNotifier.value);
+      await profileDataUpdate.updateCountry(country: countrySelectedNotifier.value);
 
       return true;
 
