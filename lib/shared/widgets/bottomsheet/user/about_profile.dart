@@ -138,6 +138,7 @@ class BottomsheetAboutProfile {
     required BuildContext context,
     required String username,
     required String pronouns,
+    required String country,
     required String joinedDate,
     required Uint8List pfpData
   }) {
@@ -165,6 +166,11 @@ class BottomsheetAboutProfile {
             if (pronouns.isNotEmpty)
             BorderedContainer(
               child: _buildHeaders('Pronouns', pronouns)
+            ),
+
+            if (country.isNotEmpty)
+            BorderedContainer(
+              child: _buildHeaders('Country', country)
             ),
 
           ],

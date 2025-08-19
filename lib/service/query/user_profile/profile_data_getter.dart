@@ -31,7 +31,7 @@ class ProfileDataGetter extends BaseQueryService {
       'following': following, 
       'bio': bio,
       'pronouns': pronouns,
-      'country': country,
+      'country': country
     };
 
     if (isMyProfile) {

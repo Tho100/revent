@@ -75,6 +75,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
   bool isSavedPostsHidden = false;
 
   String joinedDate = '';
+  String country = '';
 
   void _initializeClasses() async {
     
@@ -128,9 +129,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
     if (joinedDate.isEmpty) {
 
-      final getJoinedDate = await userDataGetter.getJoinedDate(
-        username: widget.username
-      );
+      final getJoinedDate = await userDataGetter.getJoinedDate(username: widget.username);
 
       final formattedJoinedDate = FormatDate.formatLongDate(getJoinedDate);
 
@@ -141,6 +140,20 @@ class _UserProfilePageState extends State<UserProfilePage> with
     } 
 
     return joinedDate;
+
+  }
+
+  Future<String> _initializeCountry() async {
+
+    if (country.isEmpty) {
+
+      country = await userDataGetter.getCountry(username: widget.username);
+
+      return country;
+
+    } 
+
+    return country;
 
   }
 
@@ -410,6 +423,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
           username: widget.username, 
           pronouns: pronounsNotifier.value, 
           pfpData: widget.pfpData, 
+          loadCountry: _initializeCountry,
           loadJoinedDate: _initializeJoinDate
         );
       }
