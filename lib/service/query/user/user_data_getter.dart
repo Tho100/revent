@@ -32,6 +32,19 @@ class UserDataGetter extends BaseQueryService {
 
   }
 
+  Future<String> getCountry({required String username}) async {
+
+    const query = 'SELECT country FROM ${TableNames.userInfo} WHERE username = :username';
+
+    final param = {'username': username};
+    
+    final results = await executeQuery(query, param);
+
+    return ExtractData(rowsData: results).extractStringColumn('country')[0];
+
+  }
+
+
   Future<Map<String, String>> getSocialHandles({String? username}) async {
 
     const query = 'SELECT platform, social_handle FROM ${TableNames.userSocialLinks} WHERE username = :username';
