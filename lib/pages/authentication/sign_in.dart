@@ -56,8 +56,13 @@ class _SignInPageState extends State<SignInPage> with AuthController {
       );
 
     } catch (_) {
-      // TODO: Close loading when something goes wrong (here, just like sign-up)
+
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+
     }
 
   }
