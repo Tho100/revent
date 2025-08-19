@@ -41,11 +41,11 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     TextEditingController(),
   ];
 
-  final profilePicNotifier = ValueNotifier<Uint8List>(Uint8List(0));
+  final changesSavedNotifier = ValueNotifier<bool>(true);
+
+  final avatarNotifier = ValueNotifier<Uint8List>(Uint8List(0));
   final pronounsSelectedNotifier = ValueNotifier<List<bool>>([]);
   final countrySelectedNotifier = ValueNotifier<String>('');
-
-  final isSavedNotifier = ValueNotifier<bool>(true);
 
   List<String> pronounsChips = [];
 
@@ -98,19 +98,19 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     bioController.addListener(() {
       final hasChanged = bioController.text != initialBio;
       isBioChanges = hasChanged;
-      if (hasChanged) isSavedNotifier.value = false;
+      if (hasChanged) changesSavedNotifier.value = false;
     });
 
     pronounController.addListener(() {
       final hasChanged = pronounController.text != initialPronouns;
       isPronounsChanges = hasChanged;
-      if (hasChanged) isSavedNotifier.value = false;
+      if (hasChanged) changesSavedNotifier.value = false;
     });
 
     countryController.addListener(() {
       final hasChanged = countryController.text != initialCountry;
       isCountryChanges = hasChanged;
-      if (hasChanged) isSavedNotifier.value = false;
+      if (hasChanged) changesSavedNotifier.value = false;
     });
 
     for (int i = 0; i < socialControllers.length; i++) {
@@ -123,7 +123,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
           isSocialChanges = hasChanged;
 
-          if (hasChanged) isSavedNotifier.value = false;
+          if (hasChanged) changesSavedNotifier.value = false;
 
       });
     }
@@ -164,7 +164,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _initializeProfileData() {
 
-    profilePicNotifier.value = profileProvider.profile.profilePicture;
+    avatarNotifier.value = profileProvider.profile.profilePicture;
 
     bioController.text = profileProvider.profile.bio;
     bioController.addListener(_enforceBioMaxLines);
@@ -177,7 +177,6 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       countryController.text = profileProvider.profile.country;
     }
 
-
   }
 
   Future<void> _onSaveChangesPressed() async {
@@ -186,28 +185,28 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
     if (isBioChanges) {
       if (!await _saveBio()) {
-        isSavedNotifier.value = false;
+        changesSavedNotifier.value = false;
         allSaved = false;
       }
     }
 
     if (isPronounsChanges) {
       if (!await _savePronouns()) {
-        isSavedNotifier.value = false;
+        changesSavedNotifier.value = false;
         allSaved = false;
       }
     }
 
     if (isCountryChanges) {
       if (!await _saveCountry()) {
-        isSavedNotifier.value = false;
+        changesSavedNotifier.value = false;
         allSaved = false;
       }
     }
 
     if (isSocialChanges) {
       if (!await _saveSocialLinks()) {
-        isSavedNotifier.value = false;
+        changesSavedNotifier.value = false;
         allSaved = false;
       }
     }
@@ -225,7 +224,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       isCountryChanges = false;
       isSocialChanges = false;
 
-      isSavedNotifier.value = true;
+      changesSavedNotifier.value = true;
 
       SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
 
@@ -238,7 +237,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     final isProfileSelected = await ProfilePictureModel.createProfilePicture(context: context);
 
     if (isProfileSelected) {
-      profilePicNotifier.value = profileProvider.profile.profilePicture;
+      avatarNotifier.value = profileProvider.profile.profilePicture;
       SnackBarDialog.temporarySnack(message: AlertMessages.avatarUpdated);
     }
 
@@ -260,7 +259,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       removeAvatarOnPressed: () async {
         Navigator.pop(context);
         await profileDataUpdate.removeProfilePicture().then(
-          (_) => profilePicNotifier.value = profileProvider.profile.profilePicture
+          (_) => avatarNotifier.value = profileProvider.profile.profilePicture
         );
       }
     );
@@ -307,12 +306,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
-  Future<bool> _saveBio() async {
+  Future<bool> _executeSaveChanges(Future<void> Function() updateAction) async {
 
     try {
 
-      await profileDataUpdate.updateBio(bioText: bioController.text);
-
+      await updateAction();
+      
       return true;
 
     } catch (_) {
@@ -322,37 +321,14 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
-  Future<bool> _savePronouns() async {
+  Future<bool> _saveBio()
+    => _executeSaveChanges(() => profileDataUpdate.updateBio(bioText: bioController.text));
 
-    try {
+  Future<bool> _savePronouns()
+    => _executeSaveChanges(() => profileDataUpdate.updatePronouns(pronouns: pronounController.text));
 
-      final pronouns = pronounController.text;
-
-      await profileDataUpdate.updatePronouns(pronouns: pronouns);
-
-      return true;
-
-    } catch (_) {
-      SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
-      return false;
-    }
-
-  }
-
-  Future<bool> _saveCountry() async {
-
-    try {
-
-      await profileDataUpdate.updateCountry(country: countrySelectedNotifier.value);
-
-      return true;
-
-    } catch (_) {
-      SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
-      return false;
-    }
-
-  }
+  Future<bool> _saveCountry()
+    => _executeSaveChanges(() => profileDataUpdate.updateCountry(country: countrySelectedNotifier.value));
 
   void _pronounsChipsOnSelected(String pronouns) {
 
@@ -377,7 +353,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
             children: [
         
               ValueListenableBuilder(
-                valueListenable: profilePicNotifier,
+                valueListenable: avatarNotifier,
                 builder: (_, pfp, __) {
                   return ProfilePictureWidget(
                     customWidth: 85,
@@ -653,7 +629,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   Widget _buildSaveChangesButton() { 
     return ValueListenableBuilder(
-      valueListenable: isSavedNotifier,
+      valueListenable: changesSavedNotifier,
       builder: (_, isSaved, __) {
         return IconButton(
           icon: Icon(Icons.check, size: 22, color: isSaved ? ThemeColor.contentThird : ThemeColor.contentPrimary),
@@ -714,8 +690,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   @override
   void dispose() {
-    profilePicNotifier.dispose();
-    isSavedNotifier.dispose();
+    avatarNotifier.dispose();
+    pronounsSelectedNotifier.dispose();
+    countrySelectedNotifier.dispose();
+    changesSavedNotifier.dispose();
     _disposeControllers();
     super.dispose();
   }
