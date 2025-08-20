@@ -34,7 +34,7 @@ class UserDataGetter extends BaseQueryService {
 
   Future<String> getCountry({required String username}) async {
 
-    const query = 'SELECT country FROM ${TableNames.userInfo} WHERE username = :username';
+    const query = 'SELECT country FROM ${TableNames.userProfileInfo} WHERE username = :username';
 
     final param = {'username': username};
     
@@ -43,7 +43,6 @@ class UserDataGetter extends BaseQueryService {
     return ExtractData(rowsData: results).extractStringColumn('country')[0];
 
   }
-
 
   Future<Map<String, String>> getSocialHandles({String? username}) async {
 
