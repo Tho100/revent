@@ -147,7 +147,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
     if (country.isEmpty) {
 
-      country = isBlockedAccount 
+      country = isBlockedAccount || isPrivateAccount
         ? 'Unknown' 
         :  await userDataGetter.getCountry(username: widget.username);
 
