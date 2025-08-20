@@ -44,7 +44,6 @@ class UserDataGetter extends BaseQueryService {
 
   }
 
-
   Future<Map<String, String>> getSocialHandles({String? username}) async {
 
     const query = 'SELECT platform, social_handle FROM ${TableNames.userSocialLinks} WHERE username = :username';
