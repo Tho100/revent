@@ -116,14 +116,17 @@ class BottomsheetAboutProfile {
 
         _buildHeaders('Joined', _shortenDate(joinedDate)),
 
-        Padding(
-          padding: const EdgeInsets.only(left: 14.0),
-          child: Text(
-            '${_getTimeAgoDate(joinedDate)} ago',
-            style: GoogleFonts.inter(
-              color: ThemeColor.contentSecondary,
-              fontWeight: FontWeight.w800,
-              fontSize: 13
+        Transform.translate(
+          offset: const Offset(0, -2),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 14.0),
+            child: Text(
+              '${_getTimeAgoDate(joinedDate)} ago',
+              style: GoogleFonts.inter(
+                color: ThemeColor.contentSecondary,
+                fontWeight: FontWeight.w800,
+                fontSize: 13
+              ),
             ),
           ),
         ),
