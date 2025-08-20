@@ -34,7 +34,7 @@ class UserDataGetter extends BaseQueryService {
 
   Future<String> getCountry({required String username}) async {
 
-    const query = 'SELECT country FROM ${TableNames.userInfo} WHERE username = :username';
+    const query = 'SELECT country FROM ${TableNames.userProfileInfo} WHERE username = :username';
 
     final param = {'username': username};
     

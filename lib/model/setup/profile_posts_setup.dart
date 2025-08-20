@@ -75,7 +75,6 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
       profilePostsProvider.reorderPosts();
 
-
     }
 
   }
