@@ -27,30 +27,6 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   final searchPostsFilter = SearchPostsFilter();
 
-  Widget _buildVentPreview(SearchVentsData ventData) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 8.5),
-      child: DefaultVentPreviewer(
-        title: ventData.title,
-        bodyText: '',
-        tags: ventData.tags,
-        postTimestamp: ventData.postTimestamp,
-        totalLikes: ventData.totalLikes,
-        totalComments: ventData.totalComments,
-        isNsfw: ventData.isNsfw,
-        creator: ventData.creator,
-        pfpData: ventData.profilePic,
-        disableActionButtons: true,
-      ),
-    );
-  }
-
-  Widget _buildNoResults() {
-    return NoContentMessage().customMessage(
-      message: 'No results.'
-    );
-  }
-
   void _onSortPostsPressed(String filter) {
     
     switch (filter) {
@@ -99,6 +75,24 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
     Navigator.pop(context);
 
+  }
+
+  Widget _buildVentPreview(SearchVentsData ventData) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 8.5),
+      child: DefaultVentPreviewer(
+        title: ventData.title,
+        bodyText: '',
+        tags: ventData.tags,
+        postTimestamp: ventData.postTimestamp,
+        totalLikes: ventData.totalLikes,
+        totalComments: ventData.totalComments,
+        isNsfw: ventData.isNsfw,
+        creator: ventData.creator,
+        pfpData: ventData.profilePic,
+        disableActionButtons: true,
+      ),
+    );
   }
 
   Widget _totalSearchResults() {
@@ -257,6 +251,12 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
         return const SizedBox.shrink();
         
       },
+    );
+  }
+
+  Widget _buildNoResults() {
+    return NoContentMessage().customMessage(
+      message: 'No results.'
     );
   }
 
