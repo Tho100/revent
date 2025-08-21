@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/text_copy.dart';
 import 'package:revent/service/query/user/user_actions.dart';
@@ -101,25 +102,18 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
   }
 
   void _showReplyActions() {
+
+    final context = AppKeys.navigatorKey.currentContext!;
+
     BottomsheetReplyActions().buildBottomsheet(
-      context: AppKeys.navigatorKey.currentContext!, 
+      context: context, 
       repliedBy: repliedBy, 
-      copyOnPressed: () {
-        _onCopyReplyPressed();
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-      }, 
-      reportOnPressed: () {
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-      }, 
-      blockOnPressed: () {
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-        _onBlockPressed();
-      },
-      deleteOnPressed: () async {  
-        await _onDeletePressed();
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-      }
+      copyOnPressed: () => context.popAndRun(_onCopyReplyPressed),
+      blockOnPressed: () => context.popAndRun(_onBlockPressed),
+      deleteOnPressed: () => context.popAndRun(_onDeletePressed),  
+      reportOnPressed: () => Navigator.pop(context),
     );
+    
   }
 
   Widget _buildReplyActionButton() {
