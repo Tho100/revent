@@ -40,7 +40,7 @@ class UserActions extends BaseQueryService with UserProfileProviderService {
     
   }
 
-  Future<void> blockUser({bool? block = true}) async {
+  Future<void> toggleBlockUser({bool? block = true}) async {
 
     final query = block!
       ? 'INSERT INTO ${TableNames.userBlockedInfo} (blocked_username, blocked_by) VALUES (:blocked_username, :blocked_by)'

@@ -433,7 +433,7 @@ class _VentPostPageState extends State<VentPostPage> with
       ],
     );
   }
-
+// TODO: Improve this codebase
   Widget _buildVentOptionButton() {
 
     final ventPreviewer = VentPreviewerWidgets(
@@ -468,7 +468,7 @@ class _VentPostPageState extends State<VentPostPage> with
           message: 'Block @${widget.creator}?', 
           buttonMessage: 'Block', 
           onPressedEvent: () async {
-            await UserActions(username: widget.creator).blockUser()
+            await UserActions(username: widget.creator).toggleBlockUser()
               .then((_) => Navigator.pop(context))
               .then((_) => Navigator.pop(context));
           }

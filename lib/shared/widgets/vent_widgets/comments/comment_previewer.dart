@@ -165,7 +165,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
       message: 'Block @$commentedBy?', 
       buttonMessage: 'Block', 
       onPressedEvent: () async {
-        await UserActions(username: commentedBy).blockUser().then(
+        await UserActions(username: commentedBy).toggleBlockUser().then(
           (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
         );
       }

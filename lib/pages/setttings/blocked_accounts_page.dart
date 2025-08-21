@@ -59,7 +59,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
   }
 
   Future<void> _onUnblockPressed({required String username}) async {
-    await UserActions(username: username).blockUser(block: false).then(
+    await UserActions(username: username).toggleBlockUser(block: false).then(
       (_) => _removeFromBlockedList(username)
     );
   }

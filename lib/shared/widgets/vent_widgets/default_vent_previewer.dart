@@ -134,7 +134,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
         message: 'Block @${widget.creator}?', 
         buttonMessage: 'Block', 
         onPressedEvent: () async {
-          await UserActions(username: widget.creator).blockUser().then(
+          await UserActions(username: widget.creator).toggleBlockUser().then(
             (_) => Navigator.pop(context)
           );
         }
