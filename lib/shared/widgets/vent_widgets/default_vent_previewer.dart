@@ -75,7 +75,6 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       tags: widget.tags,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
-      navigateVentPostPageOnPressed: () => _navigateToVentPostPage(),
       unSaveOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 1
         ? () async => await actionsHandler.unsavePost()
         : null,
@@ -85,10 +84,11 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       unPinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0 && widget.isPinned == true
         ? () async => await actionsHandler.unpinPost()
         : null,
-      editOnPressed: () => _onEditPressed(),
-      deleteOnPressed: () => _onDeletePressed(),
-      reportOnPressed: () => _onReportPressed(),
-      blockOnPressed: () => _onBlockPressed()
+      editOnPressed: _onEditPressed,
+      deleteOnPressed: _onDeletePressed,
+      reportOnPressed: _onReportPressed,
+      blockOnPressed: _onBlockPressed,
+      navigateVentPostPageOnPressed: _navigateToVentPostPage
     );
   }
 

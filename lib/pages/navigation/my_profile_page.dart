@@ -250,7 +250,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
   Widget _buildSettingsActionButton() {
     return IconButton(
       icon: Icon(CupertinoIcons.bars, size: 28, color: ThemeColor.contentPrimary),
-      onPressed: () => NavigatePage.settingsPage()
+      onPressed: NavigatePage.settingsPage
     );
   }
 

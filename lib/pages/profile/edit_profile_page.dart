@@ -345,7 +345,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     return Padding(
       padding: const EdgeInsets.only(left: 4.0),
       child: InkWellEffect(
-        onPressed: () => _onChangeAvatarPressed(),
+        onPressed: _onChangeAvatarPressed,
         child: SizedBox(
           width: 88,
           height: 88,

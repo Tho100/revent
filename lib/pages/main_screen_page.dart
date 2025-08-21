@@ -10,22 +10,22 @@ class MainScreenPage extends StatelessWidget {
   const MainScreenPage({super.key});
 
   Widget _buildButtons() {
-    return Column(
+    return const Column(
       children: [
 
-        const SizedBox(height: 30),
+        SizedBox(height: 30),
 
         MainButton(
           text: 'Sign In',
           customFontSize: 17,
-          onPressed: () => NavigatePage.signInPage(),
+          onPressed: NavigatePage.signInPage,
         ),
 
-        const SizedBox(height: 15),
+        SizedBox(height: 15),
 
         CustomOutlinedButton(
           text: 'Create an Account',
-          onPressed: () => NavigatePage.signUpPage(),
+          onPressed: NavigatePage.signUpPage,
         ),
 
       ],

@@ -199,7 +199,7 @@ class VentPreviewerWidgets {
         width: 25,
         height: 25,
         child: IconButton(
-          onPressed: () => _callVentOptionsBottomsheet(),
+          onPressed: _callVentOptionsBottomsheet,
           icon: customIconWidget ?? Transform.translate(
             offset: const Offset(0, -10),
             child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.contentThird, size: 18)
