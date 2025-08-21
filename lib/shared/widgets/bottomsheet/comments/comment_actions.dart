@@ -8,7 +8,7 @@ class BottomsheetCommentActions with UserProfileProviderService, VentProviderSer
 
   Future buildBottomsheet({
     required BuildContext context,
-    required int commentIndex,
+    required bool isCommentPinned,
     required String commenter,
     required VoidCallback editOnPressed,
     required VoidCallback pinOnPressed,
@@ -31,14 +31,14 @@ class BottomsheetCommentActions with UserProfileProviderService, VentProviderSer
           onPressed: editOnPressed
         ),
 
-        if (userProvider.user.username == activeVentProvider.ventData.creator && commentsProvider.comments[commentIndex].isPinned == false)
+        if (userProvider.user.username == activeVentProvider.ventData.creator && !isCommentPinned)
         BottomsheetOptionButton(
           text: 'Pin Comment',
           icon: CupertinoIcons.pin,
           onPressed: pinOnPressed
         ),
 
-        if (userProvider.user.username == activeVentProvider.ventData.creator && commentsProvider.comments[commentIndex].isPinned == true)
+        if (userProvider.user.username == activeVentProvider.ventData.creator && isCommentPinned)
         BottomsheetOptionButton(
           text: 'Unpin Comment',
           icon: CupertinoIcons.pin_slash,

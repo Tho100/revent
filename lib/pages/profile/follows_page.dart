@@ -53,8 +53,8 @@ class FollowsPage extends StatefulWidget {
 
 class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStateMixin {
 
-  final ValueNotifier<List<_FollowsProfilesData>> followersData = ValueNotifier([]);
-  final ValueNotifier<List<_FollowsProfilesData>> followingData = ValueNotifier([]);
+  ValueNotifier<List<_FollowsProfilesData>> followersData = ValueNotifier([]);
+  ValueNotifier<List<_FollowsProfilesData>> followingData = ValueNotifier([]);
 
   final emptyPageMessageNotifier = ValueNotifier<String>('');
   final profileActionTextNotifier = ValueNotifier<List<String>>([]);

@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/text_copy.dart';
 import 'package:revent/pages/search_results_page.dart';
@@ -187,7 +188,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  void _copyBodyText() async {
+  void _onCopyBodyTextPressed() async {
 
     if (widget.bodyText.isEmpty) {
       SnackBarDialog.temporarySnack(message: AlertMessages.nothingToCopy);
@@ -199,6 +200,39 @@ class _VentPostPageState extends State<VentPostPage> with
     );
 
   }
+
+  void _onDeletePressed() {
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: AlertMessages.deletePost, 
+      buttonMessage: 'Delete',
+      onPressedEvent: () async {
+        await actionsHandler.deletePost().then(
+          (_) => Navigator.pop(context)
+        );
+      }
+    );
+  }
+
+  void _onBlockUserPressed() {
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: 'Block @${widget.creator}?', 
+      buttonMessage: 'Block', 
+      onPressedEvent: () async {
+        await UserActions(username: widget.creator).toggleBlockUser()
+          .then((_) => Navigator.pop(context))
+          .then((_) => Navigator.pop(context));
+      }
+    );
+  }
+
+  void _navigateToEditVentPage() {
+    NavigatePage.editVentPage(
+      title: widget.title, 
+      body: activeVentProvider.ventData.body
+    );
+  }
+
+  void _onReportPressed() => ReportPostBottomsheet().buildBottomsheet(context: context);
 
   Future<void> _onPageRefresh() async {
 
@@ -435,58 +469,21 @@ class _VentPostPageState extends State<VentPostPage> with
   }
 
   Widget _buildVentOptionButton() {
-
-    final ventPreviewer = VentPreviewerWidgets(
+    return Padding(
+      padding: const EdgeInsets.only(right: 18.0),
+      child: VentPreviewerWidgets(
       context: AppKeys.navigatorKey.currentContext!,
       title: widget.title,
       creator: widget.creator,
-      editOnPressed: () {
-        Navigator.pop(context);
-        NavigatePage.editVentPage(
-          title: widget.title, 
-          body: activeVentProvider.ventData.body
-        );
-      },
-      copyOnPressed: () {
-        Navigator.pop(context);
-        _copyBodyText();
-      },
-      deleteOnPressed: () {
-        CustomAlertDialog.alertDialogCustomOnPress(
-          message: AlertMessages.deletePost, 
-          buttonMessage: 'Delete',
-          onPressedEvent: () async {
-            await actionsHandler.deletePost().then(
-              (_) => Navigator.pop(context)
-            );
-          }
-        );
-      },
-      blockOnPressed: () {
-        Navigator.pop(context);
-        CustomAlertDialog.alertDialogCustomOnPress(
-          message: 'Block @${widget.creator}?', 
-          buttonMessage: 'Block', 
-          onPressedEvent: () async {
-            await UserActions(username: widget.creator).blockUser()
-              .then((_) => Navigator.pop(context))
-              .then((_) => Navigator.pop(context));
-          }
-        );
-      },
-      reportOnPressed: () {
-        Navigator.pop(context);
-        ReportPostBottomsheet().buildBottomsheet(context: context);
-      }
-    );
-
-    return Padding(
-      padding: const EdgeInsets.only(right: 18.0),
-      child: ventPreviewer.buildVentOptionsButton(
+      editOnPressed: () => context.popAndRun(_navigateToEditVentPage),
+      copyOnPressed: () => context.popAndRun(_onCopyBodyTextPressed),
+      blockOnPressed: () => context.popAndRun(_onBlockUserPressed),
+      reportOnPressed: () => context.popAndRun(_onReportPressed),
+      deleteOnPressed: _onDeletePressed
+    ).buildVentOptionsButton(
         customIconWidget: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.contentPrimary)
       ),
     );
-
   }
 
   Widget _buildLikeButton() {

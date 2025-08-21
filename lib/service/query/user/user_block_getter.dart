@@ -66,5 +66,4 @@ class UserBlockGetter extends BaseQueryService {
 
   }
   
-
 }

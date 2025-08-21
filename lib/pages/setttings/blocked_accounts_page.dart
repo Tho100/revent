@@ -32,7 +32,7 @@ class BlockedAccountsPage extends StatefulWidget {
 
 class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
 
-  final ValueNotifier<List<_BlockedAccountsData>> blockedAccountsData = ValueNotifier([]);
+  ValueNotifier<List<_BlockedAccountsData>> blockedAccountsData = ValueNotifier([]);
 
   Future<void> _initializeBlockedAccounts() async {
 
@@ -59,48 +59,49 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
   }
 
   Future<void> _onUnblockPressed({required String username}) async {
-    await UserActions(username: username).blockUser(block: false).then(
+    await UserActions(username: username).toggleBlockUser(block: false).then(
       (_) => _removeFromBlockedList(username)
     );
   }
 
-  Widget _buildEmptyPage() {
-    return NoContentMessage().customMessage(
-      message: 'No blocked accounts.'
+  Widget _buildListView(List<_BlockedAccountsData> blockedData) {
+    return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
+      itemCount: blockedData.length,
+      itemBuilder: (_, index) {
+
+        final blockedUserData = blockedData[index];
+
+        return AccountProfileWidget(
+          customText: 'Unblock',
+          username: blockedUserData.username,
+          pfpData: blockedUserData.profilePic,
+          onPressed: () async => await _onUnblockPressed(username: blockedUserData.username)
+        );
+
+      },
     );
   }
 
-  Widget _buildAccountsListView() {
+  Widget _buildBody() {
     return Padding(
       padding: const EdgeInsets.only(left: 16.5, right: 16.5, top: 25.0),
       child: ValueListenableBuilder(
         valueListenable: blockedAccountsData,
         builder: (_, blockedData, __) {
-          
-          if (blockedData.isEmpty) {
-            return _buildEmptyPage();
-          }
-    
-          return ListView.builder(
-            physics: const AlwaysScrollableScrollPhysics(
-              parent: BouncingScrollPhysics(),
-            ),
-            itemCount: blockedData.length,
-            itemBuilder: (_, index) {
-
-              final blockedUserData = blockedData[index];
-
-              return AccountProfileWidget(
-                customText: 'Unblock',
-                username: blockedUserData.username,
-                pfpData: blockedUserData.profilePic,
-                onPressed: () async => await _onUnblockPressed(username: blockedUserData.username)
-              );
-
-            },
-          );
+          return blockedData.isEmpty 
+            ? _buildNoBlockedAccounts()
+            : _buildListView(blockedData);
         },
       ),
+    );
+  }
+
+  Widget _buildNoBlockedAccounts() {
+    return NoContentMessage().customMessage(
+      message: 'No blocked accounts.'
     );
   }
 
@@ -123,7 +124,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
         context: context,
         title: 'Blocked Accounts'
       ).buildAppBar(),
-      body: _buildAccountsListView(),
+      body: _buildBody(),
     );
   }
 

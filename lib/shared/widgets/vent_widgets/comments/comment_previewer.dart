@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/helper/navigate_page.dart';
+import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/text_copy.dart';
 import 'package:revent/pages/comment/edit_comment_page.dart';
@@ -165,7 +166,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
       message: 'Block @$commentedBy?', 
       buttonMessage: 'Block', 
       onPressedEvent: () async {
-        await UserActions(username: commentedBy).blockUser().then(
+        await UserActions(username: commentedBy).toggleBlockUser().then(
           (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
         );
       }
@@ -173,40 +174,28 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
   }
 
   void _showCommentActions() {
-    BottomsheetCommentActions().buildBottomsheet(
-      context: AppKeys.navigatorKey.currentContext!, 
-      commenter: commentedBy, 
-      commentIndex: commentsProvider.comments.indexWhere(
-        (mainComment) => mainComment.commentedBy == commentedBy && mainComment.comment == comment
-      ),
-      editOnPressed: () {
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-        _navigateToEditCommentPage();
-      },
-      pinOnPressed: () async {
-        await _onPinPressed();
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-      },
-      unPinOnPressed: () async {
-        await _onUnpinPressed();
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-      },
-      copyOnPressed: () {
-        _onCopyCommentPressed();
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-      }, 
-      reportOnPressed: () {
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-      }, 
-      blockOnPressed: () {
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-        _onBlockPressed();
-      },
-      deleteOnPressed: () async {  
-        await _onDeletePressed();
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-      }
+
+    final context = AppKeys.navigatorKey.currentContext!;
+
+    final commentIndex = commentsProvider.comments.indexWhere(
+      (mainComment) => mainComment.commentedBy == commentedBy && mainComment.comment == comment
     );
+
+    final isCommentPinned = commentsProvider.comments[commentIndex].isPinned;
+
+    BottomsheetCommentActions().buildBottomsheet(
+      context: context,
+      commenter: commentedBy, 
+      isCommentPinned: isCommentPinned,
+      editOnPressed: () => context.popAndRun(_navigateToEditCommentPage),
+      pinOnPressed: () => context.popAndRunAsync(_onPinPressed),
+      unPinOnPressed: () => context.popAndRunAsync(_onUnpinPressed),
+      copyOnPressed: () => context.popAndRun(_onCopyCommentPressed),
+      blockOnPressed: () => context.popAndRun(_onBlockPressed),
+      deleteOnPressed: () => context.popAndRunAsync(_onDeletePressed),
+      reportOnPressed: () => Navigator.pop(context)
+    );
+
   }
 
   Widget _buildCommentActionButton() {

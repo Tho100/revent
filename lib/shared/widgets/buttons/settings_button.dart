@@ -9,14 +9,14 @@ class SettingsButton extends StatelessWidget {
   final IconData? icon;
   final VoidCallback onPressed;
 
-  final bool? makeRed;
-  final bool? hideCaret;
+  final bool makeRed;
+  final bool hideCaret;
 
   const SettingsButton({
     required this.text,
     required this.onPressed,
     this.icon,
-    this.makeRed,
+    this.makeRed = false,
     this.hideCaret = false,
     super.key
   });
@@ -43,7 +43,7 @@ class SettingsButton extends StatelessWidget {
 
                       if (icon != null) ... [
 
-                        Icon(icon, color: makeRed == true ? ThemeColor.alert: ThemeColor.contentPrimary, size: 21),
+                        Icon(icon, color: makeRed ? ThemeColor.alert: ThemeColor.contentPrimary, size: 21),
 
                         const SizedBox(width: 14)
 
@@ -52,7 +52,7 @@ class SettingsButton extends StatelessWidget {
                       Text(
                         text,
                         style: GoogleFonts.inter(
-                          color: makeRed == true ? ThemeColor.alert : ThemeColor.contentPrimary,
+                          color: makeRed ? ThemeColor.alert : ThemeColor.contentPrimary,
                           fontWeight: FontWeight.w800,
                           fontSize: 18
                         ),
@@ -61,10 +61,10 @@ class SettingsButton extends StatelessWidget {
 
                       const Spacer(),
 
-                      if (!hideCaret!)
+                      if (!hideCaret)
                       Icon(
                         Icons.arrow_forward_ios, 
-                        color: makeRed == true ? ThemeColor.alert : ThemeColor.contentThird, 
+                        color: makeRed ? ThemeColor.alert : ThemeColor.contentThird, 
                         size: 18
                       ),
                       

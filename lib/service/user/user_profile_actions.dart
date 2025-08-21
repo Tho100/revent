@@ -66,7 +66,7 @@ class UserProfileActions {
   }
 
   Future<void> _confirmBlockUser(String username) async {
-    await UserActions(username: username).blockUser()
+    await UserActions(username: username).toggleBlockUser()
       .then((_) => Navigator.pop(context))
       .then((_) => Navigator.pop(context));
   }
