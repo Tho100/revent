@@ -177,12 +177,16 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
     final context = AppKeys.navigatorKey.currentContext!;
 
+    final commentIndex = commentsProvider.comments.indexWhere(
+      (mainComment) => mainComment.commentedBy == commentedBy && mainComment.comment == comment
+    );
+
+    final isCommentPinned = commentsProvider.comments[commentIndex].isPinned;
+
     BottomsheetCommentActions().buildBottomsheet(
       context: context,
       commenter: commentedBy, 
-      commentIndex: commentsProvider.comments.indexWhere(
-        (mainComment) => mainComment.commentedBy == commentedBy && mainComment.comment == comment
-      ),
+      isCommentPinned: isCommentPinned,
       editOnPressed: () => context.popAndRun(_navigateToEditCommentPage),
       pinOnPressed: () => context.popAndRunAsync(_onPinPressed),
       unPinOnPressed: () => context.popAndRunAsync(_onUnpinPressed),
