@@ -187,7 +187,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  void _copyBodyText() async {
+  void _onCopyBodyTextPressed() async {
 
     if (widget.bodyText.isEmpty) {
       SnackBarDialog.temporarySnack(message: AlertMessages.nothingToCopy);
@@ -198,6 +198,30 @@ class _VentPostPageState extends State<VentPostPage> with
       (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
     );
 
+  }
+
+  void _onDeletePressed() {
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: AlertMessages.deletePost, 
+      buttonMessage: 'Delete',
+      onPressedEvent: () async {
+        await actionsHandler.deletePost().then(
+          (_) => Navigator.pop(context)
+        );
+      }
+    );
+  }
+
+  void _onBlockUserPressed() {
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: 'Block @${widget.creator}?', 
+      buttonMessage: 'Block', 
+      onPressedEvent: () async {
+        await UserActions(username: widget.creator).toggleBlockUser()
+          .then((_) => Navigator.pop(context))
+          .then((_) => Navigator.pop(context));
+      }
+    );
   }
 
   Future<void> _onPageRefresh() async {
@@ -433,7 +457,7 @@ class _VentPostPageState extends State<VentPostPage> with
       ],
     );
   }
-// TODO: Improve this codebase
+
   Widget _buildVentOptionButton() {
 
     final ventPreviewer = VentPreviewerWidgets(
@@ -449,30 +473,12 @@ class _VentPostPageState extends State<VentPostPage> with
       },
       copyOnPressed: () {
         Navigator.pop(context);
-        _copyBodyText();
+        _onCopyBodyTextPressed();
       },
-      deleteOnPressed: () {
-        CustomAlertDialog.alertDialogCustomOnPress(
-          message: AlertMessages.deletePost, 
-          buttonMessage: 'Delete',
-          onPressedEvent: () async {
-            await actionsHandler.deletePost().then(
-              (_) => Navigator.pop(context)
-            );
-          }
-        );
-      },
+      deleteOnPressed: _onDeletePressed,
       blockOnPressed: () {
         Navigator.pop(context);
-        CustomAlertDialog.alertDialogCustomOnPress(
-          message: 'Block @${widget.creator}?', 
-          buttonMessage: 'Block', 
-          onPressedEvent: () async {
-            await UserActions(username: widget.creator).toggleBlockUser()
-              .then((_) => Navigator.pop(context))
-              .then((_) => Navigator.pop(context));
-          }
-        );
+        _onBlockUserPressed();
       },
       reportOnPressed: () {
         Navigator.pop(context);
