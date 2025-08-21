@@ -42,7 +42,7 @@ class _MainSearchPageState extends State<MainSearchPage> with GeneralSearchContr
 
   }
 
-  void _goToSearchResults({required String searchText}) {
+  void _navigateToSearchResults({required String searchText}) {
 
     Navigator.pop(context);
 
@@ -79,7 +79,7 @@ class _MainSearchPageState extends State<MainSearchPage> with GeneralSearchContr
           textInputAction: TextInputAction.done,
           onFieldSubmitted: (searchText) {
             _addSearchHistory(text: searchText);
-            _goToSearchResults(searchText: searchText);
+            _navigateToSearchResults(searchText: searchText);
           },
         ),
       ),
@@ -90,7 +90,7 @@ class _MainSearchPageState extends State<MainSearchPage> with GeneralSearchContr
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: InkWellEffect(
-        onPressed: () => _goToSearchResults(searchText: searchText),
+        onPressed: () => _navigateToSearchResults(searchText: searchText),
         child: SizedBox(
           height: 40,
           child: Row(

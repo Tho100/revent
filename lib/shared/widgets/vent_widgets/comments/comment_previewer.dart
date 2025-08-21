@@ -130,10 +130,82 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
     
   }
 
-  Widget _buildLastEdit() {
-    return GestureDetector(
-      onTap: () => SnackBarDialog.temporarySnack(message: AlertMessages.editedComment),
-      child: Icon(CupertinoIcons.pencil_outline, color: ThemeColor.contentThird, size: 18)
+  void _navigateToEditCommentPage() {
+    Navigator.push(
+      AppKeys.navigatorKey.currentContext!, 
+      MaterialPageRoute(
+        builder: (_) => EditCommentPage(originalComment: comment)
+      )
+    );
+  }
+
+  void _navigateToRepliesPage() {
+    Navigator.push(
+      AppKeys.navigatorKey.currentContext!,
+      MaterialPageRoute(
+        builder: (_) => RepliesPage(
+          commentedBy: commentedBy, 
+          comment: comment, 
+          commentTimestamp: commentTimestamp, 
+          isCommentLikedByCreator: isCommentLikedByCreator, 
+          pfpData: pfpData, 
+        )
+      )
+    );
+  }
+
+  void _onCopyCommentPressed() {
+    TextCopy(text: comment).copy().then(
+      (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
+    );
+  }
+  
+  void _onBlockPressed() {
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: 'Block @$commentedBy?', 
+      buttonMessage: 'Block', 
+      onPressedEvent: () async {
+        await UserActions(username: commentedBy).blockUser().then(
+          (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
+        );
+      }
+    );
+  }
+
+  void _showCommentActions() {
+    BottomsheetCommentActions().buildBottomsheet(
+      context: AppKeys.navigatorKey.currentContext!, 
+      commenter: commentedBy, 
+      commentIndex: commentsProvider.comments.indexWhere(
+        (mainComment) => mainComment.commentedBy == commentedBy && mainComment.comment == comment
+      ),
+      editOnPressed: () {
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+        _navigateToEditCommentPage();
+      },
+      pinOnPressed: () async {
+        await _onPinPressed();
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+      },
+      unPinOnPressed: () async {
+        await _onUnpinPressed();
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+      },
+      copyOnPressed: () {
+        _onCopyCommentPressed();
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+      }, 
+      reportOnPressed: () {
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+      }, 
+      blockOnPressed: () {
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+        _onBlockPressed();
+      },
+      deleteOnPressed: () async {  
+        await _onDeletePressed();
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+      }
     );
   }
 
@@ -142,60 +214,19 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
       width: 25,
       height: 25,
       child: IconButton(
-        onPressed: () => BottomsheetCommentActions().buildBottomsheet(
-          context: AppKeys.navigatorKey.currentContext!, 
-          commenter: commentedBy, 
-          commentIndex: commentsProvider.comments.indexWhere(
-            (mainComment) => mainComment.commentedBy == commentedBy && mainComment.comment == comment
-          ),
-          editOnPressed: () {
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-            Navigator.push(
-              AppKeys.navigatorKey.currentContext!, 
-              MaterialPageRoute(
-                builder: (_) => EditCommentPage(originalComment: comment)
-              )
-            );
-          },
-          pinOnPressed: () async {
-            await _onPinPressed();
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-          },
-          unPinOnPressed: () async {
-            await _onUnpinPressed();
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-          },
-          copyOnPressed: () {
-            TextCopy(text: comment).copy().then(
-              (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
-            );
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-          }, 
-          reportOnPressed: () {
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-          }, 
-          blockOnPressed: () {
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-            CustomAlertDialog.alertDialogCustomOnPress(
-              message: 'Block @$commentedBy?', 
-              buttonMessage: 'Block', 
-              onPressedEvent: () async {
-                await UserActions(username: commentedBy).blockUser().then(
-                  (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
-                );
-              }
-            );
-          },
-          deleteOnPressed: () async {  
-            await _onDeletePressed();
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-          }
-        ),
+        onPressed: _showCommentActions,
         icon: Transform.translate(
           offset: const Offset(0, -10),
           child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.contentThird, size: 18)
         )
       ),
+    );
+  }
+
+  Widget _buildLastEdit() {
+    return GestureDetector(
+      onTap: () => SnackBarDialog.temporarySnack(message: AlertMessages.editedComment),
+      child: Icon(CupertinoIcons.pencil_outline, color: ThemeColor.contentThird, size: 18)
     );
   }
 
@@ -278,20 +309,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
           const SizedBox(width: 16),
       
           IconButton(
-            onPressed: () {
-              Navigator.push(
-                AppKeys.navigatorKey.currentContext!,
-                MaterialPageRoute(
-                  builder: (_) => RepliesPage(
-                    commentedBy: commentedBy, 
-                    comment: comment, 
-                    commentTimestamp: commentTimestamp, 
-                    isCommentLikedByCreator: isCommentLikedByCreator, 
-                    pfpData: pfpData, 
-                  )
-                )
-              );
-            },
+            onPressed: _navigateToRepliesPage,
             icon: Icon(CupertinoIcons.chat_bubble, color:ThemeColor.contentSecondary, size: 18),
             padding: EdgeInsets.zero,
             constraints: const BoxConstraints(), 

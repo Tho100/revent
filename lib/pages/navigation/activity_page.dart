@@ -382,7 +382,7 @@ class _ActivityPageState extends State<ActivityPage> with
       child: Scaffold(
         appBar: CustomAppBar(
           title: 'Activity',
-          customBackOnPressed: () => NavigatePage.homePage(),
+          customBackOnPressed: NavigatePage.homePage,
           context: context,
           actions: [NavigationPagesWidgets.profilePictureLeading()]
         ).buildNavigationAppBar(),

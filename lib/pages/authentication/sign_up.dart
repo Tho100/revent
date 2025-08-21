@@ -167,9 +167,9 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
 
           const Spacer(),
 
-          UnderlinedButton(
+          const UnderlinedButton(
             text: 'Already have an account?', 
-            onPressed: () => NavigatePage.signInPage()
+            onPressed: NavigatePage.signInPage
           ),
     
         ],

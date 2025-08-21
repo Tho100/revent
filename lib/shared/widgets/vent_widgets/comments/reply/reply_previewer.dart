@@ -82,40 +82,52 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
     
   }
 
+  void _onBlockPressed() {
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: 'Block @$repliedBy?', 
+      buttonMessage: 'Block', 
+      onPressedEvent: () async {
+        await UserActions(username: repliedBy).blockUser().then(
+          (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
+        );
+      }
+    );
+  }
+
+  void _onCopyReplyPressed() {
+    TextCopy(text: reply).copy().then(
+      (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
+    );          
+  }
+
+  void _showReplyActions() {
+    BottomsheetReplyActions().buildBottomsheet(
+      context: AppKeys.navigatorKey.currentContext!, 
+      repliedBy: repliedBy, 
+      copyOnPressed: () {
+        _onCopyReplyPressed();
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+      }, 
+      reportOnPressed: () {
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+      }, 
+      blockOnPressed: () {
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+        _onBlockPressed();
+      },
+      deleteOnPressed: () async {  
+        await _onDeletePressed();
+        Navigator.pop(AppKeys.navigatorKey.currentContext!);
+      }
+    );
+  }
+
   Widget _buildReplyActionButton() {
     return SizedBox(
       width: 25,
       height: 25,
       child: IconButton(
-        onPressed: () => BottomsheetReplyActions().buildBottomsheet(
-          context: AppKeys.navigatorKey.currentContext!, 
-          repliedBy: repliedBy, 
-          copyOnPressed: () {
-            TextCopy(text: reply).copy().then(
-              (_) => SnackBarDialog.temporarySnack(message: AlertMessages.textCopied)
-            );          
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-          }, 
-          reportOnPressed: () {
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-          }, 
-          blockOnPressed: () {
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-            CustomAlertDialog.alertDialogCustomOnPress(
-              message: 'Block @$repliedBy?', 
-              buttonMessage: 'Block', 
-              onPressedEvent: () async {
-                await UserActions(username: repliedBy).blockUser().then(
-                  (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
-                );
-              }
-            );
-          },
-          deleteOnPressed: () async {  
-            await _onDeletePressed();
-            Navigator.pop(AppKeys.navigatorKey.currentContext!);
-          }
-        ),
+        onPressed: _showReplyActions,
         icon: Transform.translate(
           offset: const Offset(0, -10),
           child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.contentThird, size: 18)
