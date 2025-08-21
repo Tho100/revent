@@ -129,7 +129,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
     }
     
   }
-// TODO: Update any _goTo function to _navigateTo
+
   void _navigateToEditCommentPage() {
     Navigator.push(
       AppKeys.navigatorKey.currentContext!, 
