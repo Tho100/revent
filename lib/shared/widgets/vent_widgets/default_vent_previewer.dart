@@ -33,9 +33,9 @@ class DefaultVentPreviewer extends StatefulWidget {
 
   final Uint8List pfpData;
 
-  final bool? isPinned;
-  final bool? isMyProfile;
-  final bool? disableActionButtons;
+  final bool isPinned;
+  final bool isMyProfile;
+  final bool disableActionButtons;
 
   const DefaultVentPreviewer({
     required this.title,
@@ -76,13 +76,13 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       tags: widget.tags,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
-      unSaveOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 1
+      unSaveOnPressed: widget.isMyProfile && navigationProvider.profileTabIndex == 1
         ? actionsHandler.unsavePost
-        : null,
-      pinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0 && widget.isPinned == false
+        : null, 
+      pinOnPressed: widget.isMyProfile && navigationProvider.profileTabIndex == 0 && widget.isPinned == false
         ? actionsHandler.pinPost
         : null,
-      unPinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0 && widget.isPinned == true
+      unPinOnPressed: widget.isMyProfile && navigationProvider.profileTabIndex == 0 && widget.isPinned == true
         ? actionsHandler.unpinPost
         : null,
       editOnPressed: _onEditPressed,
@@ -239,7 +239,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
     return ventPreviewer.buildMainContainer(
       children: [
 
-        if (widget.isPinned!) ... [
+        if (widget.isPinned) ... [
 
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -306,7 +306,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   
         Padding(
           padding: EdgeInsets.only(top: actionButtonsPadding),
-          child: widget.disableActionButtons! 
+          child: widget.disableActionButtons
             ? _disabledActionButtonsWidget()
             : Row(
             children: [
