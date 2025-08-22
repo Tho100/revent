@@ -33,11 +33,11 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
 
       await txn.execute(
         '''
-          DELETE ${TableNames.commentsLikesInfo}
-            FROM ${TableNames.commentsLikesInfo}
-          INNER JOIN ${TableNames.commentsInfo}
-            ON ${TableNames.commentsLikesInfo}.comment_id = FROM ${TableNames.commentsInfo}.comment_id
-          WHERE ${TableNames.commentsInfo}.post_id = :post_id
+          DELETE cli
+            FROM ${TableNames.commentsLikesInfo} cli
+          INNER JOIN ${TableNames.commentsInfo} ci
+            ON cli.comment_id = ci.comment_id
+          WHERE ci.post_id = :post_id
         ''',
         {'post_id': postId}
       );
