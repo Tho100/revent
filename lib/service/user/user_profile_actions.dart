@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/about_profile.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/report_user_bottomsheet.dart';
@@ -57,11 +58,18 @@ class UserProfileActions {
   }
 
   void _onBlockPressed(String username) {
-    Navigator.pop(context);
-    CustomAlertDialog.alertDialogCustomOnPress(
-      message: 'Block @$username?',
-      buttonMessage: 'Block',
-      onPressedEvent: () async => await _confirmBlockUser(username),
+    context.popAndRun(() {
+      CustomAlertDialog.alertDialogCustomOnPress(
+        message: 'Block @$username?',
+        buttonMessage: 'Block',
+        onPressedEvent: () async => await _confirmBlockUser(username),
+      );
+    });
+  }
+
+  void _onReportPressed() {
+    context.popAndRun(
+      () => ReportUserBottomsheet().buildBottomsheet(context: context)
     );
   }
 
@@ -69,11 +77,6 @@ class UserProfileActions {
     await UserActions(username: username).toggleBlockUser()
       .then((_) => Navigator.pop(context))
       .then((_) => Navigator.pop(context));
-  }
-
-  void _onReportPressed() {
-    Navigator.pop(context);
-    ReportUserBottomsheet().buildBottomsheet(context: context);
   }
 
 }

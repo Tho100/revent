@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/model/country_picker_model.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/user/user_socials.dart';
@@ -252,16 +253,12 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       
     BottomsheetProfilePictureOptions().buildBottomsheet(
       context: context, 
-      changeAvatarOnPressed: () {
-        Navigator.pop(context);
-        _selectProfilePicture();
-      },
-      removeAvatarOnPressed: () async {
-        Navigator.pop(context);
+      changeAvatarOnPressed: () => context.popAndRun(_selectProfilePicture),
+      removeAvatarOnPressed: () => context.popAndRunAsync(() async {
         await profileDataUpdate.removeProfilePicture().then(
           (_) => avatarNotifier.value = profileProvider.profile.profilePicture
         );
-      }
+      })
     );
 
   }
