@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/query/user/user_actions.dart';
@@ -32,9 +33,9 @@ class DefaultVentPreviewer extends StatefulWidget {
 
   final Uint8List pfpData;
 
-  final bool? isPinned;
-  final bool? isMyProfile;
-  final bool? disableActionButtons;
+  final bool isPinned;
+  final bool isMyProfile;
+  final bool disableActionButtons;
 
   const DefaultVentPreviewer({
     required this.title,
@@ -75,14 +76,14 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       tags: widget.tags,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
-      unSaveOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 1
-        ? () async => await actionsHandler.unsavePost()
+      unSaveOnPressed: widget.isMyProfile && navigationProvider.profileTabIndex == 1
+        ? actionsHandler.unsavePost
+        : null, 
+      pinOnPressed: widget.isMyProfile && navigationProvider.profileTabIndex == 0 && widget.isPinned == false
+        ? actionsHandler.pinPost
         : null,
-      pinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0 && widget.isPinned == false
-        ? () async => await actionsHandler.pinPost()
-        : null,
-      unPinOnPressed: widget.isMyProfile! && navigationProvider.profileTabIndex == 0 && widget.isPinned == true
-        ? () async => await actionsHandler.unpinPost()
+      unPinOnPressed: widget.isMyProfile && navigationProvider.profileTabIndex == 0 && widget.isPinned == true
+        ? actionsHandler.unpinPost
         : null,
       editOnPressed: _onEditPressed,
       deleteOnPressed: _onDeletePressed,
@@ -92,28 +93,23 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
     );
   }
 
-  void _closeOnFinish<T>(T Function() next) {
-    Navigator.pop(context);
-    next();
-  }
-
   void _onEditPressed() {
 
-    _closeOnFinish(() async {
+    context.popAndRunAsync(() async {
 
-      final isInSearchResults = navigationProvider.currentRoute == AppRoute.searchResults;
+        final isInSearchResults = navigationProvider.currentRoute == AppRoute.searchResults;
 
-      final body = isInSearchResults
-        ? await _getVentBodyText() : widget.bodyText;
+        final body = isInSearchResults
+          ? await _getVentBodyText() : widget.bodyText;
 
-      NavigatePage.editVentPage(title: widget.title, body: body);
+        NavigatePage.editVentPage(title: widget.title, body: body);
 
     });
 
   }
 
   void _onDeletePressed() {
-    _closeOnFinish(() {
+    context.popAndRun(() {
       CustomAlertDialog.alertDialogCustomOnPress(
         message: AlertMessages.deletePost, 
         buttonMessage: 'Delete',
@@ -123,13 +119,13 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   }
 
   void _onReportPressed() {
-    _closeOnFinish(() {
-      ReportPostBottomsheet().buildBottomsheet(context: context);
-    });
+    context.popAndRun(
+      () => ReportPostBottomsheet().buildBottomsheet(context: context)
+    );
   }
 
   void _onBlockPressed() {
-    _closeOnFinish(() {
+    context.popAndRun(() {
       CustomAlertDialog.alertDialogCustomOnPress(
         message: 'Block @${widget.creator}?', 
         buttonMessage: 'Block', 
@@ -243,7 +239,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
     return ventPreviewer.buildMainContainer(
       children: [
 
-        if (widget.isPinned!) ... [
+        if (widget.isPinned) ... [
 
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 6.0),
@@ -310,7 +306,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
   
         Padding(
           padding: EdgeInsets.only(top: actionButtonsPadding),
-          child: widget.disableActionButtons! 
+          child: widget.disableActionButtons
             ? _disabledActionButtonsWidget()
             : Row(
             children: [

@@ -64,17 +64,22 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
      
       await txn.execute(
         '''
-          DELETE ${TableNames.commentsLikesInfo}
-            FROM ${TableNames.commentsLikesInfo}
-          INNER JOIN ${TableNames.commentsInfo}
-            ON ${TableNames.commentsLikesInfo}.comment_id = FROM ${TableNames.commentsInfo}.comment_id
-          WHERE ${TableNames.commentsInfo}.post_id = :post_id
+          DELETE cli
+            FROM ${TableNames.commentsLikesInfo} cli
+          INNER JOIN ${TableNames.commentsInfo} ci
+            ON cli.comment_id = ci.comment_id
+          WHERE 
+            ci.post_id = :post_id AND 
+            ci.comment_id = :comment_id
         ''',
-        {'post_id': idInfo['post_id']}
+        {
+          'post_id': idInfo['post_id'],
+          'comment_id': idInfo['comment_id']
+        }
       );
 
       await txn.execute(
-        'DELETE FROM ${TableNames.commentsInfo} WHERE comment_id = :comment_id AND post_id = :post_id ',
+        'DELETE FROM ${TableNames.commentsInfo} WHERE comment_id = :comment_id AND post_id = :post_id',
         {
           'post_id': idInfo['post_id'], 
           'comment_id': idInfo['comment_id']

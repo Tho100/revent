@@ -137,8 +137,8 @@ class VentActionsHandler {
   Future<void> unpinPost() async {
 
     try {
-
-      await PinVent(title: title).pin();
+      
+      await PinVent(title: title).unpin();
       
       _showTemporarySnack(AlertMessages.removedPinnedPost);
       _closeScreens(1);
