@@ -56,8 +56,8 @@ class _HomePageState extends State<HomePage> with
     );
 
     tabController.index = currentTab.index; 
-    // TODO: Test the app if it works fine, if yes then push and move on to profile
-    // TODO: Also to use switch/case
+    // TODO: Use switch/case
+    // FIXME: Posts not loaded on startup but works when the user slides the tab, currentTab might return wrong value
     if (currentTab == HomeTabs.latest && latestVentProvider.vents.isNotEmpty) {
       latestIsLoadedNotifier.value = true;
 

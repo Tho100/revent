@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
+import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/user/user_actions.dart';
@@ -120,7 +121,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     }
 
     setState(
-      () => navigationProvider.setProfileTabIndex(tabController.index)
+      () => navigationProvider.setProfileTab(ProfileTabs.values[tabController.index])
     );
 
   }
@@ -452,7 +453,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   @override
   void dispose() {
-    navigationProvider.setProfileTabIndex(0);
+    navigationProvider.setProfileTab(ProfileTabs.posts);
     navigationProvider.setCurrentRoute(AppRoute.home);
     followersNotifier.dispose();
     followingNotifier.dispose();

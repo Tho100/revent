@@ -81,11 +81,11 @@ class CurrentProviderService {
 
     } else if (type == 'profile') {
 
-      if (_navigation.profileTabIndex == 0) {
+      if (_navigation.profileTab == ProfileTabs.posts) {
         return realTime 
           ? Provider.of<ProfilePostsProvider>(context!) : getIt.profilePostsProvider;
 
-      } else if (_navigation.profileTabIndex == 1) {
+      } else if (_navigation.profileTab == ProfileTabs.savedPosts) {
         return realTime 
           ? Provider.of<ProfileSavedProvider>(context!) : getIt.profileSavedProvider;
 

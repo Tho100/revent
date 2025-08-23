@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/service/vent_actions_handler.dart';
@@ -212,7 +213,7 @@ class VentPreviewerWidgets {
   Widget buildHeaders() {
 
     final disableGoToProfile = 
-      RouteHelper.isOnProfile && navigation.profileTabIndex == 0;
+      RouteHelper.isOnProfile && navigation.profileTab == ProfileTabs.posts;
 
     return InkWellEffect(
       onPressed: () => disableGoToProfile
