@@ -250,7 +250,7 @@ class LocalStorageModel {
       return await setupFile.readAsString();
     }
 
-    return 'Latest';
+    return 'latest';
 
   }
 

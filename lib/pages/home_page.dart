@@ -51,13 +51,11 @@ class _HomePageState extends State<HomePage> with
     final currentTabString = await localStorage.readCurrentHomeTab();
 
     final currentTab = HomeTabs.values.firstWhere(
-      (tab) => tab.name.toLowerCase() == currentTabString.toLowerCase(),
-      orElse: () => HomeTabs.latest,
+      (tab) => tab.name.toLowerCase() == currentTabString.toLowerCase()
     );
 
     tabController.index = currentTab.index; 
-    // TODO: Use switch/case
-    // FIXME: Posts not loaded on startup but works when the user slides the tab, currentTab might return wrong value
+
     if (currentTab == HomeTabs.latest && latestVentProvider.vents.isNotEmpty) {
       latestIsLoadedNotifier.value = true;
 
