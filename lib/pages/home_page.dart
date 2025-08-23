@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/tabs_type.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/refresh_service.dart';
@@ -47,36 +48,40 @@ class _HomePageState extends State<HomePage> with
 
   void _initializeCurrentTab() async {
 
-    final currentTab = await localStorage.readCurrentHomeTab();
+    final currentTabString = await localStorage.readCurrentHomeTab();
 
-    final currentTabIndex = homeTabs.indexWhere((tab) => tab.text == currentTab);
+    final currentTab = HomeTabs.values.firstWhere(
+      (tab) => tab.name.toLowerCase() == currentTabString.toLowerCase(),
+      orElse: () => HomeTabs.latest,
+    );
 
-    tabController.index = currentTabIndex != -1 ? currentTabIndex : 0;
-
-    if (currentTab == 'Latest' && latestVentProvider.vents.isNotEmpty) {
+    tabController.index = currentTab.index; 
+    // TODO: Test the app if it works fine, if yes then push and move on to profile
+    // TODO: Also to use switch/case
+    if (currentTab == HomeTabs.latest && latestVentProvider.vents.isNotEmpty) {
       latestIsLoadedNotifier.value = true;
 
-    } else if (currentTab == 'Trending' && trendingVentProvider.vents.isNotEmpty) {
+    } else if (currentTab == HomeTabs.trending && trendingVentProvider.vents.isNotEmpty) {
       trendingIsLoadedNotifier.value = true;
 
-    } else if (currentTab == 'Following' && followingVentProvider.vents.isNotEmpty) {
+    } else if (currentTab == HomeTabs.trending && followingVentProvider.vents.isNotEmpty) {
       followingIsLoadedNotifier.value = true;
 
     }
 
-    navigationProvider.setHomeTabIndex(currentTabIndex);
+    navigationProvider.setHomeTab(currentTab);
 
   }
 
   void _onTabChanged() async {
 
-    final currentTab = homeTabs[tabController.index].text!;
+    final currentTab = HomeTabs.values[tabController.index];
 
-    await localStorage.setupCurrentHomeTab(tab: currentTab);
+    await localStorage.setupCurrentHomeTab(tab: currentTab.name);
 
     final ventDataSetup = VentsSetup();
 
-    if (tabController.index == 0) {
+    if (currentTab == HomeTabs.latest) {
 
       if (latestVentProvider.vents.isNotEmpty) {
         latestIsLoadedNotifier.value = true;
@@ -89,7 +94,7 @@ class _HomePageState extends State<HomePage> with
         );
       }
 
-    } else if (tabController.index == 1) {
+    } else if (currentTab == HomeTabs.trending) {
 
       if (trendingVentProvider.vents.isNotEmpty) {
         trendingIsLoadedNotifier.value = true;
@@ -102,7 +107,7 @@ class _HomePageState extends State<HomePage> with
         );
       }
 
-    } else if (tabController.index == 2) {
+    } else if (currentTab == HomeTabs.following) {
 
       if (followingVentProvider.vents.isNotEmpty) {
         followingIsLoadedNotifier.value = true;
@@ -117,7 +122,7 @@ class _HomePageState extends State<HomePage> with
 
     }
     
-    navigationProvider.setHomeTabIndex(tabController.index);
+    navigationProvider.setHomeTab(currentTab);
     
   }
 
@@ -157,22 +162,22 @@ class _HomePageState extends State<HomePage> with
 
     final refreshService = RefreshService();
 
-    final currentTab = homeTabs[tabController.index].text;
+    final currentTab = HomeTabs.values[tabController.index];
 
     switch (currentTab) {
-      case 'Latest':
+      case HomeTabs.latest:
         latestIsLoadedNotifier.value = false;
         await refreshService.refreshLatestVents().then(
           (_) => latestIsLoadedNotifier.value = true
         );
         break;
-      case 'Trending':
+      case HomeTabs.trending:
         trendingIsLoadedNotifier.value = false;
         await refreshService.refreshTrendingVents().then(
           (_) => trendingIsLoadedNotifier.value = true
         );
         break;
-      case 'Following':
+      case HomeTabs.following:
         followingIsLoadedNotifier.value = false;
         await refreshService.refreshFollowingVents().then(
           (_) => followingIsLoadedNotifier.value = true

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/tabs_type.dart';
 
 class NavigationProvider extends ChangeNotifier {
   
   int _currentPageIndex = 0;
-  int _homeTabIndex = 0;
+  HomeTabs _homeTab = HomeTabs.latest;
   int _profileTabIndex = 0;
 
   AppRoute _currentRoute = AppRoute.home;
@@ -12,7 +13,7 @@ class NavigationProvider extends ChangeNotifier {
   bool _showActivityBadge = false;
 
   int get currentPageIndex => _currentPageIndex;
-  int get homeTabIndex => _homeTabIndex;
+  HomeTabs get homeTab => _homeTab;
   int get profileTabIndex => _profileTabIndex;
 
   AppRoute get currentRoute => _currentRoute; 
@@ -27,8 +28,8 @@ class NavigationProvider extends ChangeNotifier {
     _currentPageIndex = index;
   }
 
-  void setHomeTabIndex(int index) {
-    _homeTabIndex = index;
+  void setHomeTab(HomeTabs tab) {
+    _homeTab = tab;
   }
   
   void setProfileTabIndex(int index) {
