@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> with
     } else if (currentTab == HomeTabs.trending && trendingVentProvider.vents.isNotEmpty) {
       trendingIsLoadedNotifier.value = true;
 
-    } else if (currentTab == HomeTabs.trending && followingVentProvider.vents.isNotEmpty) {
+    } else if (currentTab == HomeTabs.following && followingVentProvider.vents.isNotEmpty) {
       followingIsLoadedNotifier.value = true;
 
     }
