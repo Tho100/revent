@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> with
     final currentTabString = await localStorage.readCurrentHomeTab();
 
     final currentTab = HomeTabs.values.firstWhere(
-      (tab) => tab.name.toLowerCase() == currentTabString.toLowerCase()
+      (tab) => tab.name == currentTabString
     );
 
     tabController.index = currentTab.index; 

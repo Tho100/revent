@@ -73,7 +73,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
     final currentTabString = await localStorage.readCurrentHomeTab();
 
     final currentTab = HomeTabs.values.firstWhere(
-      (tab) => tab.name.toLowerCase() == currentTabString.toLowerCase()
+      (tab) => tab.name == currentTabString
     );
 
     if (currentTab == HomeTabs.latest) {
