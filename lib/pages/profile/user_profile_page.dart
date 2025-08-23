@@ -108,10 +108,12 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   void _onTabChanged() async {
 
-    if (tabController.index == 1) {
+    final currentTab = ProfileTabs.values[tabController.index];
+
+    if (currentTab == ProfileTabs.savedPosts) {
 
       if (isSavedPostsHidden) {
-        SnackBarDialog.temporarySnack(message: AlertMessages.followingHidden);
+        SnackBarDialog.temporarySnack(message: AlertMessages.savedPostsHidden);
       }
 
       if (!isSavedPostsHidden) {
@@ -121,7 +123,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     }
 
     setState(
-      () => navigationProvider.setProfileTab(ProfileTabs.values[tabController.index])
+      () => navigationProvider.setProfileTab(currentTab)
     );
 
   }

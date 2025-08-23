@@ -73,14 +73,16 @@ class _MyProfilePageState extends State<MyProfilePage> with
   }
 
   void _onTabChanged() async {
-    // TODO: Try to use navigationProvider.profileTab instead of tabController.index
-    if (tabController.index == 1) {
+
+    final currentTab = ProfileTabs.values[tabController.index];
+
+    if (currentTab == ProfileTabs.savedPosts) {
       await profilePostsSetup.setupSaved();
     }
 
-    setState(() {
-      navigationProvider.setProfileTab(ProfileTabs.values[tabController.index]);
-    });
+    setState(
+      () => navigationProvider.setProfileTab(currentTab)
+    );
 
   }
 
