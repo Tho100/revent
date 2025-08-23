@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
@@ -64,15 +65,15 @@ class CurrentProviderService {
 
     if (type == 'home') {
 
-      if (_navigation.homeTabIndex == 0) {
+      if (_navigation.homeTab == HomeTabs.latest) {
         return realTime 
           ? Provider.of<VentLatestProvider>(context!) : getIt.ventLatestProvider;
 
-      } else if (_navigation.homeTabIndex == 1) {
+      } else if (_navigation.homeTab == HomeTabs.trending) {
         return realTime 
           ? Provider.of<VentTrendingProvider>(context!) : getIt.ventTrendingProvider;
         
-      } else if (_navigation.homeTabIndex == 2) {
+      } else if (_navigation.homeTab == HomeTabs.following) {
         return realTime 
           ? Provider.of<VentFollowingProvider>(context!) : getIt.ventFollowingProvider;
 
@@ -80,11 +81,11 @@ class CurrentProviderService {
 
     } else if (type == 'profile') {
 
-      if (_navigation.profileTabIndex == 0) {
+      if (_navigation.profileTab == ProfileTabs.posts) {
         return realTime 
           ? Provider.of<ProfilePostsProvider>(context!) : getIt.profilePostsProvider;
 
-      } else if (_navigation.profileTabIndex == 1) {
+      } else if (_navigation.profileTab == ProfileTabs.savedPosts) {
         return realTime 
           ? Provider.of<ProfileSavedProvider>(context!) : getIt.profileSavedProvider;
 

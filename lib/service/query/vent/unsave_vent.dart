@@ -3,17 +3,17 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
-class DeleteSavedVent extends BaseQueryService {
+class UnsaveVent extends BaseQueryService {
   
   final String title;
   final String creator;
 
-  DeleteSavedVent({
+  UnsaveVent({
     required this.title,
     required this.creator
   });
 
-  Future<void> delete() async {
+  Future<void> unsave() async {
 
     final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 

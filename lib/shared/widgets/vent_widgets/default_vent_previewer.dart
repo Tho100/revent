@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
@@ -76,13 +77,13 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
       tags: widget.tags,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
-      unSaveOnPressed: widget.isMyProfile && navigationProvider.profileTabIndex == 1
+      unSaveOnPressed: widget.isMyProfile && navigationProvider.profileTab == ProfileTabs.savedPosts
         ? actionsHandler.unsavePost
         : null, 
-      pinOnPressed: widget.isMyProfile && navigationProvider.profileTabIndex == 0 && widget.isPinned == false
+      pinOnPressed: widget.isMyProfile && navigationProvider.profileTab == ProfileTabs.posts && !widget.isPinned
         ? actionsHandler.pinPost
         : null,
-      unPinOnPressed: widget.isMyProfile && navigationProvider.profileTabIndex == 0 && widget.isPinned == true
+      unPinOnPressed: widget.isMyProfile && navigationProvider.profileTab == ProfileTabs.posts && widget.isPinned
         ? actionsHandler.unpinPost
         : null,
       editOnPressed: _onEditPressed,

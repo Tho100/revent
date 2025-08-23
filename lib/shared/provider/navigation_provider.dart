@@ -1,19 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/tabs_type.dart';
 
 class NavigationProvider extends ChangeNotifier {
   
-  int _currentPageIndex = 0;
-  int _homeTabIndex = 0;
-  int _profileTabIndex = 0;
+  NavigationTabs _currentNavigation = NavigationTabs.home;
+
+  HomeTabs _homeTab = HomeTabs.latest;
+  ProfileTabs _profileTab = ProfileTabs.posts;
 
   AppRoute _currentRoute = AppRoute.home;
 
   bool _showActivityBadge = false;
 
-  int get currentPageIndex => _currentPageIndex;
-  int get homeTabIndex => _homeTabIndex;
-  int get profileTabIndex => _profileTabIndex;
+  NavigationTabs get currentNavigation => _currentNavigation;
+  HomeTabs get homeTab => _homeTab;
+  ProfileTabs get profileTab => _profileTab;
 
   AppRoute get currentRoute => _currentRoute; 
 
@@ -23,16 +25,16 @@ class NavigationProvider extends ChangeNotifier {
     _currentRoute = route;
   }
 
-  void setPageIndex(int index) {
-    _currentPageIndex = index;
+  void setPage(NavigationTabs tab) {
+    _currentNavigation = tab;
   }
 
-  void setHomeTabIndex(int index) {
-    _homeTabIndex = index;
+  void setHomeTab(HomeTabs tab) {
+    _homeTab = tab;
   }
   
-  void setProfileTabIndex(int index) {
-    _profileTabIndex = index;
+  void setProfileTab(ProfileTabs tab) {
+    _profileTab = tab;
   }
 
   void setBadgeVisible(bool showBadge) {

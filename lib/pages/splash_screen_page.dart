@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:quick_actions/quick_actions.dart';
+import 'package:revent/global/tabs_type.dart';
 import 'package:revent/service/activity_service.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -69,15 +70,19 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
   Future<void> _initializeHomeVents() async {
 
-    final currentTab = await localStorage.readCurrentHomeTab();
+    final currentTabString = await localStorage.readCurrentHomeTab();
 
-    if (currentTab == 'Latest') {
+    final currentTab = HomeTabs.values.firstWhere(
+      (tab) => tab.name == currentTabString
+    );
+
+    if (currentTab == HomeTabs.latest) {
       await VentsSetup().setupLatest();
       
-    } else if (currentTab == 'Trending') {
+    } else if (currentTab == HomeTabs.trending) {
       await VentsSetup().setupTrending();
 
-    } else if (currentTab == 'Following') {
+    } else if (currentTab == HomeTabs.following) {
       await VentsSetup().setupFollowing();
 
     }

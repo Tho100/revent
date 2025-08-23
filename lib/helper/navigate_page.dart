@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/tabs_type.dart';
 import 'package:revent/global/vent_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
@@ -72,7 +73,7 @@ class NavigatePage {
   }
 
   static void homePage() {
-    _navigation.setPageIndex(0);
+    _navigation.setPage(NavigationTabs.home);
     _navigation.setCurrentRoute(AppRoute.home);
     Navigator.pushAndRemoveUntil(
       AppKeys.navigatorKey.currentContext!,
@@ -85,19 +86,19 @@ class NavigatePage {
   }
 
   static void searchPage() {
-    _navigation.setPageIndex(1);
+    _navigation.setPage(NavigationTabs.search);
     _DockBarNavigationPages.searchPage();
   }
 
   static void activityPage() async {
     await ActivityService().initializeActivities().then((_) {
-      _navigation.setPageIndex(3);
+      _navigation.setPage(NavigationTabs.activity);
       _DockBarNavigationPages.activityPage();
     });
   }
 
   static void myProfilePage() {
-    _navigation.setPageIndex(4);
+    _navigation.setPage(NavigationTabs.profile);
     _navigation.setCurrentRoute(AppRoute.myProfile);
     _DockBarNavigationPages.myProfilePage();
   }
