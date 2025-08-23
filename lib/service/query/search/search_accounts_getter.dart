@@ -45,5 +45,4 @@ class SearchAccountsGetter extends BaseQueryService {
 
   }
 
-
 }

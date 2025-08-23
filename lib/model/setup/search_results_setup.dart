@@ -37,7 +37,6 @@ class SearchResultsSetup with SearchProviderService {
 
     }
 
-
   }
 
 }
