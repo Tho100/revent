@@ -5,7 +5,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/vent/pin_vent.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/vault/delete_vault_vent.dart';
-import 'package:revent/service/query/vent/delete_saved_vent.dart';
+import 'package:revent/service/query/vent/unsave_vent.dart';
 import 'package:revent/service/query/vent/delete_vent.dart';
 import 'package:revent/service/query/vent/vent_actions.dart';
 
@@ -86,7 +86,7 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteSavedVent(title: title, creator: creator).delete();
+      await UnsaveVent(title: title, creator: creator).unsave();
         
       _showTemporarySnack(AlertMessages.removedSavedPost);
       _closeScreens(1);
