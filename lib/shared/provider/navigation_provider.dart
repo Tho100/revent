@@ -4,7 +4,7 @@ import 'package:revent/global/tabs_type.dart';
 
 class NavigationProvider extends ChangeNotifier {
   
-  int _currentPageIndex = 0;
+  NavigationTabs _currentNavigation = NavigationTabs.home;
 
   HomeTabs _homeTab = HomeTabs.latest;
   ProfileTabs _profileTab = ProfileTabs.posts;
@@ -13,7 +13,7 @@ class NavigationProvider extends ChangeNotifier {
 
   bool _showActivityBadge = false;
 
-  int get currentPageIndex => _currentPageIndex;
+  NavigationTabs get currentNavigation => _currentNavigation;
   HomeTabs get homeTab => _homeTab;
   ProfileTabs get profileTab => _profileTab;
 
@@ -25,8 +25,8 @@ class NavigationProvider extends ChangeNotifier {
     _currentRoute = route;
   }
 
-  void setPageIndex(int index) {
-    _currentPageIndex = index;
+  void setPage(NavigationTabs tab) {
+    _currentNavigation = tab;
   }
 
   void setHomeTab(HomeTabs tab) {

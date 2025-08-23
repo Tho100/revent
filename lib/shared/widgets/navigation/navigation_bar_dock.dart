@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -9,21 +10,21 @@ class NavigationBarDock extends StatelessWidget {
 
   NavigationBarDock({super.key});
   
-  final _navigationIcons = [
-    CupertinoIcons.home, 
-    CupertinoIcons.search, 
-    CupertinoIcons.add, 
-    CupertinoIcons.heart,
-    CupertinoIcons.person
-  ];
+  final _navigationIcons = {
+    NavigationTabs.home: CupertinoIcons.home,
+    NavigationTabs.search: CupertinoIcons.search,
+    NavigationTabs.create: CupertinoIcons.add,
+    NavigationTabs.activity: CupertinoIcons.heart,
+    NavigationTabs.profile: CupertinoIcons.person,
+  };
 
-  final _navigationActions = [
-    NavigatePage.homePage,
-    NavigatePage.searchPage,
-    NavigatePage.createVentPage,
-    NavigatePage.activityPage,
-    NavigatePage.myProfilePage,
-  ];
+  final _navigationActions = {
+    NavigationTabs.home: NavigatePage.homePage,
+    NavigationTabs.search: NavigatePage.searchPage,
+    NavigationTabs.create: NavigatePage.createVentPage,
+    NavigationTabs.activity: NavigatePage.activityPage,
+    NavigationTabs.profile: NavigatePage.myProfilePage,
+  };
 
   @override
   Widget build(BuildContext context) {
@@ -32,9 +33,9 @@ class NavigationBarDock extends StatelessWidget {
       margin: const EdgeInsets.only(left: 10, right: 10, bottom: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: _navigationIcons.asMap().entries.map((entry) {
+        children: _navigationIcons.entries.map((entry) {
 
-          final index = entry.key;
+          final page = entry.key;
           final icon = entry.value;
 
           return Material(
@@ -42,11 +43,9 @@ class NavigationBarDock extends StatelessWidget {
             child: Consumer<NavigationProvider>(
               builder: (_, navigation, __) {
 
-                final currentIndex = navigation.currentPageIndex;
+                final isSelected = navigation.currentNavigation == page;
 
-                final isSelected = currentIndex == index;
-
-                final iconColor = index == 2
+                final iconColor = page == NavigationTabs.create
                   ? ThemeColor.contentThird
                   : (isSelected ? ThemeColor.contentPrimary : ThemeColor.contentThird);
 
@@ -58,14 +57,14 @@ class NavigationBarDock extends StatelessWidget {
                       color: iconColor,
                       iconSize: 28,
                       onPressed: () {
-                        if (index != 2) {
-                          navigation.setPageIndex(index);
+                        if (page != NavigationTabs.create) {
+                          navigation.setPage(page);
                         }
-                        _onNavigationButtonPressed(index);
+                        _onNavigationButtonPressed(page);
                       },
                     ),
 
-                    if (index == 3 && navigation.showActivityBadge)
+                    if (page == NavigationTabs.activity && navigation.showActivityBadge)
                     Positioned(
                       top: 9,
                       right: 8,
@@ -99,10 +98,14 @@ class NavigationBarDock extends StatelessWidget {
     );
   }
 
-  void _onNavigationButtonPressed(int index) {
-    if (index >= 0 && index < _navigationActions.length) {
-      _navigationActions[index]();
+  void _onNavigationButtonPressed(NavigationTabs page) {
+  
+    final actions = _navigationActions[page];
+
+    if (actions != null) {
+      actions();
     }
+
   }
 
 }
