@@ -110,12 +110,17 @@ class BottomsheetAboutProfile {
   }
 
   Widget _buildJoinedDate(String joinedDate) {
+
+    final parsedDate = DateFormat('MMMM d yyyy').parse(joinedDate);
+    final difference = DateTime.now().difference(parsedDate).inDays;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
         _buildHeaders('Joined', _shortenDate(joinedDate)),
 
+        if (difference > 2)
         Transform.translate(
           offset: const Offset(0, -2),
           child: Padding(
