@@ -110,28 +110,36 @@ class BottomsheetAboutProfile {
   }
 
   Widget _buildJoinedDate(String joinedDate) {
+
+    final parsedDate = DateFormat('MMMM d yyyy').parse(joinedDate);
+    final difference = DateTime.now().difference(parsedDate).inDays;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
 
         _buildHeaders('Joined', _shortenDate(joinedDate)),
 
-        Transform.translate(
-          offset: const Offset(0, -2),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 14.0),
-            child: Text(
-              '${_getTimeAgoDate(joinedDate)} ago',
-              style: GoogleFonts.inter(
-                color: ThemeColor.contentSecondary,
-                fontWeight: FontWeight.w800,
-                fontSize: 13
+        if (difference > 2) ... [
+          
+          Transform.translate(
+            offset: const Offset(0, -2),
+            child: Padding(
+              padding: const EdgeInsets.only(left: 14.0),
+              child: Text(
+                '${_getTimeAgoDate(joinedDate)} ago',
+                style: GoogleFonts.inter(
+                  color: ThemeColor.contentSecondary,
+                  fontWeight: FontWeight.w800,
+                  fontSize: 13
+                ),
               ),
             ),
           ),
-        ),
 
-        const SizedBox(height: 5),
+          const SizedBox(height: 5)
+
+        ]
 
       ],
     );
