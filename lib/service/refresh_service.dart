@@ -24,7 +24,7 @@ class RefreshService with
   Future<void> refreshLatestVents() async {
     await _refreshVentsData(
       ventProvider: latestVentProvider,
-      setupMethod: () => VentsSetup().setupLatest(),
+      setupMethod: () => VentsSetup().setupLatest(), // ToDO: remove () =>
     );
   }
 

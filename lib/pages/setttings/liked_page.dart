@@ -30,8 +30,10 @@ class _LikedPageState extends State<LikedPage> with
   LikedSavedProviderService,
   GeneralSearchController {
 
-  final isPageLoadedNotifier = ValueNotifier<bool>(false);
-
+  final _isPageLoadedNotifier = ValueNotifier<bool>(false); 
+  // TODO: 
+  // The crashes happens due to the problem with the data on the db, so take a look
+  // Checkout to refactor and get rid of whitesapce on the most bottom of this code and update saved-page code
   List<LikedVentData> _allLikedVents = [];
 
   Future<void> _initializeLikedVentsData() async {
@@ -42,7 +44,7 @@ class _LikedPageState extends State<LikedPage> with
         (_) => _allLikedVents = likedVentProvider.vents
       );
 
-      isPageLoadedNotifier.value = true;
+      _isPageLoadedNotifier.value = true;
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.postsFailedToLoad);
@@ -181,7 +183,7 @@ class _LikedPageState extends State<LikedPage> with
       child: Consumer<LikedVentProvider>(
         builder: (_, likedVentData, __) {
           return ValueListenableBuilder(
-            valueListenable: isPageLoadedNotifier,
+            valueListenable: _isPageLoadedNotifier,
             builder: (_, isLoaded, __) {
 
               if (!isLoaded) {
@@ -207,6 +209,7 @@ class _LikedPageState extends State<LikedPage> with
     );
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -217,7 +220,7 @@ class _LikedPageState extends State<LikedPage> with
   @override
   void dispose() {
     disposeControllers();
-    isPageLoadedNotifier.dispose();
+    _isPageLoadedNotifier.dispose();
     navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
