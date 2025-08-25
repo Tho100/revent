@@ -30,7 +30,7 @@ class _SavedPageState extends State<SavedPage> with
   LikedSavedProviderService,
   GeneralSearchController {
 
-  final isPageLoadedNotifier = ValueNotifier<bool>(false);
+  final _isPageLoadedNotifier = ValueNotifier<bool>(false);
 
   List<SavedVentData> _allSavedVents = [];
 
@@ -42,7 +42,7 @@ class _SavedPageState extends State<SavedPage> with
         (_) => _allSavedVents = savedVentProvider.vents
       );
 
-      isPageLoadedNotifier.value = true;
+      _isPageLoadedNotifier.value = true;
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.postsFailedToLoad);
@@ -181,7 +181,7 @@ class _SavedPageState extends State<SavedPage> with
       child: Consumer<SavedVentProvider>(
         builder: (_, savedVentData, __) {
           return ValueListenableBuilder(
-            valueListenable: isPageLoadedNotifier,
+            valueListenable: _isPageLoadedNotifier,
             builder: (_, isLoaded, __) {
 
               if (!isLoaded) {
@@ -217,7 +217,7 @@ class _SavedPageState extends State<SavedPage> with
   @override
   void dispose() {
     disposeControllers();
-    isPageLoadedNotifier.dispose();
+    _isPageLoadedNotifier.dispose();
     navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }

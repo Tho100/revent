@@ -55,18 +55,18 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   VentProviderService,
   GeneralSearchController {
 
-  final vaultDataGetter = VaultVentDataGetter();
+  final _vaultDataGetter = VaultVentDataGetter();
 
-  final isPageLoadedNotifier = ValueNotifier<bool>(false);
-  final filterTextNotifier = ValueNotifier<String>('Latest');
+  final _isPageLoadedNotifier = ValueNotifier<bool>(false);
+  final _filterTextNotifier = ValueNotifier<String>('Latest');
 
-  ValueNotifier<List<_VaultVentsData>> vaultVentsData = ValueNotifier([]);
+  final ValueNotifier<List<_VaultVentsData>> _vaultVentsData = ValueNotifier([]);
 
-  List<_VaultVentsData> allVaultVents = [];
+  List<_VaultVentsData> _allVaultVents = [];
 
   Future<String> _getBodyText(String title) async {
 
-    return await vaultDataGetter.getBodyText(
+    return await _vaultDataGetter.getBodyText(
       title: title, 
       creator: userProvider.user.username
     );
@@ -113,7 +113,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
     try {
 
-      final vaultVentsInfo = await vaultDataGetter.getMetadata(
+      final vaultVentsInfo = await _vaultDataGetter.getMetadata(
         username: userProvider.user.username
       );
 
@@ -122,7 +122,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
       final postTimestamp = vaultVentsInfo['post_timestamp'] as List<String>;
 
-      vaultVentsData.value = List.generate(titles.length, (index) {
+      _vaultVentsData.value = List.generate(titles.length, (index) {
         return _VaultVentsData(
           title: titles[index],
           tags: tags[index],
@@ -130,9 +130,9 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
         );
       });
 
-      allVaultVents = vaultVentsData.value;
+      _allVaultVents = _vaultVentsData.value;
 
-      isPageLoadedNotifier.value = true;
+      _isPageLoadedNotifier.value = true;
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.vaultFailedToLoad);
@@ -141,30 +141,30 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   }
 
   void _removeVentFromList(String title) {
-    vaultVentsData.value = vaultVentsData.value
+    _vaultVentsData.value = _vaultVentsData.value
       .where((vent) => vent.title != title)
       .toList();
   }
 
   void _sortVaultVentsToOldest() {
 
-    final sortedList = vaultVentsData.value
+    final sortedList = _vaultVentsData.value
       .toList()
       ..sort((a, b) => FormatDate.parseFormattedTimestamp(b.postTimestamp)
         .compareTo(FormatDate.parseFormattedTimestamp(a.postTimestamp)));
 
-    vaultVentsData.value = sortedList;
+    _vaultVentsData.value = sortedList;
 
   }
 
   void _sortVaultVentsToLatest() {
 
-    final sortedList = vaultVentsData.value
+    final sortedList = _vaultVentsData.value
       .toList()
       ..sort((a, b) => FormatDate.parseFormattedTimestamp(a.postTimestamp)
         .compareTo(FormatDate.parseFormattedTimestamp(b.postTimestamp)));
 
-    vaultVentsData.value = sortedList;
+    _vaultVentsData.value = sortedList;
 
   }
 
@@ -191,7 +191,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
         break;
     }
 
-    filterTextNotifier.value = filter;
+    _filterTextNotifier.value = filter;
 
     Navigator.pop(context);
 
@@ -203,17 +203,17 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
     if (query.isNotEmpty) {
       
-      final filteredList = allVaultVents.where((vent) {
+      final filteredList = _allVaultVents.where((vent) {
         return vent.title.toLowerCase().contains(query);
       }).toList();
 
       if (filteredList.isNotEmpty) {
-        vaultVentsData.value = filteredList;
+        _vaultVentsData.value = filteredList;
       } 
 
     } else {
 
-      vaultVentsData.value = List.from(allVaultVents);
+      _vaultVentsData.value = List.from(_allVaultVents);
 
     }
 
@@ -321,7 +321,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
         onPressed: () {
           BottomsheetVaultFilter().buildBottomsheet(
             context: context, 
-            currentFilter: filterTextNotifier.value,
+            currentFilter: _filterTextNotifier.value,
             latestOnPressed: () => _onFilterPressed(filter: 'Latest'),
             oldestOnPressed: () => _onFilterPressed(filter: 'Oldest'),
           );
@@ -333,7 +333,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
             const SizedBox(width: 8),
     
             ValueListenableBuilder(
-              valueListenable: filterTextNotifier,
+              valueListenable: _filterTextNotifier,
               builder: (_, filterText, __) {
                 return Text(
                   filterText,
@@ -413,7 +413,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0),
       child: ValueListenableBuilder(
-        valueListenable: isPageLoadedNotifier,
+        valueListenable: _isPageLoadedNotifier,
         builder: (_, isLoaded, __) {
           
           if (!isLoaded) {
@@ -421,7 +421,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
           }
 
           return ValueListenableBuilder(
-            valueListenable: vaultVentsData,
+            valueListenable: _vaultVentsData,
             builder: (_, vaultData, __) { 
               return vaultData.isEmpty 
                 ? _buildNoVaultPosts()
@@ -449,9 +449,9 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   @override
   void dispose() {
     disposeControllers();
-    vaultVentsData.dispose();
-    isPageLoadedNotifier.dispose();
-    filterTextNotifier.dispose();
+    _vaultVentsData.dispose();
+    _isPageLoadedNotifier.dispose();
+    _filterTextNotifier.dispose();
     activeVentProvider.clearData();
     super.dispose();
   }
