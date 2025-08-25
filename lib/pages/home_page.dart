@@ -73,9 +73,11 @@ class _HomePageState extends State<HomePage> with
 
   void _onTabChanged() async {
 
-    final currentTab = HomeTabs.values[tabController.index];
+    if (tabController.index < 0 || tabController.index >= HomeTabs.values.length) {
+      return;
+    }
 
-    await localStorage.setupCurrentHomeTab(tab: currentTab.name);
+    final currentTab = HomeTabs.values[tabController.index];
 
     final ventDataSetup = VentsSetup();
 
@@ -121,7 +123,9 @@ class _HomePageState extends State<HomePage> with
     }
     
     navigationProvider.setHomeTab(currentTab);
-    
+
+    await localStorage.setupCurrentHomeTab(tab: currentTab.name);
+
   }
 
   void _initializeTabController() {
