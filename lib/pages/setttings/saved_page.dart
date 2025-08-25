@@ -160,10 +160,10 @@ class _SavedPageState extends State<SavedPage> with
 
         if (adjustedIndex >= 0 && adjustedIndex < savedVentData.length) {
 
-          final vents = savedVentData[adjustedIndex];
+          final vents = savedVentData[savedVentData.length - 1 - adjustedIndex];
 
           return KeyedSubtree(
-            key: ValueKey('${savedVentData[adjustedIndex].title}/${savedVentData[adjustedIndex].creator}'),
+            key: ValueKey('${vents.title}/${vents.creator}'),
             child: _buildVentPreviewer(vents)
           );
 

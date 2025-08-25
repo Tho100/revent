@@ -144,7 +144,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       WHERE 
         lvi.liked_by = :liked_by
       ORDER BY 
-        lvi.liked_at ASC
+        lvi.liked_at DESC
       LIMIT 25;
     '''; 
 
@@ -180,7 +180,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       WHERE 
         svi.saved_by = :saved_by
       ORDER BY 
-        svi.saved_at ASC
+        svi.saved_at DESC
       LIMIT 25
     ''';
 

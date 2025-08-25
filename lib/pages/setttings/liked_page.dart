@@ -160,13 +160,13 @@ class _LikedPageState extends State<LikedPage> with
 
         if (adjustedIndex >= 0 && adjustedIndex < likedVentData.length) {
 
-          final vents = likedVentData[adjustedIndex];
+          final vents = likedVentData[likedVentData.length - 1 - adjustedIndex];
 
           return KeyedSubtree(
-            key: ValueKey('${likedVentData[adjustedIndex].title}/${likedVentData[adjustedIndex].creator}'),
-            child: _buildVentPreviewer(vents)
+            key: ValueKey('${vents.title}/${vents.creator}'),
+            child: _buildVentPreviewer(vents),
           );
-
+          
         }
 
         return const SizedBox.shrink();
