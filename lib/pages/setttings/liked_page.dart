@@ -31,11 +31,13 @@ class _LikedPageState extends State<LikedPage> with
   GeneralSearchController {
 
   final _isPageLoadedNotifier = ValueNotifier<bool>(false); 
-  // TODO: Checkout to refactor and update saved page
-
+  // TODO: 
+  // The crashes happens due to the problem with the data on the db, so take a look
+  // Checkout to refactor and get rid of whitesapce on the most bottom of this code and update saved-page code
   List<LikedVentData> _allLikedVents = [];
 
   Future<void> _initializeLikedVentsData() async {
+
     try {
 
       await VentsSetup().setupLiked().then(
@@ -44,9 +46,10 @@ class _LikedPageState extends State<LikedPage> with
 
       _isPageLoadedNotifier.value = true;
 
-    } catch (e) {
+    } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.postsFailedToLoad);
     }
+
   }
 
   void _searchLikedVents({required String searchText}) {

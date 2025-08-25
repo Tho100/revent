@@ -146,8 +146,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       ORDER BY 
         vi.created_at DESC
       LIMIT 25;
-    ''';
-
+    '''; 
+// TODO: Change vi.created_at DESC to lvi.liked_at DESC, same for saved
     final param = {'liked_by': userProvider.user.username};
 
     return _fetchVentsData(query, params: param);
