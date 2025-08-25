@@ -31,9 +31,7 @@ class _LikedPageState extends State<LikedPage> with
   GeneralSearchController {
 
   final _isPageLoadedNotifier = ValueNotifier<bool>(false); 
-  // TODO: 
-  // The crashes happens due to the problem with the data on the db, so take a look
-  // Checkout to refactor and get rid of whitesapce on the most bottom of this code and update saved-page code
+
   List<LikedVentData> _allLikedVents = [];
 
   Future<void> _initializeLikedVentsData() async {
@@ -162,13 +160,13 @@ class _LikedPageState extends State<LikedPage> with
 
         if (adjustedIndex >= 0 && adjustedIndex < likedVentData.length) {
 
-          final vents = likedVentData[adjustedIndex];
+          final vents = likedVentData[likedVentData.length - 1 - adjustedIndex];
 
           return KeyedSubtree(
-            key: ValueKey('${likedVentData[adjustedIndex].title}/${likedVentData[adjustedIndex].creator}'),
-            child: _buildVentPreviewer(vents)
+            key: ValueKey('${vents.title}/${vents.creator}'),
+            child: _buildVentPreviewer(vents),
           );
-
+          
         }
 
         return const SizedBox.shrink();
@@ -208,7 +206,6 @@ class _LikedPageState extends State<LikedPage> with
       message: 'No liked posts.'
     );
   }
-
 
   @override
   void initState() {
