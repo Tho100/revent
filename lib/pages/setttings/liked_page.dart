@@ -30,24 +30,23 @@ class _LikedPageState extends State<LikedPage> with
   LikedSavedProviderService,
   GeneralSearchController {
 
-  final isPageLoadedNotifier = ValueNotifier<bool>(false);
+  final _isPageLoadedNotifier = ValueNotifier<bool>(false); 
+  // TODO: Checkout to refactor and update saved page
 
   List<LikedVentData> _allLikedVents = [];
 
   Future<void> _initializeLikedVentsData() async {
-
     try {
 
       await VentsSetup().setupLiked().then(
         (_) => _allLikedVents = likedVentProvider.vents
       );
 
-      isPageLoadedNotifier.value = true;
+      _isPageLoadedNotifier.value = true;
 
-    } catch (_) {
+    } catch (e) {
       SnackBarDialog.errorSnack(message: AlertMessages.postsFailedToLoad);
     }
-
   }
 
   void _searchLikedVents({required String searchText}) {
@@ -181,7 +180,7 @@ class _LikedPageState extends State<LikedPage> with
       child: Consumer<LikedVentProvider>(
         builder: (_, likedVentData, __) {
           return ValueListenableBuilder(
-            valueListenable: isPageLoadedNotifier,
+            valueListenable: _isPageLoadedNotifier,
             builder: (_, isLoaded, __) {
 
               if (!isLoaded) {
@@ -207,6 +206,7 @@ class _LikedPageState extends State<LikedPage> with
     );
   }
 
+
   @override
   void initState() {
     super.initState();
@@ -217,7 +217,7 @@ class _LikedPageState extends State<LikedPage> with
   @override
   void dispose() {
     disposeControllers();
-    isPageLoadedNotifier.dispose();
+    _isPageLoadedNotifier.dispose();
     navigationProvider.setCurrentRoute(AppRoute.myProfile);
     super.dispose();
   }
