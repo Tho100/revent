@@ -24,21 +24,21 @@ class RefreshService with
   Future<void> refreshLatestVents() async {
     await _refreshVentsData(
       ventProvider: latestVentProvider,
-      setupMethod: () => VentsSetup().setupLatest(), // ToDO: remove () =>
+      setupMethod: VentsSetup().setupLatest,
     );
   }
 
   Future<void> refreshTrendingVents() async {
     await _refreshVentsData(
       ventProvider: trendingVentProvider,
-      setupMethod: () => VentsSetup().setupTrending(),
+      setupMethod: VentsSetup().setupTrending,
     );
   }
 
   Future<void> refreshFollowingVents() async {
     await _refreshVentsData(
       ventProvider: followingVentProvider,
-      setupMethod: () => VentsSetup().setupFollowing(),
+      setupMethod: VentsSetup().setupFollowing,
     );
   }
 

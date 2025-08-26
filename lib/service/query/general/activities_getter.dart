@@ -71,7 +71,7 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
     };
 
   }
-
+// TODO: checkout to refactor and show most recent by sorting to DESC
   Future<Map<String, List<dynamic>>> getUserPostsAllTimeLikes() async {
 
     const query = 

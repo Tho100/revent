@@ -87,8 +87,6 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
 
     }
 
-    await ActivityService().initializeActivities();
-
   }
 
   Future<void> _initializedStartupData() async {
@@ -96,6 +94,8 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
     await ProfileDataSetup().setup(username: userProvider.user.username).then(
       (_) => _initializeHomeVents()
     );
+
+    await ActivityService().initializeActivities();
 
     await localStorage.readThemeInformation().then(
       (theme) => ThemeUpdater(theme: theme).updateTheme()
