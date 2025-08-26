@@ -67,8 +67,16 @@ class ActivityService with NavigationProviderService {
     }
 
     if (isLogin) {
+
       final hasActivities = postLikesCache.isNotEmpty || followersCache.isNotEmpty;
+
+      await CacheHelper().initializeCache(
+        likesPostCache: postLikesCache,
+        followersCache: followersCache,
+      );
+
       return hasActivities;
+
     }
 
     await CacheHelper().initializeCache(
@@ -134,6 +142,18 @@ class ActivityService with NavigationProviderService {
         }
 
       }
+
+    }
+      
+    if (shouldNotify) {
+
+      final storedLikes = Map<String, List<dynamic>>.from(caches[CacheNames.postLikesCache] ?? {});
+      final storedFollowers = Map<String, List<dynamic>>.from(caches[CacheNames.followersCache] ?? {});
+
+      await CacheHelper().initializeCache(
+        likesPostCache: storedLikes,
+        followersCache: storedFollowers,
+      );
 
     }
 

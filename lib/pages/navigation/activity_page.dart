@@ -59,7 +59,9 @@ class _ActivityPageState extends State<ActivityPage> with
       });
     }
 
-    activityNotifier.value = combined;
+    activityNotifier.value = Map<String, List<dynamic>>.from(combined);
+
+    navigationProvider.setBadgeVisible(false);
 
   }
 
@@ -100,7 +102,7 @@ class _ActivityPageState extends State<ActivityPage> with
 
   Future<void> _refreshActivites() async {
 
-    activityNotifier.value.clear();
+    activityNotifier.value = {};
 
     await activityService.initializeActivities().then(
       (_) => _initializeActivityData()
@@ -131,9 +133,9 @@ class _ActivityPageState extends State<ActivityPage> with
       } else if (duration.inDays < 7) {
         groups['Last Week']!.add(i);
 
+// TODO: Fix last month posts shows up in Year ago category, fix: change it to 243 (for past 7 months)
       } else if (duration.inDays < 31) {
         groups['Last Month']!.add(i);
-
       } else if (duration.inDays < 366) {
         groups['Last Year']!.add(i);
 
@@ -315,7 +317,6 @@ class _ActivityPageState extends State<ActivityPage> with
     );
   }
 
-
   Widget _buildBody() {
     return ValueListenableBuilder(
       valueListenable: activityNotifier,
@@ -325,9 +326,9 @@ class _ActivityPageState extends State<ActivityPage> with
 
         final sortedEntries = data.entries.toList()
           ..sort((a, b) {
-            final aTime = formatTimestamp.convertRelativeTimestampToDateTime(b.value[1]);
-            final bTime = formatTimestamp.convertRelativeTimestampToDateTime(a.value[1]);
-            return aTime.compareTo(bTime);
+            final aTime = formatTimestamp.convertRelativeTimestampToDateTime(a.value[1]);
+            final bTime = formatTimestamp.convertRelativeTimestampToDateTime(b.value[1]);
+            return bTime.compareTo(aTime); // newest first
           }
         );
 
