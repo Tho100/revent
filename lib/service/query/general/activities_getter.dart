@@ -10,7 +10,13 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
   Future<Map<String, List<String>>> getUserFollowers() async {
 
-    const query = 'SELECT follower, followed_at FROM ${TableNames.userFollowsInfo} WHERE following = :username';
+    const query = 
+    '''
+      SELECT follower, followed_at 
+      FROM ${TableNames.userFollowsInfo} 
+      WHERE following = :username
+      ORDER BY followed_at DESC
+    ''';
 
     final param = {'username': userProvider.user.username};
 
@@ -44,11 +50,15 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
         lvi.liked_at, 
         COUNT(lvi.post_id) AS like_count
       FROM ${TableNames.ventInfo} vi
-      INNER JOIN ${TableNames.likedVentInfo} lvi ON vi.post_id = lvi.post_id 
+      INNER JOIN ${TableNames.likedVentInfo} lvi 
+        ON vi.post_id = lvi.post_id 
       WHERE vi.creator = :creator
         AND vi.created_at >= NOW() - INTERVAL 14 DAY
-      GROUP BY vi.post_id 
-      HAVING like_count IN (1, 2, 5, 10, 50, 100);
+      GROUP BY 
+        vi.post_id 
+      HAVING like_count 
+        IN (1, 2, 5, 10, 50, 100)
+      ORDER BY lvi.liked_at DESC
     ''';
 
     final param = {'creator': userProvider.user.username};
@@ -71,7 +81,7 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
     };
 
   }
-// TODO: checkout to refactor and show most recent by sorting to DESC
+
   Future<Map<String, List<dynamic>>> getUserPostsAllTimeLikes() async {
 
     const query = 
@@ -82,10 +92,16 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
         lvi.liked_at, 
         COUNT(lvi.post_id) AS like_count
       FROM ${TableNames.ventInfo} vi
-      INNER JOIN ${TableNames.likedVentInfo} lvi ON vi.post_id = lvi.post_id 
-      WHERE vi.creator = :creator
-      GROUP BY vi.post_id 
-      HAVING like_count IN (1, 2, 5, 10, 50, 100);
+      INNER JOIN ${TableNames.likedVentInfo} lvi 
+        ON vi.post_id = lvi.post_id 
+      WHERE 
+        vi.creator = :creator
+      GROUP BY 
+        vi.post_id 
+      HAVING 
+        like_count IN (1, 2, 5, 10, 50, 100) 
+      ORDER BY 
+        lvi.liked_at DESC;
     ''';
 
     final param = {'creator': userProvider.user.username};
