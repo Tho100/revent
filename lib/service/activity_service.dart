@@ -14,13 +14,11 @@ class ActivityService with NavigationProviderService {
 
     if (isLogin) {
 
-      await markActivityAsRead(isLogin: true).then(
-        (showBadge) => prefs.setBool(CacheNames.unreadCache, showBadge)
-      );
+      await syncActivityCaches(isLogin: true);
 
     } else {
 
-      final hasNewActivity = await _notifyNewActivity();
+      final hasNewActivity = await _hasNewActivity();
 
       if (hasNewActivity) {
         await prefs.setBool(CacheNames.unreadCache, true);
@@ -34,111 +32,114 @@ class ActivityService with NavigationProviderService {
 
   }
 
-  Future<bool> markActivityAsRead({bool isLogin = false}) async {
+  Future<void> syncActivityCaches({bool isLogin = false}) async {
 
     final prefs = await SharedPreferences.getInstance();
 
     await prefs.setBool(CacheNames.unreadCache, false);
 
-    final currentLikes = isLogin 
+    final latestLikesData = isLogin 
       ? await activitiesGetter.getUserPostsAllTimeLikes()
       : await activitiesGetter.getUserPostsWithRecentLikes();
       
-    final currentFollowers = await activitiesGetter.getUserFollowers();
+    final latestFollowersData = await activitiesGetter.getUserFollowers();
 
-    final titles = currentLikes['title']!;
-    final likeCounts = currentLikes['like_count']!;
-    final likedAt = currentLikes['liked_at']!;
+    final postTitles = latestLikesData['title']!;
+    final postLikeCounts = latestLikesData['like_count']!;
+    final postLikedTimestamps = latestLikesData['liked_at']!;
 
-    final followers = currentFollowers['followers']!;
-    final followedAt = currentFollowers['followed_at']!;
+    final followers = latestFollowersData['followers']!;
+    final followedAt = latestFollowersData['followed_at']!;
 
-    final oldCache = await CacheHelper().getActivityCache();
+    final oldCaches = await CacheHelper().getActivityCache();
 
-    final postLikesCache = Map<String, List<dynamic>>.from(oldCache[CacheNames.postLikesCache]);
-    final followersCache = Map<String, List<dynamic>>.from(oldCache[CacheNames.followersCache]);
+    final cachedLikes = Map<String, List<dynamic>>.from(
+      oldCaches[CacheNames.postLikesCache] ?? {}
+    );
 
-    for (int i = 0; i < titles.length; i++) {
-      postLikesCache[titles[i]] = [likeCounts[i], likedAt[i]];
+    final cachedFollowers = Map<String, List<dynamic>>.from(
+      oldCaches[CacheNames.followersCache] ?? {}
+    );
+
+    for (int i = 0; i < postTitles.length; i++) {
+      cachedLikes[postTitles[i]] = [postLikeCounts[i], postLikedTimestamps[i]];
     }
 
     for (int i = 0; i < followers.length; i++) {
-      followersCache[followers[i]] = [followedAt[i]];
-    }
-
-    if (isLogin) {
-
-      final hasActivities = postLikesCache.isNotEmpty || followersCache.isNotEmpty;
-
-      await CacheHelper().initializeCache(
-        likesPostCache: postLikesCache,
-        followersCache: followersCache,
-      );
-
-      return hasActivities;
-
+      cachedFollowers[followers[i]] = [followedAt[i]];
     }
 
     await CacheHelper().initializeCache(
-      likesPostCache: postLikesCache,
-      followersCache: followersCache,
+      likesPostCache: cachedLikes,
+      followersCache: cachedFollowers
     );
 
-    return true;
+    if (isLogin) {
+
+      final hasActivities = cachedLikes.isNotEmpty || cachedFollowers.isNotEmpty;
+
+      navigationProvider.setBadgeVisible(hasActivities);
+      
+    }
 
   }
 
-  Future<bool> _notifyNewActivity() async {
+  Future<bool> _hasNewActivity() async {
 
-    final currentLikes = await activitiesGetter.getUserPostsWithRecentLikes();
-    final currentFollowers = await activitiesGetter.getUserFollowers();
+    final latestLikesData = await activitiesGetter.getUserPostsWithRecentLikes();
+    final latestFollowersData = await activitiesGetter.getUserFollowers();
 
     final caches = await CacheHelper().getActivityCache();
 
-    final storedLikes = caches[CacheNames.postLikesCache];
-    final storedFollowers = caches[CacheNames.followersCache];
+    final cachedLikes = Map<String, List<dynamic>>.from(
+      caches[CacheNames.postLikesCache] ?? {}
+    );
+
+    final cachedFollowers = Map<String, List<dynamic>>.from(
+      caches[CacheNames.followersCache] ?? {}
+    );
 
     bool shouldNotify = false;
 
-    final titles = currentLikes['title']!;
-    final likeCounts = currentLikes['like_count']!;
-    final likedAt = currentLikes['liked_at']!;
+    final postTitles = latestLikesData['title']!;
+    final postLikeCounts = latestLikesData['like_count']!;
+    final postLikedTimestamps = latestLikesData['liked_at']!;
 
-    for (int i = 0; i < titles.length; i++) {
+    for (int i = 0; i < postTitles.length; i++) {
       
-      final title = titles[i];
-      final newCount = likeCounts[i];
+      final title = postTitles[i];
+      final newCount = postLikeCounts[i];
 
-      final storedLikeEntry = storedLikes[title];
-      final oldCount = (storedLikeEntry is List && storedLikeEntry.isNotEmpty)
-        ? (storedLikeEntry[0] as num?)?.toInt() ?? 0 : 0; 
+      final storedLikeEntry = cachedLikes[title];
+
+      final oldCount = _extractCachedLikeCount(storedLikeEntry);
 
       if (newCount != oldCount) {
         shouldNotify = true;
-        storedLikes[title] = [newCount, likedAt[i]];
+        cachedLikes[title] = [newCount, postLikedTimestamps[i]];
         break;
       }
 
     }
 
-    final newFollowers = currentFollowers['followers']!;
-    final followedAt = currentFollowers['followed_at']!;
+    final latestFollowersList = latestFollowersData['followers']!;
+    final followerTimestamps = latestFollowersData['followed_at']!;
 
-    final previousFollowerKeys = storedFollowers.keys.toSet();
-    final currentFollowerKeys = newFollowers.toSet();
+    final cachedFollowersKeys = cachedFollowers.keys.toSet();
+    final latestFollowerKeys = latestFollowersList.toSet();
 
-    final detectedNewFollowers = currentFollowerKeys.difference(previousFollowerKeys);
+    final newlyAddedFollowers = latestFollowerKeys.difference(cachedFollowersKeys);
 
-    if (detectedNewFollowers.isNotEmpty) {
+    if (newlyAddedFollowers.isNotEmpty) {
 
       shouldNotify = true;
 
-      for (int i = 0; i < newFollowers.length; i++) {
+      for (int i = 0; i < latestFollowersList.length; i++) {
 
-        final follower = newFollowers[i];
+        final follower = latestFollowersList[i];
 
-        if (detectedNewFollowers.contains(follower)) {
-          storedFollowers[follower] = [followedAt[i]];
+        if (newlyAddedFollowers.contains(follower)) {
+          cachedFollowers[follower] = [followerTimestamps[i]];
         }
 
       }
@@ -147,17 +148,24 @@ class ActivityService with NavigationProviderService {
       
     if (shouldNotify) {
 
-      final storedLikes = Map<String, List<dynamic>>.from(caches[CacheNames.postLikesCache] ?? {});
-      final storedFollowers = Map<String, List<dynamic>>.from(caches[CacheNames.followersCache] ?? {});
-
       await CacheHelper().initializeCache(
-        likesPostCache: storedLikes,
-        followersCache: storedFollowers,
+        likesPostCache: cachedLikes,
+        followersCache: cachedFollowers
       );
 
     }
 
     return shouldNotify;
+
+  }
+
+  int _extractCachedLikeCount(List<dynamic>? storedLikeEntry) {
+
+    if (storedLikeEntry is List && storedLikeEntry.isNotEmpty) {
+      return (storedLikeEntry[0] as num?)?.toInt() ?? 0;
+    }
+
+    return 0;
 
   }
 
