@@ -49,5 +49,4 @@ class CacheHelper with NavigationProviderService {
     
   }
 
-
 }

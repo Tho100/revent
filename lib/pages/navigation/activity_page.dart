@@ -108,7 +108,7 @@ class _ActivityPageState extends State<ActivityPage> with
       (_) => _initializeActivityData()
     );
 
-    await activityService.markActivityAsRead();
+    await activityService.syncActivityCaches();
 
   }
 
