@@ -134,7 +134,7 @@ class _ActivityPageState extends State<ActivityPage> with
         groups['Last Week']!.add(i);
 
 // TODO: Fix last month posts shows up in Year ago category, fix: change it to 243 (for past 7 months)
-      } else if (duration.inDays < 31) {
+      } else if (duration.inDays < 243) {
         groups['Last Month']!.add(i);
       } else if (duration.inDays < 366) {
         groups['Last Year']!.add(i);
