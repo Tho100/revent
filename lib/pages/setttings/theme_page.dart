@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:revent/app/app_widget_restart.dart';
-import 'package:revent/global/alert_messages.dart';
+import 'package:restart_app/restart_app.dart';
 import 'package:revent/helper/capitalizer.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/main.dart';
@@ -12,7 +11,6 @@ import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 
 class ThemePage extends StatefulWidget {
 
@@ -72,13 +70,7 @@ class _ThemePageState extends State<ThemePage> {
       themes.length, (index) => index == themeIndex
     );
       
-    currentTheme = selectedTheme;
-
-    if (context.mounted) {
-      RestartAppWidget.restartApp(context);
-    }
-
-    CustomAlertDialog.alertDialogTitle(AlertMessages.themeUpdatedTitle, AlertMessages.restartAppTheme);
+    await Restart.restartApp();
 
   }
 

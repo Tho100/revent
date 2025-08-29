@@ -23,7 +23,10 @@ class BottomsheetOptionButton extends StatelessWidget {
         children: [
 
           if (icon != null)
-          Icon(icon, color: ThemeStyle.btnBottomsheetIconColor),
+          Transform.translate(
+            offset: const Offset(0, -3),
+            child: Icon(icon, color: ThemeStyle.btnBottomsheetIconColor)
+          ),
 
           SizedBox(width: icon != null ? 15 : 10),
 
