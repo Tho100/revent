@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/tabs_type.dart';
+import 'package:revent/model/setup/follow_suggestion_setup.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/refresh_service.dart';
-import 'package:revent/service/query/general/follow_suggestion_getter.dart';
-import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
@@ -29,8 +28,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> with 
   SingleTickerProviderStateMixin, 
   VentProviderService, 
-  NavigationProviderService,
-  FollowSuggestionProviderService {
+  NavigationProviderService {
 
   final latestIsLoadedNotifier = ValueNotifier<bool>(false);
   final followingIsLoadedNotifier = ValueNotifier<bool>(false);
@@ -45,31 +43,6 @@ class _HomePageState extends State<HomePage> with
     Tab(text: 'Trending'),
     Tab(text: 'Following')
   ];
-
-  void _initializeCurrentTab() async {
-
-    final currentTabString = await localStorage.readCurrentHomeTab();
-
-    final currentTab = HomeTabs.values.firstWhere(
-      (tab) => tab.name == currentTabString
-    );
-
-    tabController.index = currentTab.index; 
-
-    if (currentTab == HomeTabs.latest && latestVentProvider.vents.isNotEmpty) {
-      latestIsLoadedNotifier.value = true;
-
-    } else if (currentTab == HomeTabs.trending && trendingVentProvider.vents.isNotEmpty) {
-      trendingIsLoadedNotifier.value = true;
-
-    } else if (currentTab == HomeTabs.following && followingVentProvider.vents.isNotEmpty) {
-      followingIsLoadedNotifier.value = true;
-
-    }
-
-    navigationProvider.setHomeTab(currentTab);
-
-  }
 
   void _onTabChanged() async {
 
@@ -128,6 +101,33 @@ class _HomePageState extends State<HomePage> with
 
   }
 
+  void _initializeFollowSuggestion() async => await FollowSuggestionSetup().setup();
+
+  void _initializeCurrentTab() async {
+
+    final currentTabString = await localStorage.readCurrentHomeTab();
+
+    final currentTab = HomeTabs.values.firstWhere(
+      (tab) => tab.name == currentTabString
+    );
+
+    tabController.index = currentTab.index; 
+
+    if (currentTab == HomeTabs.latest && latestVentProvider.vents.isNotEmpty) {
+      latestIsLoadedNotifier.value = true;
+
+    } else if (currentTab == HomeTabs.trending && trendingVentProvider.vents.isNotEmpty) {
+      trendingIsLoadedNotifier.value = true;
+
+    } else if (currentTab == HomeTabs.following && followingVentProvider.vents.isNotEmpty) {
+      followingIsLoadedNotifier.value = true;
+
+    }
+
+    navigationProvider.setHomeTab(currentTab);
+
+  }
+
   void _initializeTabController() {
 
     tabController = TabController(
@@ -135,28 +135,6 @@ class _HomePageState extends State<HomePage> with
     );
 
     tabController.addListener(_onTabChanged);
-
-  }
-
-  void _initializeFollowSuggestion() async {
-
-    if (followSuggestionProvider.suggestions.isEmpty) {
-
-      final followSuggestions = await FollowSuggestionGetter().getSuggestion();
-
-      final usernames = followSuggestions['usernames'];
-      final profilePic = followSuggestions['profile_pic'];
-
-      final suggestions = List.generate(usernames.length, (index) {
-        return FollowSuggestionData(
-          username: usernames[index], 
-          profilePic: profilePic[index]
-        );
-      });
-
-      followSuggestionProvider.setSuggestions(suggestions);
-
-    }
 
   }
 
