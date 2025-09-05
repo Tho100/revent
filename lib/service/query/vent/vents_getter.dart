@@ -9,7 +9,7 @@ import 'package:revent/service/query/vent/vent_post_state_service.dart';
 class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getLatestVentsData() async {
-// TODO: Add post_id for sorting, because just in case if multiple posts has the same timestamp, it might not order correctly
+
     const query = 
     '''
       SELECT 
