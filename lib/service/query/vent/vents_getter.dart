@@ -9,11 +9,11 @@ import 'package:revent/service/query/vent/vent_post_state_service.dart';
 class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getLatestVentsData() async {
-
+// TODO: Add post_id for sorting, because just in case if multiple posts has the same timestamp, it might not order correctly
     const query = 
     '''
       SELECT 
-        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
+        post_id, title, LEFT(body_text, 125) as body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
       WHERE NOT EXISTS (
         SELECT 1
@@ -36,7 +36,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     const query = 
     '''
       SELECT 
-        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
+        post_id, title, LEFT(body_text, 125) as body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
       WHERE NOT EXISTS (
         SELECT 1
@@ -64,7 +64,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     const query = 
     '''
       SELECT 
-        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
+        post_id, title, LEFT(body_text, 125) as body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
       INNER JOIN ${TableNames.userFollowsInfo} ufi 
         ON ufi.following = vi.creator

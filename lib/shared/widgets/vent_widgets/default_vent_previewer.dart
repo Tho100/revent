@@ -158,7 +158,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
     final getBodyTextOnCondition = 
       navigationProvider.currentRoute == AppRoute.searchResults ||
-      widget.isNsfw;
+      widget.isNsfw || widget.bodyText.length >= 125;
 
     return getBodyTextOnCondition
       ? await _getVentBodyText() : widget.bodyText;
