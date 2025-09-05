@@ -167,7 +167,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
       widget.isNsfw || (widget.bodyText.length >= 125 && !hasActiveBodyText);
 
     return getBodyTextOnCondition
-      ? await _getVentBodyText() : widget.bodyText;
+      ? await _getVentBodyText() : (hasActiveBodyText ? activeVentProvider.ventData.body : widget.bodyText);
 
   }
 
