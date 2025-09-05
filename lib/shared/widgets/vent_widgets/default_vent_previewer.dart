@@ -59,7 +59,9 @@ class DefaultVentPreviewer extends StatefulWidget {
 
 }
 
-class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with NavigationProviderService {
+class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with 
+  NavigationProviderService, 
+  VentProviderService {
 
   late VentPreviewerWidgets ventPreviewer;
   late VentActionsHandler actionsHandler;
@@ -156,9 +158,13 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with Naviga
 
   Future<String> _initializeBodyText() async {
 
+    final hasActiveBodyText = 
+      activeVentProvider.ventData.body.isNotEmpty && 
+      activeVentProvider.ventData.postId == postId;
+
     final getBodyTextOnCondition = 
       navigationProvider.currentRoute == AppRoute.searchResults ||
-      widget.isNsfw || widget.bodyText.length >= 125;
+      widget.isNsfw || (widget.bodyText.length >= 125 && !hasActiveBodyText);
 
     return getBodyTextOnCondition
       ? await _getVentBodyText() : widget.bodyText;
