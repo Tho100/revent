@@ -799,7 +799,7 @@ class _VentPostPageState extends State<VentPostPage> with
   @override
   void dispose() {
     commentsProvider.deleteComments();
-    activeVentProvider.clearData();
+    activeVentProvider.clearUnusedData();
     filterTextNotifier.dispose();
     enableCommentNotifier.dispose();
     super.dispose();

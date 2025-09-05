@@ -14,29 +14,50 @@ class FollowSuggestionGetter extends BaseQueryService with UserProfileProviderSe
 
     const query = 
     '''
-      SELECT u.username, u.profile_picture
-      FROM (
-        (
-          SELECT DISTINCT uf2.following AS username
-          FROM ${TableNames.userFollowsInfo} uf1
-          JOIN ${TableNames.userFollowsInfo} uf2 
-              ON uf1.following = uf2.follower
-          WHERE uf1.follower = :username
-            AND uf2.following NOT IN (
-                SELECT following FROM ${TableNames.userFollowsInfo} WHERE follower = :username
-            )
-            AND uf2.following != :username
+      WITH friend_of_friend AS (
+        SELECT DISTINCT uf2.following AS username
+        FROM ${TableNames.userFollowsInfo} uf1
+        JOIN ${TableNames.userFollowsInfo} uf2 
+          ON uf1.following = uf2.follower
+        WHERE uf1.follower = :username
+          AND uf2.following NOT IN (
+            SELECT following 
+            FROM ${TableNames.userFollowsInfo}
+            WHERE follower = :username
+          )
+          AND uf2.following != :username
+        LIMIT 5
+      ),
+      popular_users AS (
+        SELECT 
+          ufi.following AS username, COUNT(*) AS follower_count
+        FROM ${TableNames.userFollowsInfo} ufi
+        WHERE 
+          ufi.following != :username
+        GROUP BY 
+          ufi.following
+        ORDER BY 
+          follower_count DESC
+        LIMIT 5
+      ),
+      combined AS (
+        SELECT 
+          username, 1 AS priority
+        FROM friend_of_friend
+        UNION ALL
+        SELECT 
+          username, 2 AS priority
+        FROM popular_users
+        WHERE 
+          username NOT IN (SELECT username FROM friend_of_friend)
       )
-      UNION
-      (
-        SELECT username
-        FROM ${TableNames.userProfileInfo} 
-          WHERE username != :username
-          GROUP BY username
-          ORDER BY COUNT(followers)
-        )
-      ) AS suggested_users
-      JOIN ${TableNames.userProfileInfo} u ON suggested_users.username = u.username
+      SELECT 
+        upi.username, upi.profile_picture
+      FROM combined c
+      JOIN ${TableNames.userProfileInfo} upi
+        ON c.username = upi.username
+      ORDER BY 
+        c.priority, RAND()
       LIMIT 5;
     ''';
 

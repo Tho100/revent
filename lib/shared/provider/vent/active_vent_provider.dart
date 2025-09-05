@@ -69,4 +69,11 @@ class ActiveVentProvider extends ChangeNotifier {
     _ventData.creatorPfp = Uint8List(0);
   }
 
+  void clearUnusedData() {
+    _ventData.title = '';
+    _ventData.creator = '';
+    _ventData.lastEdit = '';
+    _ventData.creatorPfp = Uint8List(0);
+  }
+
 }

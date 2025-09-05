@@ -13,7 +13,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     const query = 
     '''
       SELECT 
-        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
+        post_id, title, LEFT(body_text, 125) as body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
       WHERE NOT EXISTS (
         SELECT 1
@@ -36,7 +36,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     const query = 
     '''
       SELECT 
-        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
+        post_id, title, LEFT(body_text, 125) as body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
       WHERE NOT EXISTS (
         SELECT 1
@@ -64,7 +64,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     const query = 
     '''
       SELECT 
-        post_id, title, body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
+        post_id, title, LEFT(body_text, 125) as body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
       FROM ${TableNames.ventInfo} vi
       INNER JOIN ${TableNames.userFollowsInfo} ufi 
         ON ufi.following = vi.creator
