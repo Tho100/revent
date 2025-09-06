@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/controllers/vent_post_controller.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/global/post_tags.dart';
 import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
@@ -64,7 +65,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
       return;
     }
 
-    if (ventTitle.length < 5) {
+    if (ventTitle.length < ValidationLimits.minPostTitleLength) {
       CustomAlertDialog.alertDialog(AlertMessages.invalidPostTtitleLength);
       return;
     }
