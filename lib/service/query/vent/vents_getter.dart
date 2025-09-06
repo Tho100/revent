@@ -218,10 +218,12 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       extractedData.extractIntColumn('marked_nsfw')
     );
     
-    final bodyText = excludeBodyText
+    final bodyText = excludeBodyText ? [] : extractedData.extractStringColumn('body_text');
+
+    final modifiedBodyText = excludeBodyText
       ? List.generate(title.length, (_) => '')
       : List.generate(
-        title.length, (index) => isNsfw[index] ? '' : extractedData.extractStringColumn('body_text')[index]
+        title.length, (index) => _formatBodyText(bodyText[index], isNsfw[index])
       );
 
     final ventPostState = VentPostStateService();
@@ -236,7 +238,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
     return {
       'title': title,
-      'body_text': bodyText,
+      'body_text': modifiedBodyText,
       'tags': tags,
       'post_timestamp': postTimestamp,
       'creator': creator,
@@ -246,6 +248,18 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       'is_liked': isLikedState,
       'is_saved': isSavedState
     };
+
+  }
+
+  String _formatBodyText(String bodyText, bool isNsfw) {
+    
+    if (isNsfw) return '';
+
+    if (bodyText.length >= 125) {
+      return '${bodyText.substring(0, bodyText.length - 3)}...';
+    }
+
+    return bodyText;
 
   }
 
