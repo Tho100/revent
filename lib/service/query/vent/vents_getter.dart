@@ -218,7 +218,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       extractedData.extractIntColumn('marked_nsfw')
     );
     
-    final bodyText = excludeBodyText ? [] : extractedData.extractStringColumn('body_text');
+    final bodyText = excludeBodyText ? const [] : extractedData.extractStringColumn('body_text');
 
     final modifiedBodyText = excludeBodyText
       ? List.generate(title.length, (_) => '')
