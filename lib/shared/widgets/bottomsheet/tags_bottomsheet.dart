@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/global/post_tags.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -39,7 +40,7 @@ class BottomsheetTagsSelection with TagsProviderService {
 
             if (selected) {
 
-              if (tags.length >= 3) {
+              if (tags.length >= ValidationLimits.maxPostTags) {
                 chipsSelectedNotifier.value[2] = false;
                 tags.removeAt(2);
               }
@@ -147,7 +148,7 @@ class BottomsheetTagsSelection with TagsProviderService {
 
                           for (final tag in rawTags) {
 
-                            if (processedTags.length >= 3) break;
+                            if (processedTags.length >= ValidationLimits.maxPostTags) break;
 
                             if (tag.length > 15) {
 
@@ -155,7 +156,7 @@ class BottomsheetTagsSelection with TagsProviderService {
 
                               for (final chunk in chunks) {
 
-                                if (processedTags.length >= 3) break;
+                                if (processedTags.length >= ValidationLimits.maxPostTags) break;
                                 processedTags.add(chunk);
 
                               }

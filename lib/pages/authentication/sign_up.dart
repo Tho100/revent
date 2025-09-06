@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/service/user/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/input_formatters.dart';
@@ -84,7 +85,7 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
       return;
     }
 
-    if (authInput.length <= 5) {
+    if (authInput.length < ValidationLimits.minPasswordLength) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, AlertMessages.invalidPasswordLength);
       return;
     }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -164,7 +165,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
 
     final getBodyTextOnCondition = 
       navigationProvider.currentRoute == AppRoute.searchResults ||
-      widget.isNsfw || (widget.bodyText.length >= 125 && !hasActiveBodyText);
+      widget.isNsfw || (widget.bodyText.length >= ValidationLimits.maxBodyPreviewerLength && !hasActiveBodyText);
 
     return getBodyTextOnCondition
       ? await _getVentBodyText() : (hasActiveBodyText ? activeVentProvider.ventData.body : widget.bodyText);

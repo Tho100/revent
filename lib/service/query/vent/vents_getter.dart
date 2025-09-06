@@ -1,3 +1,4 @@
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -255,7 +256,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     
     if (isNsfw) return '';
 
-    if (bodyText.length >= 125) {
+    if (bodyText.length >= ValidationLimits.maxBodyPreviewerLength) {
       return '${bodyText.substring(0, bodyText.length - 3)}...';
     }
 
