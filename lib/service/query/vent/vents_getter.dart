@@ -8,7 +8,8 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/vent/vent_post_state_service.dart';
 
 class VentsGetter extends BaseQueryService with UserProfileProviderService {
-
+// TODO: checkout to refactor and use ValidationLimits for LEFT(body_text, 125)
+// TODO: Use ListView.builder instead of DynamicHeightGridView for listview (liked/saved/vault page)
   Future<Map<String, dynamic>> getLatestVentsData() async {
 
     const query = 
@@ -23,7 +24,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
           AND ubi.blocked_username = vi.creator
       )
       ORDER BY vi.created_at DESC
-      LIMIT 25;
+      LIMIT 10;
     ''';
 
     final param = {'blocked_by': userProvider.user.username};
@@ -51,7 +52,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
         (vi.total_likes >= 5 AND vi.total_comments >= 1) ASC, 
         vi.total_likes ASC, 
         vi.created_at DESC
-      LIMIT 25;
+      LIMIT 10;
     ''';
 
     final param = {'blocked_by': userProvider.user.username};
@@ -78,7 +79,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
             ubi.blocked_username = vi.creator
         )
       ORDER BY vi.created_at DESC
-      LIMIT 25;
+      LIMIT 10;
     ''';
 
     final param = {'username': userProvider.user.username};

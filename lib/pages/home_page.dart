@@ -56,23 +56,17 @@ class _HomePageState extends State<HomePage> with
 
     if (currentTab == HomeTabs.latest) {
 
-      if (latestVentProvider.vents.isNotEmpty) {
-        latestIsLoadedNotifier.value = true;
-        return;
-      }
-
       if (!latestIsLoadedNotifier.value && latestVentProvider.vents.isEmpty) {
         await ventDataSetup.setupLatest().then(
           (_) => latestIsLoadedNotifier.value = true
         );
       }
 
-    } else if (currentTab == HomeTabs.trending) {
-
-      if (trendingVentProvider.vents.isNotEmpty) {
-        trendingIsLoadedNotifier.value = true;
-        return;
+      if (latestVentProvider.vents.isNotEmpty) {
+        latestIsLoadedNotifier.value = true;
       }
+
+    } else if (currentTab == HomeTabs.trending) {
 
       if (!trendingIsLoadedNotifier.value && trendingVentProvider.vents.isEmpty) {
         await ventDataSetup.setupTrending().then(
@@ -80,17 +74,20 @@ class _HomePageState extends State<HomePage> with
         );
       }
 
-    } else if (currentTab == HomeTabs.following) {
-
-      if (followingVentProvider.vents.isNotEmpty) {
-        followingIsLoadedNotifier.value = true;
-        return;
+      if (trendingVentProvider.vents.isNotEmpty) {
+        trendingIsLoadedNotifier.value = true;
       }
+
+    } else if (currentTab == HomeTabs.following) {
 
       if (!followingIsLoadedNotifier.value && followingVentProvider.vents.isEmpty) {
         await ventDataSetup.setupFollowing().then(
           (_) => followingIsLoadedNotifier.value = true
         );
+      }
+
+      if (followingVentProvider.vents.isNotEmpty) {
+        followingIsLoadedNotifier.value = true;
       }
 
     }
