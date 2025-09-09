@@ -1,6 +1,5 @@
 // ignore_for_file: library_private_types_in_public_api
 
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -250,7 +249,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
     );
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.5),
+      padding: const EdgeInsets.only(bottom: 16),
       child: ventPreviewer.buildMainContainer(
         children: [
     
@@ -389,13 +388,12 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   }
 
   Widget _buildListView(List<_VaultVentsData> vaultData) {
-    return DynamicHeightGridView(
+    return ListView.builder(
       physics: const AlwaysScrollableScrollPhysics(
         parent: BouncingScrollPhysics()
       ),
-      crossAxisCount: 1,
       itemCount: vaultData.length + 1,
-      builder: (_, index) {
+      itemBuilder: (_, index) {
           
         if (index == 0) {
           return _buildHeaderWidgets(postCounts: vaultData.length);

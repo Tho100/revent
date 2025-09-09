@@ -1,4 +1,3 @@
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
@@ -28,7 +27,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
 
   Widget _buildPreviewer(ProfileSavedData savedData, int index) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.5, left: 6, right: 6),
+      padding: const EdgeInsets.only(bottom: 16, left: 6, right: 6),
       child: DefaultVentPreviewer(
         isMyProfile: widget.isMyProfile,
         title: savedData.titles[index],
@@ -51,10 +50,9 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
   }
 
   Widget _buildListView(ProfileSavedData savedData) {
-    return DynamicHeightGridView(
-      crossAxisCount: 1,
+    return ListView.builder(
       itemCount: savedData.titles.length + 1,
-      builder: (_, index) {
+      itemBuilder: (_, index) {
 
         if (index == 0) {
           return const SizedBox(height: 10);
