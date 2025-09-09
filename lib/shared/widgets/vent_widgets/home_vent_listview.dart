@@ -1,4 +1,3 @@
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +30,7 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
 
   Widget _buildVentPreview(dynamic ventData) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.5),
+      padding: const EdgeInsets.only(bottom: 16),
       child: DefaultVentPreviewer(
         title: ventData.title,
         bodyText: ventData.bodyText,
@@ -78,13 +77,12 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
 
     return Consumer<FollowSuggestionProvider>(
       builder: (_, suggestionData, __) {
-        return DynamicHeightGridView(
+        return ListView.builder(
           physics: const AlwaysScrollableScrollPhysics(
             parent: BouncingScrollPhysics(),
           ),
-          crossAxisCount: 1,
           itemCount: ventDataList.length + (widget.showFollowSuggestion! ? 1 : 0),
-          builder: (_, index) {
+          itemBuilder: (_, index) {
       
             if (suggestionData.suggestions.isNotEmpty) {
       

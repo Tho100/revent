@@ -33,9 +33,13 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
 
     final profilePicGetter = ProfilePictureGetter();
 
-    final profilePic = await Future.wait(
-      creator.map((username) => profilePicGetter.getProfilePictures(username: username)),
-    );
+    final profilePic = <Uint8List>[];
+
+    for (final username in creator) {
+      profilePic.add(
+        await profilePicGetter.getProfilePictures(username: username)
+      );
+    }
 
     return {
       'titles': titles,
