@@ -1,6 +1,5 @@
 import 'dart:typed_data';
 
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -36,7 +35,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
 
   Widget _buildPreviewer(ProfilePostsData postsData, int index) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.5, left: 6, right: 6),
+      padding: const EdgeInsets.only(bottom: 16, left: 6, right: 6),
       child: DefaultVentPreviewer(
         isMyProfile: widget.isMyProfile,
         title: postsData.titles[index],
@@ -83,10 +82,9 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
   }
 
   Widget _buildListView(ProfilePostsData postsData) {
-    return DynamicHeightGridView(
-      crossAxisCount: 1,
+    return ListView.builder(
       itemCount: postsData.titles.length + 1,
-      builder: (_, index) {
+      itemBuilder: (_, index) {
 
         if (index == 0) {
           return const SizedBox(height: 10);

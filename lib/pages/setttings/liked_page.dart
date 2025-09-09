@@ -1,4 +1,3 @@
-import 'package:dynamic_height_grid_view/dynamic_height_grid_view.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -74,7 +73,7 @@ class _LikedPageState extends State<LikedPage> with
 
   Widget _buildVentPreviewer(LikedVentData vents) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8.5),
+      padding: const EdgeInsets.only(bottom: 16),
       child: DefaultVentPreviewer(
         title: vents.title, 
         bodyText: vents.bodyText,
@@ -144,13 +143,12 @@ class _LikedPageState extends State<LikedPage> with
   }
 
   Widget _buildListView(List<LikedVentData> likedVentData) {
-    return DynamicHeightGridView(
+    return ListView.builder(
       physics: const AlwaysScrollableScrollPhysics(
         parent: BouncingScrollPhysics()
       ),
-      crossAxisCount: 1,
       itemCount: likedVentData.length + 1,
-      builder: (_, index) {
+      itemBuilder: (_, index) {
 
         if (index == 0) {
           return _buildHeaderWidgets();

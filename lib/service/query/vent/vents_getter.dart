@@ -8,7 +8,7 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/vent/vent_post_state_service.dart';
 
 class VentsGetter extends BaseQueryService with UserProfileProviderService {
-// TODO: Use ListView.builder instead of DynamicHeightGridView for listview (liked/saved/vault page)
+
   Future<Map<String, dynamic>> getLatestVentsData() async {
 
     const query = 
