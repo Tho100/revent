@@ -27,7 +27,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     final extractedData = ExtractData(rowsData: retrievedInfo);
     
     final postIds = extractedData.extractIntColumn('post_id');
-    final title = extractedData.extractStringColumn('title');
+    final titles = extractedData.extractStringColumn('title');
     final tags = extractedData.extractStringColumn('tags');
 
     final totalLikes = extractedData.extractIntColumn('total_likes');
@@ -44,7 +44,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     final bodyText = extractedData.extractStringColumn('body_text');
 
     final modifiedBodyText = List.generate(
-      title.length, (index) => FormatPreviewerBody.formatBodyText(
+      titles.length, (index) => FormatPreviewerBody.formatBodyText(
         bodyText: bodyText[index], isNsfw: isNsfw[index]
       )
     );
@@ -62,7 +62,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     );
 
     return {
-      'title': title,
+      'title': titles,
       'body_text': modifiedBodyText,
       'tags': tags,
       'total_likes': totalLikes,

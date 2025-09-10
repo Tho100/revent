@@ -204,8 +204,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final extractedData = ExtractData(rowsData: results);
 
     final postIds = extractedData.extractIntColumn('post_id'); 
-    final title = extractedData.extractStringColumn('title'); // TODO: Make variable name plural (also on profile_post code)
-    final creator = extractedData.extractStringColumn('creator');
+    final titles = extractedData.extractStringColumn('title');
+    final creators = extractedData.extractStringColumn('creator');
 
     final tags = extractedData.extractStringColumn('tags');
     
@@ -223,9 +223,9 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final bodyText = excludeBodyText ? const [] : extractedData.extractStringColumn('body_text');
 
     final modifiedBodyText = excludeBodyText
-      ? List.generate(title.length, (_) => '')
+      ? List.generate(titles.length, (_) => '')
       : List.generate(
-        title.length, (index) => FormatPreviewerBody.formatBodyText(
+        titles.length, (index) => FormatPreviewerBody.formatBodyText(
           bodyText: bodyText[index], isNsfw: isNsfw[index]
         )
       );
@@ -241,11 +241,11 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     );
 
     return {
-      'title': title,
+      'title': titles,
       'body_text': modifiedBodyText,
       'tags': tags,
       'post_timestamp': postTimestamp,
-      'creator': creator,
+      'creator': creators,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'is_nsfw': isNsfw,
