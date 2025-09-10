@@ -1,6 +1,7 @@
 import 'package:revent/global/validation_limits.dart';
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
+import 'package:revent/helper/format_previewer_body.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -224,7 +225,9 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final modifiedBodyText = excludeBodyText
       ? List.generate(title.length, (_) => '')
       : List.generate(
-        title.length, (index) => _formatBodyText(bodyText[index], isNsfw[index])
+        title.length, (index) => FormatPreviewerBody.formatBodyText(
+          bodyText: bodyText[index], isNsfw: isNsfw[index]
+        )
       );
 
     final ventPostState = VentPostStateService();
@@ -249,18 +252,6 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       'is_liked': isLikedState,
       'is_saved': isSavedState
     };
-
-  }
-// TODO: Move this to separated class FormatPreviewerBody
-  String _formatBodyText(String bodyText, bool isNsfw) {
-    
-    if (isNsfw) return '';
-
-    if (bodyText.length >= ValidationLimits.maxBodyPreviewerLength) {
-      return '${bodyText.substring(0, bodyText.length - 3)}...';
-    }
-
-    return bodyText;
 
   }
 

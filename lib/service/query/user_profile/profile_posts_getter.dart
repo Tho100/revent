@@ -1,6 +1,7 @@
 import 'package:revent/global/table_names.dart';
 import 'package:revent/global/validation_limits.dart';
 import 'package:revent/helper/data_converter.dart';
+import 'package:revent/helper/format_previewer_body.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -43,7 +44,9 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     final bodyText = extractedData.extractStringColumn('body_text');
 
     final modifiedBodyText = List.generate(
-      title.length, (index) => _formatBodyText(bodyText[index], isNsfw[index])
+      title.length, (index) => FormatPreviewerBody.formatBodyText(
+        bodyText: bodyText[index], isNsfw: isNsfw[index]
+      )
     );
 
     final isPinned = await _ventPinnedState(postIds: postIds);
@@ -86,18 +89,6 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     final statePostIds = extractIds.toSet();
 
     return postIds.map((postId) => statePostIds.contains(postId)).toList();
-
-  }
-
-  String _formatBodyText(String bodyText, bool isNsfw) {
-    
-    if (isNsfw) return '';
-
-    if (bodyText.length >= ValidationLimits.maxBodyPreviewerLength) {
-      return '${bodyText.substring(0, bodyText.length - 3)}...';
-    }
-
-    return bodyText;
 
   }
 
