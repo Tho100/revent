@@ -1,6 +1,7 @@
 import 'package:revent/global/validation_limits.dart';
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
+import 'package:revent/helper/format_previewer_body.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -203,8 +204,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final extractedData = ExtractData(rowsData: results);
 
     final postIds = extractedData.extractIntColumn('post_id'); 
-    final title = extractedData.extractStringColumn('title');
-    final creator = extractedData.extractStringColumn('creator');
+    final titles = extractedData.extractStringColumn('title');
+    final creators = extractedData.extractStringColumn('creator');
 
     final tags = extractedData.extractStringColumn('tags');
     
@@ -222,9 +223,11 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final bodyText = excludeBodyText ? const [] : extractedData.extractStringColumn('body_text');
 
     final modifiedBodyText = excludeBodyText
-      ? List.generate(title.length, (_) => '')
+      ? List.generate(titles.length, (_) => '')
       : List.generate(
-        title.length, (index) => _formatBodyText(bodyText[index], isNsfw[index])
+        titles.length, (index) => FormatPreviewerBody.formatBodyText(
+          bodyText: bodyText[index], isNsfw: isNsfw[index]
+        )
       );
 
     final ventPostState = VentPostStateService();
@@ -238,29 +241,17 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     );
 
     return {
-      'title': title,
+      'title': titles,
       'body_text': modifiedBodyText,
       'tags': tags,
       'post_timestamp': postTimestamp,
-      'creator': creator,
+      'creator': creators,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'is_nsfw': isNsfw,
       'is_liked': isLikedState,
       'is_saved': isSavedState
     };
-
-  }
-
-  String _formatBodyText(String bodyText, bool isNsfw) {
-    
-    if (isNsfw) return '';
-
-    if (bodyText.length >= ValidationLimits.maxBodyPreviewerLength) {
-      return '${bodyText.substring(0, bodyText.length - 3)}...';
-    }
-
-    return bodyText;
 
   }
 

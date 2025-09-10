@@ -227,6 +227,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
       changesSavedNotifier.value = true;
 
+      if (context.mounted) {
+        FocusScope.of(context).unfocus();
+      }
+
       SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
 
     }

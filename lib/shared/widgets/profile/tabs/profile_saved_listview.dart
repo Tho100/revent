@@ -27,7 +27,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
 
   Widget _buildPreviewer(ProfileSavedData savedData, int index) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16, left: 6, right: 6),
+      padding: const EdgeInsets.only(bottom: 16),
       child: DefaultVentPreviewer(
         isMyProfile: widget.isMyProfile,
         title: savedData.titles[index],
@@ -50,26 +50,29 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
   }
 
   Widget _buildListView(ProfileSavedData savedData) {
-    return ListView.builder(
-      itemCount: savedData.titles.length + 1,
-      itemBuilder: (_, index) {
-
-        if (index == 0) {
-          return const SizedBox(height: 10);
-        }
-
-        final adjustedIndex = index - 1;
-
-        if (index >= 0) {
-          return KeyedSubtree(
-            key: ValueKey('${savedData.titles[adjustedIndex]}/${savedData.creator[adjustedIndex]}'),
-            child: _buildPreviewer(savedData, adjustedIndex),
-          );
-        }
-
-        return const SizedBox.shrink();
-
-      },
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 25,
+      child: ListView.builder(
+        itemCount: savedData.titles.length + 1,
+        itemBuilder: (_, index) {
+    
+          if (index == 0) {
+            return const SizedBox(height: 14);
+          }
+    
+          final adjustedIndex = index - 1;
+    
+          if (index >= 0) {
+            return KeyedSubtree(
+              key: ValueKey('${savedData.titles[adjustedIndex]}/${savedData.creator[adjustedIndex]}'),
+              child: _buildPreviewer(savedData, adjustedIndex),
+            );
+          }
+    
+          return const SizedBox.shrink();
+    
+        },
+      ),
     );
   }
 

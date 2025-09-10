@@ -90,6 +90,10 @@ class _VentPostPageState extends State<VentPostPage> with
       return;
     }
 
+    if (activeVentProvider.ventData.body.isNotEmpty) {
+      activeVentProvider.setBody('');
+    }
+
     final isViewPost = await CustomAlertDialog.nsfwWarningDialog();
 
     if (isViewPost) {
