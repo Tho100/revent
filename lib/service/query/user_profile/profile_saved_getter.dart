@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:revent/global/table_names.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -21,7 +22,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
         vi.title,
         vi.creator,
         vi.tags,
-        vi.body_text,
+        LEFT(vi.body_text, ${ValidationLimits.maxBodyPreviewerLength}),
         vi.total_likes,
         vi.total_comments,
         vi.marked_nsfw,
@@ -44,30 +45,35 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
 
     final retrievedInfo = await executeQuery(query, param);
 
-    final extractData = ExtractData(rowsData: retrievedInfo);
+    final extractedData = ExtractData(rowsData: retrievedInfo);
 
-    final postIds = extractData.extractIntColumn('post_id');
-    final titles = extractData.extractStringColumn('title');
-    final bodyText = extractData.extractStringColumn('body_text');
-    final tags = extractData.extractStringColumn('tags');
-    final creator = extractData.extractStringColumn('creator');
+    final postIds = extractedData.extractIntColumn('post_id');
+    final titles = extractedData.extractStringColumn('title');
+    final tags = extractedData.extractStringColumn('tags');
+    final creator = extractedData.extractStringColumn('creator');
 
-    final totalComments = extractData.extractIntColumn('total_comments');
-    final totalLikes = extractData.extractIntColumn('total_likes');
+    final totalComments = extractedData.extractIntColumn('total_comments');
+    final totalLikes = extractedData.extractIntColumn('total_likes');
 
     final postTimestamp = FormatDate().formatToPostDate(
-      data: extractData, columnName: 'created_at'
+      data: extractedData, columnName: 'created_at'
     );
 
-    final profilePicture = extractData
+    final profilePicture = extractedData
       .extractStringColumn('profile_picture')
       .map((pfpBase64) => base64Decode(pfpBase64))
       .toList();
 
     final isNsfw = DataConverter.convertToBools(
-      extractData.extractIntColumn('marked_nsfw')
+      extractedData.extractIntColumn('marked_nsfw')
     );
-    
+
+    final bodyText = extractedData.extractStringColumn('body_text');
+
+    final modifiedBodyText = List.generate(
+      titles.length, (index) => _formatBodyText(bodyText[index], isNsfw[index])
+    );
+
     final isLikedState = await _ventPostLikeState(
       postIds: postIds, stateType: 'liked'
     );
@@ -81,7 +87,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     return {
       'creator': creator,
       'title': titles,
-      'body_text': bodyText,
+      'body_text': modifiedBodyText,
       'tags': tags,
       'total_likes': totalLikes,
       'total_comments': totalComments,
@@ -117,5 +123,18 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     return postIds.map((postId) => statePostIds.contains(postId)).toList();
 
   }
+
+  String _formatBodyText(String bodyText, bool isNsfw) {
+    
+    if (isNsfw) return '';
+
+    if (bodyText.length >= ValidationLimits.maxBodyPreviewerLength) {
+      return '${bodyText.substring(0, bodyText.length - 3)}...';
+    }
+
+    return bodyText;
+
+  }
+
 
 }

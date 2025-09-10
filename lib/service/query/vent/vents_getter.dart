@@ -203,7 +203,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final extractedData = ExtractData(rowsData: results);
 
     final postIds = extractedData.extractIntColumn('post_id'); 
-    final title = extractedData.extractStringColumn('title');
+    final title = extractedData.extractStringColumn('title'); // TODO: Make variable name plural (also on profile_post code)
     final creator = extractedData.extractStringColumn('creator');
 
     final tags = extractedData.extractStringColumn('tags');
@@ -251,7 +251,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     };
 
   }
-
+// TODO: Move this to separated class FormatPreviewerBody
   String _formatBodyText(String bodyText, bool isNsfw) {
     
     if (isNsfw) return '';

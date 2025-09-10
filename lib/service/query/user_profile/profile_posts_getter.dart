@@ -1,4 +1,5 @@
 import 'package:revent/global/table_names.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -12,7 +13,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
     const query = 
     '''
-      SELECT post_id, title, body_text, tags, created_at, total_likes, total_comments, marked_nsfw 
+      SELECT post_id, title, LEFT(body_text, ${ValidationLimits.maxBodyPreviewerLength}), tags, created_at, total_likes, total_comments, marked_nsfw 
       FROM ${TableNames.ventInfo} 
       WHERE creator = :username
       ORDER BY created_at DESC
@@ -26,7 +27,6 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     
     final postIds = extractedData.extractIntColumn('post_id');
     final title = extractedData.extractStringColumn('title');
-    final bodyText = extractedData.extractStringColumn('body_text');
     final tags = extractedData.extractStringColumn('tags');
 
     final totalLikes = extractedData.extractIntColumn('total_likes');
@@ -38,6 +38,12 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
     final isNsfw = DataConverter.convertToBools(
       extractedData.extractIntColumn('marked_nsfw')
+    );
+
+    final bodyText = extractedData.extractStringColumn('body_text');
+
+    final modifiedBodyText = List.generate(
+      title.length, (index) => _formatBodyText(bodyText[index], isNsfw[index])
     );
 
     final isPinned = await _ventPinnedState(postIds: postIds);
@@ -54,7 +60,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
     return {
       'title': title,
-      'body_text': bodyText,
+      'body_text': modifiedBodyText,
       'tags': tags,
       'total_likes': totalLikes,
       'total_comments': totalComments,
@@ -80,6 +86,18 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     final statePostIds = extractIds.toSet();
 
     return postIds.map((postId) => statePostIds.contains(postId)).toList();
+
+  }
+
+  String _formatBodyText(String bodyText, bool isNsfw) {
+    
+    if (isNsfw) return '';
+
+    if (bodyText.length >= ValidationLimits.maxBodyPreviewerLength) {
+      return '${bodyText.substring(0, bodyText.length - 3)}...';
+    }
+
+    return bodyText;
 
   }
 
