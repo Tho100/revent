@@ -35,7 +35,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
 
   Widget _buildPreviewer(ProfilePostsData postsData, int index) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 16, left: 6, right: 6),
+      padding: const EdgeInsets.only(bottom: 16),
       child: DefaultVentPreviewer(
         isMyProfile: widget.isMyProfile,
         title: postsData.titles[index],
@@ -82,26 +82,29 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
   }
 
   Widget _buildListView(ProfilePostsData postsData) {
-    return ListView.builder(
-      itemCount: postsData.titles.length + 1,
-      itemBuilder: (_, index) {
-
-        if (index == 0) {
-          return const SizedBox(height: 10);
-        }
-
-        final adjustedIndex = index - 1;
-
-        if (index >= 0) {
-          return KeyedSubtree(
-            key: ValueKey('${postsData.titles[adjustedIndex]}/${widget.username}'),
-            child: _buildPreviewer(postsData, adjustedIndex)
-          );
-        }
-
-        return const SizedBox.shrink();
-
-      },
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 25,
+      child: ListView.builder(
+        itemCount: postsData.titles.length + 1,
+        itemBuilder: (_, index) {
+    
+          if (index == 0) {
+            return const SizedBox(height: 10);
+          }
+    
+          final adjustedIndex = index - 1;
+    
+          if (index >= 0) {
+            return KeyedSubtree(
+              key: ValueKey('${postsData.titles[adjustedIndex]}/${widget.username}'),
+              child: _buildPreviewer(postsData, adjustedIndex)
+            );
+          }
+    
+          return const SizedBox.shrink();
+    
+        },
+      ),
     );
   }
 

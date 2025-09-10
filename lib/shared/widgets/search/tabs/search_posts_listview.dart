@@ -167,88 +167,91 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   }
 
   Widget _buildListView(List<SearchVentsData> ventDataList) {
-    return ListView.builder(
-      key: UniqueKey(),
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics(),
-      ),
-      itemCount: ventDataList.length + 1,
-      itemBuilder: (_, index) {
-
-        if (index == 0) {
-
-          return Column(
-            children: [
-
-              const SizedBox(height: 12),
-
-              Row(
-                children: [
-
-                  _totalSearchResults(),
-
-                  const Spacer(),
-
-                  _buildFilterButtons(
-                    notifier: sortOptionsNotifier,
-                    onPressed: () {
-                      BottomsheetSearchFilter().buildSortOptionsBottomsheet(
-                        context: context,
-                        currentFilter: sortOptionsNotifier.value,
-                        bestOnPressed: () => _onSortPostsPressed('Best'),
-                        latestOnPressed: () => _onSortPostsPressed('Latest'),
-                        oldestOnPressed: () => _onSortPostsPressed('Oldest'),
-                        controversialOnPressed: () => _onSortPostsPressed('Controversial'),
-                      );
-                    },
-                  ),
-                  
-                  _buildFilterButtons(
-                    notifier: timeFilterNotifier,
-                    onPressed: () {
-                      BottomsheetSearchFilter().buildTimeFilterBottomsheet(
-                        context: context,
-                        currentFilter: timeFilterNotifier.value,
-                        allTimeOnPressed: () => _timeFilterNotifier('All Time'),
-                        pastYearOnPressed: () => _timeFilterNotifier('Past Year'),
-                        pastMonthOnPressed: () => _timeFilterNotifier('Past Month'),
-                        pastWeekOnPressed: () => _timeFilterNotifier('Past Week'),
-                        todayOnPressed: () => _timeFilterNotifier('Today'),
-                      );
-                    },
-                  ),
-
-                ],
-              ),
-
-              const SizedBox(height: 4),
-
-              if (ventDataList.isEmpty)
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.7,
-                child: Center(
-                  child: _buildNoResults(),
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 25,
+      child: ListView.builder(
+        key: UniqueKey(),
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics(),
+        ),
+        itemCount: ventDataList.length + 1,
+        itemBuilder: (_, index) {
+    
+          if (index == 0) {
+    
+            return Column(
+              children: [
+    
+                const SizedBox(height: 12),
+    
+                Row(
+                  children: [
+    
+                    _totalSearchResults(),
+    
+                    const Spacer(),
+    
+                    _buildFilterButtons(
+                      notifier: sortOptionsNotifier,
+                      onPressed: () {
+                        BottomsheetSearchFilter().buildSortOptionsBottomsheet(
+                          context: context,
+                          currentFilter: sortOptionsNotifier.value,
+                          bestOnPressed: () => _onSortPostsPressed('Best'),
+                          latestOnPressed: () => _onSortPostsPressed('Latest'),
+                          oldestOnPressed: () => _onSortPostsPressed('Oldest'),
+                          controversialOnPressed: () => _onSortPostsPressed('Controversial'),
+                        );
+                      },
+                    ),
+                    
+                    _buildFilterButtons(
+                      notifier: timeFilterNotifier,
+                      onPressed: () {
+                        BottomsheetSearchFilter().buildTimeFilterBottomsheet(
+                          context: context,
+                          currentFilter: timeFilterNotifier.value,
+                          allTimeOnPressed: () => _timeFilterNotifier('All Time'),
+                          pastYearOnPressed: () => _timeFilterNotifier('Past Year'),
+                          pastMonthOnPressed: () => _timeFilterNotifier('Past Month'),
+                          pastWeekOnPressed: () => _timeFilterNotifier('Past Week'),
+                          todayOnPressed: () => _timeFilterNotifier('Today'),
+                        );
+                      },
+                    ),
+    
+                  ],
                 ),
-              ),
-
-            ],
-          );
-
-        }
-
-        final adjustedIndex = ventDataList.length - index;
-
-        if (adjustedIndex >= 0) {
-          final vents = ventDataList[adjustedIndex];
-          return KeyedSubtree(
-            key: ValueKey('${vents.title}/${vents.creator}'),
-            child: _buildVentPreview(vents),
-          );
-        }
-
-        return const SizedBox.shrink();
-        
-      },
+    
+                const SizedBox(height: 8),
+    
+                if (ventDataList.isEmpty)
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.7,
+                  child: Center(
+                    child: _buildNoResults(),
+                  ),
+                ),
+    
+              ],
+            );
+    
+          }
+    
+          final adjustedIndex = ventDataList.length - index;
+    
+          if (adjustedIndex >= 0) {
+            final vents = ventDataList[adjustedIndex];
+            return KeyedSubtree(
+              key: ValueKey('${vents.title}/${vents.creator}'),
+              child: _buildVentPreview(vents),
+            );
+          }
+    
+          return const SizedBox.shrink();
+          
+        },
+      ),
     );
   }
 

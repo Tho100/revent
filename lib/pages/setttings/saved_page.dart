@@ -126,7 +126,7 @@ class _SavedPageState extends State<SavedPage> with
     return Align(
       alignment: Alignment.center,
       child: Padding(
-        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 8),
+        padding: const EdgeInsets.only(left: 10, top: 10, bottom: 12),
         child: Column(
           children: [
 
@@ -143,33 +143,36 @@ class _SavedPageState extends State<SavedPage> with
   }
 
   Widget _buildListView(List<SavedVentData> savedVentData) {
-    return ListView.builder(
-      physics: const AlwaysScrollableScrollPhysics(
-        parent: BouncingScrollPhysics()
+    return SizedBox(
+      width: MediaQuery.of(context).size.width - 25,
+      child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(
+          parent: BouncingScrollPhysics()
+        ),
+        itemCount: savedVentData.length + 1,
+        itemBuilder: (_, index) {
+    
+          if (index == 0) {
+            return _buildHeaderWidgets();
+          }
+    
+          final adjustedIndex = index - 1;
+    
+          if (adjustedIndex >= 0 && adjustedIndex < savedVentData.length) {
+    
+            final vents = savedVentData[savedVentData.length - 1 - adjustedIndex];
+    
+            return KeyedSubtree(
+              key: ValueKey('${vents.title}/${vents.creator}'),
+              child: _buildVentPreviewer(vents)
+            );
+    
+          }
+    
+          return const SizedBox.shrink();
+    
+        },
       ),
-      itemCount: savedVentData.length + 1,
-      itemBuilder: (_, index) {
-
-        if (index == 0) {
-          return _buildHeaderWidgets();
-        }
-
-        final adjustedIndex = index - 1;
-
-        if (adjustedIndex >= 0 && adjustedIndex < savedVentData.length) {
-
-          final vents = savedVentData[savedVentData.length - 1 - adjustedIndex];
-
-          return KeyedSubtree(
-            key: ValueKey('${vents.title}/${vents.creator}'),
-            child: _buildVentPreviewer(vents)
-          );
-
-        }
-
-        return const SizedBox.shrink();
-
-      },
     );
   }
 
