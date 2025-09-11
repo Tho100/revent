@@ -14,7 +14,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
 
     const query = 
     '''
-      SELECT post_id, title, LEFT(body_text, ${ValidationLimits.maxBodyPreviewerLength}), tags, created_at, total_likes, total_comments, marked_nsfw 
+      SELECT post_id, title, LEFT(body_text, ${ValidationLimits.maxBodyPreviewerLength}) as body_text, tags, created_at, total_likes, total_comments, marked_nsfw 
       FROM ${TableNames.ventInfo} 
       WHERE creator = :username
       ORDER BY created_at DESC

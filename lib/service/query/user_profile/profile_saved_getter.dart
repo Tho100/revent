@@ -23,7 +23,7 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
         vi.title,
         vi.creator,
         vi.tags,
-        LEFT(vi.body_text, ${ValidationLimits.maxBodyPreviewerLength}),
+        LEFT(vi.body_text, ${ValidationLimits.maxBodyPreviewerLength}) as body_text,
         vi.total_likes,
         vi.total_comments,
         vi.marked_nsfw,
