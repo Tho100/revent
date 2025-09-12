@@ -6,7 +6,6 @@ import 'package:revent/service/user/user_registration_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/helper/input_validator.dart';
-import 'package:revent/security/hash_model.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -49,16 +48,14 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
   Future<void> _registerUser({
     required String username,
     required String email,
-    required String auth,
+    required String password,
   }) async {
 
     try {
-
-      final authHash = HashingModel.computeHash(auth);
       
       await UserRegistrationService(context: context).register(
         username: username,
-        passwordHash: authHash,
+        password: password,
         email: email,
       );
 
@@ -78,14 +75,14 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
 
     final usernameInput = usernameController.text;
     final emailInput = emailController.text;
-    final authInput = passwordController.text;
+    final passwordInput = passwordController.text;
 
     if (!InputValidator.validateUsernameFormat(usernameInput)) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, AlertMessages.invalidUsername);
       return;
     }
 
-    if (authInput.length < ValidationLimits.minPasswordLength) {
+    if (passwordInput.length < ValidationLimits.minPasswordLength) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, AlertMessages.invalidPasswordLength);
       return;
     }
@@ -100,7 +97,7 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
     await _registerUser(
       username: usernameInput, 
       email: emailInput, 
-      auth: authInput, 
+      password: passwordInput, 
     );
       
   }

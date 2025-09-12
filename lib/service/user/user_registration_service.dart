@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/user/user_data_registration.dart';
@@ -18,7 +19,7 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
   Future<void> register({
     required String username,
     required String email,
-    required String passwordHash,
+    required String password,
   }) async {
 
     final userValidator = await UserRegistrationValidator(
@@ -38,7 +39,19 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
 
     _setupUserProfileData(username: username, email: email);
 
-    await UserDataRegistration().registerUser(passwordHash: passwordHash);
+    final responseCode = await UserDataRegistration().registerUser(password: password);
+
+    if (responseCode == 201) {
+
+      final localStorageModel = LocalStorageModel();
+
+      await localStorageModel.setupAccountInformation(
+        username: userProvider.user.username, email: userProvider.user.email
+      );
+
+      await localStorageModel.setupThemeInformation(theme: 'dark');
+
+    } 
     
     await VentsSetup().setupLatest()
       .then((_) => NavigatePage.homePage()

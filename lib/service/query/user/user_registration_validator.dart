@@ -1,6 +1,8 @@
-import 'package:revent/global/table_names.dart';
-import 'package:revent/helper/extract_data.dart';
+import 'dart:convert';
+
 import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:http/http.dart' as http;
+import 'package:revent/shared/api_base.dart';
 
 class UserRegistrationValidator extends BaseQueryService {
 
@@ -14,29 +16,32 @@ class UserRegistrationValidator extends BaseQueryService {
 
   Future<Map<String, bool>> verifyUsernameAndEmail() async {
 
-    const query = 
-    '''
-    SELECT
-	    EXISTS (SELECT 1 FROM ${TableNames.userInfo} WHERE username = :username) AS username_exists,
-      EXISTS (SELECT 1 FROM ${TableNames.userInfo} WHERE email = :email) AS email_exists;
-    ''';
-
-    final params = {
-      'username': username,
-      'email': email
+    Map<String, bool> existsConditionMap = {
+      'username_exists': false,
+      'email_exists': false,
     };
 
-    final results = await executeQuery(query, params);
+    final response = await http.post(
+      Uri.parse('${ApiBase().baseUrl}/verify-user'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'username': username,
+        'email': email,
+      })
+    );
 
-    final extractedData = ExtractData(rowsData: results);
+    if (response.statusCode == 200)  {
 
-    final usernameExists = extractedData.extractIntColumn('username_exists')[0] == 1;
-    final emailExists = extractedData.extractIntColumn('email_exists')[0] == 1;
+      final data = jsonDecode(response.body);
 
-    return {
-      'username_exists': usernameExists,
-      'email_exists': emailExists
-    };
+      existsConditionMap['username_exists'] = data['username_exists'] as bool;
+      existsConditionMap['email_exists'] = data['email_exists'] as bool;
+
+      return existsConditionMap;
+
+    }
+
+    return existsConditionMap;
 
   }
 
