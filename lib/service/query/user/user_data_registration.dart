@@ -23,15 +23,9 @@ class UserDataRegistration extends BaseQueryService with UserProfileProviderServ
       await txn.execute(
         '''
           INSERT INTO ${TableNames.userProfileInfo} 
-            (bio, followers, following, posts, profile_picture, username) 
-          VALUES 
-            (:bio, :followers, :following, :posts, :profile_pic, :username)
+            (profile_picture, username) VALUES (:profile_pic, :username)
         ''',
         {
-          'bio': '',
-          'followers': 0,
-          'following': 0,
-          'posts': 0,
           'profile_pic': '',
           'username': userProvider.user.username
         }
