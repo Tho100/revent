@@ -46,13 +46,13 @@ class _SignInPageState extends State<SignInPage> with AuthController {
 
   Future<void> _loginUser({
     required String email,
-    required String auth,
+    required String password,
   }) async {
 
     try {
 
       await UserLoginService(context: context).login(
-        email: email, auth: auth, isRememberMeChecked: isRememberMeCheckedNotifier.value
+        email: email, password: password, isRememberMeChecked: isRememberMeCheckedNotifier.value
       );
 
     } catch (_) {
@@ -69,7 +69,7 @@ class _SignInPageState extends State<SignInPage> with AuthController {
   
   Future<void> _processLogin() async {
 
-    final authInput = passwordController.text;
+    final passwordInput = passwordController.text;
     final emailInput = emailController.text;
 
     if (!InputValidator.validateEmailFormat(emailInput)) {
@@ -79,7 +79,7 @@ class _SignInPageState extends State<SignInPage> with AuthController {
 
     await _loginUser(
       email: emailInput, 
-      auth: authInput, 
+      password: passwordInput, 
     );
     
   }
