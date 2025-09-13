@@ -8,7 +8,6 @@ import 'package:revent/model/setup/profile_data_setup.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/provider/user_provider.dart';
-import 'package:revent/security/hash_model.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
@@ -24,41 +23,43 @@ class UserLoginService {
 
   Future<void> login({
     required String email, 
-    required String auth, 
+    required String password, 
     required bool isRememberMeChecked
   }) async {
 
-    final username = await _userDataGetter.getUsername(email: email);
+    final responses = await UserAuthService().getLoginAuthentication(
+      email: email, password: password
+    );
 
-    if (username == null) {
+    final responseCode = responses['status_code'];
+
+    if (responseCode == 404) {
       CustomAlertDialog.alertDialog(AlertMessages.accountNotFound);
       return;
-    }
+    } 
 
-    final authenticationInformation = await UserAuthService().getAccountAuthentication(
-      username: username
-    );
-      
-    final isAuthMatched = HashingModel.computeHash(auth) == authenticationInformation;
-
-    if (!isAuthMatched) {
+    if (responseCode == 401) {
       CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);
-      return;
+      return;      
     }
 
-    if (context.mounted) {
-      SpinnerLoading(context: context).startLoading();
-    }
-      
-    await _setUserProfileData(email: email);
+    if (responseCode == 200) {
 
-    await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
+      if (context.mounted) {
+        SpinnerLoading(context: context).startLoading();
+      }
+        
+      await _setUserProfileData(email: email, username: responses['body']['username']);
 
-    await VentsSetup().setupLatest().then(
-      (_) => NavigatePage.homePage()
-    ); 
+      await _setAutoLoginData(isRememberMeChecked: isRememberMeChecked);
 
-    await ActivityService().initializeActivities(isLogin: true);
+      await VentsSetup().setupLatest().then(
+        (_) => NavigatePage.homePage()
+      ); 
+
+      await ActivityService().initializeActivities(isLogin: true);
+
+    } 
 
   }
 
@@ -80,9 +81,10 @@ class UserLoginService {
 
   }
 
-  Future<void> _setUserProfileData({required String email}) async {
-
-    final username = await _userDataGetter.getUsername(email: email) ?? '';
+  Future<void> _setUserProfileData({
+    required String email,
+    required String username
+  }) async {
     
     final socialHandles = await _userDataGetter.getSocialHandles(username: username);
 
