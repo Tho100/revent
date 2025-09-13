@@ -29,14 +29,10 @@ class UserRegistrationService extends BaseQueryService with UserProfileProviderS
     final usernameExists = userValidator['username_exists']!;
     final emailExists = userValidator['email_exists']!;
 
-    if (_showWarningOnInfoExists(usernameExists, 'Username is taken')) {
+    if (_showWarningOnInfoExists(usernameExists || emailExists, 'Username or email already in use')) {
       return;
     }
-
-    if (_showWarningOnInfoExists(emailExists, 'Account with this email already exists')) {
-      return;
-    }
-
+    
     _setupUserProfileData(username: username, email: email);
 
     final responseCode = await UserDataRegistration().registerUser(password: password);
