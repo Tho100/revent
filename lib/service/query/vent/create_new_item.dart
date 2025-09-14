@@ -1,10 +1,14 @@
+import 'dart:convert';
+
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/shared/api_base.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
+import 'package:http/http.dart' as http;
 
 class CreateNewItem extends BaseQueryService with UserProfileProviderService {
 
@@ -23,44 +27,24 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
     required bool allowCommenting,
   }) async {
 
-    await _createVentTransaction(markedNsfw: markedNsfw, allowCommenting: allowCommenting).then(
-      (_) => _addVent(markedNsfw: markedNsfw)
+    final response = await http.post(
+      Uri.parse('${ApiBase().baseUrl}/create-vent'),
+      headers: {'Content-Type': 'application/json'},
+      body: jsonEncode({
+        'creator': userProvider.user.username,
+        'title': title,
+        'body_text': body,
+        'tags': tags,
+        'marked_nsfw': markedNsfw,
+        'comment_enabled': allowCommenting,
+      })
     );
-    
-  }
 
-  Future<void> _createVentTransaction({
-    required bool markedNsfw,
-    required bool allowCommenting
-  }) async {
+    if (response.statusCode != 201) {
+      throw Exception();
+    } 
 
-    final conn = await connection();
-
-    await conn.transactional((txn) async {
-
-      await txn.execute(
-        '''
-          INSERT INTO ${TableNames.ventInfo} 
-            (creator, title, body_text, tags, marked_nsfw, comment_enabled) 
-          VALUES 
-            (:creator, :title, :body_text, :tags, :marked_nsfw, :comment_enabled)
-        ''',
-        {
-          'creator': userProvider.user.username,
-          'title': title,
-          'body_text': body,
-          'tags': tags,
-          'marked_nsfw': markedNsfw,
-          'comment_enabled': allowCommenting,
-        }
-      );
-
-      await txn.execute(
-        'UPDATE ${TableNames.userProfileInfo} SET posts = posts + 1 WHERE username = :username',
-        {'username': userProvider.user.username}
-      );
-
-    });
+    _addVent(markedNsfw: markedNsfw);
 
   }
 

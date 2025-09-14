@@ -16,16 +16,16 @@ class MainScreenPage extends StatelessWidget {
         SizedBox(height: 30),
 
         MainButton(
-          text: 'Sign In',
+          text: 'Create Account',
           customFontSize: 17,
-          onPressed: NavigatePage.signInPage,
+          onPressed: NavigatePage.signUpPage,
         ),
 
         SizedBox(height: 15),
 
         CustomOutlinedButton(
-          text: 'Create an Account',
-          onPressed: NavigatePage.signUpPage,
+          text: 'Sign In',
+          onPressed: NavigatePage.signInPage,
         ),
 
       ],

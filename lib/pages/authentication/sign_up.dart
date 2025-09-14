@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/validation_limits.dart';
-import 'package:revent/service/user/user_registration_service.dart';
+import 'package:revent/pages/authentication/sign_up_username.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/helper/input_validator.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
-import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/buttons/underlined_button.dart';
 import 'package:revent/shared/widgets/text/header_text.dart';
@@ -26,12 +25,11 @@ class SignUpPage extends StatefulWidget {
 
 class _SignUpPageState extends State<SignUpPage> with AuthController {
 
-  final isSignUpButtonEnabledNotifier = ValueNotifier<bool>(false);
+  final isContinueButtonEnabledNotifier = ValueNotifier<bool>(false);
 
   void _checkFormFilled() {
 
     final isFilled = 
-      usernameController.text.trim().isNotEmpty &&
       emailController.text.trim().isNotEmpty &&
       passwordController.text.trim().isNotEmpty;
 
@@ -39,24 +37,41 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
 
     final shouldEnable = isFilled && isValid;
 
-    if (shouldEnable != isSignUpButtonEnabledNotifier.value) {
-      isSignUpButtonEnabledNotifier.value = shouldEnable;
+    if (shouldEnable != isContinueButtonEnabledNotifier.value) {
+      isContinueButtonEnabledNotifier.value = shouldEnable;
     }
     
   }
 
-  Future<void> _registerUser({
-    required String username,
+  Future<void> _proceedToUsernameRegistration({
     required String email,
     required String password,
   }) async {
 
     try {
       
-      await UserRegistrationService(context: context).register(
-        username: username,
-        password: password,
-        email: email,
+      Navigator.push(
+        context,
+        PageRouteBuilder(
+          pageBuilder: (context, animation, secondaryAnimation) => SignUpUsernamePage(
+            email: email, password: password
+          ),
+          transitionDuration: const Duration(milliseconds: 600),
+          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+
+            const begin = Offset(1.0, 0.0);
+            const end = Offset.zero;
+            const curve = Curves.ease;
+
+            final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+            return SlideTransition(
+              position: animation.drive(tween),
+              child: child,
+            );
+
+          },
+        ),
       );
 
     } catch (_) {
@@ -73,14 +88,8 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
 
   Future<void> _processRegistration() async {
 
-    final usernameInput = usernameController.text;
     final emailInput = emailController.text;
     final passwordInput = passwordController.text;
-
-    if (!InputValidator.validateUsernameFormat(usernameInput)) {
-      CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, AlertMessages.invalidUsername);
-      return;
-    }
 
     if (passwordInput.length < ValidationLimits.minPasswordLength) {
       CustomAlertDialog.alertDialogTitle(AlertMessages.failedSignUpTitle, AlertMessages.invalidPasswordLength);
@@ -92,10 +101,7 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
       return;
     }
 
-    SpinnerLoading(context: context).startLoading();
-
-    await _registerUser(
-      username: usernameInput, 
+    await _proceedToUsernameRegistration(
       email: emailInput, 
       password: passwordInput, 
     );
@@ -122,16 +128,6 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
           const SizedBox(height: 30),
 
           MainTextField(
-            hintText: 'Enter a username', 
-            maxLength: 24,
-            textInputAction: TextInputAction.next,
-            inputFormatters: InputFormatters.usernameFormatter(),
-            controller: usernameController,
-          ),
-
-          const SizedBox(height: 15),
-
-          MainTextField(
             hintText: 'Enter your email address', 
             textInputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
@@ -149,11 +145,11 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
           const SizedBox(height: 30),
 
           ValueListenableBuilder(
-            valueListenable: isSignUpButtonEnabledNotifier,
+            valueListenable: isContinueButtonEnabledNotifier,
             builder: (_, isEnabled, __) {
               return MainButton(
                 enabled: isEnabled,
-                text: 'Sign Up',
+                text: 'Continue',
                 customFontSize: 17,
                 onPressed: () async { 
                   FocusScope.of(context).unfocus(); 
@@ -178,7 +174,6 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
   @override
   void initState() {
     super.initState();
-    usernameController.addListener(_checkFormFilled);
     emailController.addListener(_checkFormFilled);
     passwordController.addListener(_checkFormFilled);
   }
@@ -186,7 +181,7 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
   @override
   void dispose() {
     disposeControllers();
-    isSignUpButtonEnabledNotifier.dispose();
+    isContinueButtonEnabledNotifier.dispose();
     super.dispose();
   }
 
