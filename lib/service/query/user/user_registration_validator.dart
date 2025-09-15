@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:revent/shared/api_base.dart';
+import 'package:revent/shared/api/api_config.dart';
+import 'package:revent/shared/api/api_path.dart';
 
 class UserRegistrationValidator extends BaseQueryService {
 
@@ -22,8 +23,8 @@ class UserRegistrationValidator extends BaseQueryService {
     };
 
     final response = await http.post(
-      Uri.parse('${ApiBase().baseUrl}/verify-user'),
-      headers: {'Content-Type': 'application/json'},
+      ApiConfig.endpoint(ApiPath.verifyUser),
+      headers: ApiConfig.jsonHeaders,
       body: jsonEncode({
         'username': username,
         'email': email,

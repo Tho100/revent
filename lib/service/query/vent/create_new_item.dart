@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/shared/api_base.dart';
+import 'package:revent/shared/api/api_config.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -28,8 +29,8 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
   }) async {
 
     final response = await http.post(
-      Uri.parse('${ApiBase().baseUrl}/create-vent'),
-      headers: {'Content-Type': 'application/json'},
+      ApiConfig.endpoint(ApiPath.createVent),
+      headers: ApiConfig.jsonHeaders,
       body: jsonEncode({
         'creator': userProvider.user.username,
         'title': title,

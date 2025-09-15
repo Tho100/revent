@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:http/http.dart' as http;
-import 'package:revent/shared/api_base.dart';
+import 'package:revent/shared/api/api_config.dart';
+import 'package:revent/shared/api/api_path.dart';
 
 class UserAuthService extends BaseQueryService {
 
@@ -13,8 +14,8 @@ class UserAuthService extends BaseQueryService {
   }) async {
 
     final response = await http.post(
-      Uri.parse('${ApiBase().baseUrl}/login'),
-      headers: {'Content-Type': 'application/json'},
+      ApiConfig.endpoint(ApiPath.login),
+      headers: ApiConfig.jsonHeaders,
       body: jsonEncode({
         'email': email,
         'password': password,
