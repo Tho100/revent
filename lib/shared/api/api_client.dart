@@ -29,6 +29,29 @@ class ApiClient {
 
   }
 
+  static Future<ApiResponse> put(String path, Map<String, dynamic> data) async {
+
+    final response = await http.put(
+      ApiConfig.endpoint(path),
+      headers: ApiConfig.jsonHeaders,
+      body: jsonEncode(data)
+    ).timeout(const Duration(seconds: 20));
+
+    Map<String, dynamic>? decodedBody;
+
+    try {
+      decodedBody = jsonDecode(response.body);
+    } catch (_) {
+      decodedBody = null;
+    }
+
+    return ApiResponse(
+      statusCode: response.statusCode,
+      body: decodedBody,
+    );
+    
+  }
+
   static Future<ApiResponse> get(String path, String param) async {
 
     final uri = ApiConfig.endpoint('$path/$param');
@@ -36,7 +59,7 @@ class ApiClient {
     final response = await http.get(
       uri,
       headers: ApiConfig.jsonHeaders,
-    ).timeout(const Duration(seconds: 15));
+    ).timeout(const Duration(seconds: 12));
 
     Map<String, dynamic>? decodedBody;
 
