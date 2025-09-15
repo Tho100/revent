@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
-import 'package:revent/security/hash_model.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
 import 'package:revent/service/user/user_account_manager.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -41,14 +40,13 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
 
     try {
 
-      final currentPasswordHash = await UserAuthService().getAccountAuthentication(
-        username: userProvider.user.username
+      final passwordInput = currentPasswordController.text;
+
+      final isPasswordMatched = await UserAuthService().verifyUserAuth(
+        username: userProvider.user.username, password: passwordInput
       );
 
-      final currentPasswordInput = currentPasswordController.text;
-      final currentPasswordInputHash = HashingModel.computeHash(currentPasswordInput);
-
-      if (currentPasswordHash != currentPasswordInputHash) {
+      if (!isPasswordMatched) {
         CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);
         return;
       }
