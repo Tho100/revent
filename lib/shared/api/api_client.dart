@@ -14,17 +14,9 @@ class ApiClient {
       body: jsonEncode(data),
     ).timeout(const Duration(seconds: 25));
 
-    Map<String, dynamic>? decodedBody;
-
-    try {
-      decodedBody = jsonDecode(response.body);
-    } catch (_) {
-      decodedBody = null;
-    }
-
     return ApiResponse(
       statusCode: response.statusCode,
-      body: decodedBody,
+      body: _decodedBody(response.body),
     );
 
   }
@@ -37,17 +29,9 @@ class ApiClient {
       body: jsonEncode(data)
     ).timeout(const Duration(seconds: 20));
 
-    Map<String, dynamic>? decodedBody;
-
-    try {
-      decodedBody = jsonDecode(response.body);
-    } catch (_) {
-      decodedBody = null;
-    }
-
     return ApiResponse(
       statusCode: response.statusCode,
-      body: decodedBody,
+      body: _decodedBody(response.body),
     );
     
   }
@@ -61,20 +45,25 @@ class ApiClient {
       headers: ApiConfig.jsonHeaders,
     ).timeout(const Duration(seconds: 12));
 
-    Map<String, dynamic>? decodedBody;
-
-    try {
-      decodedBody = jsonDecode(response.body);
-    } catch (_) {
-      decodedBody = null;
-    }
-
     return ApiResponse(
       statusCode: response.statusCode,
-      body: decodedBody,
+      body: _decodedBody(response.body),
     );
     
   }
 
-}
+  static Map<String, dynamic>? _decodedBody(String body) {
 
+    Map<String, dynamic>? decodedBody;
+
+    try {
+      decodedBody = jsonDecode(body);
+    } catch (_) {
+      decodedBody = null;
+    }
+
+    return decodedBody;
+
+  }
+
+}
