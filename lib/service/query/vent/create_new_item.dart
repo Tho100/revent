@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/shared/api/api_config.dart';
+import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
-import 'package:http/http.dart' as http;
 
 class CreateNewItem extends BaseQueryService with UserProfileProviderService {
 
@@ -28,18 +25,14 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
     required bool allowCommenting,
   }) async {
 
-    final response = await http.post(
-      ApiConfig.endpoint(ApiPath.createVent),
-      headers: ApiConfig.jsonHeaders,
-      body: jsonEncode({
-        'creator': userProvider.user.username,
-        'title': title,
-        'body_text': body,
-        'tags': tags,
-        'marked_nsfw': markedNsfw,
-        'comment_enabled': allowCommenting,
-      })
-    );
+    final response = await ApiClient.post(ApiPath.createVent, {
+      'creator': userProvider.user.username,
+      'title': title,
+      'body_text': body,
+      'tags': tags,
+      'marked_nsfw': markedNsfw,
+      'comment_enabled': allowCommenting,
+    });
 
     if (response.statusCode != 201) {
       throw Exception();

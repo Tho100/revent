@@ -1,8 +1,5 @@
-import 'dart:convert';
-
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:http/http.dart' as http;
-import 'package:revent/shared/api/api_config.dart';
+import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
 class UserRegistrationValidator extends BaseQueryService {
@@ -21,22 +18,16 @@ class UserRegistrationValidator extends BaseQueryService {
       'username_exists': false,
       'email_exists': false,
     };
-
-    final response = await http.post(
-      ApiConfig.endpoint(ApiPath.verifyUser),
-      headers: ApiConfig.jsonHeaders,
-      body: jsonEncode({
-        'username': username,
-        'email': email,
-      })
-    );
+  
+    final response = await ApiClient.post(ApiPath.verifyUser, {
+      'username': username,
+      'email': email,
+    });
 
     if (response.statusCode == 200)  {
 
-      final data = jsonDecode(response.body);
-
-      existsConditionMap['username_exists'] = data['username_exists'] as bool;
-      existsConditionMap['email_exists'] = data['email_exists'] as bool;
+      existsConditionMap['username_exists'] = response.body!['username_exists'] as bool;
+      existsConditionMap['email_exists'] = response.body!['email_exists'] as bool;
 
       return existsConditionMap;
 
