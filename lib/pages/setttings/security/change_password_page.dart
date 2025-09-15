@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
-import 'package:revent/security/hash_model.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -30,15 +29,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
 
       final userAuth = UserAuthService();
 
-      final currentPasswordHash = await userAuth.getAccountAuthentication(
-        username: userProvider.user.username
-      );
-
       final currentPasswordInput = currentPasswordController.text.trim();
-      final currentPasswordInputHash = HashingModel.computeHash(currentPasswordInput);
-
       final newPasswordInput = newPasswordController.text.trim();
-      final newPasswordInputHash = HashingModel.computeHash(newPasswordInput);
 
       if (newPasswordInput.isEmpty || currentPasswordInput.isEmpty) {
         CustomAlertDialog.alertDialog(AlertMessages.emptyPasswordFields);
@@ -50,16 +42,18 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
         return;
       }
 
-      final passwordMatched = currentPasswordHash == currentPasswordInputHash;
+      final isPasswordMatched = await userAuth.verifyUserAuth(
+        username: userProvider.user.username, password: currentPasswordInput
+      );
 
-      if (!passwordMatched) {
+      if (!isPasswordMatched) {
         CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);
         return;
       }
 
       await userAuth.updateAccountAuth(
         username: userProvider.user.username, 
-        newPasswordHash: newPasswordInputHash
+        newPassword: newPasswordInput
       ).then(
         (_) => CustomAlertDialog.alertDialogTitle(
           AlertMessages.passwordUpdatedTitle, AlertMessages.passwordHasBeenUpdated
