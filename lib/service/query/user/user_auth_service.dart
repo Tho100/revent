@@ -32,6 +32,10 @@ class UserAuthService extends BaseQueryService {
       'password': password
     });
 
+    if (response.statusCode != 200) {
+      throw Exception();
+    } 
+
     return response.statusCode == 200;
 
   }
