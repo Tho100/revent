@@ -1,4 +1,3 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
@@ -40,19 +39,21 @@ class UserAuthService extends BaseQueryService {
 
   }
 
-  Future<void> updateAccountAuth({
+  Future<bool> updateAccountAuth({
     required String username,
     required String newPassword
   }) async {
 
-    const query = 'UPDATE ${TableNames.userInfo} SET password = :new_password WHERE username = :username';
-    
-    final params = {
+    final response = await ApiClient.put(ApiPath.updateUserAuth, {
       'username': username,
-      'new_password': newPassword
-    };
+      'new_password': newPassword,
+    });
 
-    await executeQuery(query, params);
+    if (response.statusCode != 200) {
+      throw Exception();
+    }
+
+    return response.statusCode == 200;
 
   }
 
