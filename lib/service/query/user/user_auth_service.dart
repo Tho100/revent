@@ -3,8 +3,8 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
 class UserAuthService extends BaseQueryService {
-// TODO: Make these classes static
-  Future<Map<String, dynamic>> getLoginAuthentication({
+
+  static Future<Map<String, dynamic>> getLoginAuthentication({
     required String email, 
     required String password
   }) async {
@@ -21,7 +21,7 @@ class UserAuthService extends BaseQueryService {
 
   }
 
-  Future<bool> verifyUserAuth({
+  static Future<bool> verifyUserAuth({
     required String username,
     required String password
   }) async {
@@ -39,7 +39,7 @@ class UserAuthService extends BaseQueryService {
 
   }
 
-  Future<bool> updateAccountAuth({
+  static Future<bool> updateAccountAuth({
     required String username,
     required String newPassword
   }) async {

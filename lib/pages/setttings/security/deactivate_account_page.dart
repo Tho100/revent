@@ -42,7 +42,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
 
       final passwordInput = currentPasswordController.text;
 
-      final isPasswordMatched = await UserAuthService().verifyUserAuth(
+      final isPasswordMatched = await UserAuthService.verifyUserAuth(
         username: userProvider.user.username, password: passwordInput
       );
 

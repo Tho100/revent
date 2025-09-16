@@ -27,8 +27,6 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
 
     try {
 
-      final userAuth = UserAuthService();
-
       final currentPasswordInput = currentPasswordController.text.trim();
       final newPasswordInput = newPasswordController.text.trim();
 
@@ -42,7 +40,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
         return;
       }
 
-      final isPasswordMatched = await userAuth.verifyUserAuth(
+      final isPasswordMatched = await UserAuthService.verifyUserAuth(
         username: userProvider.user.username, password: currentPasswordInput
       );
 
@@ -51,7 +49,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
         return;
       }
 
-      await userAuth.updateAccountAuth(
+      await UserAuthService.updateAccountAuth(
         username: userProvider.user.username, 
         newPassword: newPasswordInput
       ).then(
