@@ -10,5 +10,6 @@ class ApiPath {
   static const updateUserAuth = '$updateUser/update-auth';
 
   static const createVent = '/create-vent';
+  static const createDefaultVent = '$createVent/default-vent';
 
 }
