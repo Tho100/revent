@@ -93,6 +93,7 @@ class _SavedPageState extends State<SavedPage> with
       width: MediaQuery.of(context).size.width * .92,
       height: 67,
       child: MainTextField(
+        maxLines: 1,
         controller: searchController,
         hintText: 'Search in saved...',
         onChange: (searchText) => _searchSavedVents(searchText: searchText)
