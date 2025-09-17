@@ -19,7 +19,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
     required this.tags
   });
 
-  Future<void> newVent({
+  Future<Map<String, dynamic>> newVent({
     required bool markedNsfw,
     required bool allowCommenting,
   }) async {
@@ -32,12 +32,13 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
       'marked_nsfw': markedNsfw,
       'comment_enabled': allowCommenting,
     });
-
-    if (response.statusCode != 201) {
-      throw Exception();
-    } 
-
+    
     _addVent(markedNsfw: markedNsfw);
+
+    return {
+      'status_code': response.statusCode,
+      'body': response.body,
+    };
 
   }
 
@@ -61,7 +62,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
 
   }
 
-  Future<void> newVaultVent() async {
+  Future<Map<String, dynamic>> newVaultVent() async {
 
     final response = await ApiClient.post(ApiPath.createVaultVent, {
       'creator': userProvider.user.username,
@@ -70,9 +71,10 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
       'tags': tags
     });
 
-    if (response.statusCode != 201) {
-      throw Exception();
-    } 
+    return {
+      'status_code': response.statusCode,
+      'body': response.body,
+    };
 
   }
 

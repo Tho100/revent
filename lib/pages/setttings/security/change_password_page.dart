@@ -40,11 +40,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
         return;
       }
 
-      final isPasswordMatched = await UserAuthService.verifyUserAuth(
+      final verifyAuthResponse = await UserAuthService.verifyUserAuth(
         username: userProvider.user.username, password: currentPasswordInput
       );
 
-      if (!isPasswordMatched) {
+      if (verifyAuthResponse['status_code'] == 401) {
         CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);
         return;
       }

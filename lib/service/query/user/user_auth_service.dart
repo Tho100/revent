@@ -21,7 +21,7 @@ class UserAuthService extends BaseQueryService {
 
   }
 
-  static Future<bool> verifyUserAuth({
+  static Future<Map<String, dynamic>> verifyUserAuth({
     required String username,
     required String password
   }) async {
@@ -31,15 +31,14 @@ class UserAuthService extends BaseQueryService {
       'password': password
     });
 
-    if (response.statusCode != 200) {
-      throw Exception();
-    } 
-
-    return response.statusCode == 200;
+    return {
+      'status_code': response.statusCode,
+      'body': response.body,
+    };
 
   }
 
-  static Future<bool> updateAccountAuth({
+  static Future<Map<String, dynamic>> updateAccountAuth({
     required String username,
     required String newPassword
   }) async {
@@ -49,11 +48,10 @@ class UserAuthService extends BaseQueryService {
       'new_password': newPassword,
     });
 
-    if (response.statusCode != 200) {
-      throw Exception();
-    }
-
-    return response.statusCode == 200;
+    return {
+      'status_code': response.statusCode,
+      'body': response.body,
+    };
 
   }
 
