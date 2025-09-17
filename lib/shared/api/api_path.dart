@@ -11,5 +11,6 @@ class ApiPath {
 
   static const createVent = '/create-vent';
   static const createDefaultVent = '$createVent/default-vent';
+  static const createVaultVent = '$createVent/vault-vent';
 
 }
