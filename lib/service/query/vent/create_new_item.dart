@@ -1,4 +1,3 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
@@ -20,7 +19,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
     required this.tags
   });
 
-  Future<void> newVent({
+  Future<Map<String, dynamic>> newVent({
     required bool markedNsfw,
     required bool allowCommenting,
   }) async {
@@ -33,12 +32,13 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
       'marked_nsfw': markedNsfw,
       'comment_enabled': allowCommenting,
     });
-
-    if (response.statusCode != 201) {
-      throw Exception();
-    } 
-
+    
     _addVent(markedNsfw: markedNsfw);
+
+    return {
+      'status_code': response.statusCode,
+      'body': response.body,
+    };
 
   }
 
@@ -62,24 +62,19 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
 
   }
 
-  Future<void> newVaultVent() async {
+  Future<Map<String, dynamic>> newVaultVent() async {
 
-    const insertVentInfoQuery = 
-    '''
-      INSERT INTO ${TableNames.vaultVentInfo} 
-        (creator, title, body_text, tags) 
-      VALUES 
-        (:creator, :title, :body_text, :tags)
-    ''';
-
-    final params = {
+    final response = await ApiClient.post(ApiPath.createVaultVent, {
       'creator': userProvider.user.username,
       'title': title,
       'body_text': body,
       'tags': tags
-    };
+    });
 
-    await executeQuery(insertVentInfoQuery, params);
+    return {
+      'status_code': response.statusCode,
+      'body': response.body,
+    };
 
   }
 

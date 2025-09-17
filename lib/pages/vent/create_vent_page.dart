@@ -74,6 +74,12 @@ class _CreateVentPageState extends State<CreateVentPage> with
       return;
     }
 
+    final loading = SpinnerLoading(context: context);
+
+    if (context.mounted) {
+      loading.startLoading();
+    }
+
     try {
 
       final ventChecker = VentChecker(title: ventTitle);
@@ -88,17 +94,23 @@ class _CreateVentPageState extends State<CreateVentPage> with
       }
 
       if (vaultVentNotifier.value) {
-        await _createVaultVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
+        await _createVaultVent(title: ventTitle, bodyText: ventBodyText, tags: tags).then(
+          (_) => SnackBarDialog.temporarySnack(message: AlertMessages.ventVaulted)
+        );
         return;
       }
 
-      await _createVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
+      await _createVent(title: ventTitle, bodyText: ventBodyText, tags: tags).then(
+        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.ventPosted)
+      );
 
       isPostPressed = true;
         
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);
     }
+
+    loading.stopLoading();
 
   }
 
@@ -107,22 +119,17 @@ class _CreateVentPageState extends State<CreateVentPage> with
     required String bodyText,
     required String tags
   }) async {
-    
-    final loading = SpinnerLoading(context: context);
 
-    if (context.mounted) {
-      loading.startLoading();
+    final ventResponse = await CreateNewItem(title: title, body: bodyText, tags: tags).newVaultVent();
+
+    if (ventResponse['status_code'] == 400) {
+      SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);
+      return;
     }
-
-    await CreateNewItem(title: title, body: bodyText, tags: tags).newVaultVent();
-
-    loading.stopLoading();
-
-    SnackBarDialog.temporarySnack(message: AlertMessages.ventVaulted);
     
     if(context.mounted) {
 
-      Navigator.pop(context);        
+      Navigator.pop(context);
 
       Navigator.push(
         context,
@@ -130,7 +137,6 @@ class _CreateVentPageState extends State<CreateVentPage> with
           builder: (_) => const VaultVentPage()
         )
       );
-
     }
 
   }
@@ -141,20 +147,15 @@ class _CreateVentPageState extends State<CreateVentPage> with
     required String tags
   }) async {
 
-    final loading = SpinnerLoading(context: context);
-
-    if (context.mounted) {
-      loading.startLoading();
-    }
-
-    await CreateNewItem(title: title, body: bodyText, tags: tags).newVent(
+    final ventResponse = await CreateNewItem(title: title, body: bodyText, tags: tags).newVent(
       markedNsfw: markAsNsfwNotifier.value,
       allowCommenting: allowCommentingNotifier.value
     );
 
-    loading.stopLoading();
-
-    SnackBarDialog.temporarySnack(message: AlertMessages.ventPosted);
+    if (ventResponse['status_code'] == 400) {
+      SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);
+      return;
+    }
 
     if(context.mounted) {
       Navigator.pop(context);        

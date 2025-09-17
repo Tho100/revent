@@ -27,7 +27,7 @@ class UserLoginService {
     required bool isRememberMeChecked
   }) async {
 
-    final responses = await UserAuthService().getLoginAuthentication(
+    final responses = await UserAuthService.getLoginAuthentication(
       email: email, password: password
     );
 
