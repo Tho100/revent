@@ -13,4 +13,9 @@ class ApiPath {
   static const createDefaultVent = '$createVent/default-vent';
   static const createVaultVent = '$createVent/vault-vent';
 
+  static const ventActions = '/vent-actions';
+  static const deleteVent = '$ventActions/delete-vent';
+  static const likeVent = '$ventActions/delete-vent';
+  static const saveVent = '$ventActions/delete-vent';
+
 }

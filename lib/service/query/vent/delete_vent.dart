@@ -1,60 +1,31 @@
-import 'package:revent/global/table_names.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/service/query/general/post_id_getter.dart';
 
 class DeleteVent extends BaseQueryService with UserProfileProviderService, VentProviderService {
-
+// TODO: Replace title with postId
   final String title;
 
   DeleteVent({required this.title});
 
-  Future<void> delete() async {
+  Future<Map<String, int>> delete() async {
 
     final postId = activeVentProvider.ventData.postId != 0 
       ? activeVentProvider.ventData.postId 
       : await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
-    final conn = await connection();
+    final response = await ApiClient.deleteById(ApiPath.deleteVent, postId);
 
-    await conn.transactional((txn) async {
-      
-      await txn.execute(
-        '''
-          DELETE vi, lvi, svi
-          FROM ${TableNames.ventInfo} vi
-            LEFT JOIN ${TableNames.likedVentInfo} lvi ON lvi.post_id = vi.post_id
-            LEFT JOIN ${TableNames.savedVentInfo} svi ON svi.post_id = vi.post_id
-          WHERE vi.post_id = :post_id
-        ''',
-        {'post_id': postId}
-      );
+    if (response.statusCode == 204) {
+      _removeVent();
+    }
 
-      await txn.execute(
-        '''
-          DELETE cli
-            FROM ${TableNames.commentsLikesInfo} cli
-          INNER JOIN ${TableNames.commentsInfo} ci
-            ON cli.comment_id = ci.comment_id
-          WHERE ci.post_id = :post_id
-        ''',
-        {'post_id': postId}
-      );
-
-      await txn.execute(
-        'DELETE FROM ${TableNames.commentsInfo} WHERE post_id = :post_id',
-        {'post_id': postId}
-      );
-
-      await txn.execute(
-        'UPDATE ${TableNames.userProfileInfo} SET posts = posts - 1 WHERE username = :username',
-        {'username': userProvider.user.username}
-      );
-
-    }).then(
-      (_) => _removeVent()
-    );
+    return {
+      'status_code': response.statusCode
+    };
 
   }
 

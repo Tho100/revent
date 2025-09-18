@@ -24,7 +24,7 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
     required bool allowCommenting,
   }) async {
 
-    final response = await ApiClient.post(ApiPath.createVent, {
+    final response = await ApiClient.post(ApiPath.createDefaultVent, {
       'creator': userProvider.user.username,
       'title': title,
       'body_text': body,
