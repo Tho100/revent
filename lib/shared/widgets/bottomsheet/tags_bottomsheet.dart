@@ -33,28 +33,28 @@ class BottomsheetTagsSelection with TagsProviderService {
           selected: chipSelected[index],
           onSelected: (bool selected) {
 
-            chipsSelectedNotifier.value[index] = selected;
-            chipsSelectedNotifier.value = List.from(chipSelected);
-
             final tags = customTagsController.text.split(' ').where((tag) => tag.isNotEmpty).toList();
 
             if (selected) {
-
-              if (tags.length >= ValidationLimits.maxPostTags) {
-                chipsSelectedNotifier.value[2] = false;
-                tags.removeAt(2);
-              }
               
-              tags.add(label);
+              if (tags.length >= ValidationLimits.maxPostTags) {
+                tags.removeLast();
+              }
 
+              tags.add(label);
+              
             } else {
               tags.remove(label);
-
             }
 
             customTagsController.text = tags.join(' ');
 
             tagsProvider.addTags(tags);
+
+            chipsSelectedNotifier.value = List.generate(
+              chipsTags.length,
+              (i) => tags.contains(chipsTags[i]),
+            );
 
           },
           selectedColor: ThemeColor.contentPrimary,
@@ -181,8 +181,8 @@ class BottomsheetTagsSelection with TagsProviderService {
                           chipsSelectedNotifier.value = List.generate(chipsTags.length, (index) {
                             return cleanTags.contains(chipsTags[index]);
                           });
+                          
                         },
-
                       ),
                     );
                   },

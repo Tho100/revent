@@ -222,11 +222,11 @@ class _CreateVentPageState extends State<CreateVentPage> with
       selector: (_, tagsData) => tagsData.selectedTags,
       builder: (_, selectedTags, __) {
 
-        if (tagsProvider.selectedTags.isEmpty) {
+        if (selectedTags.isEmpty) {
           return const SizedBox.shrink();
         }
 
-        final tags = tagsProvider.selectedTags.map((tag) => "#$tag").join(' ');
+        final tags = selectedTags.map((tag) => "#$tag").join(' ');
         
         return Align(
           alignment: Alignment.centerLeft,
