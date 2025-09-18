@@ -56,11 +56,16 @@ class VentActionsHandler {
 
     try {
 
-      await DeleteVent(title: title).delete();
+      final deleteVentResponse = await DeleteVent(title: title).delete();
+
+      if (deleteVentResponse['status_code'] != 204) {
+        _showErrorSnack(AlertMessages.deletePostFailed);
+        return;
+      }
 
       _showTemporarySnack(AlertMessages.postDeleted);
-      _closeScreens(1);
-
+      _closeScreens(2);
+  
     } catch (_) {
       _showErrorSnack(AlertMessages.deletePostFailed);
     }

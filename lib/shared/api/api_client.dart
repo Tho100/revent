@@ -52,6 +52,22 @@ class ApiClient {
     
   }
 
+  static Future<ApiResponse> deleteById(String path, int id) async {
+
+    final uri = ApiConfig.endpoint('$path/$id');
+
+    final response = await http.delete(
+      uri,
+      headers: ApiConfig.jsonHeaders,
+    ).timeout(const Duration(seconds: 15));
+
+    return ApiResponse(
+      statusCode: response.statusCode,
+      body: _decodedBody(response.body),
+    );
+    
+  }
+
   static Map<String, dynamic>? _decodedBody(String body) {
 
     Map<String, dynamic>? decodedBody;

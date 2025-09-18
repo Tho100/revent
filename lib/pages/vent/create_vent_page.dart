@@ -122,7 +122,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
 
     final ventResponse = await CreateNewItem(title: title, body: bodyText, tags: tags).newVaultVent();
 
-    if (ventResponse['status_code'] == 400) {
+    if (ventResponse['status_code'] != 201) {
       SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);
       return;
     }
@@ -152,7 +152,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
       allowCommenting: allowCommentingNotifier.value
     );
 
-    if (ventResponse['status_code'] == 400) {
+    if (ventResponse['status_code'] != 201) {
       SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);
       return;
     }
@@ -222,11 +222,11 @@ class _CreateVentPageState extends State<CreateVentPage> with
       selector: (_, tagsData) => tagsData.selectedTags,
       builder: (_, selectedTags, __) {
 
-        if (tagsProvider.selectedTags.isEmpty) {
+        if (selectedTags.isEmpty) {
           return const SizedBox.shrink();
         }
 
-        final tags = tagsProvider.selectedTags.map((tag) => "#$tag").join(' ');
+        final tags = selectedTags.map((tag) => "#$tag").join(' ');
         
         return Align(
           alignment: Alignment.centerLeft,
