@@ -9,7 +9,6 @@ import 'package:revent/global/validation_limits.dart';
 import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -23,6 +22,7 @@ import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class DefaultVentPreviewer extends StatefulWidget {
 
+  final int postId;
   final String title;
   final String bodyText;
   final String tags;
@@ -40,6 +40,7 @@ class DefaultVentPreviewer extends StatefulWidget {
   final bool disableActionButtons;
 
   const DefaultVentPreviewer({
+    required this.postId,
     required this.title,
     required this.bodyText,
     required this.tags,
@@ -66,12 +67,11 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
 
   late VentPreviewerWidgets ventPreviewer;
   late VentActionsHandler actionsHandler;
-
-  int postId = 0;
   
   void _initializeVentPreviewer() {
     ventPreviewer = VentPreviewerWidgets(
       context: context,
+      postId: widget.postId,
       title: widget.title,
       bodyText: widget.bodyText,
       creator: widget.creator,
@@ -106,7 +106,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
         final body = isInSearchResults
           ? await _getVentBodyText() : widget.bodyText;
 
-        NavigatePage.editVentPage(title: widget.title, body: body);
+        NavigatePage.editVentPage(postId: widget.postId, title: widget.title, body: body);
 
     });
 
@@ -143,25 +143,17 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
   }
 
   void _initializeVentActionsHandler() {
-    actionsHandler = VentActionsHandler(              
-      title: widget.title, 
-      creator: widget.creator, 
-      context: context
+    actionsHandler = VentActionsHandler(          
+      context: context,
+      postId: widget.postId
     );
-  }
-
-  Future<void> _initializePostId() async {
-    postId = await PostIdGetter(
-      title: widget.title, 
-      creator: widget.creator
-    ).getPostId();
   }
 
   Future<String> _initializeBodyText() async {
 
     final hasActiveBodyText = 
       activeVentProvider.ventData.body.isNotEmpty && 
-      activeVentProvider.ventData.postId == postId;
+      activeVentProvider.ventData.postId == widget.postId;
 
     final getBodyTextOnCondition = 
       navigationProvider.currentRoute == AppRoute.searchResults ||
@@ -173,7 +165,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
   }
 
   Future<String> _getVentBodyText() async {
-    return await VentDataGetter(postId: postId).getBodyText();
+    return await VentDataGetter(postId: widget.postId).getBodyText();
   }
 
   void _navigateToVentPostPage() async {
@@ -183,7 +175,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
         context,
         MaterialPageRoute(
           builder: (_) => VentPostPage(
-            postId: postId,
+            postId: widget.postId,
             title: widget.title, 
             bodyText: bodyText, 
             tags: widget.tags,
@@ -342,9 +334,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
   void initState() {
     super.initState();
     _initializeVentActionsHandler();
-    _initializePostId().then(
-      (_) => _initializeBodyText()
-    );
+    _initializeBodyText();
     _initializeVentPreviewer();
   }
 

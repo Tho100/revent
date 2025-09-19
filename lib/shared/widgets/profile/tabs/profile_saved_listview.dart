@@ -30,6 +30,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
       padding: const EdgeInsets.only(bottom: 16),
       child: DefaultVentPreviewer(
         isMyProfile: widget.isMyProfile,
+        postId: savedData.postIds[index],
         title: savedData.titles[index],
         bodyText: savedData.bodyText[index],
         tags: savedData.tags[index],

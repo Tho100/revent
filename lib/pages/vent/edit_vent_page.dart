@@ -13,11 +13,13 @@ import 'package:revent/shared/widgets/text/text_formatting_toolbar.dart';
 
 class EditVentPage extends StatefulWidget {
 
+  final int postId;
   final String title;
   final String body;
   final VentType ventType;
 
   const EditVentPage({
+    required this.postId,
     required this.title,
     required this.body,
     required this.ventType,
@@ -51,14 +53,14 @@ class _EditVentPageState extends State<EditVentPage> with VentPostController {
       if (widget.ventType == VentType.vault) {
 
         await SaveVentEdit(
-          title: widget.title, 
+          postId: widget.postId, 
           newBody: newBodyText, 
         ).saveVault();
 
       } else {
 
         await SaveVentEdit(
-          title: widget.title, 
+          postId: widget.postId, 
           newBody: newBodyText, 
         ).save();
 

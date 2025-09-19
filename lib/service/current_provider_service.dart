@@ -15,13 +15,9 @@ import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
 
 class CurrentProviderService {
 
-  final String? title;
-  final String? creator;
+  final int? postId;
 
-  CurrentProviderService({
-    this.title,
-    this.creator,
-  });
+  CurrentProviderService({this.postId});
 
   final _navigation = getIt.navigationProvider;
 
@@ -38,14 +34,14 @@ class CurrentProviderService {
         ? ventData.myProfile
         : ventData.userProfile;
 
-      ventIndex = profileData.titles.indexWhere(
-        (ventTitle) => ventTitle == title,
+      ventIndex = profileData.postIds.indexWhere(
+        (currentPostId) => currentPostId == postId
       );
 
     } else {
 
       ventIndex = ventData.vents.indexWhere(
-        (vent) => vent.title == title && vent.creator == creator,
+        (vent) => vent.postId == postId
       );
 
     }

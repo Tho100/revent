@@ -32,8 +32,10 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
       'marked_nsfw': markedNsfw,
       'comment_enabled': allowCommenting,
     });
+
+    final postId = response.body!['post_id'] as int;
     
-    _addVent(markedNsfw: markedNsfw);
+    _addVent(postId: postId, markedNsfw: markedNsfw);
 
     return {
       'status_code': response.statusCode,
@@ -42,13 +44,17 @@ class CreateNewItem extends BaseQueryService with UserProfileProviderService {
 
   }
 
-  void _addVent({required bool markedNsfw}) { 
+  void _addVent({
+    required int postId, 
+    required bool markedNsfw
+  }) { 
 
     final formattedTimestamp = FormatDate().formatPostTimestamp(
       DateTime.now()
     );
 
     final newVent = VentLatestData(
+      postId: postId,
       title: title,
       bodyText: markedNsfw ? '' : body, 
       tags: tags,

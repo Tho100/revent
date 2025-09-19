@@ -3,22 +3,24 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/vent/pin_vent.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/vault/delete_vault_vent.dart';
 import 'package:revent/service/query/vent/unsave_vent.dart';
 import 'package:revent/service/query/vent/delete_vent.dart';
 import 'package:revent/service/query/vent/vent_actions.dart';
 
-class VentActionsHandler {
+class VentActionsHandler with NavigationProviderService {
 
   final BuildContext context;
-  final String title; // TODO: Try to replace with postId
-  final String creator; // and get rid of this
+  final int postId;
+
+  String? creator;
 
   VentActionsHandler({
     required this.context,
-    required this.title,
-    required this.creator
+    required this.postId,
+    this.creator
   });
 
   void _showTemporarySnack(String message) {
@@ -28,7 +30,7 @@ class VentActionsHandler {
   void _showErrorSnack(String message) {
     SnackBarDialog.errorSnack(message: message);
   }
-
+// TODO: This shouldn't exists
   void _closeScreens(int count) {
     for (int i = 0; i < count; i++) {
       Navigator.pop(context);
@@ -44,7 +46,7 @@ class VentActionsHandler {
         return;
       }
 
-      await VentActions(title: title, creator: creator).likePost();
+      await VentActions(postId: postId).likePost();
 
     } catch (_) {
       _showErrorSnack(AlertMessages.likePostFailed);
@@ -56,7 +58,7 @@ class VentActionsHandler {
 
     try {
 
-      final deleteVentResponse = await DeleteVent(title: title).delete();
+      final deleteVentResponse = await DeleteVent(postId: postId).delete();
 
       if (deleteVentResponse['status_code'] != 204) {
         _showErrorSnack(AlertMessages.deletePostFailed);
@@ -64,7 +66,7 @@ class VentActionsHandler {
       }
 
       _showTemporarySnack(AlertMessages.postDeleted);
-      _closeScreens(2);
+      _closeScreens(1);
   
     } catch (_) {
       _showErrorSnack(AlertMessages.deletePostFailed);
@@ -72,7 +74,7 @@ class VentActionsHandler {
 
   }
 
-  Future<void> deleteVaultPost({required int postId}) async {
+  Future<void> deleteVaultPost() async {
 
     try {
 
@@ -96,7 +98,7 @@ class VentActionsHandler {
 
     try {
 
-      await UnsaveVent(title: title, creator: creator).unsave();
+      await UnsaveVent(postId: postId).unsave();
         
       _showTemporarySnack(AlertMessages.removedSavedPost);
       _closeScreens(1);
@@ -111,7 +113,7 @@ class VentActionsHandler {
 
     try {
 
-      await VentActions(title: title, creator: creator).savePost().then(
+      await VentActions(postId: postId).savePost().then(
         (_) => _showTemporarySnack(isAlreadySaved ? AlertMessages.removedSavedPost : AlertMessages.postSaved)
       );
 
@@ -133,7 +135,7 @@ class VentActionsHandler {
         return;
       }
 
-      await PinVent(title: title).pin();
+      await PinVent(postId: postId).pin();
 
       _showTemporarySnack(AlertMessages.pinnedPost);
       _closeScreens(1);
@@ -148,7 +150,7 @@ class VentActionsHandler {
 
     try {
       
-      await PinVent(title: title).unpin();
+      await PinVent(postId: postId).unpin();
       
       _showTemporarySnack(AlertMessages.removedPinnedPost);
       _closeScreens(1);

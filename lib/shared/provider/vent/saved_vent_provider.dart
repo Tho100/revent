@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class SavedVentData {
 
+  int postId;
+
   String title;
   String bodyText;
   String tags;
@@ -20,6 +22,7 @@ class SavedVentData {
   bool isNsfw;
 
   SavedVentData({
+    required this.postId,
     required this.title,
     required this.bodyText,
     required this.tags,

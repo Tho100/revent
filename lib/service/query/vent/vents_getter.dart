@@ -241,6 +241,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     );
 
     return {
+      'post_id': postIds,
       'title': titles,
       'body_text': modifiedBodyText,
       'tags': tags,

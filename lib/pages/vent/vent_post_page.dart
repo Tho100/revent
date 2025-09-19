@@ -124,7 +124,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   void _initializeVentActionsHandler() {
     actionsHandler = VentActionsHandler(              
-      title: widget.title, 
+      postId: widget.postId,
       creator: widget.creator, 
       context: context
     );
@@ -210,9 +210,9 @@ class _VentPostPageState extends State<VentPostPage> with
       message: AlertMessages.deletePost, 
       buttonMessage: 'Delete',
       onPressedEvent: () async {
-        await actionsHandler.deletePost().then(
-          (_) => Navigator.pop(context)
-        );
+        await actionsHandler.deletePost()
+          .then((_) => Navigator.pop(context))
+          .then((_) => Navigator.pop(context));
       }
     );
   }
@@ -231,6 +231,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   void _navigateToEditVentPage() {
     NavigatePage.editVentPage(
+      postId: widget.postId,
       title: widget.title, 
       body: activeVentProvider.ventData.body
     );
@@ -261,7 +262,7 @@ class _VentPostPageState extends State<VentPostPage> with
   Map<String, dynamic> _getVentProvider() {
 
     final currentProvider = CurrentProviderService(
-      title: widget.title, creator: widget.creator
+      postId: widget.postId
     ).getRealTimeProvider(context: context);
 
     return currentProvider;
@@ -476,15 +477,16 @@ class _VentPostPageState extends State<VentPostPage> with
     return Padding(
       padding: const EdgeInsets.only(right: 18.0),
       child: VentPreviewerWidgets(
-      context: AppKeys.navigatorKey.currentContext!,
-      title: widget.title,
-      creator: widget.creator,
-      editOnPressed: () => context.popAndRun(_navigateToEditVentPage),
-      copyOnPressed: () => context.popAndRun(_onCopyBodyTextPressed),
-      blockOnPressed: () => context.popAndRun(_onBlockUserPressed),
-      reportOnPressed: () => context.popAndRun(_onReportPressed),
-      deleteOnPressed: _onDeletePressed
-    ).buildVentOptionsButton(
+        context: AppKeys.navigatorKey.currentContext!,
+        postId: widget.postId,
+        title: widget.title,
+        creator: widget.creator,
+        editOnPressed: () => context.popAndRun(_navigateToEditVentPage),
+        copyOnPressed: () => context.popAndRun(_onCopyBodyTextPressed),
+        blockOnPressed: () => context.popAndRun(_onBlockUserPressed),
+        reportOnPressed: () => context.popAndRun(_onReportPressed),
+        deleteOnPressed: _onDeletePressed
+      ).buildVentOptionsButton(
         customIconWidget: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.contentPrimary)
       ),
     );

@@ -38,18 +38,12 @@ class VaultVentDataGetter extends BaseQueryService {
 
   }
 
-  Future<String> getBodyText({
-    required String title,
-    required String creator
-  }) async {
-    // TODO: Use postId instead of title/creator
+  Future<String> getBodyText({required int postId}) async {
+
     const query = 
-      'SELECT body_text FROM ${TableNames.vaultVentInfo} WHERE title = :title AND creator = :creator';
+      'SELECT body_text FROM ${TableNames.vaultVentInfo} WHERE post_id = :post_id';
       
-    final params = {
-      'title': title,
-      'creator': creator
-    };
+    final params = {'post_id': postId};
 
     final results = await executeQuery(query, params); 
 

@@ -80,6 +80,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: DefaultVentPreviewer(
+        postId: ventData.postId,
         title: ventData.title,
         bodyText: '',
         tags: ventData.tags,

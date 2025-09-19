@@ -65,14 +65,8 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   List<_VaultVentsData> _allVaultVents = [];
 
-  Future<String> _getBodyText(String title) async {
-
-    return await _vaultDataGetter.getBodyText(
-      title: title, 
-      creator: userProvider.user.username
-    );
-
-  } 
+  Future<String> _getBodyText(int postId) async 
+    => await _vaultDataGetter.getBodyText(postId: postId);
 
   Future<String> _getLastEdit(String title) async {
 
@@ -90,9 +84,9 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   }
 
-  void _navigateViewVaultVentPage(String title, String tags, String postTimestamp) async {
+  void _navigateViewVaultVentPage(int postId, String title, String tags, String postTimestamp) async {
 
-    final bodyText = await _getBodyText(title);
+    final bodyText = await _getBodyText(postId);
     final lastEdit = await _getLastEdit(title);
 
     Navigator.push(
@@ -173,12 +167,10 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   }
 
   void _onDeleteVaultPressed(int postId) async {
-// TODO: Delete creator, title
     await VentActionsHandler(
-      title: '', 
-      creator: '', 
-      context: context
-    ).deleteVaultPost(postId: postId).then(
+      context: context,
+      postId: postId
+    ).deleteVaultPost().then(
       (_) => _removeVentFromList(postId)
     );
 
@@ -227,20 +219,24 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
     final ventPreviewer = VentPreviewerWidgets(
       context: context,
+      postId: postId,
       title: title,
       tags: tags,
       creator: userProvider.user.username,
       pfpData: profileProvider.profile.profilePicture,
       postTimestamp: postTimestamp,
-      navigateVentPostPageOnPressed: () => _navigateViewVaultVentPage(title, tags, postTimestamp),
+      navigateVentPostPageOnPressed: () => _navigateViewVaultVentPage(postId, title, tags, postTimestamp),
       editOnPressed: () async {
 
         Navigator.pop(AppKeys.navigatorKey.currentContext!);
         
-        final bodyText = await _getBodyText(title);
+        final bodyText = await _getBodyText(postId);
 
         NavigatePage.editVentPage(
-          title: title, body: bodyText, ventType: VentType.vault
+          postId: postId, 
+          title: title, 
+          body: bodyText, 
+          ventType: VentType.vault
         );
 
       },
