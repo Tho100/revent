@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class VentFollowingData {
 
+  int postId;
+
   String title;
   String bodyText;
   String tags;
@@ -20,6 +22,7 @@ class VentFollowingData {
   bool isNsfw;
 
   VentFollowingData({
+    required this.postId,
     required this.title,
     required this.bodyText,
     required this.tags,

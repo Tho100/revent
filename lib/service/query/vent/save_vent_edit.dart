@@ -2,23 +2,18 @@ import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 
 class SaveVentEdit extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
-  final String title;
+  final int postId;
   final String newBody;
 
   SaveVentEdit({
-    required this.title,
+    required this.postId,
     required this.newBody,
   });
 
   Future<void> save() async {
-
-    final postId = activeVentProvider.ventData.postId != 0
-      ? activeVentProvider.ventData.postId
-      : await PostIdGetter(title: title, creator: userProvider.user.username).getPostId();
 
     const query = 
       'UPDATE ${TableNames.ventInfo} SET body_text = :new_body WHERE post_id = :post_id';
@@ -39,11 +34,10 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
   Future<void> saveVault() async {
 
     const query = 
-      'UPDATE ${TableNames.vaultVentInfo} SET body_text = :new_body WHERE title = :title AND creator = :creator';
+      'UPDATE ${TableNames.vaultVentInfo} SET body_text = :new_body WHERE post_id = :post_id';
 
     final params = {
-      'title': title,
-      'creator': userProvider.user.username,
+      'post_id': postId,
       'new_body': newBody
     };
 
@@ -60,13 +54,12 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
     final dateTimeNow = DateTime.now();
 
     final query = isFromVault 
-      ? 'UPDATE ${TableNames.vaultVentInfo} SET last_edit = :last_edit WHERE title = :title AND creator = :creator'
+      ? 'UPDATE ${TableNames.vaultVentInfo} SET last_edit = :last_edit WHERE post_id = :post_id'
       : 'UPDATE ${TableNames.ventInfo} SET last_edit = :last_edit WHERE post_id = :post_id';
 
     final params = isFromVault 
       ? {
-        'title': title,
-        'creator': userProvider.user.username,
+        'post_id': postId,
         'last_edit': dateTimeNow
         } 
       : {

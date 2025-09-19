@@ -21,6 +21,7 @@ class VentPreviewerWidgets {
 
   final BuildContext context;
 
+  final int? postId;
   final String? title;
   final String? bodyText;
   final String? tags;
@@ -43,6 +44,7 @@ class VentPreviewerWidgets {
 
   VentPreviewerWidgets({
     required this.context,
+    this.postId = 0,
     this.title = '',
     this.bodyText = '',
     this.tags,
@@ -123,9 +125,7 @@ class VentPreviewerWidgets {
 
   Widget buildLikeButton() {
 
-    final getProvider = CurrentProviderService(
-      title: title!, creator: creator!
-    ).getRealTimeProvider(context: context);
+    final getProvider = CurrentProviderService(postId: postId).getRealTimeProvider(context: context);
 
     final ventIndex = getProvider['vent_index'];
     final ventData = getProvider['vent_data'];
@@ -137,9 +137,9 @@ class VentPreviewerWidgets {
       isLiked: ventIndex == -1 ? false : likesInfo['is_liked'],
       onPressed: () async {
         await VentActionsHandler(
-          title: title!, 
-          creator: creator!, 
-          context: context
+          context: context,
+          postId: postId!,
+          creator: creator! 
         ).likePost();
       }
     );
@@ -148,9 +148,7 @@ class VentPreviewerWidgets {
 
   Widget buildSaveButton() {
 
-    final getProvider = CurrentProviderService(
-      title: title!, creator: creator!
-    ).getRealTimeProvider(context: context);
+    final getProvider = CurrentProviderService(postId: postId).getRealTimeProvider(context: context);
 
     final ventIndex = getProvider['vent_index'];
     final ventData = getProvider['vent_data'];
@@ -161,9 +159,8 @@ class VentPreviewerWidgets {
       isSaved: isSaved,
       onPressed: () async {
         await VentActionsHandler(
-          title: title!, 
-          creator: creator!, 
-          context: context
+          context: context,
+          postId: postId!
         ).savePost(isAlreadySaved: isSaved);
       }
     );

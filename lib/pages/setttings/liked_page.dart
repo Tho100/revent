@@ -75,6 +75,7 @@ class _LikedPageState extends State<LikedPage> with
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: DefaultVentPreviewer(
+        postId: vents.postId,
         title: vents.title, 
         bodyText: vents.bodyText,
         tags: vents.tags,

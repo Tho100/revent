@@ -6,7 +6,6 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 
 class VentActions extends BaseQueryService with 
@@ -14,36 +13,19 @@ class VentActions extends BaseQueryService with
   CommentsProviderService, 
   VentProviderService {
 
-  final String title;
-  final String creator;
+  final int postId;
 
-  VentActions({
-    required this.title,
-    required this.creator
-  });
+  VentActions({required this.postId});
 
   Map<String, dynamic> _getVentProvider() {
 
-    final currentProvider = CurrentProviderService(
-      title: title, 
-      creator: creator
-    ).getProvider();
+    final currentProvider = CurrentProviderService(postId: postId).getProvider();
 
     return currentProvider;
 
   }
 
-  Future<int> _getPostId() async {
-
-    return activeVentProvider.ventData.postId != 0 
-      ? activeVentProvider.ventData.postId
-      : await PostIdGetter(title: title, creator: creator).getPostId();
-
-  }
-
   Future<void> likePost() async {
-
-    final postId = await _getPostId();
 
     const likesInfoQueryParams = 'WHERE post_id = :post_id AND liked_by = :liked_by';
 
@@ -109,8 +91,6 @@ class VentActions extends BaseQueryService with
   }
 
   Future<void> savePost() async {
-
-    final postId = await _getPostId();
 
     const savedInfoQueryParams = 'WHERE post_id = :post_id AND saved_by = :saved_by';
 

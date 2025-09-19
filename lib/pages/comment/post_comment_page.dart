@@ -49,8 +49,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
         } 
 
         await VentActions(
-          title: activeVentProvider.ventData.title, 
-          creator: activeVentProvider.ventData.creator
+          postId: activeVentProvider.ventData.postId
         ).sendComment(comment: commentText).then(
           (_) => Navigator.pop(context)
         );

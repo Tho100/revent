@@ -20,6 +20,7 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
 
   Future<dynamic> _rawVentsData({required Map<String, dynamic> ventsInfo}) async {
 
+    final postIds = ventsInfo['post_id'] as List<int>;
     final titles = ventsInfo['title']! as List<String>;
     final bodyText = ventsInfo['body_text']! as List<String>;
     final tags = ventsInfo['tags']! as List<String>;
@@ -42,6 +43,7 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     }
 
     return {
+      'post_id': postIds,
       'titles': titles,
       'body_text': bodyText,
       'tags': tags,
@@ -65,6 +67,7 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
   Future<List<T>> _generateVents<T>({
     required Map<String, dynamic> ventsData,
     required T Function(
+      int postId,
       String title,
       String bodyText,
       String tags,
@@ -80,6 +83,7 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     ventBuilder,
   }) async {
 
+    final postIds = ventsData['post_id'];
     final titles = ventsData['titles'];
     final bodyText = ventsData['body_text'];
     final tags = ventsData['tags'];
@@ -92,10 +96,11 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     final isLiked = ventsData['is_liked'];
     final isSaved = ventsData['is_saved'];
 
-    final count = titles.length;
+    final count = postIds.length;
 
     return List.generate(count, (index) {
       return ventBuilder(
+        postIds[index],
         titles[index],
         bodyText[index],
         tags[index],
@@ -122,6 +127,7 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     required Future<Map<String, dynamic>> Function() dataGetter,
     required void Function(List<T> vents) setVents,
     required T Function(
+      int postId,
       String title,
       String bodyText,
       String tags,
@@ -151,8 +157,9 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     await _setupVents<VentLatestData>(
       dataGetter: _ventsGetter.getLatestVentsData,
       setVents: latestVentProvider.setVents,
-      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
+      ventBuilder: (postId, title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentLatestData(
+        postId: postId,
         title: title,
         bodyText: bodyText,
         tags: tags,
@@ -172,8 +179,9 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     await _setupVents<VentTrendingData>(
       dataGetter: _ventsGetter.getTrendingVentsData,
       setVents: trendingVentProvider.setVents,
-      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
+      ventBuilder: (postId, title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentTrendingData(
+        postId: postId,
         title: title,
         bodyText: bodyText,
         tags: tags,
@@ -193,8 +201,9 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     await _setupVents<VentFollowingData>(
       dataGetter: _ventsGetter.getFollowingVentsData,
       setVents: followingVentProvider.setVents,
-      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
+      ventBuilder: (postId, title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => VentFollowingData(
+        postId: postId,
         title: title,
         bodyText: bodyText,
         tags: tags,
@@ -216,8 +225,9 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
         searchText: searchText,
       ),
       setVents: searchPostsProvider.setVents,
-      ventBuilder: (title, _, tags, postTimestamp, creator,
+      ventBuilder: (postId, title, _, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => SearchVentsData(
+        postId: postId,
         title: title,
         tags: tags,
         postTimestamp: postTimestamp,
@@ -236,8 +246,9 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     await _setupVents<LikedVentData>(
       dataGetter: _ventsGetter.getLikedVentsData,
       setVents: likedVentProvider.setVents,
-      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
+      ventBuilder: (postId, title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => LikedVentData(
+        postId: postId,
         title: title,
         bodyText: bodyText,
         tags: tags,
@@ -257,8 +268,9 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     await _setupVents<SavedVentData>(
       dataGetter: _ventsGetter.getSavedVentsData,
       setVents: savedVentProvider.setVents,
-      ventBuilder: (title, bodyText, tags, postTimestamp, creator,
+      ventBuilder: (postId, title, bodyText, tags, postTimestamp, creator,
           profilePic, totalLikes, totalComments, isNsfw, isPostLiked, isPostSaved) => SavedVentData(
+        postId: postId,
         title: title,
         bodyText: bodyText,
         tags: tags,

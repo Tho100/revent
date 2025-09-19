@@ -1,21 +1,14 @@
 import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
-import 'package:revent/service/query/general/post_id_getter.dart';
 
 class UnsaveVent extends BaseQueryService {
   
-  final String title;
-  final String creator;
+  final int postId;
 
-  UnsaveVent({
-    required this.title,
-    required this.creator
-  });
+  UnsaveVent({required this.postId});
 
   Future<void> unsave() async {
-
-    final postId = await PostIdGetter(title: title, creator: creator).getPostId();
 
     const query = 'DELETE FROM ${TableNames.savedVentInfo} WHERE post_id = :post_id';
 
@@ -29,10 +22,7 @@ class UnsaveVent extends BaseQueryService {
 
   void _removeVent() {
 
-    final currentProvider = CurrentProviderService(
-      title: title, 
-      creator: creator
-    ).getProvider();
+    final currentProvider = CurrentProviderService(postId: postId).getProvider();
 
     final ventIndex = currentProvider['vent_index'];    
     final ventData = currentProvider['vent_data'];    

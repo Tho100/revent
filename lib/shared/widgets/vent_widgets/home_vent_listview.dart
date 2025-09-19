@@ -32,6 +32,7 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
     return Padding(
       padding: const EdgeInsets.only(bottom: 16),
       child: DefaultVentPreviewer(
+        postId: ventData.postId,
         title: ventData.title,
         bodyText: ventData.bodyText,
         tags: ventData.tags,

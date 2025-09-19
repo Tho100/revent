@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 
 class SearchVentsData {
 
+  int postId;
+
   String title;
   String tags;
   String postTimestamp;
@@ -19,6 +21,7 @@ class SearchVentsData {
   bool isNsfw;
 
   SearchVentsData({
+    required this.postId,
     required this.title,
     required this.tags,
     required this.postTimestamp,

@@ -8,6 +8,8 @@ import 'package:revent/main.dart';
 
 class ProfileSavedData {
 
+  List<int> postIds = [];
+
   List<String> titles = [];
   List<String> bodyText = [];
   List<String> tags = [];
@@ -24,6 +26,7 @@ class ProfileSavedData {
   List<bool> isPostSaved = [];
 
   void clear() {
+    postIds.clear();
     titles.clear();
     bodyText.clear();
     tags.clear();
@@ -48,6 +51,11 @@ class ProfileSavedProvider extends ChangeNotifier {
 
   ProfileSavedData get myProfile => _profileData[ProfileType.myProfile]!;
   ProfileSavedData get userProfile => _profileData[ProfileType.userProfile]!;
+
+  void setPostIds(ProfileType profileKey, List<int> postIds) {
+    _profileData[profileKey]?.postIds = postIds;
+    notifyListeners();
+  }
 
   void setCreator(ProfileType profileKey, List<String> creator) {
     _profileData[profileKey]?.creator = creator;

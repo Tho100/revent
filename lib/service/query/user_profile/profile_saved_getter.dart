@@ -88,8 +88,9 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
       );
 
     return {
-      'creator': creator,
+      'post_id': postIds,
       'title': titles,
+      'creator': creator,
       'body_text': modifiedBodyText,
       'tags': tags,
       'total_likes': totalLikes,

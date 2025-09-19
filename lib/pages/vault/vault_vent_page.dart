@@ -31,11 +31,13 @@ class _VaultVentsData {
   final String title;
   final String tags;
   final String postTimestamp;
+  final int postId;
 
   _VaultVentsData({
     required this.title,
     required this.tags,
-    required this.postTimestamp
+    required this.postTimestamp,
+    required this.postId,
   });
 
 }
@@ -63,14 +65,8 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   List<_VaultVentsData> _allVaultVents = [];
 
-  Future<String> _getBodyText(String title) async {
-
-    return await _vaultDataGetter.getBodyText(
-      title: title, 
-      creator: userProvider.user.username
-    );
-
-  } 
+  Future<String> _getBodyText(int postId) async 
+    => await _vaultDataGetter.getBodyText(postId: postId);
 
   Future<String> _getLastEdit(String title) async {
 
@@ -88,9 +84,9 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   }
 
-  void _navigateViewVaultVentPage(String title, String tags, String postTimestamp) async {
+  void _navigateViewVaultVentPage(int postId, String title, String tags, String postTimestamp) async {
 
-    final bodyText = await _getBodyText(title);
+    final bodyText = await _getBodyText(postId);
     final lastEdit = await _getLastEdit(title);
 
     Navigator.push(
@@ -116,6 +112,8 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
         username: userProvider.user.username
       );
 
+      final postIds = vaultVentsInfo['post_id'] as List<int>;
+
       final titles = vaultVentsInfo['title'] as List<String>;
       final tags = vaultVentsInfo['tags'] as List<String>;
 
@@ -126,6 +124,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
           title: titles[index],
           tags: tags[index],
           postTimestamp: postTimestamp[index],
+          postId: postIds[index]
         );
       });
 
@@ -139,9 +138,9 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   }
 
-  void _removeVentFromList(String title) {
+  void _removeVentFromList(int postId) {
     _vaultVentsData.value = _vaultVentsData.value
-      .where((vent) => vent.title != title)
+      .where((vent) => vent.postId != postId)
       .toList();
   }
 
@@ -167,14 +166,12 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   }
 
-  void _onDeleteVaultPressed(String title) async {
-
+  void _onDeleteVaultPressed(int postId) async {
     await VentActionsHandler(
-      title: title, 
-      creator: userProvider.user.username, 
-      context: context
+      context: context,
+      postId: postId
     ).deleteVaultPost().then(
-      (_) => _removeVentFromList(title)
+      (_) => _removeVentFromList(postId)
     );
 
   } 
@@ -218,24 +215,28 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   }
 
-  Widget _buildVentPreview(String title, String tags, String postTimestamp) {
+  Widget _buildVentPreview(String title, String tags, String postTimestamp, int postId) {
 
     final ventPreviewer = VentPreviewerWidgets(
       context: context,
+      postId: postId,
       title: title,
       tags: tags,
       creator: userProvider.user.username,
       pfpData: profileProvider.profile.profilePicture,
       postTimestamp: postTimestamp,
-      navigateVentPostPageOnPressed: () => _navigateViewVaultVentPage(title, tags, postTimestamp),
+      navigateVentPostPageOnPressed: () => _navigateViewVaultVentPage(postId, title, tags, postTimestamp),
       editOnPressed: () async {
 
         Navigator.pop(AppKeys.navigatorKey.currentContext!);
         
-        final bodyText = await _getBodyText(title);
+        final bodyText = await _getBodyText(postId);
 
         NavigatePage.editVentPage(
-          title: title, body: bodyText, ventType: VentType.vault
+          postId: postId, 
+          title: title, 
+          body: bodyText, 
+          ventType: VentType.vault
         );
 
       },
@@ -243,7 +244,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
         CustomAlertDialog.alertDialogCustomOnPress(
           message: AlertMessages.deletePost, 
           buttonMessage: 'Delete',
-          onPressedEvent: () => _onDeleteVaultPressed(title)
+          onPressedEvent: () => _onDeleteVaultPressed(postId)
         );
       },
     );
@@ -402,7 +403,9 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
         final ventsData = vaultData[index - 1];
 
-        return _buildVentPreview(ventsData.title, ventsData.tags, ventsData.postTimestamp);
+        return _buildVentPreview(
+          ventsData.title, ventsData.tags, ventsData.postTimestamp, ventsData.postId
+        );
 
       },
     );

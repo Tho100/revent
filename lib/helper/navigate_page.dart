@@ -188,12 +188,14 @@ class NavigatePage {
   }
  
   static void editVentPage({
+    required int postId,
     required String title, 
     required String body,
     VentType ventType = VentType.nonVault
   }) {
     _navigateToPage(
       classPage: EditVentPage(
+        postId: postId,
         title: title, 
         body: body, 
         ventType: ventType

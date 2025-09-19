@@ -12,6 +12,7 @@ class TestHelper {
     bool? isPostSaved = false
   }) {
     return VentLatestData(
+      postId: 0,
       title: '', 
       bodyText: '', 
       tags: '', 

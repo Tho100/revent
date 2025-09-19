@@ -62,6 +62,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     );
 
     return {
+      'post_id': postIds,
       'title': titles,
       'body_text': modifiedBodyText,
       'tags': tags,

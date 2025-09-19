@@ -46,6 +46,8 @@ class ProfilePostsSetup with ProfilePostsProviderService {
       final getPostsData = await ProfilePostsDataGetter().getPosts(
         username: username
       );
+      
+      final postIds = getPostsData['post_id'] as List<int>;
 
       final title = getPostsData['title'] as List<String>;
       final bodyText = getPostsData['body_text'] as List<String>;
@@ -61,6 +63,8 @@ class ProfilePostsSetup with ProfilePostsProviderService {
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
       final isPostSaved = getPostsData['is_saved'] as List<bool>;
 
+      profilePostsProvider.setPostIds(profileType, postIds);
+      
       profilePostsProvider.setTitles(profileType, title);
       profilePostsProvider.setBodyText(profileType, bodyText);
       profilePostsProvider.setTags(profileType, tags);
@@ -89,6 +93,8 @@ class ProfilePostsSetup with ProfilePostsProviderService {
         username: username, isMyProfile: profileType == ProfileType.myProfile
       );
 
+      final postIds = getPostsData['post_id'] as List<int>;
+
       final creator = getPostsData['creator'] as List<String>;
       final profilePicture = getPostsData['profile_picture'] as List<Uint8List>;
 
@@ -104,6 +110,8 @@ class ProfilePostsSetup with ProfilePostsProviderService {
       final isNsfw = getPostsData['is_nsfw'] as List<bool>;
       final isPostLiked = getPostsData['is_liked'] as List<bool>;
       final isPostSaved = getPostsData['is_saved'] as List<bool>;
+
+      profileSavedProvider.setPostIds(profileType, postIds);
 
       profileSavedProvider.setCreator(profileType, creator);
       profileSavedProvider.setProfilePicture(profileType, profilePicture);
