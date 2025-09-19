@@ -12,8 +12,8 @@ import 'package:revent/service/query/vent/vent_actions.dart';
 class VentActionsHandler {
 
   final BuildContext context;
-  final String title;
-  final String creator;
+  final String title; // TODO: Try to replace with postId
+  final String creator; // and get rid of this
 
   VentActionsHandler({
     required this.context,
@@ -72,11 +72,16 @@ class VentActionsHandler {
 
   }
 
-  Future<void> deleteVaultPost() async {
+  Future<void> deleteVaultPost({required int postId}) async {
 
     try {
 
-      await DeleteVaultVent(title: title).delete();
+      final deleteVaultVentResponse = await DeleteVaultVent(postId: postId).delete();
+
+      if (deleteVaultVentResponse['status_code'] != 204) {
+        _showErrorSnack(AlertMessages.deleteVaultPostFailed);
+        return;
+      }
 
       _showTemporarySnack(AlertMessages.vaultPostDeleted);
       _closeScreens(2);

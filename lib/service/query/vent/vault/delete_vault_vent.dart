@@ -1,24 +1,20 @@
-import 'package:revent/global/table_names.dart';
-import 'package:revent/helper/get_it_extensions.dart';
-import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 
 class DeleteVaultVent extends BaseQueryService {
   
-  final String title;
+  final int postId;
 
-  DeleteVaultVent({required this.title});
+  DeleteVaultVent({required this.postId});
 
-  Future<void> delete() async {
+  Future<Map<String, dynamic>> delete() async {
 
-    const query = 'DELETE FROM ${TableNames.vaultVentInfo} WHERE title = :title AND creator = :creator';
+    final response = await ApiClient.deleteById(ApiPath.deleteVaultVent, postId);
 
-    final params = {
-      'title': title,
-      'creator': getIt.userProvider.user.username,
+    return {
+      'status_code': response.statusCode
     };
-
-    await executeQuery(query, params);
 
   }
 

@@ -31,11 +31,13 @@ class _VaultVentsData {
   final String title;
   final String tags;
   final String postTimestamp;
+  final int postId;
 
   _VaultVentsData({
     required this.title,
     required this.tags,
-    required this.postTimestamp
+    required this.postTimestamp,
+    required this.postId,
   });
 
 }
@@ -116,6 +118,8 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
         username: userProvider.user.username
       );
 
+      final postIds = vaultVentsInfo['post_id'] as List<int>;
+
       final titles = vaultVentsInfo['title'] as List<String>;
       final tags = vaultVentsInfo['tags'] as List<String>;
 
@@ -126,6 +130,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
           title: titles[index],
           tags: tags[index],
           postTimestamp: postTimestamp[index],
+          postId: postIds[index]
         );
       });
 
@@ -139,9 +144,9 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   }
 
-  void _removeVentFromList(String title) {
+  void _removeVentFromList(int postId) {
     _vaultVentsData.value = _vaultVentsData.value
-      .where((vent) => vent.title != title)
+      .where((vent) => vent.postId != postId)
       .toList();
   }
 
@@ -167,14 +172,14 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   }
 
-  void _onDeleteVaultPressed(String title) async {
-
+  void _onDeleteVaultPressed(int postId) async {
+// TODO: Delete creator, title
     await VentActionsHandler(
-      title: title, 
-      creator: userProvider.user.username, 
+      title: '', 
+      creator: '', 
       context: context
-    ).deleteVaultPost().then(
-      (_) => _removeVentFromList(title)
+    ).deleteVaultPost(postId: postId).then(
+      (_) => _removeVentFromList(postId)
     );
 
   } 
@@ -218,7 +223,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   }
 
-  Widget _buildVentPreview(String title, String tags, String postTimestamp) {
+  Widget _buildVentPreview(String title, String tags, String postTimestamp, int postId) {
 
     final ventPreviewer = VentPreviewerWidgets(
       context: context,
@@ -243,7 +248,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
         CustomAlertDialog.alertDialogCustomOnPress(
           message: AlertMessages.deletePost, 
           buttonMessage: 'Delete',
-          onPressedEvent: () => _onDeleteVaultPressed(title)
+          onPressedEvent: () => _onDeleteVaultPressed(postId)
         );
       },
     );
@@ -402,7 +407,9 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
         final ventsData = vaultData[index - 1];
 
-        return _buildVentPreview(ventsData.title, ventsData.tags, ventsData.postTimestamp);
+        return _buildVentPreview(
+          ventsData.title, ventsData.tags, ventsData.postTimestamp, ventsData.postId
+        );
 
       },
     );

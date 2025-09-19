@@ -10,7 +10,7 @@ class VaultVentDataGetter extends BaseQueryService {
     const query = 
     '''
       SELECT 
-        title, created_at, tags 
+        post_id, title, created_at, tags 
       FROM ${TableNames.vaultVentInfo} 
       WHERE creator = :username ORDER BY created_at DESC
     ''';
@@ -21,6 +21,7 @@ class VaultVentDataGetter extends BaseQueryService {
 
     final extractData = ExtractData(rowsData: results);
     
+    final postId = extractData.extractIntColumn('post_id');
     final title = extractData.extractStringColumn('title');
     final tags = extractData.extractStringColumn('tags');
 
@@ -29,6 +30,7 @@ class VaultVentDataGetter extends BaseQueryService {
     );
 
     return {
+      'post_id': postId,
       'title': title,
       'tags': tags,
       'post_timestamp': postTimestamp
@@ -40,7 +42,7 @@ class VaultVentDataGetter extends BaseQueryService {
     required String title,
     required String creator
   }) async {
-
+    // TODO: Use postId instead of title/creator
     const query = 
       'SELECT body_text FROM ${TableNames.vaultVentInfo} WHERE title = :title AND creator = :creator';
       
