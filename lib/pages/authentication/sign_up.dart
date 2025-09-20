@@ -111,8 +111,8 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
   Widget _buildBody() {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: MediaQuery.of(context).size.width * 0.05,
-        vertical: MediaQuery.of(context).size.height * 0.05,
+        horizontal: MediaQuery.sizeOf(context).width * 0.05,
+        vertical: MediaQuery.sizeOf(context).height * 0.05,
       ),
       child: Column(
         children: [

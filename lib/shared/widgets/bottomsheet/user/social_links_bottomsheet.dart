@@ -34,7 +34,7 @@ class BottomsheetSocialLinks {
       child: Center(
         child: SizedBox(
           height: 65,
-          width: MediaQuery.of(context).size.width * 0.88,
+          width: MediaQuery.sizeOf(context).width * 0.88,
           child: ElevatedButton(
             onPressed: () async => await _onSocialHandlePressed(platform: platform, handle: handle),
             style: ElevatedButton.styleFrom(

@@ -84,7 +84,7 @@ class _ProfilePostsListViewState extends State<ProfilePostsListView> with Automa
 
   Widget _buildListView(ProfilePostsData postsData) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 25,
+      width: MediaQuery.sizeOf(context).width - 25,
       child: ListView.builder(
         itemCount: postsData.titles.length + 1,
         itemBuilder: (_, index) {

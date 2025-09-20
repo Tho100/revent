@@ -91,7 +91,7 @@ class _LikedPageState extends State<LikedPage> with
 
   Widget _buildSearchBar() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * .92,
+      width: MediaQuery.sizeOf(context).width * .92,
       height: 67,
       child: MainTextField(
         maxLines: 1,
@@ -146,7 +146,7 @@ class _LikedPageState extends State<LikedPage> with
 
   Widget _buildListView(List<LikedVentData> likedVentData) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 25,
+      width: MediaQuery.sizeOf(context).width - 25,
       child: ListView.builder(
         physics: const AlwaysScrollableScrollPhysics(
           parent: BouncingScrollPhysics()

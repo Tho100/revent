@@ -178,7 +178,7 @@ class _ThemePageState extends State<ThemePage> {
 
   Widget _buildThemeListView() {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.90,
+      height: MediaQuery.sizeOf(context).height * 0.90,
       child: ListView.builder(
         itemCount: themes.length,
         itemBuilder: (_, index) {

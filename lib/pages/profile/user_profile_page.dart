@@ -286,7 +286,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
         return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),  
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.65,
+            width: MediaQuery.sizeOf(context).width * 0.65,
             child: Text(
               value,
               style: ThemeStyle.profilePronounsStyle,
@@ -300,7 +300,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Widget _buildBio() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.68,
+      width: MediaQuery.sizeOf(context).width * 0.68,
       child: ValueListenableBuilder(
         valueListenable: bioNotifier,
         builder: (_, bio, __) {
@@ -333,7 +333,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Widget _buildFollowButton() {
 
-    final buttonWidth = MediaQuery.of(context).size.width * 0.87;
+    final buttonWidth = MediaQuery.sizeOf(context).width * 0.87;
     const buttonHeight = 45.0;
     
     const fontSize = 15.5;

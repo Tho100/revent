@@ -257,7 +257,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
 
   Widget _buildReplyBody(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 110,
+      width: MediaQuery.sizeOf(context).width - 110,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 25.0),
         child: Column(

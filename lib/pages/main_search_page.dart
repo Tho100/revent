@@ -101,7 +101,7 @@ class _MainSearchPageState extends State<MainSearchPage> with GeneralSearchContr
               const SizedBox(width: 15),
     
               SizedBox(
-                width: MediaQuery.of(context).size.width * 0.60,
+                width: MediaQuery.sizeOf(context).width * 0.60,
                 child: Text(
                   searchText,
                   style: GoogleFonts.inter(

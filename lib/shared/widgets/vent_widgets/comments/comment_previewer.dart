@@ -385,7 +385,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
   Widget _buildCommentBody(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 84,
+      width: MediaQuery.sizeOf(context).width - 84,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 25.0),
         child: Column(

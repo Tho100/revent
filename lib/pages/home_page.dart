@@ -170,7 +170,7 @@ class _HomePageState extends State<HomePage> with
   }) {
     return Center(
       child: SizedBox(
-        width: MediaQuery.of(context).size.width - 25,
+        width: MediaQuery.sizeOf(context).width - 25,
         child: RefreshIndicator(
           backgroundColor: ThemeColor.contentPrimary,
           color: ThemeColor.backgroundPrimary,

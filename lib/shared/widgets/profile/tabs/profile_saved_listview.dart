@@ -52,7 +52,7 @@ class _ProfileSavedListViewState extends State<ProfileSavedListView> with Automa
 
   Widget _buildListView(ProfileSavedData savedData) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 25,
+      width: MediaQuery.sizeOf(context).width - 25,
       child: ListView.builder(
         itemCount: savedData.titles.length + 1,
         itemBuilder: (_, index) {

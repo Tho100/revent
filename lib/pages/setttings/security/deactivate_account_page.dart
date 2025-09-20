@@ -62,7 +62,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
   Widget _buildBody() {
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: MediaQuery.of(context).size.width * 0.05,
+        horizontal: MediaQuery.sizeOf(context).width * 0.05,
       ),
       child: Column(
         children: [

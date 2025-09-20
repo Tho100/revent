@@ -117,7 +117,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
         return Padding(
           padding: EdgeInsets.only(bottom: bottomPadding, top: topPadding),
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.65,
+            width: MediaQuery.sizeOf(context).width * 0.65,
             child: Text(
               pronouns,
               style: ThemeStyle.profilePronounsStyle,
@@ -132,7 +132,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
   Widget _buildBio() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.68,
+      width: MediaQuery.sizeOf(context).width * 0.68,
       child: Consumer<ProfileProvider>(
         builder: (_, profileData, __) {
           return profileData.profile.bio.isEmpty
@@ -166,7 +166,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
     return Align(
       alignment: Alignment.center,
       child: CustomOutlinedButton(
-        customWidth: MediaQuery.of(context).size.width * 0.87,
+        customWidth: MediaQuery.sizeOf(context).width * 0.87,
         customHeight: 45.0,
         customFontSize: 15.5,
         text: 'Edit Profile',

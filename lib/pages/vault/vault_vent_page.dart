@@ -287,7 +287,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   Widget _buildSearchBar() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * .92,
+      width: MediaQuery.sizeOf(context).width * .92,
       height: 67,
       child: MainTextField(
         maxLines: 1,
