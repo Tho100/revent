@@ -252,11 +252,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
         CustomAlertDialog.alertDialogCustomOnPress(
           message: "Unfollow @${widget.username}?", 
           buttonMessage: "Unfollow", 
-          onPressedEvent: () async {
-            await _toggleFollowUser(follow).then(
-              (_) => Navigator.pop(context)
-            );
-          }
+          onPressedEvent: () async => await _toggleFollowUser(follow)
         );
 
         return;

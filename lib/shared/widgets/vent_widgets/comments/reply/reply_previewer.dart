@@ -89,7 +89,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
       buttonMessage: 'Block', 
       onPressedEvent: () async {
         await UserActions(username: repliedBy).toggleBlockUser().then(
-          (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
+          (_) => SnackBarDialog.temporarySnack(message: 'Blocked $repliedBy.')
         );
       }
     );

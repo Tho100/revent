@@ -69,6 +69,8 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       postIds: postIds, stateType: 'saved'
     );
 
+    print(postIds);
+
     return {
       'post_id': postIds,
       'title': titles,

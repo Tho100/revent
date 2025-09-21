@@ -85,6 +85,8 @@ class _VentPostPageState extends State<VentPostPage> with
 
   void _showNsfwConfirmationDialog() async {
 
+    print(widget.postId.toString());
+
     if (!widget.isNsfw) {
       _initializeVentInfo();
       return;
@@ -210,9 +212,9 @@ class _VentPostPageState extends State<VentPostPage> with
       message: AlertMessages.deletePost, 
       buttonMessage: 'Delete',
       onPressedEvent: () async {
-        await actionsHandler.deletePost()
-          .then((_) => Navigator.pop(context))
-          .then((_) => Navigator.pop(context));
+        await actionsHandler.deletePost().then(
+          (_) => Navigator.pop(context)
+        );
       }
     );
   }
@@ -222,9 +224,9 @@ class _VentPostPageState extends State<VentPostPage> with
       message: 'Block @${widget.creator}?', 
       buttonMessage: 'Block', 
       onPressedEvent: () async {
-        await UserActions(username: widget.creator).toggleBlockUser()
-          .then((_) => Navigator.pop(context))
-          .then((_) => Navigator.pop(context));
+        await UserActions(username: widget.creator).toggleBlockUser().then(
+          (_) => Navigator.pop(context)
+        );
       }
     );
   }
@@ -485,7 +487,7 @@ class _VentPostPageState extends State<VentPostPage> with
         copyOnPressed: () => context.popAndRun(_onCopyBodyTextPressed),
         blockOnPressed: () => context.popAndRun(_onBlockUserPressed),
         reportOnPressed: () => context.popAndRun(_onReportPressed),
-        deleteOnPressed: _onDeletePressed
+        deleteOnPressed: () => context.popAndRun(_onDeletePressed),
       ).buildVentOptionsButton(
         customIconWidget: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.contentPrimary)
       ),
