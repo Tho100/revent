@@ -70,6 +70,7 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
     );
 
     print(postIds);
+    print(isPinned);
 
     return {
       'post_id': postIds,
