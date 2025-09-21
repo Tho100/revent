@@ -85,8 +85,6 @@ class _VentPostPageState extends State<VentPostPage> with
 
   void _showNsfwConfirmationDialog() async {
 
-    print(widget.postId.toString());
-
     if (!widget.isNsfw) {
       _initializeVentInfo();
       return;
