@@ -146,7 +146,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
             
                 Center(
                   child: SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.58,
+                    width: MediaQuery.sizeOf(context).width * 0.58,
                     child: Text(
                       widget.searchText,
                       style: GoogleFonts.inter(

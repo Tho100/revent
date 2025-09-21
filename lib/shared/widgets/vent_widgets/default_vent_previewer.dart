@@ -18,6 +18,7 @@ import 'package:revent/shared/widgets/bottomsheet/report_post_bottomsheet.dart';
 import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/service/query/vent/vent_data_getter.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
 class DefaultVentPreviewer extends StatefulWidget {
@@ -81,19 +82,37 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
       unSaveOnPressed: widget.isMyProfile && navigationProvider.profileTab == ProfileTabs.savedPosts
-        ? actionsHandler.unsavePost
+        ? _onUnsavePostPressed
         : null, 
       pinOnPressed: widget.isMyProfile && navigationProvider.profileTab == ProfileTabs.posts && !widget.isPinned
-        ? actionsHandler.pinPost
+        ? _onPinPostPressed
         : null,
       unPinOnPressed: widget.isMyProfile && navigationProvider.profileTab == ProfileTabs.posts && widget.isPinned
-        ? actionsHandler.unpinPost
+        ? _onUnpinPostPressed
         : null,
       editOnPressed: _onEditPressed,
       deleteOnPressed: _onDeletePressed,
       reportOnPressed: _onReportPressed,
       blockOnPressed: _onBlockPressed,
       navigateVentPostPageOnPressed: _navigateToVentPostPage
+    );
+  }
+
+  void _onUnsavePostPressed() {
+    context.popAndRun(
+      () => actionsHandler.unsavePost()
+    );
+  }
+
+  void _onPinPostPressed() {
+    context.popAndRun(
+      () => actionsHandler.pinPost()
+    );
+  }
+
+  void _onUnpinPostPressed() {
+    context.popAndRun(
+      () => actionsHandler.unpinPost()
     );
   }
 
@@ -135,7 +154,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
         buttonMessage: 'Block', 
         onPressedEvent: () async {
           await UserActions(username: widget.creator).toggleBlockUser().then(
-            (_) => Navigator.pop(context)
+            (_) => SnackBarDialog.temporarySnack(message: 'Blocked ${widget.creator}.')
           );
         }
       );
@@ -143,10 +162,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
   }
 
   void _initializeVentActionsHandler() {
-    actionsHandler = VentActionsHandler(          
-      context: context,
-      postId: widget.postId
-    );
+    actionsHandler = VentActionsHandler(postId: widget.postId);
   }
 
   Future<String> _initializeBodyText() async {

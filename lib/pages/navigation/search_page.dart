@@ -31,7 +31,7 @@ class _SearchPageState extends State<SearchPage> {
     return Align(
       alignment: Alignment.center,
       child: Container(
-        width: MediaQuery.of(context).size.width * 0.91,
+        width: MediaQuery.sizeOf(context).width * 0.91,
         height: 52,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(16),
@@ -128,7 +128,7 @@ class _SearchPageState extends State<SearchPage> {
         const SizedBox(height: 8),
 
         SizedBox(
-          width: MediaQuery.of(context).size.width * 0.88,
+          width: MediaQuery.sizeOf(context).width * 0.88,
           child: Wrap(
             spacing: 8.0, 
             children: [

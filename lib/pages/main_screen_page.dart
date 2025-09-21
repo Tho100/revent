@@ -71,7 +71,7 @@ class MainScreenPage extends StatelessWidget {
   Widget _buildBottomContainer(BuildContext context) {
     return Container(
       color: ThemeColor.backgroundPrimary,
-      width: MediaQuery.of(context).size.width,
+      width: MediaQuery.sizeOf(context).width,
       height: 205,
       child: _buildButtons(),
     );

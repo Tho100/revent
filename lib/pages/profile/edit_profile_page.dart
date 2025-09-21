@@ -434,7 +434,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     return Padding(
       padding: const EdgeInsets.only(left: 4.0),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.88,
+        width: MediaQuery.sizeOf(context).width * 0.88,
         child: Wrap(
           spacing: 10.0, 
           children: [
@@ -454,7 +454,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     return Padding(
       padding: const EdgeInsets.only(left: 8.0),
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.85,
+        width: MediaQuery.sizeOf(context).width * 0.85,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

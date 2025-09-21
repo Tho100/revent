@@ -48,7 +48,7 @@ class AlertDialogWidget extends StatelessWidget {
       ),
       backgroundColor: ThemeColor.backgroundPrimary,
       child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.55,
+        width: MediaQuery.sizeOf(context).width * 0.55,
         height: _getDialogHeight(),
         child: Column(
           children: [

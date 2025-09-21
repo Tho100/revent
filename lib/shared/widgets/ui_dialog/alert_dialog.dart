@@ -87,7 +87,10 @@ class CustomAlertDialog {
 
               _roundedActionButton(
                 TextButton(
-                  onPressed: onPressedEvent,
+                  onPressed: () {
+                    onPressedEvent();
+                    Navigator.pop(context);
+                  },
                   style: ButtonStyle(
                     overlayColor: MaterialStateColor.resolveWith((_) => ThemeColor.contentThird),
                   ),

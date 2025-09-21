@@ -167,7 +167,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
       buttonMessage: 'Block', 
       onPressedEvent: () async {
         await UserActions(username: commentedBy).toggleBlockUser().then(
-          (_) => Navigator.pop(AppKeys.navigatorKey.currentContext!)
+          (_) => SnackBarDialog.temporarySnack(message: 'Blocked $commentedBy.')
         );
       }
     );
@@ -385,7 +385,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
   Widget _buildCommentBody(BuildContext context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 84,
+      width: MediaQuery.sizeOf(context).width - 84,
       child: Padding(
         padding: const EdgeInsets.only(bottom: 25.0),
         child: Column(

@@ -137,7 +137,6 @@ class VentPreviewerWidgets {
       isLiked: ventIndex == -1 ? false : likesInfo['is_liked'],
       onPressed: () async {
         await VentActionsHandler(
-          context: context,
           postId: postId!,
           creator: creator! 
         ).likePost();
@@ -159,7 +158,6 @@ class VentPreviewerWidgets {
       isSaved: isSaved,
       onPressed: () async {
         await VentActionsHandler(
-          context: context,
           postId: postId!
         ).savePost(isAlreadySaved: isSaved);
       }

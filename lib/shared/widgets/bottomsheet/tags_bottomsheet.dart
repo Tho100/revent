@@ -97,7 +97,7 @@ class BottomsheetTagsSelection with TagsProviderService {
 
         Center(
           child: SizedBox(
-            width: MediaQuery.of(context).size.width * 0.92,
+            width: MediaQuery.sizeOf(context).width * 0.92,
             child: Row(
               children: [
 
@@ -116,7 +116,7 @@ class BottomsheetTagsSelection with TagsProviderService {
                   valueListenable: chipsSelectedNotifier,
                   builder: (_, chipsSelected, __) {
                     return SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.86,
+                      width: MediaQuery.sizeOf(context).width * 0.86,
                       child: TextFormField(
                         autofocus: true,
                         maxLines: 1,

@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
@@ -12,13 +11,11 @@ import 'package:revent/service/query/vent/vent_actions.dart';
 
 class VentActionsHandler with NavigationProviderService {
 
-  final BuildContext context;
   final int postId;
 
   String? creator;
 
   VentActionsHandler({
-    required this.context,
     required this.postId,
     this.creator
   });
@@ -29,12 +26,6 @@ class VentActionsHandler with NavigationProviderService {
 
   void _showErrorSnack(String message) {
     SnackBarDialog.errorSnack(message: message);
-  }
-// TODO: This shouldn't exists
-  void _closeScreens(int count) {
-    for (int i = 0; i < count; i++) {
-      Navigator.pop(context);
-    }
   }
 
   Future<void> likePost() async {
@@ -66,7 +57,6 @@ class VentActionsHandler with NavigationProviderService {
       }
 
       _showTemporarySnack(AlertMessages.postDeleted);
-      _closeScreens(1);
   
     } catch (_) {
       _showErrorSnack(AlertMessages.deletePostFailed);
@@ -86,7 +76,6 @@ class VentActionsHandler with NavigationProviderService {
       }
 
       _showTemporarySnack(AlertMessages.vaultPostDeleted);
-      _closeScreens(2);
 
     } catch (_) {
       _showErrorSnack(AlertMessages.deleteVaultPostFailed);
@@ -101,7 +90,6 @@ class VentActionsHandler with NavigationProviderService {
       await UnsaveVent(postId: postId).unsave();
         
       _showTemporarySnack(AlertMessages.removedSavedPost);
-      _closeScreens(1);
 
     } catch (_) {
       _showErrorSnack(AlertMessages.unsavePostfailed);
@@ -130,7 +118,6 @@ class VentActionsHandler with NavigationProviderService {
       final pinnedPostExists = getIt.profilePostsProvider.myProfile.isPinned.contains(true);
 
       if (pinnedPostExists) {
-        _closeScreens(1);
         _showTemporarySnack(AlertMessages.pinnedPostExists);
         return;
       }
@@ -138,7 +125,6 @@ class VentActionsHandler with NavigationProviderService {
       await PinVent(postId: postId).pin();
 
       _showTemporarySnack(AlertMessages.pinnedPost);
-      _closeScreens(1);
     
     } catch (_) {
       _showErrorSnack(AlertMessages.pinPostFailed);
@@ -153,7 +139,6 @@ class VentActionsHandler with NavigationProviderService {
       await PinVent(postId: postId).unpin();
       
       _showTemporarySnack(AlertMessages.removedPinnedPost);
-      _closeScreens(1);
 
     } catch (_) {
       _showErrorSnack(AlertMessages.unpinPostFailed);

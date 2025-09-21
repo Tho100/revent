@@ -1,4 +1,4 @@
-package com.example.revent
+package com.revent.app
 
 import io.flutter.embedding.android.FlutterActivity
 

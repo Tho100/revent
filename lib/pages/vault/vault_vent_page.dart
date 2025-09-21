@@ -8,6 +8,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/global/vent_type.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/vent_actions_handler.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -166,15 +167,32 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   }
 
-  void _onDeleteVaultPressed(int postId) async {
-    await VentActionsHandler(
-      context: context,
-      postId: postId
-    ).deleteVaultPost().then(
+  void _deleteVaultVent(int postId) async {
+    await VentActionsHandler(postId: postId).deleteVaultPost().then(
       (_) => _removeVentFromList(postId)
     );
-
   } 
+
+  void _onDeletePressed(int postId) {
+    CustomAlertDialog.alertDialogCustomOnPress(
+      message: AlertMessages.deletePost, 
+      buttonMessage: 'Delete',
+      onPressedEvent: () => _deleteVaultVent(postId)
+    );
+  }
+
+  void _onEditPressed(title, int postId) async {
+    
+    final bodyText = await _getBodyText(postId);
+
+    NavigatePage.editVentPage(
+      postId: postId, 
+      title: title, 
+      body: bodyText, 
+      ventType: VentType.vault
+    );
+
+  }
 
   void _onFilterPressed({required String filter}) { 
     
@@ -226,27 +244,12 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
       pfpData: profileProvider.profile.profilePicture,
       postTimestamp: postTimestamp,
       navigateVentPostPageOnPressed: () => _navigateViewVaultVentPage(postId, title, tags, postTimestamp),
-      editOnPressed: () async {
-
-        Navigator.pop(AppKeys.navigatorKey.currentContext!);
-        
-        final bodyText = await _getBodyText(postId);
-
-        NavigatePage.editVentPage(
-          postId: postId, 
-          title: title, 
-          body: bodyText, 
-          ventType: VentType.vault
-        );
-
-      },
-      deleteOnPressed: () {
-        CustomAlertDialog.alertDialogCustomOnPress(
-          message: AlertMessages.deletePost, 
-          buttonMessage: 'Delete',
-          onPressedEvent: () => _onDeleteVaultPressed(postId)
-        );
-      },
+      editOnPressed: () => context.popAndRun(
+        () => _onEditPressed(title, postId)
+      ),  
+      deleteOnPressed: () => context.popAndRun(
+        () => _onDeletePressed(postId)
+      ),
     );
 
     return Padding(
@@ -287,7 +290,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
   Widget _buildSearchBar() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * .92,
+      width: MediaQuery.sizeOf(context).width * .92,
       height: 67,
       child: MainTextField(
         maxLines: 1,

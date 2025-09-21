@@ -94,7 +94,7 @@ class TermAndConditionsPage extends StatelessWidget {
       ).buildAppBar(),
       body: SingleChildScrollView(
         child: SizedBox(
-          width: MediaQuery.of(context).size.width * 0.92,
+          width: MediaQuery.sizeOf(context).width * 0.92,
           child: Padding(
             padding: const EdgeInsets.only(top: 15, bottom: 12, left: 25),
             child: Text(

@@ -169,7 +169,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   Widget _buildListView(List<SearchVentsData> ventDataList) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width - 25,
+      width: MediaQuery.sizeOf(context).width - 25,
       child: ListView.builder(
         key: UniqueKey(),
         physics: const AlwaysScrollableScrollPhysics(
@@ -228,7 +228,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
     
                 if (ventDataList.isEmpty)
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.7,
+                  height: MediaQuery.sizeOf(context).height * 0.7,
                   child: Center(
                     child: _buildNoResults(),
                   ),

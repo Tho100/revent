@@ -116,7 +116,7 @@ class _PostReplyPageState extends State<PostReplyPage> {
             const SizedBox(width: 45),
 
             SizedBox(
-              width: MediaQuery.of(context).size.width - 85,
+              width: MediaQuery.sizeOf(context).width - 85,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 25.0),
                 child: StyledTextWidget(text: widget.comment),
@@ -190,7 +190,6 @@ class _PostReplyPageState extends State<PostReplyPage> {
       child: TextFormattingToolbar(controller: replyController),
     );
   }
-
 
   Widget _buildActionButton() {
     return Padding(

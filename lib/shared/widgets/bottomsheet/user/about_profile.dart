@@ -168,7 +168,7 @@ class BottomsheetAboutProfile {
             
             _buildUsername(username),
             
-            const SizedBox(height: 35),
+            const SizedBox(height: 15),
             
             BorderedContainer(
               child: _buildJoinedDate(joinedDate)

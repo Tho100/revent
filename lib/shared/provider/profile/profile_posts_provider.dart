@@ -192,6 +192,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
       final finalOrder = [...pinnedIndices, ...nonPinnedIndices];
 
+      profile.postIds = _reorderList(profile.postIds, finalOrder);
       profile.titles = _reorderList(profile.titles, finalOrder);
       profile.bodyText = _reorderList(profile.bodyText, finalOrder);
       profile.tags = _reorderList(profile.tags, finalOrder);
@@ -204,6 +205,7 @@ class ProfilePostsProvider extends ChangeNotifier {
       profile.isPostSaved = _reorderList(profile.isPostSaved, finalOrder);
 
       notifyListeners();
+      
     }
 
   }

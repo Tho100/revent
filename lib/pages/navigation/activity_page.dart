@@ -199,7 +199,7 @@ class _ActivityPageState extends State<ActivityPage> with
 
             ConstrainedBox(
               constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.45,
+                maxWidth: MediaQuery.sizeOf(context).width * 0.45,
               ),
               child: Text(
                 type == newFollowerType ? '' : activitySubject,
