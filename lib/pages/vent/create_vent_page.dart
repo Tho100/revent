@@ -131,7 +131,7 @@ class _CreateVentPageState extends State<CreateVentPage> with
 
       Navigator.pop(context);
 
-      Navigator.push(
+      Navigator.pushReplacement(
         context,
         MaterialPageRoute(
           builder: (_) => const VaultVentPage()
