@@ -1,4 +1,3 @@
-import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
@@ -12,13 +11,11 @@ import 'package:revent/service/query/vent/vent_actions.dart';
 
 class VentActionsHandler with NavigationProviderService {
 
-  final BuildContext context;
   final int postId;
 
   String? creator;
 
   VentActionsHandler({
-    required this.context,
     required this.postId,
     this.creator
   });

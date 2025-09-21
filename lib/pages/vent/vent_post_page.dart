@@ -126,7 +126,6 @@ class _VentPostPageState extends State<VentPostPage> with
     actionsHandler = VentActionsHandler(              
       postId: widget.postId,
       creator: widget.creator, 
-      context: context
     );
   }
 

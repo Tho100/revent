@@ -168,13 +168,9 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   }
 
   void _deleteVaultVent(int postId) async {
-    await VentActionsHandler(
-      context: context,
-      postId: postId
-    ).deleteVaultPost().then(
+    await VentActionsHandler(postId: postId).deleteVaultPost().then(
       (_) => _removeVentFromList(postId)
     );
-
   } 
 
   void _onDeletePressed(int postId) {

@@ -162,10 +162,7 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
   }
 
   void _initializeVentActionsHandler() {
-    actionsHandler = VentActionsHandler(          
-      context: context,
-      postId: widget.postId
-    );
+    actionsHandler = VentActionsHandler(postId: widget.postId);
   }
 
   Future<String> _initializeBodyText() async {
