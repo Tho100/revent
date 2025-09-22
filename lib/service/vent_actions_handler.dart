@@ -122,7 +122,12 @@ class VentActionsHandler with NavigationProviderService {
         return;
       }
 
-      await PinVent(postId: postId).pin();
+      final pinVentResponse = await PinVent(postId: postId).pin();
+
+      if (pinVentResponse['status_code'] != 201) {
+        _showErrorSnack(AlertMessages.pinPostFailed);
+        return;
+      }
 
       _showTemporarySnack(AlertMessages.pinnedPost);
     

@@ -1,4 +1,6 @@
 import 'package:revent/global/table_names.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -8,18 +10,20 @@ class PinVent extends BaseQueryService with UserProfileProviderService, ProfileP
   
   PinVent({required this.postId});
 
-  Future<void> pin() async {
+  Future<Map<String, dynamic>> pin() async {
 
-    const query = 'INSERT INTO ${TableNames.pinnedVentInfo} (pinned_by, post_id) VALUES (:pinned_by, :post_id)';
-
-    final params = {
+    final response = await ApiClient.post(ApiPath.pinVent, {
       'pinned_by': userProvider.user.username,
       'post_id': postId
-    };
+    });
 
-    await executeQuery(query, params).then(
-      (_) => _updateIsPinnedList(true)
-    );
+    if (response.statusCode == 201) {
+      _updateIsPinnedList(true);
+    }
+
+    return {
+      'status_code': response.statusCode
+    };
 
   }
 

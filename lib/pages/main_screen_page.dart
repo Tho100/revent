@@ -46,7 +46,7 @@ class MainScreenPage extends StatelessWidget {
 
   Widget _buildHeaderText() {
     return Text(
-      'Read & Vent.',
+      'Read & Vent',
       style: GoogleFonts.inter(
         color: ThemeColor.contentPrimary,
         fontSize: 42,
