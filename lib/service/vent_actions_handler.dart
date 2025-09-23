@@ -37,7 +37,11 @@ class VentActionsHandler with NavigationProviderService {
         return;
       }
 
-      await VentActions(postId: postId).likePost();
+      final likeVentResponse = await VentActions(postId: postId).likePost();
+
+      if (likeVentResponse['status_code'] != 200) {
+        _showErrorSnack(AlertMessages.likePostFailed);
+      }
 
     } catch (_) {
       _showErrorSnack(AlertMessages.likePostFailed);
