@@ -37,7 +37,11 @@ class VentActionsHandler with NavigationProviderService {
         return;
       }
 
-      await VentActions(postId: postId).likePost();
+      final likeVentResponse = await VentActions(postId: postId).likePost();
+
+      if (likeVentResponse['status_code'] != 200) {
+        _showErrorSnack(AlertMessages.likePostFailed);
+      }
 
     } catch (_) {
       _showErrorSnack(AlertMessages.likePostFailed);
@@ -101,8 +105,15 @@ class VentActionsHandler with NavigationProviderService {
 
     try {
 
-      await VentActions(postId: postId).savePost().then(
-        (_) => _showTemporarySnack(isAlreadySaved ? AlertMessages.removedSavedPost : AlertMessages.postSaved)
+      final saveVentResponse = await VentActions(postId: postId).savePost();
+
+      if (saveVentResponse['status_code'] != 200) {
+        _showErrorSnack(AlertMessages.savePostFailed);
+        return;
+      }
+
+      _showTemporarySnack(
+        isAlreadySaved ? AlertMessages.removedSavedPost : AlertMessages.postSaved
       );
 
     } catch (_) {

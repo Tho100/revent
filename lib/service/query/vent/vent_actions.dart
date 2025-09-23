@@ -1,6 +1,7 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/service/query/vent/comment/comment_actions.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
@@ -16,7 +17,7 @@ class VentActions extends BaseQueryService with
   final int postId;
 
   VentActions({required this.postId});
-
+// TODO: Try to create separate folder action/ to store each individual actions like; like/save/pin/delete
   Map<String, dynamic> _getVentProvider() {
 
     final currentProvider = CurrentProviderService(postId: postId).getProvider();
@@ -25,57 +26,20 @@ class VentActions extends BaseQueryService with
 
   }
 
-  Future<void> likePost() async {
+  Future<Map<String, dynamic>> likePost() async {
 
-    const likesInfoQueryParams = 'WHERE post_id = :post_id AND liked_by = :liked_by';
-
-    final likesInfoParams = {
+    final response = await ApiClient.post(ApiPath.likeVent, {
       'post_id': postId,
       'liked_by': userProvider.user.username,
+    });
+
+    if (response.statusCode == 200) {
+      _updatePostLikeValue(isPostAlreadyLiked: response.body!['liked']);
+    }
+
+    return {
+      'status_code': response.statusCode
     };
-
-    final isPostAlreadyLiked = await _isUserLikedPost(
-      likesInfoParams: likesInfoParams,
-      likesInfoQueryParams: likesInfoQueryParams
-    );
-
-    final conn = await connection();
-
-    await conn.transactional((txn) async {
-
-      await txn.execute(
-        '''
-          UPDATE ${TableNames.ventInfo} 
-          SET total_likes = total_likes ${isPostAlreadyLiked ? '-' : '+'} 1 
-          WHERE post_id = :post_id
-        ''',
-        {'post_id': postId}
-      );
-
-      await txn.execute(
-        isPostAlreadyLiked 
-          ? 'DELETE FROM ${TableNames.likedVentInfo} $likesInfoQueryParams'
-          : 'INSERT INTO ${TableNames.likedVentInfo} (post_id, liked_by) VALUES (:post_id, :liked_by)',
-        likesInfoParams
-      );
-
-    }).then(
-      (_) => _updatePostLikeValue(isPostAlreadyLiked: isPostAlreadyLiked)
-    );
-
-  }
-
-  Future<bool> _isUserLikedPost({
-    required Map<String, dynamic> likesInfoParams,
-    required String likesInfoQueryParams
-  }) async {
-
-    final getLikesInfoQuery = 
-      'SELECT 1 FROM ${TableNames.likedVentInfo} $likesInfoQueryParams';
-
-    final likesInfoResults = await executeQuery(getLikesInfoQuery, likesInfoParams);
-
-    return likesInfoResults.rows.isNotEmpty;
 
   }
 
@@ -90,55 +54,20 @@ class VentActions extends BaseQueryService with
 
   }
 
-  Future<void> savePost() async {
+  Future<Map<String, dynamic>> savePost() async {
 
-    const savedInfoQueryParams = 'WHERE post_id = :post_id AND saved_by = :saved_by';
-
-    final savedInfoParams = {
+    final response = await ApiClient.post(ApiPath.saveVent, {
       'post_id': postId,
       'saved_by': userProvider.user.username
+    });
+
+    if (response.statusCode == 200) {
+      _updatePostSavedValue(isUserSavedPost: response.body!['saved']);
+    }
+
+    return {
+      'status_code': response.statusCode
     };
-
-    final isUserSavedPost = await _isUserSavedPost(
-      savedInfoQueryParams: savedInfoQueryParams, 
-      savedInfoParams: savedInfoParams
-    );
-
-    await _updatePostSavedInfo(
-      isUserSavedPost: isUserSavedPost, 
-      savedInfoQueryParams: savedInfoQueryParams, 
-      savedInfoParams: savedInfoParams
-    );
-
-    _updatePostSavedValue(isUserSavedPost: isUserSavedPost);
-
-  }
-
-  Future<bool> _isUserSavedPost({
-    required String savedInfoQueryParams,
-    required Map<String, dynamic> savedInfoParams
-  }) async {
-
-    final getSavedInfoQuery = 
-      'SELECT 1 FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'; 
-
-    final savedInfoResults = await executeQuery(getSavedInfoQuery, savedInfoParams);
-    
-    return savedInfoResults.rows.isNotEmpty;
-
-  }
-
-  Future<void> _updatePostSavedInfo({
-    required bool isUserSavedPost,
-    required String savedInfoQueryParams,
-    required Map<String, dynamic> savedInfoParams,
-  }) async {
-
-    final query = isUserSavedPost 
-      ? 'DELETE FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'
-      : 'INSERT INTO ${TableNames.savedVentInfo} (post_id, saved_by) VALUES (:post_id, :saved_by)';
-
-    await executeQuery(query, savedInfoParams);
 
   }
 
