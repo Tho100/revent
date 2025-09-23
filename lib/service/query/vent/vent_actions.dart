@@ -1,4 +1,3 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/api/api_client.dart';
@@ -55,55 +54,20 @@ class VentActions extends BaseQueryService with
 
   }
 
-  Future<void> savePost() async {
+  Future<Map<String, dynamic>> savePost() async {
 
-    const savedInfoQueryParams = 'WHERE post_id = :post_id AND saved_by = :saved_by';
-
-    final savedInfoParams = {
+    final response = await ApiClient.post(ApiPath.saveVent, {
       'post_id': postId,
       'saved_by': userProvider.user.username
+    });
+
+    if (response.statusCode == 200) {
+      _updatePostSavedValue(isUserSavedPost: response.body!['saved']);
+    }
+
+    return {
+      'status_code': response.statusCode
     };
-
-    final isUserSavedPost = await _isUserSavedPost(
-      savedInfoQueryParams: savedInfoQueryParams, 
-      savedInfoParams: savedInfoParams
-    );
-
-    await _updatePostSavedInfo(
-      isUserSavedPost: isUserSavedPost, 
-      savedInfoQueryParams: savedInfoQueryParams, 
-      savedInfoParams: savedInfoParams
-    );
-
-    _updatePostSavedValue(isUserSavedPost: isUserSavedPost);
-
-  }
-
-  Future<bool> _isUserSavedPost({
-    required String savedInfoQueryParams,
-    required Map<String, dynamic> savedInfoParams
-  }) async {
-
-    final getSavedInfoQuery = 
-      'SELECT 1 FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'; 
-
-    final savedInfoResults = await executeQuery(getSavedInfoQuery, savedInfoParams);
-    
-    return savedInfoResults.rows.isNotEmpty;
-
-  }
-
-  Future<void> _updatePostSavedInfo({
-    required bool isUserSavedPost,
-    required String savedInfoQueryParams,
-    required Map<String, dynamic> savedInfoParams,
-  }) async {
-
-    final query = isUserSavedPost 
-      ? 'DELETE FROM ${TableNames.savedVentInfo} $savedInfoQueryParams'
-      : 'INSERT INTO ${TableNames.savedVentInfo} (post_id, saved_by) VALUES (:post_id, :saved_by)';
-
-    await executeQuery(query, savedInfoParams);
 
   }
 
