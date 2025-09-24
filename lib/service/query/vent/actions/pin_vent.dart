@@ -1,4 +1,3 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -10,35 +9,40 @@ class PinVent extends BaseQueryService with UserProfileProviderService, ProfileP
   
   PinVent({required this.postId});
 
-  Future<Map<String, dynamic>> pin() async {
+  Future<Map<String, dynamic>> pinPost() async {
+
+    final response = await _callPinRequest();
+
+    if (response['status_code'] == 200) {
+      _updateIsPinnedList(true);
+    }
+
+    return response;
+
+  }
+
+  Future<Map<String, dynamic>> unpinPost() async {
+
+    final response = await _callPinRequest();
+
+    if (response['status_code'] == 200) {
+      _updateIsPinnedList(false);
+    }
+
+    return response;
+
+  }
+
+  Future<Map<String, dynamic>> _callPinRequest() async {
 
     final response = await ApiClient.post(ApiPath.pinVent, {
       'pinned_by': userProvider.user.username,
       'post_id': postId
     });
 
-    if (response.statusCode == 201) {
-      _updateIsPinnedList(true);
-    }
-
     return {
       'status_code': response.statusCode
     };
-
-  }
-
-  Future<void> unpin() async {
-
-    const query = 'DELETE FROM ${TableNames.pinnedVentInfo} WHERE post_id = :post_id AND pinned_by = :pinned_by';
-
-    final params = {
-      'pinned_by': userProvider.user.username,
-      'post_id': postId
-    };
-
-    await executeQuery(query, params).then(
-      (_) => _updateIsPinnedList(false)
-    );
 
   }
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -9,7 +10,6 @@ import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 import 'package:revent/shared/widgets/text/text_formatting_toolbar.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/vent_actions.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
@@ -48,9 +48,10 @@ class _PostCommentPageState extends State<PostCommentPage> with
           return;
         } 
 
-        await VentActions(
-          postId: activeVentProvider.ventData.postId
-        ).sendComment(comment: commentText).then(
+        await CommentActions(
+          commentText: commentText,
+          commentedBy: userProvider.user.username
+        ).sendComment().then(
           (_) => Navigator.pop(context)
         );
 

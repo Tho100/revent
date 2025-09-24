@@ -59,7 +59,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
     try {
 
       await CommentActions(
-        username: commentedBy, 
+        commentedBy: commentedBy, 
         commentText: comment, 
       ).delete().then(
         (_) => SnackBarDialog.temporarySnack(message: AlertMessages.commentDeleted)
@@ -121,7 +121,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
     try {
 
       await CommentActions(
-        username: commentedBy, 
+        commentedBy: commentedBy, 
         commentText: comment, 
       ).like();
 

@@ -10,7 +10,7 @@ class DeleteVent extends BaseQueryService with UserProfileProviderService, VentP
 
   DeleteVent({required this.postId});
 
-  Future<Map<String, int>> delete() async {
+  Future<Map<String, int>> deletePost() async {
 
     final response = await ApiClient.deleteById(ApiPath.deleteVent, postId);
 
