@@ -1,24 +1,28 @@
 import 'package:revent/global/table_names.dart';
+import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 
-class CommentActions extends BaseQueryService with CommentsProviderService, VentProviderService {
+class CommentActions extends BaseQueryService with 
+  CommentsProviderService, 
+  VentProviderService {
 
-  final String username;
+  final String commentedBy;
   final String commentText;
 
   CommentActions({
-    required this.username,
-    required this.commentText,
+    required this.commentedBy, 
+    required this.commentText
   });
 
   Future<Map<String, int>> _getIdInfo() async {
 
     final commentId = await CommentIdGetter().getCommentId(
-      username: username, commentText: commentText
+      username: commentedBy, commentText: commentText
     );
 
     return {
@@ -28,7 +32,31 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
 
   }
 
-  Future<void> createCommentTransaction() async {
+  Future<void> sendComment() async {
+
+    await _createCommentTransaction().then(
+      (_) => _addComment()
+    );
+
+  }
+
+  void _addComment() {
+
+    final now = DateTime.now();
+    final formattedTimestamp = FormatDate().formatPostTimestamp(now);
+
+    final newComment = CommentsData(
+      commentedBy: commentedBy, 
+      comment: commentText,
+      commentTimestamp: formattedTimestamp,
+      pfpData: getIt.profileProvider.profile.profilePicture
+    );
+
+    commentsProvider.addComment(newComment);
+
+  }
+
+  Future<void> _createCommentTransaction() async {
 
     final postId = activeVentProvider.ventData.postId;
 
@@ -37,9 +65,14 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
     await conn.transactional((txn) async {
 
       await txn.execute(
-        'INSERT INTO ${TableNames.commentsInfo} (commented_by, comment, post_id) VALUES (:commented_by, :comment, :post_id)',
+        '''
+        INSERT INTO ${TableNames.commentsInfo} 
+          (commented_by, comment, post_id) 
+        VALUES 
+          (:commented_by, :comment, :post_id)'
+        ''',
         {
-          'commented_by': username,
+          'commented_by': commentedBy,
           'comment': commentText,
           'post_id': postId
         },
@@ -100,7 +133,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
   void _removeComment() {
 
     final index = commentsProvider.comments.indexWhere(
-      (comment) => comment.commentedBy == username && comment.comment == commentText
+      (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
     );
 
     if (index != -1) {
@@ -139,7 +172,7 @@ class CommentActions extends BaseQueryService with CommentsProviderService, Vent
     );
 
     final index = commentsProvider.comments.indexWhere(
-      (comment) => comment.commentedBy == username && comment.comment == commentText
+      (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
     );
 
     _updateCommentLikedValue(
