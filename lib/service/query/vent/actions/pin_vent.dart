@@ -9,7 +9,7 @@ class PinVent extends BaseQueryService with UserProfileProviderService, ProfileP
   
   PinVent({required this.postId});
 
-  Future<Map<String, dynamic>> pin() async {
+  Future<Map<String, dynamic>> pinPost() async {
 
     final response = await _callPinRequest();
 
@@ -21,7 +21,7 @@ class PinVent extends BaseQueryService with UserProfileProviderService, ProfileP
 
   }
 
-  Future<Map<String, dynamic>> unpin() async {
+  Future<Map<String, dynamic>> unpinPost() async {
 
     final response = await _callPinRequest();
 
