@@ -1,6 +1,8 @@
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/get_it_extensions.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
@@ -32,11 +34,23 @@ class CommentActions extends BaseQueryService with
 
   }
 
-  Future<void> sendComment() async {
+  Future<Map<String, dynamic>> sendComment() async {
 
-    await _createCommentTransaction().then(
-      (_) => _addComment()
-    );
+    final postId = activeVentProvider.ventData.postId;
+
+    final response = await ApiClient.post(ApiPath.createComment, {
+      'commented_by': commentedBy,
+      'comment': commentText,
+      'post_id': postId
+    });
+
+    if (response.statusCode == 201) {
+      _addComment();
+    }
+
+    return {
+      'status_code': response.statusCode
+    };
 
   }
 
@@ -53,37 +67,6 @@ class CommentActions extends BaseQueryService with
     );
 
     commentsProvider.addComment(newComment);
-
-  }
-
-  Future<void> _createCommentTransaction() async {
-
-    final postId = activeVentProvider.ventData.postId;
-
-    final conn = await connection();
-
-    await conn.transactional((txn) async {
-
-      await txn.execute(
-        '''
-        INSERT INTO ${TableNames.commentsInfo} 
-          (commented_by, comment, post_id) 
-        VALUES 
-          (:commented_by, :comment, :post_id)'
-        ''',
-        {
-          'commented_by': commentedBy,
-          'comment': commentText,
-          'post_id': postId
-        },
-      );
-
-      await txn.execute(
-        'UPDATE ${TableNames.ventInfo} SET total_comments = total_comments + 1 WHERE post_id = :post_id',
-        {'post_id': postId}
-      );
-
-    });
 
   }
 
