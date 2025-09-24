@@ -48,12 +48,15 @@ class _PostCommentPageState extends State<PostCommentPage> with
           return;
         } 
 
-        await CommentActions(
+        final postCommentResponse = await CommentActions(
           commentText: commentText,
           commentedBy: userProvider.user.username
-        ).sendComment().then(
-          (_) => Navigator.pop(context)
-        );
+        ).sendComment();
+
+        if (postCommentResponse['status_code'] != 201) {
+          SnackBarDialog.errorSnack(message: AlertMessages.commentFailed);
+          return;    
+        }
 
         SnackBarDialog.temporarySnack(message: AlertMessages.commentPosted);
 

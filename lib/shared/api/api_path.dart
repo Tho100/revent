@@ -20,4 +20,6 @@ class ApiPath {
   static const saveVent = '$ventActions/save-vent';
   static const pinVent = '$ventActions/pin-vent';
 
+  static const createComment = '/create-comment';
+
 }
