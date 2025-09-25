@@ -58,12 +58,17 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
     try {
 
-      await CommentActions(
+      final deleteCommentResponse = await CommentActions(
         commentedBy: commentedBy, 
         commentText: comment, 
-      ).delete().then(
-        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.commentDeleted)
-      );
+      ).delete();
+
+      if (deleteCommentResponse['status_code'] != 204) {
+        SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+        return;
+      }
+
+      SnackBarDialog.temporarySnack(message: AlertMessages.commentDeleted);
 
       if (isOnRepliesPage) {
         Navigator.pop(AppKeys.navigatorKey.currentContext!);
