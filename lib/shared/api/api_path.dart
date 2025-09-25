@@ -22,4 +22,7 @@ class ApiPath {
 
   static const createComment = '/create-comment';
 
+  static const commentActions = '/comment-actions';
+  static const deleteComment = '$commentActions/delete-comment';
+
 }
