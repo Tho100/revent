@@ -20,6 +20,14 @@ class ApiPath {
   static const saveVent = '$ventActions/save-vent';
   static const pinVent = '$ventActions/pin-vent';
 
+  static const ventsGetter = '/vents-getter';
+  static const latestVentsGetter = '$ventsGetter/latest';
+  static const trendingVentsGetter = '$ventsGetter/trending';
+  static const followingVentsGetter = '$ventsGetter/following';
+
   static const createComment = '/create-comment';
+
+  static const commentActions = '/comment-actions';
+  static const deleteComment = '$commentActions/delete-comment';
 
 }

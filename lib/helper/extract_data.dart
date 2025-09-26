@@ -2,16 +2,19 @@ import 'package:mysql_client/mysql_client.dart';
 
 class ExtractData {
 
-  final IResultSet rowsData;
+  List<dynamic>? data;
+  IResultSet? rowsData;
 
-  ExtractData({required this.rowsData});
+  ExtractData({this.data, this.rowsData});
+
+// TODO: Get rid of these two and make data required
 
   /// Extracts a list of [String] values from the specified [columnName].
   /// 
   /// Assumes the column values are non-null strings.
 
   List<String> extractStringColumn(String columnName) {
-    return rowsData.rows.map((row) {
+    return rowsData!.rows.map((row) {
       return row.assoc()[columnName]!;
     }).toList();
   }
@@ -21,10 +24,14 @@ class ExtractData {
   /// Parses string values to integers, defaulting to 0 if parsing fails.
    
   List<int> extractIntColumn(String columnName) {
-    return rowsData.rows.map((row) {
+    return rowsData!.rows.map((row) {
       final value = row.assoc()[columnName]!;
       return int.tryParse(value) ?? 0;
     }).toList();
+  }
+
+  List<T> extractVentsData<T>(String header) {
+    return data!.map((vent) => (vent as Map<String, dynamic>)[header] as T).toList();
   }
   
 }

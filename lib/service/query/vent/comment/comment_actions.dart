@@ -70,46 +70,21 @@ class CommentActions extends BaseQueryService with
 
   }
 
-  Future<void> delete() async {
+  Future<Map<String, dynamic>> delete() async {
 
     final idInfo = await _getIdInfo();
 
-    final conn = await connection();
-
-    await conn.transactional((txn) async {
-     
-      await txn.execute(
-        '''
-          DELETE cli
-            FROM ${TableNames.commentsLikesInfo} cli
-          INNER JOIN ${TableNames.commentsInfo} ci
-            ON cli.comment_id = ci.comment_id
-          WHERE 
-            ci.post_id = :post_id AND 
-            ci.comment_id = :comment_id
-        ''',
-        {
-          'post_id': idInfo['post_id'],
-          'comment_id': idInfo['comment_id']
-        }
-      );
-
-      await txn.execute(
-        'DELETE FROM ${TableNames.commentsInfo} WHERE comment_id = :comment_id AND post_id = :post_id',
-        {
-          'post_id': idInfo['post_id'], 
-          'comment_id': idInfo['comment_id']
-        },
-      );
-
-      await txn.execute(
-        'UPDATE ${TableNames.ventInfo} SET total_comments = total_comments - 1 WHERE post_id = :post_id',
-        {'post_id': idInfo['post_id']}
-      );
-
-    }).then(
-      (_) => _removeComment()
+    final response = await ApiClient.deleteById(
+      ApiPath.deleteComment, idInfo['comment_id']!
     );
+
+    if (response.statusCode == 204) {
+      _removeComment();
+    }
+
+    return {
+      'status_code': response.statusCode
+    };
 
   }
 

@@ -63,7 +63,7 @@ class VentActionsHandler with NavigationProviderService {
   Future<void> savePost({bool isAlreadySaved = false}) async {
 
     try {
-
+// TODO: Fix icon doesn't update when post is saved
       final saveVentResponse = await SaveVent(
         postId: postId, ventProvider: _getVentProvider()
       ).savePost();
