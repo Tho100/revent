@@ -17,7 +17,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       'blocked_by': userProvider.user.username
     });
 
-    return await _fetchVentsData(ventsBody: response.body);
+    return await _parseVentsData(ventsBody: response.body);
 
   }
 
@@ -27,7 +27,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       'blocked_by': userProvider.user.username
     });
 
-    return await _fetchVentsData(ventsBody: response.body);
+    return await _parseVentsData(ventsBody: response.body);
 
   }
 
@@ -37,7 +37,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       'blocked_by': userProvider.user.username
     });
 
-    return await _fetchVentsData(ventsBody: response.body);
+    return await _parseVentsData(ventsBody: response.body);
 
   }
 
@@ -145,8 +145,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   }
 
-  // TODO: Rename to _parseVentsData
-  Future<Map<String, dynamic>> _fetchVentsData({
+  Future<Map<String, dynamic>> _parseVentsData({
     required dynamic ventsBody, 
     bool excludeBodyText = false
   }) async {
@@ -156,9 +155,11 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final ventsData = ExtractData(data: vents);
 
     final postIds = ventsData.extractVentsData<int>('post_id');
+    
     final titles = ventsData.extractVentsData<String>('title');
     final creators = ventsData.extractVentsData<String>('creator');
     final tags = ventsData.extractVentsData<String>('tags');
+
     final totalLikes = ventsData.extractVentsData<int>('total_likes');
     final totalComments = ventsData.extractVentsData<int>('total_comments');
 
