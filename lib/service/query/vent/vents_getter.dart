@@ -1,10 +1,11 @@
-import 'package:revent/global/validation_limits.dart';
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
+import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_previewer_body.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/vent/vent_post_state_service.dart';
 
@@ -12,79 +13,31 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getLatestVentsData() async {
 
-    const query = 
-    '''
-      SELECT 
-        post_id, title, LEFT(body_text, ${ValidationLimits.maxBodyPreviewerLength}) as body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
-      FROM ${TableNames.ventInfo} vi
-      WHERE NOT EXISTS (
-        SELECT 1
-        FROM ${TableNames.userBlockedInfo} ubi
-        WHERE ubi.blocked_by = :blocked_by
-          AND ubi.blocked_username = vi.creator
-      )
-      ORDER BY vi.created_at DESC
-      LIMIT 10;
-    ''';
+    final response = await ApiClient.post(ApiPath.latestVentsGetter, {
+      'blocked_by': userProvider.user.username
+    });
 
-    final param = {'blocked_by': userProvider.user.username};
-
-    return _fetchVentsData(query, params: param);
+    return await _fetchVentsData(ventsBody: response.body);
 
   }
 
   Future<Map<String, dynamic>> getTrendingVentsData() async {
 
-    const query = 
-    '''
-      SELECT 
-        post_id, title, LEFT(body_text, ${ValidationLimits.maxBodyPreviewerLength}) as body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
-      FROM ${TableNames.ventInfo} vi
-      WHERE NOT EXISTS (
-        SELECT 1
-        FROM ${TableNames.userBlockedInfo} ubi
-        WHERE ubi.blocked_by = :blocked_by
-          AND ubi.blocked_username = vi.creator
-      )
-        AND vi.created_at >= DATE_SUB(NOW(), INTERVAL 16 DAY)
-        AND (total_likes >= 5 OR total_comments >= 1)
-      ORDER BY 
-        (vi.total_likes >= 5 AND vi.total_comments >= 1) ASC, 
-        vi.total_likes ASC, 
-        vi.created_at DESC
-      LIMIT 10;
-    ''';
+    final response = await ApiClient.post(ApiPath.trendingVentsGetter, {
+      'blocked_by': userProvider.user.username
+    });
 
-    final param = {'blocked_by': userProvider.user.username};
-
-    return _fetchVentsData(query, params: param);
+    return await _fetchVentsData(ventsBody: response.body);
 
   }
 
   Future<Map<String, dynamic>> getFollowingVentsData() async {
 
-    const query = 
-    '''
-      SELECT 
-        post_id, title, LEFT(body_text, ${ValidationLimits.maxBodyPreviewerLength}) as body_text, creator, created_at, tags, total_likes, total_comments, marked_nsfw
-      FROM ${TableNames.ventInfo} vi
-      INNER JOIN ${TableNames.userFollowsInfo} ufi 
-        ON ufi.following = vi.creator
-      WHERE ufi.follower = :username
-        AND NOT EXISTS (
-          SELECT 1
-          FROM ${TableNames.userBlockedInfo} ubi
-          WHERE 
-            ubi.blocked_by = :username AND 
-            ubi.blocked_username = vi.creator
-        )
-      ORDER BY vi.created_at DESC
-      LIMIT 10;
-    ''';
+    final response = await ApiClient.post(ApiPath.followingVentsGetter, {
+      'blocked_by': userProvider.user.username
+    });
 
-    final param = {'username': userProvider.user.username};
-
-    return _fetchVentsData(query, params: param);
+    return await _fetchVentsData(ventsBody: response.body);
 
   }
 
@@ -116,7 +69,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       'blocked_by': userProvider.user.username
     };
 
-    return _fetchVentsData(query, params: params, excludeBodyText: true);
+    return {};//_fetchVentsData(query, params: params, excludeBodyText: true);
 
   }
 
@@ -152,7 +105,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
     final param = {'liked_by': userProvider.user.username};
 
-    return _fetchVentsData(query, params: param);
+    return {};//_fetchVentsData(query, params: param);
 
   }
 
@@ -188,47 +141,48 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
     final param = {'saved_by': userProvider.user.username};
 
-    return _fetchVentsData(query, params: param);
+    return {}; // _fetchVentsData(query, params: param);
 
   }
 
-  Future<Map<String, dynamic>> _fetchVentsData(
-    String query, 
-    {Map<String, dynamic>? params, bool excludeBodyText = false}
-  ) async {
+  // TODO: Rename to _parseVentsData
+  Future<Map<String, dynamic>> _fetchVentsData({
+    required dynamic ventsBody, 
+    bool excludeBodyText = false
+  }) async {
 
-    final results = params != null 
-      ? await executeQuery(query, params)
-      : await executeQuery(query);
+    final vents = ventsBody['vents'] as List<dynamic>;
 
-    final extractedData = ExtractData(rowsData: results);
+    final ventsData = ExtractData(data: vents);
 
-    final postIds = extractedData.extractIntColumn('post_id'); 
-    final titles = extractedData.extractStringColumn('title');
-    final creators = extractedData.extractStringColumn('creator');
+    final postIds = ventsData.extractVentsData<int>('post_id');
+    final titles = ventsData.extractVentsData<String>('title');
+    final creators = ventsData.extractVentsData<String>('creator');
+    final tags = ventsData.extractVentsData<String>('tags');
+    final totalLikes = ventsData.extractVentsData<int>('total_likes');
+    final totalComments = ventsData.extractVentsData<int>('total_comments');
 
-    final tags = extractedData.extractStringColumn('tags');
-    
-    final totalLikes = extractedData.extractIntColumn('total_likes');
-    final totalComments = extractedData.extractIntColumn('total_comments');
-
-    final postTimestamp = FormatDate().formatToPostDate(
-      data: extractedData, columnName: 'created_at'
+    final postTimestamp = FormatDate().formatToPostDate2(
+      data: ventsData.extractVentsData<String>('created_at'),
     );
 
     final isNsfw = DataConverter.convertToBools(
-      extractedData.extractIntColumn('marked_nsfw')
+      ventsData.extractVentsData<int>('marked_nsfw'),
     );
-    
-    final bodyText = excludeBodyText ? const [] : extractedData.extractStringColumn('body_text');
+
+    final bodyText = excludeBodyText
+      ? const []
+      : ventsData.extractVentsData<String>('body_text');
 
     final modifiedBodyText = excludeBodyText
       ? List.generate(titles.length, (_) => '')
       : List.generate(
-        titles.length, (index) => FormatPreviewerBody.formatBodyText(
-          bodyText: bodyText[index], isNsfw: isNsfw[index]
-        )
-      );
+          titles.length,
+          (index) => FormatPreviewerBody.formatBodyText(
+            bodyText: bodyText[index],
+            isNsfw: isNsfw[index],
+          ),
+        );
 
     final ventPostState = VentPostStateService();
 
