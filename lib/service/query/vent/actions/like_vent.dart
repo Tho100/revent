@@ -12,7 +12,7 @@ class LikeVent with UserProfileProviderService {
     required this.postId
   });
 
-  Future<Map<String, dynamic>> likePost() async {
+  Future<Map<String, dynamic>> toggleLikePost() async {
 
     final response = await ApiClient.post(ApiPath.likeVent, {
       'post_id': postId,
@@ -20,7 +20,7 @@ class LikeVent with UserProfileProviderService {
     });
 
     if (response.statusCode == 200) {
-      _updatePostLikeValue(isPostAlreadyLiked: response.body!['liked']);
+      _updatePostLikeValue(liked: response.body!['liked']);
     }
 
     return {
@@ -29,12 +29,12 @@ class LikeVent with UserProfileProviderService {
 
   }
 
-  void _updatePostLikeValue({required bool isPostAlreadyLiked}) {
+  void _updatePostLikeValue({required bool liked}) {
 
     final index = ventProvider['vent_index'];
     final ventData = ventProvider['vent_data'];
 
-    ventData.likeVent(index, isPostAlreadyLiked);
+    ventData.likeVent(index, liked);
 
   }
 

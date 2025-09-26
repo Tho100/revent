@@ -12,12 +12,16 @@ class SaveVent with UserProfileProviderService {
     required this.postId
   });
 
-  Future<Map<String, dynamic>> _callSaveRequest() async {
+  Future<Map<String, dynamic>> toggleSavePost() async {
 
-    final response = await ApiClient.post(ApiPath.saveVent, {
+    final response = await ApiClient. post(ApiPath.saveVent, {
       'post_id': postId,
       'saved_by': userProvider.user.username
     });
+
+    if (response.statusCode == 200) {
+      _updatePostSavedValue(saved: response.body!['saved']);
+    }
 
     return {
       'status_code': response.statusCode
@@ -25,36 +29,12 @@ class SaveVent with UserProfileProviderService {
 
   }
 
-  Future<Map<String, dynamic>> savePost() async {
-
-    final response = await _callSaveRequest();
-
-    if (response['status_code'] == 200) {
-      _updatePostSavedValue(isUserSavedPost: true);
-    }
-
-    return response;
-
-  }
-
-  Future<Map<String, dynamic>> unsavePost() async {
-
-    final response = await _callSaveRequest();
-
-    if (response['status_code'] == 200) {
-      _updatePostSavedValue(isUserSavedPost: false);
-    }
-
-    return response;
-
-  }
-
-  void _updatePostSavedValue({required bool isUserSavedPost}) {
+  void _updatePostSavedValue({required bool saved}) {
 
     final index = ventProvider['vent_index'];
     final ventData = ventProvider['vent_data'];
 
-    ventData.saveVent(index, isUserSavedPost);
+    ventData.saveVent(index, saved);
 
   }
 

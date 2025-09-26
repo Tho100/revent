@@ -9,36 +9,16 @@ class PinVent extends BaseQueryService with UserProfileProviderService, ProfileP
   
   PinVent({required this.postId});
 
-  Future<Map<String, dynamic>> pinPost() async {
-
-    final response = await _callPinRequest();
-
-    if (response['status_code'] == 200) {
-      _updateIsPinnedList(true);
-    }
-
-    return response;
-
-  }
-
-  Future<Map<String, dynamic>> unpinPost() async {
-
-    final response = await _callPinRequest();
-
-    if (response['status_code'] == 200) {
-      _updateIsPinnedList(false);
-    }
-
-    return response;
-
-  }
-
-  Future<Map<String, dynamic>> _callPinRequest() async {
+  Future<Map<String, dynamic>> togglePinPost() async {
 
     final response = await ApiClient.post(ApiPath.pinVent, {
       'pinned_by': userProvider.user.username,
       'post_id': postId
     });
+
+    if (response.statusCode == 200) {
+      _updateIsPinnedList(response.body!['pinned']);
+    }
 
     return {
       'status_code': response.statusCode
@@ -46,11 +26,11 @@ class PinVent extends BaseQueryService with UserProfileProviderService, ProfileP
 
   }
 
-  void _updateIsPinnedList(bool isPin) {
+  void _updateIsPinnedList(bool pinned) {
 
     final postsData = profilePostsProvider.myProfile;
 
-    if (isPin) {
+    if (pinned) {
 
       postsData.isPinned = List.generate(postsData.isPinned.length, 
         (index) => postsData.postIds[index] == postId
