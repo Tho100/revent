@@ -41,35 +41,16 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   }
 
-  Future<Map<String, dynamic>> getSearchVentsData({required String? searchText}) async {
+  Future<Map<String, dynamic>> getSearchVentsData({required String? searchText}) async {        
 
     final cleanSearchText = searchText?.replaceAll(RegExp(r'[^\w\s]'), '') ?? '';
 
-    const query = 
-    '''
-      SELECT 
-        post_id, title, creator, created_at, tags, total_likes, total_comments, marked_nsfw
-      FROM ${TableNames.ventInfo} vi
-      WHERE 
-        (LOWER(title) LIKE LOWER(:search_text) 
-        OR LOWER(body_text) LIKE LOWER(:search_text) 
-        OR LOWER(tags) LIKE LOWER(:search_text))
-        AND NOT EXISTS (
-          SELECT 1
-          FROM ${TableNames.userBlockedInfo} ubi
-          WHERE 
-            ubi.blocked_by = :blocked_by AND 
-            ubi.blocked_username = vi.creator
-        )
-      ORDER BY vi.created_at DESC;
-    ''';
-
-    final params = {
-      'search_text': '%$cleanSearchText%',
+    final response = await ApiClient.post(ApiPath.searchVentsGetter, {
+      'search_text': cleanSearchText,
       'blocked_by': userProvider.user.username
-    };
+    }); 
 
-    return {};//_fetchVentsData(query, params: params, excludeBodyText: true);
+    return await _parseVentsData(ventsBody: response.body, excludeBodyText: true);
 
   }
 

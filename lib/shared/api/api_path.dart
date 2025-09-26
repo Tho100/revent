@@ -24,6 +24,7 @@ class ApiPath {
   static const latestVentsGetter = '$ventsGetter/latest';
   static const trendingVentsGetter = '$ventsGetter/trending';
   static const followingVentsGetter = '$ventsGetter/following';
+  static const searchVentsGetter = '$ventsGetter/search';
 
   static const createComment = '/create-comment';
 
