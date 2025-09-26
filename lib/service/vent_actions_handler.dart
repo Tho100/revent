@@ -48,7 +48,7 @@ class VentActionsHandler with NavigationProviderService {
 
       final likeVentResponse = await LikeVent(
         postId: postId, ventProvider: _getVentProvider()
-      ).likePost();
+      ).toggleLikePost();
 
       if (likeVentResponse['status_code'] != 200) {
         _showErrorSnack(AlertMessages.likePostFailed);
@@ -63,10 +63,10 @@ class VentActionsHandler with NavigationProviderService {
   Future<void> savePost({bool isAlreadySaved = false}) async {
 
     try {
-// TODO: Fix icon doesn't update when post is saved
+
       final saveVentResponse = await SaveVent(
         postId: postId, ventProvider: _getVentProvider()
-      ).savePost();
+      ).toggleSavePost();
 
       if (saveVentResponse['status_code'] != 200) {
         _showErrorSnack(AlertMessages.savePostFailed);
@@ -87,9 +87,14 @@ class VentActionsHandler with NavigationProviderService {
 
     try {
 
-      await SaveVent(
+      final response = await SaveVent(
         postId: postId, ventProvider: _getVentProvider()
-      ).unsavePost();
+      ).toggleSavePost();
+
+      if (response['status_code'] != 200) {
+        _showTemporarySnack(AlertMessages.unsavePostfailed);
+        return;
+      }
         
       _showTemporarySnack(AlertMessages.removedSavedPost);
 
@@ -110,7 +115,7 @@ class VentActionsHandler with NavigationProviderService {
         return;
       }
 
-      final pinVentResponse = await PinVent(postId: postId).pinPost();
+      final pinVentResponse = await PinVent(postId: postId).togglePinPost();
 
       if (pinVentResponse['status_code'] != 201) {
         _showErrorSnack(AlertMessages.pinPostFailed);
@@ -129,7 +134,12 @@ class VentActionsHandler with NavigationProviderService {
 
     try {
       
-      await PinVent(postId: postId).unpinPost();
+      final response = await PinVent(postId: postId).togglePinPost();
+
+      if (response['status_code'] != 200) {
+        _showErrorSnack(AlertMessages.unpinPostFailed);
+        return;
+      }
       
       _showTemporarySnack(AlertMessages.removedPinnedPost);
 

@@ -49,11 +49,9 @@ class SavedVentProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  void likeVent(int index, bool isUserLikedPost) {
+  void likeVent(int index, bool liked) {
 
-    _vents[index].isPostLiked = isUserLikedPost 
-      ? false
-      : true;
+    _vents[index].isPostLiked = liked;
 
     _vents[index].isPostLiked 
       ? _vents[index].totalLikes += 1
@@ -63,14 +61,9 @@ class SavedVentProvider extends ChangeNotifier {
     
   }
 
-  void saveVent(int index, bool isUserSavedPost) {
-
-    _vents[index].isPostSaved = isUserSavedPost 
-      ? false
-      : true;
-
+  void saveVent(int index, bool saved) {
+    _vents[index].isPostSaved = saved;
     notifyListeners();
-    
   }
 
   void clearVents() {
