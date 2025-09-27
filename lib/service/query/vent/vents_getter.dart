@@ -56,37 +56,11 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getLikedVentsData() async {
 
-    const query = 
-    '''
-      SELECT 
-        vi.post_id,
-        vi.title,
-        vi.creator,
-        vi.body_text,
-        vi.tags, 
-        vi.created_at,
-        vi.total_likes,
-        vi.total_comments,
-        vi.marked_nsfw,
-        upi.profile_picture
-      FROM 
-        ${TableNames.likedVentInfo} AS lvi
-      JOIN 
-        ${TableNames.ventInfo} AS vi 
-          ON lvi.post_id = vi.post_id
-      JOIN 
-        ${TableNames.userProfileInfo} AS upi
-          ON vi.creator = upi.username
-      WHERE 
-        lvi.liked_by = :liked_by
-      ORDER BY 
-        lvi.liked_at DESC
-      LIMIT 25;
-    '''; 
+    final response = await ApiClient.post(ApiPath.likedVentsGetter, {
+      'liked_by': userProvider.user.username
+    });
 
-    final param = {'liked_by': userProvider.user.username};
-
-    return {};//_fetchVentsData(query, params: param);
+    return await _parseVentsData(ventsBody: response.body);
 
   }
 
