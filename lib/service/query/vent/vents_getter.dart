@@ -60,43 +60,17 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       'liked_by': userProvider.user.username
     });
 
-    return await _parseVentsData(ventsBody: response.body);
+    return await _parseVentsData(ventsBody: response.body); 
 
   }
 
   Future<Map<String, dynamic>> getSavedVentsData() async {
 
-    const query = 
-    '''
-      SELECT 
-        vi.post_id,
-        vi.title,
-        vi.creator,
-        vi.body_text,
-        vi.tags, 
-        vi.created_at,
-        vi.total_likes,
-        vi.total_comments,
-        vi.marked_nsfw,
-        upi.profile_picture
-      FROM 
-        ${TableNames.savedVentInfo} AS svi
-      JOIN 
-        ${TableNames.ventInfo} AS vi 
-          ON svi.post_id = vi.post_id
-      JOIN 
-        ${TableNames.userProfileInfo} AS upi
-          ON vi.creator = upi.username
-      WHERE 
-        svi.saved_by = :saved_by
-      ORDER BY 
-        svi.saved_at DESC
-      LIMIT 25
-    ''';
+    final response = await ApiClient.post(ApiPath.savedVentsGetter, {
+      'saved_by': userProvider.user.username
+    });
 
-    final param = {'saved_by': userProvider.user.username};
-
-    return {}; // _fetchVentsData(query, params: param);
+    return await _parseVentsData(ventsBody: response.body);
 
   }
 
