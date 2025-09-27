@@ -1,4 +1,3 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_previewer_body.dart';
