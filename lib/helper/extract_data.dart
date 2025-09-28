@@ -33,9 +33,15 @@ class ExtractData {
   /// Returns all values for [header] from [data] as a List<T>.
 
   List<T> extractColumn<T>(String header) {
+
+    if (data == null) {
+      return <T>[];
+    }
+
     return data!
-      .map((vent) => (vent as Map<String, dynamic>)[header] as T)
+      .map((value) => (value as Map<String, dynamic>)[header] as T)
       .toList();
+      
   }
   
 }
