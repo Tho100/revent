@@ -1,41 +1,35 @@
 import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
-import 'package:revent/helper/format_date.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
+import 'package:revent/shared/provider_mixins.dart';
 
-class VaultVentDataGetter extends BaseQueryService {
+class VaultVentDataGetter extends BaseQueryService with UserProfileProviderService {
 
-  Future<Map<String, List<dynamic>>> getMetadata({required String username}) async {
+  Future<Map<String, dynamic>> getMetadata() async {
 
-    const query = 
-    '''
-      SELECT 
-        post_id, title, created_at, tags 
-      FROM ${TableNames.vaultVentInfo} 
-      WHERE creator = :username ORDER BY created_at DESC
-    ''';
+    final response = await ApiClient.post(ApiPath.vaultVentsGetter, {
+      'username': userProvider.user.username
+    });
 
-    final param = {'username': username};
+    final vents = response.body!['vents'] as List<dynamic>;
 
-    final results = await executeQuery(query, param);
+    final ventsData = ExtractData(data: vents);
 
-    final extractData = ExtractData(rowsData: results);
-    
-    final postId = extractData.extractIntColumn('post_id');
-    final title = extractData.extractStringColumn('title');
-    final tags = extractData.extractStringColumn('tags');
-
-    final postTimestamp = FormatDate().formatToPostDate(
-      data: extractData, columnName: 'created_at'
-    );
+    final postIds = ventsData.extractVentsData<int>('post_id');
+    final titles = ventsData.extractVentsData<String>('title');
+    final tags = ventsData.extractVentsData<String>('tags');
+    final postTimestamp = ventsData.extractVentsData<String>('created_at');
 
     return {
-      'post_id': postId,
-      'title': title,
+      'status_code': response.statusCode,
+      'post_id': postIds,
+      'title': titles,
       'tags': tags,
       'post_timestamp': postTimestamp
     };
-
+  
   }
 
   Future<String> getBodyText({required int postId}) async {

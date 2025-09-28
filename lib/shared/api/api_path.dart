@@ -27,6 +27,7 @@ class ApiPath {
   static const searchVentsGetter = '$ventsGetter/search';
   static const likedVentsGetter = '$ventsGetter/liked';
   static const savedVentsGetter = '$ventsGetter/saved';
+  static const vaultVentsGetter = '$ventsGetter/vault';
 
   static const createComment = '/create-comment';
 
