@@ -30,8 +30,12 @@ class ExtractData {
     }).toList();
   }
 
-  List<T> extractVentsData<T>(String header) {
-    return data!.map((vent) => (vent as Map<String, dynamic>)[header] as T).toList();
+  /// Returns all values for [header] from [data] as a List<T>.
+
+  List<T> extractColumn<T>(String header) {
+    return data!
+      .map((vent) => (vent as Map<String, dynamic>)[header] as T)
+      .toList();
   }
   
 }

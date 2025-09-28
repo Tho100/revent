@@ -17,10 +17,10 @@ class VaultVentDataGetter extends BaseQueryService with UserProfileProviderServi
 
     final ventsData = ExtractData(data: vents);
 
-    final postIds = ventsData.extractVentsData<int>('post_id');
-    final titles = ventsData.extractVentsData<String>('title');
-    final tags = ventsData.extractVentsData<String>('tags');
-    final postTimestamp = ventsData.extractVentsData<String>('created_at');
+    final postIds = ventsData.extractColumn<int>('post_id');
+    final titles = ventsData.extractColumn<String>('title');
+    final tags = ventsData.extractColumn<String>('tags');
+    final postTimestamp = ventsData.extractColumn<String>('created_at');
 
     return {
       'status_code': response.statusCode,
