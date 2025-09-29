@@ -10,7 +10,7 @@ import 'package:revent/helper/extract_data.dart';
 class ProfilePictureGetter extends BaseQueryService {
 
   Future<Uint8List> getProfilePictures({String? username}) async {
-    
+    // TODO: Try to remove this and merge it into queries instead, for example on vents-getter
     if (username == getIt.userProvider.user.username) {
       return getIt.profileProvider.profile.profilePicture;
     }

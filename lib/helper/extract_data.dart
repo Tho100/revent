@@ -37,7 +37,7 @@ class ExtractData {
     if (data == null) {
       return <T>[];
     }
-
+// TODO: Return [] if no data is found
     return data!
       .map((value) => (value as Map<String, dynamic>)[header] as T)
       .toList();

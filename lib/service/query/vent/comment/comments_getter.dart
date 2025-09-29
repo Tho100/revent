@@ -1,81 +1,44 @@
-import 'package:revent/global/table_names.dart';
-import 'package:revent/helper/data_converter.dart';
+import 'dart:typed_data';
+
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/service/query/general/comment_id_getter.dart';
 
 class CommentsGetter extends BaseQueryService with UserProfileProviderService, VentProviderService {
 
   Future<Map<String, List<dynamic>>> getComments() async {
 
-    final commentIds = await CommentIdGetter().getAllCommentsId();
-
-    const getCommentsQuery = 
-    '''
-      SELECT 
-        ci.comment_id,
-        ci.comment, 
-        ci.commented_by,
-        ci.created_at,
-        ci.total_likes,
-        ci.total_replies, 
-        ci.is_edited,
-        upi.profile_picture
-      FROM ${TableNames.commentsInfo} ci
-      JOIN ${TableNames.userProfileInfo} upi 
-        ON ci.commented_by = upi.username 
-      WHERE ci.post_id = :post_id
-        AND NOT EXISTS (
-          SELECT 1
-          FROM ${TableNames.userBlockedInfo} ubi
-          WHERE 
-            ubi.blocked_by = :blocked_by AND 
-            ubi.blocked_username = ci.commented_by
-        )
-      ORDER BY ci.created_at ASC;
-    ''';
-
-    final param = {
+    final response = await ApiClient.post(ApiPath.commentsGetter, {
       'post_id': activeVentProvider.ventData.postId,
-      'blocked_by': userProvider.user.username
-    };
+      'creator': activeVentProvider.ventData.creator,
+      'current_user': userProvider.user.username,
+      'blocked_by': userProvider.user.username,
+    });
 
-    final results = await executeQuery(getCommentsQuery, param);
+    final commentsData = ExtractData(data: response.body!['comments']);
 
-    final extractedData = ExtractData(rowsData: results);
+    final comment = commentsData.extractColumn<String>('comment');
+    final commentedBy = commentsData.extractColumn<String>('commented_by');
 
-    final comment = extractedData.extractStringColumn('comment');
-    final commentedBy = extractedData.extractStringColumn('commented_by');
+    final totalLikes = commentsData.extractColumn<int>('total_likes');
+    final totalReplies = commentsData.extractColumn<int>('total_replies');
 
-    final totalLikes = extractedData.extractIntColumn('total_likes');
-    final totalReplies = extractedData.extractIntColumn('total_replies');
-
-    final commentTimestamp = FormatDate().formatToPostDate(
-      data: extractedData, columnName: 'created_at'
+    final commentTimestamp = FormatDate().formatToPostDate2(
+      data: commentsData.extractColumn<String>('created_at')
     );
 
-    final profilePictures = DataConverter.convertToPfp(
-      extractedData.extractStringColumn('profile_picture')
-    );
+    final profilePictures = List.generate(comment.length, (index) => Uint8List(0));/* TODO: Change it back to this after updating pfp stuff: DataConverter.convertToPfp(
+      commentsData.extractColumn<String>('profile_picture')
+    );*/
 
-    final isLikedState = await _commentLikedState(
-      isLikedByCreator: false,
-      commentIds: commentIds,
-    );
+    final isLiked = commentsData.extractColumn<bool>('is_liked');
+    final isLikedByCreator = commentsData.extractColumn<bool>('is_liked_by_creator');
 
-    final isLikedByCreatorState = await _commentLikedState(
-      isLikedByCreator: true,
-      commentIds: commentIds,
-    );
-
-    final isEdited = extractedData
-      .extractIntColumn('is_edited')
-      .map((value) => value != 0)
-      .toList();
-
-    final isPinned = await _commentPinnedState(commentIds: commentIds);
+    final isPinned = commentsData.extractColumn<bool>('is_pinned');
+    final isEdited = commentsData.extractColumn<bool>('is_edited');
 
     return {
       'commented_by': commentedBy,
@@ -83,59 +46,13 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
       'comment_timestamp': commentTimestamp,
       'total_likes': totalLikes,
       'total_replies': totalReplies,
-      'is_liked': isLikedState,
-      'is_liked_by_creator': isLikedByCreatorState,
+      'is_liked': isLiked,
+      'is_liked_by_creator': isLikedByCreator,
       'is_pinned': isPinned,
       'is_edited': isEdited,
       'profile_picture': profilePictures,
     };
 
-  }
-
-  Future<List<bool>> _commentPinnedState({required List<int> commentIds}) async {
-
-    const query = 'SELECT comment_id FROM ${TableNames.pinnedCommentsInfo} WHERE pinned_by = :username';
-
-    final param = {'username': activeVentProvider.ventData.creator};
-
-    final retrievedIds = await executeQuery(query, param);
-
-    final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('comment_id');
-
-    final statePostIds = extractIds.toSet();
-
-    return commentIds.map((commentId) => statePostIds.contains(commentId)).toList();
-
-  }
-
-  Future<List<bool>> _commentLikedState({
-    required bool isLikedByCreator,
-    required List<int> commentIds,
-  }) async {
-
-    const readLikesQuery = 
-    '''
-      SELECT cli.comment_id
-      FROM ${TableNames.commentsLikesInfo} cli
-      JOIN ${TableNames.commentsInfo} ci
-        ON cli.comment_id = ci.comment_id
-      WHERE cli.liked_by = :liked_by AND ci.post_id = :post_id;
-    ''';
-
-    final params = {
-      'liked_by': isLikedByCreator ? activeVentProvider.ventData.creator : userProvider.user.username,
-      'post_id': activeVentProvider.ventData.postId
-    };
-
-    final results = await executeQuery(readLikesQuery, params);
-
-    final extractedIds = ExtractData(rowsData: results).extractIntColumn('comment_id');
-
-    return List<bool>.generate(
-      commentIds.length,
-      (i) => extractedIds.contains(commentIds[i]),
-    );
-    
   }
 
 }
