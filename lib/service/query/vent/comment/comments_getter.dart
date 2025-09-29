@@ -1,5 +1,4 @@
-import 'dart:typed_data';
-
+import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -30,9 +29,9 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
       data: commentsData.extractColumn<String>('created_at')
     );
 
-    final profilePictures = List.generate(comment.length, (index) => Uint8List(0));/* TODO: Change it back to this after updating pfp stuff: DataConverter.convertToPfp(
+    final profilePictures = DataConverter.convertToPfp(
       commentsData.extractColumn<String>('profile_picture')
-    );*/
+    );
 
     final isLiked = commentsData.extractColumn<bool>('is_liked');
     final isLikedByCreator = commentsData.extractColumn<bool>('is_liked_by_creator');

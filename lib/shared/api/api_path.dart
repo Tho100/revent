@@ -8,6 +8,11 @@ class ApiPath {
 
   static const updateUser = '/update-user';
   static const updateUserAuth = '$updateUser/update-auth';
+  static const updateUserAvatar = '$updateUser/update-avatar';
+
+  static const userProfile = '/user-profile';
+  static const userProfileInfoGetter = '$userProfile/get-info';
+  static const userAvatarGetter = '$userProfile/get-avatar';
 
   static const createVent = '/create-vent';
   static const createDefaultVent = '$createVent/default-vent';

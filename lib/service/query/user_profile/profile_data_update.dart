@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:revent/global/table_names.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -24,19 +26,16 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
 
   Future<void> updateProfilePicture({required Uint8List picData}) async {
 
-    final toBase64EncodedPfp = const Base64Encoder().convert(picData);
+    final base64Pfp = const Base64Encoder().convert(picData);
 
-    const query = 
-      'UPDATE ${TableNames.userProfileInfo} SET profile_picture = :profile_pic_data WHERE username = :username';
-
-    final params = {
-      'profile_pic_data': toBase64EncodedPfp,
-      'username': userProvider.user.username
-    };
-
-    await executeQuery(query, params).then(
-      (_) => profileProvider.profile.profilePicture = picData
-    );
+    final response = await ApiClient.put(ApiPath.updateUserAvatar, {
+      'username': userProvider.user.username,
+      'pfp_base64': base64Pfp,
+    });
+    
+    if (response.statusCode == 200) {
+      profileProvider.profile.profilePicture = picData;
+    }
 
   }
 
