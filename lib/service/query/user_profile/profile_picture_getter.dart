@@ -10,7 +10,7 @@ import 'package:revent/shared/api/api_path.dart';
 class ProfilePictureGetter extends BaseQueryService {
 
   Future<Uint8List> getProfilePictures({String? username}) async {
-    // TODO: Do not use this for vents-getter, instead merge into one query
+
     if (username == getIt.userProvider.user.username) {
       return getIt.profileProvider.profile.profilePicture;
     }

@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
 import 'package:revent/shared/provider/search/search_posts_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
@@ -26,21 +25,12 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     final tags = ventsInfo['tags']! as List<String>;
     final postTimestamp = ventsInfo['post_timestamp']! as List<String>;
     final creator = ventsInfo['creator']! as List<String>;
+    final profilePictures = ventsInfo['profile_picture']! as List<Uint8List>;
     final totalLikes = ventsInfo['total_likes']! as List<int>;
     final totalComments = ventsInfo['total_comments']! as List<int>;
     final isNsfw = ventsInfo['is_nsfw']! as List<bool>;
     final isLiked = ventsInfo['is_liked']! as List<bool>;
     final isSaved = ventsInfo['is_saved']! as List<bool>;
-
-    final profilePicGetter = ProfilePictureGetter();
-
-    final profilePic = <Uint8List>[];
-
-    for (final username in creator) {
-      profilePic.add(
-        await profilePicGetter.getProfilePictures(username: username)
-      );
-    }
 
     return {
       'post_id': postIds,
@@ -49,12 +39,12 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
       'tags': tags,
       'post_timestamp': postTimestamp,
       'creator': creator,
+      'profile_picture': profilePictures,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'is_nsfw': isNsfw,
       'is_liked': isLiked,
       'is_saved': isSaved,
-      'profile_pic': profilePic,
     };
 
   }
@@ -89,7 +79,7 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
     final tags = ventsData['tags'];
     final postTimestamp = ventsData['post_timestamp'];
     final creator = ventsData['creator'];
-    final profilePic = ventsData['profile_pic'];
+    final profilePicture = ventsData['profile_picture'];
     final totalLikes = ventsData['total_likes'];
     final totalComments = ventsData['total_comments'];
     final isNsfw = ventsData['is_nsfw'];
@@ -106,7 +96,7 @@ class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProv
         tags[index],
         postTimestamp[index],
         creator[index],
-        profilePic[index],
+        profilePicture[index],
         totalLikes[index],
         totalComments[index],
         isNsfw[index],
