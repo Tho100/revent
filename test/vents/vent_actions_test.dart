@@ -16,10 +16,8 @@ void main() {
 
     test('Should increment totalLikes when user likes a post', () {
 
-      const isUserLikedPost = false;
-
       ventProvider.setVents([TestHelper.dummyVentData()]);
-      ventProvider.likeVent(postIndex, isUserLikedPost);    
+      ventProvider.likeVent(postIndex, true);    
 
       expect(ventProvider.vents[postIndex].totalLikes, equals(1));
 
@@ -27,10 +25,8 @@ void main() {
 
     test('Should decrement totalLikes when user unlikes a post', () {
 
-      const isUserLikedPost = true;
-
       ventProvider.setVents([TestHelper.dummyVentData()]);
-      ventProvider.likeVent(postIndex, isUserLikedPost);    
+      ventProvider.likeVent(postIndex, false);    
 
       expect(ventProvider.vents[postIndex].totalLikes, equals(-1));
 
@@ -42,10 +38,8 @@ void main() {
 
     test('Should set isPostSaved to true when user saves a post', () {
 
-      const isUserSavedPost = false;
-
       ventProvider.setVents([TestHelper.dummyVentData()]);
-      ventProvider.saveVent(postIndex, isUserSavedPost);
+      ventProvider.saveVent(postIndex, true);
 
       expect(ventProvider.vents[postIndex].isPostSaved, equals(true));
 
@@ -53,10 +47,8 @@ void main() {
 
     test('Should set isPostSaved to false when user unsaves a post', () {
 
-      const isUserSavedPost = true;
-
       ventProvider.setVents([TestHelper.dummyVentData()]);
-      ventProvider.saveVent(postIndex, isUserSavedPost);
+      ventProvider.saveVent(postIndex, false);
 
       expect(ventProvider.vents[postIndex].isPostSaved, equals(false));
 
