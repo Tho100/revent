@@ -34,10 +34,10 @@ class ExtractData {
 
   List<T> extractColumn<T>(String header) {
 
-    if (data == null) {
+    if (data == null || data!.isEmpty) {
       return <T>[];
     }
-// TODO: Return [] if no data is found
+
     return data!
       .map((value) => (value as Map<String, dynamic>)[header] as T)
       .toList();

@@ -78,7 +78,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     bool excludeBodyText = false
   }) async {
 
-    final vents = ventsBody['vents'] as List<dynamic>;
+    final vents = ventsBody['vents'];
 
     final ventsData = ExtractData(data: vents);
 
@@ -92,11 +92,15 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final totalComments = ventsData.extractColumn<int>('total_comments');
 
     final postTimestamp = FormatDate().formatToPostDate2(
-      data: ventsData.extractColumn<String>('created_at'),
+      data: ventsData.extractColumn<String>('created_at')
+    );
+
+    final profilePictures = DataConverter.convertToPfp(
+      ventsData.extractColumn<String>('profile_picture')
     );
 
     final isNsfw = DataConverter.convertToBools(
-      ventsData.extractColumn<int>('marked_nsfw'),
+      ventsData.extractColumn<int>('marked_nsfw')
     );
 
     final bodyText = excludeBodyText
@@ -130,6 +134,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       'tags': tags,
       'post_timestamp': postTimestamp,
       'creator': creators,
+      'profile_picture': profilePictures,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'is_nsfw': isNsfw,
