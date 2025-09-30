@@ -8,6 +8,11 @@ class ApiPath {
 
   static const updateUser = '/update-user';
   static const updateUserAuth = '$updateUser/update-auth';
+  static const updateUserAvatar = '$updateUser/update-avatar';
+
+  static const userProfile = '/user-profile';
+  static const userProfileInfoGetter = '$userProfile/get-info';
+  static const userAvatarGetter = '$userProfile/get-avatar';
 
   static const createVent = '/create-vent';
   static const createDefaultVent = '$createVent/default-vent';
@@ -27,10 +32,13 @@ class ApiPath {
   static const searchVentsGetter = '$ventsGetter/search';
   static const likedVentsGetter = '$ventsGetter/liked';
   static const savedVentsGetter = '$ventsGetter/saved';
+  static const vaultVentsGetter = '$ventsGetter/vault';
 
   static const createComment = '/create-comment';
 
   static const commentActions = '/comment-actions';
   static const deleteComment = '$commentActions/delete-comment';
+
+  static const commentsGetter = '/comments-getter';
 
 }

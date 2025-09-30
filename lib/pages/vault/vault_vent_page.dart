@@ -109,16 +109,19 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
     try {
 
-      final vaultVentsInfo = await _vaultDataGetter.getMetadata(
-        username: userProvider.user.username
-      );
+      final vaultVentsResponse = await _vaultDataGetter.getMetadata();
 
-      final postIds = vaultVentsInfo['post_id'] as List<int>;
+      if (vaultVentsResponse['status_code'] != 200) {
+        SnackBarDialog.errorSnack(message: AlertMessages.vaultFailedToLoad);
+        return;
+      }
 
-      final titles = vaultVentsInfo['title'] as List<String>;
-      final tags = vaultVentsInfo['tags'] as List<String>;
+      final postIds = vaultVentsResponse['post_id'] as List<int>;
 
-      final postTimestamp = vaultVentsInfo['post_timestamp'] as List<String>;
+      final titles = vaultVentsResponse['title'] as List<String>;
+      final tags = vaultVentsResponse['tags'] as List<String>;
+
+      final postTimestamp = vaultVentsResponse['post_timestamp'] as List<String>;
 
       _vaultVentsData.value = List.generate(titles.length, (index) {
         return _VaultVentsData(

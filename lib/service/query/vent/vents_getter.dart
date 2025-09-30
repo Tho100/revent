@@ -82,26 +82,26 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
     final ventsData = ExtractData(data: vents);
 
-    final postIds = ventsData.extractVentsData<int>('post_id');
+    final postIds = ventsData.extractColumn<int>('post_id');
     
-    final titles = ventsData.extractVentsData<String>('title');
-    final creators = ventsData.extractVentsData<String>('creator');
-    final tags = ventsData.extractVentsData<String>('tags');
+    final titles = ventsData.extractColumn<String>('title');
+    final creators = ventsData.extractColumn<String>('creator');
+    final tags = ventsData.extractColumn<String>('tags');
 
-    final totalLikes = ventsData.extractVentsData<int>('total_likes');
-    final totalComments = ventsData.extractVentsData<int>('total_comments');
+    final totalLikes = ventsData.extractColumn<int>('total_likes');
+    final totalComments = ventsData.extractColumn<int>('total_comments');
 
     final postTimestamp = FormatDate().formatToPostDate2(
-      data: ventsData.extractVentsData<String>('created_at'),
+      data: ventsData.extractColumn<String>('created_at'),
     );
 
     final isNsfw = DataConverter.convertToBools(
-      ventsData.extractVentsData<int>('marked_nsfw'),
+      ventsData.extractColumn<int>('marked_nsfw'),
     );
 
     final bodyText = excludeBodyText
       ? const []
-      : ventsData.extractVentsData<String>('body_text');
+      : ventsData.extractColumn<String>('body_text');
 
     final modifiedBodyText = excludeBodyText
       ? List.generate(titles.length, (_) => '')

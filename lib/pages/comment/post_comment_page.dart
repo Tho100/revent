@@ -51,7 +51,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
         final postCommentResponse = await CommentActions(
           commentText: commentText,
           commentedBy: userProvider.user.username
-        ).sendComment();
+        ).sendComment(); // TODO: Close page when comment is sent
 
         if (postCommentResponse['status_code'] != 201) {
           SnackBarDialog.errorSnack(message: AlertMessages.commentFailed);

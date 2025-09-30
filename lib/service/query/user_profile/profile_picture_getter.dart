@@ -1,31 +1,27 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/helper/extract_data.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 
 class ProfilePictureGetter extends BaseQueryService {
 
   Future<Uint8List> getProfilePictures({String? username}) async {
-    
+    // TODO: Do not use this for vents-getter, instead merge into one query
     if (username == getIt.userProvider.user.username) {
       return getIt.profileProvider.profile.profilePicture;
     }
 
-    const query = 'SELECT profile_picture FROM ${TableNames.userProfileInfo} WHERE username = :username';
+    final response = await ApiClient.get(ApiPath.userAvatarGetter, username!);
 
-    final param = {
-      'username': username!.isNotEmpty ? username : getIt.userProvider.user.username
-    };
+    final avatar = response.body!['avatar'];
 
-    final result = await executeQuery(query, param);
+    final pfpData = base64Decode(avatar);
 
-    final pfpData = ExtractData(rowsData: result).extractStringColumn('profile_picture')[0];
-
-    return base64Decode(pfpData);
+    return pfpData;
     
   }
 
