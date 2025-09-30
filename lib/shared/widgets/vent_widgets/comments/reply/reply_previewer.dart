@@ -9,7 +9,7 @@ import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/text_copy.dart';
 import 'package:revent/service/query/user/user_actions.dart';
-import 'package:revent/service/query/vent/comment/reply/reply_actions.dart';
+import 'package:revent/service/query/vent/reply/reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/reply_actions.dart';
