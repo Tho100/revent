@@ -1,5 +1,7 @@
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format_date.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
@@ -28,42 +30,23 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
 
   }
 
-  Future<void> sendReply() async {
-
-    await _createReplyTransaction().then(
-      (_) => _addReply()
-    );
-
-  }
-
-  Future<void> _createReplyTransaction() async {
+  Future<Map<String, dynamic>> sendReply() async {
 
     final commentId = await _getCommentId();
 
-    final conn = await connection();
-
-    await conn.transactional((txn) async {
-      
-      await txn.execute(
-        '''
-          INSERT INTO ${TableNames.commentRepliesInfo}
-            (reply, comment_id, replied_by) 
-          VALUES 
-          (:reply, :comment_id, :replied_by)
-        ''',
-        {
-          'reply': replyText,
-          'comment_id': commentId,
-          'replied_by': repliedBy,
-        },
-      );
-
-      await txn.execute(
-        'UPDATE ${TableNames.commentsInfo} SET total_replies = total_replies + 1 WHERE comment_id = :comment_id',
-        {'comment_id': commentId}
-      );
-
+    final response = await ApiClient.post(ApiPath.createReply, {
+      'reply': replyText,
+      'replied_by': repliedBy,
+      'comment_id': commentId
     });
+
+    if (response.statusCode == 201) {
+      _addReply();
+    }
+
+    return {
+      'status_code': response.statusCode
+    };
 
   }
 

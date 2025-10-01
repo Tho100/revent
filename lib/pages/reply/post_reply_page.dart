@@ -46,14 +46,21 @@ class _PostReplyPageState extends State<PostReplyPage> {
 
       if (replyText.isNotEmpty) {
 
-        await ReplyActions(
+        final postReplyResponse = await ReplyActions(
           repliedBy: getIt.userProvider.user.username,
           replyText: replyText, 
           commentText: widget.comment, 
           commentedBy: widget.commentedBy
-        ).sendReply().then(
-          (_) => Navigator.pop(context)
-        );
+        ).sendReply();
+
+        if (postReplyResponse['status_code'] != 201) {
+          SnackBarDialog.errorSnack(message: AlertMessages.replyFailed);
+          return;
+        }
+
+        if (context.mounted) {
+          Navigator.pop(context);
+        }
 
         SnackBarDialog.temporarySnack(message: AlertMessages.replyPosted);
 
