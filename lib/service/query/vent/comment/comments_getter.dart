@@ -26,7 +26,7 @@ class CommentsGetter extends BaseQueryService with UserProfileProviderService, V
     final totalReplies = commentsData.extractColumn<int>('total_replies');
 
     final commentTimestamp = FormatDate().formatToPostDate2(
-      data: commentsData.extractColumn<String>('created_at')
+      commentsData.extractColumn<String>('created_at')
     );
 
     final profilePictures = DataConverter.convertToPfp(

@@ -32,7 +32,7 @@ class ReplyIdGetter extends BaseQueryService {
     return ExtractData(rowsData: commentIdResults).extractIntColumn('reply_id')[0];
 
   }
-
+// TODO: Remove this (one commit, along with comment-id-getter)
   Future<List<int>> getAllRepliesId() async {
 
     const getPostIdQuery = 'SELECT reply_id FROM ${TableNames.commentRepliesInfo} WHERE comment_id = :comment_id';

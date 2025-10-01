@@ -92,7 +92,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final totalComments = ventsData.extractColumn<int>('total_comments');
 
     final postTimestamp = FormatDate().formatToPostDate2(
-      data: ventsData.extractColumn<String>('created_at')
+      ventsData.extractColumn<String>('created_at')
     );
 
     final profilePictures = DataConverter.convertToPfp(

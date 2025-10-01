@@ -98,9 +98,9 @@ class FormatDate {
       .map((timestamp) => formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();
   }
-// TODO: Don't make the data required
-  List<String> formatToPostDate2({required List<String> data}) {
-    return data
+
+  List<String> formatToPostDate2(List<String> timestampData) {
+    return timestampData
       .map((timestamp) => formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();
   }
