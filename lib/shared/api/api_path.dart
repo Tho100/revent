@@ -35,10 +35,10 @@ class ApiPath {
   static const vaultVentsGetter = '$ventsGetter/vault';
 
   static const createComment = '/create-comment';
-
   static const commentActions = '/comment-actions';
   static const deleteComment = '$commentActions/delete-comment';
-
   static const commentsGetter = '/comments-getter';
+
+  static const repliesGetter = '/replies-getter';
 
 }
