@@ -40,6 +40,8 @@ class ApiPath {
   static const commentsGetter = '/comments-getter';
 
   static const createReply = '/create-reply';
+  static const replyActions = '/reply-action';
+  static const deleteReply = '$replyActions/delete-reply';
   static const repliesGetter = '/replies-getter';
 
 }
