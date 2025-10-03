@@ -1,20 +1,18 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 
 class CommentActions extends BaseQueryService with 
   CommentsProviderService, 
-  VentProviderService {
+  VentProviderService,
+  UserProfileProviderService {
 
-  final String commentedBy;
-  final String commentText;
+  String commentedBy;
+  String commentText;
 
   CommentActions({
     required this.commentedBy, 
@@ -63,7 +61,7 @@ class CommentActions extends BaseQueryService with
       commentedBy: commentedBy, 
       comment: commentText,
       commentTimestamp: formattedTimestamp,
-      pfpData: getIt.profileProvider.profile.profilePicture
+      pfpData: profileProvider.profile.profilePicture
     );
 
     commentsProvider.addComment(newComment);
@@ -100,105 +98,41 @@ class CommentActions extends BaseQueryService with
 
   }
 
-  Future<void> like() async {
+  Future<Map<String, dynamic>> toggleLikeComment() async {
 
     final idInfo = await _getIdInfo();
-
-    const likesInfoQueryParams = 
-      'WHERE comment_id = :comment_id AND liked_by = :liked_by';
-
-    final likesInfoParams = {
-      'comment_id': idInfo['comment_id'],
-      'liked_by': getIt.userProvider.user.username,
-    };
-
-    final isUserLikedComment = await _isUserLikedComment(
-      likesInfoQueryParams: likesInfoQueryParams,
-      likesInfoParams: likesInfoParams
-    );
-
-    await _updateCommentLikes(
-      postId: idInfo['post_id']!, 
-      commentId: idInfo['comment_id']!,
-      isUserLikedPost: isUserLikedComment
-    );
-
-    await _updateLikesInfo(
-      isUserLikedPost: isUserLikedComment,
-      likesInfoParams: likesInfoParams,
-      likesInfoQueryParams: likesInfoQueryParams
-    );
 
     final index = commentsProvider.comments.indexWhere(
       (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
     );
 
-    _updateCommentLikedValue(
-      index: index,
-      isUserLikedComment: isUserLikedComment,
-    );
+    final isLiked = commentsProvider.comments[index].isCommentLiked;
 
-  }
+    final response = await ApiClient.post(ApiPath.likeComment, {
+      'comment_id': idInfo['comment_id'],
+      'liked_by': userProvider.user.username,
+    });
 
-  Future<void> _updateCommentLikes({
-    required int postId,
-    required int commentId,
-    required bool isUserLikedPost 
-  }) async {
+    if (response.statusCode == 200) {
+      _updateCommentLikedValue(
+        index: index,
+        liked: isLiked,
+      );
+    }
 
-    final operationSymbol = isUserLikedPost ? '-' : '+';
-
-    final updateLikeValueQuery = 
-    '''
-      UPDATE ${TableNames.commentsInfo} 
-      SET total_likes = total_likes $operationSymbol 1 
-      WHERE post_id = :post_id AND comment_id = :comment_id 
-    ''';
-
-    final ventInfoParams = {
-      'post_id': postId,
-      'comment_id': commentId
+    return {
+      'status_code': response.statusCode
     };
-
-    await executeQuery(updateLikeValueQuery, ventInfoParams);
-
-  }
-
-  Future<bool> _isUserLikedComment({
-    required String likesInfoQueryParams,
-    required Map<String, dynamic> likesInfoParams
-  }) async {
-
-    final getLikesInfoQuery = 
-      'SELECT 1 FROM ${TableNames.commentsLikesInfo} $likesInfoQueryParams';
-
-    final likesInfoResults = await executeQuery(getLikesInfoQuery, likesInfoParams);
-
-    return likesInfoResults.rows.isNotEmpty;
-
-  }
-
-  Future<void> _updateLikesInfo({
-    required bool isUserLikedPost,
-    required Map<String, dynamic> likesInfoParams,
-    required String likesInfoQueryParams,
-  }) async {
-
-    final query = isUserLikedPost 
-      ? 'DELETE FROM ${TableNames.commentsLikesInfo} $likesInfoQueryParams'
-      : 'INSERT INTO ${TableNames.commentsLikesInfo} (liked_by, comment_id) VALUES (:liked_by, :comment_id)';
-
-    await executeQuery(query, likesInfoParams);
 
   }
 
   void _updateCommentLikedValue({
     required int index,
-    required bool isUserLikedComment,
+    required bool liked,
   }) {
 
     if (index != -1) {
-      commentsProvider.likeComment(index, isUserLikedComment);
+      commentsProvider.likeComment(index, liked);
     }
 
   }

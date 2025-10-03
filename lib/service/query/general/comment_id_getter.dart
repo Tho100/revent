@@ -29,18 +29,5 @@ class CommentIdGetter extends BaseQueryService with VentProviderService {
     return ExtractData(rowsData: commentIdResults).extractIntColumn('comment_id')[0];
 
   }
-// TODO: Remove this
-  Future<List<int>> getAllCommentsId() async {
-
-    const getPostIdQuery = 'SELECT comment_id FROM ${TableNames.commentsInfo} WHERE post_id = :post_id';
-
-    final param = {'post_id': activeVentProvider.ventData.postId};
-
-    final results = await executeQuery(getPostIdQuery, param);
-
-    return ExtractData(rowsData: results).extractIntColumn('comment_id');
-
-
-  }
 
 }

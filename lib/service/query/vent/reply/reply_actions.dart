@@ -104,7 +104,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
 
     _updateCommentLikedValue(
       index: index,
-      isUserLikedComment: isUserLikedReply,
+      liked: isUserLikedReply,
     );
 
   }
@@ -159,16 +159,16 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
 
   void _updateCommentLikedValue({
     required int index,
-    required bool isUserLikedComment,
+    required bool liked,
   }) {
 
     if (index != -1) {
-      repliesProvider.likeReply(index, isUserLikedComment);
+      repliesProvider.likeReply(index, liked);
     }
 
   }
 
-  Future<void> delete() async {
+  Future<Map<String, dynamic>> delete() async {
 
     final commentId = await _getCommentId();
 
@@ -176,23 +176,15 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
       commentId: commentId
     ).getReplyId(username: repliedBy, replyText: replyText);
 
-    final conn = await connection();
+    final response = await ApiClient.deleteById(ApiPath.deleteReply, replyId);
 
-    await conn.transactional((txn) async {
+    if (response.statusCode == 204) {
+      _removeComment();
+    }
 
-      await txn.execute(
-        'DELETE FROM ${TableNames.commentRepliesInfo} WHERE reply_id = :reply_id',
-        {'reply_id': replyId}
-      );
-
-      await txn.execute(
-        'UPDATE ${TableNames.commentsInfo} SET total_replies = total_replies - 1 WHERE comment_id = :comment_id',
-        {'comment_id': commentId}
-      );
-
-    }).then(
-      (_) => _removeComment()
-    );
+    return {
+      'status_code': response.statusCode
+    };
 
   }
 

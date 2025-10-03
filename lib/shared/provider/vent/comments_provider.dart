@@ -86,11 +86,9 @@ class CommentsProvider extends ChangeNotifier {
 
   }
 
-  void likeComment(int index, bool isUserLikedComment) {
+  void likeComment(int index, bool liked) {
 
-    _comments[index].isCommentLiked = isUserLikedComment 
-      ? false
-      : true;
+    _comments[index].isCommentLiked = liked;
 
     _comments[index].isCommentLiked 
       ? _comments[index].totalLikes += 1
