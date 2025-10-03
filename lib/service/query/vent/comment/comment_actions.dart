@@ -111,13 +111,13 @@ class CommentActions extends BaseQueryService with
     final response = await ApiClient.post(ApiPath.likeComment, {
       'comment_id': idInfo['comment_id'],
       'liked_by': userProvider.user.username,
-      'is_already_liked': isAlreadyLiked
+      'is_already_liked': isAlreadyLiked // TODO: This might not be necessary
     });
 
     if (response.statusCode == 200) {
       _updateCommentLikedValue(
         index: index,
-        isUserLikedComment: isAlreadyLiked,
+        liked: isAlreadyLiked,
       );
     }
 
@@ -129,11 +129,11 @@ class CommentActions extends BaseQueryService with
 
   void _updateCommentLikedValue({
     required int index,
-    required bool isUserLikedComment,
+    required bool liked,
   }) {
 
     if (index != -1) {
-      commentsProvider.likeComment(index, isUserLikedComment);
+      commentsProvider.likeComment(index, liked);
     }
 
   }

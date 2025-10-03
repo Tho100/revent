@@ -104,7 +104,7 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
 
     _updateCommentLikedValue(
       index: index,
-      isUserLikedComment: isUserLikedReply,
+      liked: isUserLikedReply,
     );
 
   }
@@ -159,11 +159,11 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
 
   void _updateCommentLikedValue({
     required int index,
-    required bool isUserLikedComment,
+    required bool liked,
   }) {
 
     if (index != -1) {
-      repliesProvider.likeReply(index, isUserLikedComment);
+      repliesProvider.likeReply(index, liked);
     }
 
   }
