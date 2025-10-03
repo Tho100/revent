@@ -1,19 +1,18 @@
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 
 class CommentActions extends BaseQueryService with 
   CommentsProviderService, 
-  VentProviderService {
+  VentProviderService,
+  UserProfileProviderService {
 
-  final String commentedBy;
-  final String commentText;
+  String commentedBy;
+  String commentText;
 
   CommentActions({
     required this.commentedBy, 
@@ -62,7 +61,7 @@ class CommentActions extends BaseQueryService with
       commentedBy: commentedBy, 
       comment: commentText,
       commentTimestamp: formattedTimestamp,
-      pfpData: getIt.profileProvider.profile.profilePicture
+      pfpData: profileProvider.profile.profilePicture
     );
 
     commentsProvider.addComment(newComment);
@@ -103,8 +102,6 @@ class CommentActions extends BaseQueryService with
 
     final idInfo = await _getIdInfo();
 
-// TODO: Use UserProviderService intsead of getIt
-
     final index = commentsProvider.comments.indexWhere(
       (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
     );
@@ -113,7 +110,7 @@ class CommentActions extends BaseQueryService with
 
     final response = await ApiClient.post(ApiPath.likeComment, {
       'comment_id': idInfo['comment_id'],
-      'liked_by': getIt.userProvider.user.username,
+      'liked_by': userProvider.user.username,
       'is_already_liked': isAlreadyLiked
     });
 
