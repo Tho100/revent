@@ -4,7 +4,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 
 class ReplyIdGetter extends BaseQueryService {
 
-  final int commentId;
+  int commentId;
 
   ReplyIdGetter({required this.commentId});
 
@@ -30,19 +30,6 @@ class ReplyIdGetter extends BaseQueryService {
     final commentIdResults = await executeQuery(getCommentIdQuery, commentParams);
 
     return ExtractData(rowsData: commentIdResults).extractIntColumn('reply_id')[0];
-
-  }
-// TODO: Remove this (one commit, along with comment-id-getter)
-  Future<List<int>> getAllRepliesId() async {
-
-    const getPostIdQuery = 'SELECT reply_id FROM ${TableNames.commentRepliesInfo} WHERE comment_id = :comment_id';
-
-    final param = {'comment_id': commentId};
-
-    final results = await executeQuery(getPostIdQuery, param);
-
-    return ExtractData(rowsData: results).extractIntColumn('reply_id');
-
 
   }
 
