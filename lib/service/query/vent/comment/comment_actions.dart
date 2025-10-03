@@ -98,7 +98,7 @@ class CommentActions extends BaseQueryService with
 
   }
 
-  Future<Map<String, dynamic>> like() async {
+  Future<Map<String, dynamic>> toggleLikeComment() async {
 
     final idInfo = await _getIdInfo();
 

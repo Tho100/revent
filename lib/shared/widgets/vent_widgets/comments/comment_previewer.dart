@@ -128,7 +128,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
       final likeCommentResponse = await CommentActions(
         commentedBy: commentedBy, 
         commentText: comment, 
-      ).like();
+      ).toggleLikeComment();
 
       if (likeCommentResponse['status_code'] != 200) {
         SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
