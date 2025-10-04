@@ -19,19 +19,6 @@ class CommentActions extends BaseQueryService with
     required this.commentText
   });
 
-  Future<Map<String, int>> _getIdInfo() async {
-
-    final commentId = await CommentIdGetter().getCommentId(
-      username: commentedBy, commentText: commentText
-    );
-
-    return {
-      'post_id': activeVentProvider.ventData.postId,
-      'comment_id': commentId
-    };
-
-  }
-
   Future<Map<String, dynamic>> sendComment() async {
 
     final postId = activeVentProvider.ventData.postId;
@@ -70,10 +57,12 @@ class CommentActions extends BaseQueryService with
 
   Future<Map<String, dynamic>> delete() async {
 
-    final idInfo = await _getIdInfo();
+    final commentId = await CommentIdGetter().getCommentId(
+      username: commentedBy, commentText: commentText
+    );
 
     final response = await ApiClient.deleteById(
-      ApiPath.deleteComment, idInfo['comment_id']!
+      ApiPath.deleteComment, commentId
     );
 
     if (response.statusCode == 204) {
@@ -100,24 +89,28 @@ class CommentActions extends BaseQueryService with
 
   Future<Map<String, dynamic>> toggleLikeComment() async {
 
-    final idInfo = await _getIdInfo();
-
-    final index = commentsProvider.comments.indexWhere(
-      (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
+    final commentId = await CommentIdGetter().getCommentId(
+      username: commentedBy, commentText: commentText
     );
 
-    final isLiked = commentsProvider.comments[index].isCommentLiked;
-
     final response = await ApiClient.post(ApiPath.likeComment, {
-      'comment_id': idInfo['comment_id'],
+      'comment_id': commentId,
       'liked_by': userProvider.user.username,
     });
 
     if (response.statusCode == 200) {
+
+      final index = commentsProvider.comments.indexWhere(
+        (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
+      );
+
+      final isLiked = commentsProvider.comments[index].isCommentLiked;
+
       _updateCommentLikedValue(
         index: index,
         liked: isLiked,
       );
+
     }
 
     return {
