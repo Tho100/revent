@@ -144,7 +144,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
           const Padding(
             padding: EdgeInsets.only(left: 4.0),
             child: HeaderText(
-              title: 'Update Password', // TODO: Update to 'chnage'
+              title: 'Change Password',
               subTitle: ''
             ),
           ),
@@ -174,7 +174,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
             builder: (_, isEnabled, __) {
               return MainButton(
                 enabled: isEnabled,
-                text: 'Update',
+                text: 'Continue',
                 customFontSize: 17,
                 onPressed: () async {
                   FocusScope.of(context).unfocus(); 
