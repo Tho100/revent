@@ -10,11 +10,11 @@ import 'package:revent/shared/provider/vent/replies_provider.dart';
 class ReplyActions extends BaseQueryService with 
   RepliesProviderService, 
   UserProfileProviderService {
-// TODO: remove these unnecessary finals
-  final String replyText;
-  final String repliedBy;
-  final String commentText;
-  final String commentedBy;
+
+  String replyText;
+  String repliedBy;
+  String commentText;
+  String commentedBy;
 
   ReplyActions({
     required this.replyText, 
