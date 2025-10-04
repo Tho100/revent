@@ -66,8 +66,8 @@ class ReplyActions extends BaseQueryService with
     repliesProvider.addReply(newReply);
 
   }
-// TODO: Rename to toggleLikeReply
-  Future<Map<String, dynamic>> like() async {
+
+  Future<Map<String, dynamic>> toggleLikeReply() async {
 
     final commentId = await _getCommentId();
 

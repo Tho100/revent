@@ -80,7 +80,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
         repliedBy: repliedBy,
         commentText: comment, 
         commentedBy: commentedBy
-      ).like();
+      ).toggleLikeReply();
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
