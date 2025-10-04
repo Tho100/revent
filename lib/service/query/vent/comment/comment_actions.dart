@@ -18,7 +18,7 @@ class CommentActions extends BaseQueryService with
     required this.commentedBy, 
     required this.commentText
   });
-
+// TODO: Remove this function and separately call the comment id
   Future<Map<String, int>> _getIdInfo() async {
 
     final commentId = await CommentIdGetter().getCommentId(
@@ -101,7 +101,7 @@ class CommentActions extends BaseQueryService with
   Future<Map<String, dynamic>> toggleLikeComment() async {
 
     final idInfo = await _getIdInfo();
-
+// TODO: Move this inside the if 200 condition
     final index = commentsProvider.comments.indexWhere(
       (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
     );

@@ -1,4 +1,3 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
@@ -8,8 +7,10 @@ import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/replies_id_getter.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
-class ReplyActions extends BaseQueryService with RepliesProviderService, UserProfileProviderService {
-
+class ReplyActions extends BaseQueryService with 
+  RepliesProviderService, 
+  UserProfileProviderService {
+// TODO: remove these unnecessary finals
   final String replyText;
   final String repliedBy;
   final String commentText;
@@ -65,8 +66,8 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
     repliesProvider.addReply(newReply);
 
   }
-
-  Future<void> like() async {
+// TODO: Rename to toggleLikeReply
+  Future<Map<String, dynamic>> like() async {
 
     final commentId = await _getCommentId();
 
@@ -74,86 +75,29 @@ class ReplyActions extends BaseQueryService with RepliesProviderService, UserPro
       commentId: commentId
     ).getReplyId(username: repliedBy, replyText: replyText);
 
-    const likesInfoQueryParams = 
-      'WHERE reply_id = :reply_id AND liked_by = :liked_by';
-
-    final likesInfoParams = {
+    final response = await ApiClient.post(ApiPath.likeReply, {
       'reply_id': replyId,
-      'liked_by': userProvider.user.username,
+      'liked_by': userProvider.user.username
+    });
+
+    if (response.statusCode == 200) {
+
+      final index = repliesProvider.replies.indexWhere(
+        (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
+      );
+
+      final isLiked = repliesProvider.replies[index].isReplyLiked;
+
+      _updateCommentLikedValue(
+        index: index,
+        liked: isLiked,
+      );
+
+    }
+
+    return {
+      'status_code': response.statusCode
     };
-
-    final isUserLikedReply = await _isUserLikedReply(
-      likesInfoQueryParams: likesInfoQueryParams,
-      likesInfoParams: likesInfoParams
-    );
-
-    await _updateReplyLikes(
-      replyId: replyId,
-      isUserLikedPost: isUserLikedReply
-    );
-
-    await _updateLikesInfo(
-      isUserLikedPost: isUserLikedReply,
-      likesInfoParams: likesInfoParams,
-      likesInfoQueryParams: likesInfoQueryParams
-    );
-
-    final index = repliesProvider.replies.indexWhere(
-      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
-    );
-
-    _updateCommentLikedValue(
-      index: index,
-      liked: isUserLikedReply,
-    );
-
-  }
-
-  Future<void> _updateReplyLikes({
-    required int replyId,
-    required bool isUserLikedPost 
-  }) async {
-
-    final operationSymbol = isUserLikedPost ? '-' : '+';
-
-    final updateLikeValueQuery = 
-    '''
-      UPDATE ${TableNames.commentRepliesInfo} 
-      SET total_likes = total_likes $operationSymbol 1 
-      WHERE reply_id = :reply_id
-    ''';
-
-    final ventInfoParams = {'reply_id': replyId};
-
-    await executeQuery(updateLikeValueQuery, ventInfoParams);
-
-  }
-
-  Future<bool> _isUserLikedReply({
-    required String likesInfoQueryParams,
-    required Map<String, dynamic> likesInfoParams
-  }) async {
-
-    final getLikesInfoQuery = 
-      'SELECT 1 FROM ${TableNames.repliesLikesInfo} $likesInfoQueryParams';
-
-    final likesInfoResults = await executeQuery(getLikesInfoQuery, likesInfoParams);
-
-    return likesInfoResults.rows.isNotEmpty;
-
-  }
-
-  Future<void> _updateLikesInfo({
-    required bool isUserLikedPost,
-    required Map<String, dynamic> likesInfoParams,
-    required String likesInfoQueryParams,
-  }) async {
-
-    final query = isUserLikedPost 
-      ? 'DELETE FROM ${TableNames.repliesLikesInfo} $likesInfoQueryParams'
-      : 'INSERT INTO ${TableNames.repliesLikesInfo} (liked_by, reply_id) VALUES (:liked_by, :reply_id)';
-
-    await executeQuery(query, likesInfoParams);
 
   }
 
