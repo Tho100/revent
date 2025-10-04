@@ -144,6 +144,14 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
     );
   }
 
+  String _hiddenEmailString(String email) {
+
+    final middleEmail = email.substring(1, email.length - 1);
+
+    return '*$middleEmail*';
+
+  }
+
   Widget _buildBody() {
     return SingleChildScrollView(
       child: Column(
@@ -155,7 +163,7 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
           const SizedBox(height: 25),
 
           BorderedContainer(
-            child: _buildHeaders('Email', userProvider.user.email)
+            child: _buildHeaders('Email', _hiddenEmailString(userProvider.user.email))
           ),
     
           BorderedContainer(
