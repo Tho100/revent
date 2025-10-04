@@ -92,10 +92,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
           valueListenable: isContinueButtonEnabledNotifier,
           builder: (_, isEnabled, __) {
             return isEnabled 
-              ? Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(CupertinoIcons.check_mark, color: ThemeColor.contentPrimary, size: 14)
-                ) 
+              ? Icon(CupertinoIcons.check_mark, color: ThemeColor.contentPrimary, size: 15)
               : Text(
                 ThemeStyle.dotSeparator,
                 style: GoogleFonts.inter(
@@ -106,6 +103,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
               );
           }
         ),
+
+        const SizedBox(width: 8),
         
         Text(
           requirement,
