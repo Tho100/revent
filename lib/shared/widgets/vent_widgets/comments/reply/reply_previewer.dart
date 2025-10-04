@@ -75,12 +75,17 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
 
     try {
 
-      await ReplyActions(
+      final likeReplyResponse = await ReplyActions(
         replyText: reply, 
         repliedBy: repliedBy,
         commentText: comment, 
         commentedBy: commentedBy
       ).toggleLikeReply();
+
+      if (likeReplyResponse['status_code'] != 200) {
+        SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+        return;
+      }
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
