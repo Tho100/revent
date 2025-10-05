@@ -6,7 +6,6 @@ import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/service/query/vent/vent_post_state_service.dart';
 
 class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
@@ -117,15 +116,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
           ),
         );
 
-    final ventPostState = VentPostStateService();
-
-    final isLikedState = await ventPostState.getVentPostState(
-      postIds: postIds, stateType: 'liked'
-    );
-
-    final isSavedState = await ventPostState.getVentPostState(
-      postIds: postIds, stateType: 'saved'
-    );
+    final isLiked = ventsData.extractColumn<bool>('is_liked');
+    final isSaved = ventsData.extractColumn<bool>('is_saved');
 
     return {
       'post_id': postIds,
@@ -138,8 +130,8 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'is_nsfw': isNsfw,
-      'is_liked': isLikedState,
-      'is_saved': isSavedState
+      'is_liked': isLiked,
+      'is_saved': isSaved
     };
 
   }
