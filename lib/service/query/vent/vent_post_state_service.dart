@@ -4,7 +4,7 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class VentPostStateService extends BaseQueryService with UserProfileProviderService {
-
+// TODO: In the future, remove this
   /// Returns a list of booleans indicating whether each post ID
   /// has been liked or saved by the current user based on [stateType].
 
