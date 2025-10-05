@@ -46,4 +46,8 @@ class ApiPath {
   static const likeReply = '$replyActions/like-reply';
   static const repliesGetter = '/replies-getter';
 
+  static const profilePostsGetter = '/profile-posts-getter';
+  static const profileOwnPostsGetter = '$profilePostsGetter/posts';
+  static const profileSavedPostsGetter = '$profilePostsGetter/saved';
+
 }

@@ -1,55 +1,39 @@
-import 'package:revent/global/table_names.dart';
-import 'package:revent/global/validation_limits.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/helper/format_previewer_body.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
-import 'package:revent/service/query/vent/vent_post_state_service.dart';
-
+// TODO: Rename to ProfilePostsGetter
 class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderService {
-
+// TODO: Rename to getOwnPosts
   Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
 
-    const query = 
-    '''
-      SELECT 
-        post_id, 
-        title, 
-        LEFT(body_text, ${ValidationLimits.maxBodyPreviewerLength}) as body_text, 
-        tags, 
-        created_at, 
-        total_likes, 
-        total_comments, 
-        marked_nsfw 
-      FROM ${TableNames.ventInfo} 
-      WHERE creator = :username
-      ORDER BY created_at DESC
-    ''';
-      
-    final param = {'username': username};
+    final response = await ApiClient.post(ApiPath.profileOwnPostsGetter, {
+      'profile_username': username,
+      'current_user': userProvider.user.username,
+    });
 
-    final retrievedInfo = await executeQuery(query, param);
+    final vents = ExtractData(data: response.body!['vents']);
 
-    final extractedData = ExtractData(rowsData: retrievedInfo);
-    
-    final postIds = extractedData.extractIntColumn('post_id');
-    final titles = extractedData.extractStringColumn('title');
-    final tags = extractedData.extractStringColumn('tags');
+    final postIds = vents.extractColumn<int>('post_id');
+    final titles = vents.extractColumn<String>('title');
+    final tags = vents.extractColumn<String>('tags');
 
-    final totalLikes = extractedData.extractIntColumn('total_likes');
-    final totalComments = extractedData.extractIntColumn('total_comments');
+    final totalLikes = vents.extractColumn<int>('total_likes');
+    final totalComments = vents.extractColumn<int>('total_comments');
 
-    final postTimestamp = FormatDate().formatToPostDate(
-      data: extractedData, columnName: 'created_at'
+    final postTimestamp = FormatDate().formatToPostDate2(
+      vents.extractColumn<String>('created_at')
     );
 
     final isNsfw = DataConverter.convertToBools(
-      extractedData.extractIntColumn('marked_nsfw')
+      vents.extractColumn<int>('marked_nsfw')
     );
 
-    final bodyText = extractedData.extractStringColumn('body_text');
+    final bodyText = vents.extractColumn<String>('body_text');
 
     final modifiedBodyText = List.generate(
       titles.length, (index) => FormatPreviewerBody.formatBodyText(
@@ -57,17 +41,9 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       )
     );
 
-    final isPinned = await _ventPinnedState(postIds: postIds);
-
-    final ventPostState = VentPostStateService();    
-
-    final isLikedState = await ventPostState.getVentPostState(
-      postIds: postIds, stateType: 'liked'
-    );
-
-    final isSavedState = await ventPostState.getVentPostState(
-      postIds: postIds, stateType: 'saved'
-    );
+    final isPinned = vents.extractColumn<bool>('is_pinned');
+    final isLiked = vents.extractColumn<bool>('is_liked');
+    final isSaved = vents.extractColumn<bool>('is_saved');
 
     return {
       'post_id': postIds,
@@ -79,25 +55,9 @@ class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderSe
       'post_timestamp': postTimestamp,
       'is_nsfw': isNsfw,
       'is_pinned': isPinned,
-      'is_liked': isLikedState,
-      'is_saved': isSavedState
+      'is_liked': isLiked,
+      'is_saved': isSaved
     };
-
-  }
-
-  Future<List<bool>> _ventPinnedState({required List<int> postIds}) async {
-
-    const query = 'SELECT post_id FROM ${TableNames.pinnedVentInfo} WHERE pinned_by = :username';
-
-    final param = {'username': userProvider.user.username};
-
-    final retrievedIds = await executeQuery(query, param);
-
-    final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
-
-    final statePostIds = extractIds.toSet();
-
-    return postIds.map((postId) => statePostIds.contains(postId)).toList();
 
   }
 

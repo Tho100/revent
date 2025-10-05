@@ -10,7 +10,7 @@ import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 
 class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderService {
-
+// TODO: Remove the class and move this func to profile_posts_getter
   Future<Map<String, List<dynamic>>> getSaved({
     required String username, 
     required bool isMyProfile
