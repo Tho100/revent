@@ -12,7 +12,6 @@ class BottomsheetVentPostActions with UserProfileProviderService {
     required String creator,
     VoidCallback? editOnPressed,
     VoidCallback? reportOnPressed,
-    VoidCallback? unSaveOnPressed,
     VoidCallback? unPinOnPressed,
     VoidCallback? blockOnPressed,
     VoidCallback? copyOnPressed,
@@ -24,13 +23,6 @@ class BottomsheetVentPostActions with UserProfileProviderService {
       children: [
 
         const BottomsheetHeader(title: 'Post Options'),
-
-        if (unSaveOnPressed != null)
-        BottomsheetOptionButton(
-          text: 'Unsave Post',
-          icon: CupertinoIcons.bookmark_fill,
-          onPressed: unSaveOnPressed
-        ),
 
         if (userProvider.user.username == creator && editOnPressed != null)
         BottomsheetOptionButton(
