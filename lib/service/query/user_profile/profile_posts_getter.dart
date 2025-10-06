@@ -9,7 +9,11 @@ import 'package:revent/helper/format_date.dart';
 
 class ProfilePostsGetter extends BaseQueryService with UserProfileProviderService {
 
-  Future<Map<String, List<dynamic>>> getOwnPosts({required String username}) async {
+  final String username;
+
+  ProfilePostsGetter({required this.username});
+
+  Future<Map<String, List<dynamic>>> getOwnPosts() async {
 
     final response = await ApiClient.post(ApiPath.profileOwnPostsGetter, {
       'profile_username': username,
@@ -55,6 +59,64 @@ class ProfilePostsGetter extends BaseQueryService with UserProfileProviderServic
       'post_timestamp': postTimestamp,
       'is_nsfw': isNsfw,
       'is_pinned': isPinned,
+      'is_liked': isLiked,
+      'is_saved': isSaved
+    };
+
+  }
+
+  Future<Map<String, List<dynamic>>> getSavedPosts() async {
+
+    final response = await ApiClient.post(ApiPath.profileSavedPostsGetter, {
+      'profile_username': username,
+      'current_user': userProvider.user.username,
+    });
+
+    final vents = ExtractData(data: response.body!['vents']);
+
+    final postIds = vents.extractColumn<int>('post_id');
+
+    final creators = vents.extractColumn<String>('creator');
+    final titles = vents.extractColumn<String>('title');
+    final tags = vents.extractColumn<String>('tags');
+
+    final totalLikes = vents.extractColumn<int>('total_likes');
+    final totalComments = vents.extractColumn<int>('total_comments');
+
+    final postTimestamp = FormatDate().formatToPostDate2(
+      vents.extractColumn<String>('created_at')
+    );
+
+    final profilePictures = DataConverter.convertToPfp(
+      vents.extractColumn<String>('profile_picture')
+    );
+
+    final isNsfw = DataConverter.convertToBools(
+      vents.extractColumn<int>('marked_nsfw')
+    );
+
+    final bodyText = vents.extractColumn<String>('body_text');
+
+    final modifiedBodyText = List.generate(
+      titles.length, (index) => FormatPreviewerBody.formatBodyText(
+        bodyText: bodyText[index], isNsfw: isNsfw[index]
+      )
+    );
+
+    final isLiked = vents.extractColumn<bool>('is_liked');
+    final isSaved = vents.extractColumn<bool>('is_saved');
+
+    return {
+      'post_id': postIds,
+      'title': titles,
+      'creator': creators,
+      'body_text': modifiedBodyText,
+      'tags': tags,
+      'total_likes': totalLikes,
+      'total_comments': totalComments,
+      'post_timestamp': postTimestamp,
+      'profile_picture': profilePictures,
+      'is_nsfw': isNsfw,
       'is_liked': isLiked,
       'is_saved': isSaved
     };
