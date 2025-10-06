@@ -81,9 +81,6 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
       tags: widget.tags,
       totalLikes: widget.totalLikes,
       totalComments: widget.totalComments,
-      unSaveOnPressed: widget.isMyProfile && navigationProvider.profileTab == ProfileTabs.savedPosts
-        ? _onUnsavePostPressed
-        : null, 
       pinOnPressed: widget.isMyProfile && navigationProvider.profileTab == ProfileTabs.posts && !widget.isPinned
         ? _onPinPostPressed
         : null,
@@ -95,12 +92,6 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
       reportOnPressed: _onReportPressed,
       blockOnPressed: _onBlockPressed,
       navigateVentPostPageOnPressed: _navigateToVentPostPage
-    );
-  }
-
-  void _onUnsavePostPressed() {
-    context.popAndRun(
-      () => actionsHandler.unsavePost()
     );
   }
 
