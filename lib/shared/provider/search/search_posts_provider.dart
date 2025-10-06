@@ -55,6 +55,30 @@ class SearchPostsProvider extends ChangeNotifier {
     notifyListeners(); 
   }
 
+  void deleteVent(int index) {
+    if (index >= 0 && index < _vents.length) {
+      _vents.removeAt(index);
+      notifyListeners();
+    }
+  }
+
+  void likeVent(int index, bool liked) {
+
+    _vents[index].isPostLiked = liked;
+
+    _vents[index].isPostLiked 
+      ? _vents[index].totalLikes += 1
+      : _vents[index].totalLikes -= 1;
+
+    notifyListeners();
+    
+  }
+
+  void saveVent(int index, bool saved) {
+    _vents[index].isPostSaved = saved;
+    notifyListeners();
+  }
+
   void clearVents() {
     _vents.clear();
     _filteredVents.clear();
