@@ -77,7 +77,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
     final currentTab = ProfileTabs.values[tabController.index];
 
     if (currentTab == ProfileTabs.savedPosts) {
-      await profilePostsSetup.setupSaved();
+      await profilePostsSetup.setupSavedPosts();
     }
 
     setState(
@@ -98,10 +98,9 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
       }
 
-      await profilePostsSetup.setupPosts();
+      await profilePostsSetup.setupOwnPosts();
 
     } catch (_) {
-      print(_.toString());
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
     }
 

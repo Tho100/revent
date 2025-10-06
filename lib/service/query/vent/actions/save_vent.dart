@@ -14,7 +14,7 @@ class SaveVent with UserProfileProviderService {
 
   Future<Map<String, dynamic>> toggleSavePost() async {
 
-    final response = await ApiClient. post(ApiPath.saveVent, {
+    final response = await ApiClient.post(ApiPath.saveVent, {
       'post_id': postId,
       'saved_by': userProvider.user.username
     });

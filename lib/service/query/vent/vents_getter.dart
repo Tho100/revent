@@ -12,7 +12,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
   Future<Map<String, dynamic>> getLatestVentsData() async {
 
     final response = await ApiClient.post(ApiPath.latestVentsGetter, {
-      'blocked_by': userProvider.user.username
+      'current_user': userProvider.user.username
     });
 
     return await _parseVentsData(ventsBody: response.body);
@@ -22,7 +22,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
   Future<Map<String, dynamic>> getTrendingVentsData() async {
 
     final response = await ApiClient.post(ApiPath.trendingVentsGetter, {
-      'blocked_by': userProvider.user.username
+      'current_user': userProvider.user.username
     });
 
     return await _parseVentsData(ventsBody: response.body);
@@ -32,7 +32,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
   Future<Map<String, dynamic>> getFollowingVentsData() async {
 
     final response = await ApiClient.post(ApiPath.followingVentsGetter, {
-      'blocked_by': userProvider.user.username
+      'current_user': userProvider.user.username
     });
 
     return await _parseVentsData(ventsBody: response.body);
@@ -45,7 +45,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
 
     final response = await ApiClient.post(ApiPath.searchVentsGetter, {
       'search_text': cleanSearchText,
-      'blocked_by': userProvider.user.username
+      'current_user': userProvider.user.username
     }); 
 
     return await _parseVentsData(ventsBody: response.body, excludeBodyText: true);

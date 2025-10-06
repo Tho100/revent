@@ -117,7 +117,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       }
 
       if (!isSavedPostsHidden) {
-        await profilePostsSetup.setupSaved();
+        await profilePostsSetup.setupSavedPosts();
       }
 
     }
@@ -228,7 +228,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       profilePostsProvider.userProfile.clear();
       profileSavedProvider.userProfile.clear();
 
-      await profilePostsSetup.setupPosts();
+      await profilePostsSetup.setupOwnPosts();
       
       postsNotifier.value = profilePostsProvider.userProfile.titles.length;
 
