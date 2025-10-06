@@ -1,9 +1,7 @@
-import 'dart:convert';
-
-import 'package:revent/global/table_names.dart';
-import 'package:revent/global/validation_limits.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/helper/format_previewer_body.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
@@ -16,60 +14,35 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
     required bool isMyProfile
   }) async {
 
-    const query = 
-    '''
-      SELECT 
-        vi.post_id,
-        vi.title,
-        vi.creator,
-        vi.tags,
-        LEFT(vi.body_text, ${ValidationLimits.maxBodyPreviewerLength}) as body_text,
-        vi.total_likes,
-        vi.total_comments,
-        vi.marked_nsfw,
-        vi.created_at,
-        upi.profile_picture
-      FROM 
-        ${TableNames.savedVentInfo} svi
-      INNER JOIN 
-        ${TableNames.ventInfo} vi 
-        ON svi.post_id = vi.post_id
-      INNER JOIN 
-        ${TableNames.userProfileInfo} upi
-        ON vi.creator = upi.username
-      WHERE 
-        svi.saved_by = :saved_by
-      ORDER BY svi.saved_at DESC
-    ''';
+    final response = await ApiClient.post(ApiPath.profileSavedPostsGetter, {
+      'profile_username': username,
+      'current_user': userProvider.user.username,
+    });
 
-    final param = {'saved_by': username};
+    final vents = ExtractData(data: response.body!['vents']);
 
-    final retrievedInfo = await executeQuery(query, param);
+    final postIds = vents.extractColumn<int>('post_id');
 
-    final extractedData = ExtractData(rowsData: retrievedInfo);
+    final creators = vents.extractColumn<String>('creator');
+    final titles = vents.extractColumn<String>('title');
+    final tags = vents.extractColumn<String>('tags');
 
-    final postIds = extractedData.extractIntColumn('post_id');
-    final titles = extractedData.extractStringColumn('title');
-    final tags = extractedData.extractStringColumn('tags');
-    final creator = extractedData.extractStringColumn('creator');
+    final totalLikes = vents.extractColumn<int>('total_likes');
+    final totalComments = vents.extractColumn<int>('total_comments');
 
-    final totalComments = extractedData.extractIntColumn('total_comments');
-    final totalLikes = extractedData.extractIntColumn('total_likes');
-
-    final postTimestamp = FormatDate().formatToPostDate(
-      data: extractedData, columnName: 'created_at'
+    final postTimestamp = FormatDate().formatToPostDate2(
+      vents.extractColumn<String>('created_at')
     );
 
-    final profilePicture = extractedData
-      .extractStringColumn('profile_picture')
-      .map((pfpBase64) => base64Decode(pfpBase64))
-      .toList();
+    final profilePictures = DataConverter.convertToPfp(
+      vents.extractColumn<String>('profile_picture')
+    );
 
     final isNsfw = DataConverter.convertToBools(
-      extractedData.extractIntColumn('marked_nsfw')
+      vents.extractColumn<int>('marked_nsfw')
     );
 
-    final bodyText = extractedData.extractStringColumn('body_text');
+    final bodyText = vents.extractColumn<String>('body_text');
 
     final modifiedBodyText = List.generate(
       titles.length, (index) => FormatPreviewerBody.formatBodyText(
@@ -77,54 +50,23 @@ class ProfileSavedDataGetter extends BaseQueryService with UserProfileProviderSe
       )
     );
 
-    final isLikedState = await _ventPostLikeState(
-      postIds: postIds, stateType: 'liked'
-    );
-
-    final isSavedState = isMyProfile 
-      ? List.generate(titles.length, (_) => true)
-      : await _ventPostLikeState(
-        postIds: postIds, stateType: 'saved'
-      );
+    final isLiked = vents.extractColumn<bool>('is_liked');
+    final isSaved = vents.extractColumn<bool>('is_saved');
 
     return {
       'post_id': postIds,
       'title': titles,
-      'creator': creator,
+      'creator': creators,
       'body_text': modifiedBodyText,
       'tags': tags,
       'total_likes': totalLikes,
       'total_comments': totalComments,
       'post_timestamp': postTimestamp,
-      'profile_picture': profilePicture,
+      'profile_picture': profilePictures,
       'is_nsfw': isNsfw,
-      'is_liked': isLikedState,
-      'is_saved': isSavedState
+      'is_liked': isLiked,
+      'is_saved': isSaved
     };
-
-  }
-
-  Future<List<bool>> _ventPostLikeState({
-    required List<int> postIds,
-    required String stateType,
-  }) async {
-
-    final queryBasedOnType = {
-      'liked': 'SELECT post_id FROM ${TableNames.likedVentInfo} WHERE liked_by = :username',
-      'saved': 'SELECT post_id FROM ${TableNames.savedVentInfo} WHERE saved_by = :username'
-    };
-
-    final param = {'username': userProvider.user.username};
-
-    final retrievedIds = await executeQuery(
-      queryBasedOnType[stateType]!, param
-    );
-
-    final extractIds = ExtractData(rowsData: retrievedIds).extractIntColumn('post_id');
-
-    final statePostIds = extractIds.toSet();
-
-    return postIds.map((postId) => statePostIds.contains(postId)).toList();
 
   }
 
