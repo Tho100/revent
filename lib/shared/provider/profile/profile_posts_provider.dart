@@ -130,6 +130,7 @@ class ProfilePostsProvider extends ChangeNotifier {
     }
 
   }
+// TODO: Simpify those two functions logic
 
   void likeVent(int index, bool isUserLikedPost) {
 
