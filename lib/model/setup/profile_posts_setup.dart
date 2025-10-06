@@ -43,7 +43,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
     if (isDataEmpty) {
 
-      final getPostsData = await ProfilePostsDataGetter().getOwnPosts(
+      final getPostsData = await ProfilePostsGetter().getOwnPosts(
         username: username
       );
       
