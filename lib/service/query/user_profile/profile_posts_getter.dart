@@ -8,8 +8,8 @@ import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 // TODO: Rename to ProfilePostsGetter
 class ProfilePostsDataGetter extends BaseQueryService with UserProfileProviderService {
-// TODO: Rename to getOwnPosts
-  Future<Map<String, List<dynamic>>> getPosts({required String username}) async {
+
+  Future<Map<String, List<dynamic>>> getOwnPosts({required String username}) async {
 
     final response = await ApiClient.post(ApiPath.profileOwnPostsGetter, {
       'profile_username': username,

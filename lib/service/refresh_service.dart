@@ -58,8 +58,8 @@ class RefreshService with
     profilePostsProvider.myProfile.clear();
     profileSavedProvider.myProfile.clear();
 
-    await profilePostsSetup.setupPosts();
-    await profilePostsSetup.setupSaved();
+    await profilePostsSetup.setupOwnPosts();
+    await profilePostsSetup.setupSavedPosts();
 
   }
 

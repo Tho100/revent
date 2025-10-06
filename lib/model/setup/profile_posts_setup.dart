@@ -37,13 +37,13 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
   }
 
-  Future<void> setupPosts() async {
+  Future<void> setupOwnPosts() async {
 
     final isDataEmpty = _isDataEmpty('posts');
 
     if (isDataEmpty) {
 
-      final getPostsData = await ProfilePostsDataGetter().getPosts(
+      final getPostsData = await ProfilePostsDataGetter().getOwnPosts(
         username: username
       );
       
@@ -83,7 +83,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
   }
 
-  Future<void> setupSaved() async {
+  Future<void> setupSavedPosts() async {
 
     final isDataEmpty = _isDataEmpty('saved');
 
