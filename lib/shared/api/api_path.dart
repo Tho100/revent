@@ -50,4 +50,7 @@ class ApiPath {
   static const profileOwnPostsGetter = '$profilePostsGetter/posts';
   static const profileSavedPostsGetter = '$profilePostsGetter/saved';
 
+  static const searchGetter = '/search-getter';
+  static const searchProfilesGetter = '$searchGetter/get-profiles';
+
 }

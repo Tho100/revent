@@ -23,7 +23,7 @@ class SearchResultsSetup with SearchProviderService {
 
     if (searchAccountsProvider.accounts.usernames.isEmpty) {
 
-      final accountsData = await SearchAccountsGetter().getAccounts(searchText: searchText);
+      final accountsData = await SearchAccountsGetter().getAccounts(searchUsername: searchText);
 
       final usernames = accountsData['username'] as List<String>;
       final profilePictures = accountsData['profile_pic'] as List<Uint8List>;

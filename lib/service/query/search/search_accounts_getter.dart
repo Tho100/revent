@@ -1,41 +1,25 @@
-import 'package:revent/global/table_names.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/data_converter.dart';
-import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
+import 'package:revent/shared/provider_mixins.dart';
+// TODO: Rename to profiles
+class SearchAccountsGetter extends BaseQueryService with UserProfileProviderService {
 
-class SearchAccountsGetter extends BaseQueryService {
+  Future<Map<String, List<dynamic>>> getAccounts({required String searchUsername}) async {
 
-  Future<Map<String, List<dynamic>>> getAccounts({required String searchText}) async {
+    final response = await ApiClient.post(ApiPath.searchProfilesGetter, {
+      'search_username': searchUsername,
+      'current_user': userProvider.user.username
+    });
 
-    const query = 
-    '''
-      SELECT username, profile_picture 
-      FROM ${TableNames.userProfileInfo} upi
-      WHERE upi.username LIKE :search_text
-        AND NOT EXISTS (
-          SELECT 1
-          FROM ${TableNames.userBlockedInfo} ubi
-          WHERE 
-            ubi.blocked_by = :blocked_by AND 
-            ubi.blocked_username = upi.username
-        )
-    ''';
+    final profiles = ExtractData(data: response.body!['profiles']);
 
-    final param = {
-      'search_text': '%$searchText%',
-      'blocked_by': getIt.userProvider.user.username
-    };
-
-    final results = await executeQuery(query, param);
-
-    final extractedData = ExtractData(rowsData: results);
-
-    final usernames = extractedData.extractStringColumn('username');
+    final usernames = profiles.extractColumn<String>('username');
 
     final profilePictures = DataConverter.convertToPfp(
-      extractedData.extractStringColumn('profile_picture')
+      profiles.extractColumn<String>('profile_picture')
     );
     
     return {
