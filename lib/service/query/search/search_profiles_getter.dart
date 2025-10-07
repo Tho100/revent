@@ -4,10 +4,10 @@ import 'package:revent/helper/extract_data.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-// TODO: Rename to profiles
-class SearchAccountsGetter extends BaseQueryService with UserProfileProviderService {
 
-  Future<Map<String, List<dynamic>>> getAccounts({required String searchUsername}) async {
+class SearchProfilesGetter extends BaseQueryService with UserProfileProviderService {
+
+  Future<Map<String, List<dynamic>>> getProfiles({required String searchUsername}) async {
 
     final response = await ApiClient.post(ApiPath.searchProfilesGetter, {
       'search_username': searchUsername,
