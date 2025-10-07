@@ -55,5 +55,6 @@ class ApiPath {
 
   static const activityGetter = '/activity-getter';
   static const activityFollowersGetter = '$activityGetter/followers';
+  static const activityRecentPostsLikesGetter = '$activityGetter/recent-likes';
 
 }

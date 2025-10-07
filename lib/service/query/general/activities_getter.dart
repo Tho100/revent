@@ -36,36 +36,17 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
   Future<Map<String, List<dynamic>>> getUserPostsWithRecentLikes() async {
 
-    const query = 
-    '''
-      SELECT 
-        vi.title, 
-        vi.creator, 
-        lvi.liked_at, 
-        COUNT(lvi.post_id) AS like_count
-      FROM ${TableNames.ventInfo} vi
-      INNER JOIN ${TableNames.likedVentInfo} lvi 
-        ON vi.post_id = lvi.post_id 
-      WHERE vi.creator = :creator
-        AND vi.created_at >= NOW() - INTERVAL 14 DAY
-      GROUP BY 
-        vi.post_id 
-      HAVING like_count 
-        IN (1, 2, 5, 10, 50, 100)
-      ORDER BY lvi.liked_at DESC
-    ''';
+    final response = await ApiClient.post(ApiPath.activityRecentPostsLikesGetter, {
+      'current_user': userProvider.user.username
+    });
 
-    final param = {'creator': userProvider.user.username};
+    final extractedData = ExtractData(data: response.body!['posts']);
 
-    final results = await executeQuery(query, param);
+    final titles = extractedData.extractColumn<String>('title');
+    final likeCount = extractedData.extractColumn<int>('like_count');
 
-    final extractedData = ExtractData(rowsData: results);
-
-    final titles = extractedData.extractStringColumn('title');
-    final likeCount = extractedData.extractIntColumn('like_count');
-
-    final likedAt = formatDate.formatToPostDate(
-      data: extractedData, columnName: 'liked_at'
+    final likedAt = formatDate.formatToPostDate2(
+      extractedData.extractColumn<String>('liked_at')
     );
 
     return {
