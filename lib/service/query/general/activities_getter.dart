@@ -2,6 +2,8 @@ import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
 class ActivitiesGetter extends BaseQueryService with UserProfileProviderService {
@@ -10,24 +12,16 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
   Future<Map<String, List<String>>> getUserFollowers() async {
 
-    const query = 
-    '''
-      SELECT follower, followed_at 
-      FROM ${TableNames.userFollowsInfo} 
-      WHERE following = :username
-      ORDER BY followed_at DESC
-    ''';
+    final response = await ApiClient.post(ApiPath.activityFollowersGetter, {
+      'current_user': userProvider.user.username
+    });
 
-    final param = {'username': userProvider.user.username};
+    final extractedData = ExtractData(data: response.body!['followers']);
 
-    final results = await executeQuery(query, param);
+    final followers = extractedData.extractColumn<String>('follower');
 
-    final extractedData = ExtractData(rowsData: results);
-
-    final followers = extractedData.extractStringColumn('follower');
-
-    final followedAt = formatDate.formatToPostDate(
-      data: extractedData, columnName: 'followed_at'
+    final followedAt = formatDate.formatToPostDate2(
+      extractedData.extractColumn<String>('followed_at')
     );
 
     return {
