@@ -1,7 +1,8 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
 class ActivitiesGetter extends BaseQueryService with UserProfileProviderService {
@@ -10,24 +11,16 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
   Future<Map<String, List<String>>> getUserFollowers() async {
 
-    const query = 
-    '''
-      SELECT follower, followed_at 
-      FROM ${TableNames.userFollowsInfo} 
-      WHERE following = :username
-      ORDER BY followed_at DESC
-    ''';
+    final response = await ApiClient.post(ApiPath.activityFollowersGetter, {
+      'current_user': userProvider.user.username
+    });
 
-    final param = {'username': userProvider.user.username};
+    final extractedData = ExtractData(data: response.body!['followers']);
 
-    final results = await executeQuery(query, param);
+    final followers = extractedData.extractColumn<String>('follower');
 
-    final extractedData = ExtractData(rowsData: results);
-
-    final followers = extractedData.extractStringColumn('follower');
-
-    final followedAt = formatDate.formatToPostDate(
-      data: extractedData, columnName: 'followed_at'
+    final followedAt = formatDate.formatToPostDate2(
+      extractedData.extractColumn<String>('followed_at')
     );
 
     return {
@@ -39,39 +32,20 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
   /// Retrieves posts created by the current user that received specific 
   /// number of likes (1, 2, 5, 10, 50, 100) within the past 14 days.
-
+// TODO: Sync function naming with backend
   Future<Map<String, List<dynamic>>> getUserPostsWithRecentLikes() async {
 
-    const query = 
-    '''
-      SELECT 
-        vi.title, 
-        vi.creator, 
-        lvi.liked_at, 
-        COUNT(lvi.post_id) AS like_count
-      FROM ${TableNames.ventInfo} vi
-      INNER JOIN ${TableNames.likedVentInfo} lvi 
-        ON vi.post_id = lvi.post_id 
-      WHERE vi.creator = :creator
-        AND vi.created_at >= NOW() - INTERVAL 14 DAY
-      GROUP BY 
-        vi.post_id 
-      HAVING like_count 
-        IN (1, 2, 5, 10, 50, 100)
-      ORDER BY lvi.liked_at DESC
-    ''';
+    final response = await ApiClient.post(ApiPath.activityRecentPostsLikesGetter, {
+      'current_user': userProvider.user.username
+    });
 
-    final param = {'creator': userProvider.user.username};
+    final extractedData = ExtractData(data: response.body!['posts']);
 
-    final results = await executeQuery(query, param);
+    final titles = extractedData.extractColumn<String>('title');
+    final likeCount = extractedData.extractColumn<int>('like_count');
 
-    final extractedData = ExtractData(rowsData: results);
-
-    final titles = extractedData.extractStringColumn('title');
-    final likeCount = extractedData.extractIntColumn('like_count');
-
-    final likedAt = formatDate.formatToPostDate(
-      data: extractedData, columnName: 'liked_at'
+    final likedAt = formatDate.formatToPostDate2(
+      extractedData.extractColumn<String>('liked_at')
     );
 
     return {
@@ -84,37 +58,17 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
   Future<Map<String, List<dynamic>>> getUserPostsAllTimeLikes() async {
 
-    const query = 
-    '''
-      SELECT 
-        vi.title, 
-        vi.creator, 
-        lvi.liked_at, 
-        COUNT(lvi.post_id) AS like_count
-      FROM ${TableNames.ventInfo} vi
-      INNER JOIN ${TableNames.likedVentInfo} lvi 
-        ON vi.post_id = lvi.post_id 
-      WHERE 
-        vi.creator = :creator
-      GROUP BY 
-        vi.post_id 
-      HAVING 
-        like_count IN (1, 2, 5, 10, 50, 100) 
-      ORDER BY 
-        lvi.liked_at DESC;
-    ''';
+    final response = await ApiClient.post(ApiPath.activityAllTimePostsLikesGetter, {
+      'current_user': userProvider.user.username
+    });
 
-    final param = {'creator': userProvider.user.username};
+    final extractedData = ExtractData(data: response.body!['posts']);
 
-    final results = await executeQuery(query, param);
+    final titles = extractedData.extractColumn<String>('title');
+    final likeCount = extractedData.extractColumn<int>('like_count');
 
-    final extractedData = ExtractData(rowsData: results);
-
-    final titles = extractedData.extractStringColumn('title');
-    final likeCount = extractedData.extractIntColumn('like_count');
-
-    final likedAt = formatDate.formatToPostDate(
-      data: extractedData, columnName: 'liked_at'
+    final likedAt = formatDate.formatToPostDate2(
+      extractedData.extractColumn<String>('liked_at')
     );
 
     return {
