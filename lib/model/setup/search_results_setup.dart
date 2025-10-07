@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/search/search_accounts_getter.dart';
+import 'package:revent/service/query/search/search_profiles_getter.dart';
 import 'package:revent/shared/provider/search/search_accounts_provider.dart';
 import 'package:revent/model/setup/vents_setup.dart';
 
@@ -23,7 +23,7 @@ class SearchResultsSetup with SearchProviderService {
 
     if (searchAccountsProvider.accounts.usernames.isEmpty) {
 
-      final accountsData = await SearchAccountsGetter().getAccounts(searchText: searchText);
+      final accountsData = await SearchProfilesGetter().getProfiles(searchUsername: searchText);
 
       final usernames = accountsData['username'] as List<String>;
       final profilePictures = accountsData['profile_pic'] as List<Uint8List>;

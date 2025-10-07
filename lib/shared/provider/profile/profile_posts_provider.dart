@@ -130,9 +130,8 @@ class ProfilePostsProvider extends ChangeNotifier {
     }
 
   }
-// TODO: Simpify those two functions logic
 
-  void likeVent(int index, bool isUserLikedPost) {
+  void likeVent(int index, bool liked) {
 
     final profileKey = _getCurrentProfileKey();
 
@@ -140,9 +139,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     if (profile != null) {
 
-      profile.isPostLiked[index] = isUserLikedPost 
-        ? false
-        : true;
+      profile.isPostLiked[index] = liked;
 
       profile.isPostLiked[index] 
         ? profile.totalLikes[index] += 1
@@ -154,7 +151,7 @@ class ProfilePostsProvider extends ChangeNotifier {
     
   }
 
-  void saveVent(int index, bool isUserSavedPost) {
+  void saveVent(int index, bool saved) {
 
     final profileKey = _getCurrentProfileKey();
 
@@ -162,9 +159,7 @@ class ProfilePostsProvider extends ChangeNotifier {
 
     if (profile != null) {
 
-      profile.isPostSaved[index] = isUserSavedPost 
-        ? false
-        : true;
+      profile.isPostSaved[index] = saved;
 
       notifyListeners();
 
