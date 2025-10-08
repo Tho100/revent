@@ -36,7 +36,7 @@ class ApiClient {
     
   }
 
-  static Future<ApiResponse> get(String path, String param) async {
+  static Future<ApiResponse> get(String path, dynamic param) async {
 
     final uri = ApiConfig.endpoint('$path/$param');
 

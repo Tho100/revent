@@ -24,7 +24,7 @@ class ApiPath {
   static const likeVent = '$ventActions/like-vent';
   static const saveVent = '$ventActions/save-vent';
   static const pinVent = '$ventActions/pin-vent';
-
+// TODO: make top variable lke ventsGetter private
   static const ventsGetter = '/vents-getter';
   static const latestVentsGetter = '$ventsGetter/latest';
   static const trendingVentsGetter = '$ventsGetter/trending';
@@ -33,6 +33,10 @@ class ApiPath {
   static const likedVentsGetter = '$ventsGetter/liked';
   static const savedVentsGetter = '$ventsGetter/saved';
   static const vaultVentsGetter = '$ventsGetter/vault';
+
+  static const ventInfoGetter = '/vent-info-getter';
+  static const ventBodyTextGetter = '$ventInfoGetter/body-text';
+  static const ventMetadataGetter = '$ventInfoGetter/metadata';
 
   static const createComment = '/create-comment';
   static const commentActions = '/comment-actions';
