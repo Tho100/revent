@@ -35,7 +35,7 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 // TODO: Sync function naming with backend
   Future<Map<String, List<dynamic>>> getUserPostsWithRecentLikes() async {
 
-    final response = await ApiClient.post(ApiPath.activityRecentPostsLikesGetter, {
+    final response = await ApiClient.post(ApiPath.activityRecentLikesGetter, {
       'current_user': userProvider.user.username
     });
 
@@ -58,7 +58,7 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
   Future<Map<String, List<dynamic>>> getUserPostsAllTimeLikes() async {
 
-    final response = await ApiClient.post(ApiPath.activityAllTimePostsLikesGetter, {
+    final response = await ApiClient.post(ApiPath.activityAllTimeLikesGetter, {
       'current_user': userProvider.user.username
     });
 

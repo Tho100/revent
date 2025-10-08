@@ -54,8 +54,8 @@ class ApiPath {
   static const searchProfilesGetter = '$searchGetter/profiles';
 
   static const activityGetter = '/activity-getter';
-  static const activityFollowersGetter = '$activityGetter/followers'; // TODO: remove 'post' from variablesPsa
-  static const activityRecentPostsLikesGetter = '$activityGetter/recent-likes';
-  static const activityAllTimePostsLikesGetter = '$activityGetter/recent-likes';
+  static const activityFollowersGetter = '$activityGetter/followers';
+  static const activityRecentLikesGetter = '$activityGetter/recent-likes';
+  static const activityAllTimeLikesGetter = '$activityGetter/all-time-likes';
 
 }
