@@ -39,8 +39,8 @@ class ActivityService with NavigationProviderService {
     await prefs.setBool(CacheNames.unreadCache, false);
 
     final latestLikesData = isLogin 
-      ? await activitiesGetter.getUserPostsAllTimeLikes()
-      : await activitiesGetter.getUserPostsWithRecentLikes();
+      ? await activitiesGetter.getAllTimeLikeMilestones()
+      : await activitiesGetter.getRecentLikeMilestones();
       
     final latestFollowersData = await activitiesGetter.getUserFollowers();
 
@@ -86,7 +86,7 @@ class ActivityService with NavigationProviderService {
 
   Future<bool> _hasNewActivity() async {
 
-    final latestLikesData = await activitiesGetter.getUserPostsWithRecentLikes();
+    final latestLikesData = await activitiesGetter.getRecentLikeMilestones();
     final latestFollowersData = await activitiesGetter.getUserFollowers();
 
     final caches = await CacheHelper().getActivityCache();

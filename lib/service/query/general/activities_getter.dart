@@ -32,10 +32,10 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
   /// Retrieves posts created by the current user that received specific 
   /// number of likes (1, 2, 5, 10, 50, 100) within the past 14 days.
-// TODO: Sync function naming with backend
-  Future<Map<String, List<dynamic>>> getUserPostsWithRecentLikes() async {
 
-    final response = await ApiClient.post(ApiPath.activityRecentPostsLikesGetter, {
+  Future<Map<String, List<dynamic>>> getRecentLikeMilestones() async {
+
+    final response = await ApiClient.post(ApiPath.activityRecentLikesGetter, {
       'current_user': userProvider.user.username
     });
 
@@ -56,9 +56,9 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
   }
 
-  Future<Map<String, List<dynamic>>> getUserPostsAllTimeLikes() async {
+  Future<Map<String, List<dynamic>>> getAllTimeLikeMilestones() async {
 
-    final response = await ApiClient.post(ApiPath.activityAllTimePostsLikesGetter, {
+    final response = await ApiClient.post(ApiPath.activityAllTimeLikesGetter, {
       'current_user': userProvider.user.username
     });
 
