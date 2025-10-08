@@ -1,8 +1,9 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 
 class VentDataGetter extends BaseQueryService {
 
@@ -12,40 +13,27 @@ class VentDataGetter extends BaseQueryService {
 
   Future<String> getBodyText() async {
 
-    const query = 'SELECT body_text FROM ${TableNames.ventInfo} WHERE post_id = :post_id';
+    final response = await ApiClient.get(ApiPath.ventBodyTextGetter, postId);
 
-    final param = {'post_id': postId};
+    return response.body!['body_text'];
 
-    final results = await executeQuery(query, param);
-
-    return results.rows.last.assoc()['body_text']!;
-    
   }
 
   Future<Map<String, dynamic>> getMetadata() async {
 
-    const query = 
-    '''
-      SELECT tags, total_likes, created_at, marked_nsfw 
-      FROM ${TableNames.ventInfo} 
-      WHERE post_id = :post_id
-    ''';
+    final response = await ApiClient.get(ApiPath.ventMetadataGetter, postId);
 
-    final param = {'post_id': postId};
+    final metadata = ExtractData(data: response.body!['metadata']);
 
-    final results = await executeQuery(query, param);
-
-    final extractedData = ExtractData(rowsData: results);
-
-    final tags = extractedData.extractStringColumn('tags');
-    final totalLikes = extractedData.extractIntColumn('total_likes');
+    final tags = metadata.extractColumn<String>('tags');
+    final totalLikes = metadata.extractColumn<int>('total_likes');
 
     final isNsfw = DataConverter.convertToBools(
-      extractedData.extractIntColumn('marked_nsfw')
+      metadata.extractColumn<int>('marked_nsfw')
     );
 
-    final postTimestamp = FormatDate().formatToPostDate(
-      data: extractedData, columnName: 'created_at'
+    final postTimestamp = FormatDate().formatToPostDate2(
+      metadata.extractColumn<String>('created_at')
     );
 
     return {
