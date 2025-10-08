@@ -1,4 +1,3 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/shared/api/api_client.dart';
@@ -34,16 +33,9 @@ class VaultVentDataGetter extends BaseQueryService with UserProfileProviderServi
 
   Future<String> getBodyText({required int postId}) async {
 
-    const query = 
-      'SELECT body_text FROM ${TableNames.vaultVentInfo} WHERE post_id = :post_id';
-      
-    final params = {'post_id': postId};
+    final response = await ApiClient.get(ApiPath.vaultBodyTextGetter, postId);
 
-    final results = await executeQuery(query, params); 
-
-    final extractedData = ExtractData(rowsData: results); 
-
-    return extractedData.extractStringColumn('body_text')[0];
+    return response.body!['body_text'];
 
   }
 
