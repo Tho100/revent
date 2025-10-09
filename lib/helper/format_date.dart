@@ -1,5 +1,4 @@
 import 'package:intl/intl.dart';
-import 'package:revent/helper/extract_data.dart';
 
 class FormatDate {
 
@@ -88,18 +87,8 @@ class FormatDate {
     return _dateNow;
 
   }
-// TODO: Soon, get rid of this fully
-  List<String> formatToPostDate({
-    required ExtractData data, 
-    required String columnName
-  }) {
-    return data
-      .extractStringColumn(columnName)
-      .map((timestamp) => formatPostTimestamp(DateTime.parse(timestamp)))
-      .toList();
-  }
 
-  List<String> formatToPostDate2(List<String> timestampData) {
+  List<String> formatToPostDate(List<String> timestampData) {
     return timestampData
       .map((timestamp) => formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();

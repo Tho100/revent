@@ -146,9 +146,13 @@ class _AccountInformationPageState extends State<AccountInformationPage> with Us
 
   String _hiddenEmailString(String email) {
 
-    final middleEmail = email.substring(1, email.length - 1);
+    final emailValue = email.split('@')[0];
+  
+    final middleEmail = emailValue.substring(1, emailValue.length - 1);
 
-    return '*$middleEmail*';
+    final emailDomain = '@${email.split('@')[1]}';
+
+    return '*$middleEmail*$emailDomain';
 
   }
 

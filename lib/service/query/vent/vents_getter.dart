@@ -90,7 +90,7 @@ class VentsGetter extends BaseQueryService with UserProfileProviderService {
     final totalLikes = ventsData.extractColumn<int>('total_likes');
     final totalComments = ventsData.extractColumn<int>('total_comments');
 
-    final postTimestamp = FormatDate().formatToPostDate2(
+    final postTimestamp = FormatDate().formatToPostDate(
       ventsData.extractColumn<String>('created_at')
     );
 

@@ -27,7 +27,7 @@ class RepliesGetter extends BaseQueryService with UserProfileProviderService, Ve
     final repliedBy = replies.extractColumn<String>('replied_by');
     final totalLikes = replies.extractColumn<int>('total_likes');
 
-    final replyTimestamp = FormatDate().formatToPostDate2(
+    final replyTimestamp = FormatDate().formatToPostDate(
       replies.extractColumn<String>('created_at')
     );
 
