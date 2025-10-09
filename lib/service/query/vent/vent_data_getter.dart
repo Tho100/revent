@@ -32,7 +32,7 @@ class VentDataGetter extends BaseQueryService {
       metadata.extractColumn<int>('marked_nsfw')
     );
 
-    final postTimestamp = FormatDate().formatToPostDate2(
+    final postTimestamp = FormatDate().formatToPostDate(
       metadata.extractColumn<String>('created_at')
     );
 

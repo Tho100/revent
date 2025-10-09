@@ -88,7 +88,7 @@ class FormatDate {
 
   }
 
-  List<String> formatToPostDate2(List<String> timestampData) {
+  List<String> formatToPostDate(List<String> timestampData) {
     return timestampData
       .map((timestamp) => formatPostTimestamp(DateTime.parse(timestamp)))
       .toList();

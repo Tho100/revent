@@ -19,7 +19,7 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
 
     final followers = extractedData.extractColumn<String>('follower');
 
-    final followedAt = formatDate.formatToPostDate2(
+    final followedAt = formatDate.formatToPostDate(
       extractedData.extractColumn<String>('followed_at')
     );
 
@@ -44,7 +44,7 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
     final titles = extractedData.extractColumn<String>('title');
     final likeCount = extractedData.extractColumn<int>('like_count');
 
-    final likedAt = formatDate.formatToPostDate2(
+    final likedAt = formatDate.formatToPostDate(
       extractedData.extractColumn<String>('liked_at')
     );
 
@@ -67,7 +67,7 @@ class ActivitiesGetter extends BaseQueryService with UserProfileProviderService 
     final titles = extractedData.extractColumn<String>('title');
     final likeCount = extractedData.extractColumn<int>('like_count');
 
-    final likedAt = formatDate.formatToPostDate2(
+    final likedAt = formatDate.formatToPostDate(
       extractedData.extractColumn<String>('liked_at')
     );
 

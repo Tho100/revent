@@ -29,7 +29,7 @@ class ProfilePostsGetter extends BaseQueryService with UserProfileProviderServic
     final totalLikes = vents.extractColumn<int>('total_likes');
     final totalComments = vents.extractColumn<int>('total_comments');
 
-    final postTimestamp = FormatDate().formatToPostDate2(
+    final postTimestamp = FormatDate().formatToPostDate(
       vents.extractColumn<String>('created_at')
     );
 
@@ -83,7 +83,7 @@ class ProfilePostsGetter extends BaseQueryService with UserProfileProviderServic
     final totalLikes = vents.extractColumn<int>('total_likes');
     final totalComments = vents.extractColumn<int>('total_comments');
 
-    final postTimestamp = FormatDate().formatToPostDate2(
+    final postTimestamp = FormatDate().formatToPostDate(
       vents.extractColumn<String>('created_at')
     );
 
