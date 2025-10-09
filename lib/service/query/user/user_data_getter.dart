@@ -1,58 +1,46 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
+// TODO: make username class level variable
 class UserDataGetter extends BaseQueryService {
 
   Future<String> getJoinedDate({required String username}) async {
 
-    const query = 'SELECT created_at FROM ${TableNames.userInfo} WHERE username = :username';
+    final response = await ApiClient.get(ApiPath.userJoinedDateGetter, username);
 
-    final param = {'username': username};
-    
-    final results = await executeQuery(query, param);
-
-    return ExtractData(rowsData: results).extractStringColumn('created_at')[0];
+    return response.body!['joined_date'];
 
   }
 
   Future<String> getCountry({required String username}) async {
 
-    const query = 'SELECT country FROM ${TableNames.userProfileInfo} WHERE username = :username';
+    final response = await ApiClient.get(ApiPath.userCountryGetter, username);
 
-    final param = {'username': username};
-    
-    final results = await executeQuery(query, param);
-
-    return ExtractData(rowsData: results).extractStringColumn('country')[0];
+    return response.body!['country'];
 
   }
 
   Future<Map<String, String>> getSocialHandles({String? username}) async {
 
-    const query = 'SELECT platform, social_handle FROM ${TableNames.userSocialLinks} WHERE username = :username';
+    final response = await ApiClient.get(ApiPath.userSocialHandlesGetter, username);
 
-    final param = {'username': username};
-    
-    final results = await executeQuery(query, param);
+    final socialHandlesBody = response.body!['social_handles'] as List<dynamic>;
 
-    if (results.isEmpty) {
+    if (socialHandlesBody.isEmpty) {
       return {};
-    }
+    } 
 
-    final extractedData = ExtractData(rowsData: results);
+    final extractedData = ExtractData(data: socialHandlesBody);
 
-    final platforms = extractedData.extractStringColumn('platform');
-    final handles = extractedData.extractStringColumn('social_handle');
+    final platforms = extractedData.extractColumn<String>('platform');
+    final handles = extractedData.extractColumn<String>('social_handle');
 
-    Map<String, String> socialHandles = {};
+    final socialHandles = Map.fromIterables(
+      platforms,
+      handles,
+    )..removeWhere((_, handle) => handle.isEmpty);
     
-    for (int i = 0; i < platforms.length; i++) {
-      if (handles[i].isNotEmpty) {
-        socialHandles[platforms[i]] = handles[i];
-      }
-    }
-
     return socialHandles;
 
   }

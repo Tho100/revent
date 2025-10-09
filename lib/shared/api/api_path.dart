@@ -10,6 +10,11 @@ class ApiPath {
   static const updateUserAuth = '$_updateUser/update-auth';
   static const updateUserAvatar = '$_updateUser/update-avatar';
 
+  static const _userInfoGetter = '/user-info-getter';
+  static const userJoinedDateGetter = '$_userInfoGetter/joined-date';
+  static const userCountryGetter = '$_userInfoGetter/country';
+  static const userSocialHandlesGetter = '$_userInfoGetter/social-handles';
+
   static const _userProfile = '/user-profile';
   static const userProfileInfoGetter = '$_userProfile/get-info';
   static const userAvatarGetter = '$_userProfile/get-avatar';
