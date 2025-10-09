@@ -4,22 +4,6 @@ import 'package:revent/service/query/general/base_query_service.dart';
 
 class UserDataGetter extends BaseQueryService {
 
-  Future<String?> getUsername({required String email}) async {
-
-    const query = 'SELECT username FROM ${TableNames.userInfo} WHERE email = :email';
-
-    final param = {'email': email};
-    
-    final results = await executeQuery(query, param);
-
-    if (results.rows.isEmpty) {
-      return null;
-    }
-
-    return ExtractData(rowsData: results).extractStringColumn('username')[0];
-
-  }
-
   Future<String> getJoinedDate({required String username}) async {
 
     const query = 'SELECT created_at FROM ${TableNames.userInfo} WHERE username = :username';
