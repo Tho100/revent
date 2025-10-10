@@ -17,6 +17,8 @@ class ApiPath {
 
   static const userRelationsGetter = '/user-relations-getter';
   static const userBlockedAccountsGetter = '$userRelationsGetter/blocked_accounts';
+  static const userFollowersGetter = '$userRelationsGetter/followers';
+  static const userFollowingGeter = '$userRelationsGetter/following';
 
   static const _userProfile = '/user-profile';
   static const userProfileInfoGetter = '$_userProfile/get-info';
