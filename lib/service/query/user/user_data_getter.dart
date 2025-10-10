@@ -3,6 +3,7 @@ import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 // TODO: make username class level variable
+// TODO: Rename to user-info-getter
 class UserDataGetter extends BaseQueryService {
 
   Future<String> getJoinedDate({required String username}) async {

@@ -4,6 +4,8 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 
 class UserBlockGetter extends BaseQueryService {
 
@@ -13,27 +15,14 @@ class UserBlockGetter extends BaseQueryService {
 
   Future<Map<String, dynamic>> getBlockedAccounts() async {
 
-    const query = 
-    '''
-      SELECT 
-        upi.username, 
-        upi.profile_picture
-      FROM ${TableNames.userProfileInfo} upi
-      LEFT JOIN ${TableNames.userBlockedInfo} ubi
-        ON ubi.blocked_username = upi.username
-      WHERE ubi.blocked_by = :blocked_by
-    ''';
+    final response = await ApiClient.get(ApiPath.userBlockedAccountsGetter, username);
 
-    final param = {'blocked_by': username};
+    final blockedAccounts = ExtractData(data: response.body!['blocked_accounts']);
 
-    final results = await executeQuery(query, param);
-
-    final extractedData = ExtractData(rowsData: results);
-
-    final usernames = extractedData.extractStringColumn('username');
+    final usernames = blockedAccounts.extractColumn<String>('username');
 
     final profilePictures = DataConverter.convertToPfp(
-      extractedData.extractStringColumn('profile_picture')
+      blockedAccounts.extractColumn<String>('profile_picture')
     );
     
     return {

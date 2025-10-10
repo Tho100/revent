@@ -1,59 +1,36 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 
 class FollowsGetter extends BaseQueryService with UserProfileProviderService {
 
-  /// Fetches list of followers/following for given [username] 
-  /// also includes their profile picture and whether the current user follows them.
-
   Future<Map<String, List<dynamic>>> getFollows({
     required String followType,
     required String username
   }) async {
     
-    final columnName = followType == 'Followers' ? 'follower' : 'following';
-    final oppositeColumn = followType == 'Followers' ? 'following' : 'follower';
+    final apiEndPoint = followType == 'Followers' 
+      ? ApiPath.userFollowersGetter 
+      : ApiPath.userFollowingGeter;
 
-    final getFollowProfilesQuery = 
-    '''
-      SELECT DISTINCT
-        ufi.$columnName AS username,
-        upi.profile_picture AS profile_picture,
-        CASE 
-          WHEN EXISTS (
-            SELECT 1 
-            FROM ${TableNames.userFollowsInfo} ufi_inner
-            WHERE ufi_inner.follower = :current_user
-            AND ufi_inner.following = ufi.$columnName
-          )
-          THEN 1
-          ELSE 0
-        END AS is_followed
-      FROM ${TableNames.userFollowsInfo} ufi
-      JOIN ${TableNames.userProfileInfo} upi ON ufi.$columnName = upi.username
-      WHERE ufi.$oppositeColumn = :username
-    ''';
+    final response = await ApiClient.post(apiEndPoint, {
+      'current_user': userProvider.user.username,
+      'viewed_profile_username': username,
+    });
 
-    final params = {
-      'username': username,
-      'current_user': userProvider.user.username
-    };
+    final profiles = ExtractData(rowsData: response.body!['profiles']);
 
-    final followResults = await executeQuery(getFollowProfilesQuery, params);
-
-    final extractedProfiles = ExtractData(rowsData: followResults);
-
-    final followProfileUsernames = extractedProfiles.extractStringColumn('username');
+    final followProfileUsernames = profiles.extractColumn<String>('username');
 
     final profilePictures = DataConverter.convertToPfp(
-      extractedProfiles.extractStringColumn('profile_picture')
+      profiles.extractColumn<String>('profile_picture')
     );
     
-    final isFollowed = extractedProfiles
-      .extractIntColumn('is_followed')
+    final isFollowed = profiles
+      .extractColumn<int>('is_followed')
       .map((value) => value == 1)
       .toList();
 
@@ -62,7 +39,7 @@ class FollowsGetter extends BaseQueryService with UserProfileProviderService {
       'profile_pic': profilePictures,
       'is_followed': isFollowed
     };
-
+    
   }
 
 }
