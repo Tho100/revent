@@ -92,7 +92,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
       if ((userProvider.user.socialHandles ?? {}).isEmpty) {
 
-        await UserInfoGetter().getSocialHandles(username: userProvider.user.username).then(
+        await UserInfoGetter.getSocialHandles(username: userProvider.user.username).then(
           (socialHandles) => userProvider.setSocialHandles(socialHandles)
         );
 

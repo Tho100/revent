@@ -19,8 +19,6 @@ class UserLoginService {
 
   UserLoginService({required this.context});
 
-  final _userDataGetter = UserInfoGetter();
-
   Future<void> login({
     required String email, 
     required String password, 
@@ -86,7 +84,7 @@ class UserLoginService {
     required String username
   }) async {
     
-    final socialHandles = await _userDataGetter.getSocialHandles(username: username);
+    final socialHandles = await UserInfoGetter.getSocialHandles(username: username);
 
     final userSetup = UserData(
       username: username, 

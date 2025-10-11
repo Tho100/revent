@@ -62,7 +62,6 @@ class _UserProfilePageState extends State<UserProfilePage> with
   final socialHandlesNotifier = ValueNotifier<Map<String, String>>({});
 
   final profileDataGetter = ProfileDataGetter();
-  final userDataGetter = UserInfoGetter();
   final userFollowStatus = UserFollowStatus();
 
   late ProfilePostsSetup profilePostsSetup;
@@ -132,7 +131,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
     if (joinedDate.isEmpty) {
 
-      final getJoinedDate = await userDataGetter.getJoinedDate(username: widget.username);
+      final getJoinedDate = await UserInfoGetter.getJoinedDate(username: widget.username);
 
       final formattedJoinedDate = FormatDate.formatLongDate(getJoinedDate);
 
@@ -152,7 +151,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
       country = isBlockedAccount || isPrivateAccount
         ? 'Unknown' 
-        :  await userDataGetter.getCountry(username: widget.username);
+        :  await UserInfoGetter.getCountry(username: widget.username);
 
       return country;
 
@@ -233,7 +232,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       postsNotifier.value = profilePostsProvider.userProfile.titles.length;
 
       isFollowingNotifier.value = await userFollowStatus.isFollowing(username: widget.username);
-      socialHandlesNotifier.value = await userDataGetter.getSocialHandles(username: widget.username);
+      socialHandlesNotifier.value = await UserInfoGetter.getSocialHandles(username: widget.username);
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
