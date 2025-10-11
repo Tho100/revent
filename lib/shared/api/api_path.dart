@@ -20,6 +20,10 @@ class ApiPath {
   static const userFollowersGetter = '$userRelationsGetter/followers';
   static const userFollowingGeter = '$userRelationsGetter/following';
 
+  static const userFollowRelationsGetter = '/user-follow-relations-getter';
+  static const userFollowSuggestionsGetter = '$userFollowRelationsGetter/follow-suggestions';
+  static const userFollowingStatusGetter = '$userFollowRelationsGetter/is-following';
+
   static const _userProfile = '/user-profile';
   static const userProfileInfoGetter = '$_userProfile/get-info';
   static const userAvatarGetter = '$_userProfile/get-avatar';

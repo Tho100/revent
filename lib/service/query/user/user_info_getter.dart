@@ -2,11 +2,10 @@ import 'package:revent/helper/extract_data.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
-// TODO: make username class level variable
-// TODO: Rename to user-info-getter
-class UserDataGetter extends BaseQueryService {
 
-  Future<String> getJoinedDate({required String username}) async {
+class UserInfoGetter extends BaseQueryService {
+
+  static Future<String> getJoinedDate({required String username}) async {
 
     final response = await ApiClient.get(ApiPath.userJoinedDateGetter, username);
 
@@ -14,7 +13,7 @@ class UserDataGetter extends BaseQueryService {
 
   }
 
-  Future<String> getCountry({required String username}) async {
+  static Future<String> getCountry({required String username}) async {
 
     final response = await ApiClient.get(ApiPath.userCountryGetter, username);
 
@@ -22,7 +21,7 @@ class UserDataGetter extends BaseQueryService {
 
   }
 
-  Future<Map<String, String>> getSocialHandles({String? username}) async {
+  static Future<Map<String, String>> getSocialHandles({String? username}) async {
 
     final response = await ApiClient.get(ApiPath.userSocialHandlesGetter, username);
 
