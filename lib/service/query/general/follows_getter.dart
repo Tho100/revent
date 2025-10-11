@@ -21,7 +21,7 @@ class FollowsGetter extends BaseQueryService with UserProfileProviderService {
       'viewed_profile_username': username,
     });
 
-    final profiles = ExtractData(rowsData: response.body!['profiles']);
+    final profiles = ExtractData(data: response.body!['profiles']);
 
     final followProfileUsernames = profiles.extractColumn<String>('username');
 
