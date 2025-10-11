@@ -4,7 +4,7 @@ import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
 class UserFollowStatus extends BaseQueryService {
-
+// TODO: make request to backend
   Future<bool> isFollowing({required String username}) async {
 
     const query = 
