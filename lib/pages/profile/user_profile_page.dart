@@ -9,7 +9,7 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
-import 'package:revent/service/query/user/user_data_getter.dart';
+import 'package:revent/service/query/user/user_info_getter.dart';
 import 'package:revent/service/query/user/user_follow_status.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
 import 'package:revent/service/query/user_profile/profile_data_getter.dart';
@@ -62,7 +62,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
   final socialHandlesNotifier = ValueNotifier<Map<String, String>>({});
 
   final profileDataGetter = ProfileDataGetter();
-  final userDataGetter = UserDataGetter();
+  final userDataGetter = UserInfoGetter();
   final userFollowStatus = UserFollowStatus();
 
   late ProfilePostsSetup profilePostsSetup;
