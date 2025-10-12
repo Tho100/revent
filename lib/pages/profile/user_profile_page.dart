@@ -62,7 +62,6 @@ class _UserProfilePageState extends State<UserProfilePage> with
   final socialHandlesNotifier = ValueNotifier<Map<String, String>>({});
 
   final profileDataGetter = ProfileDataGetter();
-  final userFollowStatus = UserFollowingStatus();
 
   late ProfilePostsSetup profilePostsSetup;
   late ProfileInfoWidgets profileInfoWidgets;
@@ -184,7 +183,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     bioNotifier.value = isBlockedAccount ? '' : profileData['bio'];
     pronounsNotifier.value =  isBlockedAccount ? '' : profileData['pronouns'];
 
-    isFollowingNotifier.value = await userFollowStatus.isFollowing(username: widget.username);
+    isFollowingNotifier.value = await UserFollowingStatus.isFollowing(username: widget.username);
     
     postsNotifier.value = 0;
 
@@ -231,7 +230,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       
       postsNotifier.value = profilePostsProvider.userProfile.titles.length;
 
-      isFollowingNotifier.value = await userFollowStatus.isFollowing(username: widget.username);
+      isFollowingNotifier.value = await UserFollowingStatus.isFollowing(username: widget.username);
       socialHandlesNotifier.value = await UserInfoGetter.getSocialHandles(username: widget.username);
 
     } catch (_) {
