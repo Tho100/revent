@@ -2,14 +2,11 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 import 'package:revent/service/query/general/replies_id_getter.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
-class ReplyActions extends BaseQueryService with 
-  RepliesProviderService, 
-  UserProfileProviderService {
+class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
   String replyText;
   String repliedBy;

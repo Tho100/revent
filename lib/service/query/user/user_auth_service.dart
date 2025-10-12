@@ -1,8 +1,7 @@
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class UserAuthService extends BaseQueryService {
+class UserAuthService {
 
   static Future<Map<String, dynamic>> getLoginAuthentication({
     required String email, 

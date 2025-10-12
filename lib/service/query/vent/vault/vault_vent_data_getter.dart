@@ -1,16 +1,13 @@
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class VaultVentDataGetter extends BaseQueryService with UserProfileProviderService {
+class VaultVentDataGetter with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getMetadata() async {
 
-    final response = await ApiClient.post(ApiPath.vaultVentsGetter, {
-      'username': userProvider.user.username
-    });
+    final response = await ApiClient.get(ApiPath.vaultVentsGetter, userProvider.user.username);
 
     final vents = response.body!['vents'] as List<dynamic>;
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/user/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/service/query/user/user_registration_validator.dart';
@@ -10,7 +9,7 @@ import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/model/setup/vents_setup.dart';
 
-class UserRegistrationService extends BaseQueryService with UserProfileProviderService {
+class UserRegistrationService with UserProfileProviderService {
 
   final BuildContext context;
 

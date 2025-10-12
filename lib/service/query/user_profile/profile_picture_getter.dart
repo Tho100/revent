@@ -3,11 +3,10 @@ import 'dart:typed_data';
 
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class ProfilePictureGetter extends BaseQueryService {
+class ProfilePictureGetter {
 
   Future<Uint8List> getProfilePictures({String? username}) async {
 

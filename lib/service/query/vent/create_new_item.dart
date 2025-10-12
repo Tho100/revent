@@ -3,11 +3,10 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 
-class CreateNewItem extends BaseQueryService with UserProfileProviderService {
+class CreateNewItem with UserProfileProviderService {
 
   final String title;
   final String body;

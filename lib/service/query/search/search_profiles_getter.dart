@@ -1,11 +1,10 @@
 import 'package:revent/helper/data_converter.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class SearchProfilesGetter extends BaseQueryService with UserProfileProviderService {
+class SearchProfilesGetter with UserProfileProviderService {
 
   Future<Map<String, List<dynamic>>> getProfiles({required String searchUsername}) async {
 

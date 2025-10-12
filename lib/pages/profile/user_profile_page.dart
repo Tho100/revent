@@ -10,7 +10,7 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
 import 'package:revent/service/query/user/user_info_getter.dart';
-import 'package:revent/service/query/user/user_follow_status.dart';
+import 'package:revent/service/query/user/user_following_status.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
 import 'package:revent/service/query/user_profile/profile_data_getter.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
@@ -62,7 +62,6 @@ class _UserProfilePageState extends State<UserProfilePage> with
   final socialHandlesNotifier = ValueNotifier<Map<String, String>>({});
 
   final profileDataGetter = ProfileDataGetter();
-  final userFollowStatus = UserFollowStatus();
 
   late ProfilePostsSetup profilePostsSetup;
   late ProfileInfoWidgets profileInfoWidgets;
@@ -184,7 +183,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     bioNotifier.value = isBlockedAccount ? '' : profileData['bio'];
     pronounsNotifier.value =  isBlockedAccount ? '' : profileData['pronouns'];
 
-    isFollowingNotifier.value = await userFollowStatus.isFollowing(username: widget.username);
+    isFollowingNotifier.value = await UserFollowingStatus.isFollowing(username: widget.username);
     
     postsNotifier.value = 0;
 
@@ -231,7 +230,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       
       postsNotifier.value = profilePostsProvider.userProfile.titles.length;
 
-      isFollowingNotifier.value = await userFollowStatus.isFollowing(username: widget.username);
+      isFollowingNotifier.value = await UserFollowingStatus.isFollowing(username: widget.username);
       socialHandlesNotifier.value = await UserInfoGetter.getSocialHandles(username: widget.username);
 
     } catch (_) {
