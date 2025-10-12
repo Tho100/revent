@@ -10,9 +10,7 @@ class VentsGetter with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getLatestVentsData() async {
 
-    final response = await ApiClient.post(ApiPath.latestVentsGetter, {
-      'current_user': userProvider.user.username
-    });
+    final response = await ApiClient.get(ApiPath.latestVentsGetter, userProvider.user.username);
 
     return await _parseVentsData(ventsBody: response.body);
 
@@ -20,9 +18,7 @@ class VentsGetter with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getTrendingVentsData() async {
 
-    final response = await ApiClient.post(ApiPath.trendingVentsGetter, {
-      'current_user': userProvider.user.username
-    });
+    final response = await ApiClient.get(ApiPath.trendingVentsGetter, userProvider.user.username);
 
     return await _parseVentsData(ventsBody: response.body);
 
@@ -30,9 +26,23 @@ class VentsGetter with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getFollowingVentsData() async {
 
-    final response = await ApiClient.post(ApiPath.followingVentsGetter, {
-      'current_user': userProvider.user.username
-    });
+    final response = await ApiClient.get(ApiPath.followingVentsGetter, userProvider.user.username);
+
+    return await _parseVentsData(ventsBody: response.body);
+
+  }
+
+  Future<Map<String, dynamic>> getLikedVentsData() async {
+
+    final response = await ApiClient.get(ApiPath.likedVentsGetter, userProvider.user.username);
+
+    return await _parseVentsData(ventsBody: response.body); 
+
+  }
+
+  Future<Map<String, dynamic>> getSavedVentsData() async {
+
+    final response = await ApiClient.get(ApiPath.savedVentsGetter, userProvider.user.username);
 
     return await _parseVentsData(ventsBody: response.body);
 
@@ -48,26 +58,6 @@ class VentsGetter with UserProfileProviderService {
     }); 
 
     return await _parseVentsData(ventsBody: response.body, excludeBodyText: true);
-
-  }
-
-  Future<Map<String, dynamic>> getLikedVentsData() async {
-
-    final response = await ApiClient.post(ApiPath.likedVentsGetter, {
-      'liked_by': userProvider.user.username
-    });
-
-    return await _parseVentsData(ventsBody: response.body); 
-
-  }
-
-  Future<Map<String, dynamic>> getSavedVentsData() async {
-
-    final response = await ApiClient.post(ApiPath.savedVentsGetter, {
-      'saved_by': userProvider.user.username
-    });
-
-    return await _parseVentsData(ventsBody: response.body);
 
   }
 

@@ -7,9 +7,7 @@ class VaultVentDataGetter with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getMetadata() async {
 
-    final response = await ApiClient.post(ApiPath.vaultVentsGetter, {
-      'username': userProvider.user.username
-    });
+    final response = await ApiClient.get(ApiPath.vaultVentsGetter, userProvider.user.username);
 
     final vents = response.body!['vents'] as List<dynamic>;
 
