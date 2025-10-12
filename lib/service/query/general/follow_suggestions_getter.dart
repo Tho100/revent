@@ -3,9 +3,8 @@ import 'package:revent/helper/data_converter.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 
-class FollowSuggestionsGetter extends BaseQueryService with UserProfileProviderService {
+class FollowSuggestionsGetter with UserProfileProviderService {
 
   Future<Map<String, List<dynamic>>> getSuggestions() async {
 

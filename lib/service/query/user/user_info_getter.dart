@@ -1,9 +1,8 @@
 import 'package:revent/helper/extract_data.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class UserInfoGetter extends BaseQueryService {
+class UserInfoGetter {
 
   static Future<String> getJoinedDate({required String username}) async {
 

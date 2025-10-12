@@ -4,10 +4,9 @@ import 'package:revent/helper/format_previewer_body.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/format_date.dart';
 
-class VentsGetter extends BaseQueryService with UserProfileProviderService {
+class VentsGetter with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getLatestVentsData() async {
 

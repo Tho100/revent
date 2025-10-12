@@ -1,10 +1,9 @@
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 
-class DeleteVent extends BaseQueryService with UserProfileProviderService, VentProviderService {
+class DeleteVent with UserProfileProviderService, VentProviderService {
 
   final int postId;
 
