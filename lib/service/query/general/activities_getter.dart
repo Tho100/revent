@@ -10,9 +10,7 @@ class ActivitiesGetter with UserProfileProviderService {
 
   Future<Map<String, List<String>>> getUserFollowers() async {
 
-    final response = await ApiClient.post(ApiPath.activityFollowersGetter, {
-      'current_user': userProvider.user.username
-    });
+    final response = await ApiClient.get(ApiPath.activityFollowersGetter, userProvider.user.username);
 
     final extractedData = ExtractData(data: response.body!['followers']);
 
@@ -29,14 +27,9 @@ class ActivitiesGetter with UserProfileProviderService {
 
   }
 
-  /// Retrieves posts created by the current user that received specific 
-  /// number of likes (1, 2, 5, 10, 50, 100) within the past 14 days.
-
   Future<Map<String, List<dynamic>>> getRecentLikeMilestones() async {
 
-    final response = await ApiClient.post(ApiPath.activityRecentLikesGetter, {
-      'current_user': userProvider.user.username
-    });
+    final response = await ApiClient.get(ApiPath.activityRecentLikesGetter, userProvider.user.username);
 
     final extractedData = ExtractData(data: response.body!['posts']);
 
@@ -57,9 +50,7 @@ class ActivitiesGetter with UserProfileProviderService {
 
   Future<Map<String, List<dynamic>>> getAllTimeLikeMilestones() async {
 
-    final response = await ApiClient.post(ApiPath.activityAllTimeLikesGetter, {
-      'current_user': userProvider.user.username
-    });
+    final response = await ApiClient.get(ApiPath.activityAllTimeLikesGetter, userProvider.user.username);
 
     final extractedData = ExtractData(data: response.body!['posts']);
 
