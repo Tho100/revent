@@ -7,12 +7,14 @@ import 'package:revent/shared/themes/theme_style.dart';
 class PasswordTextField extends StatefulWidget {
 
   final TextEditingController controller;
+  final Iterable<String>? autoFillHints;
   final String hintText;
 
   const PasswordTextField({
     super.key,
     required this.controller,
     required this.hintText,
+    this.autoFillHints
   });
 
   @override
@@ -37,6 +39,7 @@ class _PasswordTextFieldState extends State<PasswordTextField> {
       inputFormatters: InputFormatters.passwordFormatter(),
       controller: widget.controller,
       obscureText: !_isObscureText,
+      autofillHints: widget.autoFillHints,
       decoration: ThemeStyle.txtFieldStye(
         hintText: widget.hintText,
         customSuffix: IconButton(

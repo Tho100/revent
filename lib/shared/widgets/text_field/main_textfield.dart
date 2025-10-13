@@ -15,6 +15,7 @@ class MainTextField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final TextInputType? keyboardType;
   final List<TextInputFormatter>? inputFormatters;
+  final Iterable<String>? autoFillHints;
   final void Function(String)? onChange;
   final void Function(String)? onFieldSubmitted;
 
@@ -28,6 +29,7 @@ class MainTextField extends StatelessWidget {
     this.textInputAction,
     this.keyboardType,
     this.inputFormatters,
+    this.autoFillHints,
     this.onChange,
     this.onFieldSubmitted,
     super.key
@@ -46,6 +48,7 @@ class MainTextField extends StatelessWidget {
       textInputAction: textInputAction,
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
+      autofillHints: autoFillHints,
       decoration: ThemeStyle.txtFieldStye(hintText: hintText!),
       style: GoogleFonts.inter(
         color: ThemeColor.contentSecondary,
