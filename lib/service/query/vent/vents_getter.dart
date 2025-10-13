@@ -8,43 +8,35 @@ import 'package:revent/helper/format_date.dart';
 
 class VentsGetter with UserProfileProviderService {
 
-  Future<Map<String, dynamic>> getLatestVentsData() async {
+  Future<Map<String, dynamic>> _returnVentsInfo(String apiPath) async {
 
-    final response = await ApiClient.get(ApiPath.latestVentsGetter, userProvider.user.username);
+    final response = await ApiClient.get(apiPath, userProvider.user.username);
 
     return await _parseVentsData(ventsBody: response.body);
 
   }
 
+  Future<Map<String, dynamic>> getLatestVentsData() async {
+    return _returnVentsInfo(ApiPath.latestVentsGetter);
+  }
+
   Future<Map<String, dynamic>> getTrendingVentsData() async {
-
-    final response = await ApiClient.get(ApiPath.trendingVentsGetter, userProvider.user.username);
-
-    return await _parseVentsData(ventsBody: response.body);
+    return _returnVentsInfo(ApiPath.trendingVentsGetter);
 
   }
 
   Future<Map<String, dynamic>> getFollowingVentsData() async {
-
-    final response = await ApiClient.get(ApiPath.followingVentsGetter, userProvider.user.username);
-
-    return await _parseVentsData(ventsBody: response.body);
+    return _returnVentsInfo(ApiPath.followingVentsGetter);
 
   }
 
   Future<Map<String, dynamic>> getLikedVentsData() async {
-
-    final response = await ApiClient.get(ApiPath.likedVentsGetter, userProvider.user.username);
-
-    return await _parseVentsData(ventsBody: response.body); 
+    return _returnVentsInfo(ApiPath.likedVentsGetter);
 
   }
 
   Future<Map<String, dynamic>> getSavedVentsData() async {
-
-    final response = await ApiClient.get(ApiPath.savedVentsGetter, userProvider.user.username);
-
-    return await _parseVentsData(ventsBody: response.body);
+    return _returnVentsInfo(ApiPath.savedVentsGetter);
 
   }
 

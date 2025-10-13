@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -30,6 +31,10 @@ class SaveVent with UserProfileProviderService {
   }
 
   void _updatePostSavedValue({required bool saved}) {
+
+    if (saved) {
+      HapticFeedback.heavyImpact();
+    }
 
     final index = ventProvider['vent_index'];
     final ventData = ventProvider['vent_data'];

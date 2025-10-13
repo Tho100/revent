@@ -127,19 +127,29 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
           
           const SizedBox(height: 30),
 
-          MainTextField(
-            hintText: 'Enter your email address', 
-            textInputAction: TextInputAction.next,
-            keyboardType: TextInputType.emailAddress,
-            inputFormatters: InputFormatters.noSpaces(),
-            controller: emailController,
-          ),
+          AutofillGroup(
+            child: Column(
+              children: [
 
-          const SizedBox(height: 15),
+                MainTextField(
+                  hintText: 'Enter your email address', 
+                  textInputAction: TextInputAction.next,
+                  keyboardType: TextInputType.emailAddress,
+                  inputFormatters: InputFormatters.noSpaces(),
+                  autoFillHints: const [AutofillHints.email],
+                  controller: emailController,
+                ),
+          
+                const SizedBox(height: 15),
+          
+                PasswordTextField(
+                  hintText: 'Enter a password',
+                  controller: passwordController, 
+                  autoFillHints: const [AutofillHints.password],
+                ),
 
-          PasswordTextField(
-            hintText: 'Enter a password',
-            controller: passwordController, 
+              ],
+            ),
           ),
 
           const SizedBox(height: 30),
