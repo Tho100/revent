@@ -40,7 +40,7 @@ class ProfileProvider extends ChangeNotifier {
   void setProfile(ProfileData profile) {
     _profile = profile;
     notifyListeners();
-  }
+  }// TODO: Add functions to update each info in real time (notifyListener)
 
   void clearProfileData() {
     _profile.bio = '';
