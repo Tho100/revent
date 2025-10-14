@@ -11,16 +11,14 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
 
   Future<void> updateBio({required String bioText}) async {
 
-    const query = 'UPDATE ${TableNames.userProfileInfo} SET bio = :bio_value WHERE username = :username';
-    
-    final params = {
-      'bio_value': bioText,
+    final response = await ApiClient.post(ApiPath.updateUserBio, {
+      'bio': bioText,
       'username': userProvider.user.username
-    };
+    });    
 
-    await executeQuery(query, params).then(
-      (_) => profileProvider.profile.bio = bioText
-    );
+    if (response.statusCode == 200) {
+      profileProvider.profile.bio = bioText;
+    }
 
   }
 
@@ -40,7 +38,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
   }
 
   Future<void> removeProfilePicture() async {
-
+// TODO: Just call updateUserAvatar except make the pfp_base64 empty string
     const query = 
       'UPDATE ${TableNames.userProfileInfo} SET profile_picture = :profile_pic_data WHERE username = :username';
 
@@ -57,31 +55,27 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
 
   Future<void> updatePronouns({required String pronouns}) async {
 
-    const query = 'UPDATE ${TableNames.userProfileInfo} SET pronouns = :pronouns WHERE username = :username';
-
-    final params = {
+    final response = await ApiClient.post(ApiPath.updateUserPronouns, {
       'pronouns': pronouns,
       'username': userProvider.user.username
-    };
+    });    
 
-    await executeQuery(query, params).then(
-      (_) => profileProvider.profile.pronouns = pronouns
-    );
+    if (response.statusCode == 200) {
+      profileProvider.profile.pronouns = pronouns;
+    }
 
   }
 
   Future<void> updateCountry({required String country}) async {
 
-    const query = 'UPDATE ${TableNames.userProfileInfo} SET country = :country_value WHERE username = :username';
-    
-    final params = {
-      'country_value': country,
+    final response = await ApiClient.post(ApiPath.updateUserCountry, {
+      'country': country,
       'username': userProvider.user.username
-    };
+    });    
 
-    await executeQuery(query, params).then(
-      (_) => profileProvider.profile.country = country
-    );
+    if (response.statusCode == 200) {
+      profileProvider.profile.country = country;
+    }
 
   }
 

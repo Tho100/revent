@@ -9,11 +9,15 @@ class ApiPath {
   static const _updateUser = '/update-user';
   static const updateUserAuth = '$_updateUser/update-auth';
   static const updateUserAvatar = '$_updateUser/update-avatar';
+  static const updateUserBio = '$_updateUser/update-bio';
+  static const updateUserPronouns = '$_updateUser/update-pronouns';
+  static const updateUserCountry = '$_updateUser/update-country';
+  static const updateUserSocials = '$_updateUser/update-socials';
 
   static const _userInfoGetter = '/user-info-getter';
   static const userJoinedDateGetter = '$_userInfoGetter/joined-date';
   static const userCountryGetter = '$_userInfoGetter/country';
-  static const userSocialHandlesGetter = '$_userInfoGetter/social-handles';
+  static const userSocialHandlesGetter = '$_userInfoGetter/social-handles'; // TODO: remove -handles and replace with socials
 
   static const userRelationsGetter = '/user-relations-getter';
   static const userBlockedAccountsGetter = '$userRelationsGetter/blocked_accounts';

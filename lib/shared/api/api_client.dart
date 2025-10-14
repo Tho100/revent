@@ -12,7 +12,7 @@ class ApiClient {
       ApiConfig.endpoint(path),
       headers: ApiConfig.jsonHeaders,
       body: jsonEncode(data),
-    ).timeout(const Duration(seconds: 25));
+    ).timeout(const Duration(seconds: 15));
 
     return ApiResponse(
       statusCode: response.statusCode,
@@ -27,7 +27,7 @@ class ApiClient {
       ApiConfig.endpoint(path),
       headers: ApiConfig.jsonHeaders,
       body: jsonEncode(data)
-    ).timeout(const Duration(seconds: 20));
+    ).timeout(const Duration(seconds: 12));
 
     return ApiResponse(
       statusCode: response.statusCode,
@@ -59,7 +59,7 @@ class ApiClient {
     final response = await http.delete(
       uri,
       headers: ApiConfig.jsonHeaders,
-    ).timeout(const Duration(seconds: 15));
+    ).timeout(const Duration(seconds: 10));
 
     return ApiResponse(
       statusCode: response.statusCode,

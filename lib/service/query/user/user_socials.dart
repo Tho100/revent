@@ -1,4 +1,5 @@
-import 'package:revent/global/table_names.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -14,40 +15,12 @@ class UserSocials extends BaseQueryService with UserProfileProviderService {
 
   Future<void> addSocial() async {
 
-    if ((userProvider.user.socialHandles![platform] ?? '').isNotEmpty) {
-      await _updateSocialHandles();
-      return;
-    }
-
-    const query = 
-      'INSERT INTO ${TableNames.userSocialLinks} (social_handle, platform, username) VALUES (:social_handle, :platform, :username)';
-
-    final params = {
+    await ApiClient.post(ApiPath.updateUserSocials, {
       'social_handle': handle,
       'platform': platform,
-      'username': userProvider.user.username
-    };
-
-    await executeQuery(query, params);
-
-  }
-
-  Future<void> _updateSocialHandles() async {
-
-    const query = 
-    '''
-      UPDATE ${TableNames.userSocialLinks}
-      SET social_handle = :social_handle
-      WHERE platform = :platform AND username = :username
-    ''';
-
-    final params = {
-      'social_handle': handle,
-      'platform': platform,
-      'username': userProvider.user.username
-    };
-
-    await executeQuery(query, params);
+      'username': userProvider.user.username,
+      'social_exists': (userProvider.user.socialHandles![platform] ?? '').isNotEmpty
+    });
 
   }
 
