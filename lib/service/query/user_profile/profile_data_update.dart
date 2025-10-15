@@ -16,7 +16,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
     });    
 
     if (response.statusCode == 200) {
-      profileProvider.profile.bio = bioText;
+      profileProvider.updateBio(bioText);
     }
 
   }
@@ -31,7 +31,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
     });
     
     if (response.statusCode == 200) {
-      profileProvider.profile.profilePicture = picData;
+      profileProvider.updateProfilePicture(picData);
     }
 
   }
@@ -44,7 +44,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
     });
     
     if (response.statusCode == 200) {
-      profileProvider.profile.profilePicture = Uint8List(0);
+      profileProvider.updateProfilePicture(Uint8List(0));
     }
 
   }
