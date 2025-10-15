@@ -47,6 +47,11 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updatePronouns(String pronouns) {
+    _profile.pronouns = pronouns;
+    notifyListeners();
+  }
+
   void updateProfilePicture(Uint8List pfpData) {
     _profile.profilePicture = pfpData;
     notifyListeners();

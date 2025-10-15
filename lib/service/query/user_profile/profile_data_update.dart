@@ -57,7 +57,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
     });    
 
     if (response.statusCode == 200) {
-      profileProvider.profile.pronouns = pronouns;
+      profileProvider.updatePronouns(pronouns);
     }
 
   }
