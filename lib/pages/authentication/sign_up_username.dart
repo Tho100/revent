@@ -30,6 +30,7 @@ class SignUpUsernamePage extends StatefulWidget {
 class _SignUpUsernamePageState extends State<SignUpUsernamePage> with AuthController {
 
   final isSignUpButtonEnabledNotifier = ValueNotifier<bool>(false);
+  final usernameFocus = FocusNode();
 
   void _checkFormFilled() {
 
@@ -104,9 +105,9 @@ class _SignUpUsernamePageState extends State<SignUpUsernamePage> with AuthContro
           MainTextField(
             hintText: 'Enter a username', 
             maxLength: 24,
-            autoFocus: true,
             textInputAction: TextInputAction.next,
             inputFormatters: InputFormatters.usernameFormatter(),
+            focusNode: usernameFocus,
             controller: usernameController,
           ),
 
@@ -135,13 +136,20 @@ class _SignUpUsernamePageState extends State<SignUpUsernamePage> with AuthContro
   @override
   void initState() {
     super.initState();
+
+    Future.delayed(const Duration(milliseconds: 650), () {
+      if (mounted) FocusScope.of(context).requestFocus(usernameFocus);
+    });
+
     usernameController.addListener(_checkFormFilled);
+
   }
 
   @override
   void dispose() {
     disposeControllers();
     isSignUpButtonEnabledNotifier.dispose();
+    usernameFocus.dispose();
     super.dispose();
   }
 
