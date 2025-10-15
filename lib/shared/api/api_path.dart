@@ -17,7 +17,7 @@ class ApiPath {
   static const _userInfoGetter = '/user-info-getter';
   static const userJoinedDateGetter = '$_userInfoGetter/joined-date';
   static const userCountryGetter = '$_userInfoGetter/country';
-  static const userSocialHandlesGetter = '$_userInfoGetter/social-handles'; // TODO: remove -handles and replace with socials
+  static const userSocialHandlesGetter = '$_userInfoGetter/socials';
 
   static const userRelationsGetter = '/user-relations-getter';
   static const userBlockedAccountsGetter = '$userRelationsGetter/blocked_accounts';

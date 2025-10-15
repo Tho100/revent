@@ -7,17 +7,7 @@ class ExtractData {
 
   ExtractData({this.data, this.rowsData});
 
-// TODO: Get rid of these two and make data required
-
-  /// Extracts a list of [String] values from the specified [columnName].
-  /// 
-  /// Assumes the column values are non-null strings.
-
-  List<String> extractStringColumn(String columnName) {
-    return rowsData!.rows.map((row) {
-      return row.assoc()[columnName]!;
-    }).toList();
-  }
+// TODO: Get rid of this function
 
   /// Extracts a list of [int] values from the specified [columnName].
   /// 

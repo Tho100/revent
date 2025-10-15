@@ -162,26 +162,6 @@ class _MyProfilePageState extends State<MyProfilePage> with
     );
   }
 
-  Widget _buildEditProfileButton() {
-    return Align(
-      alignment: Alignment.center,
-      child: CustomOutlinedButton(
-        customWidth: MediaQuery.sizeOf(context).width * 0.87,
-        customHeight: 45.0,
-        customFontSize: 15.5,
-        text: 'Edit Profile',
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => const EditProfilePage()
-            )
-          );
-        }
-      ),
-    );
-  }
-
   Widget _popularityWidgets() {
     return Consumer<ProfileProvider>(
       builder: (_, profileData, __) {
@@ -221,18 +201,6 @@ class _MyProfilePageState extends State<MyProfilePage> with
     );
   }
 
-  Widget _buildBody() {
-    return ProfileBodyWidgets(
-      onRefresh: () async => await RefreshService().refreshMyProfile(),
-      tabBarWidgets: tabBarWidgets, 
-      profileInfoWidgets: profileInfoWidgets, 
-      pronounsWidget: _buildPronouns(), 
-      bioWidget: _buildBio(), 
-      userActionButtonWidget: _buildEditProfileButton(), 
-      popularityWidget: _popularityWidgets()
-    );
-  }
-
   Widget _buildSocialLinks() {
     return Selector<UserProvider, Map<String, String>?>(
       selector: (_, userData) => userData.user.socialHandles,
@@ -247,6 +215,38 @@ class _MyProfilePageState extends State<MyProfilePage> with
         ).buildSocialLinks();
 
       },
+    );
+  }
+
+  Widget _buildEditProfileButton() {
+    return Align(
+      alignment: Alignment.center,
+      child: CustomOutlinedButton(
+        customWidth: MediaQuery.sizeOf(context).width * 0.87,
+        customHeight: 45.0,
+        customFontSize: 15.5,
+        text: 'Edit Profile',
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const EditProfilePage()
+            )
+          );
+        }
+      ),
+    );
+  }
+
+  Widget _buildBody() {
+    return ProfileBodyWidgets(
+      onRefresh: () async => await RefreshService().refreshMyProfile(),
+      tabBarWidgets: tabBarWidgets, 
+      profileInfoWidgets: profileInfoWidgets, 
+      pronounsWidget: _buildPronouns(), 
+      bioWidget: _buildBio(), 
+      userActionButtonWidget: _buildEditProfileButton(), 
+      popularityWidget: _popularityWidgets()
     );
   }
 

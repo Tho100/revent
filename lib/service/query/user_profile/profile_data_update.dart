@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:revent/global/table_names.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -17,7 +16,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
     });    
 
     if (response.statusCode == 200) {
-      profileProvider.profile.bio = bioText;
+      profileProvider.updateBio(bioText);
     }
 
   }
@@ -32,24 +31,21 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
     });
     
     if (response.statusCode == 200) {
-      profileProvider.profile.profilePicture = picData;
+      profileProvider.updateProfilePicture(picData);
     }
 
   }
 
   Future<void> removeProfilePicture() async {
-// TODO: Just call updateUserAvatar except make the pfp_base64 empty string
-    const query = 
-      'UPDATE ${TableNames.userProfileInfo} SET profile_picture = :profile_pic_data WHERE username = :username';
 
-    final params = {
-      'profile_pic_data': '',
-      'username': userProvider.user.username
-    };
-
-    await executeQuery(query, params).then(
-      (_) => profileProvider.profile.profilePicture = Uint8List(0)
-    );
+    final response = await ApiClient.put(ApiPath.updateUserAvatar, {
+      'username': userProvider.user.username,
+      'pfp_base64': '',
+    });
+    
+    if (response.statusCode == 200) {
+      profileProvider.updateProfilePicture(Uint8List(0));
+    }
 
   }
 
@@ -61,7 +57,7 @@ class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService
     });    
 
     if (response.statusCode == 200) {
-      profileProvider.profile.pronouns = pronouns;
+      profileProvider.updatePronouns(pronouns);
     }
 
   }

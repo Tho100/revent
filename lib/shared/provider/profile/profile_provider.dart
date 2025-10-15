@@ -40,7 +40,22 @@ class ProfileProvider extends ChangeNotifier {
   void setProfile(ProfileData profile) {
     _profile = profile;
     notifyListeners();
-  }// TODO: Add functions to update each info in real time (notifyListener)
+  }
+
+  void updateBio(String bio) {
+    _profile.bio = bio;
+    notifyListeners();
+  }
+
+  void updatePronouns(String pronouns) {
+    _profile.pronouns = pronouns;
+    notifyListeners();
+  }
+
+  void updateProfilePicture(Uint8List pfpData) {
+    _profile.profilePicture = pfpData;
+    notifyListeners();
+  }
 
   void clearProfileData() {
     _profile.bio = '';
