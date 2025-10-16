@@ -267,14 +267,33 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   }
 
-  void _onChangeCountryPressed() async {
-  
+  void _selectCountry() async {
+
     final selectedCountry = await CountryPickerModel(context: context).startCountryPicker();
 
     if (selectedCountry.isNotEmpty) {
       countrySelectedNotifier.value = selectedCountry;
       countryController.text = selectedCountry;
     }
+    
+  }
+
+  void _onChangeCountryPressed() async {
+
+    if (profileProvider.profile.country.isEmpty) {
+      _selectCountry();
+      return;
+    }
+
+    BottomsheetProfilePictureOptions().buildBottomsheet(
+      context: context, 
+      changeAvatarOnPressed: () => context.popAndRun(_selectCountry),
+      removeAvatarOnPressed: () => context.popAndRunAsync(() async {
+        await profileDataUpdate.updateCountry(country: '').then(
+          (_) => countrySelectedNotifier.value = ''
+        );
+      })
+    );
 
   }
 

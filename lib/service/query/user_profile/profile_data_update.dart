@@ -4,9 +4,8 @@ import 'dart:typed_data';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 
-class ProfileDataUpdate extends BaseQueryService with UserProfileProviderService {
+class ProfileDataUpdate with UserProfileProviderService {
 
   Future<void> updateBio({required String bioText}) async {
 

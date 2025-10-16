@@ -18,6 +18,7 @@ class MainTextField extends StatelessWidget {
   final Iterable<String>? autoFillHints;
   final void Function(String)? onChange;
   final void Function(String)? onFieldSubmitted;
+  final FocusNode? focusNode;
 
   const MainTextField({
     required this.controller,
@@ -32,6 +33,7 @@ class MainTextField extends StatelessWidget {
     this.autoFillHints,
     this.onChange,
     this.onFieldSubmitted,
+    this.focusNode,
     super.key
   });
 
@@ -49,6 +51,7 @@ class MainTextField extends StatelessWidget {
       keyboardType: keyboardType,
       inputFormatters: inputFormatters,
       autofillHints: autoFillHints,
+      focusNode: focusNode,
       decoration: ThemeStyle.txtFieldStye(hintText: hintText!),
       style: GoogleFonts.inter(
         color: ThemeColor.contentSecondary,
