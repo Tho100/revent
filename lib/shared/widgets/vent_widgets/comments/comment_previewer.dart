@@ -91,12 +91,17 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
         }
       }
 
-      await PinComment(
+      final pinCommentResponse = await PinComment(
         username: commentedBy, 
         commentText: comment, 
-      ).pin().then(
-        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.commentPinned)
-      );
+      ).togglePinComment();
+
+      if (pinCommentResponse['status_code'] != 200) {
+        SnackBarDialog.temporarySnack(message: AlertMessages.defaultError);
+        return;
+      }
+
+      SnackBarDialog.temporarySnack(message: AlertMessages.commentPinned);
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
@@ -108,12 +113,17 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
     try {
 
-      await PinComment(
+      final unpinCommentResponse = await PinComment(
         username: commentedBy, 
         commentText: comment, 
-      ).unpin().then(
-        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.unpinnedComment)
-      );
+      ).togglePinComment();
+
+      if (unpinCommentResponse['status_code'] != 200) {
+        SnackBarDialog.temporarySnack(message: AlertMessages.defaultError);
+        return;
+      }
+
+      SnackBarDialog.temporarySnack(message: AlertMessages.unpinnedComment);
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
