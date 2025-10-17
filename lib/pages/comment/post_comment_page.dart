@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/service/query/vent/comment/comment_actions.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
@@ -185,7 +186,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
         Expanded(
           child: BodyTextField(
             controller: commentController,
-            maxLength: 500,
+            maxLength: ValidationLimits.maxCommentLength,
             hintText: 'Your comment...',
           )
         ),
