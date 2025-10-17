@@ -6,10 +6,12 @@ class BodyTextField extends StatelessWidget {
 
   final TextEditingController controller;
   final String hintText;
+  final int maxLength;
 
   const BodyTextField({
     required this.controller, 
     required this.hintText,
+    this.maxLength = 1000,
     super.key
   });
 
@@ -21,7 +23,7 @@ class BodyTextField extends StatelessWidget {
         controller: controller,
         autofocus: true,
         keyboardType: TextInputType.multiline,
-        maxLength: 1000,
+        maxLength: maxLength,
         maxLines: null,
         style: GoogleFonts.inter(
           color: ThemeColor.contentSecondary,

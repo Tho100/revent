@@ -185,6 +185,7 @@ class _PostCommentPageState extends State<PostCommentPage> with
         Expanded(
           child: BodyTextField(
             controller: commentController,
+            maxLength: 500,
             hintText: 'Your comment...',
           )
         ),
