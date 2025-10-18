@@ -279,6 +279,19 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     
   }
 
+  void _removeCountry() async {
+
+    await profileDataUpdate.updateCountry(country: '').then(
+      (_) {
+        countrySelectedNotifier.value = '';
+        countryController.text = '';
+      }
+    );
+
+    SnackBarDialog.temporarySnack(message: 'Removed country.');
+
+  }
+
   void _onChangeCountryPressed() async {
 
     if (profileProvider.profile.country.isEmpty) {
@@ -289,11 +302,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     BottomsheetCountryOptions().buildBottomsheet(
       context: context, 
       changeCountryOnPressed: () => context.popAndRun(_selectCountry),
-      removeCountryOnPressed: () => context.popAndRunAsync(() async {
-        await profileDataUpdate.updateCountry(country: '').then(
-          (_) => countrySelectedNotifier.value = ''
-        );
-      })
+      removeCountryOnPressed: () => context.popAndRun(_removeCountry)
     );
 
   }
