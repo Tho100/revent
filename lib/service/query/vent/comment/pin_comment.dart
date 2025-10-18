@@ -22,22 +22,24 @@ class PinComment with UserProfileProviderService, CommentsProviderService {
       'comment_id': commentId
     });
 
+    final index = commentsProvider.comments.indexWhere(
+      (comment) => comment.commentedBy == username && comment.comment == commentText
+    );
+
+    final isPinned = commentsProvider.comments[index].isPinned;
+
     if (response.statusCode == 200) {
-      _updateIsPinnedList(response.body!['pinned']);
+      _updateCommentPinnedStatus(index, !isPinned);
     }
 
     return {'status_code': response.statusCode};
 
   }
 
-  void _updateIsPinnedList(bool isPin) {
-
-    final index = commentsProvider.comments.indexWhere(
-      (comment) => comment.commentedBy == username && comment.comment == commentText
-    );
+  void _updateCommentPinnedStatus(int index, bool doPin) {
 
     if (index != -1) {
-      commentsProvider.pinComment(isPin, index);
+      commentsProvider.pinComment(index, doPin);
     }
 
   }

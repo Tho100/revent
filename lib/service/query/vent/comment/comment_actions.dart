@@ -98,17 +98,14 @@ class CommentActions with
     });
 
     if (response.statusCode == 200) {
-
+// TODO: simplify by creating separated function to return the index
       final index = commentsProvider.comments.indexWhere(
         (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
       );
 
       final isLiked = commentsProvider.comments[index].isCommentLiked;
 
-      _updateCommentLikedValue(
-        index: index,
-        liked: isLiked,
-      );
+      _updateCommentLikedValue(index, !isLiked);
 
     }
 
@@ -118,13 +115,10 @@ class CommentActions with
 
   }
 
-  void _updateCommentLikedValue({
-    required int index,
-    required bool liked,
-  }) {
+  void _updateCommentLikedValue(int index, bool doLike) {
 
     if (index != -1) {
-      commentsProvider.likeComment(index, liked);
+      commentsProvider.likeComment(index, doLike);
     }
 
   }

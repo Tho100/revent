@@ -15,8 +15,14 @@ class PinVent with UserProfileProviderService, ProfilePostsProviderService {
       'post_id': postId
     });
 
+    final index = profilePostsProvider.myProfile.postIds.indexWhere(
+      (currentPostId) => currentPostId == postId
+    );
+
+    final isPinned = profilePostsProvider.myProfile.isPinned[index];
+
     if (response.statusCode == 200) {
-      _updateIsPinnedList(response.body!['pinned']);
+      _updateIsPinnedList(!isPinned);
     }
 
     return {
@@ -25,11 +31,11 @@ class PinVent with UserProfileProviderService, ProfilePostsProviderService {
 
   }
 
-  void _updateIsPinnedList(bool pinned) {
+  void _updateIsPinnedList(bool doPin) {
 
     final postsData = profilePostsProvider.myProfile;
 
-    if (pinned) {
+    if (doPin) {
 
       postsData.isPinned = List.generate(postsData.isPinned.length, 
         (index) => postsData.postIds[index] == postId
