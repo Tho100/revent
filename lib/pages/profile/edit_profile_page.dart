@@ -240,13 +240,25 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _selectProfilePicture() async {
 
-    final isProfileSelected = await ProfilePictureModel.createProfilePicture(context: context);
+    final selectAvatar = await ProfilePictureModel.createProfilePicture(context: context);
 
-    if (isProfileSelected) {
-      avatarNotifier.value = profileProvider.profile.profilePicture;
+    if (selectAvatar['avatar_updated']) {
+
+      final avatar = selectAvatar['avatar_data'];
+
+      avatarNotifier.value = avatar;
+      profileProvider.updateProfilePicture(avatar);
+
       SnackBarDialog.temporarySnack(message: AlertMessages.avatarUpdated);
+
     }
 
+  }
+
+  void _removeAvatar() async {
+    await profileDataUpdate.removeProfilePicture().then(
+      (_) => avatarNotifier.value = profileProvider.profile.profilePicture
+    );
   }
 
   void _onChangeAvatarPressed() async {
@@ -259,11 +271,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     BottomsheetProfilePictureOptions().buildBottomsheet(
       context: context, 
       changeAvatarOnPressed: () => context.popAndRun(_selectProfilePicture),
-      removeAvatarOnPressed: () => context.popAndRunAsync(() async {
-        await profileDataUpdate.removeProfilePicture().then(
-          (_) => avatarNotifier.value = profileProvider.profile.profilePicture
-        );
-      })
+      removeAvatarOnPressed: () => context.popAndRun(_removeAvatar)
     );
 
   }

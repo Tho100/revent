@@ -24,7 +24,7 @@ class ProfileDataUpdate with UserProfileProviderService {
 
     final base64Pfp = const Base64Encoder().convert(picData);
 
-    final response = await ApiClient.put(ApiPath.updateUserAvatar, {
+    final response = await ApiClient.post(ApiPath.updateUserAvatar, {
       'username': userProvider.user.username,
       'pfp_base64': base64Pfp,
     });
@@ -37,7 +37,7 @@ class ProfileDataUpdate with UserProfileProviderService {
 
   Future<void> removeProfilePicture() async {
 
-    final response = await ApiClient.put(ApiPath.updateUserAvatar, {
+    final response = await ApiClient.post(ApiPath.updateUserAvatar, {
       'username': userProvider.user.username,
       'pfp_base64': '',
     });

@@ -6,11 +6,12 @@ import 'package:revent/model/profile_picture/profile_picture_picker.dart';
 
 class ProfilePictureModel {
 
-  static Future<bool> createProfilePicture({required BuildContext context}) async {
+  static Future<Map<String, dynamic>> createProfilePicture({required BuildContext context}) async {
+
+    String fileName = '';
+    Uint8List decodedImage = Uint8List(0);
 
     try {
-
-      String fileName = '';
 
       final pickedImages = await ProfilePicturePicker().imagePicker(context);
 
@@ -24,16 +25,22 @@ class ProfilePictureModel {
           path: pathToString, quality: 18
         );
 
-        final decodedImage = Uint8List.fromList(compressedImage);
+        decodedImage = Uint8List.fromList(compressedImage);
 
         await ProfileDataUpdate().updateProfilePicture(picData: decodedImage);
 
       }
 
-      return fileName.isNotEmpty;
+      return {
+        'avatar_updated': fileName.isNotEmpty,
+        'avatar_data': decodedImage
+      };
 
     } catch (_) {
-      return false;
+      return {
+        'avatar_updated': false,
+        'avatar_data': decodedImage
+      };
     }
 
   }
