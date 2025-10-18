@@ -103,11 +103,13 @@ class ProfilePostsProvider extends ChangeNotifier {
   }
 
   void clearPostsData() {
+    
     for (final profile in _profileData.values) {
       profile.clear();
     }
 
     notifyListeners();
+    
   }
 
   void deleteVent(int index) {
