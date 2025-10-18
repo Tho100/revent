@@ -117,7 +117,7 @@ class VentActionsHandler with NavigationProviderService {
 
       final pinVentResponse = await PinVent(postId: postId).togglePinPost();
 
-      if (pinVentResponse['status_code'] != 201) {
+      if (pinVentResponse['status_code'] != 200) {
         _showErrorSnack(AlertMessages.pinPostFailed);
         return;
       }
