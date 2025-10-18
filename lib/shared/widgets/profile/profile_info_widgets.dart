@@ -2,7 +2,9 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'package:revent/global/app_keys.dart';
+import 'package:revent/shared/provider/profile/profile_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/pages/profile_picture_viewer_page.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
@@ -30,24 +32,29 @@ class ProfileInfoWidgets {
   }
 
   Widget buildProfilePicture() {
-    return InkWellEffect(
-      onPressed: () {
-        Navigator.push(
-          AppKeys.navigatorKey.currentContext!,
-          MaterialPageRoute(
-            builder: (_) => ProfilePictureViewer(pfpData: pfpData)
-          )
+    return Selector<ProfileProvider, Uint8List>(
+      selector: (_, profileData) => profileData.profile.profilePicture,
+      builder: (_, avatar, __) {
+        return InkWellEffect(
+          onPressed: () {
+            Navigator.push(
+              AppKeys.navigatorKey.currentContext!,
+              MaterialPageRoute(
+                builder: (_) => ProfilePictureViewer(pfpData: avatar)
+              )
+            );
+          },
+          child: Hero(
+            tag: 'profile-picture-hero',
+            child: ProfilePictureWidget(
+              customHeight: 70,
+              customWidth: 70,
+              customEmptyPfpSize: 30,
+              pfpData: avatar,
+            ),
+          ),
         );
       },
-      child: Hero(
-        tag: 'profile-picture-hero',
-        child: ProfilePictureWidget(
-          customHeight: 70,
-          customWidth: 70,
-          customEmptyPfpSize: 30,
-          pfpData: pfpData,
-        ),
-      ),
     );
   }
 
