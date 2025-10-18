@@ -1,9 +1,9 @@
-import 'package:revent/global/table_names.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/service/query/general/comment_id_getter.dart';
 
-class SaveCommentEdit extends BaseQueryService with 
+class SaveCommentEdit with 
   UserProfileProviderService, 
   VentProviderService, 
   CommentsProviderService {
@@ -13,31 +13,27 @@ class SaveCommentEdit extends BaseQueryService with
 
   SaveCommentEdit({
     required this.originalComment,
-    required this.newComment,
+    required this.newComment
   });
 
-  Future<void> save() async {
+  Future<Map<String, dynamic>> save() async {
 
     final commentId = await CommentIdGetter().getCommentId(
       username: userProvider.user.username, commentText: originalComment
     );
 
-    const query = 
-    '''
-      UPDATE ${TableNames.commentsInfo} 
-      SET comment = :new_comment, is_edited = :is_edited
-      WHERE comment_id = :comment_id 
-    ''';
-
-    final param = {
+    final response = await ApiClient.post(ApiPath.editComment, {
       'new_comment': newComment,
-      'is_edited': true,
       'comment_id': commentId
-    };
+    });
 
-    await executeQuery(query, param).then(
-      (_) => commentsProvider.editComment(userProvider.user.username, newComment, originalComment)
-    );
+    if (response.statusCode == 200) {
+      commentsProvider.editComment(userProvider.user.username, newComment, originalComment);
+    }
+
+    return {
+      'status_code': response.statusCode
+    };
 
   }
 

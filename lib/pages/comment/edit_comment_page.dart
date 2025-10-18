@@ -48,12 +48,17 @@ class _EditCommentPageState extends State<EditCommentPage> {
 
       if (newCommentText.isNotEmpty) {
 
-        await SaveCommentEdit(
+        final editCommentResponse = await SaveCommentEdit(
           originalComment: widget.originalComment, 
           newComment: newCommentText, 
-        ).save().then(
-          (_) => SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges)
-        );
+        ).save();
+
+        if (editCommentResponse['status_code'] != 200) {
+          SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
+          return;
+        }
+
+        SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
 
       }
 
