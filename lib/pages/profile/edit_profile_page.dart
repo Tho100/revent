@@ -150,8 +150,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void _initializePronounsChips() {
     
     pronounsChips = [
-      'he/him', 
       'she/her',
+      'he/him', 
       'they/them',
     ];
 
