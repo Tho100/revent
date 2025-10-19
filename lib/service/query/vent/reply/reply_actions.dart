@@ -78,10 +78,8 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
     });
 
     if (response.statusCode == 200) {
-// TODO: simplify by creating separated function
-      final index = repliesProvider.replies.indexWhere(
-        (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
-      );
+
+      final index = _getReplyIndex();
 
       final isLiked = repliesProvider.replies[index].isReplyLiked;
 
@@ -125,14 +123,18 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
   void _removeComment() {
 
-    final index = repliesProvider.replies.indexWhere(
-      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
-    );
+    final index = _getReplyIndex();
 
     if (index != -1) {
       repliesProvider.deleteReply(index);
     }
 
+  }
+
+  int _getReplyIndex() {
+    return repliesProvider.replies.indexWhere(
+      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
+    );
   }
 
 }
