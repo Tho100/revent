@@ -20,8 +20,13 @@ class LikeVent with UserProfileProviderService {
       'liked_by': userProvider.user.username,
     });
 
+    final index = ventProvider['vent_index'];
+    final ventData = ventProvider['vent_data'];
+
+    final isLiked = ventData.vents[index].isPostLiked;
+
     if (response.statusCode == 200) {
-      _updatePostLikeValue(liked: response.body!['liked']);
+      _updatePostLikeValue(ventData, index, !isLiked);
     }
 
     return {
@@ -30,16 +35,13 @@ class LikeVent with UserProfileProviderService {
 
   }
 
-  void _updatePostLikeValue({required bool liked}) {
+  void _updatePostLikeValue(dynamic ventData, int index, bool doLike) {
 
-    if (liked) {
+    if (doLike) {
       HapticFeedback.heavyImpact();
     }
 
-    final index = ventProvider['vent_index'];
-    final ventData = ventProvider['vent_data'];
-
-    ventData.likeVent(index, liked);
+    ventData.likeVent(index, doLike);
 
   }
 

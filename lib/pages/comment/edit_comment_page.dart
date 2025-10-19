@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -47,12 +48,17 @@ class _EditCommentPageState extends State<EditCommentPage> {
 
       if (newCommentText.isNotEmpty) {
 
-        await SaveCommentEdit(
+        final editCommentResponse = await SaveCommentEdit(
           originalComment: widget.originalComment, 
           newComment: newCommentText, 
-        ).save().then(
-          (_) => SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges)
-        );
+        ).save();
+
+        if (editCommentResponse['status_code'] != 200) {
+          SnackBarDialog.errorSnack(message: AlertMessages.changesFailed);
+          return;
+        }
+
+        SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);
 
       }
 
@@ -86,6 +92,7 @@ class _EditCommentPageState extends State<EditCommentPage> {
             child: SingleChildScrollView(
               child: BodyTextField(
                 controller: commentController, 
+                maxLength: ValidationLimits.maxCommentLength,
                 hintText: ''
               ),
             ),

@@ -12,6 +12,7 @@ import 'package:revent/service/query/user_profile/profile_data_update.dart';
 import 'package:revent/helper/input_formatters.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
 import 'package:revent/shared/themes/theme_color.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/country_options_bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/profile_picture_options_bottomsheet.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -150,8 +151,8 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   void _initializePronounsChips() {
     
     pronounsChips = [
-      'he/him', 
       'she/her',
+      'he/him', 
       'they/them',
     ];
 
@@ -239,13 +240,25 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _selectProfilePicture() async {
 
-    final isProfileSelected = await ProfilePictureModel.createProfilePicture(context: context);
+    final selectAvatar = await ProfilePictureModel.createProfilePicture(context: context);
 
-    if (isProfileSelected) {
-      avatarNotifier.value = profileProvider.profile.profilePicture;
+    if (selectAvatar['avatar_updated']) {
+
+      final avatar = selectAvatar['avatar_data'];
+
+      avatarNotifier.value = avatar;
+      profileProvider.updateProfilePicture(avatar);
+
       SnackBarDialog.temporarySnack(message: AlertMessages.avatarUpdated);
+
     }
 
+  }
+
+  void _removeAvatar() async {
+    await profileDataUpdate.removeProfilePicture().then(
+      (_) => avatarNotifier.value = profileProvider.profile.profilePicture
+    );
   }
 
   void _onChangeAvatarPressed() async {
@@ -258,11 +271,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     BottomsheetProfilePictureOptions().buildBottomsheet(
       context: context, 
       changeAvatarOnPressed: () => context.popAndRun(_selectProfilePicture),
-      removeAvatarOnPressed: () => context.popAndRunAsync(() async {
-        await profileDataUpdate.removeProfilePicture().then(
-          (_) => avatarNotifier.value = profileProvider.profile.profilePicture
-        );
-      })
+      removeAvatarOnPressed: () => context.popAndRun(_removeAvatar)
     );
 
   }
@@ -278,6 +287,19 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     
   }
 
+  void _removeCountry() async {
+
+    await profileDataUpdate.updateCountry(country: '').then(
+      (_) {
+        countrySelectedNotifier.value = '';
+        countryController.text = '';
+      }
+    );
+
+    SnackBarDialog.temporarySnack(message: 'Removed country.');
+
+  }
+
   void _onChangeCountryPressed() async {
 
     if (profileProvider.profile.country.isEmpty) {
@@ -285,14 +307,10 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
       return;
     }
 
-    BottomsheetProfilePictureOptions().buildBottomsheet(
+    BottomsheetCountryOptions().buildBottomsheet(
       context: context, 
-      changeAvatarOnPressed: () => context.popAndRun(_selectCountry),
-      removeAvatarOnPressed: () => context.popAndRunAsync(() async {
-        await profileDataUpdate.updateCountry(country: '').then(
-          (_) => countrySelectedNotifier.value = ''
-        );
-      })
+      changeCountryOnPressed: () => context.popAndRun(_selectCountry),
+      removeCountryOnPressed: () => context.popAndRun(_removeCountry)
     );
 
   }

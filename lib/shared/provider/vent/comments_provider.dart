@@ -68,7 +68,7 @@ class CommentsProvider extends ChangeNotifier {
 
   }
 
-  void pinComment(bool pin, int index) {
+  void pinComment(int index, bool pin) {
 
     if (index >= 0 && index < _comments.length) {
 

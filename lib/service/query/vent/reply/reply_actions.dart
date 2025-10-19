@@ -79,16 +79,11 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
     if (response.statusCode == 200) {
 
-      final index = repliesProvider.replies.indexWhere(
-        (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
-      );
+      final index = _getReplyIndex();
 
       final isLiked = repliesProvider.replies[index].isReplyLiked;
 
-      _updateCommentLikedValue(
-        index: index,
-        liked: isLiked,
-      );
+      _updateCommentLikedValue(index, !isLiked);
 
     }
 
@@ -98,13 +93,10 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
   }
 
-  void _updateCommentLikedValue({
-    required int index,
-    required bool liked,
-  }) {
+  void _updateCommentLikedValue(int index, bool doLike) {
 
     if (index != -1) {
-      repliesProvider.likeReply(index, liked);
+      repliesProvider.likeReply(index, doLike);
     }
 
   }
@@ -131,14 +123,18 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
   void _removeComment() {
 
-    final index = repliesProvider.replies.indexWhere(
-      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
-    );
+    final index = _getReplyIndex();
 
     if (index != -1) {
       repliesProvider.deleteReply(index);
     }
 
+  }
+
+  int _getReplyIndex() {
+    return repliesProvider.replies.indexWhere(
+      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
+    );
   }
 
 }

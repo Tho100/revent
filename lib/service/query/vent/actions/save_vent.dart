@@ -20,8 +20,13 @@ class SaveVent with UserProfileProviderService {
       'saved_by': userProvider.user.username
     });
 
+    final index = ventProvider['vent_index'];
+    final ventData = ventProvider['vent_data'];
+
+    final isSaved = ventData.vents[index].isPostSaved;
+
     if (response.statusCode == 200) {
-      _updatePostSavedValue(saved: response.body!['saved']);
+      _updatePostSavedValue(ventData, index, !isSaved);
     }
 
     return {
@@ -30,16 +35,13 @@ class SaveVent with UserProfileProviderService {
 
   }
 
-  void _updatePostSavedValue({required bool saved}) {
+  void _updatePostSavedValue(dynamic ventData, int index, bool doSave) {
 
-    if (saved) {
+    if (doSave) {
       HapticFeedback.heavyImpact();
     }
 
-    final index = ventProvider['vent_index'];
-    final ventData = ventProvider['vent_data'];
-
-    ventData.saveVent(index, saved);
+    ventData.saveVent(index, doSave);
 
   }
 

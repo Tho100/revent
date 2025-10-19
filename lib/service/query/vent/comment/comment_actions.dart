@@ -76,9 +76,7 @@ class CommentActions with
 
   void _removeComment() {
 
-    final index = commentsProvider.comments.indexWhere(
-      (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
-    );
+    final index = _getCommentIndex();
 
     if (index != -1) {
       commentsProvider.deleteComment(index);
@@ -99,16 +97,11 @@ class CommentActions with
 
     if (response.statusCode == 200) {
 
-      final index = commentsProvider.comments.indexWhere(
-        (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
-      );
+      final index = _getCommentIndex();
 
       final isLiked = commentsProvider.comments[index].isCommentLiked;
 
-      _updateCommentLikedValue(
-        index: index,
-        liked: isLiked,
-      );
+      _updateCommentLikedValue(index, !isLiked);
 
     }
 
@@ -118,15 +111,18 @@ class CommentActions with
 
   }
 
-  void _updateCommentLikedValue({
-    required int index,
-    required bool liked,
-  }) {
+  void _updateCommentLikedValue(int index, bool doLike) {
 
     if (index != -1) {
-      commentsProvider.likeComment(index, liked);
+      commentsProvider.likeComment(index, doLike);
     }
 
+  }
+
+  int _getCommentIndex() {
+    return commentsProvider.comments.indexWhere(
+      (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
+    );
   }
 
 }
