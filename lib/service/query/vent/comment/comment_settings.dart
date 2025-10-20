@@ -1,41 +1,29 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-import 'package:revent/helper/extract_data.dart';
 
 class CommentSettings extends BaseQueryService with VentProviderService {
 
-  Future<void> toggleComment({required bool enableComment}) async {
+  Future<Map<String, dynamic>> toggleComment({required bool enableComment}) async {
 
-    const query = 
-      'UPDATE ${TableNames.ventInfo} SET comment_enabled = :new_value WHERE post_id = :post_id';
-
-    final param = {
+    final response = await ApiClient.post(ApiPath.toggleComment, {
       'post_id': activeVentProvider.ventData.postId,
       'new_value': DataConverter.convertBoolToInt(enableComment)
-    };
+    });
 
-    await executeQuery(query, param);
+    return {'status_code': response.statusCode};
 
   }
   
   Future<Map<String, int>> getCurrentOptions() async {
 
-    const query = 
-      'SELECT comment_enabled FROM ${TableNames.ventInfo} WHERE post_id = :post_id';
+    final response = await ApiClient.get(ApiPath.getCommentStatus, activeVentProvider.ventData.postId);
 
-    final param = {'post_id': activeVentProvider.ventData.postId};
+    final commentEnabled = response.body!['status'] as int;
 
-    final results = await executeQuery(query, param);
-
-    final extractedData = ExtractData(rowsData: results);
-
-    final commentEnabled = extractedData.extractIntColumn('comment_enabled')[0];
-
-    return {
-      'comment_enabled': commentEnabled,
-    };
+    return {'comment_enabled': commentEnabled};
 
   }
 
