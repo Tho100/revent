@@ -29,7 +29,7 @@ import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/model/setup/comments_setup.dart';
-import 'package:revent/service/query/vent/comment/comment_settings.dart';
+import 'package:revent/service/query/vent/comment/comment_options.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/comments/comment_filter.dart';
 import 'package:revent/shared/widgets/bottomsheet/comments/comment_settings.dart';
@@ -78,7 +78,7 @@ class _VentPostPageState extends State<VentPostPage> with
   final enableCommentNotifier = ValueNotifier<bool>(true);
   final filterTextNotifier = ValueNotifier<String>('Best');
 
-  final commentSettings = CommentSettings();
+  final commentOptions = CommentOptions();
   final commentsFilter = CommentsFilter();
 
   late VentActionsHandler actionsHandler;
@@ -155,7 +155,7 @@ class _VentPostPageState extends State<VentPostPage> with
 
   Future<void> _initializeCommentsSettings() async {
 
-    final currentOptions = await commentSettings.getCurrentOptions();
+    final currentOptions = await commentOptions.getCurrentOptions();
 
     enableCommentNotifier.value = currentOptions['comment_enabled'] == 1;
 
@@ -163,10 +163,14 @@ class _VentPostPageState extends State<VentPostPage> with
 
   Future<void> _onToggleCommentsPressed() async {
 
-    await commentSettings.toggleComment(enableComment: enableCommentNotifier.value);
+    final toggleCommentResponse = await commentOptions.toggleComment(
+      enableComment: enableCommentNotifier.value
+    );
 
-    if (!enableCommentNotifier.value) {
-      commentsProvider.deleteComments();
+    if (toggleCommentResponse['status_code'] == 200) {
+      if (!enableCommentNotifier.value) {
+        commentsProvider.deleteComments();
+      }
     }
 
   }

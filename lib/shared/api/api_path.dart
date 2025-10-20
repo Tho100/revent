@@ -66,6 +66,10 @@ class ApiPath {
   static const pinComment = '$_commentActions/pin-comment';
   static const editComment = '$_commentActions/edit-comment';
 
+  static const _commentOptions = '/comment-options';
+  static const toggleComment = '$_commentOptions/toggle-comment';
+  static const getCommentStatus = '$_commentOptions/get-comment-status';
+
   static const createReply = '/create-reply';
   static const repliesGetter = '/replies-getter';
   
