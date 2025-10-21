@@ -89,4 +89,9 @@ class ApiPath {
   static const activityRecentLikesGetter = '$_activityGetter/recent-likes';
   static const activityAllTimeLikesGetter = '$_activityGetter/all-time-likes';
 
+  static const _idGetter = '/id-getter';
+  static const postIdGetter = '$_idGetter/post-id';
+  static const commentIdGetter = '$_idGetter/comment-id';
+  static const replyIdGetter = '$_idGetter/reply-id';
+
 }
