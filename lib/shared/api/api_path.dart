@@ -68,7 +68,7 @@ class ApiPath {
 
   static const _commentOptions = '/comment-options';
   static const toggleComment = '$_commentOptions/toggle-comment';
-  static const getCommentStatus = '$_commentOptions/get-comment-status'; // TODO: rename to commentStatusGetter
+  static const commentStatusGetter = '$_commentOptions/get-comment-status';
 
   static const createReply = '/create-reply';
   static const repliesGetter = '/replies-getter';
