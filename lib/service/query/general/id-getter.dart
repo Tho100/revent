@@ -1,3 +1,8 @@
+// TODO: rename file to id_getter, remove unused id-getter files
+
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
+
 class IdGetter {
 
   Future<int> getPostId({
@@ -5,16 +10,12 @@ class IdGetter {
     required String creator
   }) async {
 
-    const getPostIdQuery = 'SELECT post_id FROM ${TableNames.ventInfo} WHERE title = :title AND creator = :creator';
-
-    final postParams = {
+    final response = await ApiClient.post(ApiPath.postIdGetter, {
       'title': title,
       'creator': creator
-    };
+    });
 
-    final results = await executeQuery(getPostIdQuery, postParams);
-
-    return ExtractData(rowsData: results).extractIntColumn('post_id')[0];
+    return response.body!['post_id'] as int;
 
   }
 
@@ -24,23 +25,13 @@ class IdGetter {
     required String commentText
   }) async {
 
-    const getCommentIdQuery = 
-    '''
-      SELECT comment_id FROM ${TableNames.commentsInfo} 
-      WHERE post_id = :post_id 
-        AND commented_by = :commented_by 
-        AND comment = :comment
-    ''';
-
-    final commentParams = {
-      'post_id': activeVentProvider.ventData.postId,
+    final response = await ApiClient.post(ApiPath.commentIdGetter, {
+      'post_id': postId,
       'commented_by': username,
       'comment': commentText
-    };
+    });
 
-    final commentIdResults = await executeQuery(getCommentIdQuery, commentParams);
-
-    return ExtractData(rowsData: commentIdResults).extractIntColumn('comment_id')[0];
+    return response.body!['comment_id'] as int;
 
   }
 
@@ -50,23 +41,13 @@ class IdGetter {
     required String replyText
   }) async {
 
-    const getCommentIdQuery = 
-    '''
-      SELECT reply_id FROM ${TableNames.commentRepliesInfo} 
-      WHERE comment_id = :comment_id 
-        AND replied_by = :replied_by 
-        AND reply = :reply
-    ''';
-
-    final commentParams = {
+    final response = await ApiClient.post(ApiPath.replyIdGetter, {
       'comment_id': commentId,
       'replied_by': username,
       'reply': replyText
-    };
+    });
 
-    final commentIdResults = await executeQuery(getCommentIdQuery, commentParams);
-
-    return ExtractData(rowsData: commentIdResults).extractIntColumn('reply_id')[0];
+    return response.body!['reply_id'] as int;
 
   }
 
