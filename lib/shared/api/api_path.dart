@@ -68,7 +68,7 @@ class ApiPath {
 
   static const _commentOptions = '/comment-options';
   static const toggleComment = '$_commentOptions/toggle-comment';
-  static const getCommentStatus = '$_commentOptions/get-comment-status';
+  static const commentStatusGetter = '$_commentOptions/get-comment-status';
 
   static const createReply = '/create-reply';
   static const repliesGetter = '/replies-getter';
@@ -88,5 +88,10 @@ class ApiPath {
   static const activityFollowersGetter = '$_activityGetter/followers';
   static const activityRecentLikesGetter = '$_activityGetter/recent-likes';
   static const activityAllTimeLikesGetter = '$_activityGetter/all-time-likes';
+
+  static const _idGetter = '/id-getter';
+  static const postIdGetter = '$_idGetter/post-id';
+  static const commentIdGetter = '$_idGetter/comment-id';
+  static const replyIdGetter = '$_idGetter/reply-id';
 
 }

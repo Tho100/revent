@@ -18,7 +18,7 @@ class CommentOptions with VentProviderService {
   
   Future<Map<String, int>> getCurrentOptions() async {
 
-    final response = await ApiClient.get(ApiPath.getCommentStatus, activeVentProvider.ventData.postId);
+    final response = await ApiClient.get(ApiPath.commentStatusGetter, activeVentProvider.ventData.postId);
 
     final commentEnabled = response.body!['status'] as int;
 

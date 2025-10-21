@@ -2,11 +2,10 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/comment_id_getter.dart';
-import 'package:revent/service/query/general/replies_id_getter.dart';
+import 'package:revent/service/query/general/id_getter.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
-class ReplyActions with RepliesProviderService, UserProfileProviderService {
+class ReplyActions with RepliesProviderService, UserProfileProviderService, VentProviderService {
 
   String replyText;
   String repliedBy;
@@ -22,10 +21,28 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
   Future<int> _getCommentId() async {
 
-    return await CommentIdGetter().getCommentId(
-      username: commentedBy, commentText: commentText
+    return await IdGetter.getCommentId(
+      postId: activeVentProvider.ventData.postId,
+      username: commentedBy, 
+      commentText: commentText
     );
 
+  }
+
+  Future<int> _getReplyId(int commentId) async {
+
+    return await IdGetter.getReplyId(
+      commentId: commentId, 
+      username: repliedBy, 
+      replyText: replyText
+    );
+
+  }
+
+  int _getReplyIndex() {
+    return repliesProvider.replies.indexWhere(
+      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
+    );
   }
 
   Future<Map<String, dynamic>> sendReply() async {
@@ -68,9 +85,7 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
     final commentId = await _getCommentId();
 
-    final replyId = await ReplyIdGetter(
-      commentId: commentId
-    ).getReplyId(username: repliedBy, replyText: replyText);
+    final replyId = _getReplyId(commentId);
 
     final response = await ApiClient.post(ApiPath.likeReply, {
       'reply_id': replyId,
@@ -105,9 +120,7 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
     final commentId = await _getCommentId();
 
-    final replyId = await ReplyIdGetter(
-      commentId: commentId
-    ).getReplyId(username: repliedBy, replyText: replyText);
+    final replyId = await _getReplyId(commentId);
 
     final response = await ApiClient.deleteById(ApiPath.deleteReply, replyId);
 
@@ -129,12 +142,6 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
       repliesProvider.deleteReply(index);
     }
 
-  }
-
-  int _getReplyIndex() {
-    return repliesProvider.replies.indexWhere(
-      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
-    );
   }
 
 }
