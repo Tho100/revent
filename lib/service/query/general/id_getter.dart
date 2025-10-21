@@ -3,7 +3,7 @@ import 'package:revent/shared/api/api_path.dart';
 
 class IdGetter {
 
-  Future<int> getPostId({
+  static Future<int> getPostId({
     required String title, 
     required String creator
   }) async {
@@ -17,7 +17,7 @@ class IdGetter {
 
   }
 
-  Future<int> getCommentId({
+  static Future<int> getCommentId({
     required int postId,
     required String username, 
     required String commentText
@@ -33,7 +33,7 @@ class IdGetter {
 
   }
 
-  Future<int> getReplyId({
+  static Future<int> getReplyId({
     required int commentId,
     required String username, 
     required String replyText

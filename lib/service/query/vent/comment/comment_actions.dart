@@ -3,7 +3,7 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/comment_id_getter.dart';
+import 'package:revent/service/query/general/id_getter.dart';
 
 class CommentActions with 
   CommentsProviderService, 
@@ -56,8 +56,10 @@ class CommentActions with
 
   Future<Map<String, dynamic>> delete() async {
 
-    final commentId = await CommentIdGetter().getCommentId(
-      username: commentedBy, commentText: commentText
+    final commentId = await IdGetter.getCommentId(
+      postId: activeVentProvider.ventData.postId,
+      username: commentedBy, 
+      commentText: commentText
     );
 
     final response = await ApiClient.deleteById(
@@ -86,8 +88,11 @@ class CommentActions with
 
   Future<Map<String, dynamic>> toggleLikeComment() async {
 
-    final commentId = await CommentIdGetter().getCommentId(
-      username: commentedBy, commentText: commentText
+// TODO: Create separated function to retrieve comment id
+    final commentId = await IdGetter.getCommentId(
+      postId: activeVentProvider.ventData.postId,
+      username: commentedBy, 
+      commentText: commentText
     );
 
     final response = await ApiClient.post(ApiPath.likeComment, {

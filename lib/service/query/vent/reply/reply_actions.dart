@@ -2,11 +2,10 @@ import 'package:revent/helper/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/comment_id_getter.dart';
-import 'package:revent/service/query/general/replies_id_getter.dart';
+import 'package:revent/service/query/general/id_getter.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
-class ReplyActions with RepliesProviderService, UserProfileProviderService {
+class ReplyActions with RepliesProviderService, UserProfileProviderService, VentProviderService {
 
   String replyText;
   String repliedBy;
@@ -22,8 +21,10 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
   Future<int> _getCommentId() async {
 
-    return await CommentIdGetter().getCommentId(
-      username: commentedBy, commentText: commentText
+    return await IdGetter.getCommentId(
+      postId: activeVentProvider.ventData.postId,
+      username: commentedBy, 
+      commentText: commentText
     );
 
   }
@@ -68,9 +69,11 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
 
     final commentId = await _getCommentId();
 
-    final replyId = await ReplyIdGetter(
-      commentId: commentId
-    ).getReplyId(username: repliedBy, replyText: replyText);
+    final replyId = await IdGetter.getReplyId(
+      commentId: commentId, 
+      username: repliedBy, 
+      replyText: replyText
+    );
 
     final response = await ApiClient.post(ApiPath.likeReply, {
       'reply_id': replyId,
@@ -104,11 +107,13 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService {
   Future<Map<String, dynamic>> delete() async {
 
     final commentId = await _getCommentId();
-
-    final replyId = await ReplyIdGetter(
-      commentId: commentId
-    ).getReplyId(username: repliedBy, replyText: replyText);
-
+// TODO: Create separated function to get reply id
+    final replyId = await IdGetter.getReplyId(
+      commentId: commentId, 
+      username: repliedBy, 
+      replyText: replyText
+    );
+    
     final response = await ApiClient.deleteById(ApiPath.deleteReply, replyId);
 
     if (response.statusCode == 204) {
