@@ -29,6 +29,22 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService, Vent
 
   }
 
+  Future<int> _getReplyId(int commentId) async {
+
+    return await IdGetter.getReplyId(
+      commentId: commentId, 
+      username: repliedBy, 
+      replyText: replyText
+    );
+
+  }
+
+  int _getReplyIndex() {
+    return repliesProvider.replies.indexWhere(
+      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
+    );
+  }
+
   Future<Map<String, dynamic>> sendReply() async {
 
     final commentId = await _getCommentId();
@@ -69,11 +85,7 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService, Vent
 
     final commentId = await _getCommentId();
 
-    final replyId = await IdGetter.getReplyId(
-      commentId: commentId, 
-      username: repliedBy, 
-      replyText: replyText
-    );
+    final replyId = _getReplyId(commentId);
 
     final response = await ApiClient.post(ApiPath.likeReply, {
       'reply_id': replyId,
@@ -107,13 +119,9 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService, Vent
   Future<Map<String, dynamic>> delete() async {
 
     final commentId = await _getCommentId();
-// TODO: Create separated function to get reply id
-    final replyId = await IdGetter.getReplyId(
-      commentId: commentId, 
-      username: repliedBy, 
-      replyText: replyText
-    );
-    
+
+    final replyId = await _getReplyId(commentId);
+
     final response = await ApiClient.deleteById(ApiPath.deleteReply, replyId);
 
     if (response.statusCode == 204) {
@@ -134,12 +142,6 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService, Vent
       repliesProvider.deleteReply(index);
     }
 
-  }
-
-  int _getReplyIndex() {
-    return repliesProvider.replies.indexWhere(
-      (reply) => reply.repliedBy == repliedBy && reply.reply == replyText
-    );
   }
 
 }

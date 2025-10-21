@@ -18,6 +18,20 @@ class CommentActions with
     required this.commentText
   });
 
+  int _getCommentIndex() {
+    return commentsProvider.comments.indexWhere(
+      (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
+    );
+  }
+
+  Future<int> _getCommentId() async {
+    return await IdGetter.getCommentId(
+      postId: activeVentProvider.ventData.postId,
+      username: commentedBy, 
+      commentText: commentText
+    );
+  }
+
   Future<Map<String, dynamic>> sendComment() async {
 
     final postId = activeVentProvider.ventData.postId;
@@ -56,11 +70,7 @@ class CommentActions with
 
   Future<Map<String, dynamic>> delete() async {
 
-    final commentId = await IdGetter.getCommentId(
-      postId: activeVentProvider.ventData.postId,
-      username: commentedBy, 
-      commentText: commentText
-    );
+    final commentId = await _getCommentId();
 
     final response = await ApiClient.deleteById(
       ApiPath.deleteComment, commentId
@@ -88,12 +98,7 @@ class CommentActions with
 
   Future<Map<String, dynamic>> toggleLikeComment() async {
 
-// TODO: Create separated function to retrieve comment id
-    final commentId = await IdGetter.getCommentId(
-      postId: activeVentProvider.ventData.postId,
-      username: commentedBy, 
-      commentText: commentText
-    );
+    final commentId = await _getCommentId();
 
     final response = await ApiClient.post(ApiPath.likeComment, {
       'comment_id': commentId,
@@ -122,12 +127,6 @@ class CommentActions with
       commentsProvider.likeComment(index, doLike);
     }
 
-  }
-
-  int _getCommentIndex() {
-    return commentsProvider.comments.indexWhere(
-      (comment) => comment.commentedBy == commentedBy && comment.comment == commentText
-    );
   }
 
 }
