@@ -1,5 +1,3 @@
-// TODO: rename file to id_getter, remove unused id-getter files
-
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
