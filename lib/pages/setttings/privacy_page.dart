@@ -4,7 +4,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
-import 'package:revent/service/user/user_privacy_handler.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
@@ -24,7 +23,7 @@ class _PrivacyPageState extends State<PrivacyPage> {
   final hideFollowingListNotifier = ValueNotifier<bool>(false);
   final hideSavedPostNotifier = ValueNotifier<bool>(false);
 
-  final userPrivacyHandler = UserPrivacyHandler();
+  final userPrivacyActions = UserPrivacyActions();
 
   void _initializeCurrentOptions() async {
 
@@ -37,15 +36,15 @@ class _PrivacyPageState extends State<PrivacyPage> {
     hideSavedPostNotifier.value = currentOptions['saved'] != 0;     
 
   }
-
+// TODO: improve this code so that it check if the status code returns something else
   Future<void> _onPrivateAccountPressed() async
-    => await userPrivacyHandler.privateAccount(makePrivate: privateAccountNotifier.value);
+    => await userPrivacyActions.makeProfilePrivate(isPrivate: privateAccountNotifier.value);
 
   Future<void> _onHideFollowingPressed() async
-    => await userPrivacyHandler.hideFollowingList(hideFollowingList: hideFollowingListNotifier.value);
+    => await userPrivacyActions.hideFollowingList(isHidden: hideFollowingListNotifier.value);
 
   Future<void> _onHideSavedPostsPressed() async
-    => await userPrivacyHandler.hideSavedPosts(hideSavedPosts: hideSavedPostNotifier.value);
+    => await userPrivacyActions.hideSavedPosts(isHidden: hideSavedPostNotifier.value);
 
   Widget _buildSwitch(ValueNotifier notifier, VoidCallback onToggled, String text, String description) {
     return Padding(
