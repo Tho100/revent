@@ -1,24 +1,48 @@
 import 'package:revent/global/table_names.dart';
+import 'package:revent/helper/data_converter.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/extract_data.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 
 class UserPrivacyActions extends BaseQueryService {
 
-  Future<void> updatePrivacyOption({
-    required int value, 
-    required String column
+  Future<Map<String, dynamic>> makeProfilePrivate({required bool isPrivate}) async {
+    return await _updatePrivacyOptions(
+      param: 'is_private', value: isPrivate, path: ApiPath.makeUserPrivate
+    );
+  }
+
+  Future<Map<String, dynamic>> hideFollowingList({required bool isHidden}) async {
+    return await _updatePrivacyOptions(
+      param: 'is_hidden', value: isHidden, path: ApiPath.makeUserPrivate
+    );
+  }
+
+  Future<Map<String, dynamic>> hideSavedPosts({required bool isHidden}) async {
+    return await _updatePrivacyOptions(
+      param: 'is_hidden', value: isHidden, path: ApiPath.hideUserSaved
+    );
+  }
+
+  Future<Map<String, dynamic>> _updatePrivacyOptions({
+    required bool value,
+    required String param, 
+    required String path
   }) async {
 
-    final query = 'UPDATE ${TableNames.userPrivacyInfo} SET $column = :new_value WHERE username = :username';
+    final valueBoolToInt = DataConverter.convertBoolToInt(value);
 
-    final param = {
+    final response = await ApiClient.post(path, {
       'username': getIt.userProvider.user.username,
-      'new_value': value
-    };
+      param: valueBoolToInt
+    });
 
-    await executeQuery(query, param);
+    return {
+      'status_code': response.statusCode
+    };
 
   }
 
@@ -48,5 +72,7 @@ class UserPrivacyActions extends BaseQueryService {
     };
 
   }
+
+
 
 }

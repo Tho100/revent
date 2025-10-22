@@ -14,6 +14,11 @@ class ApiPath {
   static const updateUserCountry = '$_updateUser/update-country';
   static const updateUserSocials = '$_updateUser/update-socials';
 
+  static const _updateUserPrivacy = '/update-user-privacy';
+  static const makeUserPrivate = '$_updateUserPrivacy/private-profile';
+  static const hideUserFollowing = '$_updateUserPrivacy/hide-following';
+  static const hideUserSaved = '$_updateUserPrivacy/hide-saved';
+
   static const _userInfoGetter = '/user-info-getter';
   static const userJoinedDateGetter = '$_userInfoGetter/joined-date';
   static const userCountryGetter = '$_userInfoGetter/country';
@@ -93,5 +98,5 @@ class ApiPath {
   static const postIdGetter = '$_idGetter/post-id';
   static const commentIdGetter = '$_idGetter/comment-id';
   static const replyIdGetter = '$_idGetter/reply-id';
-
+  
 }
