@@ -73,6 +73,4 @@ class UserPrivacyActions extends BaseQueryService {
 
   }
 
-
-
 }
