@@ -1,4 +1,3 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data_converter.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
@@ -48,23 +47,14 @@ class UserPrivacyActions extends BaseQueryService {
 
   Future<Map<String, int>> getCurrentPrivacyOptions({required String username}) async {
 
-    const query = 
-    '''
-      SELECT privated_profile, privated_following_list, privated_saved_vents 
-      FROM ${TableNames.userPrivacyInfo} 
-      WHERE username = :username
-    ''';
+    final response = await ApiClient.get(ApiPath.userPrivacyOptionsGetter, username);
 
-    final param = {'username': username};
+    final options = ExtractData(data: response.body!['options']);
 
-    final results = await executeQuery(query, param);
-
-    final extractedData = ExtractData(rowsData: results);
-
-    final privatedAccount = extractedData.extractIntColumn('privated_profile')[0];
-    final privatedFollowing = extractedData.extractIntColumn('privated_following_list')[0];
-    final privatedSaved = extractedData.extractIntColumn('privated_saved_vents')[0];
-
+    final privatedAccount = options.extractColumn<int>('privated_profile')[0];
+    final privatedFollowing = options.extractColumn<int>('privated_following_list')[0];
+    final privatedSaved = options.extractColumn<int>('privated_saved_vents')[0];
+ 
     return {
       'account': privatedAccount,
       'following': privatedFollowing,
