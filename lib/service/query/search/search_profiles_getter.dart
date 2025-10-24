@@ -1,5 +1,5 @@
-import 'package:revent/helper/data_converter.dart';
-import 'package:revent/helper/extract_data.dart';
+import 'package:revent/helper/data/data_converter.dart';
+import 'package:revent/helper/data/extract_data.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';

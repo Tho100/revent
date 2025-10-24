@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:restart_app/restart_app.dart';
-import 'package:revent/helper/capitalizer.dart';
+import 'package:revent/helper/general/capitalizer.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/local_storage_model.dart';

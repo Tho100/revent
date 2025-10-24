@@ -2,7 +2,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/helper/open_link.dart';
+import 'package:revent/helper/general/open_link.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
 class StyledTextWidget extends StatelessWidget {

@@ -8,7 +8,7 @@ import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/helper/text_copy.dart';
+import 'package:revent/helper/general/text_copy.dart';
 import 'package:revent/pages/search_results_page.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/refresh_service.dart';

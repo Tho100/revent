@@ -1,6 +1,6 @@
 import 'package:revent/global/table_names.dart';
 import 'package:revent/global/vent_type.dart';
-import 'package:revent/helper/format_date.dart';
+import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
