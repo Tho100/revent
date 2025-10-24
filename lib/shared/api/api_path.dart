@@ -29,6 +29,7 @@ class ApiPath {
 
   static const userRelationsGetter = '/user-relations-getter';
   static const userBlockedAccountsGetter = '$userRelationsGetter/blocked_accounts';
+  static const userBlockedStatusGetter = '$userRelationsGetter/blocked-status';
   static const userFollowersGetter = '$userRelationsGetter/followers';
   static const userFollowingGeter = '$userRelationsGetter/following';
 

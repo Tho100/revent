@@ -1,13 +1,10 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/data/extract_data.dart';
-import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/data/data_converter.dart';
-import 'package:revent/main.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
+import 'package:revent/shared/provider_mixins.dart';
 
-class UserBlockGetter extends BaseQueryService {
+class UserBlockGetter with UserProfileProviderService {
 
   final String username;
 
@@ -34,24 +31,12 @@ class UserBlockGetter extends BaseQueryService {
 
   Future<bool> getIsAccountBlocked() async {
 
-    const query = 
-    '''
-      SELECT 1 
-      FROM ${TableNames.userBlockedInfo} 
-      WHERE 
-        (blocked_by = :blocked_by AND blocked_username = :blocked_username)
-        OR
-        (blocked_by = :blocked_username AND blocked_username = :blocked_by);
-    ''';
+    final response = await ApiClient.post(ApiPath.userBlockedStatusGetter, {
+      'current_user': userProvider.user.username,
+      'viewed_profile_username': username,
+    });
 
-    final params = {
-      'blocked_username': username,
-      'blocked_by': getIt.userProvider.user.username
-    };
-
-    final results = await executeQuery(query, params);
-
-    return results.rows.isNotEmpty;
+    return response.body!['is_blocked'] as bool;
 
   }
   
