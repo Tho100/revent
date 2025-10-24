@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/service/user/user_registration_service.dart';
-import 'package:revent/helper/input_formatters.dart';
-import 'package:revent/helper/input_validator.dart';
+import 'package:revent/helper/input/input_formatters.dart';
+import 'package:revent/helper/input/input_validator.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -104,7 +105,7 @@ class _SignUpUsernamePageState extends State<SignUpUsernamePage> with AuthContro
 
           MainTextField(
             hintText: 'Enter a username', 
-            maxLength: 24,
+            maxLength: ValidationLimits.maxUsernameLength,
             textInputAction: TextInputAction.next,
             inputFormatters: InputFormatters.usernameFormatter(),
             focusNode: usernameFocus,

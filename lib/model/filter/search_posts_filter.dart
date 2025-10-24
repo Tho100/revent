@@ -1,4 +1,4 @@
-import 'package:revent/helper/format_date.dart';
+import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
 class SearchPostsFilter with SearchProviderService {

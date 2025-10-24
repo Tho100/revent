@@ -9,7 +9,7 @@ import 'package:revent/model/country_picker_model.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/user/user_socials.dart';
 import 'package:revent/service/query/user_profile/profile_data_update.dart';
-import 'package:revent/helper/input_formatters.dart';
+import 'package:revent/helper/input/input_formatters.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/country_options_bottomsheet.dart';

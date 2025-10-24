@@ -1,12 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class PrivacyPage extends StatefulWidget {
 
@@ -36,15 +38,40 @@ class _PrivacyPageState extends State<PrivacyPage> {
     hideSavedPostNotifier.value = currentOptions['saved'] != 0;     
 
   }
-// TODO: improve this code so that it check if the status code returns something else
-  Future<void> _onPrivateAccountPressed() async
-    => await userPrivacyActions.makeProfilePrivate(isPrivate: privateAccountNotifier.value);
 
-  Future<void> _onHideFollowingPressed() async
-    => await userPrivacyActions.hideFollowingList(isHidden: hideFollowingListNotifier.value);
+  Future<void> _onUpdatePrivacyOptions(Future<Map<String, dynamic>> Function() updatePrivacy) async {
 
-  Future<void> _onHideSavedPostsPressed() async
-    => await userPrivacyActions.hideSavedPosts(isHidden: hideSavedPostNotifier.value);
+    try {
+
+      final updateResponse = await updatePrivacy();
+
+      if (updateResponse['status_code'] != 200) {
+        SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+      }
+
+    } catch (_) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+    }
+
+  }
+
+  Future<void> _onPrivateAccountPressed() async {
+    await _onUpdatePrivacyOptions(
+      () => userPrivacyActions.makeProfilePrivate(isPrivate: privateAccountNotifier.value)
+    );
+  }
+
+  Future<void> _onHideFollowingPressed() async {
+    await _onUpdatePrivacyOptions(
+      () => userPrivacyActions.hideFollowingList(isHidden: hideFollowingListNotifier.value)
+    );
+  }
+
+  Future<void> _onHideSavedPostsPressed() async {
+    await _onUpdatePrivacyOptions(
+      () => userPrivacyActions.hideSavedPosts(isHidden: hideSavedPostNotifier.value)
+    );
+  }
 
   Widget _buildSwitch(ValueNotifier notifier, VoidCallback onToggled, String text, String description) {
     return Padding(

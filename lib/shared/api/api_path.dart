@@ -19,6 +19,9 @@ class ApiPath {
   static const hideUserFollowing = '$_updateUserPrivacy/hide-following';
   static const hideUserSaved = '$_updateUserPrivacy/hide-saved';
 
+  static const _userPrivacyGetter = '/user-privacy-getter';
+  static const userPrivacyOptionsGetter = '$_userPrivacyGetter/all-options';
+
   static const _userInfoGetter = '/user-info-getter';
   static const userJoinedDateGetter = '$_userInfoGetter/joined-date';
   static const userCountryGetter = '$_userInfoGetter/country';

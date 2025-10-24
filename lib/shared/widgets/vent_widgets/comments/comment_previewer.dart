@@ -7,7 +7,7 @@ import 'package:revent/global/app_keys.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/helper/text_copy.dart';
+import 'package:revent/helper/general/text_copy.dart';
 import 'package:revent/pages/comment/edit_comment_page.dart';
 import 'package:revent/pages/reply/replies_page.dart';
 import 'package:revent/service/query/user/user_actions.dart';

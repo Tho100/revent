@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/pages/profile_picture_viewer_page.dart';
-import 'package:revent/helper/format_date.dart';
+import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';

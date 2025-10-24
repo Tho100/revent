@@ -7,7 +7,7 @@ import 'package:revent/controllers/search_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/global/vent_type.dart';
-import 'package:revent/helper/format_date.dart';
+import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/vent_actions_handler.dart';

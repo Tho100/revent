@@ -1,4 +1,4 @@
-import 'package:revent/helper/input_validator.dart';
+import 'package:revent/helper/input/input_validator.dart';
 import 'package:revent/helper/test_helper.dart';
 import 'package:test/test.dart';
 
