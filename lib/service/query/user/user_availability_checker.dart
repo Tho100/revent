@@ -1,12 +1,12 @@
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class UserRegistrationValidator {
+class UserAvailabilityChecker {
 
   final String username;
   final String email;
 
-  UserRegistrationValidator({
+  UserAvailabilityChecker({
     required this.username, 
     required this.email
   });
