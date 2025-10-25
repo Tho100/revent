@@ -1,6 +1,6 @@
 import 'package:revent/global/table_names.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
-
+// TODO: remove this class
 class UserValidator extends BaseQueryService {
 
   Future<bool> userExists({required String username}) async {

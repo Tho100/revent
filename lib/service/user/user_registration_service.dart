@@ -23,7 +23,7 @@ class UserRegistrationService with UserProfileProviderService {
 
     final userValidator = await UserAvailabilityChecker(
       username: username, email: email
-    ).verifyUsernameAndEmail();
+    ).usernameOrEmailExists();
 
     final usernameExists = userValidator['username_exists']!;
     final emailExists = userValidator['email_exists']!;

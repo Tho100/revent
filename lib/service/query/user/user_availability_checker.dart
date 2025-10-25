@@ -11,7 +11,7 @@ class UserAvailabilityChecker {
     required this.email
   });
 
-  Future<Map<String, bool>> verifyUsernameAndEmail() async {
+  Future<Map<String, bool>> usernameOrEmailExists() async {
 
     Map<String, bool> existsConditionMap = {
       'username_exists': false,
@@ -35,5 +35,17 @@ class UserAvailabilityChecker {
     return existsConditionMap;
 
   }
+
+  /*Future<bool> userExists({required String username}) async {
+
+    const query = 'SELECT 1 FROM ${TableNames.userInfo} WHERE username = :username';
+
+    final param = {'username': username};
+
+    final results = await executeQuery(query, param);
+
+    return results.rows.isNotEmpty;
+
+  }*/
 
 }
