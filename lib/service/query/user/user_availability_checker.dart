@@ -18,7 +18,7 @@ class UserAvailabilityChecker {
       'email_exists': false,
     };
   
-    final response = await ApiClient.post(ApiPath.verifyUser, {
+    final response = await ApiClient.post(ApiPath.verifyUserAvailability, {
       'username': username,
       'email': email,
     });
