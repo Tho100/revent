@@ -34,7 +34,7 @@ class UserPrivacyActions extends BaseQueryService {
 
     final valueBoolToInt = DataConverter.convertBoolToInt(value);
 
-    final response = await ApiClient.post(path, {
+    final response = await ApiClient.patch(path, {
       'username': getIt.userProvider.user.username,
       param: valueBoolToInt
     });

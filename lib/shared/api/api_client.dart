@@ -36,6 +36,21 @@ class ApiClient {
     
   }
 
+  static Future<ApiResponse> patch(String path, Map<String, dynamic> data) async {
+
+    final response = await http.patch(
+      ApiConfig.endpoint(path),
+      headers: ApiConfig.jsonHeaders,
+      body: jsonEncode(data)
+    ).timeout(const Duration(seconds: 10));
+
+    return ApiResponse(
+      statusCode: response.statusCode,
+      body: _decodedBody(response.body),
+    );
+    
+  }
+
   static Future<ApiResponse> get(String path, dynamic param) async {
 
     final uri = ApiConfig.endpoint('$path/$param');

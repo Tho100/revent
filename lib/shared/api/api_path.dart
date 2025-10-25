@@ -1,58 +1,63 @@
 class ApiPath {
 
-  static const login = '/login';
-  static const register = '/register';
-  
-  static const verifyUser = '/verify-user';
-  static const verifyUserAuth = '$verifyUser/verify-auth';
+  static const _auth = '/auth';
+  static const login = '$_auth/login';
+  static const register = '$_auth/register';
 
-  static const _updateUser = '/update-user';
-  static const updateUserAuth = '$_updateUser/update-auth';
-  static const updateUserAvatar = '$_updateUser/update-avatar';
-  static const updateUserBio = '$_updateUser/update-bio';
-  static const updateUserPronouns = '$_updateUser/update-pronouns';
-  static const updateUserCountry = '$_updateUser/update-country';
-  static const updateUserSocials = '$_updateUser/update-socials';
+  static const _verify = '$_auth/verify';
+  static const verifyUser = '$_verify/verify-user';
+  static const verifyUserAuth = '$_verify/verify-auth';
 
-  static const _updateUserPrivacy = '/update-user-privacy';
-  static const makeUserPrivate = '$_updateUserPrivacy/private-profile';
-  static const hideUserFollowing = '$_updateUserPrivacy/hide-following';
-  static const hideUserSaved = '$_updateUserPrivacy/hide-saved';
+  static const _users = '/users';
+  static const _usersUpdate = '$_users/update';
 
-  static const _userPrivacyGetter = '/user-privacy-getter';
-  static const userPrivacyOptionsGetter = '$_userPrivacyGetter/all-options';
+  static const updateUserAuth = '$_usersUpdate/auth';
+  static const updateUserAvatar = '$_usersUpdate/avatar';
+  static const updateUserBio = '$_usersUpdate/bio';
+  static const updateUserPronouns = '$_usersUpdate/pronouns';
+  static const updateUserCountry = '$_usersUpdate/country';
+  static const updateUserSocials = '$_usersUpdate/socials';
 
-  static const _userInfoGetter = '/user-info-getter';
-  static const userJoinedDateGetter = '$_userInfoGetter/joined-date';
-  static const userCountryGetter = '$_userInfoGetter/country';
-  static const userSocialHandlesGetter = '$_userInfoGetter/socials';
+  static const _usersPrivacy = '$_users/privacy';
+  static const _usersPrivacyUpdate = '$_usersPrivacy/update';
 
-  static const userRelationsGetter = '/user-relations-getter';
-  static const userBlockedAccountsGetter = '$userRelationsGetter/blocked_accounts';
-  static const userBlockedStatusGetter = '$userRelationsGetter/blocked-status';
-  static const userFollowersGetter = '$userRelationsGetter/followers';
-  static const userFollowingGeter = '$userRelationsGetter/following';
+  static const makeUserPrivate = '$_usersPrivacyUpdate/private-profile';
+  static const hideUserFollowing = '$_usersPrivacyUpdate/hide-following';
+  static const hideUserSaved = '$_usersPrivacyUpdate/hide-saved';
 
-  static const userFollowRelationsGetter = '/user-follow-relations-getter';
-  static const userFollowSuggestionsGetter = '$userFollowRelationsGetter/follow-suggestions';
-  static const userFollowingStatusGetter = '$userFollowRelationsGetter/is-following';
+  static const userPrivacyOptionsGetter = '$_usersPrivacy/all-options';
 
-  static const _userProfile = '/user-profile';
-  static const userProfileInfoGetter = '$_userProfile/get-info';
-  static const userAvatarGetter = '$_userProfile/get-avatar';
+  static const _usersInfo = '$_users/about';
+  static const userJoinedDateGetter = '$_usersInfo/joined-date';
+  static const userCountryGetter = '$_usersInfo/country';
+  static const userSocialHandlesGetter = '$_usersInfo/socials';
 
-  static const _createVent = '/create-vent';
-  static const createDefaultVent = '$_createVent/default-vent';
-  static const createVaultVent = '$_createVent/vault-vent';
+  static const _usersRelations = '$_users/relations';
+  static const userBlockedAccountsGetter = '$_usersRelations/blocked-accounts';
+  static const userBlockedStatusGetter = '$_usersRelations/blocked-status';
+  static const userFollowersGetter = '$_usersRelations/followers';
+  static const userFollowingGetter = '$_usersRelations/following';
 
-  static const _ventActions = '/vent-actions';
+  static const _usersFollows = '$_users/follows';
+  static const userFollowSuggestionsGetter = '$_usersFollows/follow-suggestions';
+  static const userFollowingStatusGetter = '$_usersFollows/is-following';
+
+  static const _usersProfile = '$_users/profile';
+  static const userProfileInfoGetter = '$_usersProfile/get-info';
+  static const userAvatarGetter = '$_usersProfile/get-avatar';
+
+  static const _createVent = '/vent/create';
+  static const createDefaultVent = '$_createVent/default';
+  static const createVaultVent = '$_createVent/vault';
+
+  static const _ventActions = '/vent/actions';
   static const deleteVent = '$_ventActions/delete-vent';
-  static const deleteVaultVent = '$_ventActions/delete-vault-vent';
-  static const likeVent = '$_ventActions/like-vent';
-  static const saveVent = '$_ventActions/save-vent';
-  static const pinVent = '$_ventActions/pin-vent';
+  static const deleteVaultVent = '$_ventActions/delete-vault';
+  static const likeVent = '$_ventActions/like';
+  static const saveVent = '$_ventActions/save';
+  static const pinVent = '$_ventActions/pin';
 
-  static const _ventsGetter = '/vents-getter';
+  static const _ventsGetter = '/vents';
   static const latestVentsGetter = '$_ventsGetter/latest';
   static const trendingVentsGetter = '$_ventsGetter/trending';
   static const followingVentsGetter = '$_ventsGetter/following';
@@ -61,46 +66,50 @@ class ApiPath {
   static const savedVentsGetter = '$_ventsGetter/saved';
   static const vaultVentsGetter = '$_ventsGetter/vault';
 
-  static const _ventInfoGetter = '/vent-info-getter';
+  static const _ventInfoGetter = '/vent/info';
   static const ventBodyTextGetter = '$_ventInfoGetter/body-text';
   static const ventMetadataGetter = '$_ventInfoGetter/metadata';
   static const vaultBodyTextGetter = '$_ventInfoGetter/vault-body-text';
 
-  static const createComment = '/create-comment';
-  static const commentsGetter = '/comments-getter';
+  static const _comment = '/comment';
+  static const createComment = '$_comment/create';
 
-  static const _commentActions = '/comment-actions';
-  static const deleteComment = '$_commentActions/delete-comment';
-  static const likeComment = '$_commentActions/like-comment';
-  static const pinComment = '$_commentActions/pin-comment';
-  static const editComment = '$_commentActions/edit-comment';
+  static const _commentActions = '$_comment/actions';
+  static const deleteComment = '$_commentActions/delete';
+  static const likeComment = '$_commentActions/like';
+  static const pinComment = '$_commentActions/pin';
+  static const editComment = '$_commentActions/edit';
 
-  static const _commentOptions = '/comment-options';
-  static const toggleComment = '$_commentOptions/toggle-comment';
-  static const commentStatusGetter = '$_commentOptions/get-comment-status';
+  static const commentsGetter = '/comments';
 
-  static const createReply = '/create-reply';
-  static const repliesGetter = '/replies-getter';
+  static const _commentOptions = '/comment/options';
+  static const toggleComment = '$_commentOptions/toggle';
+  static const commentStatusGetter = '$_commentOptions/get-status';
+
+  static const _reply = '/reply';
+  static const createReply = '$_reply/create';
+
+  static const _replyActions = '$_reply/actions';
+  static const deleteReply = '$_replyActions/delete';
+  static const likeReply = '$_replyActions/like';
   
-  static const _replyActions = '/reply-action';
-  static const deleteReply = '$_replyActions/delete-reply';
-  static const likeReply = '$_replyActions/like-reply';
+  static const repliesGetter = '/replies';
 
-  static const _profilePostsGetter = '/profile-posts-getter';
+  static const _profilePostsGetter = '/profile-posts';
   static const profileOwnPostsGetter = '$_profilePostsGetter/posts';
   static const profileSavedPostsGetter = '$_profilePostsGetter/saved';
 
-  static const _searchGetter = '/search-getter';
+  static const _searchGetter = '/search';
   static const searchProfilesGetter = '$_searchGetter/profiles';
 
-  static const _activityGetter = '/activity-getter';
+  static const _activityGetter = '/activity';
   static const activityFollowersGetter = '$_activityGetter/followers';
   static const activityRecentLikesGetter = '$_activityGetter/recent-likes';
   static const activityAllTimeLikesGetter = '$_activityGetter/all-time-likes';
 
-  static const _idGetter = '/id-getter';
-  static const postIdGetter = '$_idGetter/post-id';
-  static const commentIdGetter = '$_idGetter/comment-id';
-  static const replyIdGetter = '$_idGetter/reply-id';
+  static const _idGetter = '/id-lookup';
+  static const postIdGetter = '$_idGetter/post';
+  static const commentIdGetter = '$_idGetter/comment';
+  static const replyIdGetter = '$_idGetter/reply';
   
 }

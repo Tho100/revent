@@ -9,7 +9,7 @@ class ProfileDataUpdate with UserProfileProviderService {
 
   Future<void> updateBio({required String bioText}) async {
 
-    final response = await ApiClient.post(ApiPath.updateUserBio, {
+    final response = await ApiClient.patch(ApiPath.updateUserBio, {
       'bio': bioText,
       'username': userProvider.user.username
     });    
@@ -24,7 +24,7 @@ class ProfileDataUpdate with UserProfileProviderService {
 
     final base64Pfp = const Base64Encoder().convert(picData);
 
-    final response = await ApiClient.post(ApiPath.updateUserAvatar, {
+    final response = await ApiClient.patch(ApiPath.updateUserAvatar, {
       'username': userProvider.user.username,
       'pfp_base64': base64Pfp,
     });
@@ -37,7 +37,7 @@ class ProfileDataUpdate with UserProfileProviderService {
 
   Future<void> removeProfilePicture() async {
 
-    final response = await ApiClient.post(ApiPath.updateUserAvatar, {
+    final response = await ApiClient.patch(ApiPath.updateUserAvatar, {
       'username': userProvider.user.username,
       'pfp_base64': '',
     });
@@ -50,7 +50,7 @@ class ProfileDataUpdate with UserProfileProviderService {
 
   Future<void> updatePronouns({required String pronouns}) async {
 
-    final response = await ApiClient.post(ApiPath.updateUserPronouns, {
+    final response = await ApiClient.patch(ApiPath.updateUserPronouns, {
       'pronouns': pronouns,
       'username': userProvider.user.username
     });    
@@ -63,7 +63,7 @@ class ProfileDataUpdate with UserProfileProviderService {
 
   Future<void> updateCountry({required String country}) async {
 
-    final response = await ApiClient.post(ApiPath.updateUserCountry, {
+    final response = await ApiClient.patch(ApiPath.updateUserCountry, {
       'country': country,
       'username': userProvider.user.username
     });    
