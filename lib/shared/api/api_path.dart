@@ -27,7 +27,7 @@ class ApiPath {
 
   static const userPrivacyOptionsGetter = '$_usersPrivacy/all-options';
 
-  static const _usersInfo = '$_users/info';
+  static const _usersInfo = '$_users/about';
   static const userJoinedDateGetter = '$_usersInfo/joined-date';
   static const userCountryGetter = '$_usersInfo/country';
   static const userSocialHandlesGetter = '$_usersInfo/socials';
