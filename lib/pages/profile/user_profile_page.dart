@@ -250,14 +250,14 @@ class _UserProfilePageState extends State<UserProfilePage> with
         CustomAlertDialog.alertDialogCustomOnPress(
           message: "Unfollow @${widget.username}?", 
           buttonMessage: "Unfollow", 
-          onPressedEvent: () async => await _toggleFollowUser(follow)
+          onPressedEvent: () async => await _toggleFollowUser()
         );
 
         return;
 
       }
 
-      await _toggleFollowUser(follow);
+      await _toggleFollowUser();
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
@@ -265,10 +265,17 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   }
 
-  Future<void> _toggleFollowUser(bool follow) async {
-    await UserActions(username: widget.username).toggleFollowUser(follow: true).then(
-      (_) => isFollowingNotifier.value = !isFollowingNotifier.value
-    );
+  Future<void> _toggleFollowUser() async {
+
+    final followResponse = await UserActions(username: widget.username).toggleFollowUser();
+
+    if (followResponse['status_code'] != 200) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+      return;
+    }
+
+    isFollowingNotifier.value = !isFollowingNotifier.value;
+
   }
 
   Widget _buildPronouns() {

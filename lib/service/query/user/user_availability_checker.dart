@@ -1,24 +1,24 @@
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class UserRegistrationValidator {
+class UserAvailabilityChecker {
 
   final String username;
   final String email;
 
-  UserRegistrationValidator({
+  UserAvailabilityChecker({
     required this.username, 
     required this.email
   });
 
-  Future<Map<String, bool>> verifyUsernameAndEmail() async {
+  Future<Map<String, bool>> usernameOrEmailExists() async {
 
     Map<String, bool> existsConditionMap = {
       'username_exists': false,
       'email_exists': false,
     };
   
-    final response = await ApiClient.post(ApiPath.verifyUser, {
+    final response = await ApiClient.post(ApiPath.verifyUserAvailability, {
       'username': username,
       'email': email,
     });
@@ -33,6 +33,14 @@ class UserRegistrationValidator {
     }
 
     return existsConditionMap;
+
+  }
+
+  Future<bool> userExists({required String username}) async {
+
+    final response = await ApiClient.get(ApiPath.verifyUser, username);
+
+    return response.body!['user_exists'] as bool;
 
   }
 

@@ -1,4 +1,6 @@
 import 'package:revent/global/table_names.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -8,36 +10,17 @@ class UserActions extends BaseQueryService with UserProfileProviderService {
 
   UserActions({required this.username});
 
-  Future<void> toggleFollowUser({required bool follow}) async {
+  Future<Map<String, dynamic>> toggleFollowUser() async {
     
-    final operationSymbol = follow ? '+' : '-'; 
-
-    final conn = await connection();
-
-    await conn.transactional((txn) async {
-      
-      await txn.execute(
-        'UPDATE ${TableNames.userProfileInfo} SET following = following $operationSymbol 1 WHERE username = :username',
-        {'username': userProvider.user.username}
-      );
-      
-      await txn.execute(
-        'UPDATE ${TableNames.userProfileInfo} SET followers = followers $operationSymbol 1 WHERE username = :username',
-        {'username': username}
-      );
-
-      await txn.execute(
-        follow 
-          ? 'INSERT INTO ${TableNames.userFollowsInfo} (follower, following) VALUES (:follower, :following)'
-          : 'DELETE FROM ${TableNames.userFollowsInfo} WHERE following = :following AND follower = :follower',
-        {
-          'follower': userProvider.user.username, 
-          'following': username
-        }
-      );
-
+    final response = await ApiClient.post(ApiPath.followUser, {
+      'current_user': userProvider.user.username,
+      'following': username,
     });
-    
+
+    return {
+      'status_code': response.statusCode
+    };
+
   }
 
   Future<void> toggleBlockUser({bool? block = true}) async {

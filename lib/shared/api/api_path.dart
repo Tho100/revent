@@ -4,9 +4,10 @@ class ApiPath {
   static const login = '$_auth/login';
   static const register = '$_auth/register';
 
-  static const _verify = '$_auth/verify';
-  static const verifyUser = '$_verify/verify-user';
-  static const verifyUserAuth = '$_verify/verify-auth';
+  static const _verify = '$_auth/verify'; 
+  static const verifyUser = '$_verify/user';
+  static const verifyUserAvailability = '$verifyUser/availability';
+  static const verifyUserAuth = '$verifyUser/auth';
 
   static const _users = '/users';
   static const _usersUpdate = '$_users/update';
@@ -37,6 +38,7 @@ class ApiPath {
   static const userBlockedStatusGetter = '$_usersRelations/blocked-status';
   static const userFollowersGetter = '$_usersRelations/followers';
   static const userFollowingGetter = '$_usersRelations/following';
+  static const followUser = '$_usersRelations/follow';
 
   static const _usersFollows = '$_users/follows';
   static const userFollowSuggestionsGetter = '$_usersFollows/follow-suggestions';
