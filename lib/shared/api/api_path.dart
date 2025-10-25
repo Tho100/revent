@@ -4,8 +4,8 @@ class ApiPath {
   static const login = '$_auth/login';
   static const register = '$_auth/register';
 
-  static const _verify = '$_auth/verify';
-  static const verifyUser = '$_verify/verify-user';
+  static const _verify = '$_auth/verify'; 
+  static const verifyUser = '$_verify/verify-user';// TODO: Remove verify-
   static const verifyUserAuth = '$_verify/verify-auth';
 
   static const _users = '/users';

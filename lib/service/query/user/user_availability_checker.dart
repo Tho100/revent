@@ -36,16 +36,12 @@ class UserAvailabilityChecker {
 
   }
 
-  /*Future<bool> userExists({required String username}) async {
+  Future<bool> userExists({required String username}) async {
 
-    const query = 'SELECT 1 FROM ${TableNames.userInfo} WHERE username = :username';
+    final response = await ApiClient.get(ApiPath.verifyUser, username);
 
-    final param = {'username': username};
+    return response.body!['user_exists'] as bool;
 
-    final results = await executeQuery(query, param);
-
-    return results.rows.isNotEmpty;
-
-  }*/
+  }
 
 }
