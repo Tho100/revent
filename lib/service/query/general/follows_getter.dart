@@ -13,7 +13,7 @@ class FollowsGetter with UserProfileProviderService {
     
     final apiEndPoint = followType == 'Followers' 
       ? ApiPath.userFollowersGetter 
-      : ApiPath.userFollowingGeter;
+      : ApiPath.userFollowingGetter;
 
     final response = await ApiClient.post(apiEndPoint, {
       'current_user': userProvider.user.username,
