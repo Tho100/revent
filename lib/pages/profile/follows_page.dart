@@ -88,7 +88,12 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
   Future<void> _onFollowPressed(int index, String username, bool follow) async {
 
-    await UserActions(username: username).toggleFollowUser(follow: follow);
+    final followResponse = await UserActions(username: widget.username).toggleFollowUser();
+
+    if (followResponse['status_code'] != 200) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+      return;
+    }
 
     final updatedList = List<String>.from(profileActionTextNotifier.value);
 

@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
@@ -12,6 +13,7 @@ import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class FollowSuggestionListView extends StatelessWidget {
 
@@ -19,9 +21,14 @@ class FollowSuggestionListView extends StatelessWidget {
 
   Future<void> _onFollowPressed(String username, Uint8List pfpData, int index) async {
 
-    await UserActions(username: username).toggleFollowUser(follow: true).then(
-      (_) => getIt.followSuggestionProvider.removeSuggestion(index)
-    ); 
+    final followResponse = await UserActions(username: username).toggleFollowUser();
+
+    if (followResponse['status_code'] != 200) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+      return;
+    }
+
+    getIt.followSuggestionProvider.removeSuggestion(index);
 
     NavigatePage.userProfilePage(username: username, pfpData: pfpData);
 
