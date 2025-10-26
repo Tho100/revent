@@ -39,6 +39,7 @@ class ApiPath {
   static const userFollowersGetter = '$_usersRelations/followers';
   static const userFollowingGetter = '$_usersRelations/following';
   static const followUser = '$_usersRelations/follow';
+  static const blockUser = '$_usersRelations/block';
 
   static const _usersFollows = '$_users/follows';
   static const userFollowSuggestionsGetter = '$_usersFollows/follow-suggestions';

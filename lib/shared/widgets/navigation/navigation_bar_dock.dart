@@ -7,9 +7,9 @@ import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 
 class NavigationBarDock extends StatelessWidget {
-
-  NavigationBarDock({super.key});
   
+  NavigationBarDock({super.key});
+
   final _navigationIcons = {
     NavigationTabs.home: CupertinoIcons.house,
     NavigationTabs.search: CupertinoIcons.search,
@@ -66,19 +66,34 @@ class NavigationBarDock extends StatelessWidget {
                   return Stack(
                     children: [
           
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(16),
-                        child: IconButton(
-                          icon: Icon(selectedIcon),
-                          color: iconColor,
-                          iconSize: 28,
-                          onPressed: () {
-                            if (page != NavigationTabs.create) {
-                              navigation.setPage(page);
-                            }
-                            _onNavigationButtonPressed(page);
-                          },
-                        ),
+                      ClipRRect( 
+                        borderRadius: BorderRadius.circular(16), 
+                        child: Material(
+                          color: Colors.transparent,
+                          child: InkWell(
+                            borderRadius: BorderRadius.circular(16),
+                            onTap: () {
+
+                              if (page != NavigationTabs.create) {
+                                navigation.setPage(page);
+                              }
+
+                              _onNavigationButtonPressed(page);
+
+                            },
+                            onLongPress: page == NavigationTabs.create
+                                ? () => NavigatePage.pongGame()
+                                : null,
+                            child: Padding(
+                              padding: const EdgeInsets.all(10.0),
+                              child: Icon(
+                                selectedIcon,
+                                color: iconColor,
+                                size: 28,
+                              ),
+                            ),
+                          ),
+                        )
                       ),
           
                       if (page == NavigationTabs.activity && navigation.showActivityBadge)
@@ -125,5 +140,4 @@ class NavigationBarDock extends StatelessWidget {
     }
 
   }
-
 }

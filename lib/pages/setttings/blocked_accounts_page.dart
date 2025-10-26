@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
@@ -8,6 +9,7 @@ import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class _BlockedAccountsData {
   
@@ -59,9 +61,16 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
   }
 
   Future<void> _onUnblockPressed({required String username}) async {
-    await UserActions(username: username).toggleBlockUser(block: false).then(
-      (_) => _removeFromBlockedList(username)
-    );
+
+    final toggleUnblockResponse = await UserActions(username: username).toggleBlockUser();
+
+    if (toggleUnblockResponse['status_code'] != 200) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+      return;
+    }
+
+    _removeFromBlockedList(username);
+
   }
 
   Widget _buildListView(List<_BlockedAccountsData> blockedData) {
