@@ -22,7 +22,7 @@ import 'package:revent/pages/navigation/search_page.dart';
 import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
 import 'package:revent/service/activity_service.dart';
-import 'package:revent/service/query/user/user_validator.dart';
+import 'package:revent/service/query/user/user_availability_checker.dart';
 import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
@@ -167,7 +167,7 @@ class NavigatePage {
       return;
     }
 
-    final userExists = await UserValidator().userExists(username: username);
+    final userExists = await UserAvailabilityChecker().userExists(username: username);
 
     if (!userExists) {
       SnackBarDialog.errorSnack(message: AlertMessages.userNotFound);
