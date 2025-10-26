@@ -21,9 +21,9 @@ class UserRegistrationService with UserProfileProviderService {
     required String password,
   }) async {
 
-    final userValidator = await UserAvailabilityChecker(
+    final userValidator = await UserAvailabilityChecker().usernameOrEmailExists(
       username: username, email: email
-    ).usernameOrEmailExists();
+    );
 
     final usernameExists = userValidator['username_exists']!;
     final emailExists = userValidator['email_exists']!;

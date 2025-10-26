@@ -3,15 +3,10 @@ import 'package:revent/shared/api/api_path.dart';
 
 class UserAvailabilityChecker {
 
-  final String username;
-  final String email;
-
-  UserAvailabilityChecker({
-    required this.username, 
-    required this.email
-  });
-
-  Future<Map<String, bool>> usernameOrEmailExists() async {
+  Future<Map<String, bool>> usernameOrEmailExists({
+    required String username, 
+    required String email
+  }) async {
 
     Map<String, bool> existsConditionMap = {
       'username_exists': false,
