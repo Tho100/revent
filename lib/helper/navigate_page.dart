@@ -10,6 +10,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
 import 'package:revent/pages/authentication/sign_up.dart';
+import 'package:revent/pages/mini_game/ball_game.dart';
 import 'package:revent/pages/vent/create_vent_page.dart';
 import 'package:revent/pages/vent/edit_vent_page.dart';
 import 'package:revent/pages/profile/follows_page.dart';
@@ -202,5 +203,11 @@ class NavigatePage {
       )
     );
   }
+
+  static void pongGame() {
+    _navigateToPage(
+      classPage: const PongGame()
+    );
+  } 
 
 }
