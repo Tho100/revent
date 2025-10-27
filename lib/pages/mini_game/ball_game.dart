@@ -90,6 +90,7 @@ class _PongGameState extends State<PongGame> {
   final highScoreNotifier = ValueNotifier<int>(0);
 
   int highScore = 0;
+  bool hasBounced = false;
 
   List<int> highScoresList = [];
 
@@ -163,21 +164,27 @@ class _PongGameState extends State<PongGame> {
 
     final paddleTop = MediaQuery.of(context).size.height - 112;
 
-    if (ball.y + ball.radius >= paddleTop 
-      && ball.x >= paddlePosition 
-      &&  ball.x <= paddlePosition + 155 
-      &&  ball.y - ball.radius <= paddleTop + 10) {
+    if (ball.y + ball.radius >= paddleTop &&
+      ball.x >= paddlePosition &&
+      ball.x <= paddlePosition + 155 &&
+      ball.y - ball.radius <= paddleTop + 10) {
+    
+      if (!hasBounced) {
+        
+        scoreNotifier.value++;
+        highScore = scoreNotifier.value;
+        ball.dy = -ball.dy;
 
-      scoreNotifier.value++;
-      highScore = scoreNotifier.value;
-      ball.dy = -ball.dy;
+        if (scoreNotifier.value <= 12) {
+          ball.dx *= 1.05;
+          ball.dy *= 1.05;
+        }
 
-    } else if (ball.y + ball.radius >= MediaQuery.of(context).size.height - 90) {
+        hasBounced = true; 
+      }
 
-      highScoresList.add(highScore);
-      highScoreNotifier.value = highScoresList.reduce((score, next) => score > next? score: next);
-      _resetBall();
-      
+    } else {
+      hasBounced = false; 
     }
 
     if (ball.x - ball.radius <= 0 || ball.x + ball.radius >= MediaQuery.of(context).size.width) {
@@ -186,6 +193,12 @@ class _PongGameState extends State<PongGame> {
 
     if (ball.y - ball.radius <= 0) {
       ball.dy = -ball.dy;
+    }
+
+    if (ball.y + ball.radius >= MediaQuery.of(context).size.height - 90) {
+      highScoresList.add(highScore);
+      highScoreNotifier.value = highScoresList.reduce((score, next) => score > next ? score : next);
+      _resetBall();
     }
 
   }
