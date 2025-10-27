@@ -1,5 +1,7 @@
 import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format/format_date.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/general/base_query_service.dart';
 
@@ -13,21 +15,23 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
     required this.newBody,
   });
 
-  Future<void> save() async {
+  final _lastEdit = DateTime.now();
 
-    const query = 
-      'UPDATE ${TableNames.ventInfo} SET body_text = :new_body WHERE post_id = :post_id';
+  Future<Map<String, dynamic>> save() async {
 
-    final params = {
+    final response = await ApiClient.post(ApiPath.updateDefaultVent, {
       'post_id': postId,
-      'new_body': newBody
+      'new_body': newBody,
+      'last_edit': _lastEdit
+    });
+
+    if (response.statusCode == 200) {
+      activeVentProvider.setBody(newBody); 
+    }
+
+    return {
+      'status_code': response.statusCode
     };
-
-    await executeQuery(query, params).then(
-      (_) => _updateLastEdit(isFromVault: false, postId: postId)
-    );
-
-    activeVentProvider.setBody(newBody);
 
   }
 
