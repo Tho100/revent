@@ -5,6 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 
+class _Specification {
+
+  static const paddleWidth = 125.0;
+  static const paddleHeight = 25.0; 
+
+}
+
 class _Ball {
 
   double x, y, radius, dx, dy;
@@ -34,15 +41,12 @@ class _PongPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 
-    const paddleWidth = 135.0; 
-    const paddleHeight = 22.0; 
-
     final paddleRect = RRect.fromRectAndRadius(
       Rect.fromLTWH(
         paddlePosition,
-        size.height - paddleHeight, 
-        paddleWidth,
-        paddleHeight,
+        size.height - _Specification.paddleHeight, 
+        _Specification.paddleWidth,
+        _Specification.paddleHeight,
       ),
       const Radius.circular(12),
     );
@@ -93,16 +97,16 @@ class _PongGameState extends State<PongGame> {
     return GestureDetector(
       onHorizontalDragUpdate: (DragUpdateDetails details) {
         setState(() {
-          
-          final screenWidth = MediaQuery.of(context).size.width;
-          const paddleWidth = 135.0; 
 
+          final screenWidth = MediaQuery.of(context).size.width;
+          
           paddlePosition += details.delta.dx;
 
           if (paddlePosition < 0) {
-            paddlePosition = 0;
-          } else if (paddlePosition + paddleWidth > screenWidth) {
-            paddlePosition = screenWidth - paddleWidth;
+            paddlePosition *= 0.5;
+          } else if (paddlePosition + _Specification.paddleWidth > screenWidth) {
+            final overflow = paddlePosition + _Specification.paddleWidth - screenWidth;
+            paddlePosition -= overflow * 0.5;
           }
 
         });
