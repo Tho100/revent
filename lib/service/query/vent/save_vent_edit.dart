@@ -35,23 +35,24 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
 
   }
 
-  Future<void> saveVault() async {
+  Future<Map<String, dynamic>> saveVault() async {
 
-    const query = 
-      'UPDATE ${TableNames.vaultVentInfo} SET body_text = :new_body WHERE post_id = :post_id';
-
-    final params = {
+    final response = await ApiClient.post(ApiPath.updateVaultVent, {
       'post_id': postId,
-      'new_body': newBody
+      'new_body': newBody,
+      'last_edit': _lastEdit
+    });
+
+    if (response.statusCode == 200) {
+      activeVentProvider.setBody(newBody); 
+    }
+
+    return {
+      'status_code': response.statusCode
     };
 
-    await executeQuery(query, params).then(
-      (_) => _updateLastEdit(isFromVault: true)
-    );
-
-    activeVentProvider.setBody(newBody);
-
   }
+// TODO: Remove unused stuff
 
   Future<void> _updateLastEdit({required bool isFromVault, int? postId}) async {
 
