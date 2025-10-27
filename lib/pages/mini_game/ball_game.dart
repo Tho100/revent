@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -201,6 +202,8 @@ class _PongGameState extends State<PongGame> {
       highScoreNotifier.value = highScoresList.reduce((score, next) => score > next ? score : next);
       _resetBall();
     }
+
+    HapticFeedback.mediumImpact();
 
   }
 
