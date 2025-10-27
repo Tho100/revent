@@ -15,7 +15,7 @@ class UserPrivacyActions {
 
   Future<Map<String, dynamic>> hideFollowingList({required bool isHidden}) async {
     return await _updatePrivacyOptions(
-      param: 'is_hidden', value: isHidden, path: ApiPath.makeUserPrivate
+      param: 'is_hidden', value: isHidden, path: ApiPath.hideUserFollowing
     );
   }
 
