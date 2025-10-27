@@ -60,6 +60,10 @@ class ApiPath {
   static const saveVent = '$_ventActions/save';
   static const pinVent = '$_ventActions/pin';
 
+  static const _ventUpdate = '/vent/update';
+  static const updateDefaultVent = '$_ventUpdate/default';
+  static const updateVaultVent = '$_ventUpdate/vault';
+
   static const _ventsGetter = '/vents';
   static const latestVentsGetter = '$_ventsGetter/latest';
   static const trendingVentsGetter = '$_ventsGetter/trending';

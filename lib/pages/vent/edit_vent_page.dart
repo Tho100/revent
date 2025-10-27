@@ -50,20 +50,15 @@ class _EditVentPageState extends State<EditVentPage> with VentPostController {
 
       final newBodyText = bodyTextController.text;
 
-      if (widget.ventType == VentType.vault) {
+      final saveVentEdit = SaveVentEdit(postId: widget.postId, newBody: newBodyText);
 
-        await SaveVentEdit(
-          postId: widget.postId, 
-          newBody: newBodyText, 
-        ).saveVault();
+      final saveChangesResponse = widget.ventType == VentType.vault
+        ? await saveVentEdit.saveVault()
+        : await saveVentEdit.save();
 
-      } else {
-
-        await SaveVentEdit(
-          postId: widget.postId, 
-          newBody: newBodyText, 
-        ).save();
-
+      if (saveChangesResponse['status_code'] != 200) {
+        SnackBarDialog.temporarySnack(message: AlertMessages.changesFailed);
+        return;
       }
 
       SnackBarDialog.temporarySnack(message: AlertMessages.savedChanges);

@@ -1,12 +1,11 @@
 import 'package:revent/helper/data/data_converter.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 import 'package:revent/helper/data/extract_data.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class UserPrivacyActions extends BaseQueryService {
+class UserPrivacyActions {
 
   Future<Map<String, dynamic>> makeProfilePrivate({required bool isPrivate}) async {
     return await _updatePrivacyOptions(
@@ -16,7 +15,7 @@ class UserPrivacyActions extends BaseQueryService {
 
   Future<Map<String, dynamic>> hideFollowingList({required bool isHidden}) async {
     return await _updatePrivacyOptions(
-      param: 'is_hidden', value: isHidden, path: ApiPath.makeUserPrivate
+      param: 'is_hidden', value: isHidden, path: ApiPath.hideUserFollowing
     );
   }
 
