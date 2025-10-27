@@ -181,6 +181,7 @@ class _PongGameState extends State<PongGame> {
         }
 
         hasBounced = true; 
+        
       }
 
     } else {
