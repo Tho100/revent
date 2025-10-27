@@ -132,10 +132,10 @@ class _PongGameState extends State<PongGame> {
         return Align(
           alignment: Alignment.topCenter,
           child: Text("HIGH SCORE: ${value.toString()}", 
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 15,
               color: ThemeColor.contentThird,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.w800
             ),
           ),
         );
@@ -149,10 +149,10 @@ class _PongGameState extends State<PongGame> {
       builder: (context, value, child) {
         return Center(
           child: Text(value.toString(), 
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 135,
               color: ThemeColor.contentThird,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.w900
             )
           ),
         );
@@ -170,7 +170,7 @@ class _PongGameState extends State<PongGame> {
       ball.y - ball.radius <= paddleTop + 10) {
     
       if (!hasBounced) {
-        
+
         scoreNotifier.value++;
         highScore = scoreNotifier.value;
         ball.dy = -ball.dy;
