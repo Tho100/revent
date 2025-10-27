@@ -1,11 +1,9 @@
-import 'package:revent/global/table_names.dart';
 import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 
-class SaveVentEdit extends BaseQueryService with UserProfileProviderService, VentProviderService {
+class SaveVentEdit  with UserProfileProviderService, VentProviderService {
 
   final int postId;
   final String newBody;
@@ -26,7 +24,13 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
     });
 
     if (response.statusCode == 200) {
+
       activeVentProvider.setBody(newBody); 
+
+      final formatTimeStamp = FormatDate().formatPostTimestamp(_lastEdit);
+
+      activeVentProvider.setLastEdit(formatTimeStamp);
+
     }
 
     return {
@@ -50,35 +54,6 @@ class SaveVentEdit extends BaseQueryService with UserProfileProviderService, Ven
     return {
       'status_code': response.statusCode
     };
-
-  }
-// TODO: Remove unused stuff
-
-  Future<void> _updateLastEdit({required bool isFromVault, int? postId}) async {
-
-    final dateTimeNow = DateTime.now();
-
-    final query = isFromVault 
-      ? 'UPDATE ${TableNames.vaultVentInfo} SET last_edit = :last_edit WHERE post_id = :post_id'
-      : 'UPDATE ${TableNames.ventInfo} SET last_edit = :last_edit WHERE post_id = :post_id';
-
-    final params = isFromVault 
-      ? {
-        'post_id': postId,
-        'last_edit': dateTimeNow
-        } 
-      : {
-        'post_id': postId,
-        'last_edit': dateTimeNow
-        };
-
-    await executeQuery(query, params);
-
-    final formatTimeStamp = FormatDate().formatPostTimestamp(dateTimeNow);
-
-    if (!isFromVault) {
-      activeVentProvider.setLastEdit(formatTimeStamp);
-    }
 
   }
 
