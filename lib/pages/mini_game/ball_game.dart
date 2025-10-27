@@ -93,7 +93,18 @@ class _PongGameState extends State<PongGame> {
     return GestureDetector(
       onHorizontalDragUpdate: (DragUpdateDetails details) {
         setState(() {
+          
+          final screenWidth = MediaQuery.of(context).size.width;
+          const paddleWidth = 135.0; 
+
           paddlePosition += details.delta.dx;
+
+          if (paddlePosition < 0) {
+            paddlePosition = 0;
+          } else if (paddlePosition + paddleWidth > screenWidth) {
+            paddlePosition = screenWidth - paddleWidth;
+          }
+
         });
       },
       child: CustomPaint(
