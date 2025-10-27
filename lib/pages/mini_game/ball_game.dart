@@ -1,9 +1,17 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
+
+class _Specification {
+
+  static const paddleWidth = 125.0;
+  static const paddleHeight = 25.0; 
+
+}
 
 class _Ball {
 
@@ -34,15 +42,12 @@ class _PongPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
 
-    const paddleWidth = 135.0; 
-    const paddleHeight = 22.0; 
-
     final paddleRect = RRect.fromRectAndRadius(
       Rect.fromLTWH(
         paddlePosition,
-        size.height - paddleHeight, 
-        paddleWidth,
-        paddleHeight,
+        size.height - _Specification.paddleHeight, 
+        _Specification.paddleWidth,
+        _Specification.paddleHeight,
       ),
       const Radius.circular(12),
     );
@@ -86,6 +91,7 @@ class _PongGameState extends State<PongGame> {
   final highScoreNotifier = ValueNotifier<int>(0);
 
   int highScore = 0;
+  bool hasBounced = false;
 
   List<int> highScoresList = [];
 
@@ -93,7 +99,18 @@ class _PongGameState extends State<PongGame> {
     return GestureDetector(
       onHorizontalDragUpdate: (DragUpdateDetails details) {
         setState(() {
+
+          final screenWidth = MediaQuery.of(context).size.width;
+          
           paddlePosition += details.delta.dx;
+
+          if (paddlePosition < 0) {
+            paddlePosition *= 0.5;
+          } else if (paddlePosition + _Specification.paddleWidth > screenWidth) {
+            final overflow = paddlePosition + _Specification.paddleWidth - screenWidth;
+            paddlePosition -= overflow * 0.5;
+          }
+
         });
       },
       child: CustomPaint(
@@ -116,10 +133,10 @@ class _PongGameState extends State<PongGame> {
         return Align(
           alignment: Alignment.topCenter,
           child: Text("HIGH SCORE: ${value.toString()}", 
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 15,
               color: ThemeColor.contentThird,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.w800
             ),
           ),
         );
@@ -133,10 +150,10 @@ class _PongGameState extends State<PongGame> {
       builder: (context, value, child) {
         return Center(
           child: Text(value.toString(), 
-            style: GoogleFonts.poppins(
+            style: GoogleFonts.inter(
               fontSize: 135,
               color: ThemeColor.contentThird,
-              fontWeight: FontWeight.bold
+              fontWeight: FontWeight.w900
             )
           ),
         );
@@ -148,21 +165,28 @@ class _PongGameState extends State<PongGame> {
 
     final paddleTop = MediaQuery.of(context).size.height - 112;
 
-    if (ball.y + ball.radius >= paddleTop 
-      && ball.x >= paddlePosition 
-      &&  ball.x <= paddlePosition + 155 
-      &&  ball.y - ball.radius <= paddleTop + 10) {
+    if (ball.y + ball.radius >= paddleTop &&
+      ball.x >= paddlePosition &&
+      ball.x <= paddlePosition + 155 &&
+      ball.y - ball.radius <= paddleTop + 10) {
+    
+      if (!hasBounced) {
 
-      scoreNotifier.value++;
-      highScore = scoreNotifier.value;
-      ball.dy = -ball.dy;
+        scoreNotifier.value++;
+        highScore = scoreNotifier.value;
+        ball.dy = -ball.dy;
 
-    } else if (ball.y + ball.radius >= MediaQuery.of(context).size.height - 90) {
+        if (scoreNotifier.value <= 12) {
+          ball.dx *= 1.05;
+          ball.dy *= 1.05;
+        }
 
-      highScoresList.add(highScore);
-      highScoreNotifier.value = highScoresList.reduce((score, next) => score > next? score: next);
-      _resetBall();
-      
+        hasBounced = true; 
+        
+      }
+
+    } else {
+      hasBounced = false; 
     }
 
     if (ball.x - ball.radius <= 0 || ball.x + ball.radius >= MediaQuery.of(context).size.width) {
@@ -172,6 +196,14 @@ class _PongGameState extends State<PongGame> {
     if (ball.y - ball.radius <= 0) {
       ball.dy = -ball.dy;
     }
+
+    if (ball.y + ball.radius >= MediaQuery.of(context).size.height - 90) {
+      highScoresList.add(highScore);
+      highScoreNotifier.value = highScoresList.reduce((score, next) => score > next ? score : next);
+      _resetBall();
+    }
+
+    HapticFeedback.mediumImpact();
 
   }
 
