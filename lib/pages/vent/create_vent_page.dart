@@ -22,7 +22,6 @@ import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/query/vent/create_new_item.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
-import 'package:revent/service/query/vent/vent_checker.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
@@ -82,27 +81,12 @@ class _CreateVentPageState extends State<CreateVentPage> with
 
     try {
 
-      final ventChecker = VentChecker(title: ventTitle);
-
-      final isVentAlreadyExists = vaultVentNotifier.value 
-        ? await ventChecker.isVaultVentExists()
-        : await ventChecker.isVentExists();
-
-      if (isVentAlreadyExists) {
-        CustomAlertDialog.alertDialog(AlertMessages.postTitleExists);
-        return;
-      }
-
       if (vaultVentNotifier.value) {
-        await _createVaultVent(title: ventTitle, bodyText: ventBodyText, tags: tags).then(
-          (_) => SnackBarDialog.temporarySnack(message: AlertMessages.ventVaulted)
-        );
+        await _createVaultVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
         return;
       }
 
-      await _createVent(title: ventTitle, bodyText: ventBodyText, tags: tags).then(
-        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.ventPosted)
-      );
+      await _createVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
 
       isPostPressed = true;
         
@@ -122,6 +106,11 @@ class _CreateVentPageState extends State<CreateVentPage> with
 
     final ventResponse = await CreateNewItem(title: title, body: bodyText, tags: tags).newVaultVent();
 
+    if (ventResponse['status_code'] == 409) {
+      SnackBarDialog.errorSnack(message: AlertMessages.postTitleExists);
+      return;
+    }
+
     if (ventResponse['status_code'] != 201) {
       SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);
       return;
@@ -139,6 +128,8 @@ class _CreateVentPageState extends State<CreateVentPage> with
       );
     }
 
+    SnackBarDialog.temporarySnack(message: AlertMessages.ventVaulted);
+
   }
 
   Future<void> _createVent({
@@ -152,6 +143,11 @@ class _CreateVentPageState extends State<CreateVentPage> with
       allowCommenting: allowCommentingNotifier.value
     );
 
+    if (ventResponse['status_code'] == 409) {
+      SnackBarDialog.errorSnack(message: AlertMessages.postTitleExists);
+      return;
+    }
+
     if (ventResponse['status_code'] != 201) {
       SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);
       return;
@@ -164,6 +160,8 @@ class _CreateVentPageState extends State<CreateVentPage> with
     if (getIt.navigationProvider.currentNavigation != NavigationTabs.home) {
       NavigatePage.homePage();
     }
+
+    SnackBarDialog.temporarySnack(message: AlertMessages.ventPosted);
 
   }  
 

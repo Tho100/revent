@@ -1,15 +1,21 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 
 class _Specification {
 
-  static const paddleWidth = 125.0;
+  static const paddleWidth = 100.0;
   static const paddleHeight = 25.0; 
+  static const paddleYOffset = 40.0;
+  static const paddleCollisionHeight = paddleHeight + 90;
+
+  static const ballXPosition = 110.0;
+  static const ballYPosition = 100.0;
+
+  static const ballXShootDirection = 3.0;
+  static const ballYShootDirection = -3.0;
 
 }
 
@@ -45,7 +51,7 @@ class _PongPainter extends CustomPainter {
     final paddleRect = RRect.fromRectAndRadius(
       Rect.fromLTWH(
         paddlePosition,
-        size.height - _Specification.paddleHeight, 
+        size.height - _Specification.paddleHeight - _Specification.paddleYOffset, 
         _Specification.paddleWidth,
         _Specification.paddleHeight,
       ),
@@ -132,7 +138,7 @@ class _PongGameState extends State<PongGame> {
       builder: (context, value, child) {
         return Align(
           alignment: Alignment.topCenter,
-          child: Text("HIGH SCORE: ${value.toString()}", 
+          child: Text("HIGHEST SCORE: ${value.toString()}", 
             style: GoogleFonts.inter(
               fontSize: 15,
               color: ThemeColor.contentThird,
@@ -163,11 +169,14 @@ class _PongGameState extends State<PongGame> {
 
   void _checkCollisions() {
 
-    final paddleTop = MediaQuery.of(context).size.height - 112;
+    final paddleTop = 
+    MediaQuery.of(context).size.height - (
+      _Specification.paddleCollisionHeight + _Specification.paddleYOffset
+    );
 
     if (ball.y + ball.radius >= paddleTop &&
       ball.x >= paddlePosition &&
-      ball.x <= paddlePosition + 155 &&
+      ball.x <= paddlePosition + _Specification.paddleWidth &&
       ball.y - ball.radius <= paddleTop + 10) {
     
       if (!hasBounced) {
@@ -203,17 +212,15 @@ class _PongGameState extends State<PongGame> {
       _resetBall();
     }
 
-    HapticFeedback.mediumImpact();
-
   }
 
   void _resetBall() {
 
-    ball.x = MediaQuery.of(context).size.width / 2;
-    ball.y = MediaQuery.of(context).size.height / 2;
+    ball.x = _Specification.ballXPosition;
+    ball.y = _Specification.ballYPosition;
 
-    ball.dx = 3;
-    ball.dy = 3; 
+    ball.dx = _Specification.ballXShootDirection;
+    ball.dy = _Specification.ballYShootDirection; 
     
     highScore = scoreNotifier.value;
     scoreNotifier.value = 0;
@@ -229,11 +236,17 @@ class _PongGameState extends State<PongGame> {
     });
   }
 
-  @override
+  @override 
   void initState() {
     super.initState();
     paddlePosition = 165.0;
-    ball = _Ball(x: 150, y: 100, radius: 10, dx: 3, dy: 3);
+    ball = _Ball(
+      x: _Specification.ballXPosition, 
+      y: _Specification.ballYPosition, 
+      dx: _Specification.ballXShootDirection, 
+      dy: _Specification.ballYShootDirection,
+      radius: 10, 
+    );
     _startGameLoop();
   }
 
