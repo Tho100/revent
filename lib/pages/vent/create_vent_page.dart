@@ -122,6 +122,11 @@ class _CreateVentPageState extends State<CreateVentPage> with
 
     final ventResponse = await CreateNewItem(title: title, body: bodyText, tags: tags).newVaultVent();
 
+    if (ventResponse['status_code'] == 409) {
+      SnackBarDialog.errorSnack(message: AlertMessages.postTitleExists);
+      return;
+    }
+
     if (ventResponse['status_code'] != 201) {
       SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);
       return;
@@ -151,6 +156,11 @@ class _CreateVentPageState extends State<CreateVentPage> with
       markedNsfw: markAsNsfwNotifier.value,
       allowCommenting: allowCommentingNotifier.value
     );
+
+    if (ventResponse['status_code'] == 409) {
+      SnackBarDialog.errorSnack(message: AlertMessages.postTitleExists);
+      return;
+    }
 
     if (ventResponse['status_code'] != 201) {
       SnackBarDialog.errorSnack(message: AlertMessages.ventPostFailed);

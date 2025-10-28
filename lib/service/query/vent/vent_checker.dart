@@ -11,7 +11,7 @@ class VentChecker extends BaseQueryService {
   VentChecker({required this.title});
 
   Future<bool> _isVentExists({required VentType type}) async {
-
+// TODO: REmove this class
     final table = type == VentType.vault 
       ? TableNames.vaultVentInfo : TableNames.ventInfo;
 

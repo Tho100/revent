@@ -32,10 +32,12 @@ class CreateNewItem with UserProfileProviderService {
       'comment_enabled': allowCommenting,
     });
 
-    final postId = response.body!['post_id'] as int;
-    
     if (response.statusCode == 201) {
+      
+      final postId = response.body!['post_id'] as int;
+
       _addVent(postId: postId, markedNsfw: markedNsfw);
+
     }
 
     return {
