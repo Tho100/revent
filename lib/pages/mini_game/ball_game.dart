@@ -9,7 +9,7 @@ class _Specification {
   static const paddleWidth = 100.0;
   static const paddleHeight = 25.0; 
   static const paddleYOffset = 40.0;
-  static const paddleCollisionHeight = 115.0;
+  static const paddleCollisionHeight = paddleHeight + 90;
 
   static const ballXPosition = 110.0;
   static const ballYPosition = 100.0;
