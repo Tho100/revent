@@ -131,7 +131,7 @@ class _PongGameState extends State<PongGame> {
       builder: (context, value, child) {
         return Align(
           alignment: Alignment.topCenter,
-          child: Text("HIGH SCORE: ${value.toString()}", 
+          child: Text("HIGHEST SCORE: ${value.toString()}", 
             style: GoogleFonts.inter(
               fontSize: 15,
               color: ThemeColor.contentThird,
