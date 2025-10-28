@@ -203,8 +203,6 @@ class _PongGameState extends State<PongGame> {
       _resetBall();
     }
 
-    HapticFeedback.mediumImpact();
-
   }
 
   void _resetBall() {
