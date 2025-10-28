@@ -34,11 +34,12 @@ class CreateNewItem with UserProfileProviderService {
 
     final postId = response.body!['post_id'] as int;
     
-    _addVent(postId: postId, markedNsfw: markedNsfw);
+    if (response.statusCode == 201) {
+      _addVent(postId: postId, markedNsfw: markedNsfw);
+    }
 
     return {
-      'status_code': response.statusCode,
-      'body': response.body,
+      'status_code': response.statusCode
     };
 
   }
@@ -77,8 +78,7 @@ class CreateNewItem with UserProfileProviderService {
     });
 
     return {
-      'status_code': response.statusCode,
-      'body': response.body,
+      'status_code': response.statusCode
     };
 
   }
