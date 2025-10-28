@@ -3,9 +3,8 @@ import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
 
-class LastEditGetter extends BaseQueryService with VentProviderService {
+class LastEditGetter with VentProviderService {
 
   Future<String> _getLastEdit({required VentType type}) async {
 
