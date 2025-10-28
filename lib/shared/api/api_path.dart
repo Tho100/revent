@@ -77,6 +77,8 @@ class ApiPath {
   static const ventBodyTextGetter = '$_ventInfoGetter/body-text';
   static const ventMetadataGetter = '$_ventInfoGetter/metadata';
   static const vaultBodyTextGetter = '$_ventInfoGetter/vault-body-text';
+  static const ventLastEditDefaultGetter = '$_ventInfoGetter/last-edit-default';
+  static const ventLastEditVaultGetter = '$_ventInfoGetter/last-edit-vault';
 
   static const _comment = '/comment';
   static const createComment = '$_comment/create';
