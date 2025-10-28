@@ -9,15 +9,9 @@ class LastEditGetter extends BaseQueryService with VentProviderService {
 
   Future<String> _getLastEdit({required VentType type}) async {
 
-    final response = type == VentType.nonVault 
-      ? await ApiClient.get(
-        ApiPath.ventLastEditDefaultGetter, activeVentProvider.ventData.postId
-    )
-      : await ApiClient.post(
-        ApiPath.ventLastEditVaultGetter, {
-          'title': activeVentProvider.ventData.title, 
-          'creator': activeVentProvider.ventData.creator
-        }
+    final response = await ApiClient.get(
+      type == VentType.nonVault ? ApiPath.ventLastEditDefaultGetter : ApiPath.ventLastEditVaultGetter, 
+      activeVentProvider.ventData.postId
     );
 
     final lastEdit = response.body!['last_edit'] as String;
