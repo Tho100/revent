@@ -9,6 +9,7 @@ class _Specification {
   static const paddleWidth = 100.0;
   static const paddleHeight = 25.0; 
   static const paddleYOffset = 40.0;
+  static const paddleCollisionHeight = 115.0;
 
   static const ballXPosition = 110.0;
   static const ballYPosition = 100.0;
@@ -168,7 +169,10 @@ class _PongGameState extends State<PongGame> {
 
   void _checkCollisions() {
 
-    final paddleTop = MediaQuery.of(context).size.height - (112 + _Specification.paddleYOffset);
+    final paddleTop = 
+    MediaQuery.of(context).size.height - (
+      _Specification.paddleCollisionHeight + _Specification.paddleYOffset
+    );
 
     if (ball.y + ball.radius >= paddleTop &&
       ball.x >= paddlePosition &&
@@ -215,8 +219,8 @@ class _PongGameState extends State<PongGame> {
     ball.x = _Specification.ballXPosition;
     ball.y = _Specification.ballYPosition;
 
-    ball.dx = 3;
-    ball.dy = -3; 
+    ball.dx = _Specification.ballXShootDirection;
+    ball.dy = _Specification.ballYShootDirection; 
     
     highScore = scoreNotifier.value;
     scoreNotifier.value = 0;
