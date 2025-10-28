@@ -7,7 +7,7 @@ import 'package:revent/shared/widgets/app_bar.dart';
 
 class _Specification {
 
-  static const paddleWidth = 115.0;
+  static const paddleWidth = 100.0;
   static const paddleHeight = 25.0; 
   static const paddleYOffset = 40;
 
@@ -167,7 +167,7 @@ class _PongGameState extends State<PongGame> {
 
     if (ball.y + ball.radius >= paddleTop &&
       ball.x >= paddlePosition &&
-      ball.x <= paddlePosition + 155 &&
+      ball.x <= paddlePosition + _Specification.paddleWidth &&
       ball.y - ball.radius <= paddleTop + 10) {
     
       if (!hasBounced) {
