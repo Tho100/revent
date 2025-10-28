@@ -82,15 +82,11 @@ class _CreateVentPageState extends State<CreateVentPage> with
     try {
 
       if (vaultVentNotifier.value) {
-        await _createVaultVent(title: ventTitle, bodyText: ventBodyText, tags: tags).then(
-          (_) => SnackBarDialog.temporarySnack(message: AlertMessages.ventVaulted)
-        );
+        await _createVaultVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
         return;
       }
 
-      await _createVent(title: ventTitle, bodyText: ventBodyText, tags: tags).then(
-        (_) => SnackBarDialog.temporarySnack(message: AlertMessages.ventPosted)
-      );
+      await _createVent(title: ventTitle, bodyText: ventBodyText, tags: tags);
 
       isPostPressed = true;
         
@@ -132,6 +128,8 @@ class _CreateVentPageState extends State<CreateVentPage> with
       );
     }
 
+    SnackBarDialog.temporarySnack(message: AlertMessages.ventVaulted);
+
   }
 
   Future<void> _createVent({
@@ -162,6 +160,8 @@ class _CreateVentPageState extends State<CreateVentPage> with
     if (getIt.navigationProvider.currentNavigation != NavigationTabs.home) {
       NavigatePage.homePage();
     }
+
+    SnackBarDialog.temporarySnack(message: AlertMessages.ventPosted);
 
   }  
 
