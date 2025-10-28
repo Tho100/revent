@@ -9,6 +9,7 @@ class _Specification {
 
   static const paddleWidth = 115.0;
   static const paddleHeight = 25.0; 
+  static const paddleYOffset = 40;
 
 }
 
@@ -44,7 +45,7 @@ class _PongPainter extends CustomPainter {
     final paddleRect = RRect.fromRectAndRadius(
       Rect.fromLTWH(
         paddlePosition,
-        size.height - _Specification.paddleHeight, 
+        size.height - _Specification.paddleHeight - _Specification.paddleYOffset, 
         _Specification.paddleWidth,
         _Specification.paddleHeight,
       ),
@@ -162,7 +163,7 @@ class _PongGameState extends State<PongGame> {
 
   void _checkCollisions() {
 
-    final paddleTop = MediaQuery.of(context).size.height - 112;
+    final paddleTop = MediaQuery.of(context).size.height - (112 + _Specification.paddleYOffset);
 
     if (ball.y + ball.radius >= paddleTop &&
       ball.x >= paddlePosition &&
