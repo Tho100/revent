@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 
 class _Specification {
 
-  static const paddleWidth = 125.0;
+  static const paddleWidth = 115.0;
   static const paddleHeight = 25.0; 
 
 }
