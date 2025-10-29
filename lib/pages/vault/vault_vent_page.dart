@@ -69,11 +69,11 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   Future<String> _getBodyText(int postId) async 
     => await _vaultDataGetter.getBodyText(postId: postId);
 
-  Future<String> _getLastEdit(String title) async {
+  Future<String> _getLastEdit(int postId, String title) async {
 
     activeVentProvider.setVentData(
       ActiveVentData(
-        postId: 0,
+        postId: postId,
         title: title, 
         creator: userProvider.user.username, 
         body: '',
@@ -88,7 +88,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   void _navigateViewVaultVentPage(int postId, String title, String tags, String postTimestamp) async {
 
     final bodyText = await _getBodyText(postId);
-    final lastEdit = await _getLastEdit(title);
+    final lastEdit = await _getLastEdit(postId, title);
 
     Navigator.push(
       AppKeys.navigatorKey.currentContext!,

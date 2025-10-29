@@ -5,12 +5,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/shared/provider/profile/profile_provider.dart';
+import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/pages/profile_picture_viewer_page.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
-class ProfileInfoWidgets {
+class ProfileInfoWidgets with UserProfileProviderService {
 
   final String username;
   final Uint8List pfpData;
@@ -40,7 +41,9 @@ class ProfileInfoWidgets {
             Navigator.push(
               AppKeys.navigatorKey.currentContext!,
               MaterialPageRoute(
-                builder: (_) => ProfilePictureViewer(pfpData: avatar)
+                builder: (_) => ProfilePictureViewer(
+                  pfpData: username == userProvider.user.username ? avatar : pfpData
+                )
               )
             );
           },
@@ -50,7 +53,7 @@ class ProfileInfoWidgets {
               customHeight: 70,
               customWidth: 70,
               customEmptyPfpSize: 30,
-              pfpData: avatar,
+              pfpData: username == userProvider.user.username ? avatar : pfpData,
             ),
           ),
         );

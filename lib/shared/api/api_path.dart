@@ -54,7 +54,7 @@ class ApiPath {
   static const createVaultVent = '$_createVent/vault';
 
   static const _ventActions = '/vent/actions';
-  static const deleteVent = '$_ventActions/delete-vent';
+  static const deleteVent = '$_ventActions/delete';
   static const deleteVaultVent = '$_ventActions/delete-vault';
   static const likeVent = '$_ventActions/like';
   static const saveVent = '$_ventActions/save';
@@ -77,6 +77,8 @@ class ApiPath {
   static const ventBodyTextGetter = '$_ventInfoGetter/body-text';
   static const ventMetadataGetter = '$_ventInfoGetter/metadata';
   static const vaultBodyTextGetter = '$_ventInfoGetter/vault-body-text';
+  static const ventLastEditDefaultGetter = '$_ventInfoGetter/last-edit-default';
+  static const ventLastEditVaultGetter = '$_ventInfoGetter/last-edit-vault';
 
   static const _comment = '/comment';
   static const createComment = '$_comment/create';
