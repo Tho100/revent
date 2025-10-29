@@ -1,11 +1,12 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 
 class _Specification {
 
+  static const paddlePosition = 165.0;
   static const paddleWidth = 100.0;
   static const paddleHeight = 25.0; 
   static const paddleYOffset = 40.0;
@@ -41,6 +42,7 @@ class _Ball {
 class _PongPainter extends CustomPainter {
   
   final double paddlePosition;
+
   final _Ball ball;
 
   _PongPainter({required this.paddlePosition, required this.ball});
@@ -88,13 +90,21 @@ class PongGame extends StatefulWidget {
 
 }
 
-class _PongGameState extends State<PongGame> {
+class _PongGameState extends State<PongGame> with SingleTickerProviderStateMixin {
   
-  late double paddlePosition;
-  late _Ball ball;
+  _Ball ball = _Ball(
+    x: _Specification.ballXPosition, 
+    y: _Specification.ballYPosition, 
+    dx: _Specification.ballXShootDirection, 
+    dy: _Specification.ballYShootDirection,
+    radius: 10, 
+  );
 
   final scoreNotifier = ValueNotifier<int>(0);
   final highScoreNotifier = ValueNotifier<int>(0);
+  final paddlePositionNotifier = ValueNotifier<double>(_Specification.paddlePosition);
+
+  late Ticker tickerTimer;
 
   int highScore = 0;
   bool hasBounced = false;
@@ -104,30 +114,33 @@ class _PongGameState extends State<PongGame> {
   Widget _buildPaddle() {
     return GestureDetector(
       onHorizontalDragUpdate: (DragUpdateDetails details) {
-        setState(() {
 
-          final screenWidth = MediaQuery.of(context).size.width;
-          
-          paddlePosition += details.delta.dx;
+        final screenWidth = MediaQuery.of(context).size.width;
+        
+        paddlePositionNotifier.value += details.delta.dx;
 
-          if (paddlePosition < 0) {
-            paddlePosition *= 0.5;
-          } else if (paddlePosition + _Specification.paddleWidth > screenWidth) {
-            final overflow = paddlePosition + _Specification.paddleWidth - screenWidth;
-            paddlePosition -= overflow * 0.5;
-          }
+        if (paddlePositionNotifier.value < 0) {
+          paddlePositionNotifier.value *= 0.5;
+        } else if (paddlePositionNotifier.value + _Specification.paddleWidth > screenWidth) {
+          final overflow = paddlePositionNotifier.value + _Specification.paddleWidth - screenWidth;
+          paddlePositionNotifier.value -= overflow * 0.5;
+        }
 
-        });
       },
-      child: CustomPaint(
-        painter: _PongPainter(
-          paddlePosition: paddlePosition,
-          ball: ball,
-        ),
-        child: SizedBox(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height-90,
-        ),
+      child: ValueListenableBuilder(
+        valueListenable: paddlePositionNotifier,
+        builder: (_, paddlePosition, __) {
+          return CustomPaint(
+            painter: _PongPainter(
+              paddlePosition: paddlePosition,
+              ball: ball,
+            ),
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height-90,
+            ),
+          );
+        },
       ),
     );
   }
@@ -175,8 +188,8 @@ class _PongGameState extends State<PongGame> {
     );
 
     if (ball.y + ball.radius >= paddleTop &&
-      ball.x >= paddlePosition &&
-      ball.x <= paddlePosition + _Specification.paddleWidth &&
+      ball.x >= paddlePositionNotifier.value &&
+      ball.x <= paddlePositionNotifier.value + _Specification.paddleWidth &&
       ball.y - ball.radius <= paddleTop + 10) {
     
       if (!hasBounced) {
@@ -228,25 +241,21 @@ class _PongGameState extends State<PongGame> {
   }
 
   void _startGameLoop() {
-    Timer.periodic(const Duration(milliseconds: 6), (timer) {
+
+    tickerTimer = createTicker((elapsed) {
       setState(() {
         ball.updatePosition();
         _checkCollisions();
       });
     });
+
+    tickerTimer.start();
+
   }
 
   @override 
   void initState() {
     super.initState();
-    paddlePosition = 165.0;
-    ball = _Ball(
-      x: _Specification.ballXPosition, 
-      y: _Specification.ballYPosition, 
-      dx: _Specification.ballXShootDirection, 
-      dy: _Specification.ballYShootDirection,
-      radius: 10, 
-    );
     _startGameLoop();
   }
 
@@ -254,6 +263,8 @@ class _PongGameState extends State<PongGame> {
   void dispose() {
     highScoreNotifier.dispose();
     scoreNotifier.dispose();
+    paddlePositionNotifier.dispose();
+    tickerTimer.dispose();
     super.dispose();
   }
 
