@@ -31,7 +31,7 @@ class RepliesGetter with UserProfileProviderService, VentProviderService {
     );
 
     final profilePictures = DataConverter.convertToPfp(
-      replies.extractColumn<String>('created_at')
+      replies.extractColumn<String>('profile_picture')
     );
 
     final isLiked = replies.extractColumn<bool>('is_liked');
