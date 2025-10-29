@@ -15,8 +15,8 @@ class _Specification {
   static const ballXPosition = 110.0;
   static const ballYPosition = 100.0;
 
-  static const ballXShootDirection = 3.0;
-  static const ballYShootDirection = -3.0;
+  static const ballXShootDirection = 5.0;
+  static const ballYShootDirection = -5.0;
 
 }
 
