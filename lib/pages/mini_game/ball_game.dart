@@ -6,7 +6,6 @@ import 'package:revent/shared/widgets/app_bar.dart';
 
 class _Specification {
 
-  static const paddlePosition = 165.0;
   static const paddleWidth = 100.0;
   static const paddleHeight = 25.0; 
   static const paddleYOffset = 40.0;
@@ -102,7 +101,7 @@ class _PongGameState extends State<PongGame> with SingleTickerProviderStateMixin
 
   final scoreNotifier = ValueNotifier<int>(0);
   final highScoreNotifier = ValueNotifier<int>(0);
-  final paddlePositionNotifier = ValueNotifier<double>(_Specification.paddlePosition);
+  final paddlePositionNotifier = ValueNotifier<double>(0.0);
 
   late Ticker tickerTimer;
 
@@ -240,6 +239,17 @@ class _PongGameState extends State<PongGame> with SingleTickerProviderStateMixin
 
   }
 
+  void _centerPaddle() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      final screenWidth = MediaQuery.of(context).size.width;
+      const paddleWidth = _Specification.paddleWidth;
+
+      paddlePositionNotifier.value = (screenWidth - paddleWidth) / 2;
+
+    });
+  }
+
   void _startGameLoop() {
 
     tickerTimer = createTicker((elapsed) {
@@ -256,6 +266,7 @@ class _PongGameState extends State<PongGame> with SingleTickerProviderStateMixin
   @override 
   void initState() {
     super.initState();
+    _centerPaddle();
     _startGameLoop();
   }
 
