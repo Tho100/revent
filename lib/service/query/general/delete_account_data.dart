@@ -1,37 +1,24 @@
-import 'package:revent/global/table_names.dart';
-import 'package:revent/service/query/general/base_query_service.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 
-class DeleteAccountData extends BaseQueryService {
+class DeleteAccountData {
 
   /// Delete all stored information for [username] on account deletion
   /// including non-vault/vault posts, comments, pinned-comment, etc.
+// TODO: remove unnecessary parameter, use userProvider.user.username instead
+  Future<Map<String, dynamic>> verifyAndDelete({
+    required String password, 
+    required String username
+  }) async {
 
-  Future<void> delete({required String username}) async {
+    final response = await ApiClient.post(ApiPath.deleteUser, {
+      'username': username,
+      'password': password
+    });
 
-    const query = 
-    '''
-      DELETE ui, upi, upvi, ufi, usl, vi, svi, avi, lvi, ci, cli, cri, rli, pci, pvi
-      FROM ${TableNames.userInfo} ui
-        LEFT JOIN ${TableNames.userProfileInfo} upi ON upi.username = ui.username
-        LEFT JOIN ${TableNames.userPrivacyInfo} pvi ON upvi.username = ui.username
-        LEFT JOIN ${TableNames.userFollowsInfo} ufi ON ufi.follower = ui.username
-        LEFT JOIN ${TableNames.userSocialLinks} usl ON ufi.username = ui.username
-        LEFT JOIN ${TableNames.ventInfo} vi ON vi.creator = ui.username
-        LEFT JOIN ${TableNames.savedVentInfo} svi ON svi.creator = ui.username
-        LEFT JOIN ${TableNames.vaultVentInfo} avi ON avi.creator = ui.username
-        LEFT JOIN ${TableNames.likedVentInfo} lvi ON lvi.liked_by = ui.username
-        LEFT JOIN ${TableNames.commentsInfo} ci ON ci.commented_by = ui.username
-        LEFT JOIN ${TableNames.commentsLikesInfo} cli ON cli.liked_by = ui.username
-        LEFT JOIN ${TableNames.commentRepliesInfo} cri ON cri.replied_by = ui.username
-        LEFT JOIN ${TableNames.repliesLikesInfo} rli ON rli.liked_by = ui.username
-        LEFT JOIN ${TableNames.pinnedCommentsInfo} pci ON pci.pinned_by = ui.username
-        LEFT JOIN ${TableNames.pinnedVentInfo} pvi ON pvi.pinned_by = ui.username
-      WHERE ui.username = :username
-    ''';
-
-    final param = {'username': username};
-
-    await executeQuery(query, param);
+    return {
+      'status_code': response.statusCode
+    };
 
   }
 
