@@ -52,7 +52,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
     );
   }
 
-  Future<void> _onDeactivateAccountPressed() async {
+  void _onDeactivateAccountPressed() async {
 
     try {
 
@@ -97,7 +97,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
             customFontSize: 17,
             onPressed: () async {
               FocusScope.of(context).unfocus(); 
-              await _onDeactivateAccountPressed();
+              _onDeactivateAccountPressed();
             }
           ),
     
