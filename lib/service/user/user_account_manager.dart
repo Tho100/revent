@@ -20,9 +20,9 @@ class UserAccountManager with UserProfileProviderService, ProfilePostsProviderSe
     await CacheHelper().clearActivityCache();
 
   }
-
-  Future<void> deactivateUserAccount({required String username}) async {
-    await DeleteAccountData().delete(username: username).then(
+// TODO: Delete this
+  Future<void> deactivateUserAccount({required String password, required String username}) async {
+    await DeleteAccountData().verifyAndDelete(password: password, username: username).then(
       (_) => signOutUserAccount()
     );
   }

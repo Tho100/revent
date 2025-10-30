@@ -9,6 +9,8 @@ class ApiPath {
   static const verifyUserAvailability = '$verifyUser/availability';
   static const verifyUserAuth = '$verifyUser/auth';
 
+  static const deleteUser = '$_auth/delete';
+
   static const _users = '/users';
   static const _usersUpdate = '$_users/update';
 
