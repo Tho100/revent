@@ -26,9 +26,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
 
   Future<void> _deleteAccount({required String password}) async {
 
-    final deleteAccountResponse = await DeleteAccountData().verifyAndDelete(
-      password: password, username: userProvider.user.username
-    );
+    final deleteAccountResponse = await DeleteAccountData().verifyAndDelete(password: password);
 
     if (deleteAccountResponse['status_code'] == 401) {
       SnackBarDialog.errorSnack(message: AlertMessages.incorrectPassword);
