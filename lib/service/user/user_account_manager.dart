@@ -1,7 +1,6 @@
 import 'package:revent/helper/cache_helper.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/local_storage_model.dart';
-import 'package:revent/service/query/general/delete_account_data.dart';
 
 class UserAccountManager with UserProfileProviderService, ProfilePostsProviderService {
 
@@ -19,12 +18,6 @@ class UserAccountManager with UserProfileProviderService, ProfilePostsProviderSe
     
     await CacheHelper().clearActivityCache();
 
-  }
-// TODO: Delete this
-  Future<void> deactivateUserAccount({required String password, required String username}) async {
-    await DeleteAccountData().verifyAndDelete(password: password, username: username).then(
-      (_) => signOutUserAccount()
-    );
   }
 
 }
