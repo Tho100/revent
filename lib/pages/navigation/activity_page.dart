@@ -11,7 +11,7 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/service/activity_service.dart';
 import 'package:revent/service/query/general/id_getter.dart';
-import 'package:revent/service/query/vent/vent_data_getter.dart';
+import 'package:revent/service/query/vent/vent_info_getter.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -71,10 +71,10 @@ class _ActivityPageState extends State<ActivityPage> with
     
     final postId = await IdGetter.getPostId(title: title, creator: userProvider.user.username);
 
-    final ventDataGetter = VentDataGetter(postId: postId);
+    final ventInfoGetter = VentInfoGetter(postId: postId);
 
-    final metadataResponse = await ventDataGetter.getMetadata();
-    final bodyTextResponse = await ventDataGetter.getBodyText();
+    final metadataResponse = await ventInfoGetter.getMetadata();
+    final bodyTextResponse = await ventInfoGetter.getBodyText();
 
     if (bodyTextResponse['status_code'] != 200 || metadataResponse['status_code'] != 200) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);

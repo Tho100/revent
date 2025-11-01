@@ -3,12 +3,12 @@ import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/helper/data/data_converter.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
-// TODO: Renae to VentInfoGetter
-class VentDataGetter {
+
+class VentInfoGetter {
 
   final int postId;
 
-  VentDataGetter({required this.postId});
+  VentInfoGetter({required this.postId});
 
   Future<Map<String, dynamic>> getBodyText() async {
 
