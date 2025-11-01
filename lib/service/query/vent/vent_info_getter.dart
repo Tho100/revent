@@ -4,17 +4,22 @@ import 'package:revent/helper/data/data_converter.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class VentDataGetter {
+class VentInfoGetter {
 
   final int postId;
 
-  VentDataGetter({required this.postId});
+  VentInfoGetter({required this.postId});
 
-  Future<String> getBodyText() async {
+  Future<Map<String, dynamic>> getBodyText() async {
 
     final response = await ApiClient.get(ApiPath.ventBodyTextGetter, postId);
 
-    return response.body!['body_text'];
+    final bodyText = response.body!['body_text'];
+
+    return {
+      'body_text': bodyText,
+      'status_code': response.statusCode
+    };
 
   }
 
@@ -36,10 +41,11 @@ class VentDataGetter {
     );
 
     return {
+      'status_code': response.statusCode,
       'tags': tags[0],
       'post_timestamp': postTimestamp[0],
       'total_likes': totalLikes[0],
-      'is_nsfw': isNsfw[0]
+      'is_nsfw': isNsfw[0],
     };
     
   }

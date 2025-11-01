@@ -17,7 +17,7 @@ import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/report_post_bottomsheet.dart';
 import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
-import 'package:revent/service/query/vent/vent_data_getter.dart';
+import 'package:revent/service/query/vent/vent_info_getter.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
@@ -172,7 +172,16 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
   }
 
   Future<String> _getVentBodyText() async {
-    return await VentDataGetter(postId: widget.postId).getBodyText();
+
+    final responseBodyText = await VentInfoGetter(postId: widget.postId).getBodyText();
+
+    if (responseBodyText['status_code'] != 200) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+      return '';
+    }
+
+    return responseBodyText['body_text'];
+
   }
 
   void _navigateToVentPostPage() async {

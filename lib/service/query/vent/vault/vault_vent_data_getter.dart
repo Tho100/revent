@@ -1,4 +1,5 @@
 import 'package:revent/helper/data/extract_data.dart';
+import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -16,8 +17,11 @@ class VaultVentDataGetter with UserProfileProviderService {
     final postIds = ventsData.extractColumn<int>('post_id');
     final titles = ventsData.extractColumn<String>('title');
     final tags = ventsData.extractColumn<String>('tags');
-    final postTimestamp = ventsData.extractColumn<String>('created_at');
 
+    final postTimestamp = FormatDate().formatToPostDate(
+      ventsData.extractColumn<String>('created_at')
+    );
+    
     return {
       'status_code': response.statusCode,
       'post_id': postIds,
