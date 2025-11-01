@@ -27,10 +27,6 @@ class VentInfoGetter {
 
     final response = await ApiClient.get(ApiPath.ventMetadataGetter, postId);
 
-    if (response.statusCode != 200) {
-      return {'status_code': response.statusCode};
-    }
-
     final metadata = ExtractData(data: response.body!['metadata']);
 
     final tags = metadata.extractColumn<String>('tags');
