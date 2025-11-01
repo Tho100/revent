@@ -3,24 +3,33 @@ import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/helper/data/data_converter.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
-
+// TODO: Renae to VentInfoGetter
 class VentDataGetter {
 
   final int postId;
 
   VentDataGetter({required this.postId});
 
-  Future<String> getBodyText() async {
+  Future<Map<String, dynamic>> getBodyText() async {
 
     final response = await ApiClient.get(ApiPath.ventBodyTextGetter, postId);
 
-    return response.body!['body_text'];
+    final bodyText = response.body!['body_text'];
+
+    return {
+      'body_text': bodyText,
+      'status_code': response.statusCode
+    };
 
   }
 
   Future<Map<String, dynamic>> getMetadata() async {
 
     final response = await ApiClient.get(ApiPath.ventMetadataGetter, postId);
+
+    if (response.statusCode != 200) {
+      return {'status_code': response.statusCode};
+    }
 
     final metadata = ExtractData(data: response.body!['metadata']);
 
@@ -39,7 +48,7 @@ class VentDataGetter {
       'tags': tags[0],
       'post_timestamp': postTimestamp[0],
       'total_likes': totalLikes[0],
-      'is_nsfw': isNsfw[0]
+      'is_nsfw': isNsfw[0],
     };
     
   }

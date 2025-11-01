@@ -2,6 +2,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/cache_names.dart';
 import 'package:revent/helper/cache_helper.dart';
 import 'package:revent/helper/format/format_date.dart';
@@ -17,6 +18,7 @@ import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
+import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class ActivityPage extends StatefulWidget {
 
@@ -71,13 +73,18 @@ class _ActivityPageState extends State<ActivityPage> with
 
     final ventDataGetter = VentDataGetter(postId: postId);
 
-    final bodyText = await ventDataGetter.getBodyText();
-    final metadata = await ventDataGetter.getMetadata();
+    final metadataResponse = await ventDataGetter.getMetadata();
+    final bodyTextResponse = await ventDataGetter.getBodyText();
 
-    final tags = metadata['tags'];
-    final totalLikes = metadata['total_likes'];
-    final postTimestamp = metadata['post_timestamp'];
-    final isNsfw = metadata['is_nsfw'];
+    if (bodyTextResponse['status_code'] != 200 || metadataResponse['status_code'] != 200) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+      return;
+    }
+
+    final tags = metadataResponse['tags'];
+    final totalLikes = metadataResponse['total_likes'];
+    final postTimestamp = metadataResponse['post_timestamp'];
+    final isNsfw = metadataResponse['is_nsfw'];
 
     if (context.mounted) {
       Navigator.push(
@@ -86,7 +93,7 @@ class _ActivityPageState extends State<ActivityPage> with
           builder: (_) => VentPostPage(
             title: title, 
             postId: postId,
-            bodyText: bodyText, 
+            bodyText: bodyTextResponse['body_text'], 
             tags: tags,
             postTimestamp: postTimestamp,
             isNsfw: isNsfw,

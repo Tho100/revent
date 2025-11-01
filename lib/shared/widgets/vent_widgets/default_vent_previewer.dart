@@ -172,7 +172,16 @@ class _DefaultVentPreviewerState extends State<DefaultVentPreviewer> with
   }
 
   Future<String> _getVentBodyText() async {
-    return await VentDataGetter(postId: widget.postId).getBodyText();
+
+    final responseBodyText = await VentDataGetter(postId: widget.postId).getBodyText();
+
+    if (responseBodyText['status_code'] != 200) {
+      SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+      return '';
+    }
+
+    return responseBodyText['body_text'];
+
   }
 
   void _navigateToVentPostPage() async {
