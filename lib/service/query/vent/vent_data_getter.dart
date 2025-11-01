@@ -45,6 +45,7 @@ class VentDataGetter {
     );
 
     return {
+      'status_code': response.statusCode,
       'tags': tags[0],
       'post_timestamp': postTimestamp[0],
       'total_likes': totalLikes[0],
