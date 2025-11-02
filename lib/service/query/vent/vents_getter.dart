@@ -22,22 +22,18 @@ class VentsGetter with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getTrendingVentsData() async {
     return _returnVentsInfo(ApiPath.trendingVentsGetter);
-
   }
 
   Future<Map<String, dynamic>> getFollowingVentsData() async {
     return _returnVentsInfo(ApiPath.followingVentsGetter);
-
   }
 
   Future<Map<String, dynamic>> getLikedVentsData() async {
     return _returnVentsInfo(ApiPath.likedVentsGetter);
-
   }
 
   Future<Map<String, dynamic>> getSavedVentsData() async {
     return _returnVentsInfo(ApiPath.savedVentsGetter);
-
   }
 
   Future<Map<String, dynamic>> getSearchVentsData({required String? searchText}) async {        
