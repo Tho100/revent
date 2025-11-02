@@ -29,6 +29,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
 
   final isContinueButtonEnabledNotifier = ValueNotifier<bool>(false);
 
+  final currentPasswordFocus = FocusNode();
+  final newPasswordFocus = FocusNode();
+
   void _checkFormFilled() {
 
     final isFilled = 
@@ -152,7 +155,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
 
           PasswordTextField(
             hintText: 'Enter your current password',
+            textInputAction: TextInputAction.next,
             controller: currentPasswordController, 
+            focusNode: currentPasswordFocus,
+            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(newPasswordFocus),
           ),
 
           const SizedBox(height: 15),
@@ -160,6 +166,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
           PasswordTextField(
             hintText: 'Enter a new password',
             controller: newPasswordController, 
+            focusNode: newPasswordFocus,
           ),
 
           const SizedBox(height: 8),
@@ -199,6 +206,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
   void dispose() {
     disposeControllers();
     isContinueButtonEnabledNotifier.dispose();
+    currentPasswordFocus.dispose();
+    newPasswordFocus.dispose();
     super.dispose();
   }
 
