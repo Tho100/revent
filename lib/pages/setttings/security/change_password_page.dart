@@ -185,6 +185,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
     isContinueButtonEnabledNotifier.dispose();
     currentPasswordFocus.dispose();
     newPasswordFocus.dispose();
+    showPasswordRequirements.dispose();
     super.dispose();
   }
 
