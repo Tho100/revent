@@ -27,6 +27,9 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> with AuthController {
 
   final isContinueButtonEnabledNotifier = ValueNotifier<bool>(false);
+  final showPasswordRequirements = ValueNotifier<bool>(false);
+
+  final passwordFocusNode = FocusNode();
 
   void _checkFormFilled() {
 
@@ -42,6 +45,14 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
       isContinueButtonEnabledNotifier.value = shouldEnable;
     }
     
+  }
+
+  void _addPasswordFocusListener() {
+    passwordFocusNode.addListener(() {
+      if (passwordFocusNode.hasFocus) {
+        showPasswordRequirements.value = true;
+      }
+    });
   }
 
   Future<void> _proceedToUsernameRegistration({
@@ -110,18 +121,29 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
   }
 
   Widget _passwordRequirements() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 12.0, top: 16.0),
-      child: Column(
-        children: [
-    
-          PasswordRequirementStatus(
-            isContinue: isContinueButtonEnabledNotifier, 
-            requirement: '6 characters minimum'
-          )
-    
-        ],
-      ),
+    return ValueListenableBuilder(
+      valueListenable: showPasswordRequirements,
+      builder: (_, showRequirements, __) {
+
+        if (showRequirements) {
+          return Padding(
+            padding: const EdgeInsets.only(left: 12.0, top: 16.0),
+            child: Column(
+              children: [
+          
+                PasswordRequirementStatus(
+                  isContinue: isContinueButtonEnabledNotifier, 
+                  requirement: '6 characters minimum'
+                )
+          
+              ],
+            ),
+          );
+        }
+
+        return const SizedBox.shrink();
+
+      },
     );
   }
 
@@ -162,6 +184,7 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
                 PasswordTextField(
                   hintText: 'Enter a password',
                   controller: passwordController, 
+                  focusNode: passwordFocusNode,
                   autoFillHints: const [AutofillHints.password],
                 ),
 
@@ -207,12 +230,15 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
     super.initState();
     emailController.addListener(_checkFormFilled);
     passwordController.addListener(_checkFormFilled);
+    _addPasswordFocusListener();
   }
 
   @override
   void dispose() {
     disposeControllers();
     isContinueButtonEnabledNotifier.dispose();
+    showPasswordRequirements.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 
