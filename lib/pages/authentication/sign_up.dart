@@ -121,29 +121,19 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
   }
 
   Widget _passwordRequirements() {
-    return ValueListenableBuilder(
-      valueListenable: showPasswordRequirements,
-      builder: (_, showRequirements, __) {
-
-        if (showRequirements) {
-          return Padding(
-            padding: const EdgeInsets.only(left: 12.0, top: 16.0),
-            child: Column(
-              children: [
-          
-                PasswordRequirementStatus(
-                  isContinue: isContinueButtonEnabledNotifier, 
-                  requirement: 'At least ${ValidationLimits.minPasswordLength} characters'
-                )
-          
-              ],
-            ),
-          );
-        }
-
-        return const SizedBox.shrink();
-
-      },
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0, top: 16.0),
+      child: Column(
+        children: [
+    
+          PasswordRequirementStatus(
+            isValid: isContinueButtonEnabledNotifier, 
+            showRequirements: showPasswordRequirements,
+            requirement: 'At least ${ValidationLimits.minPasswordLength} characters'
+          )
+    
+        ],
+      ),
     );
   }
 

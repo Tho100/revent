@@ -5,11 +5,13 @@ import 'package:revent/shared/themes/theme_style.dart';
 
 class PasswordRequirementStatus extends StatefulWidget {
 
-  final ValueNotifier isContinue;
+  final ValueNotifier isValid;
+  final ValueNotifier showRequirements;
   final String requirement;
 
   const PasswordRequirementStatus({
-    required this.isContinue,
+    required this.showRequirements,
+    required this.isValid,
     required this.requirement,
     super.key
   });
@@ -23,45 +25,56 @@ class _PasswordRequirementStatusState extends State<PasswordRequirementStatus> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
+    return ValueListenableBuilder(
+      valueListenable: widget.showRequirements,
+      builder: (_, showRequirements, __) {
 
-        ValueListenableBuilder(
-          valueListenable: widget.isContinue,
-          builder: (_, isEnabled, __) {
-            return isEnabled 
-              ? Container(
-                width: 22,
-                height: 22,
-                decoration: BoxDecoration(
-                  color: ThemeColor.contentPrimary,
-                  borderRadius: BorderRadius.circular(16)
-                ),
-                child: Icon(Icons.check, color: ThemeColor.backgroundPrimary, size: 15)
-              )
-              : Text(
-                ThemeStyle.dotSeparator,
+        if (showRequirements) {
+          return Row(
+            children: [
+        
+              ValueListenableBuilder(
+                valueListenable: widget.isValid,
+                builder: (_, isValid, __) {
+                  return isValid 
+                    ? Container(
+                      width: 22,
+                      height: 22,
+                      decoration: BoxDecoration(
+                        color: ThemeColor.contentPrimary,
+                        borderRadius: BorderRadius.circular(16)
+                      ),
+                      child: Icon(Icons.check, color: ThemeColor.backgroundPrimary, size: 15)
+                    )
+                    : Text(
+                      ThemeStyle.dotSeparator,
+                      style: GoogleFonts.inter(
+                        color: ThemeColor.contentThird,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    );
+                }
+              ),
+        
+              const SizedBox(width: 8),
+              
+              Text(
+                widget.requirement,
                 style: GoogleFonts.inter(
-                  color: ThemeColor.contentThird,
-                  fontSize: 18,
+                  color: ThemeColor.contentSecondary,
+                  fontSize: 14,
                   fontWeight: FontWeight.w700,
                 ),
-              );
-          }
-        ),
-
-        const SizedBox(width: 8),
+              )
         
-        Text(
-          widget.requirement,
-          style: GoogleFonts.inter(
-            color: ThemeColor.contentSecondary,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
-        )
+            ],
+          );
+        }
 
-      ],
+        return const SizedBox.shrink();
+
+      },
     );
   }
 

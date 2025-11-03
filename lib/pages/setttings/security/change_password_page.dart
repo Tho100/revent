@@ -26,6 +26,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
   SecurityAuthController {
 
   final isContinueButtonEnabledNotifier = ValueNotifier<bool>(false);
+  final showPasswordRequirements = ValueNotifier<bool>(false);
 
   final currentPasswordFocus = FocusNode();
   final newPasswordFocus = FocusNode();
@@ -42,6 +43,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
       isContinueButtonEnabledNotifier.value = shouldEnable;
     }
     
+  }
+
+  void _addPasswordFocusListener() {
+    newPasswordFocus.addListener(() {
+      if (newPasswordFocus.hasFocus) {
+        showPasswordRequirements.value = true;
+      }
+    });
   }
 
   Future<void> _onUpdatePasswordPressed() async {
@@ -92,7 +101,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
         children: [
     
           PasswordRequirementStatus(
-            isContinue: isContinueButtonEnabledNotifier, 
+            isValid: isContinueButtonEnabledNotifier, 
+            showRequirements: showPasswordRequirements,
             requirement: 'At least ${ValidationLimits.minPasswordLength} characters'
           )
     
@@ -166,6 +176,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
     super.initState();
     currentPasswordController.addListener(_checkFormFilled);
     newPasswordController.addListener(_checkFormFilled);
+    _addPasswordFocusListener();
   }
 
   @override
