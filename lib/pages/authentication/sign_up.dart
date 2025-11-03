@@ -6,6 +6,7 @@ import 'package:revent/pages/authentication/sign_up_username.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/input/input_formatters.dart';
 import 'package:revent/helper/input/input_validator.dart';
+import 'package:revent/shared/widgets/password_requirement_status.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/buttons/underlined_button.dart';
@@ -35,7 +36,7 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
 
     final isValid = InputValidator.validateEmailFormat(emailController.text);
 
-    final shouldEnable = isFilled && isValid;
+    final shouldEnable = isFilled && isValid && passwordController.text.length >= 6;
 
     if (shouldEnable != isContinueButtonEnabledNotifier.value) {
       isContinueButtonEnabledNotifier.value = shouldEnable;
@@ -108,6 +109,22 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
       
   }
 
+  Widget _passwordRequirements() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0, top: 16.0),
+      child: Column(
+        children: [
+    
+          PasswordRequirementStatus(
+            isContinue: isContinueButtonEnabledNotifier, 
+            requirement: '6 characters minimum'
+          )
+    
+        ],
+      ),
+    );
+  }
+
   Widget _buildBody() {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -151,6 +168,10 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
               ],
             ),
           ),
+
+          const SizedBox(height: 8),
+
+          _passwordRequirements(),
 
           const SizedBox(height: 30),
 
