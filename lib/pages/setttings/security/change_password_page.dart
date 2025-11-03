@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
@@ -92,7 +93,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
     
           PasswordRequirementStatus(
             isContinue: isContinueButtonEnabledNotifier, 
-            requirement: '6 characters minimum'
+            requirement: 'At least ${ValidationLimits.minPasswordLength} characters'
           )
     
         ],

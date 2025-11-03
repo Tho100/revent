@@ -133,7 +133,7 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
           
                 PasswordRequirementStatus(
                   isContinue: isContinueButtonEnabledNotifier, 
-                  requirement: '6 characters minimum'
+                  requirement: 'At least ${ValidationLimits.minPasswordLength} characters'
                 )
           
               ],
