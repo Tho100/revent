@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/validation_limits.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/service/query/user/user_auth_service.dart';
-import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/themes/theme_style.dart';
+import 'package:revent/shared/widgets/password_requirement_status.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -28,6 +26,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
   SecurityAuthController {
 
   final isContinueButtonEnabledNotifier = ValueNotifier<bool>(false);
+  final showPasswordRequirements = ValueNotifier<bool>(false);
+
+  final currentPasswordFocus = FocusNode();
+  final newPasswordFocus = FocusNode();
 
   void _checkFormFilled() {
 
@@ -41,6 +43,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
       isContinueButtonEnabledNotifier.value = shouldEnable;
     }
     
+  }
+
+  void _addPasswordFocusListener() {
+    newPasswordFocus.addListener(() {
+      if (newPasswordFocus.hasFocus) {
+        showPasswordRequirements.value = true;
+      }
+    });
   }
 
   Future<void> _onUpdatePasswordPressed() async {
@@ -84,48 +94,17 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
     
   }
 
-  Widget _passwordRequirementBullet(String requirement) {
-    return Row(
-      children: [
-
-        ValueListenableBuilder(
-          valueListenable: isContinueButtonEnabledNotifier,
-          builder: (_, isEnabled, __) {
-            return isEnabled 
-              ? Icon(CupertinoIcons.check_mark, color: ThemeColor.contentPrimary, size: 15)
-              : Text(
-                ThemeStyle.dotSeparator,
-                style: GoogleFonts.inter(
-                  color: ThemeColor.contentThird,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
-                ),
-              );
-          }
-        ),
-
-        const SizedBox(width: 8),
-        
-        Text(
-          requirement,
-          style: GoogleFonts.inter(
-            color: ThemeColor.contentSecondary,
-            fontSize: 14,
-            fontWeight: FontWeight.w700,
-          ),
-        )
-
-      ],
-    );
-  }
-
   Widget _passwordRequirements() {
     return Padding(
       padding: const EdgeInsets.only(left: 12.0, top: 16.0),
       child: Column(
         children: [
     
-          _passwordRequirementBullet('6 characters minimum')
+          PasswordRequirementStatus(
+            isValid: isContinueButtonEnabledNotifier, 
+            showRequirements: showPasswordRequirements,
+            requirement: 'At least ${ValidationLimits.minPasswordLength} characters'
+          )
     
         ],
       ),
@@ -152,7 +131,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
 
           PasswordTextField(
             hintText: 'Enter your current password',
+            textInputAction: TextInputAction.next,
             controller: currentPasswordController, 
+            focusNode: currentPasswordFocus,
+            onFieldSubmitted: (_) => FocusScope.of(context).requestFocus(newPasswordFocus),
           ),
 
           const SizedBox(height: 15),
@@ -160,6 +142,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
           PasswordTextField(
             hintText: 'Enter a new password',
             controller: newPasswordController, 
+            focusNode: newPasswordFocus,
           ),
 
           const SizedBox(height: 8),
@@ -193,12 +176,16 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
     super.initState();
     currentPasswordController.addListener(_checkFormFilled);
     newPasswordController.addListener(_checkFormFilled);
+    _addPasswordFocusListener();
   }
 
   @override
   void dispose() {
     disposeControllers();
     isContinueButtonEnabledNotifier.dispose();
+    currentPasswordFocus.dispose();
+    newPasswordFocus.dispose();
+    showPasswordRequirements.dispose();
     super.dispose();
   }
 

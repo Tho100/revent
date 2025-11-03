@@ -6,6 +6,7 @@ import 'package:revent/pages/authentication/sign_up_username.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/input/input_formatters.dart';
 import 'package:revent/helper/input/input_validator.dart';
+import 'package:revent/shared/widgets/password_requirement_status.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/buttons/underlined_button.dart';
@@ -26,6 +27,9 @@ class SignUpPage extends StatefulWidget {
 class _SignUpPageState extends State<SignUpPage> with AuthController {
 
   final isContinueButtonEnabledNotifier = ValueNotifier<bool>(false);
+  final showPasswordRequirements = ValueNotifier<bool>(false);
+
+  final passwordFocusNode = FocusNode();
 
   void _checkFormFilled() {
 
@@ -35,12 +39,20 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
 
     final isValid = InputValidator.validateEmailFormat(emailController.text);
 
-    final shouldEnable = isFilled && isValid;
+    final shouldEnable = isFilled && isValid && passwordController.text.length >= 6;
 
     if (shouldEnable != isContinueButtonEnabledNotifier.value) {
       isContinueButtonEnabledNotifier.value = shouldEnable;
     }
     
+  }
+
+  void _addPasswordFocusListener() {
+    passwordFocusNode.addListener(() {
+      if (passwordFocusNode.hasFocus) {
+        showPasswordRequirements.value = true;
+      }
+    });
   }
 
   Future<void> _proceedToUsernameRegistration({
@@ -108,6 +120,23 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
       
   }
 
+  Widget _passwordRequirements() {
+    return Padding(
+      padding: const EdgeInsets.only(left: 12.0, top: 16.0),
+      child: Column(
+        children: [
+    
+          PasswordRequirementStatus(
+            isValid: isContinueButtonEnabledNotifier, 
+            showRequirements: showPasswordRequirements,
+            requirement: 'At least ${ValidationLimits.minPasswordLength} characters'
+          )
+    
+        ],
+      ),
+    );
+  }
+
   Widget _buildBody() {
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -145,12 +174,17 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
                 PasswordTextField(
                   hintText: 'Enter a password',
                   controller: passwordController, 
+                  focusNode: passwordFocusNode,
                   autoFillHints: const [AutofillHints.password],
                 ),
 
               ],
             ),
           ),
+
+          const SizedBox(height: 8),
+
+          _passwordRequirements(),
 
           const SizedBox(height: 30),
 
@@ -186,12 +220,15 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
     super.initState();
     emailController.addListener(_checkFormFilled);
     passwordController.addListener(_checkFormFilled);
+    _addPasswordFocusListener();
   }
 
   @override
   void dispose() {
     disposeControllers();
     isContinueButtonEnabledNotifier.dispose();
+    showPasswordRequirements.dispose();
+    passwordFocusNode.dispose();
     super.dispose();
   }
 

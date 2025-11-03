@@ -46,6 +46,10 @@ class _ThemePageState extends State<ThemePage> {
 
     currentTheme = await localStorageModel.readThemeInformation();
 
+    if(!themes.contains(currentTheme)) {
+      currentTheme = 'dark';
+    }
+
     isSelectedThemeNotifier.value = List<bool>.generate(
       themes.length, (index) => currentTheme == themes[index]
     );
@@ -158,14 +162,20 @@ class _ThemePageState extends State<ThemePage> {
               ValueListenableBuilder(
                 valueListenable: isSelectedThemeNotifier,
                 builder: (_, isSelected, __) {
+
+                  final selected = (isSelected.isNotEmpty && index < isSelected.length) 
+                    ? isSelected[index] 
+                    : false;
+
                   return Padding(
                     padding: const EdgeInsets.only(right: 16.0),
                     child: Icon(
-                      isSelected[index] ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
-                      color: isSelected[index] ? ThemeColor.contentPrimary : ThemeColor.contentThird, 
+                      selected ? CupertinoIcons.check_mark_circled : CupertinoIcons.circle, 
+                      color: selected ? ThemeColor.contentPrimary : ThemeColor.contentThird, 
                       size: 25
                     ),
                   );
+                  
                 },
               ),
             
