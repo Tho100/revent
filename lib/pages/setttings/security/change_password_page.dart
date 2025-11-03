@@ -95,7 +95,15 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
           valueListenable: isContinueButtonEnabledNotifier,
           builder: (_, isEnabled, __) {
             return isEnabled 
-              ? Icon(CupertinoIcons.check_mark, color: ThemeColor.contentPrimary, size: 15)
+              ? Container(
+                width: 22,
+                height: 22,
+                decoration: BoxDecoration(
+                  color: ThemeColor.contentPrimary,
+                  borderRadius: BorderRadius.circular(16)
+                ),
+                child: Icon(Icons.check, color: ThemeColor.backgroundPrimary, size: 15)
+              )
               : Text(
                 ThemeStyle.dotSeparator,
                 style: GoogleFonts.inter(
