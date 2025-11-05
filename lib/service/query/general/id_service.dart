@@ -1,7 +1,7 @@
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class IdGetter {
+class IdService {
 
   static Future<int> getPostId({
     required String title, 

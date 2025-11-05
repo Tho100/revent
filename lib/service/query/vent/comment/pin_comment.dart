@@ -1,7 +1,7 @@
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/id_getter.dart';
+import 'package:revent/service/query/general/id_service.dart';
 
 class PinComment with UserProfileProviderService, CommentsProviderService, VentProviderService {
 
@@ -15,7 +15,7 @@ class PinComment with UserProfileProviderService, CommentsProviderService, VentP
 
   Future<Map<String, int>> togglePinComment() async {
 
-    final commentId = await IdGetter.getCommentId(
+    final commentId = await IdService.getCommentId(
       postId: activeVentProvider.ventData.postId,
       username: username, 
       commentText: commentText

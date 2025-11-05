@@ -2,7 +2,7 @@ import 'package:revent/helper/data/extract_data.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class UserInfoGetter {
+class UserInfoService {
 
   static Future<String> getJoinedDate({required String username}) async {
 

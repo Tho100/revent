@@ -4,7 +4,7 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class LastEditGetter with VentProviderService {
+class LastEditService with VentProviderService {
 
   Future<String> _getLastEdit({required VentType type}) async {
 
@@ -26,7 +26,7 @@ class LastEditGetter with VentProviderService {
     return formattedTimeStamp;
 
   }
-
+// TODO: rneame to: getDefaultLastEdit, getVaultLastEdit
   Future<String> getLastEdit() async => await _getLastEdit(type: VentType.nonVault);
   Future<String> getLastEditVault() async => await _getLastEdit(type: VentType.vault);
 

@@ -3,7 +3,7 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class SaveVentEdit  with UserProfileProviderService, VentProviderService {
+class SaveVentEdit with UserProfileProviderService, VentProviderService {
 
   final int postId;
   final String newBody;

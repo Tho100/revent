@@ -2,7 +2,7 @@ import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/id_getter.dart';
+import 'package:revent/service/query/general/id_service.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
 class ReplyActions with RepliesProviderService, UserProfileProviderService, VentProviderService {
@@ -21,7 +21,7 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService, Vent
 
   Future<int> _getCommentId() async {
 
-    return await IdGetter.getCommentId(
+    return await IdService.getCommentId(
       postId: activeVentProvider.ventData.postId,
       username: commentedBy, 
       commentText: commentText
@@ -31,7 +31,7 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService, Vent
 
   Future<int> _getReplyId(int commentId) async {
 
-    return await IdGetter.getReplyId(
+    return await IdService.getReplyId(
       commentId: commentId, 
       username: repliedBy, 
       replyText: replyText

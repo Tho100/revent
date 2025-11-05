@@ -9,10 +9,10 @@ import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/service/query/user/user_block_getter.dart';
-import 'package:revent/service/query/user/user_info_getter.dart';
+import 'package:revent/service/query/user/user_info_service.dart';
 import 'package:revent/service/query/user/user_following_status.dart';
 import 'package:revent/service/query/user/user_privacy_actions.dart';
-import 'package:revent/service/query/user_profile/profile_data_getter.dart';
+import 'package:revent/service/query/user_profile/profile_data_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
@@ -61,7 +61,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
   final isFollowingNotifier = ValueNotifier<bool>(false);
   final socialHandlesNotifier = ValueNotifier<Map<String, String>>({});
 
-  final profileDataGetter = ProfileDataGetter();
+  final profileDataService = ProfileDataService();
 
   late ProfilePostsSetup profilePostsSetup;
   late ProfileInfoWidgets profileInfoWidgets;
@@ -130,7 +130,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
     if (joinedDate.isEmpty) {
 
-      final getJoinedDate = await UserInfoGetter.getJoinedDate(username: widget.username);
+      final getJoinedDate = await UserInfoService.getJoinedDate(username: widget.username);
 
       final formattedJoinedDate = FormatDate.formatLongDate(getJoinedDate);
 
@@ -150,7 +150,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
       country = isBlockedAccount || isPrivateAccount
         ? 'Unknown' 
-        :  await UserInfoGetter.getCountry(username: widget.username);
+        :  await UserInfoService.getCountry(username: widget.username);
 
       return country;
 
@@ -174,7 +174,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Future<void> _initializeRestrictedView() async {
 
-    final profileData = await profileDataGetter.getProfileData(
+    final profileData = await profileDataService.getProfileData(
       isMyProfile: false, username: widget.username
     );
         
@@ -191,7 +191,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Future<void> _initializeBasicProfileInfo() async {
 
-    final profileData = await profileDataGetter.getProfileData(
+    final profileData = await profileDataService.getProfileData(
       isMyProfile: false, username: widget.username
     );
         
@@ -231,7 +231,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       postsNotifier.value = profilePostsProvider.userProfile.titles.length;
 
       isFollowingNotifier.value = await UserFollowingStatus.isFollowing(username: widget.username);
-      socialHandlesNotifier.value = await UserInfoGetter.getSocialHandles(username: widget.username);
+      socialHandlesNotifier.value = await UserInfoService.getSocialHandles(username: widget.username);
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);

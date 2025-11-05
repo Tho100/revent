@@ -23,7 +23,7 @@ import 'package:revent/pages/setttings/settings_page.dart';
 import 'package:revent/pages/profile/user_profile_page.dart';
 import 'package:revent/service/activity_service.dart';
 import 'package:revent/service/query/user/user_availability_checker.dart';
-import 'package:revent/service/query/user_profile/profile_picture_getter.dart';
+import 'package:revent/service/query/user_profile/profile_picture_service.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
 class _DockBarNavigationPages {
@@ -175,7 +175,7 @@ class NavigatePage {
     }
 
     final profilePicture = 
-      pfpData ?? await ProfilePictureGetter().getProfilePictures(username: username);
+      pfpData ?? await ProfilePictureService().getProfilePictures(username: username);
 
     _navigation.setCurrentRoute(AppRoute.userProfile);
 

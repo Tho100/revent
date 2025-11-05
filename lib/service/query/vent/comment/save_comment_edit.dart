@@ -1,7 +1,7 @@
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/id_getter.dart';
+import 'package:revent/service/query/general/id_service.dart';
 
 class SaveCommentEdit with 
   UserProfileProviderService, 
@@ -18,7 +18,7 @@ class SaveCommentEdit with
 
   Future<Map<String, dynamic>> save() async {
 
-    final commentId = await IdGetter.getCommentId(
+    final commentId = await IdService.getCommentId(
       postId: activeVentProvider.ventData.postId,
       username: userProvider.user.username, 
       commentText: originalComment

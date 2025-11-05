@@ -5,7 +5,7 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/data/extract_data.dart';
 import 'package:revent/helper/format/format_date.dart';
 
-class CommentsGetter with UserProfileProviderService, VentProviderService {
+class CommentsService with UserProfileProviderService, VentProviderService {
 
   Future<Map<String, List<dynamic>>> getComments() async {
 

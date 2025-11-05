@@ -17,13 +17,13 @@ import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/vault_filter_bottomsheet.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
-import 'package:revent/service/query/vent/last_edit_getter.dart';
+import 'package:revent/service/query/vent/last_edit_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/vault/vault_vent_data_getter.dart';
+import 'package:revent/service/query/vent/vault/vault_vent_service.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
@@ -57,7 +57,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   VentProviderService,
   GeneralSearchController {
 
-  final _vaultDataGetter = VaultVentDataGetter();
+  final _vaultVentService = VaultVentService();
 
   final _isPageLoadedNotifier = ValueNotifier<bool>(false);
   final _filterTextNotifier = ValueNotifier<String>('Latest');
@@ -67,7 +67,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   List<_VaultVentsData> _allVaultVents = [];
 
   Future<String> _getBodyText(int postId) async 
-    => await _vaultDataGetter.getBodyText(postId: postId);
+    => await _vaultVentService.getBodyText(postId: postId);
 
   Future<String> _getLastEdit(int postId, String title) async {
 
@@ -81,7 +81,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
       )
     );
 
-    return await LastEditGetter().getLastEditVault();
+    return await LastEditService().getLastEditVault();
 
   }
 
@@ -109,7 +109,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
 
     try {
 
-      final vaultVentsResponse = await _vaultDataGetter.getMetadata();
+      final vaultVentsResponse = await _vaultVentService.getMetadata();
 
       if (vaultVentsResponse['status_code'] != 200) {
         SnackBarDialog.errorSnack(message: AlertMessages.vaultFailedToLoad);

@@ -6,7 +6,7 @@ import 'package:revent/global/profile_type.dart';
 import 'package:revent/global/tabs_type.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
-import 'package:revent/service/query/user/user_info_getter.dart';
+import 'package:revent/service/query/user/user_info_service.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
@@ -92,7 +92,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
 
       if ((userProvider.user.socialHandles ?? {}).isEmpty) {
 
-        await UserInfoGetter.getSocialHandles(username: userProvider.user.username).then(
+        await UserInfoService.getSocialHandles(username: userProvider.user.username).then(
           (socialHandles) => userProvider.setSocialHandles(socialHandles)
         );
 

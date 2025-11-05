@@ -9,7 +9,7 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/model/setup/replies_setup.dart';
 import 'package:revent/pages/reply/post_reply_page.dart';
-import 'package:revent/service/query/general/id_getter.dart';
+import 'package:revent/service/query/general/id_service.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
@@ -54,7 +54,7 @@ class _RepliesPageState extends State<RepliesPage> with VentProviderService {
 
     try {
       
-      commentId = await IdGetter.getCommentId(
+      commentId = await IdService.getCommentId(
         postId: activeVentProvider.ventData.postId,
         username: widget.commentedBy, 
         commentText: widget.comment

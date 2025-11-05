@@ -5,7 +5,7 @@ import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/data/extract_data.dart';
 
-class FollowDataGetter with UserProfileProviderService {
+class FollowService with UserProfileProviderService {
 
   Future<Map<String, List<dynamic>>> _getUserFollows({
     required FollowType followType,

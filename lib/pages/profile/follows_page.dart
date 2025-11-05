@@ -5,7 +5,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/follow_type.dart';
-import 'package:revent/service/query/general/follow_data_getter.dart';
+import 'package:revent/service/query/general/follow_service.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
@@ -106,8 +106,8 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
   Future<List<_FollowsProfilesData>> _fetchFollowsData(FollowType followType) async {
 
     final info = followType == FollowType.followers
-      ? await FollowDataGetter().getUserFollowers(username: widget.username)
-      : await FollowDataGetter().getUserFollowing(username: widget.username);
+      ? await FollowService().getUserFollowers(username: widget.username)
+      : await FollowService().getUserFollowing(username: widget.username);
 
     final usernames = info['username']! as List<String>;
     final pfpData = info['profile_pic']! as List<Uint8List>; 

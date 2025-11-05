@@ -6,7 +6,7 @@ import 'package:revent/main.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class ProfilePictureGetter {
+class ProfilePictureService {
 
   Future<Uint8List> getProfilePictures({String? username}) async {
 

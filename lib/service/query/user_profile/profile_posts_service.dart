@@ -6,11 +6,11 @@ import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/data/extract_data.dart';
 
-class ProfilePostsGetter with UserProfileProviderService {
+class ProfilePostsService with UserProfileProviderService {
 
   final String username;
 
-  ProfilePostsGetter({required this.username});
+  ProfilePostsService({required this.username});
 
   Future<Map<String, List<dynamic>>> getOwnPosts() async {
 

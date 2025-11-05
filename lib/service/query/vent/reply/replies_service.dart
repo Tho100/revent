@@ -5,11 +5,11 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/data/extract_data.dart';
 import 'package:revent/helper/format/format_date.dart';
 
-class RepliesGetter with UserProfileProviderService, VentProviderService {
+class RepliesService with UserProfileProviderService, VentProviderService {
 
   final int commentId;
 
-  RepliesGetter({required this.commentId});
+  RepliesService({required this.commentId});
 
   Future<Map<String, List<dynamic>>> getReplies() async {
 

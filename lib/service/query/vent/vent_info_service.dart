@@ -4,11 +4,11 @@ import 'package:revent/helper/data/data_converter.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class VentInfoGetter {
+class VentInfoService {
 
   final int postId;
 
-  VentInfoGetter({required this.postId});
+  VentInfoService({required this.postId});
 
   Future<Map<String, dynamic>> getBodyText() async {
 

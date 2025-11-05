@@ -17,7 +17,7 @@ import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/filter/comments_filter.dart';
 import 'package:revent/pages/comment/post_comment_page.dart';
-import 'package:revent/service/query/vent/last_edit_getter.dart';
+import 'package:revent/service/query/vent/last_edit_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -130,7 +130,7 @@ class _VentPostPageState extends State<VentPostPage> with
   }
 
   Future<void> _initializeLastEdit() async {
-    await LastEditGetter().getLastEdit().then(
+    await LastEditService().getLastEdit().then(
       (lastEdit) => activeVentProvider.setLastEdit(lastEdit)
     );
   }
