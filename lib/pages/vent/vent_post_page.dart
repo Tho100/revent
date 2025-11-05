@@ -130,7 +130,7 @@ class _VentPostPageState extends State<VentPostPage> with
   }
 
   Future<void> _initializeLastEdit() async {
-    await LastEditService().getLastEdit().then(
+    await LastEditService().getLastDefault().then(
       (lastEdit) => activeVentProvider.setLastEdit(lastEdit)
     );
   }

@@ -27,7 +27,7 @@ class LastEditService with VentProviderService {
 
   }
 // TODO: rneame to: getDefaultLastEdit, getVaultLastEdit
-  Future<String> getLastEdit() async => await _getLastEdit(type: VentType.nonVault);
+  Future<String> getLastDefault() async => await _getLastEdit(type: VentType.nonVault);
   Future<String> getLastEditVault() async => await _getLastEdit(type: VentType.vault);
 
 }
