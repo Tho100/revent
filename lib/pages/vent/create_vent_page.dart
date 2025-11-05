@@ -19,7 +19,7 @@ import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/vent/create_new_item.dart';
+import 'package:revent/service/vent/new_post_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -104,7 +104,9 @@ class _CreateVentPageState extends State<CreateVentPage> with
     required String tags
   }) async {
 
-    final ventResponse = await CreateNewItem(title: title, body: bodyText, tags: tags).newVaultVent();
+    final ventResponse = await NewPostService(
+      title: title, body: bodyText, tags: tags
+    ).vaultVent();
 
     if (ventResponse['status_code'] == 409) {
       SnackBarDialog.errorSnack(message: AlertMessages.postTitleExists);
@@ -138,7 +140,9 @@ class _CreateVentPageState extends State<CreateVentPage> with
     required String tags
   }) async {
 
-    final ventResponse = await CreateNewItem(title: title, body: bodyText, tags: tags).newVent(
+    final ventResponse = await NewPostService(
+      title: title, body: bodyText, tags: tags
+    ).defaultVent(
       markedNsfw: markAsNsfwNotifier.value,
       allowCommenting: allowCommentingNotifier.value
     );

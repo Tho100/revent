@@ -3,7 +3,7 @@ import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/general/id_service.dart';
 
-class SaveCommentEdit with 
+class SaveCommentEditService with 
   UserProfileProviderService, 
   VentProviderService, 
   CommentsProviderService {
@@ -11,7 +11,7 @@ class SaveCommentEdit with
   final String originalComment;
   final String newComment;
 
-  SaveCommentEdit({
+  SaveCommentEditService({
     required this.originalComment,
     required this.newComment
   });

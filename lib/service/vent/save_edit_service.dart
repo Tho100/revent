@@ -3,19 +3,19 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class SaveVentEdit with UserProfileProviderService, VentProviderService {
+class SaveVentEditService with UserProfileProviderService, VentProviderService {
 
   final int postId;
   final String newBody;
 
-  SaveVentEdit({
+  SaveVentEditService({
     required this.postId,
     required this.newBody,
   });
 
   final _lastEdit = DateTime.now();
 
-  Future<Map<String, dynamic>> save() async {
+  Future<Map<String, dynamic>> saveDefault() async {
 
     final response = await ApiClient.post(ApiPath.updateDefaultVent, {
       'post_id': postId,

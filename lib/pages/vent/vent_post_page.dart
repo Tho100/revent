@@ -29,7 +29,7 @@ import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/model/setup/comments_setup.dart';
-import 'package:revent/service/vent/comment/comment_options.dart';
+import 'package:revent/service/vent/comment/options_service.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/comments/comment_filter.dart';
 import 'package:revent/shared/widgets/bottomsheet/comments/comment_settings.dart';
@@ -78,7 +78,7 @@ class _VentPostPageState extends State<VentPostPage> with
   final enableCommentNotifier = ValueNotifier<bool>(true);
   final filterTextNotifier = ValueNotifier<String>('Best');
 
-  final commentOptions = CommentOptions();
+  final commentOptions = CommentOptionsService();
   final commentsFilter = CommentsFilter();
 
   late VentActionsService actionsService;

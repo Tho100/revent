@@ -5,14 +5,17 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/general/id_service.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
-class ReplyActions with RepliesProviderService, UserProfileProviderService, VentProviderService {
+class ReplyActionsService with 
+  RepliesProviderService, 
+  UserProfileProviderService, 
+  VentProviderService {
 
   String replyText;
   String repliedBy;
   String commentText;
   String commentedBy;
 
-  ReplyActions({
+  ReplyActionsService({
     required this.replyText, 
     required this.repliedBy,
     required this.commentText,
@@ -45,7 +48,7 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService, Vent
     );
   }
 
-  Future<Map<String, dynamic>> sendReply() async {
+  Future<Map<String, dynamic>> send() async {
 
     final commentId = await _getCommentId();
 
@@ -81,7 +84,7 @@ class ReplyActions with RepliesProviderService, UserProfileProviderService, Vent
 
   }
 
-  Future<Map<String, dynamic>> toggleLikeReply() async {
+  Future<Map<String, dynamic>> toggleLike() async {
 
     final commentId = await _getCommentId();
 

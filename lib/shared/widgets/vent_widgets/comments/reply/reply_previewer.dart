@@ -51,7 +51,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
 
     try {
 
-      final deleteReplyResponse = await ReplyActions(
+      final deleteReplyResponse = await ReplyActionsService(
         replyText: reply, 
         repliedBy: repliedBy, 
         commentText: comment, 
@@ -75,12 +75,12 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
 
     try {
 
-      final likeReplyResponse = await ReplyActions(
+      final likeReplyResponse = await ReplyActionsService(
         replyText: reply, 
         repliedBy: repliedBy,
         commentText: comment, 
         commentedBy: commentedBy
-      ).toggleLikeReply();
+      ).toggleLike();
 
       if (likeReplyResponse['status_code'] != 200) {
         SnackBarDialog.errorSnack(message: AlertMessages.defaultError);

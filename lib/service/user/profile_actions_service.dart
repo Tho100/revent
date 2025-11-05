@@ -8,13 +8,13 @@ import 'package:revent/shared/widgets/bottomsheet/user/report_user_bottomsheet.d
 import 'package:revent/shared/widgets/bottomsheet/user/user_actions.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 
-class UserProfileActions {
+class UserProfileActionsService {
   
   final BuildContext context;
 
-  UserProfileActions({required this.context});
+  UserProfileActionsService({required this.context});
 
-  void showUserActions({
+  void showActions({
     required String username,
     required String pronouns,
     required Uint8List pfpData,

@@ -11,12 +11,12 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/user/actions_service.dart';
 import 'package:revent/service/user/block_service.dart';
 import 'package:revent/service/user/info_service.dart';
-import 'package:revent/service/user/privacy_actions.dart';
+import 'package:revent/service/user/privacy_service.dart';
 import 'package:revent/service/profile/profile_data_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/service/user/profile_actions.dart';
+import 'package:revent/service/user/profile_actions_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/themes/theme_style.dart';
@@ -163,7 +163,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Future<void> _initializePrivacySettings() async {
 
-    final privacyOptions = await UserPrivacyActions().getCurrentPrivacyOptions(
+    final privacyOptions = await UserPrivacyService().getCurrentPrivacyOptions(
       username: widget.username
     );
 
@@ -426,7 +426,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     return IconButton(
       icon: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.contentPrimary),
       onPressed: () {
-        UserProfileActions(context: context).showUserActions(
+        UserProfileActionsService(context: context).showActions(
           username: widget.username, 
           pronouns: pronounsNotifier.value, 
           pfpData: widget.pfpData, 

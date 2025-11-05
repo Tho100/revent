@@ -23,7 +23,7 @@ import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/vent/vault/vault_vent_service.dart';
+import 'package:revent/service/vent/vault/info_service.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
@@ -57,7 +57,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   VentProviderService,
   GeneralSearchController {
 
-  final _vaultVentService = VaultVentService();
+  final _vaultVentService = VaultVentInfoService();
 
   final _isPageLoadedNotifier = ValueNotifier<bool>(false);
   final _filterTextNotifier = ValueNotifier<String>('Latest');

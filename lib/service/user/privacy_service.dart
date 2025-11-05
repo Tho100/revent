@@ -5,7 +5,7 @@ import 'package:revent/helper/data/extract_data.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class UserPrivacyActions {
+class UserPrivacyService {
 
   Future<Map<String, dynamic>> makeProfilePrivate({required bool isPrivate}) async {
     return await _updatePrivacyOptions(

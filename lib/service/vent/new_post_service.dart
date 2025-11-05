@@ -6,19 +6,19 @@ import 'package:revent/main.dart';
 import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
 
-class CreateNewItem with UserProfileProviderService {
+class NewPostService with UserProfileProviderService {
 
   final String title;
   final String body;
   final String tags;
 
-  CreateNewItem({
+  NewPostService({
     required this.title, 
     required this.body,
     required this.tags
   });
 
-  Future<Map<String, dynamic>> newVent({
+  Future<Map<String, dynamic>> defaultVent({
     required bool markedNsfw,
     required bool allowCommenting,
   }) async {
@@ -70,7 +70,7 @@ class CreateNewItem with UserProfileProviderService {
 
   }
 
-  Future<Map<String, dynamic>> newVaultVent() async {
+  Future<Map<String, dynamic>> vaultVent() async {
 
     final response = await ApiClient.post(ApiPath.createVaultVent, {
       'creator': userProvider.user.username,

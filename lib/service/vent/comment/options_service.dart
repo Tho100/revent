@@ -3,7 +3,7 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class CommentOptions with VentProviderService {
+class CommentOptionsService with VentProviderService {
 
   Future<Map<String, dynamic>> toggleComment({required bool enableComment}) async {
 

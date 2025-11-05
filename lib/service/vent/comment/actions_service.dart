@@ -5,7 +5,7 @@ import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/general/id_service.dart';
 
-class CommentActions with 
+class CommentActionsService with 
   CommentsProviderService, 
   VentProviderService,
   UserProfileProviderService {
@@ -13,7 +13,7 @@ class CommentActions with
   String commentedBy;
   String commentText;
 
-  CommentActions({
+  CommentActionsService({
     required this.commentedBy, 
     required this.commentText
   });
@@ -32,7 +32,7 @@ class CommentActions with
     );
   }
 
-  Future<Map<String, dynamic>> sendComment() async {
+  Future<Map<String, dynamic>> send() async {
 
     final postId = activeVentProvider.ventData.postId;
 
@@ -96,7 +96,7 @@ class CommentActions with
 
   }
 
-  Future<Map<String, dynamic>> toggleLikeComment() async {
+  Future<Map<String, dynamic>> toggleLike() async {
 
     final commentId = await _getCommentId();
 

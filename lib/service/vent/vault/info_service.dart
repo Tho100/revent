@@ -4,7 +4,7 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class VaultVentService with UserProfileProviderService {
+class VaultVentInfoService with UserProfileProviderService {
 
   Future<Map<String, dynamic>> getMetadata() async {
 

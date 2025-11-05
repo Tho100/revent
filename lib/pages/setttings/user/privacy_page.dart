@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/user/privacy_actions.dart';
+import 'package:revent/service/user/privacy_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
@@ -25,11 +25,11 @@ class _PrivacyPageState extends State<PrivacyPage> {
   final hideFollowingListNotifier = ValueNotifier<bool>(false);
   final hideSavedPostNotifier = ValueNotifier<bool>(false);
 
-  final userPrivacyActions = UserPrivacyActions();
+  final userPrivacyService = UserPrivacyService();
 
   void _initializeCurrentOptions() async {
 
-    final currentOptions = await UserPrivacyActions().getCurrentPrivacyOptions(
+    final currentOptions = await userPrivacyService.getCurrentPrivacyOptions(
       username: getIt.userProvider.user.username
     );
 
@@ -57,19 +57,19 @@ class _PrivacyPageState extends State<PrivacyPage> {
 
   Future<void> _onPrivateAccountPressed() async {
     await _onUpdatePrivacyOptions(
-      () => userPrivacyActions.makeProfilePrivate(isPrivate: privateAccountNotifier.value)
+      () => userPrivacyService.makeProfilePrivate(isPrivate: privateAccountNotifier.value)
     );
   }
 
   Future<void> _onHideFollowingPressed() async {
     await _onUpdatePrivacyOptions(
-      () => userPrivacyActions.hideFollowingList(isHidden: hideFollowingListNotifier.value)
+      () => userPrivacyService.hideFollowingList(isHidden: hideFollowingListNotifier.value)
     );
   }
 
   Future<void> _onHideSavedPostsPressed() async {
     await _onUpdatePrivacyOptions(
-      () => userPrivacyActions.hideSavedPosts(isHidden: hideSavedPostNotifier.value)
+      () => userPrivacyService.hideSavedPosts(isHidden: hideSavedPostNotifier.value)
     );
   }
 

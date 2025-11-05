@@ -11,13 +11,13 @@ import 'package:revent/helper/general/text_copy.dart';
 import 'package:revent/pages/comment/edit_comment_page.dart';
 import 'package:revent/pages/reply/replies_page.dart';
 import 'package:revent/service/user/actions_service.dart';
-import 'package:revent/service/vent/comment/pin_comment.dart';
+import 'package:revent/service/vent/comment/pin_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/vent/comment/comment_actions.dart';
+import 'package:revent/service/vent/comment/actions_service.dart';
 import 'package:revent/shared/widgets/bottomsheet/comments/comment_actions.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 
@@ -58,7 +58,7 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
     try {
 
-      final deleteCommentResponse = await CommentActions(
+      final deleteCommentResponse = await CommentActionsService(
         commentedBy: commentedBy, 
         commentText: comment, 
       ).delete();
@@ -91,10 +91,10 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
         }
       }
 
-      final pinCommentResponse = await PinComment(
+      final pinCommentResponse = await PinCommentService(
         username: commentedBy, 
         commentText: comment, 
-      ).togglePinComment();
+      ).togglePin();
 
       if (pinCommentResponse['status_code'] != 200) {
         SnackBarDialog.temporarySnack(message: AlertMessages.defaultError);
@@ -113,10 +113,10 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
     try {
 
-      final unpinCommentResponse = await PinComment(
+      final unpinCommentResponse = await PinCommentService(
         username: commentedBy, 
         commentText: comment, 
-      ).togglePinComment();
+      ).togglePin();
 
       if (unpinCommentResponse['status_code'] != 200) {
         SnackBarDialog.temporarySnack(message: AlertMessages.defaultError);
@@ -135,10 +135,10 @@ class CommentPreviewer extends StatelessWidget with VentProviderService, Comment
 
     try {
 
-      final likeCommentResponse = await CommentActions(
+      final likeCommentResponse = await CommentActionsService(
         commentedBy: commentedBy, 
         commentText: comment, 
-      ).toggleLikeComment();
+      ).toggleLike();
 
       if (likeCommentResponse['status_code'] != 200) {
         SnackBarDialog.errorSnack(message: AlertMessages.defaultError);

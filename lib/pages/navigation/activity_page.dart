@@ -11,7 +11,7 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/service/activity_service.dart';
 import 'package:revent/service/general/id_service.dart';
-import 'package:revent/service/vent/vent_info_service.dart';
+import 'package:revent/service/vent/info_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
