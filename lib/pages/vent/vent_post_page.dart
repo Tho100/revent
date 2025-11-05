@@ -10,14 +10,14 @@ import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/general/text_copy.dart';
 import 'package:revent/pages/search_results_page.dart';
-import 'package:revent/service/query/user/user_actions.dart';
+import 'package:revent/service/user/actions_service.dart';
 import 'package:revent/service/refresh_service.dart';
-import 'package:revent/service/vent_actions_handler.dart';
+import 'package:revent/service/vent_actions_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/model/filter/comments_filter.dart';
 import 'package:revent/pages/comment/post_comment_page.dart';
-import 'package:revent/service/query/vent/last_edit_service.dart';
+import 'package:revent/service/vent/last_edit_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -29,7 +29,7 @@ import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/model/setup/comments_setup.dart';
-import 'package:revent/service/query/vent/comment/comment_options.dart';
+import 'package:revent/service/vent/comment/comment_options.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/bottomsheet/comments/comment_filter.dart';
 import 'package:revent/shared/widgets/bottomsheet/comments/comment_settings.dart';
@@ -81,7 +81,7 @@ class _VentPostPageState extends State<VentPostPage> with
   final commentOptions = CommentOptions();
   final commentsFilter = CommentsFilter();
 
-  late VentActionsHandler actionsHandler;
+  late VentActionsService actionsService;
 
   void _showNsfwConfirmationDialog() async {
 
@@ -123,7 +123,7 @@ class _VentPostPageState extends State<VentPostPage> with
   }
 
   void _initializeVentActionsHandler() {
-    actionsHandler = VentActionsHandler(              
+    actionsService = VentActionsService(              
       postId: widget.postId,
       creator: widget.creator, 
     );
@@ -213,7 +213,7 @@ class _VentPostPageState extends State<VentPostPage> with
       message: AlertMessages.deletePost, 
       buttonMessage: 'Delete',
       onPressedEvent: () async {
-        await actionsHandler.deletePost().then(
+        await actionsService.deletePost().then(
           (_) => Navigator.pop(context)
         );
       }
@@ -502,7 +502,7 @@ class _VentPostPageState extends State<VentPostPage> with
         return ActionsButton().buildLikeButton(
           value: likesInfo['total_likes'], 
           isLiked: likesInfo['is_liked'],
-          onPressed: () async => await actionsHandler.likePost()
+          onPressed: () async => await actionsService.likePost()
         );
       },
     );
@@ -525,7 +525,7 @@ class _VentPostPageState extends State<VentPostPage> with
         final isSaved = _isVentSaved();
         return ActionsButton().buildSaveButton(
           isSaved: isSaved,
-          onPressed: () async => await actionsHandler.savePost(isAlreadySaved: isSaved)
+          onPressed: () async => await actionsService.savePost(isAlreadySaved: isSaved)
         );
       },
     );

@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:revent/service/query/general/follow_service.dart';
+import 'package:revent/service/general/follow_service.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
 

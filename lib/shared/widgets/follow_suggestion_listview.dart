@@ -7,7 +7,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
-import 'package:revent/service/query/user/user_actions.dart';
+import 'package:revent/service/user/actions_service.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';

@@ -10,14 +10,14 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/general/text_copy.dart';
 import 'package:revent/pages/comment/edit_comment_page.dart';
 import 'package:revent/pages/reply/replies_page.dart';
-import 'package:revent/service/query/user/user_actions.dart';
-import 'package:revent/service/query/vent/comment/pin_comment.dart';
+import 'package:revent/service/user/actions_service.dart';
+import 'package:revent/service/vent/comment/pin_comment.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/comment/comment_actions.dart';
+import 'package:revent/service/vent/comment/comment_actions.dart';
 import 'package:revent/shared/widgets/bottomsheet/comments/comment_actions.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 

@@ -5,8 +5,8 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
-import 'package:revent/service/query/user/user_actions.dart';
-import 'package:revent/service/query/user/user_block_getter.dart';
+import 'package:revent/service/user/actions_service.dart';
+import 'package:revent/service/user/block_service.dart';
 import 'package:revent/shared/widgets/account_profile.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -38,7 +38,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
 
   Future<void> _initializeBlockedAccounts() async {
 
-    final blockedAccountsInfo = await UserBlockGetter(
+    final blockedAccountsInfo = await UserBlockService(
       username: getIt.userProvider.user.username
     ).getBlockedAccounts();
   

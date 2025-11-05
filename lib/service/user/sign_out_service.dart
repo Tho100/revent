@@ -2,10 +2,10 @@ import 'package:revent/helper/cache_helper.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/local_storage_model.dart';
 
-class UserAccountManager with UserProfileProviderService, ProfilePostsProviderService {
+class UserSignOutService with UserProfileProviderService, ProfilePostsProviderService {
 
   Future<void> signOutUserAccount() async {
-
+// TODO: Create 2 separated functions for these two operations
     userProvider.clearUserData();
     profileProvider.clearProfileData();
     profilePostsProvider.clearPostsData();

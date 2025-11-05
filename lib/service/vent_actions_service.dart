@@ -2,21 +2,21 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/service/current_provider_service.dart';
-import 'package:revent/service/query/vent/actions/like_vent.dart';
-import 'package:revent/service/query/vent/actions/pin_vent.dart';
-import 'package:revent/service/query/vent/actions/save_vent.dart';
+import 'package:revent/service/vent/actions/like_vent.dart';
+import 'package:revent/service/vent/actions/pin_vent.dart';
+import 'package:revent/service/vent/actions/save_vent.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/vault/delete_vault_vent.dart';
-import 'package:revent/service/query/vent/actions/delete_vent.dart';
+import 'package:revent/service/vent/vault/delete_vault_vent.dart';
+import 'package:revent/service/vent/actions/delete_vent.dart';
 
-class VentActionsHandler with NavigationProviderService {
+class VentActionsService with NavigationProviderService {
 
   final int postId;
 
   String? creator;
 
-  VentActionsHandler({
+  VentActionsService({
     required this.postId,
     this.creator
   });

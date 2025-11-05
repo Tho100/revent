@@ -10,20 +10,20 @@ import 'package:revent/global/vent_type.dart';
 import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/vent_actions_handler.dart';
+import 'package:revent/service/vent_actions_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vault/vault_vent_viewer_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/vault_filter_bottomsheet.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
-import 'package:revent/service/query/vent/last_edit_service.dart';
+import 'package:revent/service/vent/last_edit_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/vault/vault_vent_service.dart';
+import 'package:revent/service/vent/vault/vault_vent_service.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
 
@@ -171,7 +171,7 @@ class _VaultVentPageVentPageState extends State<VaultVentPage> with
   }
 
   void _deleteVaultVent(int postId) async {
-    await VentActionsHandler(postId: postId).deleteVaultPost().then(
+    await VentActionsService(postId: postId).deleteVaultPost().then(
       (_) => _removeVentFromList(postId)
     );
   } 

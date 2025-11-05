@@ -4,11 +4,11 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class UserBlockGetter with UserProfileProviderService {
+class UserBlockService with UserProfileProviderService {
 
   final String username;
 
-  UserBlockGetter({required this.username});
+  UserBlockService({required this.username});
 
   Future<Map<String, dynamic>> getBlockedAccounts() async {
 

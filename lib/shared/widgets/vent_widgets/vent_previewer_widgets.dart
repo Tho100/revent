@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/service/vent_actions_handler.dart';
+import 'package:revent/service/vent_actions_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
@@ -134,7 +134,7 @@ class VentPreviewerWidgets {
       value: ventIndex == -1 ? 0 : likesInfo['total_likes'],
       isLiked: ventIndex == -1 ? false : likesInfo['is_liked'],
       onPressed: () async {
-        await VentActionsHandler(
+        await VentActionsService(
           postId: postId!,
           creator: creator! 
         ).likePost();
@@ -155,7 +155,7 @@ class VentPreviewerWidgets {
     return ActionsButton().buildSaveButton(
       isSaved: isSaved,
       onPressed: () async {
-        await VentActionsHandler(
+        await VentActionsService(
           postId: postId!
         ).savePost(isAlreadySaved: isSaved);
       }

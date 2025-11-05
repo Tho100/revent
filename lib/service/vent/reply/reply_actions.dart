@@ -2,7 +2,7 @@ import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/id_service.dart';
+import 'package:revent/service/general/id_service.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
 class ReplyActions with RepliesProviderService, UserProfileProviderService, VentProviderService {

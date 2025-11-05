@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
-import 'package:revent/service/query/general/delete_account_data.dart';
-import 'package:revent/service/user/user_account_manager.dart';
+import 'package:revent/service/general/delete_account_data.dart';
+import 'package:revent/service/user/sign_out_service.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
@@ -38,7 +38,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
       return;
     }
 
-    await UserAccountManager().signOutUserAccount();
+    await UserSignOutService().signOutUserAccount();
 
   }
 

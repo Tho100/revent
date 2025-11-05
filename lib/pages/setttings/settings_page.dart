@@ -14,7 +14,7 @@ import 'package:revent/pages/setttings/security/security_page.dart';
 import 'package:revent/pages/setttings/vent/liked_page.dart';
 import 'package:revent/pages/setttings/theme_page.dart';
 import 'package:revent/pages/setttings/vent_plus_page.dart';
-import 'package:revent/service/user/user_account_manager.dart';
+import 'package:revent/service/user/sign_out_service.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
@@ -25,7 +25,7 @@ class SettingsPage extends StatelessWidget {
   const SettingsPage({super.key});
 
   Future<void> _onConfirmSignOutPressed() async {
-    await UserAccountManager().signOutUserAccount().then(
+    await UserSignOutService().signOutUserAccount().then(
       (_) => NavigatePage.mainScreenPage()
     );
   }

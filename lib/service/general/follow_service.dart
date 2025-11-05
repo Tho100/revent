@@ -69,4 +69,15 @@ class FollowService with UserProfileProviderService {
 
   }
 
+  Future<bool> isFollowing({required String username}) async {
+
+    final response = await ApiClient.post(ApiPath.userFollowingStatusGetter, {
+      'following': username,
+      'current_user': userProvider.user.username
+    });
+
+    return response.body!['is_following'];
+
+  }
+
 }

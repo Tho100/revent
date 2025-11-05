@@ -6,17 +6,17 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
 import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/format/format_date.dart';
+import 'package:revent/service/general/follow_service.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/user/user_actions.dart';
-import 'package:revent/service/query/user/user_block_getter.dart';
-import 'package:revent/service/query/user/user_info_service.dart';
-import 'package:revent/service/query/user/user_following_status.dart';
-import 'package:revent/service/query/user/user_privacy_actions.dart';
-import 'package:revent/service/query/user_profile/profile_data_service.dart';
+import 'package:revent/service/user/actions_service.dart';
+import 'package:revent/service/user/block_service.dart';
+import 'package:revent/service/user/info_service.dart';
+import 'package:revent/service/user/privacy_actions.dart';
+import 'package:revent/service/profile/profile_data_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/service/user/user_profile_actions.dart';
+import 'package:revent/service/user/profile_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
 import 'package:revent/shared/themes/theme_style.dart';
@@ -62,6 +62,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
   final socialHandlesNotifier = ValueNotifier<Map<String, String>>({});
 
   final profileDataService = ProfileDataService();
+  final followService = FollowService();
 
   late ProfilePostsSetup profilePostsSetup;
   late ProfileInfoWidgets profileInfoWidgets;
@@ -183,7 +184,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     bioNotifier.value = isBlockedAccount ? '' : profileData['bio'];
     pronounsNotifier.value =  isBlockedAccount ? '' : profileData['pronouns'];
 
-    isFollowingNotifier.value = await UserFollowingStatus.isFollowing(username: widget.username);
+    isFollowingNotifier.value = await followService.isFollowing(username: widget.username);
     
     postsNotifier.value = 0;
 
@@ -206,7 +207,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
     try {
 
-      isBlockedAccount = await UserBlockGetter(username: widget.username).getIsAccountBlocked();
+      isBlockedAccount = await UserBlockService(username: widget.username).getIsAccountBlocked();
 
       if (isBlockedAccount) {
         setState(() {});
@@ -230,7 +231,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
       
       postsNotifier.value = profilePostsProvider.userProfile.titles.length;
 
-      isFollowingNotifier.value = await UserFollowingStatus.isFollowing(username: widget.username);
+      isFollowingNotifier.value = await followService.isFollowing(username: widget.username);
       socialHandlesNotifier.value = await UserInfoService.getSocialHandles(username: widget.username);
 
     } catch (_) {

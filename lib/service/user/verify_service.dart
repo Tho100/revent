@@ -1,7 +1,7 @@
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 
-class UserAvailabilityChecker {
+class UserVerifyService {
 
   Future<Map<String, bool>> usernameOrEmailExists({
     required String username, 

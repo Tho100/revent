@@ -2,12 +2,12 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class UserSocials with UserProfileProviderService {
+class UserSocialsService with UserProfileProviderService {
 
   final String platform;
   final String handle;
 
-  UserSocials({
+  UserSocialsService({
     required this.platform, 
     required this.handle
   });

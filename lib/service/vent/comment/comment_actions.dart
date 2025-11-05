@@ -3,7 +3,7 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/general/id_service.dart';
+import 'package:revent/service/general/id_service.dart';
 
 class CommentActions with 
   CommentsProviderService, 

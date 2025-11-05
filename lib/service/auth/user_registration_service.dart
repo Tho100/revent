@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/model/local_storage_model.dart';
+import 'package:revent/shared/api/api_client.dart';
+import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/user/user_data_registration.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/service/query/user/user_availability_checker.dart';
+import 'package:revent/service/user/verify_service.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/model/setup/vents_setup.dart';
@@ -21,7 +22,7 @@ class UserRegistrationService with UserProfileProviderService {
     required String password,
   }) async {
 
-    final userValidator = await UserAvailabilityChecker().usernameOrEmailExists(
+    final userValidator = await UserVerifyService().usernameOrEmailExists(
       username: username, email: email
     );
 
@@ -34,7 +35,7 @@ class UserRegistrationService with UserProfileProviderService {
     
     _setupUserProfileData(username: username, email: email);
 
-    final responseCode = await UserDataRegistration().registerUser(password: password);
+    final responseCode = await _registerUser(password);
 
     if (responseCode == 201) {
 
@@ -47,10 +48,22 @@ class UserRegistrationService with UserProfileProviderService {
       await localStorageModel.setupThemeInformation(theme: 'dark');
 
     } 
-    
+    // TODO: Move this inside 201
     await VentsSetup().setupLatest()
       .then((_) => NavigatePage.homePage()
     );
+
+  }
+
+  Future<int> _registerUser(password) async {
+    
+    final response = await ApiClient.post(ApiPath.register, {
+      'username': userProvider.user.username,
+      'email': userProvider.user.email,
+      'password': password
+    });
+
+    return response.statusCode;
 
   }
 

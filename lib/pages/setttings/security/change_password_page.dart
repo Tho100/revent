@@ -3,7 +3,7 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/validation_limits.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/controllers/security_auth_controller.dart';
-import 'package:revent/service/query/user/user_auth_service.dart';
+import 'package:revent/service/user/auth_service.dart';
 import 'package:revent/shared/widgets/password_requirement_status.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';

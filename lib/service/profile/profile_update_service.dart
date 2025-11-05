@@ -5,7 +5,7 @@ import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
-class ProfileDataUpdate with UserProfileProviderService {
+class ProfileUpdateService with UserProfileProviderService {
 
   Future<void> updateBio({required String bioText}) async {
 

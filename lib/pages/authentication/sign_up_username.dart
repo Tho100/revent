@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/validation_limits.dart';
-import 'package:revent/service/user/user_registration_service.dart';
+import 'package:revent/service/auth/user_registration_service.dart';
 import 'package:revent/helper/input/input_formatters.dart';
 import 'package:revent/helper/input/input_validator.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';

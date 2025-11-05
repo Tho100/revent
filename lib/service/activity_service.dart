@@ -1,6 +1,6 @@
 import 'package:revent/global/cache_names.dart';
 import 'package:revent/helper/cache_helper.dart';
-import 'package:revent/service/query/general/activities_service.dart';
+import 'package:revent/service/general/activities_service.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

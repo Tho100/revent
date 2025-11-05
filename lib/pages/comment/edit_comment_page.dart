@@ -6,7 +6,7 @@ import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/text/text_formatting_toolbar.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/comment/save_comment_edit.dart';
+import 'package:revent/service/vent/comment/save_comment_edit.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/profile_picture.dart';
 import 'package:revent/shared/widgets/text_field/body_textfield.dart';
