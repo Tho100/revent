@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:revent/service/query/general/follow_suggestions_getter.dart';
+import 'package:revent/service/general/follow_service.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
@@ -10,7 +10,7 @@ class FollowSuggestionsSetup with FollowSuggestionProviderService {
 
     if (followSuggestionProvider.suggestions.isEmpty) {
 
-      final followSuggestions = await FollowSuggestionsGetter().getSuggestions();
+      final followSuggestions = await FollowService().getFollowSuggestions();
 
       final usernames = followSuggestions['usernames'] as List<String>;
       final profilePic = followSuggestions['profile_pic'] as List<Uint8List>;

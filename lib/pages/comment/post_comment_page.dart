@@ -3,17 +3,17 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/validation_limits.dart';
-import 'package:revent/service/query/vent/comment/comment_actions.dart';
+import 'package:revent/service/vent/comment/actions_service.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/text/styled_text_widget.dart';
-import 'package:revent/shared/widgets/text/text_formatting_toolbar.dart';
+import 'package:revent/shared/widgets/text/formatting_toolbar.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 import 'package:revent/shared/widgets/text_field/body_textfield.dart';
 
 class PostCommentPage extends StatefulWidget {
@@ -49,10 +49,10 @@ class _PostCommentPageState extends State<PostCommentPage> with
           return;
         } 
 
-        final postCommentResponse = await CommentActions(
+        final postCommentResponse = await CommentActionsService(
           commentText: commentText,
           commentedBy: userProvider.user.username
-        ).sendComment();
+        ).send();
 
         if (postCommentResponse['status_code'] != 201) {
           SnackBarDialog.errorSnack(message: AlertMessages.commentFailed);

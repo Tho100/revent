@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/controllers/auth_controller.dart';
 import 'package:revent/global/alert_messages.dart';
-import 'package:revent/service/user/user_login_service.dart';
+import 'package:revent/service/auth/user_login_service.dart';
 import 'package:revent/helper/input/input_formatters.dart';
 import 'package:revent/helper/input/input_validator.dart';
 import 'package:revent/shared/themes/theme_color.dart';

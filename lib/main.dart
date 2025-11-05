@@ -6,21 +6,21 @@ import 'package:revent/global/app_keys.dart';
 import 'package:revent/pages/splash_screen_page.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
-import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
-import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
-import 'package:revent/shared/provider/search/search_accounts_provider.dart';
-import 'package:revent/shared/provider/search/search_posts_provider.dart';
+import 'package:revent/shared/provider/profile/posts_provider.dart';
+import 'package:revent/shared/provider/profile/saved_provider.dart';
+import 'package:revent/shared/provider/search/profiles_provider.dart';
+import 'package:revent/shared/provider/search/posts_provider.dart';
 import 'package:revent/shared/provider/user_provider.dart';
-import 'package:revent/shared/provider/profile/profile_provider.dart';
+import 'package:revent/shared/provider/profile/info_provider.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
-import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
-import 'package:revent/shared/provider/vent/vent_following_provider.dart';
-import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
+import 'package:revent/shared/provider/vent/latest_provider.dart';
+import 'package:revent/shared/provider/vent/following_provider.dart';
+import 'package:revent/shared/provider/vent/trending_provider.dart';
 import 'package:revent/shared/themes/app_theme.dart';
 import 'package:get_it/get_it.dart';
 
@@ -56,7 +56,7 @@ void _initializeLocators() {
   getIt.registerLazySingleton<ProfilePostsProvider>(() => ProfilePostsProvider());
   getIt.registerLazySingleton<ProfileSavedProvider>(() => ProfileSavedProvider());
   getIt.registerLazySingleton<SearchPostsProvider>(() => SearchPostsProvider());
-  getIt.registerLazySingleton<SearchAccountsProvider>(() => SearchAccountsProvider());
+  getIt.registerLazySingleton<SearchProfilesProvider>(() => SearchProfilesProvider());
   getIt.registerLazySingleton<LikedVentProvider>(() => LikedVentProvider());
   getIt.registerLazySingleton<SavedVentProvider>(() => SavedVentProvider());
   getIt.registerLazySingleton<FollowSuggestionProvider>(() => FollowSuggestionProvider());
@@ -87,7 +87,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => getIt<RepliesProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ActiveVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SearchPostsProvider>()),
-    ChangeNotifierProvider(create: (_) => getIt<SearchAccountsProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<SearchProfilesProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<LikedVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SavedVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<FollowSuggestionProvider>()),

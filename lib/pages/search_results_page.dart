@@ -53,7 +53,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
 
   void _clearSearchDataOnClose() {
     searchPostsProvider.clearVents();
-    searchAccountsProvider.clearAccounts();
+    searchProfilesProvider.clearAccounts();
   }
 
   void _onTabChanged() async {
@@ -61,7 +61,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> with
     final currentTab = SearchResultsTabs.values[tabController.index];
 
     if (currentTab == SearchResultsTabs.profiles) {
-      await setupSearch.setupAccountsResults();
+      await setupSearch.setupProfilesResults();
     }
 
   }

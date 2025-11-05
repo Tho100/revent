@@ -1,0 +1,82 @@
+import 'package:flutter/cupertino.dart';
+import 'package:revent/shared/provider_mixins.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/header.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/option_buttons.dart';
+
+class BottomsheetVentActions with UserProfileProviderService {
+
+  Future buildBottomsheet({
+    required BuildContext context,
+    required String title,
+    required String creator,
+    VoidCallback? editOnPressed,
+    VoidCallback? reportOnPressed,
+    VoidCallback? unPinOnPressed,
+    VoidCallback? blockOnPressed,
+    VoidCallback? copyOnPressed,
+    VoidCallback? pinOnPressed,
+    VoidCallback? deleteOnPressed,
+  }) {
+    return Bottomsheet().buildBottomSheet(
+      context: context, 
+      children: [
+
+        const BottomsheetHeader(title: 'Post Options'),
+
+        if (userProvider.user.username == creator && editOnPressed != null)
+        BottomsheetOptionButton(
+          text: 'Edit Post',
+          icon: CupertinoIcons.square_pencil,
+          onPressed: editOnPressed
+        ),
+
+        if (copyOnPressed != null)
+        BottomsheetOptionButton(
+          text: 'Copy Body',
+          icon: CupertinoIcons.doc_on_doc,
+          onPressed: copyOnPressed
+        ),
+
+        if (userProvider.user.username == creator && unPinOnPressed != null)
+        BottomsheetOptionButton(
+          text: 'Unpin Post',
+          icon: CupertinoIcons.pin_slash, 
+          onPressed: unPinOnPressed
+        ),
+
+        if (userProvider.user.username == creator && pinOnPressed != null)
+        BottomsheetOptionButton(
+          text: 'Pin Post', 
+          icon: CupertinoIcons.pin, 
+          onPressed: pinOnPressed
+        ),
+
+        if (userProvider.user.username != creator && reportOnPressed != null)
+        BottomsheetOptionButton(
+          text: 'Report Post',
+          icon: CupertinoIcons.flag,
+          onPressed: reportOnPressed
+        ),
+
+        if (userProvider.user.username != creator && blockOnPressed != null)
+        BottomsheetOptionButton(
+          text: 'Block @$creator',
+          icon: CupertinoIcons.clear_circled,
+          onPressed: blockOnPressed
+        ),
+
+        if (userProvider.user.username == creator && deleteOnPressed != null)
+        BottomsheetOptionButton(
+          text: 'Delete Post',
+          icon: CupertinoIcons.trash,
+          onPressed: deleteOnPressed
+        ),
+
+        const SizedBox(height: 25),
+
+      ]
+    );
+  }
+
+}

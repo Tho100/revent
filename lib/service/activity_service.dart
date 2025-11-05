@@ -1,12 +1,12 @@
 import 'package:revent/global/cache_names.dart';
 import 'package:revent/helper/cache_helper.dart';
-import 'package:revent/service/query/general/activities_getter.dart';
+import 'package:revent/service/general/activities_service.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ActivityService with NavigationProviderService {
 
-  final activitiesGetter = ActivitiesGetter();
+  final activitiesService = ActivitiesService();
 
   Future<void> initializeActivities({bool isLogin = false}) async {
 
@@ -39,10 +39,10 @@ class ActivityService with NavigationProviderService {
     await prefs.setBool(CacheNames.unreadCache, false);
 
     final latestLikesData = isLogin 
-      ? await activitiesGetter.getAllTimeLikeMilestones()
-      : await activitiesGetter.getRecentLikeMilestones();
+      ? await activitiesService.getAllTimeLikeMilestones()
+      : await activitiesService.getRecentLikeMilestones();
       
-    final latestFollowersData = await activitiesGetter.getUserFollowers();
+    final latestFollowersData = await activitiesService.getUserFollowers();
 
     final postTitles = latestLikesData['title']!;
     final postLikeCounts = latestLikesData['like_count']!;
@@ -86,8 +86,8 @@ class ActivityService with NavigationProviderService {
 
   Future<bool> _hasNewActivity() async {
 
-    final latestLikesData = await activitiesGetter.getRecentLikeMilestones();
-    final latestFollowersData = await activitiesGetter.getUserFollowers();
+    final latestLikesData = await activitiesService.getRecentLikeMilestones();
+    final latestFollowersData = await activitiesService.getUserFollowers();
 
     final caches = await CacheHelper().getActivityCache();
 

@@ -7,8 +7,8 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/model/country_picker_model.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/user/user_socials.dart';
-import 'package:revent/service/query/user_profile/profile_data_update.dart';
+import 'package:revent/service/user/socials_service.dart';
+import 'package:revent/service/profile/profile_update_service.dart';
 import 'package:revent/helper/input/input_formatters.dart';
 import 'package:revent/model/profile_picture/profile_picture_model.dart';
 import 'package:revent/shared/themes/theme_color.dart';
@@ -17,7 +17,7 @@ import 'package:revent/shared/widgets/bottomsheet/user/profile_picture_options_b
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 
 class EditProfilePage extends StatefulWidget {
@@ -31,7 +31,7 @@ class EditProfilePage extends StatefulWidget {
 
 class _EditProfilePageState extends State<EditProfilePage> with UserProfileProviderService {
 
-  final profileDataUpdate = ProfileDataUpdate();
+  final profileUpdateService = ProfileUpdateService();
 
   final bioController = TextEditingController();
   final pronounController = TextEditingController();
@@ -256,7 +256,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   }
 
   void _removeAvatar() async {
-    await profileDataUpdate.removeProfilePicture().then(
+    await profileUpdateService.removeProfilePicture().then(
       (_) => avatarNotifier.value = profileProvider.profile.profilePicture
     );
   }
@@ -289,7 +289,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
 
   void _removeCountry() async {
 
-    await profileDataUpdate.updateCountry(country: '').then(
+    await profileUpdateService.updateCountry(country: '').then(
       (_) {
         countrySelectedNotifier.value = '';
         countryController.text = '';
@@ -330,7 +330,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
         final platform = entry.key;
         final handle = entry.value;
 
-        await UserSocials(platform: platform, handle: handle).addSocial();
+        await UserSocialsService(platform: platform, handle: handle).addSocial();
 
       }
 
@@ -360,13 +360,13 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
   }
 
   Future<bool> _saveBio()
-    => _executeSaveChanges(() => profileDataUpdate.updateBio(bioText: bioController.text));
+    => _executeSaveChanges(() => profileUpdateService.updateBio(bioText: bioController.text));
 
   Future<bool> _savePronouns()
-    => _executeSaveChanges(() => profileDataUpdate.updatePronouns(pronouns: pronounController.text));
+    => _executeSaveChanges(() => profileUpdateService.updatePronouns(pronouns: pronounController.text));
 
   Future<bool> _saveCountry()
-    => _executeSaveChanges(() => profileDataUpdate.updateCountry(country: countrySelectedNotifier.value));
+    => _executeSaveChanges(() => profileUpdateService.updateCountry(country: countrySelectedNotifier.value));
 
   void _pronounsChipsOnSelected(String pronouns) {
 

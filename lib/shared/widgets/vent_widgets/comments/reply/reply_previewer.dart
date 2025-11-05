@@ -8,12 +8,12 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/general/text_copy.dart';
-import 'package:revent/service/query/user/user_actions.dart';
-import 'package:revent/service/query/vent/reply/reply_actions.dart';
+import 'package:revent/service/user/actions_service.dart';
+import 'package:revent/service/vent/reply/reply_actions.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/shared/widgets/bottomsheet/reply_actions.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/bottomsheet/reply_actions_bottomsheet.dart';
+import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -51,7 +51,7 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
 
     try {
 
-      final deleteReplyResponse = await ReplyActions(
+      final deleteReplyResponse = await ReplyActionsService(
         replyText: reply, 
         repliedBy: repliedBy, 
         commentText: comment, 
@@ -75,12 +75,12 @@ class ReplyPreviewer extends StatelessWidget with VentProviderService {
 
     try {
 
-      final likeReplyResponse = await ReplyActions(
+      final likeReplyResponse = await ReplyActionsService(
         replyText: reply, 
         repliedBy: repliedBy,
         commentText: comment, 
         commentedBy: commentedBy
-      ).toggleLikeReply();
+      ).toggleLike();
 
       if (likeReplyResponse['status_code'] != 200) {
         SnackBarDialog.errorSnack(message: AlertMessages.defaultError);

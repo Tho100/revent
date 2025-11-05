@@ -1,14 +1,14 @@
 import 'dart:typed_data';
 
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/vent/reply/replies_getter.dart';
+import 'package:revent/service/vent/reply/replies_service.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 
 class RepliesSetup with RepliesProviderService {
 
   Future<void> setup({required int commentId}) async {
 
-    final repliesInfo = await RepliesGetter(commentId: commentId).getReplies();
+    final repliesInfo = await RepliesService(commentId: commentId).getReplies();
 
     final repliedBy = repliesInfo['replied_by']! as List<String>;
     final reply = repliesInfo['reply']! as List<String>;

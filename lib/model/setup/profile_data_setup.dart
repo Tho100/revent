@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/user_profile/profile_data_getter.dart';
-import 'package:revent/shared/provider/profile/profile_provider.dart';
+import 'package:revent/service/profile/profile_data_service.dart';
+import 'package:revent/shared/provider/profile/info_provider.dart';
 
 class ProfileDataSetup with UserProfileProviderService {
 
@@ -35,7 +35,7 @@ class ProfileDataSetup with UserProfileProviderService {
 
   Future<void> setup({required String username}) async {
 
-    final getProfileData = await ProfileDataGetter().getProfileData(
+    final getProfileData = await ProfileDataService().getProfileData(
       isMyProfile: true, username: username
     );
 

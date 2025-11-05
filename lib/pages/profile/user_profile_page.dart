@@ -6,29 +6,29 @@ import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/profile_type.dart';
 import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/format/format_date.dart';
+import 'package:revent/service/general/follow_service.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/user/user_actions.dart';
-import 'package:revent/service/query/user/user_block_getter.dart';
-import 'package:revent/service/query/user/user_info_getter.dart';
-import 'package:revent/service/query/user/user_following_status.dart';
-import 'package:revent/service/query/user/user_privacy_actions.dart';
-import 'package:revent/service/query/user_profile/profile_data_getter.dart';
+import 'package:revent/service/user/actions_service.dart';
+import 'package:revent/service/user/block_service.dart';
+import 'package:revent/service/user/info_service.dart';
+import 'package:revent/service/user/privacy_service.dart';
+import 'package:revent/service/profile/profile_data_service.dart';
 import 'package:revent/model/setup/profile_posts_setup.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
-import 'package:revent/service/user/user_profile_actions.dart';
+import 'package:revent/service/user/profile_actions_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/full_bio_bottomsheet.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
-import 'package:revent/shared/widgets/profile/social_links_widget.dart';
+import 'package:revent/shared/widgets/navigation/bar_dock.dart';
+import 'package:revent/shared/widgets/profile/socials_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
-import 'package:revent/shared/widgets/profile/profile_body_widgets.dart';
-import 'package:revent/shared/widgets/profile/profile_info_widgets.dart';
+import 'package:revent/shared/widgets/profile/body_widgets.dart';
+import 'package:revent/shared/widgets/profile/info_widgets.dart';
 import 'package:revent/shared/widgets/profile/tabbar_widgets.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -61,7 +61,8 @@ class _UserProfilePageState extends State<UserProfilePage> with
   final isFollowingNotifier = ValueNotifier<bool>(false);
   final socialHandlesNotifier = ValueNotifier<Map<String, String>>({});
 
-  final profileDataGetter = ProfileDataGetter();
+  final profileDataService = ProfileDataService();
+  final followService = FollowService();
 
   late ProfilePostsSetup profilePostsSetup;
   late ProfileInfoWidgets profileInfoWidgets;
@@ -130,7 +131,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
     if (joinedDate.isEmpty) {
 
-      final getJoinedDate = await UserInfoGetter.getJoinedDate(username: widget.username);
+      final getJoinedDate = await UserInfoService.getJoinedDate(username: widget.username);
 
       final formattedJoinedDate = FormatDate.formatLongDate(getJoinedDate);
 
@@ -150,7 +151,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
       country = isBlockedAccount || isPrivateAccount
         ? 'Unknown' 
-        :  await UserInfoGetter.getCountry(username: widget.username);
+        :  await UserInfoService.getCountry(username: widget.username);
 
       return country;
 
@@ -162,7 +163,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Future<void> _initializePrivacySettings() async {
 
-    final privacyOptions = await UserPrivacyActions().getCurrentPrivacyOptions(
+    final privacyOptions = await UserPrivacyService().getCurrentPrivacyOptions(
       username: widget.username
     );
 
@@ -174,7 +175,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Future<void> _initializeRestrictedView() async {
 
-    final profileData = await profileDataGetter.getProfileData(
+    final profileData = await profileDataService.getProfileData(
       isMyProfile: false, username: widget.username
     );
         
@@ -183,7 +184,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     bioNotifier.value = isBlockedAccount ? '' : profileData['bio'];
     pronounsNotifier.value =  isBlockedAccount ? '' : profileData['pronouns'];
 
-    isFollowingNotifier.value = await UserFollowingStatus.isFollowing(username: widget.username);
+    isFollowingNotifier.value = await followService.isFollowing(username: widget.username);
     
     postsNotifier.value = 0;
 
@@ -191,7 +192,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
   Future<void> _initializeBasicProfileInfo() async {
 
-    final profileData = await profileDataGetter.getProfileData(
+    final profileData = await profileDataService.getProfileData(
       isMyProfile: false, username: widget.username
     );
         
@@ -206,7 +207,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
 
     try {
 
-      isBlockedAccount = await UserBlockGetter(username: widget.username).getIsAccountBlocked();
+      isBlockedAccount = await UserBlockService(username: widget.username).getIsAccountBlocked();
 
       if (isBlockedAccount) {
         setState(() {});
@@ -230,8 +231,8 @@ class _UserProfilePageState extends State<UserProfilePage> with
       
       postsNotifier.value = profilePostsProvider.userProfile.titles.length;
 
-      isFollowingNotifier.value = await UserFollowingStatus.isFollowing(username: widget.username);
-      socialHandlesNotifier.value = await UserInfoGetter.getSocialHandles(username: widget.username);
+      isFollowingNotifier.value = await followService.isFollowing(username: widget.username);
+      socialHandlesNotifier.value = await UserInfoService.getSocialHandles(username: widget.username);
 
     } catch (_) {
       SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
@@ -317,7 +318,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
             : Transform.translate(
               offset: Offset(0, pronounsNotifier.value.isEmpty ? -5 : -2),
                 child: GestureDetector(
-                onTap: () => BottomsheetViewFullBio().buildBottomsheet(context: context, bio: bio),
+                onTap: () => BottomsheetFullBio().buildBottomsheet(context: context, bio: bio),
                 child: Text(
                   bio,
                   style: ThemeStyle.profileBioStyle,
@@ -425,7 +426,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     return IconButton(
       icon: Icon(CupertinoIcons.ellipsis_circle, size: 25, color: ThemeColor.contentPrimary),
       onPressed: () {
-        UserProfileActions(context: context).showUserActions(
+        UserProfileActionsService(context: context).showActions(
           username: widget.username, 
           pronouns: pronounsNotifier.value, 
           pfpData: widget.pfpData, 
@@ -440,7 +441,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     return ValueListenableBuilder(
       valueListenable: socialHandlesNotifier,
       builder: (_, socialHandles, __) {
-        return SocialLinksWidgets(
+        return SocialsWidget(
           socialHandles: socialHandles
         ).buildSocialLinks();
       }

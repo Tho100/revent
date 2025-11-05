@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:revent/global/profile_type.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/service/query/user_profile/profile_posts_getter.dart';
+import 'package:revent/service/profile/profile_posts_service.dart';
 
 class ProfilePostsSetup with ProfilePostsProviderService {
 
@@ -42,7 +42,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
     if (isDataEmpty) {
 
-      final getPostsData = await ProfilePostsGetter(username: username).getOwnPosts();
+      final getPostsData = await ProfilePostsService(username: username).getOwnPosts();
       
       final postIds = getPostsData['post_id'] as List<int>;
 
@@ -86,7 +86,7 @@ class ProfilePostsSetup with ProfilePostsProviderService {
 
     if (isDataEmpty) {
 
-      final getPostsData = await ProfilePostsGetter(username: username).getSavedPosts();
+      final getPostsData = await ProfilePostsService(username: username).getSavedPosts();
 
       final postIds = getPostsData['post_id'] as List<int>;
 

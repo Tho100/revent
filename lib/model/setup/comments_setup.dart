@@ -2,13 +2,13 @@ import 'dart:typed_data';
 
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
-import 'package:revent/service/query/vent/comment/comments_getter.dart';
+import 'package:revent/service/vent/comment/comments_service.dart';
 
 class CommentsSetup with CommentsProviderService {
 
   Future<void> setup() async {
 
-    final commentsInfo = await CommentsGetter().getComments();
+    final commentsInfo = await CommentsService().getComments();
 
     final commentedBy = commentsInfo['commented_by']! as List<String>;
     final comment = commentsInfo['comment']! as List<String>;

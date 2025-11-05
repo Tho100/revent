@@ -10,12 +10,12 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/service/activity_service.dart';
-import 'package:revent/service/query/general/id_getter.dart';
-import 'package:revent/service/query/vent/vent_info_getter.dart';
+import 'package:revent/service/general/id_service.dart';
+import 'package:revent/service/vent/info_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
+import 'package:revent/shared/widgets/navigation/bar_dock.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
@@ -69,9 +69,9 @@ class _ActivityPageState extends State<ActivityPage> with
 
   Future<void> _navigateToLikedPost({required String title}) async {
     
-    final postId = await IdGetter.getPostId(title: title, creator: userProvider.user.username);
+    final postId = await IdService.getPostId(title: title, creator: userProvider.user.username);
 
-    final ventInfoGetter = VentInfoGetter(postId: postId);
+    final ventInfoGetter = VentInfoService(postId: postId);
 
     final metadataResponse = await ventInfoGetter.getMetadata();
     final bodyTextResponse = await ventInfoGetter.getBodyText();

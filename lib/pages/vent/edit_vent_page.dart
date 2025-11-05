@@ -7,9 +7,9 @@ import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/service/query/vent/save_vent_edit.dart';
+import 'package:revent/service/vent/save_edit_service.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/text/text_formatting_toolbar.dart';
+import 'package:revent/shared/widgets/text/formatting_toolbar.dart';
 
 class EditVentPage extends StatefulWidget {
 
@@ -50,11 +50,11 @@ class _EditVentPageState extends State<EditVentPage> with VentPostController {
 
       final newBodyText = bodyTextController.text;
 
-      final saveVentEdit = SaveVentEdit(postId: widget.postId, newBody: newBodyText);
+      final saveVentEdit = SaveVentEditService(postId: widget.postId, newBody: newBodyText);
 
       final saveChangesResponse = widget.ventType == VentType.vault
         ? await saveVentEdit.saveVault()
-        : await saveVentEdit.save();
+        : await saveVentEdit.saveDefault();
 
       if (saveChangesResponse['status_code'] != 200) {
         SnackBarDialog.temporarySnack(message: AlertMessages.changesFailed);

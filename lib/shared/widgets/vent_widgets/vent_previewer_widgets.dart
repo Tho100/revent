@@ -6,15 +6,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/tabs_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/service/vent_actions_handler.dart';
+import 'package:revent/service/vent_actions_service.dart';
 import 'package:revent/service/current_provider_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/bottomsheet/vents/vent_post_actions.dart';
+import 'package:revent/shared/widgets/bottomsheet/vents/actions_bottomsheet.dart';
 import 'package:revent/shared/widgets/buttons/actions_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 import 'package:revent/shared/widgets/text/styled_text_widget.dart';
 
 class VentPreviewerWidgets {
@@ -134,7 +134,7 @@ class VentPreviewerWidgets {
       value: ventIndex == -1 ? 0 : likesInfo['total_likes'],
       isLiked: ventIndex == -1 ? false : likesInfo['is_liked'],
       onPressed: () async {
-        await VentActionsHandler(
+        await VentActionsService(
           postId: postId!,
           creator: creator! 
         ).likePost();
@@ -155,7 +155,7 @@ class VentPreviewerWidgets {
     return ActionsButton().buildSaveButton(
       isSaved: isSaved,
       onPressed: () async {
-        await VentActionsHandler(
+        await VentActionsService(
           postId: postId!
         ).savePost(isAlreadySaved: isSaved);
       }
@@ -170,8 +170,8 @@ class VentPreviewerWidgets {
     );
   }
 
-  void _callVentOptionsBottomsheet() {
-    BottomsheetVentPostActions().buildBottomsheet(
+  void _callVentActionsBottomsheet() {
+    BottomsheetVentActions().buildBottomsheet(
       context: context, 
       title: title!,
       creator: creator!,
@@ -192,7 +192,7 @@ class VentPreviewerWidgets {
         width: 25,
         height: 25,
         child: IconButton(
-          onPressed: _callVentOptionsBottomsheet,
+          onPressed: _callVentActionsBottomsheet,
           icon: customIconWidget ?? Transform.translate(
             offset: const Offset(0, -10),
             child: Icon(CupertinoIcons.ellipsis, color: ThemeColor.contentThird, size: 18)
@@ -288,7 +288,7 @@ class VentPreviewerWidgets {
 
   Widget buildMainContainer({required List<Widget> children}) {
     return InkWellEffect(
-      onLongPress: () => _callVentOptionsBottomsheet(),
+      onLongPress: () => _callVentActionsBottomsheet(),
       onPressed: navigateVentPostPageOnPressed!,
       child: Container(
         decoration: BoxDecoration(
