@@ -4,6 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
+import 'package:revent/global/follow_type.dart';
 import 'package:revent/service/query/general/follow_data_getter.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
@@ -102,9 +103,9 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
   }
 
-  Future<List<_FollowsProfilesData>> _fetchFollowsData(String followType) async {
+  Future<List<_FollowsProfilesData>> _fetchFollowsData(FollowType followType) async {
 
-    final info = followType == 'Followers' 
+    final info = followType == FollowType.followers
       ? await FollowDataGetter().getUserFollowers(username: widget.username)
       : await FollowDataGetter().getUserFollowing(username: widget.username);
 
@@ -135,7 +136,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
       if (page == 'Followers') {
 
         if (followersTabNotLoaded) {
-          followersData.value = await _fetchFollowsData('Followers');
+          followersData.value = await _fetchFollowsData(FollowType.followers);
           followersTabNotLoaded = false;
         } 
 
@@ -149,7 +150,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
       } else if (page == 'Following') {
 
         if (followingTabNotLoaded) {
-          followingData.value = await _fetchFollowsData('Following');
+          followingData.value = await _fetchFollowsData(FollowType.following);
           followingTabNotLoaded = false;
         } 
 
