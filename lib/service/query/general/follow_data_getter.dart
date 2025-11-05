@@ -4,9 +4,9 @@ import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/data/extract_data.dart';
 
-class FollowsGetter with UserProfileProviderService {
+class FollowDataGetter with UserProfileProviderService {
 
-  Future<Map<String, List<dynamic>>> getFollows({
+  Future<Map<String, List<dynamic>>> _getUserFollows({
     required String followType,
     required String username
   }) async {
@@ -39,6 +39,33 @@ class FollowsGetter with UserProfileProviderService {
       'is_followed': isFollowed
     };
     
+  }
+
+  Future<Map<String, List<dynamic>>> getUserFollowers({required String username}) async {
+    return _getUserFollows(username: username, followType: 'Followers');
+  }
+
+  Future<Map<String, List<dynamic>>> getUserFollowing({required String username}) async {
+    return _getUserFollows(username: username, followType: 'Following');
+  }
+
+  Future<Map<String, List<dynamic>>> getFollowSuggestions() async {
+
+    final response = await ApiClient.get(ApiPath.userFollowSuggestionsGetter, userProvider.user.username);
+
+    final profiles = ExtractData(data: response.body!['profiles']);
+
+    final usernames = profiles.extractColumn<String>('username');
+    
+    final profilePictures = DataConverter.convertToPfp(
+      profiles.extractColumn<String>('profile_picture')
+    );
+
+    return {
+      'usernames': usernames,
+      'profile_pic': profilePictures
+    };
+
   }
 
 }

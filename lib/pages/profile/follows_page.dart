@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
-import 'package:revent/service/query/general/follows_getter.dart';
+import 'package:revent/service/query/general/follow_data_getter.dart';
 import 'package:revent/service/query/user/user_actions.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
@@ -104,14 +104,13 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
   Future<List<_FollowsProfilesData>> _fetchFollowsData(String followType) async {
 
-    final getFollowsInfo = await FollowsGetter().getFollows(
-      followType: followType,
-      username: widget.username,
-    );
+    final info = followType == 'Followers' 
+      ? await FollowDataGetter().getUserFollowers(username: widget.username)
+      : await FollowDataGetter().getUserFollowing(username: widget.username);
 
-    final usernames = getFollowsInfo['username']! as List<String>;
-    final pfpData = getFollowsInfo['profile_pic']! as List<Uint8List>; 
-    final isFollowed = getFollowsInfo['is_followed']! as List<bool>;
+    final usernames = info['username']! as List<String>;
+    final pfpData = info['profile_pic']! as List<Uint8List>; 
+    final isFollowed = info['is_followed']! as List<bool>;
 
     return List.generate(usernames.length, (index) {
       return _FollowsProfilesData(
