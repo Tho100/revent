@@ -2,31 +2,31 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 
-class SearchAccountsData {
+class SearchProfilesData {
 
   List<String> usernames = [];
   List<Uint8List> profilePictures = [];
 
-  SearchAccountsData({
+  SearchProfilesData({
     required this.usernames,
     required this.profilePictures
   });
 
 }
 
-class SearchAccountsProvider extends ChangeNotifier {
+class SearchProfilesProvider extends ChangeNotifier {
 
-  SearchAccountsData _accounts = SearchAccountsData(usernames: [], profilePictures: []);
+  SearchProfilesData _profiles = SearchProfilesData(usernames: [], profilePictures: []);
 
-  SearchAccountsData get accounts => _accounts; 
+  SearchProfilesData get profiles => _profiles; 
 
-  void setAccounts(SearchAccountsData accounts) {
-    _accounts = accounts;
+  void setProfiles(SearchProfilesData profiles) {
+    _profiles = profiles;
     notifyListeners();
   }
 
   void clearAccounts() {
-    _accounts = SearchAccountsData(usernames: [], profilePictures: []);
+    _profiles = SearchProfilesData(usernames: [], profilePictures: []);
   }
 
 }

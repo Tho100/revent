@@ -32,7 +32,7 @@ extension GetItExtensions on GetIt {
   ProfileSavedProvider get profileSavedProvider => get<ProfileSavedProvider>();
 
   SearchPostsProvider get searchPostsProvider => get<SearchPostsProvider>();
-  SearchAccountsProvider get searchAccountsProvider => get<SearchAccountsProvider>();
+  SearchProfilesProvider get searchProfilesProvider => get<SearchProfilesProvider>();
 
   LikedVentProvider get likedVentProvider => get<LikedVentProvider>();
   SavedVentProvider get savedVentProvider => get<SavedVentProvider>();

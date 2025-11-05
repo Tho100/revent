@@ -47,11 +47,11 @@ class UserRegistrationService with UserProfileProviderService {
 
       await localStorageModel.setupThemeInformation(theme: 'dark');
 
+      await VentsSetup().setupLatest()
+        .then((_) => NavigatePage.homePage()
+      );
+
     } 
-    // TODO: Move this inside 201
-    await VentsSetup().setupLatest()
-      .then((_) => NavigatePage.homePage()
-    );
 
   }
 

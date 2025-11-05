@@ -56,7 +56,7 @@ void _initializeLocators() {
   getIt.registerLazySingleton<ProfilePostsProvider>(() => ProfilePostsProvider());
   getIt.registerLazySingleton<ProfileSavedProvider>(() => ProfileSavedProvider());
   getIt.registerLazySingleton<SearchPostsProvider>(() => SearchPostsProvider());
-  getIt.registerLazySingleton<SearchAccountsProvider>(() => SearchAccountsProvider());
+  getIt.registerLazySingleton<SearchProfilesProvider>(() => SearchProfilesProvider());
   getIt.registerLazySingleton<LikedVentProvider>(() => LikedVentProvider());
   getIt.registerLazySingleton<SavedVentProvider>(() => SavedVentProvider());
   getIt.registerLazySingleton<FollowSuggestionProvider>(() => FollowSuggestionProvider());
@@ -87,7 +87,7 @@ void main() async {
     ChangeNotifierProvider(create: (_) => getIt<RepliesProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<ActiveVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SearchPostsProvider>()),
-    ChangeNotifierProvider(create: (_) => getIt<SearchAccountsProvider>()),
+    ChangeNotifierProvider(create: (_) => getIt<SearchProfilesProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<LikedVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<SavedVentProvider>()),
     ChangeNotifierProvider(create: (_) => getIt<FollowSuggestionProvider>()),

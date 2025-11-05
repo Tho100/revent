@@ -18,22 +18,22 @@ class SearchResultsSetup with SearchProviderService {
     );
 
   }
-// TODO: Rename to profiles
-  Future<void> setupAccountsResults() async {
 
-    if (searchAccountsProvider.accounts.usernames.isEmpty) {
+  Future<void> setupProfilesResults() async {
+
+    if (searchProfilesProvider.profiles.usernames.isEmpty) {
 
       final accountsData = await SearchProfilesService().getProfiles(searchUsername: searchText);
 
       final usernames = accountsData['username'] as List<String>;
       final profilePictures = accountsData['profile_pic'] as List<Uint8List>;
 
-      final setupAccounts = SearchAccountsData(
+      final setupProfiles = SearchProfilesData(
         usernames: usernames, 
         profilePictures: profilePictures
       );
 
-      searchAccountsProvider.setAccounts(setupAccounts);
+      searchProfilesProvider.setProfiles(setupProfiles);
 
     }
 

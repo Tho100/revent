@@ -36,7 +36,7 @@ mixin VentProviderService {
 mixin SearchProviderService {
 
   SearchPostsProvider get searchPostsProvider => getIt<SearchPostsProvider>();
-  SearchAccountsProvider get searchAccountsProvider => getIt<SearchAccountsProvider>();
+  SearchProfilesProvider get searchProfilesProvider => getIt<SearchProfilesProvider>();
 
 }
 

@@ -8,7 +8,7 @@ class SearchProfilesListView extends StatelessWidget {
 
   const SearchProfilesListView({super.key});
 
-  Widget _buildListView(SearchAccountsData accountsData) {
+  Widget _buildListView(SearchProfilesData accountsData) {
     return Padding(
       padding: const EdgeInsets.only(left: 7.5, right: 10),
       child: ListView.builder(
@@ -50,10 +50,10 @@ class SearchProfilesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<SearchAccountsProvider>(
+    return Consumer<SearchProfilesProvider>(
       builder: (_, accountsData, __) {
 
-        final accounts = accountsData.accounts;
+        final accounts = accountsData.profiles;
 
         return accounts.usernames.isEmpty 
           ? _buildNoResults()
