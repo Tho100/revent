@@ -5,11 +5,21 @@ import 'package:revent/model/local_storage_model.dart';
 class UserSignOutService with UserProfileProviderService, ProfilePostsProviderService {
 
   Future<void> signOutUserAccount() async {
-// TODO: Create 2 separated functions for these two operations
+
+    await _clearLocalData().then(
+      (_) => _clearMemoryInfo()
+    );
+    
+  }
+
+  void _clearMemoryInfo() {
     userProvider.clearUserData();
     profileProvider.clearProfileData();
     profilePostsProvider.clearPostsData();
     profileSavedProvider.clearPostsData();
+  }
+
+  Future<void> _clearLocalData() async {
 
     final localModel = LocalStorageModel();
 

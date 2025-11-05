@@ -26,7 +26,7 @@ class LastEditService with VentProviderService {
     return formattedTimeStamp;
 
   }
-// TODO: rneame to: getDefaultLastEdit, getVaultLastEdit
+
   Future<String> getLastDefault() async => await _getLastEdit(type: VentType.nonVault);
   Future<String> getLastEditVault() async => await _getLastEdit(type: VentType.vault);
 
