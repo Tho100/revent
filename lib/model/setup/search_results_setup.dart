@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/search/profiles_service.dart';
-import 'package:revent/shared/provider/search/search_accounts_provider.dart';
+import 'package:revent/shared/provider/search/profiles_provider.dart';
 import 'package:revent/model/setup/vents_setup.dart';
 
 class SearchResultsSetup with SearchProviderService {

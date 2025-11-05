@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
-import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
+import 'package:revent/shared/provider/profile/posts_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
 import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';

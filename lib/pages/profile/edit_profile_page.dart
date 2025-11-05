@@ -17,7 +17,7 @@ import 'package:revent/shared/widgets/bottomsheet/user/profile_picture_options_b
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 
 class EditProfilePage extends StatefulWidget {

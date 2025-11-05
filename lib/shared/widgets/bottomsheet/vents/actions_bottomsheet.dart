@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_option_button.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/header.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/option_buttons.dart';
 
-class BottomsheetVentPostActions with UserProfileProviderService {
+class BottomsheetVentActions with UserProfileProviderService {
 
   Future buildBottomsheet({
     required BuildContext context,

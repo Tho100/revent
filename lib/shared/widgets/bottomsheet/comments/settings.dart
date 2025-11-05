@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/header.dart';
 
 class BottomsheetCommentsSettings {
 

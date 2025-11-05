@@ -1,11 +1,11 @@
 import 'package:revent/main.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
-import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
-import 'package:revent/shared/provider/profile/profile_provider.dart';
-import 'package:revent/shared/provider/profile/profile_saved_provider.dart';
-import 'package:revent/shared/provider/search/search_accounts_provider.dart';
-import 'package:revent/shared/provider/search/search_posts_provider.dart';
+import 'package:revent/shared/provider/profile/posts_provider.dart';
+import 'package:revent/shared/provider/profile/info_provider.dart';
+import 'package:revent/shared/provider/profile/saved_provider.dart';
+import 'package:revent/shared/provider/search/profiles_provider.dart';
+import 'package:revent/shared/provider/search/posts_provider.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
@@ -13,9 +13,9 @@ import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
-import 'package:revent/shared/provider/vent/vent_following_provider.dart';
-import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
-import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
+import 'package:revent/shared/provider/vent/following_provider.dart';
+import 'package:revent/shared/provider/vent/latest_provider.dart';
+import 'package:revent/shared/provider/vent/trending_provider.dart';
 
 mixin UserProfileProviderService {
 

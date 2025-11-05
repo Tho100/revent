@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/profile/profile_info_widgets.dart';
+import 'package:revent/shared/widgets/profile/info_widgets.dart';
 import 'package:revent/shared/widgets/profile/tabbar_widgets.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 

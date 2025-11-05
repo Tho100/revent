@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/app_keys.dart';
-import 'package:revent/shared/provider/profile/profile_provider.dart';
+import 'package:revent/shared/provider/profile/info_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/pages/profile_picture_viewer_page.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 
 class ProfileInfoWidgets with UserProfileProviderService {
 

@@ -13,17 +13,17 @@ import 'package:revent/pages/profile/edit_profile_page.dart';
 import 'package:revent/pages/setttings/user/privacy_page.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
-import 'package:revent/shared/widgets/profile/social_links_widget.dart';
+import 'package:revent/shared/widgets/navigation/bar_dock.dart';
+import 'package:revent/shared/widgets/profile/socials_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
-import 'package:revent/shared/provider/profile/profile_provider.dart';
-import 'package:revent/shared/provider/profile/profile_posts_provider.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/full_bio_bottomsheet.dart';
+import 'package:revent/shared/provider/profile/info_provider.dart';
+import 'package:revent/shared/provider/profile/posts_provider.dart';
 import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
-import 'package:revent/shared/widgets/profile/profile_body_widgets.dart';
-import 'package:revent/shared/widgets/profile/profile_info_widgets.dart';
+import 'package:revent/shared/widgets/profile/body_widgets.dart';
+import 'package:revent/shared/widgets/profile/info_widgets.dart';
 import 'package:revent/shared/widgets/profile/tabbar_widgets.dart';
 
 class MyProfilePage extends StatefulWidget {
@@ -147,7 +147,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
             : Transform.translate(
               offset: Offset(0, profileData.profile.pronouns.isEmpty ? -5 : -2),
               child: GestureDetector(
-              onTap: () => BottomsheetViewFullBio().buildBottomsheet(context: context, bio: profileData.profile.bio),
+              onTap: () => BottomsheetFullBio().buildBottomsheet(context: context, bio: profileData.profile.bio),
                 child: Text(
                   profileData.profile.bio,
                   style: ThemeStyle.profileBioStyle,
@@ -210,7 +210,7 @@ class _MyProfilePageState extends State<MyProfilePage> with
           return const SizedBox.shrink();
         }
 
-        return SocialLinksWidgets(
+        return SocialsWidget(
           socialHandles: socialHandles!
         ).buildSocialLinks();
 

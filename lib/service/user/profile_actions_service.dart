@@ -3,9 +3,9 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/service/user/actions_service.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/about_profile.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/report_user_bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/user_actions.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/about_profile_bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/report_bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/user_actions_bottomsheet.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 
 class UserProfileActionsService {
@@ -69,7 +69,7 @@ class UserProfileActionsService {
 
   void _onReportPressed() {
     context.popAndRun(
-      () => ReportUserBottomsheet().buildBottomsheet(context: context)
+      () => Reportottomsheet().buildBottomsheet(context: context)
     );
   }
 

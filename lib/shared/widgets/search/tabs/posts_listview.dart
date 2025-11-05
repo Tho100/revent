@@ -4,9 +4,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/model/filter/search_posts_filter.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
-import 'package:revent/shared/provider/search/search_posts_provider.dart';
+import 'package:revent/shared/provider/search/posts_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/bottomsheet/search_filter.dart';
+import 'package:revent/shared/widgets/bottomsheet/search_filter_bottomsheet.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
 

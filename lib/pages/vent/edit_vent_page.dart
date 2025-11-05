@@ -9,7 +9,7 @@ import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/vent/save_edit_service.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/text/text_formatting_toolbar.dart';
+import 'package:revent/shared/widgets/text/formatting_toolbar.dart';
 
 class EditVentPage extends StatefulWidget {
 

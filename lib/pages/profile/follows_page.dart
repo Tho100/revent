@@ -10,7 +10,7 @@ import 'package:revent/service/user/actions_service.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/shared/widgets/account_profile.dart';
+import 'package:revent/shared/widgets/profile/title_widget.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/custom_tab_bar.dart';
 
@@ -215,7 +215,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
 
                   final isFollow = actionText == 'Follow' ? true : false;
                   
-                  return AccountProfileWidget(
+                  return UserProfileTitleWidget(
                     customText: actionText,
                     username: username,
                     pfpData: pfpData,

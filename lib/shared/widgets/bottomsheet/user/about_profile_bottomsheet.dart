@@ -9,9 +9,9 @@ import 'package:revent/pages/profile_picture_viewer_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet_header.dart';
+import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/header.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 
 class BottomsheetAboutProfile {
 

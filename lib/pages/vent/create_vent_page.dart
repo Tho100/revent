@@ -14,7 +14,7 @@ import 'package:revent/main.dart';
 import 'package:revent/pages/vault/vault_vent_page.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
 import 'package:revent/shared/widgets/bottomsheet/tags_bottomsheet.dart';
-import 'package:revent/shared/widgets/bottomsheet/vents/vent_options_bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/vents/options_bottomsheet.dart';
 import 'package:revent/shared/widgets/nsfw_widget.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
@@ -25,7 +25,7 @@ import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
-import 'package:revent/shared/widgets/text/text_formatting_toolbar.dart';
+import 'package:revent/shared/widgets/text/formatting_toolbar.dart';
 
 class CreateVentPage extends StatefulWidget {
 

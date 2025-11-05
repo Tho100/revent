@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/social_links_bottomsheet.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/socials_bottomsheet.dart';
 
-class SocialLinksWidgets {
+class SocialsWidget {
 
   final Map<String, String> socialHandles;
 
-  SocialLinksWidgets({required this.socialHandles});
+  SocialsWidget({required this.socialHandles});
 
   Widget buildSocialLinks() {
     return GestureDetector(
       onTap: () {
-        BottomsheetSocialLinks().buildBottomsheet(
+        BottomsheetSocials().buildBottomsheet(
           context: AppKeys.navigatorKey.currentContext!, 
           handles: socialHandles
         );

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
-import 'package:revent/shared/provider/search/search_accounts_provider.dart';
-import 'package:revent/shared/widgets/account_profile.dart';
+import 'package:revent/shared/provider/search/profiles_provider.dart';
+import 'package:revent/shared/widgets/profile/title_widget.dart';
 
 class SearchProfilesListView extends StatelessWidget {
 
@@ -28,7 +28,7 @@ class SearchProfilesListView extends StatelessWidget {
           final pfpData = accountsData.profilePictures[adjustedIndex];
 
           if (index >= 0) {
-            return AccountProfileWidget(
+            return UserProfileTitleWidget(
               username: username,
               pfpData: pfpData,
               hideActionButton: true,

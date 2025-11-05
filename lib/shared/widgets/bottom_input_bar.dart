@@ -4,7 +4,7 @@ import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 
 class BottomInputBar extends StatelessWidget {
 

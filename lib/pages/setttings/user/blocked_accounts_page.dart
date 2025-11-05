@@ -7,7 +7,7 @@ import 'package:revent/main.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/service/user/actions_service.dart';
 import 'package:revent/service/user/block_service.dart';
-import 'package:revent/shared/widgets/account_profile.dart';
+import 'package:revent/shared/widgets/profile/title_widget.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 
@@ -83,7 +83,7 @@ class _BlockedAccountsPageState extends State<BlockedAccountsPage> {
 
         final blockedUserData = blockedData[index];
 
-        return AccountProfileWidget(
+        return UserProfileTitleWidget(
           customText: 'Unblock',
           username: blockedUserData.username,
           pfpData: blockedUserData.profilePic,

@@ -15,7 +15,7 @@ import 'package:revent/service/vent/info_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
+import 'package:revent/shared/widgets/navigation/bar_dock.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';

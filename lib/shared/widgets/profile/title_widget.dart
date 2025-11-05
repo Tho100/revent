@@ -8,9 +8,9 @@ import 'package:revent/main.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/buttons/sub_button.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/profile_picture.dart';
+import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 
-class AccountProfileWidget extends StatelessWidget {
+class UserProfileTitleWidget extends StatelessWidget {
 
   final String? customText;
   final bool? hideActionButton;
@@ -20,7 +20,7 @@ class AccountProfileWidget extends StatelessWidget {
 
   final VoidCallback? onPressed;
   
-  const AccountProfileWidget({
+  const UserProfileTitleWidget({
     required this.username, 
     required this.pfpData, 
     this.customText,

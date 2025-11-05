@@ -1,13 +1,13 @@
 import 'dart:typed_data';
 
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/shared/provider/search/search_posts_provider.dart';
+import 'package:revent/shared/provider/search/posts_provider.dart';
 import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
-import 'package:revent/shared/provider/vent/vent_following_provider.dart';
+import 'package:revent/shared/provider/vent/following_provider.dart';
 import 'package:revent/service/vent/vents_service.dart';
-import 'package:revent/shared/provider/vent/vent_latest_provider.dart';
-import 'package:revent/shared/provider/vent/vent_trending_provider.dart';
+import 'package:revent/shared/provider/vent/latest_provider.dart';
+import 'package:revent/shared/provider/vent/trending_provider.dart';
 
 class VentsSetup with VentProviderService, SearchProviderService, LikedSavedProviderService {
 

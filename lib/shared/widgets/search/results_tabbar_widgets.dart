@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:revent/shared/widgets/custom_tab_bar.dart';
-import 'package:revent/shared/widgets/search/tabs/search_profiles_listview.dart';
-import 'package:revent/shared/widgets/search/tabs/search_posts_listview.dart';
+import 'package:revent/shared/widgets/search/tabs/profiles_listview.dart';
+import 'package:revent/shared/widgets/search/tabs/posts_listview.dart';
 
 class SearchResultsTabBarWidgets {
 

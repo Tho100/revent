@@ -18,17 +18,17 @@ import 'package:revent/app/app_route.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/service/user/profile_actions_service.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/bottomsheet/user/view_full_bio.dart';
+import 'package:revent/shared/widgets/bottomsheet/user/full_bio_bottomsheet.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
-import 'package:revent/shared/widgets/profile/social_links_widget.dart';
+import 'package:revent/shared/widgets/navigation/bar_dock.dart';
+import 'package:revent/shared/widgets/profile/socials_widget.dart';
 import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/custom_outlined_button.dart';
 import 'package:revent/shared/widgets/buttons/main_button.dart';
-import 'package:revent/shared/widgets/profile/profile_body_widgets.dart';
-import 'package:revent/shared/widgets/profile/profile_info_widgets.dart';
+import 'package:revent/shared/widgets/profile/body_widgets.dart';
+import 'package:revent/shared/widgets/profile/info_widgets.dart';
 import 'package:revent/shared/widgets/profile/tabbar_widgets.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -318,7 +318,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
             : Transform.translate(
               offset: Offset(0, pronounsNotifier.value.isEmpty ? -5 : -2),
                 child: GestureDetector(
-                onTap: () => BottomsheetViewFullBio().buildBottomsheet(context: context, bio: bio),
+                onTap: () => BottomsheetFullBio().buildBottomsheet(context: context, bio: bio),
                 child: Text(
                   bio,
                   style: ThemeStyle.profileBioStyle,
@@ -441,7 +441,7 @@ class _UserProfilePageState extends State<UserProfilePage> with
     return ValueListenableBuilder(
       valueListenable: socialHandlesNotifier,
       builder: (_, socialHandles, __) {
-        return SocialLinksWidgets(
+        return SocialsWidget(
           socialHandles: socialHandles
         ).buildSocialLinks();
       }
