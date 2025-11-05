@@ -10,7 +10,7 @@ import 'package:revent/service/query/user/user_info_getter.dart';
 import 'package:revent/service/refresh_service.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/profile/edit_profile_page.dart';
-import 'package:revent/pages/setttings/privacy_page.dart';
+import 'package:revent/pages/setttings/user/privacy_page.dart';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/navigation/navigation_bar_dock.dart';
