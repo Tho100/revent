@@ -37,7 +37,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
       currentPasswordController.text.trim().isNotEmpty &&
       newPasswordController.text.trim().isNotEmpty;
 
-    final shouldEnable = isFilled && newPasswordController.text.length >= 6;
+    final shouldEnable = 
+      isFilled && 
+      newPasswordController.text.length >= ValidationLimits.minPasswordLength;
 
     if (isFilled != isContinueButtonEnabledNotifier.value) {
       isContinueButtonEnabledNotifier.value = shouldEnable;

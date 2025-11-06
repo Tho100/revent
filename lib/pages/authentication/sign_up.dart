@@ -39,7 +39,10 @@ class _SignUpPageState extends State<SignUpPage> with AuthController {
 
     final isValid = InputValidator.validateEmailFormat(emailController.text);
 
-    final shouldEnable = isFilled && isValid && passwordController.text.length >= 6;
+    final shouldEnable = 
+      isFilled && 
+      isValid && 
+      passwordController.text.length >= ValidationLimits.minPasswordLength;
 
     if (shouldEnable != isContinueButtonEnabledNotifier.value) {
       isContinueButtonEnabledNotifier.value = shouldEnable;
