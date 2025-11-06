@@ -159,7 +159,7 @@ class _EditProfilePageState extends State<EditProfilePage> with UserProfileProvi
     final currentPronouns = pronounController.text;
 
     pronounsSelectedNotifier.value = List<bool>.generate(pronounsChips.length, 
-      (index) => pronounsChips[index] == currentPronouns ? true : false
+      (index) => pronounsChips[index] == currentPronouns
     );
 
   }
