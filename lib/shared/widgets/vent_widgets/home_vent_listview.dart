@@ -75,42 +75,37 @@ class _HomeVentListViewState extends State<HomeVentListView> with AutomaticKeepA
   Widget _buildVentList() {
     
     final ventDataList = widget.provider.vents;
+    final showSuggestion = widget.showFollowSuggestion ?? false;
 
-    return Consumer<FollowSuggestionProvider>(
-      builder: (_, suggestionData, __) {
-        return ListView.builder(
-          physics: const AlwaysScrollableScrollPhysics(
-            parent: BouncingScrollPhysics(),
-          ),
-          itemCount: ventDataList.length + (widget.showFollowSuggestion! ? 1 : 0),
-          itemBuilder: (_, index) {
-      
-            if (suggestionData.suggestions.isNotEmpty) {
-      
-              if (index == 5 && widget.showFollowSuggestion!) {
-                return _buildFollowSuggestion();
-              }
-      
-            }
-      
-            final adjustedIndex = index > 5 
-              && (widget.showFollowSuggestion! && suggestionData.suggestions.isNotEmpty) ? index - 1 : index;
-      
-            if (adjustedIndex >= 0 && adjustedIndex < ventDataList.length) {
-      
-              final vents = ventDataList[adjustedIndex];
-      
-              return KeyedSubtree(
-                key: ValueKey('${vents.title}/${vents.creator}'),
-                child: _buildVentPreview(vents),
-              );
-      
-            }
-      
-            return const SizedBox.shrink();
-      
-          },
+    return ListView.builder(
+      physics: const AlwaysScrollableScrollPhysics(
+        parent: BouncingScrollPhysics(),
+      ),
+      itemCount: ventDataList.length + (showSuggestion ? 1 : 0),
+      itemBuilder: (_, index) {
+
+        if (index == 5 && showSuggestion) {
+          return Consumer<FollowSuggestionProvider>(
+            builder: (_, suggestionData, __) {
+              if (suggestionData.suggestions.isEmpty) return const SizedBox.shrink();
+              return _buildFollowSuggestion();
+            },
+          );
+        }
+
+        final adjustedIndex = (showSuggestion && index > 5) ? index - 1 : index;
+
+        if (adjustedIndex < 0 || adjustedIndex >= ventDataList.length) {
+          return const SizedBox.shrink();
+        }
+
+        final vents = ventDataList[adjustedIndex];
+
+        return KeyedSubtree(
+          key: ValueKey('${vents.title}/${vents.creator}'),
+          child: _buildVentPreview(vents),
         );
+        
       },
     );
   }
