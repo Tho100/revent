@@ -213,7 +213,7 @@ class _FollowsPageState extends State<FollowsPage> with SingleTickerProviderStat
                   final username = userProfileData.username;
                   final pfpData = userProfileData.profilePic;
 
-                  final isFollow = actionText == 'Follow' ? true : false;
+                  final isFollow = actionText == 'Follow';
                   
                   return UserProfileTitleWidget(
                     customText: actionText,
