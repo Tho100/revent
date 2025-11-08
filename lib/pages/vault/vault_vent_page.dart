@@ -25,7 +25,7 @@ import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/service/vent/vault/info_service.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
+import 'package:revent/shared/widgets/vent/vent_previewer_widgets.dart';
 
 class _VaultVentsData {
   

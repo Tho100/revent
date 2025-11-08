@@ -13,7 +13,7 @@ import 'package:revent/shared/widgets/text_field/main_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
+import 'package:revent/shared/widgets/vent/default_vent_previewer.dart';
 
 class SavedPage extends StatefulWidget {
 

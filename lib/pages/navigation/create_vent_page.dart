@@ -15,7 +15,7 @@ import 'package:revent/pages/vault/vault_vent_page.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
 import 'package:revent/shared/widgets/bottomsheet/tags_bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/vents/options_bottomsheet.dart';
-import 'package:revent/shared/widgets/vent_widgets/nsfw_widget.dart';
+import 'package:revent/shared/widgets/vent/nsfw_widget.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/ui_dialog/loading/spinner_loading.dart';
 import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';

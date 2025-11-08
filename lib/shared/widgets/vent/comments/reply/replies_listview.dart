@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
-import 'package:revent/shared/widgets/vent_widgets/comments/reply/reply_previewer.dart';
+import 'package:revent/shared/widgets/vent/comments/reply/reply_previewer.dart';
 
 class RepliesListView extends StatelessWidget {
 

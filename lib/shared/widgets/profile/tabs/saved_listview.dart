@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/profile/saved_provider.dart';
-import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
+import 'package:revent/shared/widgets/vent/default_vent_previewer.dart';
 
 class ProfileSavedListView extends StatefulWidget {
 

@@ -5,7 +5,7 @@ import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/follow_suggestion_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/follow_suggestion_listview.dart';
-import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
+import 'package:revent/shared/widgets/vent/default_vent_previewer.dart';
 
 class HomeVentListView extends StatefulWidget {
 
