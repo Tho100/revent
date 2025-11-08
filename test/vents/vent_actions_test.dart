@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:revent/helper/test_helper.dart';
-import 'package:revent/shared/provider/vent/latest_provider.dart';
+import 'package:revent/shared/provider/vent/feed/latest_provider.dart';
 
 void main() {
 
