@@ -15,8 +15,8 @@ import 'package:revent/shared/themes/theme_style.dart';
 import 'package:revent/shared/widgets/bottomsheet/reply_actions_bottomsheet.dart';
 import 'package:revent/shared/widgets/profile/avatar_widget.dart';
 import 'package:revent/shared/widgets/text/styled_text_widget.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 
 class ReplyPreviewer extends StatelessWidget with VentProviderService {
 

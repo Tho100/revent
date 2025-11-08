@@ -6,7 +6,7 @@ import 'package:revent/service/vent/actions/like_service.dart';
 import 'package:revent/service/vent/actions/pin_service.dart';
 import 'package:revent/service/vent/actions/save_service.dart';
 import 'package:revent/shared/provider_mixins.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 import 'package:revent/service/vent/vault/delete_service.dart';
 import 'package:revent/service/vent/actions/delete_service.dart';
 

@@ -24,7 +24,7 @@ import 'package:revent/pages/profile/user_profile_page.dart';
 import 'package:revent/service/activity_service.dart';
 import 'package:revent/service/user/verify_service.dart';
 import 'package:revent/service/profile/profile_picture_service.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 
 class _DockBarNavigationPages {
 

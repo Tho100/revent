@@ -13,7 +13,7 @@ import 'package:revent/shared/provider/vent/following_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/model/setup/vents_setup.dart';
 import 'package:revent/shared/widgets/custom_tab_bar.dart';
-import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
+import 'package:revent/shared/widgets/dialog/page_loading.dart';
 import 'package:revent/shared/widgets/vent/home_vent_listview.dart';
 
 class HomePage extends StatefulWidget {

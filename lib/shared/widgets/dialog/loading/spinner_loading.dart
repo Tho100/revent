@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
+import 'package:revent/shared/widgets/dialog/page_loading.dart';
 
 class SpinnerLoading {
 

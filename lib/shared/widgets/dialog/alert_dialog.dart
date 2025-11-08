@@ -3,7 +3,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/themes/theme_style.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog_widget.dart';
+import 'package:revent/shared/widgets/dialog/alert_dialog_widget.dart';
 
 class CustomAlertDialog {
 

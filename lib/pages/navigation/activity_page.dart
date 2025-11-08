@@ -18,7 +18,7 @@ import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/navigation/bar_dock.dart';
 import 'package:revent/shared/widgets/navigation_pages_widgets.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 
 class ActivityPage extends StatefulWidget {
 

@@ -7,7 +7,7 @@ import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/service/user/verify_service.dart';
 import 'package:revent/shared/provider/user_provider.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/dialog/alert_dialog.dart';
 import 'package:revent/model/setup/vents_setup.dart';
 
 class UserRegistrationService with UserProfileProviderService {

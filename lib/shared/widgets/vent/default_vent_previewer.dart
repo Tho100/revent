@@ -16,9 +16,9 @@ import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/report_post_bottomsheet.dart';
 import 'package:revent/shared/widgets/vent/nsfw_widget.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/dialog/alert_dialog.dart';
 import 'package:revent/service/vent/info_service.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/vent/vent_previewer_widgets.dart';
 
 class DefaultVentPreviewer extends StatefulWidget {

@@ -5,7 +5,7 @@ import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/header.dart';
 import 'package:revent/shared/widgets/bottomsheet/bottomsheet_widgets/option_buttons.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/dialog/alert_dialog.dart';
 
 class ReportPostBottomsheet {
 
