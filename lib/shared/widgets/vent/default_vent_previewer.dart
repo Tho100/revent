@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/app/app_route.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/validation_limits.dart';
-import 'package:revent/global/tabs_type.dart';
+import 'package:revent/global/type/tabs_type.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/user/actions_service.dart';
@@ -15,11 +15,11 @@ import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/pages/vent/vent_post_page.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/report_post_bottomsheet.dart';
-import 'package:revent/shared/widgets/nsfw_widget.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/vent/nsfw_widget.dart';
+import 'package:revent/shared/widgets/dialog/alert_dialog.dart';
 import 'package:revent/service/vent/info_service.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
-import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/vent/vent_previewer_widgets.dart';
 
 class DefaultVentPreviewer extends StatefulWidget {
 

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/global/tabs_type.dart';
+import 'package:revent/global/type/tabs_type.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';

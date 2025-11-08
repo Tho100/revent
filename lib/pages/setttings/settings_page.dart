@@ -16,7 +16,7 @@ import 'package:revent/pages/setttings/theme_page.dart';
 import 'package:revent/pages/setttings/vent_plus_page.dart';
 import 'package:revent/service/user/sign_out_service.dart';
 import 'package:revent/shared/widgets/boredered_container.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/dialog/alert_dialog.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/buttons/settings_button.dart';
 

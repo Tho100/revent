@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:revent/shared/provider/user_provider.dart';
 import 'package:revent/shared/provider/vent/comments_provider.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
-import 'package:revent/shared/provider/vent/latest_provider.dart';
+import 'package:revent/shared/provider/vent/feed/latest_provider.dart';
 
 class TestHelper {
 

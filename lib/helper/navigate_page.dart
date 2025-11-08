@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/global/tabs_type.dart';
-import 'package:revent/global/vent_type.dart';
+import 'package:revent/global/type/tabs_type.dart';
+import 'package:revent/global/type/vent_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 import 'package:revent/pages/authentication/sign_in.dart';
@@ -24,7 +24,7 @@ import 'package:revent/pages/profile/user_profile_page.dart';
 import 'package:revent/service/activity_service.dart';
 import 'package:revent/service/user/verify_service.dart';
 import 'package:revent/service/profile/profile_picture_service.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 
 class _DockBarNavigationPages {
 

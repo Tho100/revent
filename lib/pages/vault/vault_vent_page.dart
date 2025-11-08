@@ -6,7 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/controllers/search_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
-import 'package:revent/global/vent_type.dart';
+import 'package:revent/global/type/vent_type.dart';
 import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -20,12 +20,12 @@ import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/service/vent/last_edit_service.dart';
 import 'package:revent/shared/provider/vent/active_vent_provider.dart';
 import 'package:revent/shared/widgets/text_field/main_textfield.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
-import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/dialog/page_loading.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 import 'package:revent/service/vent/vault/info_service.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/vent_widgets/vent_previewer_widgets.dart';
+import 'package:revent/shared/widgets/vent/vent_previewer_widgets.dart';
 
 class _VaultVentsData {
   

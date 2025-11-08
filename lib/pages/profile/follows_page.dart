@@ -4,12 +4,12 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
-import 'package:revent/global/follow_type.dart';
+import 'package:revent/global/type/follow_type.dart';
 import 'package:revent/service/general/follow_service.dart';
 import 'package:revent/service/user/actions_service.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
-import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/page_loading.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/profile/title_widget.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/custom_tab_bar.dart';

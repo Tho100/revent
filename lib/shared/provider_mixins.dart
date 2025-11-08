@@ -13,9 +13,9 @@ import 'package:revent/shared/provider/vent/liked_vent_provider.dart';
 import 'package:revent/shared/provider/vent/replies_provider.dart';
 import 'package:revent/shared/provider/vent/saved_vent_provider.dart';
 import 'package:revent/shared/provider/vent/tags_provider.dart';
-import 'package:revent/shared/provider/vent/following_provider.dart';
-import 'package:revent/shared/provider/vent/latest_provider.dart';
-import 'package:revent/shared/provider/vent/trending_provider.dart';
+import 'package:revent/shared/provider/vent/feed/following_provider.dart';
+import 'package:revent/shared/provider/vent/feed/latest_provider.dart';
+import 'package:revent/shared/provider/vent/feed/trending_provider.dart';
 
 mixin UserProfileProviderService {
 

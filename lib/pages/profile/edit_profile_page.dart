@@ -14,7 +14,7 @@ import 'package:revent/model/profile_picture/profile_picture_model.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/country_options_bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/profile_picture_options_bottomsheet.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
 import 'package:revent/shared/widgets/profile/avatar_widget.dart';

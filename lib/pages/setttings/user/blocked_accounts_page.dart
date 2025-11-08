@@ -9,7 +9,7 @@ import 'package:revent/service/user/actions_service.dart';
 import 'package:revent/service/user/block_service.dart';
 import 'package:revent/shared/widgets/profile/title_widget.dart';
 import 'package:revent/shared/widgets/app_bar.dart';
-import 'package:revent/shared/widgets/ui_dialog/snack_bar.dart';
+import 'package:revent/shared/widgets/dialog/snack_bar.dart';
 
 class _BlockedAccountsData {
   

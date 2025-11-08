@@ -8,7 +8,7 @@ import 'package:revent/shared/provider/search/posts_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/bottomsheet/search_filter_bottomsheet.dart';
 import 'package:revent/shared/widgets/inkwell_effect.dart';
-import 'package:revent/shared/widgets/vent_widgets/default_vent_previewer.dart';
+import 'package:revent/shared/widgets/vent/default_vent_previewer.dart';
 
 class SearchPostsListView extends StatefulWidget {
 

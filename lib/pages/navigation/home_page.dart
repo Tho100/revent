@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/global/tabs_type.dart';
+import 'package:revent/global/type/tabs_type.dart';
 import 'package:revent/model/setup/follow_suggestions_setup.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/refresh_service.dart';
-import 'package:revent/shared/provider/vent/trending_provider.dart';
+import 'package:revent/shared/provider/vent/feed/trending_provider.dart';
 import 'package:revent/shared/widgets/navigation/bar_dock.dart';
-import 'package:revent/shared/provider/vent/latest_provider.dart';
-import 'package:revent/shared/provider/vent/following_provider.dart';
+import 'package:revent/shared/provider/vent/feed/latest_provider.dart';
+import 'package:revent/shared/provider/vent/feed/following_provider.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/model/setup/vents_setup.dart';
 import 'package:revent/shared/widgets/custom_tab_bar.dart';
-import 'package:revent/shared/widgets/ui_dialog/page_loading.dart';
-import 'package:revent/shared/widgets/vent_widgets/home_vent_listview.dart';
+import 'package:revent/shared/widgets/dialog/page_loading.dart';
+import 'package:revent/shared/widgets/vent/home_vent_listview.dart';
 
 class HomePage extends StatefulWidget {
 

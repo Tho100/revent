@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/global/tabs_type.dart';
+import 'package:revent/global/type/tabs_type.dart';
 
 class NavigationProvider extends ChangeNotifier {
   

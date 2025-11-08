@@ -1,4 +1,4 @@
-import 'package:revent/global/vent_type.dart';
+import 'package:revent/global/type/vent_type.dart';
 import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';

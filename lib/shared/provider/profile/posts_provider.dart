@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:revent/app/app_route.dart';
-import 'package:revent/global/profile_type.dart';
+import 'package:revent/global/type/profile_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/main.dart';
 

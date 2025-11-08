@@ -4,7 +4,7 @@ import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
 import 'package:revent/helper/format/format_date.dart';
-import 'package:revent/shared/provider/vent/latest_provider.dart';
+import 'package:revent/shared/provider/vent/feed/latest_provider.dart';
 
 class NewPostService with UserProfileProviderService {
 

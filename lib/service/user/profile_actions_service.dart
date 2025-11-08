@@ -6,7 +6,7 @@ import 'package:revent/service/user/actions_service.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/about_profile_bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/report_bottomsheet.dart';
 import 'package:revent/shared/widgets/bottomsheet/user/user_actions_bottomsheet.dart';
-import 'package:revent/shared/widgets/ui_dialog/alert_dialog.dart';
+import 'package:revent/shared/widgets/dialog/alert_dialog.dart';
 
 class UserProfileActionsService {
   
