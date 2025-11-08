@@ -1,4 +1,4 @@
-import 'package:revent/global/follow_type.dart';
+import 'package:revent/global/type/follow_type.dart';
 import 'package:revent/helper/data/data_converter.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';

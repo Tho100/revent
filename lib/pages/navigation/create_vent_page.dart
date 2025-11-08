@@ -6,7 +6,7 @@ import 'package:revent/controllers/vent_post_controller.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/validation_limits.dart';
 import 'package:revent/global/post_tags.dart';
-import 'package:revent/global/tabs_type.dart';
+import 'package:revent/global/type/tabs_type.dart';
 import 'package:revent/helper/get_it_extensions.dart';
 import 'package:revent/helper/navigate_page.dart';
 import 'package:revent/shared/provider_mixins.dart';

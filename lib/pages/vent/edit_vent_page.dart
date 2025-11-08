@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:revent/controllers/vent_post_controller.dart';
 import 'package:revent/global/alert_messages.dart';
-import 'package:revent/global/vent_type.dart';
+import 'package:revent/global/type/vent_type.dart';
 import 'package:revent/shared/themes/theme_color.dart';
 import 'package:revent/shared/widgets/text_field/post_textfield.dart';
 import 'package:revent/shared/widgets/dialog/alert_dialog.dart';

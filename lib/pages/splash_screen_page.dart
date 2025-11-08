@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:quick_actions/quick_actions.dart';
-import 'package:revent/global/tabs_type.dart';
+import 'package:revent/global/type/tabs_type.dart';
 import 'package:revent/service/activity_service.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/shared/provider_mixins.dart';

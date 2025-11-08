@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
 import 'package:revent/global/alert_messages.dart';
-import 'package:revent/global/follow_type.dart';
+import 'package:revent/global/type/follow_type.dart';
 import 'package:revent/service/general/follow_service.dart';
 import 'package:revent/service/user/actions_service.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';

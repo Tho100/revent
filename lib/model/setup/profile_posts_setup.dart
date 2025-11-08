@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:revent/global/profile_type.dart';
+import 'package:revent/global/type/profile_type.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/service/profile/profile_posts_service.dart';
 
