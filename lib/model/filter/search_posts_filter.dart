@@ -1,4 +1,4 @@
-import 'package:revent/global/type/post_filter_type.dart';
+import 'package:revent/global/type/filter_type.dart';
 import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 

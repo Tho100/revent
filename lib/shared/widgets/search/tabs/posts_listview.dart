@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:revent/global/type/post_filter_type.dart';
+import 'package:revent/global/type/filter_type.dart';
 import 'package:revent/model/filter/search_posts_filter.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/search/posts_provider.dart';
@@ -26,10 +26,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   final timeFilterNotifier = ValueNotifier<String>('All Time');
 
   final filterMaps = {
-    PostFilterType.best: 'Best',
-    PostFilterType.latest: 'Latest',
-    PostFilterType.oldest: 'Oldest',
-    PostFilterType.controversial: 'Controversial',
+    GeneralFilterType.best: 'Best',
+    GeneralFilterType.latest: 'Latest',
+    GeneralFilterType.oldest: 'Oldest',
+    GeneralFilterType.controversial: 'Controversial',
   };
 
   final filterDateMaps = {
@@ -42,19 +42,19 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   final searchPostsFilter = SearchPostsFilter();
 
-  void _onSortPostsPressed(PostFilterType filter) {
+  void _onSortPostsPressed(GeneralFilterType filter) {
     
     switch (filter) {
-      case PostFilterType.best:
+      case GeneralFilterType.best:
         searchPostsFilter.filterPostsToBest();
         break;
-      case PostFilterType.latest:
+      case GeneralFilterType.latest:
         searchPostsFilter.filterPostsToLatest();
         break;
-      case PostFilterType.oldest:
+      case GeneralFilterType.oldest:
         searchPostsFilter.filterPostsToOldest();
         break;
-      case PostFilterType.controversial:
+      case GeneralFilterType.controversial:
         searchPostsFilter.filterToControversial();
         break;
     }
@@ -201,10 +201,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                         BottomsheetSearchFilter().buildSortOptionsBottomsheet(
                           context: context,
                           currentFilter: sortOptionsNotifier.value,
-                          bestOnPressed: () => _onSortPostsPressed(PostFilterType.best),
-                          latestOnPressed: () => _onSortPostsPressed(PostFilterType.latest),
-                          oldestOnPressed: () => _onSortPostsPressed(PostFilterType.oldest),
-                          controversialOnPressed: () => _onSortPostsPressed(PostFilterType.controversial),
+                          bestOnPressed: () => _onSortPostsPressed(GeneralFilterType.best),
+                          latestOnPressed: () => _onSortPostsPressed(GeneralFilterType.latest),
+                          oldestOnPressed: () => _onSortPostsPressed(GeneralFilterType.oldest),
+                          controversialOnPressed: () => _onSortPostsPressed(GeneralFilterType.controversial),
                         );
                       },
                     ),

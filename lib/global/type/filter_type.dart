@@ -1,4 +1,4 @@
-enum PostFilterType {
+enum GeneralFilterType {
   best,
   latest,
   oldest,
