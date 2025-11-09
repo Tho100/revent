@@ -26,10 +26,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   final timeFilterNotifier = ValueNotifier<String>('All Time');
 
   final filterMaps = {
-    GeneralFilterType.best: 'Best',
-    GeneralFilterType.latest: 'Latest',
-    GeneralFilterType.oldest: 'Oldest',
-    GeneralFilterType.controversial: 'Controversial',
+    PostFilterType.best: 'Best',
+    PostFilterType.latest: 'Latest',
+    PostFilterType.oldest: 'Oldest',
+    PostFilterType.controversial: 'Controversial',
   };
 
   final filterDateMaps = {
@@ -42,19 +42,19 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   final searchPostsFilter = SearchPostsFilter();
 
-  void _onSortPostsPressed(GeneralFilterType filter) {
+  void _onSortPostsPressed(PostFilterType filter) {
     
     switch (filter) {
-      case GeneralFilterType.best:
+      case PostFilterType.best:
         searchPostsFilter.filterPostsToBest();
         break;
-      case GeneralFilterType.latest:
+      case PostFilterType.latest:
         searchPostsFilter.filterPostsToLatest();
         break;
-      case GeneralFilterType.oldest:
+      case PostFilterType.oldest:
         searchPostsFilter.filterPostsToOldest();
         break;
-      case GeneralFilterType.controversial:
+      case PostFilterType.controversial:
         searchPostsFilter.filterToControversial();
         break;
     }
@@ -201,10 +201,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                         BottomsheetSearchFilter().buildSortOptionsBottomsheet(
                           context: context,
                           currentFilter: sortOptionsNotifier.value,
-                          bestOnPressed: () => _onSortPostsPressed(GeneralFilterType.best),
-                          latestOnPressed: () => _onSortPostsPressed(GeneralFilterType.latest),
-                          oldestOnPressed: () => _onSortPostsPressed(GeneralFilterType.oldest),
-                          controversialOnPressed: () => _onSortPostsPressed(GeneralFilterType.controversial),
+                          bestOnPressed: () => _onSortPostsPressed(PostFilterType.best),
+                          latestOnPressed: () => _onSortPostsPressed(PostFilterType.latest),
+                          oldestOnPressed: () => _onSortPostsPressed(PostFilterType.oldest),
+                          controversialOnPressed: () => _onSortPostsPressed(PostFilterType.controversial),
                         );
                       },
                     ),

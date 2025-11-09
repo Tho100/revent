@@ -1,4 +1,4 @@
-enum GeneralFilterType {
+enum PostFilterType {
   best,
   latest,
   oldest,
@@ -11,4 +11,9 @@ enum PostDateFilterType {
   pastMonth,
   pastWeek,
   today
+}
+enum CommentFilterType {
+  best,
+  latest,
+  oldest,
 }
