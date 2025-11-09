@@ -97,7 +97,7 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
 
   Widget _totalSearchResults() {
     return Selector<SearchPostsProvider, int>(
-      selector: (_, searchPostsData) => searchPostsData.vents.length,
+      selector: (_, searchPostsData) => searchPostsData.filteredVents.length,
       builder: (_, totalVents, __) {
         return Padding(
           padding: const EdgeInsets.only(left: 12.0, top: 2.0),
