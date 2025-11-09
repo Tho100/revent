@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+import 'package:revent/global/type/post_filter_type.dart';
 import 'package:revent/model/filter/search_posts_filter.dart';
 import 'package:revent/shared/widgets/no_content_message.dart';
 import 'package:revent/shared/provider/search/posts_provider.dart';
@@ -24,53 +25,55 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
   final sortOptionsNotifier = ValueNotifier<String>('Best');
   final timeFilterNotifier = ValueNotifier<String>('All Time');
 
+  final filterMaps = {
+    PostFilterType.best: 'Best',
+    PostFilterType.latest: 'Latest',
+    PostFilterType.oldest: 'Oldest',
+    PostFilterType.controversial: 'Controversial',
+  };
+
+  final filterDateMaps = {
+    PostDateFilterType.allTime: 'All Time',
+    PostDateFilterType.pastYear: 'Past Year',
+    PostDateFilterType.pastMonth: 'Past Month',
+    PostDateFilterType.pastWeek: 'Past Week',
+    PostDateFilterType.today: 'Today',
+  };
+
   final searchPostsFilter = SearchPostsFilter();
 
-  void _onSortPostsPressed(String filter) {
+  void _onSortPostsPressed(PostFilterType filter) {
     
     switch (filter) {
-      case 'Best':
+      case PostFilterType.best:
         searchPostsFilter.filterPostsToBest();
         break;
-      case 'Latest':
+      case PostFilterType.latest:
         searchPostsFilter.filterPostsToLatest();
         break;
-      case 'Oldest':
+      case PostFilterType.oldest:
         searchPostsFilter.filterPostsToOldest();
         break;
-      case 'Controversial':
+      case PostFilterType.controversial:
         searchPostsFilter.filterToControversial();
         break;
     }
 
-    sortOptionsNotifier.value = filter;
+    sortOptionsNotifier.value = filterMaps[filter]!;
 
     Navigator.pop(context);
 
   }
 
-  void _timeFilterNotifier(String filter) {
-    
-    switch (filter) {
-      case 'All Time':
-        searchPostsFilter.filterPostsByTimestamp('All Time');
-        searchPostsFilter.filterPostsToBest();
-        break;
-      case 'Past Year':
-        searchPostsFilter.filterPostsByTimestamp('Past Year');
-        break;
-      case 'Past Month':
-        searchPostsFilter.filterPostsByTimestamp('Past Month');
-        break;
-      case 'Past Week':
-        searchPostsFilter.filterPostsByTimestamp('Past Week');
-        break;
-      case 'Today':
-        searchPostsFilter.filterPostsByTimestamp('Today');
-        break;
+  void _timeFilterNotifier(PostDateFilterType filter) {
+
+    searchPostsFilter.filterPostsByTimestamp(filter);
+
+    if (filter == PostDateFilterType.allTime) {
+      searchPostsFilter.filterPostsToBest();
     }
 
-    timeFilterNotifier.value = filter;
+    timeFilterNotifier.value = filterDateMaps[filter]!;
 
     Navigator.pop(context);
 
@@ -198,10 +201,10 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                         BottomsheetSearchFilter().buildSortOptionsBottomsheet(
                           context: context,
                           currentFilter: sortOptionsNotifier.value,
-                          bestOnPressed: () => _onSortPostsPressed('Best'),
-                          latestOnPressed: () => _onSortPostsPressed('Latest'),
-                          oldestOnPressed: () => _onSortPostsPressed('Oldest'),
-                          controversialOnPressed: () => _onSortPostsPressed('Controversial'),
+                          bestOnPressed: () => _onSortPostsPressed(PostFilterType.best),
+                          latestOnPressed: () => _onSortPostsPressed(PostFilterType.latest),
+                          oldestOnPressed: () => _onSortPostsPressed(PostFilterType.oldest),
+                          controversialOnPressed: () => _onSortPostsPressed(PostFilterType.controversial),
                         );
                       },
                     ),
@@ -212,11 +215,11 @@ class _SearchPostsListViewState extends State<SearchPostsListView> {
                         BottomsheetSearchFilter().buildTimeFilterBottomsheet(
                           context: context,
                           currentFilter: timeFilterNotifier.value,
-                          allTimeOnPressed: () => _timeFilterNotifier('All Time'),
-                          pastYearOnPressed: () => _timeFilterNotifier('Past Year'),
-                          pastMonthOnPressed: () => _timeFilterNotifier('Past Month'),
-                          pastWeekOnPressed: () => _timeFilterNotifier('Past Week'),
-                          todayOnPressed: () => _timeFilterNotifier('Today'),
+                          allTimeOnPressed: () => _timeFilterNotifier(PostDateFilterType.allTime),
+                          pastYearOnPressed: () => _timeFilterNotifier(PostDateFilterType.pastYear),
+                          pastMonthOnPressed: () => _timeFilterNotifier(PostDateFilterType.pastMonth),
+                          pastWeekOnPressed: () => _timeFilterNotifier(PostDateFilterType.pastWeek),
+                          todayOnPressed: () => _timeFilterNotifier(PostDateFilterType.today),
                         );
                       },
                     ),
