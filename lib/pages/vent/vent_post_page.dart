@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:revent/global/alert_messages.dart';
 import 'package:revent/global/app_keys.dart';
 import 'package:revent/app/app_route.dart';
+import 'package:revent/global/type/filter_type.dart';
 import 'package:revent/helper/navigator_extension.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/helper/general/text_copy.dart';
@@ -82,6 +83,12 @@ class _VentPostPageState extends State<VentPostPage> with
   final commentsFilter = CommentsFilter();
 
   late VentActionsService actionsService;
+
+  final filterMaps = {
+    CommentFilterType.best: 'Best',
+    CommentFilterType.latest: 'Latest',
+    CommentFilterType.oldest: 'Oldest',
+  };
 
   void _showNsfwConfirmationDialog() async {
 
@@ -175,21 +182,21 @@ class _VentPostPageState extends State<VentPostPage> with
 
   }
 
-  void _onFilterPressed({required String filter}) {
+  void _onFilterPressed(CommentFilterType filter) {
     
     switch (filter) {
-      case 'Best':
+      case CommentFilterType.best:
         commentsFilter.filterCommentToBest();
         break;
-      case 'Latest':
+      case CommentFilterType.latest:
         commentsFilter.filterCommentToLatest();
         break;
-      case 'Oldest':
+      case CommentFilterType.oldest:
         commentsFilter.filterCommentToOldest();
         break;
     }
 
-    filterTextNotifier.value = filter;
+    filterTextNotifier.value = filterMaps[filter]!;
 
     Navigator.pop(context);
 
@@ -564,9 +571,9 @@ class _VentPostPageState extends State<VentPostPage> with
           BottomsheetCommentFilter().buildBottomsheet(
             context: context, 
             currentFilter: filterTextNotifier.value,
-            bestOnPressed: () => _onFilterPressed(filter: 'Best'), 
-            latestOnPressed: () => _onFilterPressed(filter: 'Latest'),
-            oldestOnPressed: () => _onFilterPressed(filter: 'Oldest'),
+            bestOnPressed: () => _onFilterPressed(CommentFilterType.best), 
+            latestOnPressed: () => _onFilterPressed(CommentFilterType.latest),
+            oldestOnPressed: () => _onFilterPressed(CommentFilterType.oldest),
           );
         },
         child: Row(

@@ -1,3 +1,4 @@
+import 'package:revent/global/type/filter_type.dart';
 import 'package:revent/helper/format/format_date.dart';
 import 'package:revent/shared/provider_mixins.dart';
 
@@ -45,26 +46,26 @@ class SearchPostsFilter with SearchProviderService {
 
   }
 
-  void filterPostsByTimestamp(String timestamp) {
+  void filterPostsByTimestamp(PostDateFilterType timestamp) {
 
     final now = DateTime.now();
 
     DateTime threshold;
 
     switch (timestamp) {
-      case 'Past year':
+      case PostDateFilterType.pastYear:
         threshold = now.subtract(const Duration(days: 365));
         break;
-      case 'Past month':
+      case PostDateFilterType.pastMonth:
         threshold = now.subtract(const Duration(days: 30));
         break;
-      case 'Past week':
+      case PostDateFilterType.pastWeek:
         threshold = now.subtract(const Duration(days: 7));
         break;
-      case 'Today':
+      case PostDateFilterType.today:
         threshold = DateTime(now.year, now.month, now.day);
         break;
-      case 'All time':
+      case PostDateFilterType.allTime:
       default:
         searchPostsProvider.setFilteredVents(searchPostsProvider.vents);
         return;
