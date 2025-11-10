@@ -41,7 +41,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
     final deleteAccountResponse = await DeleteAccountData().verifyAndDelete(password: password);
 
     if (deleteAccountResponse['status_code'] == 401) {
-      SnackBarDialog.errorSnack(message: AlertMessages.incorrectPassword); // TODO: Use custom alert dialog instead
+      CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);
       return;
     }
 
