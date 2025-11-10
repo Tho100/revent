@@ -158,7 +158,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
             builder: (_, isEnabled, __) {
               return MainButton(
                 enabled: isEnabled,
-                text: 'Continue',
+                text: 'Update',
                 customFontSize: 17,
                 onPressed: () async {
                   FocusScope.of(context).unfocus(); 
