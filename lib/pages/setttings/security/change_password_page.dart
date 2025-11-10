@@ -154,11 +154,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
           const SizedBox(height: 30),
 
           ValueListenableBuilder(
-            valueListenable: isContinueButtonEnabledNotifier,
+            valueListenable: isContinueButtonEnabledNotifier, // TODO: Update to isUpdate...
             builder: (_, isEnabled, __) {
               return MainButton(
                 enabled: isEnabled,
-                text: 'Continue',
+                text: 'Update',
                 customFontSize: 17,
                 onPressed: () async {
                   FocusScope.of(context).unfocus(); 

@@ -24,12 +24,24 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
   UserProfileProviderService,
   SecurityAuthController {
 
+  final isDeactivateButtonEnabledNotifier = ValueNotifier<bool>(false);
+
+  void _checkFormFilled() {
+
+    final isFilled = currentPasswordController.text.trim().isNotEmpty;
+
+    if (isFilled != isDeactivateButtonEnabledNotifier.value) {
+      isDeactivateButtonEnabledNotifier.value = isFilled;
+    }
+    
+  }
+
   Future<void> _deleteAccount({required String password}) async {
 
     final deleteAccountResponse = await DeleteAccountData().verifyAndDelete(password: password);
 
     if (deleteAccountResponse['status_code'] == 401) {
-      SnackBarDialog.errorSnack(message: AlertMessages.incorrectPassword);
+      CustomAlertDialog.alertDialog(AlertMessages.incorrectPassword);
       return;
     }
 
@@ -45,7 +57,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
   void _deactivateAccountConfirmationDialog({required String password}) {
     CustomAlertDialog.alertDialogCustomOnPress(
       message: AlertMessages.deactivateAccount, 
-      buttonMessage: 'Proceed', 
+      buttonMessage: 'Yes, Deactivate Account',
       onPressedEvent: () async => await _deleteAccount(password: password)
     );
   }
@@ -90,13 +102,19 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
 
           const SizedBox(height: 30),
 
-          MainButton(
-            text: 'Deactivate',
-            customFontSize: 17,
-            onPressed: () async {
-              FocusScope.of(context).unfocus(); 
-              _onDeactivateAccountPressed();
-            }
+          ValueListenableBuilder(
+            valueListenable: isDeactivateButtonEnabledNotifier,
+            builder: (_, isEnabled, __) {
+              return MainButton(
+                enabled: isEnabled,
+                text: 'Deactivate',
+                customFontSize: 17,
+                onPressed: () async {
+                  FocusScope.of(context).unfocus(); 
+                  _onDeactivateAccountPressed();
+                }
+              );
+            },
           ),
     
         ],
@@ -105,8 +123,15 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
   }
 
   @override
+  void initState() {
+    super.initState();
+    currentPasswordController.addListener(_checkFormFilled);
+  }
+
+  @override
   void dispose() {
     disposeControllers();
+    isDeactivateButtonEnabledNotifier.dispose();
     super.dispose();
   }
 
