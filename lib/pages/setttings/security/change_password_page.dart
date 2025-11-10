@@ -81,13 +81,23 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
         return;
       }
 
-      await UserAuthService.updateAccountAuth(
+      final updateAuthResponse = await UserAuthService.updateAccountAuth(
         username: userProvider.user.username, 
         newPassword: newPasswordInput
-      ).then(
-        (_) => CustomAlertDialog.alertDialogTitle(
-          AlertMessages.passwordUpdatedTitle, AlertMessages.passwordHasBeenUpdated
-        )
+      );
+
+      if (updateAuthResponse['status_code'] == 400) {
+        CustomAlertDialog.alertDialog(AlertMessages.matchingPasswordFields);
+        return;
+      }
+
+      if (updateAuthResponse['status_code'] != 200) {
+        SnackBarDialog.errorSnack(message: AlertMessages.defaultError);
+        return;
+      }
+
+      CustomAlertDialog.alertDialogTitle(
+        AlertMessages.passwordUpdatedTitle, AlertMessages.passwordHasBeenUpdated
       );
 
     } catch (_) {
