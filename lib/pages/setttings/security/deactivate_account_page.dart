@@ -45,7 +45,7 @@ class _DeleteAccountPageState extends State<DeactivateAccountPage> with
   void _deactivateAccountConfirmationDialog({required String password}) {
     CustomAlertDialog.alertDialogCustomOnPress(
       message: AlertMessages.deactivateAccount, 
-      buttonMessage: 'Proceed', // TODO: Change to "Yes, Deactivate Account", and check if the width/height is good
+      buttonMessage: 'Yes, Deactivate Account',
       onPressedEvent: () async => await _deleteAccount(password: password)
     );
   }
