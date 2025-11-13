@@ -46,6 +46,7 @@ class ApiPath {
   static const _usersFollows = '$_users/follows';
   static const userFollowSuggestionsGetter = '$_usersFollows/follow-suggestions';
   static const userFollowingStatusGetter = '$_usersFollows/is-following';
+  static const userFollowingLatestPostId = '$_usersFollows/latest-post-id';
 
   static const _usersProfile = '$_users/profile';
   static const userProfileInfoGetter = '$_usersProfile/get-info';

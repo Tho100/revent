@@ -12,6 +12,7 @@ class NavigationProvider extends ChangeNotifier {
   AppRoute _currentRoute = AppRoute.home;
 
   bool _showActivityBadge = false;
+  bool _showFollowingFeedBadge = false;
 
   NavigationTabs get currentNavigation => _currentNavigation;
   HomeTabs get homeTab => _homeTab;
@@ -20,6 +21,7 @@ class NavigationProvider extends ChangeNotifier {
   AppRoute get currentRoute => _currentRoute; 
 
   bool get showActivityBadge => _showActivityBadge; 
+  bool get showFollowingFeedBadge => _showFollowingFeedBadge; 
 
   void setCurrentRoute(AppRoute route) {
     _currentRoute = route;
@@ -36,9 +38,14 @@ class NavigationProvider extends ChangeNotifier {
   void setProfileTab(ProfileTabs tab) {
     _profileTab = tab;
   }
-
+// TODO: Rename to setActivityBadgeVisible
   void setBadgeVisible(bool showBadge) {
     _showActivityBadge = showBadge;
+    notifyListeners();
+  }
+
+  void setFollowingFeedBadgeVisible(bool showBadge) {
+    _showFollowingFeedBadge = showBadge;
     notifyListeners();
   }
 

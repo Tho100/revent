@@ -3,6 +3,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:revent/global/type/tabs_type.dart';
 import 'package:revent/model/setup/follow_suggestions_setup.dart';
+import 'package:revent/service/following_feed_service.dart';
+import 'package:revent/shared/provider/navigation_provider.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/model/local_storage_model.dart';
 import 'package:revent/service/refresh_service.dart';
@@ -38,10 +40,49 @@ class _HomePageState extends State<HomePage> with
 
   late TabController tabController;
 
-  final homeTabs = const [
-    Tab(text: 'Latest'),
-    Tab(text: 'Trending'),
-    Tab(text: 'Following')
+  final homeTabs = [
+
+    const Tab(text: 'Latest'),
+    const Tab(text: 'Trending'),
+
+    Selector<NavigationProvider, bool>(
+      selector: (_, navigationData) => navigationData.showFollowingFeedBadge,
+      builder: (_, showFollowingBadge, __) {
+        return Stack(
+          clipBehavior: Clip.none,
+          children: [
+      
+            const Tab(text: 'Following'),
+
+            if (showFollowingBadge)
+            Positioned(
+              top: 9,
+              left: 60,
+              child: Container(
+                width: 14,
+                height: 14,
+                decoration: BoxDecoration(
+                  color: ThemeColor.backgroundPrimary,
+                  shape: BoxShape.circle,
+                ),
+                child: Center(
+                  child: Container(
+                    width: 10,
+                    height: 10,
+                    decoration: BoxDecoration(
+                      color: ThemeColor.alert,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+
+          ]
+        );
+      },
+    )
+
   ];
 
   void _onTabChanged() async {
@@ -88,6 +129,7 @@ class _HomePageState extends State<HomePage> with
 
       if (followingVentProvider.vents.isNotEmpty) {
         followingIsLoadedNotifier.value = true;
+        FollowingFeedService().setHasSeen();
       }
 
     }
