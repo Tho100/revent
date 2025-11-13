@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:quick_actions/quick_actions.dart';
 import 'package:revent/global/type/tabs_type.dart';
 import 'package:revent/service/activity_service.dart';
+import 'package:revent/service/following_feed_service.dart';
 import 'package:revent/shared/themes/theme_updater.dart';
 import 'package:revent/shared/provider_mixins.dart';
 import 'package:revent/main.dart';
@@ -96,6 +97,7 @@ class _SplashScreenState extends State<SplashScreen> with UserProfileProviderSer
     );
 
     await ActivityService().initializeActivities();
+    await FollowingFeedService().initializeFollowingFeedInfo();
 
     await localStorage.readThemeInformation().then(
       (theme) => ThemeUpdater(theme: theme).updateTheme()
