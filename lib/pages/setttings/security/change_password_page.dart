@@ -25,7 +25,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
   UserProfileProviderService,
   SecurityAuthController {
 
-  final isContinueButtonEnabledNotifier = ValueNotifier<bool>(false);
+  final isUpdateButtonEnabledNotifier = ValueNotifier<bool>(false);
   final showPasswordRequirements = ValueNotifier<bool>(false);
 
   final currentPasswordFocus = FocusNode();
@@ -41,8 +41,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
       isFilled && 
       newPasswordController.text.length >= ValidationLimits.minPasswordLength;
 
-    if (isFilled != isContinueButtonEnabledNotifier.value) {
-      isContinueButtonEnabledNotifier.value = shouldEnable;
+    if (isFilled != isUpdateButtonEnabledNotifier.value) {
+      isUpdateButtonEnabledNotifier.value = shouldEnable;
     }
     
   }
@@ -113,7 +113,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
         children: [
     
           PasswordRequirementStatus(
-            isValid: isContinueButtonEnabledNotifier, 
+            isValid: isUpdateButtonEnabledNotifier, 
             showRequirements: showPasswordRequirements,
             requirement: 'At least ${ValidationLimits.minPasswordLength} characters'
           )
@@ -164,7 +164,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
           const SizedBox(height: 30),
 
           ValueListenableBuilder(
-            valueListenable: isContinueButtonEnabledNotifier, // TODO: Update to isUpdate...
+            valueListenable: isUpdateButtonEnabledNotifier,
             builder: (_, isEnabled, __) {
               return MainButton(
                 enabled: isEnabled,
@@ -194,7 +194,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> with
   @override
   void dispose() {
     disposeControllers();
-    isContinueButtonEnabledNotifier.dispose();
+    isUpdateButtonEnabledNotifier.dispose();
     currentPasswordFocus.dispose();
     newPasswordFocus.dispose();
     showPasswordRequirements.dispose();
