@@ -33,7 +33,7 @@ class CacheHelper with NavigationProviderService {
     await prefs.setString(CacheNames.postLikesCache, jsonEncode(likesPostCache));
     await prefs.setString(CacheNames.followersCache, jsonEncode(followersCache));
 
-    navigationProvider.setBadgeVisible(false);
+    navigationProvider.setActivityBadgeVisible(false);
 
   }
 
@@ -45,8 +45,10 @@ class CacheHelper with NavigationProviderService {
     await prefs.remove(CacheNames.followersCache);
     await prefs.remove(CacheNames.unreadCache);
 
-    navigationProvider.setBadgeVisible(false);
+    navigationProvider.setActivityBadgeVisible(false);
     
   }
+
+  // TODO: Add clear following-feed cache here and call it on sign-out (or account deacivation)
 
 }

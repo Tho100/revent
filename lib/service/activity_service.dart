@@ -28,7 +28,7 @@ class ActivityService with NavigationProviderService {
 
     final showBadge = prefs.getBool(CacheNames.unreadCache) ?? false;
 
-    navigationProvider.setBadgeVisible(showBadge);
+    navigationProvider.setActivityBadgeVisible(showBadge);
 
   }
 
@@ -78,7 +78,7 @@ class ActivityService with NavigationProviderService {
 
       final hasActivities = cachedLikes.isNotEmpty || cachedFollowers.isNotEmpty;
 
-      navigationProvider.setBadgeVisible(hasActivities);
+      navigationProvider.setActivityBadgeVisible(hasActivities);
       
     }
 

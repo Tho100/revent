@@ -63,7 +63,7 @@ class _ActivityPageState extends State<ActivityPage> with
 
     activityNotifier.value = Map<String, List<dynamic>>.from(combined);
 
-    navigationProvider.setBadgeVisible(false);
+    navigationProvider.setActivityBadgeVisible(false);
 
   }
 
