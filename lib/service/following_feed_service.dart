@@ -1,3 +1,4 @@
+import 'package:revent/global/cache_names.dart';
 import 'package:revent/shared/api/api_client.dart';
 import 'package:revent/shared/api/api_path.dart';
 import 'package:revent/shared/provider_mixins.dart';
@@ -20,15 +21,15 @@ class FollowingFeedService with
 
     final info = await _loadFeedInfo();
 
-    final lastPostId = info['last_post_id'];
-    final hasSeen = info['has_seen'];
+    final lastPostId = info[CacheNames.followingLastPostId];
+    final hasSeen = info[CacheNames.followingHasSeen];
 
     final showBadge = (latestPostId != lastPostId) || !hasSeen;
 
-    await prefs.setInt('last_post_id', latestPostId);
+    await prefs.setInt(CacheNames.followingLastPostId, latestPostId);
 
     if (latestPostId != lastPostId) {
-      await prefs.setBool('has_seen', false);
+      await prefs.setBool(CacheNames.followingHasSeen, false);
     }
 
     navigationProvider.setFollowingFeedBadgeVisible(showBadge);
@@ -39,7 +40,7 @@ class FollowingFeedService with
 
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setBool('has_seen', true);
+    await prefs.setBool(CacheNames.followingHasSeen, true);
 
     navigationProvider.setFollowingFeedBadgeVisible(false);
 
@@ -49,12 +50,12 @@ class FollowingFeedService with
     
     final prefs = await SharedPreferences.getInstance();
 
-    final lastPostId = prefs.getInt('last_post_id') ?? 0;
-    final hasSeen = prefs.getBool('has_seen') ?? false;
+    final lastPostId = prefs.getInt(CacheNames.followingLastPostId) ?? 0;
+    final hasSeen = prefs.getBool(CacheNames.followingHasSeen) ?? false;
 
     return {
-      'last_post_id': lastPostId,
-      'has_seen': hasSeen
+      CacheNames.followingLastPostId: lastPostId,
+      CacheNames.followingHasSeen: hasSeen
     };
     
   }

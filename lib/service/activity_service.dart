@@ -21,14 +21,14 @@ class ActivityService with NavigationProviderService {
       final hasNewActivity = await _hasNewActivity();
 
       if (hasNewActivity) {
-        await prefs.setBool(CacheNames.unreadCache, true);
+        await prefs.setBool(CacheNames.activityHasUnread, true);
       }
 
     }
 
-    final showBadge = prefs.getBool(CacheNames.unreadCache) ?? false;
+    final showBadge = prefs.getBool(CacheNames.activityHasUnread) ?? false;
 
-    navigationProvider.setBadgeVisible(showBadge);
+    navigationProvider.setActivityBadgeVisible(showBadge);
 
   }
 
@@ -36,7 +36,7 @@ class ActivityService with NavigationProviderService {
 
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setBool(CacheNames.unreadCache, false);
+    await prefs.setBool(CacheNames.activityHasUnread, false);
 
     final latestLikesData = isLogin 
       ? await activitiesService.getAllTimeLikeMilestones()
@@ -54,11 +54,11 @@ class ActivityService with NavigationProviderService {
     final oldCaches = await CacheHelper().getActivityCache();
 
     final cachedLikes = Map<String, List<dynamic>>.from(
-      oldCaches[CacheNames.postLikesCache] ?? {}
+      oldCaches[CacheNames.activityPostLikesCache] ?? {}
     );
 
     final cachedFollowers = Map<String, List<dynamic>>.from(
-      oldCaches[CacheNames.followersCache] ?? {}
+      oldCaches[CacheNames.activityFollowersCache] ?? {}
     );
 
     for (int i = 0; i < postTitles.length; i++) {
@@ -71,14 +71,14 @@ class ActivityService with NavigationProviderService {
 
     await CacheHelper().initializeCache(
       likesPostCache: cachedLikes,
-      followersCache: cachedFollowers
+      activityFollowersCache: cachedFollowers
     );
 
     if (isLogin) {
 
       final hasActivities = cachedLikes.isNotEmpty || cachedFollowers.isNotEmpty;
 
-      navigationProvider.setBadgeVisible(hasActivities);
+      navigationProvider.setActivityBadgeVisible(hasActivities);
       
     }
 
@@ -92,11 +92,11 @@ class ActivityService with NavigationProviderService {
     final caches = await CacheHelper().getActivityCache();
 
     final cachedLikes = Map<String, List<dynamic>>.from(
-      caches[CacheNames.postLikesCache] ?? {}
+      caches[CacheNames.activityPostLikesCache] ?? {}
     );
 
     final cachedFollowers = Map<String, List<dynamic>>.from(
-      caches[CacheNames.followersCache] ?? {}
+      caches[CacheNames.activityFollowersCache] ?? {}
     );
 
     bool shouldNotify = false;
@@ -150,7 +150,7 @@ class ActivityService with NavigationProviderService {
 
       await CacheHelper().initializeCache(
         likesPostCache: cachedLikes,
-        followersCache: cachedFollowers
+        activityFollowersCache: cachedFollowers
       );
 
     }

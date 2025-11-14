@@ -44,8 +44,8 @@ class _ActivityPageState extends State<ActivityPage> with
 
     final caches = await CacheHelper().getActivityCache();
 
-    final storedLikes = caches[CacheNames.postLikesCache];
-    final storedFollowers = caches[CacheNames.followersCache];
+    final storedLikes = caches[CacheNames.activityPostLikesCache];
+    final storedFollowers = caches[CacheNames.activityFollowersCache];
 
     Map<String, List<dynamic>> combined = {};
 
@@ -63,7 +63,7 @@ class _ActivityPageState extends State<ActivityPage> with
 
     activityNotifier.value = Map<String, List<dynamic>>.from(combined);
 
-    navigationProvider.setBadgeVisible(false);
+    navigationProvider.setActivityBadgeVisible(false);
 
   }
 

@@ -10,30 +10,30 @@ class CacheHelper with NavigationProviderService {
 
     final prefs = await SharedPreferences.getInstance();
 
-    final storedLikesJson = prefs.getString(CacheNames.postLikesCache) ?? '{}';
-    final storedFollowersJson = prefs.getString(CacheNames.followersCache) ?? '{}';
+    final storedLikesJson = prefs.getString(CacheNames.activityPostLikesCache) ?? '{}';
+    final storedFollowersJson = prefs.getString(CacheNames.activityFollowersCache) ?? '{}';
 
     final storedLikes = jsonDecode(storedLikesJson);
     final storedFollowers = jsonDecode(storedFollowersJson);
 
     return {
-      CacheNames.postLikesCache: storedLikes,
-      CacheNames.followersCache: storedFollowers,
+      CacheNames.activityPostLikesCache: storedLikes,
+      CacheNames.activityFollowersCache: storedFollowers,
     };
 
   }
   
   Future<void> initializeCache({
     required Map<String, List<dynamic>> likesPostCache,
-    required Map<String, List<dynamic>> followersCache,
+    required Map<String, List<dynamic>> activityFollowersCache,
   }) async {
 
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.setString(CacheNames.postLikesCache, jsonEncode(likesPostCache));
-    await prefs.setString(CacheNames.followersCache, jsonEncode(followersCache));
+    await prefs.setString(CacheNames.activityPostLikesCache, jsonEncode(likesPostCache));
+    await prefs.setString(CacheNames.activityFollowersCache, jsonEncode(activityFollowersCache));
 
-    navigationProvider.setBadgeVisible(false);
+    navigationProvider.setActivityBadgeVisible(false);
 
   }
 
@@ -41,11 +41,22 @@ class CacheHelper with NavigationProviderService {
 
     final prefs = await SharedPreferences.getInstance();
 
-    await prefs.remove(CacheNames.postLikesCache);
-    await prefs.remove(CacheNames.followersCache);
-    await prefs.remove(CacheNames.unreadCache);
+    await prefs.remove(CacheNames.activityPostLikesCache);
+    await prefs.remove(CacheNames.activityFollowersCache);
+    await prefs.remove(CacheNames.activityHasUnread);
 
-    navigationProvider.setBadgeVisible(false);
+    navigationProvider.setActivityBadgeVisible(false);
+    
+  }
+
+  Future<void> clearFollowingFeedCache() async {
+
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove(CacheNames.followingHasSeen);
+    await prefs.remove(CacheNames.followingLastPostId);
+
+    navigationProvider.setFollowingFeedBadgeVisible(false);
     
   }
 

@@ -38,8 +38,8 @@ class NavigationProvider extends ChangeNotifier {
   void setProfileTab(ProfileTabs tab) {
     _profileTab = tab;
   }
-// TODO: Rename to setActivityBadgeVisible
-  void setBadgeVisible(bool showBadge) {
+
+  void setActivityBadgeVisible(bool showBadge) {
     _showActivityBadge = showBadge;
     notifyListeners();
   }
