@@ -49,6 +49,15 @@ class CacheHelper with NavigationProviderService {
     
   }
 
-  // TODO: Add clear following-feed cache here and call it on sign-out (or account deacivation)
+  Future<void> clearFollowingFeedCache() async {
+
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.remove(CacheNames.followingHasSeen);
+    await prefs.remove(CacheNames.followingLastPostId);
+
+    navigationProvider.setFollowingFeedBadgeVisible(false);
+    
+  }
 
 }

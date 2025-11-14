@@ -26,7 +26,10 @@ class UserSignOutService with UserProfileProviderService, ProfilePostsProviderSe
     await localModel.deleteAllSearchHistory();
     await localModel.deleteLocalData();
     
-    await CacheHelper().clearActivityCache();
+    final cacheHelper = CacheHelper();
+
+    await cacheHelper.clearActivityCache();
+    await cacheHelper.clearFollowingFeedCache();
 
   }
 
